@@ -5,18 +5,14 @@
     <!-- 根据用户id获取用户权限标识 -->
     <select id="getUserPerms" resultClass="java.lang.String" parameterClass="java.lang.Long">
         SELECT
-			m.rel
+			DISTINCT(m.rel)
 		FROM
-			t_sys_user_role ur
-		LEFT JOIN
-			t_sys_role_menu rm
-		ON
-			ur.role_id = rm.role_id
-		LEFT JOIN
-			t_sys_menu m
-		ON
-			rm.menu_id = m.id
+			t_sys_menu m,t_sys_user_role ur,t_sys_role_menu rm
 		WHERE
+			ur.role_id = rm.role_id
+		AND
+			rm.menu_id = m.id
+		AND
 			ur.user_id = #userId#
     </select>
 </sqlMap>
