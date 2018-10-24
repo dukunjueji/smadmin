@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+
+		 http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
+
+    <!-- datasource define -->
+    <bean id="dataSourceCarIs" class="com.zuche.framework.extend.spring.JndiObjectFactoryBeanExtend">
+        <property name="jndiName" value="java:comp/env/jdbc/yccmall,yccmall.read"/>
+    </bean>
+
+
+    <!--IBATIS DAO-->
+    <bean id="sqlMapClientCarIs" class="com.zuche.framework.extend.spring.SqlMapClientFactoryBeanExtend">
+        <property name="defaultConfigLocation" value="classpath:com/zuche/framework/config/ibatis/ibatis_config.xml"/>
+        <property name="propertiesConfigLocation"
+                  value="classpath:com/zuche/framework/config/ibatis/ibatis_config_templement.xml"/>
+        <property name="defaultHashCode" value="23456"/>
+        <property name="dataSource" ref="dataSourceCarIs"/>
+    </bean>
+
+    <bean id="dialectCarIs" class="com.zuche.framework.dao.dialect.MysqlDialect"/>
+    <bean id="sqlExecutorCarIs" class="com.zuche.framework.dao.dialect.PageSqlExecutor">
+        <property name="dialects" ref="dialectCarIs"/>
+    </bean>
+
+    <bean id="baseDaoCarIs" lazy-init="false" class="com.zuche.framework.dao.CarIsIbatisDaoImpl"
+          init-method="initialize">
+        <property name="dataSource" ref="dataSourceCarIs"/>
+        <property name="sqlMapClient" ref="sqlMapClientCarIs"/>
+        <property name="sqlExecutors" ref="sqlExecutorCarIs"/>
+    </bean>
+
+
+    <!--IBATIS TransactionManager -->
+    <bean id="transactionManagerCarIs"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSourceCarIs"/>
+    </bean>
+
+    <bean id="transactionServiceCarIs" abstract="true" lazy-init="true"
+          class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+        <property name="transactionManager">
+            <ref bean="transactionManagerCarIs" />
+        </property>
+        <property name="proxyTargetClass" value="true" />
+        <property name="transactionAttributes">
+            <props>
+                <prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+                <prop key="query*">PROPAGATION_REQUIRED,readOnly</prop>
+                <prop key="create*">PROPAGATION_REQUIRED</prop>
+                <prop key="update*">PROPAGATION_REQUIRED</prop>
+                <prop key="delete*">PROPAGATION_REQUIRED</prop>
+                <prop key="save*">PROPAGATION_REQUIRED</prop>
+                <prop key="remove*">PROPAGATION_REQUIRED</prop>
+                <prop key="insert*">PROPAGATION_REQUIRED</prop>
+                <prop key="add*">PROPAGATION_REQUIRED</prop>
+                <prop key="*">PROPAGATION_REQUIRED</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!--<tx:annotation-driven transaction-manager="transactionManagerCarIs"/>-->
+</beans>
