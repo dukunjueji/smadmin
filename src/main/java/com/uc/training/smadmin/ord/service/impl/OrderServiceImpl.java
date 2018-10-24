@@ -1,5 +1,7 @@
 package com.uc.training.smadmin.ord.service.impl;
 
+import com.sun.corba.se.spi.orb.ORBData;
+import com.uc.training.common.enums.UUIDTypeEnum;
 import com.uc.training.smadmin.gds.dao.GoodsDao;
 import com.uc.training.smadmin.gds.re.GoodsDetailRE;
 import com.uc.training.smadmin.ord.dao.CartGoodsDao;
@@ -120,20 +122,22 @@ public class OrderServiceImpl implements OrderService {
     order.setReceiptTel(orderInfoListNow.get(orderInfoListNow.size()-2).getReceiptTel());
     order.setStatus(1);
     order.setIsDelete(0);
-    //order.setOrderNum(UUIDUtil.getUuidByType(UUIDTypeEnum.ORDERID.getType()));
+    order.setOrderNum(UUIDUtil.getUuidByType(UUIDTypeEnum.ORDERID.getType()));
     Long oderId = orderDao.insertOrder(order);
     for (int i = 0; i < orderInfoListNow.size()-2; i++){
-        OrderGoods orderGoods = new OrderGoods();
-        orderGoods.setOrderId(oderId);
-        orderGoods.setGoodsId(orderInfoListNow.get(i).getGoodsId());
-        orderGoods.setPayPrice(orderInfoListNow.get(i).getSalePrice());
-        orderGoods.setGoodsPropertyId(orderInfoListNow.get(i).getPropertyId());
-        orderGoods.setGoodsNum(orderInfoListNow.get(i).getNum());
-        orderGoods.setSalePrice(orderInfoListNow.get(i).getSalePrice());
-        orderGoods.setDiscountPrice(0);
-        orderGoodsDao.insertOrderGoods(orderGoods);
+      OrderGoods orderGoods = new OrderGoods();
+      orderGoods.setOrderId(oderId);
+      orderGoods.setGoodsId(orderInfoListNow.get(i).getGoodsId());
+      orderGoods.setPayPrice(orderInfoListNow.get(i).getSalePrice());
+      orderGoods.setGoodsPropertyId(orderInfoListNow.get(i).getPropertyId());
+      orderGoods.setGoodsNum(orderInfoListNow.get(i).getNum());
+      orderGoods.setSalePrice(orderInfoListNow.get(i).getSalePrice());
+      orderGoods.setDiscountPrice(0);
+      OrdCartGoodsVo ordCartGoodsVo=new OrdCartGoodsVo();
+      ordCartGoodsVo.setPropertyId(orderInfoListNow.get(i).getPropertyId());
+      ordCartGoodsVo.setMemberId(1L);
+      cartGoodsDao.deleteCartGoods(ordCartGoodsVo);
+      orderGoodsDao.insertOrderGoods(orderGoods);
     }
-
-
   }
 }
