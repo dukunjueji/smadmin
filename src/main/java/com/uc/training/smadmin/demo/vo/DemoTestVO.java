@@ -1,6 +1,7 @@
 package com.uc.training.smadmin.demo.vo;
 
 import com.uc.training.common.bean.PageQuery;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -8,10 +9,11 @@ import javax.validation.constraints.Pattern;
 public class DemoTestVO extends PageQuery {
 
     private static final long serialVersionUID = -384549370196291123L;
-    @NotNull(message = "姓名不能为空")
+    @NotBlank(message = "姓名不能为空")
     private String name;
+    @NotNull(message = "性别不能为空")
     private Integer sex;
-    @NotNull(message = "手机号不能为空")
+    @NotBlank(message = "手机号不能为空")
     @Pattern(regexp = "^((13[0-9])|(15[^4,\\D])|(17[0,5-9])|(18[0,5-9])|(19[0,5-9]))\\d{8}$", message = "手机号格式不正确")
     private String cellphone;
 
