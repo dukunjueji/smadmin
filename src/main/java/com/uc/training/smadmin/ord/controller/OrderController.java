@@ -36,7 +36,7 @@ public class OrderController extends BaseController {
     GoodsService goodsService;
 
     @ResponseBody
-    @RequestMapping(value = " ",method = RequestMethod.GET)
+    @RequestMapping(value = "getCartList.do_",method = RequestMethod.GET)
     public Result getCartgds() {
         Result result = new Result();
         List<OrdCartGoodsVo> list;
@@ -88,11 +88,12 @@ public class OrderController extends BaseController {
 
 
 
+    @ResponseBody
     @RequestMapping(value = "updateOrderInfo.do_",method = RequestMethod.POST)
     public Result updateOrderInfo(String orderInfoList){
+        Result result = new Result();
         List<OrdOrderGoodsVo> orderInfoListNow = (List<OrdOrderGoodsVo>) JSONArray.toList(JSONArray.fromObject(orderInfoList), new OrdOrderGoodsVo(), new JsonConfig());
         orderService.updateOrderInfo(orderInfoListNow);
-        Result result = new Result();
         return result;
     }
 }
