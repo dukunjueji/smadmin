@@ -34,4 +34,15 @@
         WHERE
           id = #id#
     </select>
+
+    <update id="updatePassword" parameterClass="com.uc.training.smadmin.sys.model.SysUser">
+        UPDATE
+          t_sys_user
+        SET
+          password = #password#,
+          modify_time = NOW(),
+          modify_emp = #modifyEmp#
+        WHERE
+          id = #id#
+    </update>
 </sqlMap>

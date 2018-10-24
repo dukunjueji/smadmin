@@ -1,5 +1,7 @@
 package com.uc.training.smadmin.sys.vo;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import java.io.Serializable;
 
 /**
@@ -10,7 +12,9 @@ import java.io.Serializable;
  */
 public class UserLoginVO implements Serializable {
     private static final long serialVersionUID = -2167388848846793016L;
+    @NotBlank(message = "用户名不能为空")
     private String username;
+    @NotBlank(message = "密码不能为空")
     private String password;
 
     public String getUsername() {

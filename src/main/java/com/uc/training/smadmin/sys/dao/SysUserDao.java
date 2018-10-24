@@ -29,4 +29,13 @@ public interface SysUserDao {
      * @version 1.0 2018/10/18 19:44 by 吴佰川（baichuan.wu@ucarinc.com）创建
      */
     SysUser getById(Long id);
+
+    /**
+     * 修改密码
+     *
+     * @version 1.0 2018/10/24 20:30 by 吴佰川（baichuan.wu@ucarinc.com）创建
+     * @param user 用户
+     * @return java.lang.Long
+     */
+    int updatePassword(SysUser user);
 }

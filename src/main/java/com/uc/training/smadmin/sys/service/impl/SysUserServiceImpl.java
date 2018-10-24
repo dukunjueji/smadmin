@@ -29,4 +29,9 @@ public class SysUserServiceImpl implements SysUserService {
     public SysUser getById(Long id) {
         return userDao.getById(id);
     }
+
+    @Override
+    public int updatePassword(SysUser user) {
+        return userDao.updatePassword(user);
+    }
 }

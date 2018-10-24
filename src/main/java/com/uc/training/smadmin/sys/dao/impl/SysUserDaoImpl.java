@@ -26,4 +26,9 @@ public class SysUserDaoImpl extends CarIsIbatisDaoImpl implements SysUserDao {
     public SysUser getById(Long id) {
         return (SysUser) this.queryForObject("com.uc.training.smadmin.sys.dao.SysUserDao.getById", id);
     }
+
+    @Override
+    public int updatePassword(SysUser user) {
+        return this.update("com.uc.training.smadmin.sys.dao.SysUserDao.updatePassword", user);
+    }
 }

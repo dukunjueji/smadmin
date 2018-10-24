@@ -1,5 +1,6 @@
 package com.uc.training.smadmin.sys.controller;
 
+import com.uc.training.smadmin.sys.vo.UserEditPasswordVo;
 import com.ycc.base.common.Result;
 import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
@@ -15,6 +16,7 @@ import com.uc.training.smadmin.utils.EncryptUtil;
 import com.uc.training.smadmin.utils.TokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -45,7 +47,7 @@ public class SysUserController extends BaseController {
      */
     @ResponseBody
     @RequestMapping("login.do_")
-    public Result<UserLoginRE> login(UserLoginVO userLoginVO) {
+    public Result<UserLoginRE> login(@Validated UserLoginVO userLoginVO) {
         Result<UserLoginRE> res;
         try {
             String password = EncryptUtil.md5(userLoginVO.getPassword());
@@ -107,4 +109,39 @@ public class SysUserController extends BaseController {
         return res;
     }
 
+    /**
+     * 用户修改密码
+     *
+     * @version 1.0 2018/10/24 20:38 by 吴佰川（baichuan.wu@ucarinc.com）创建
+     * @param userEditPasswordVo 用户修改密码参数vo
+     * @return com.ycc.base.common.Result<java.lang.Integer>
+     */
+    @AccessLogin
+    @ResponseBody
+    @RequestMapping("editPassword.do_")
+    public Result<Integer> editPassword(@Validated UserEditPasswordVo userEditPasswordVo) {
+        Result<Integer> res;
+        try {
+            Long userId = getUid();
+            SysUser user = userService.getById(userId);
+            if (user == null) {
+                res = Result.getBusinessException("用户不存在", null);
+            } else {
+                String oldPwd = EncryptUtil.md5(userEditPasswordVo.getOldPwd());
+                if (user.getPassword().equals(oldPwd)) {
+                    SysUser sysUser = new SysUser();
+                    sysUser.setId(userId);
+                    sysUser.setPassword(EncryptUtil.md5(userEditPasswordVo.getNewPwd()));
+                    sysUser.setModifyEmp(userId);
+                    res = Result.getSuccessResult(userService.updatePassword(sysUser));
+                } else {
+                    res = Result.getBusinessException("原始密码不正确", null);
+                }
+            }
+        } catch (Exception e) {
+            logger.error("用户修改密码异常！", e);
+            res = Result.getServiceError("用户修改密码异常", null);
+        }
+        return res;
+    }
 }
