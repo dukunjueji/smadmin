@@ -53,6 +53,7 @@ public class UUIDUtil {
             if(currentTime-lastSecond > 1){//新的一秒，重新初始化
                 queue=new ArrayBlockingQueue<UUIDData>(UUIDTypeEnum.QUEUESIZE,true);
                 count= new AtomicInteger(0);// 流水线号 初始化从1开始
+
                 lastSecond=System.currentTimeMillis()/1000;
             }
         }
@@ -80,6 +81,7 @@ class GetAndProductUUID {
             if(UUIDUtil.queue.size() < UUIDTypeEnum.MINQUEUESIZE) {
                 Thread thread=new Producer();
                 thread.start();
+//                producerNumInQueue();
             }
             lock.lock();
             UUIDData data = UUIDUtil.queue.take();
@@ -92,6 +94,21 @@ class GetAndProductUUID {
         return null;
     }
 
+    public static void producerNumInQueue() {
+        UUIDData data = null;
+        while(true) {
+            if(UUIDUtil.queue.size()>=UUIDTypeEnum.ONEPRODUCTQUEUESIZE){
+                break;
+            }
+            data = new UUIDData(UUIDUtil.count.incrementAndGet());
+            System.out.println("生产了数据" + data.getData());
+            try {
+                UUIDUtil.queue.offer(data, 1, TimeUnit.SECONDS);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
     /**
      * 生产者线程
      */
@@ -104,8 +121,9 @@ class GetAndProductUUID {
             UUIDData data = null;
             while(isRunning) {
                 try {
-                    if(UUIDUtil.queue.size()>UUIDTypeEnum.ONEPRODUCTQUEUESIZE){
+                    if(UUIDUtil.queue.size()>=UUIDTypeEnum.ONEPRODUCTQUEUESIZE){
                         isRunning=false;
+                        break;
                     }
                     data = new UUIDData(UUIDUtil.count.incrementAndGet());
                     System.out.println("生产了数据"+data.getData());
@@ -114,6 +132,7 @@ class GetAndProductUUID {
                     e.printStackTrace();
                 }
             }
+            isRunning=true;
         }
     }
 }
