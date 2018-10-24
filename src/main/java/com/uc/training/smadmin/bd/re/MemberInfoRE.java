@@ -28,6 +28,11 @@ public class MemberInfoRE implements Serializable {
      */
     private Integer sex;
 
+    /**
+     * 头像url
+     */
+    private String imageUrl;
+
     public String getNickname() {
         return nickname;
     }
@@ -50,5 +55,13 @@ public class MemberInfoRE implements Serializable {
 
     public void setSex(Integer sex) {
         this.sex = sex;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
