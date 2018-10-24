@@ -23,14 +23,30 @@ public class CategoryRE implements Serializable{
     /**
      * 类别名称
      */
-    private String name;
+    private String label;
+    /**
+     * 级别
+     */
+    private Integer level;
+
+    private Integer sortNum;
 
     /**
      * 父级id
      */
     private Long parentId;
-
+    /**
+     * 子级类别
+     */
     private List<CategoryRE> children;
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
 
     public Long getId() {
         return id;
@@ -40,12 +56,12 @@ public class CategoryRE implements Serializable{
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getLabel() {
+        return label;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     public Long getParentId() {
@@ -62,5 +78,13 @@ public class CategoryRE implements Serializable{
 
     public void setChildren(List<CategoryRE> children) {
         this.children = children;
+    }
+
+    public Integer getSortNum() {
+        return sortNum;
+    }
+
+    public void setSortNum(Integer sortNum) {
+        this.sortNum = sortNum;
     }
 }
