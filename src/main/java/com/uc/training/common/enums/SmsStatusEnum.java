@@ -1,0 +1,46 @@
+package com.uc.training.common.enums;
+
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * @Author: 余旭东
+ * @Date: 2018/10/24 16:52
+ * @Description: 短信状态枚举类：0-失败，1-成功
+ */
+public enum SmsStatusEnum {
+    FAIL(0, "失败"),
+    SUCCESS(1, "成功");
+
+    private int key;
+    private String value;
+
+    SmsStatusEnum(int key, String value){
+        this.key = key;
+        this.value = value;
+    }
+
+    public int getKey() {
+        return key;
+    }
+
+    public void setKey(int key) {
+        this.key = key;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public static Map<Integer, String> getMap() {
+        Map<Integer, String> map = new HashMap<>();
+        for (SmsStatusEnum s : SmsStatusEnum.values()) {
+            map.put(s.key, s.value);
+        }
+        return map;
+    }
+}

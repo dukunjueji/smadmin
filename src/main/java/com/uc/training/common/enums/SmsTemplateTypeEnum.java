@@ -1,5 +1,10 @@
 package com.uc.training.common.enums;
 
+import com.alibaba.fastjson.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 版权说明：Copyright (c) 2018 ucarinc. All Rights Reserved.
  *
@@ -44,5 +49,13 @@ public enum SmsTemplateTypeEnum {
 
     public void setType(Integer type) {
         this.type = type;
+    }
+
+    public static Map<Integer, String> getMap() {
+        Map<Integer, String> map = new HashMap<>();
+        for (SmsTemplateTypeEnum s : SmsTemplateTypeEnum.values()) {
+            map.put(s.type, s.describe);
+        }
+        return map;
     }
 }
