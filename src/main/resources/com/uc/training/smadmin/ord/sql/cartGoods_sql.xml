@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="com.uc.training.smadmin.ord.dao.CartGoodsDao">
+
+	<!-- 根据对象的不为null的值作为条件进行查找 -->
+	<select id="getCartGoodsById" resultClass="com.uc.training.smadmin.ord.model.CartGoods" parameterClass="long">
+		 SELECT
+		 s.id AS id,
+		 s.goods_id AS goodsId,
+		 s.goods_property_id AS goodsPropertyId,
+		 s.member_id AS memberId,
+		 s.goods_num AS goodsNum,
+		 s.create_emp AS createEmp,
+		 s.create_time AS createTime,
+		 s.modify_emp AS modifyEmp,
+		 s.modify_time AS modifyTime
+		 FROM t_ord_cart_goods s		 WHERE s.member_id=#id#
+	</select>
+
+
+	<sql id="where_query">
+
+		 <isNotEmpty property="id" prepend="and">
+			 s.id = #id#
+		 </isNotEmpty>
+		 <isNotEmpty property="goodsId" prepend="and">
+			 s.goods_id = #goodsId#
+		 </isNotEmpty>
+		 <isNotEmpty property="goodsPropertyId" prepend="and">
+			 s.goods_property_id = #goodsPropertyId#
+		 </isNotEmpty>
+		 <isNotEmpty property="memberId" prepend="and">
+			 s.member_id = #memberId#
+		 </isNotEmpty>
+		 <isNotEmpty property="goodsNum" prepend="and">
+			 s.goods_num = #goodsNum#
+		 </isNotEmpty>
+		 <isNotEmpty property="createEmp" prepend="and">
+			 s.create_emp = #createEmp#
+		 </isNotEmpty>
+		 <isNotEmpty property="createTime" prepend="and">
+			 s.create_time = #createTime#
+		 </isNotEmpty>
+		 <isNotEmpty property="modifyEmp" prepend="and">
+			 s.modify_emp = #modifyEmp#
+		 </isNotEmpty>
+		 <isNotEmpty property="modifyTime" prepend="and">
+			 s.modify_time = #modifyTime#
+		 </isNotEmpty>
+	</sql>
+
+	<!-- 列表查询 -->
+	<select id="queryCartGoodsList" resultClass="com.uc.training.smadmin.ord.model.CartGoods">
+		 SELECT
+		 s.goods_id AS goodsId,
+		 s.goods_property_id AS goodsPropertyId,
+		 s.member_id AS memberId,
+		 s.goods_num AS goodsNum,
+		 s.create_emp AS createEmp,
+		 s.create_time AS createTime,
+		 s.modify_emp AS modifyEmp,
+		 s.modify_time AS modifyTime
+		 FROM t_ord_cart_goods s
+		 WHERE 1=1
+		 <!--  <isEmpty property="queryType"> order by s.id DESC </isEmpty>  -->
+		 <!--  <isNotEmpty property="rows" prepend=" "> limit #start#,#rows#</isNotEmpty>/>  -->
+	</select>
+
+	<!-- 查找数据总记录数 -->
+	<select id="queryCartGoodsCount" resultClass="java.lang.Integer" parameterClass="com.uc.training.smadmin.ord.model.CartGoods">
+		 SELECT count(1)
+		 FROM t_ord_cart_goods s
+		 WHERE 1=1
+	</select>
+
+	<!-- 插入 -->
+	<insert id="insertCartGoods" parameterClass="com.uc.training.smadmin.ord.vo.OrdCartGoodsVo">
+		 insert into t_ord_cart_goods
+	  (
+		goods_id,
+		member_id)
+		values (
+		#goodsId#,
+		#memberId#)
+	<selectKey keyProperty="id">
+		select LAST_INSERT_ID() AS id
+	</selectKey>
+	</insert>
+
+	<delete id="delCartGoods" parameterClass="com.uc.training.smadmin.ord.vo.OrdCartGoodsVo">
+		DELETE FROM t_ord_cart_goods
+		WHERE
+		id = #cartId#
+	</delete>
+
+	<!-- 通过主键更新 -->
+	<update id="updateCartGoodsById" parameterClass="com.uc.training.smadmin.ord.model.CartGoods">
+		 update t_ord_cart_goods set
+		goods_id = #goodsId#, goods_property_id = #goodsPropertyId#, member_id = #memberId#, goods_num = #goodsNum#, create_emp = #createEmp#, create_time = #createTime#, modify_emp = #modifyEmp#, modify_time = #modifyTime#
+		where id=#id#
+		</update>
+
+	<update id="upCartGoodsNum" parameterClass="com.uc.training.smadmin.ord.vo.OrdCartGoodsVo">
+		UPDATE t_ord_cart_goods
+		SET
+		goods_num = #num#
+		WHERE member_id = #memberId# AND goods_property_id = #propertyId#
+	</update>
+
+</sqlMap>
+

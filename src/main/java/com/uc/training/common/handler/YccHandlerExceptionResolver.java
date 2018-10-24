@@ -1,19 +1,21 @@
 package com.uc.training.common.handler;
 import com.alibaba.fastjson.JSON;
+import com.google.common.base.Joiner;
 import com.ycc.base.common.Result;
 import com.ycc.base.framework.exception.BusinessRuntimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.validation.BindException;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Set;
 
 /**
  * Description: Controller异常拦截器.
@@ -43,6 +45,15 @@ public class YccHandlerExceptionResolver implements HandlerExceptionResolver {
             if (logger.isDebugEnabled()) {
                 logger.debug("Controller返回结果包装：result={}", JSON.toJSONString(result));
             }
+        } else  if (ex instanceof BindException) {
+            BindingResult bindResult = ((BindException) ex).getBindingResult();
+            List<String> list = new ArrayList<String>();
+            if (bindResult != null) {
+                for (ObjectError objectError : bindResult.getAllErrors()) {
+                    list.add(objectError.getDefaultMessage());
+                }
+            }
+            result = Result.getBusinessException(Joiner.on(",").skipNulls().join(list), null);
         } else {
             result = Result.getServiceError(ex.getMessage(), null);
 

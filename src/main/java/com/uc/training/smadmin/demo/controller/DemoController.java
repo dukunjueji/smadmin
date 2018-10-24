@@ -1,16 +1,18 @@
 package com.uc.training.smadmin.demo.controller;
 
-import com.uc.training.common.annotation.AccessLogin;
 import com.ycc.base.common.Result;
 import com.ycc.base.framework.exception.BusinessRuntimeException;
+import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.common.vo.PageVO;
 import com.uc.training.smadmin.demo.re.DemoRE;
 import com.uc.training.smadmin.demo.model.Demo;
 import com.uc.training.smadmin.demo.service.DemoService;
 import com.uc.training.smadmin.demo.vo.DemoListVO;
+import com.uc.training.smadmin.demo.vo.DemoTestVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -24,7 +26,7 @@ import java.util.Map;
  * Description: 示例Controller.
  * <p>
  * 说明：
- * <li>返回值会自动封装上{@link com.ycc.base.common.Result}</li>
+ * <li>返回值会自动封装上{@link Result}</li>
  * <li>抛出{@link BusinessRuntimeException}异常时,封装Result.status=-1对象,包含异常的code和msg,不会log日志.</li>
  * <li>抛出其他异常时,封装Result.status=-2对象,包含异常的msg,自动log异常日志.</li>
  * <p>
@@ -38,9 +40,20 @@ public class DemoController extends BaseController {
     @Autowired
     private DemoService demoService;
 
-    @RequestMapping("index.do_")
-    public String index() {
-        return "sys/index/index";
+    /**
+     * 参数验证
+     *
+     * @version 1.0 2018/10/24 11:09 by 吴佰川（baichuan.wu@ucarinc.com）创建
+     * @param demoTestVO 请求参数
+     * @return com.ycc.base.common.Result<java.util.Map<java.lang.String,java.lang.Object>>
+     */
+    @RequestMapping("validate.do_")
+    @ResponseBody
+    public Result<Map<String, Object>> validate(@Validated DemoTestVO demoTestVO) {
+        Map<String, Object> re = new HashMap<String, Object>();
+        re.put("total", 10);
+        re.put("datas", new ArrayList<Object>());
+        return Result.getSuccessResult(re);
     }
 
     /**
@@ -83,6 +96,7 @@ public class DemoController extends BaseController {
         return res;
     }
 
+    @AccessLogin
     @ResponseBody
     @RequestMapping("getDemoPage.do_")
     public Result<PageVO<DemoRE>> getDemoPage(DemoListVO demoListVO) {

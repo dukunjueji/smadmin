@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="com.uc.training.smadmin.sys.dao.SysMenuDao">
+
+    <!-- 根据用户id获取用户权限标识 -->
+    <select id="getUserPerms" resultClass="java.lang.String" parameterClass="java.lang.Long">
+        SELECT
+			m.rel
+		FROM
+			t_sys_user_role ur
+		LEFT JOIN
+			t_sys_role_menu rm
+		ON
+			ur.role_id = rm.role_id
+		LEFT JOIN
+			t_sys_menu m
+		ON
+			rm.menu_id = m.id
+		WHERE
+			ur.user_id = #userId#
+    </select>
+</sqlMap>

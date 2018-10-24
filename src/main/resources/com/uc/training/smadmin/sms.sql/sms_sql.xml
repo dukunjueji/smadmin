@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="com.uc.training.smadmin.sms.dao.SmsDao">
+
+  <sql id="where_query">
+    <isNotEmpty property="telephone" prepend="and">
+      s.telephone = #telephone#
+    </isNotEmpty>
+    <isNotEmpty property="type" prepend="and">
+      s.type = #type#
+    </isNotEmpty>
+    <isNotEmpty property="status" prepend="and">
+      s.status = #status#
+    </isNotEmpty>
+    <isNotEmpty property="startDate" prepend="and">
+      unix_timestamp(s.create_time) &gt;= unix_timestamp(#startDate#)
+    </isNotEmpty>
+    <isNotEmpty property="endDate" prepend="and">
+      unix_timestamp(s.create_time) &lt; unix_timestamp(#endDate#)
+    </isNotEmpty>
+  </sql>
+
+  <!-- 查询分页列表 -->
+  <select id="querySmsList" parameterClass="com.uc.training.smadmin.sms.vo.SmsListVO" resultClass="com.uc.training.smadmin.sms.model.Sms">
+    SELECT
+      s.id,
+      s.telephone,
+      s.content,
+      s.type,
+      s.status,
+      s.create_time as createTime
+    FROM t_bd_sms s
+    WHERE 1 = 1
+    <include refid="where_query"/>
+    <isNotEmpty property="offset">
+      limit #offset#, #pageSize#
+    </isNotEmpty>
+  </select>
+
+  <!-- 查询记录总数 -->
+  <select id="querySmsCount" resultClass="java.lang.Long" parameterClass="com.uc.training.smadmin.sms.vo.SmsListVO">
+    SELECT count(1)
+    FROM t_bd_sms s
+    WHERE 1=1
+    <include refid="where_query"/>
+  </select>
+
+  <!-- 根据ID查询单条记录 -->
+  <select id="getSms" parameterClass="java.lang.Long" resultClass="com.uc.training.smadmin.sms.model.Sms">
+    SELECT
+      s.id,
+      s.telephone,
+      s.content,
+      s.type,
+      s.status,
+      s.create_time
+    FROM t_bd_sms s
+    WHERE id = #id#
+  </select>
+
+</sqlMap>

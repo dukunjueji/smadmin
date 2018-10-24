@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="com.uc.training.smadmin.ord.dao.OrderHistoryDao">
+
+	<!-- 根据对象的不为null的值作为条件进行查找 -->
+	<select id="getOrderHistoryById" resultClass="com.uc.training.smadmin.ord.model.OrderHistory" parameterClass="long">
+		 SELECT
+		 s.id AS id,
+		 s.order_id AS orderId,
+		 s.status AS status,
+		 s.create_emp AS createEmp,
+		 s.create_time AS createTime,
+		 s.modify_emp AS modifyEmp,
+		 s.modify_time AS modifyTime
+		 FROM t_ord_order_history s		 WHERE s.id=#id#
+	</select>
+
+
+	<sql id="where_query">
+
+		 <isNotEmpty property="id" prepend="and">
+			 s.id = #id#
+		 </isNotEmpty>
+		 <isNotEmpty property="orderId" prepend="and">
+			 s.order_id = #orderId#
+		 </isNotEmpty>
+		 <isNotEmpty property="status" prepend="and">
+			 s.status = #status#
+		 </isNotEmpty>
+		 <isNotEmpty property="createEmp" prepend="and">
+			 s.create_emp = #createEmp#
+		 </isNotEmpty>
+		 <isNotEmpty property="createTime" prepend="and">
+			 s.create_time = #createTime#
+		 </isNotEmpty>
+		 <isNotEmpty property="modifyEmp" prepend="and">
+			 s.modify_emp = #modifyEmp#
+		 </isNotEmpty>
+		 <isNotEmpty property="modifyTime" prepend="and">
+			 s.modify_time = #modifyTime#
+		 </isNotEmpty>
+	</sql>
+
+	<!-- 列表查询 -->
+	<select id="queryOrderHistoryList" resultClass="com.uc.training.smadmin.ord.model.OrderHistory">
+		 SELECT
+		 s.order_id AS orderId,
+		 s.status AS status,
+		 s.create_emp AS createEmp,
+		 s.create_time AS createTime,
+		 s.modify_emp AS modifyEmp,
+		 s.modify_time AS modifyTime
+		 FROM t_ord_order_history s
+		 WHERE 1=1
+		 <!--  <isEmpty property="queryType"> order by s.id DESC </isEmpty>  -->
+		 <!--  <isNotEmpty property="rows" prepend=" "> limit #start#,#rows#</isNotEmpty>/>  -->
+	</select>
+
+	<!-- 查找数据总记录数 -->
+	<select id="queryOrderHistoryCount" resultClass="java.lang.Integer" parameterClass="com.uc.training.smadmin.ord.model.OrderHistory">
+		 SELECT count(1)
+		 FROM t_ord_order_history s
+		 WHERE 1=1
+	</select>
+
+	<!-- 插入 -->
+	<insert id="insertOrderHistory" parameterClass="com.uc.training.smadmin.ord.model.OrderHistory">
+		 insert into t_ord_order_history
+			 (id, order_id, status, create_emp, create_time, modify_emp, modify_time)		 values (#id#,#orderId#,#status#,#createEmp#,#createTime#,#modifyEmp#,#modifyTime#)
+	<selectKey keyProperty="id">
+		select LAST_INSERT_ID() AS id
+	</selectKey>
+	</insert>
+
+	<!-- 通过主键更新 -->
+	<update id="updateOrderHistoryById" parameterClass="com.uc.training.smadmin.ord.model.OrderHistory">
+		 update t_ord_order_history set
+		id = #id#, order_id = #orderId#, status = #status#, create_emp = #createEmp#, create_time = #createTime#, modify_emp = #modifyEmp#, modify_time = #modifyTime#
+		where id=#id#
+		</update>
+
+</sqlMap>

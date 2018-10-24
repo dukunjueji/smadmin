@@ -1,8 +1,8 @@
 package com.uc.training.smadmin.demo.dao;
 
 import com.uc.training.smadmin.demo.re.DemoRE;
-import com.uc.training.smadmin.demo.vo.DemoListVO;
 import com.uc.training.smadmin.demo.model.Demo;
+import com.uc.training.smadmin.demo.vo.DemoListVO;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ public interface DemoDao {
      * 获取所有列表
      *
      * @param
-     * @return java.util.List<Demo>
+     * @return java.util.List<com.uc.training.smadmin.demo.model.Demo>
      * @version 1.0 2018/10/17 12:21 by 吴佰川（baichuan.wu@ucarinc.com）创建
      */
     List<Demo> getList();
@@ -25,7 +25,7 @@ public interface DemoDao {
      * 查询列表
      *
      * @param demoListVO 查询参数vo
-     * @return java.util.List<com.uc.training.smadmin.demo.dto.DemoRE>
+     * @return java.util.List<com.uc.training.smadmin.demo.re.DemoRE>
      * @version 1.0 2018/10/17 12:21 by 吴佰川（baichuan.wu@ucarinc.com）创建
      */
     List<DemoRE> getDemoList(DemoListVO demoListVO);

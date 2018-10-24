@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="com.uc.training.smadmin.bd.dao.MessageDao">
+
+	<!-- 根据对象的不为null的值作为条件进行查找 -->
+	<select id="getMessageById" resultClass="com.uc.training.smadmin.bd.model.Message" parameterClass="long">
+		 SELECT
+		 s.id AS id,
+		 s.member_id AS memberId,
+		 s.content AS content,
+		 s.is_read AS isRead,
+		 s.create_time AS createTime,
+		 s.create_emp AS createEmp,
+		 s.modify_time AS modifyTime,
+		 s.modify_emp AS modifyEmp
+		 FROM t_bd_message s		 WHERE s.id=#id#
+	</select>
+
+
+	<sql id="where_query">
+
+		 <isNotEmpty property="id" prepend="and">
+			 s.id = #id#
+		 </isNotEmpty>
+		 <isNotEmpty property="memberId" prepend="and">
+			 s.member_id = #memberId#
+		 </isNotEmpty>
+		 <isNotEmpty property="content" prepend="and">
+			 s.content = #content#
+		 </isNotEmpty>
+		 <isNotEmpty property="isRead" prepend="and">
+			 s.is_read = #isRead#
+		 </isNotEmpty>
+		 <isNotEmpty property="createTime" prepend="and">
+			 s.create_time = #createTime#
+		 </isNotEmpty>
+		 <isNotEmpty property="createEmp" prepend="and">
+			 s.create_emp = #createEmp#
+		 </isNotEmpty>
+		 <isNotEmpty property="modifyTime" prepend="and">
+			 s.modify_time = #modifyTime#
+		 </isNotEmpty>
+		 <isNotEmpty property="modifyEmp" prepend="and">
+			 s.modify_emp = #modifyEmp#
+		 </isNotEmpty>
+	</sql>
+
+	<!-- 列表查询 -->
+	<select id="queryMessageList" resultClass="com.uc.training.smadmin.bd.model.Message">
+		 SELECT
+		 s.member_id AS memberId,
+		 s.content AS content,
+		 s.is_read AS isRead,
+		 s.create_time AS createTime,
+		 s.create_emp AS createEmp,
+		 s.modify_time AS modifyTime,
+		 s.modify_emp AS modifyEmp
+		 FROM t_bd_message s
+		 WHERE 1=1
+		 <!--  <isEmpty property="queryType"> order by s.id DESC </isEmpty>  -->
+		 <!--  <isNotEmpty property="rows" prepend=" "> limit #start#,#rows#</isNotEmpty>/>  -->
+	</select>
+
+	<!-- 查找指定会员消息总记录数 -->
+	<select id="queryMessageCount" resultClass="java.lang.Integer" parameterClass="java.lang.Long">
+		 SELECT count(1)
+		 FROM t_bd_message s
+		 WHERE s.member_id = #memberId#
+	</select>
+
+	<!-- 插入 -->
+	<insert id="insertMessage" parameterClass="com.uc.training.smadmin.bd.model.Message">
+		 insert into t_bd_message
+			 (id, member_id, content, is_read, create_time, create_emp, modify_time, modify_emp)		 values (#id#,#memberId#,#content#,#isRead#,#createTime#,#createEmp#,#modifyTime#,#modifyEmp#)
+	<selectKey keyProperty="id">
+		select LAST_INSERT_ID() AS id
+	</selectKey>
+	</insert>
+
+	<!-- 通过主键更新 -->
+	<update id="updateMessageById" parameterClass="com.uc.training.smadmin.bd.model.Message">
+		 update t_bd_message set
+		id = #id#, member_id = #memberId#, content = #content#, is_read = #isRead#, create_time = #createTime#, create_emp = #createEmp#, modify_time = #modifyTime#, modify_emp = #modifyEmp#
+		where id=#id#
+		</update>
+
+</sqlMap>
