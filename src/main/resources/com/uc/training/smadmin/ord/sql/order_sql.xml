@@ -123,7 +123,7 @@
 		</update>
 
 	<!--查询分页-->
-	<select id="getOrderPage" parameterClass="com.uc.training.smadmin.ord.vo.OrdOrderVo" resultClass="com.uc.training.smadmin.ord.re.orderRe">
+	<select id="getOrderPage" parameterClass="com.uc.training.smadmin.ord.vo.OrdOrderVo" resultClass="com.uc.training.smadmin.ord.re.OrderRe">
 		SELECT
 			s.id,
 			s.member_id as memberId,
@@ -135,7 +135,7 @@
 			s.receipt_name as receiptName,
 			s.receipt_tel as receiptTel,
 			s.receipt_address as receiptAddress,
-			s.create_time as createTime
+			date_format(s.create_time,'%Y-%m-%d %k:%i:%s') AS createTime
 		FROM  t_ord_order s
 		WHERE
 		1 = 1
