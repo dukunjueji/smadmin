@@ -31,4 +31,15 @@ public class CategoryServiceImpl implements CategoryService{
     public List<CategoryRE> getCategoryList() {
         return categoryDao.getCategoryList();
     }
+
+    /**
+     * 增加分类
+     *
+     * @param category
+     * @return
+     */
+    @Override
+    public Long addCategory(Category category) {
+        return categoryDao.addCategory(category);
+    }
 }

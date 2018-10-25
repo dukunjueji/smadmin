@@ -7,7 +7,7 @@ import com.uc.training.common.base.model.BaseModel;
  */
 public class Category extends BaseModel {
 
-  private long id;
+  private Long id;
   /**
    * 类别名称
    */
@@ -15,25 +15,28 @@ public class Category extends BaseModel {
   /**
    * 排序号
    */
-  private long sortNum;
+  private Integer sortNum;
+  /**
+   * 分类图标
+   */
+  private String imageUrl;
   /**
    * 父级id
    */
-  private long parentId;
+  private Long parentId;
   /**
    * 逻辑删除
    */
-  private long isDelete;
+  private Long isDelete;
 
 
-  public long getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(long id) {
+  public void setId(Long id) {
     this.id = id;
   }
-
 
   public String getName() {
     return name;
@@ -43,32 +46,35 @@ public class Category extends BaseModel {
     this.name = name;
   }
 
-
-  public long getSortNum() {
+  public Integer getSortNum() {
     return sortNum;
   }
 
-  public void setSortNum(long sortNum) {
+  public void setSortNum(Integer sortNum) {
     this.sortNum = sortNum;
   }
 
+  public String getImageUrl() {
+    return imageUrl;
+  }
 
-  public long getParentId() {
+  public void setImageUrl(String imageUrl) {
+    this.imageUrl = imageUrl;
+  }
+
+  public Long getParentId() {
     return parentId;
   }
 
-  public void setParentId(long parentId) {
+  public void setParentId(Long parentId) {
     this.parentId = parentId;
   }
 
-
-  public long getIsDelete() {
+  public Long getIsDelete() {
     return isDelete;
   }
 
-  public void setIsDelete(long isDelete) {
+  public void setIsDelete(Long isDelete) {
     this.isDelete = isDelete;
   }
-
-
 }

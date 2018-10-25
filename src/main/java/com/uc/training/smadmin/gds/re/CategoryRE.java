@@ -23,7 +23,7 @@ public class CategoryRE implements Serializable{
     /**
      * 类别名称
      */
-    private String label;
+    private String name;
     /**
      * 级别
      */
@@ -56,12 +56,12 @@ public class CategoryRE implements Serializable{
         this.id = id;
     }
 
-    public String getLabel() {
-        return label;
+    public String getName() {
+        return name;
     }
 
-    public void setLabel(String label) {
-        this.label = label;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Long getParentId() {

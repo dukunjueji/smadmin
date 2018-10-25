@@ -1,10 +1,16 @@
 package com.uc.training.smadmin.gds.controller;
 
+import com.uc.training.common.annotation.AccessLogin;
+import com.uc.training.common.base.controller.BaseController;
+import com.uc.training.smadmin.gds.model.Category;
+import com.uc.training.smadmin.gds.vo.CategoryVO;
 import com.ycc.base.common.Result;
 import com.uc.training.smadmin.gds.re.CategoryRE;
 import com.uc.training.smadmin.gds.service.CategoryService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,13 +27,15 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("api/gds/category")
-public class CategoryController {
+public class CategoryController extends BaseController{
 
     @Autowired
     private CategoryService categoryService;
 
+    //获取所有没有被删除分类
     @ResponseBody
-    @RequestMapping(value = "getCategoryList.do_",method = RequestMethod.GET)
+    @AccessLogin
+    @RequestMapping(value = "getCategoryList.do_",method = RequestMethod.POST)
     public Result<List<CategoryRE>> getCategoryList() {
         //获取所有类型
         List<CategoryRE> list = categoryService.getCategoryList();
@@ -72,4 +80,18 @@ public class CategoryController {
         return child;
     }
 
+    @ResponseBody
+    @AccessLogin
+    @RequestMapping(value = "addParentCategory.do_", method = RequestMethod.POST)
+    public Result addParentCategory(@Validated CategoryVO categoryVO) {
+
+        Category category = new Category();
+        //将categoryVO的值映射到category中
+        BeanUtils.copyProperties(categoryVO, category);
+
+        category.setCreateEmp(getUid());
+        category.setModifyEmp(getUid());
+
+        return Result.getSuccessResult(categoryService.addCategory(category));
+    }
 }

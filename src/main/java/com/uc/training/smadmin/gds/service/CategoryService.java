@@ -19,4 +19,11 @@ public interface CategoryService {
      * @return
      */
     List<CategoryRE> getCategoryList();
+
+    /**
+     * 增加分类
+     * @param category
+     * @return
+     */
+    Long addCategory(Category category);
 }

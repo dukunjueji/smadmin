@@ -19,4 +19,11 @@ public interface CategoryDao {
      * @return
      */
     List<CategoryRE> getCategoryList();
+
+    /**
+     * 新增分类
+     * @param category
+     * @return
+     */
+    Long addCategory(Category category);
 }

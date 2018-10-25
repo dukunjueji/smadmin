@@ -26,4 +26,15 @@ public class CategoryDaoImpl extends CarIsIbatisDaoImpl implements CategoryDao {
     public List<CategoryRE> getCategoryList() {
         return this.queryForList("com.uc.training.smadmin.gds.dao.CategoryDao.getCategoryList");
     }
+
+    /**
+     * 新增分类
+     *
+     * @param category
+     * @return
+     */
+    @Override
+    public Long addCategory(Category category) {
+        return (Long) this.insert("com.uc.training.smadmin.gds.dao.CategoryDao.addCategory", category);
+    }
 }
