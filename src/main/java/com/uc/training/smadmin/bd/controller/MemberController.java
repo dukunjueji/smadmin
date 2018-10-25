@@ -21,6 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -275,6 +276,10 @@ public class MemberController extends BaseController {
         member.setEmail(memberInfoVO.getEmail());
         member.setSex(memberInfoVO.getSex());
         member.setId(getUid());
+        boolean flag = "../../../static/images/user/header.png".equals(memberInfoVO.getImageUrl());
+        if (!flag) {
+            member.setImageUrl(memberInfoVO.getImageUrl());
+        }
         //更新会员信息
         memberService.updateMemberInfo(member);
         //查询指定会员信息
@@ -283,5 +288,49 @@ public class MemberController extends BaseController {
         return Result.getSuccessResult(memberInfoRE);
     }
 
+    /**
+    *说明：修改密码时发送验证码
+    *@param sendCodeVO 发送验证码接受的参数
+    *@return：com.ycc.base.common.Result
+    *@throws：
+    */
+    @ResponseBody
+    @RequestMapping("/sendCode.do_")
+    @AccessLogin
+    public Result sendCode(@Validated SendCodeVO sendCodeVO){
+        Result re;
+        Member member = new Member();
+        member.setId(getUid());
+        member = memberService.queryOneMember(member);
+        // 判断旧密码是否和库里的一致
+        String oldpassword = EncryptUtil.md5(sendCodeVO.getOldpassword());
+        if((member.getPassword()).equals(oldpassword)){
+            re = Result.getBusinessException("原来的密码输入有误", null);
+            return re;
+        }
+        // 判断新密码和确认密码是否一致
+        if ((sendCodeVO.getNewpassword()).equals(sendCodeVO.getConfirmpassword())){
+            // 产生验证码
+            String telCode = TelCodeUtil.createCode();
+            //把验证码存入到redis里
+            map.put("telCode", telCode);
+            //调取短信模板
 
+            //获取短信
+            String message = telCode;
+            System.out.println("手机短信为：" + message);
+            re = Result.getSuccessResult("成功");
+        }else {
+            re = Result.getBusinessException("新的密码和确认密码不一致", null);
+        }
+        return re;
+    }
+
+    @ResponseBody
+    @RequestMapping("/editMemberPassword.do_")
+    @AccessLogin
+    public Result editMemberPassword(PasswordEditVO passwordEditVO){
+        Result re = null;
+        return re;
+    }
 }

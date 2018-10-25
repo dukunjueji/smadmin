@@ -6,6 +6,7 @@
 	<select id="queryOneMember" resultClass="com.uc.training.smadmin.bd.model.Member" parameterClass="com.uc.training.smadmin.bd.model.Member">
 		 SELECT
 		 s.id AS id,
+		 s.password AS password,
 		 s.membername AS memberName,
 		 s.email AS email,
 		 CONCAT(LEFT(s.telephone,3), '****' ,RIGHT(s.telephone,4)) AS telephone,
@@ -26,6 +27,9 @@
 			 </isNotEmpty>
 			 <isNotEmpty property="telephone" prepend="and">
 				 s.telephone = #telephone#
+			 </isNotEmpty>
+			 <isNotEmpty property="id" prepend="and">
+				 s.id = #id#
 			 </isNotEmpty>
 		 </dynamic>
 	</select>
@@ -188,8 +192,9 @@
 		nickname = #nickname#,
 		email = #email#,
 		sex = #sex#,
+		image_url = #imageUrl#,
 		modify_time = now()
-		where id=#id#
+		where id = #id#
 	</update>
 	<!-- 会员登录-根据对象的手机号或密码作为条件进行查找 -->
 	<select id="getMemberLogin" resultClass="com.uc.training.smadmin.bd.model.Member" parameterClass="com.uc.training.smadmin.bd.vo.MemberLoginVO">
