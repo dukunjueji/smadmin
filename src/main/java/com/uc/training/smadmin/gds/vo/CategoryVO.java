@@ -1,8 +1,7 @@
 package com.uc.training.smadmin.gds.vo;
-
-import com.sun.istack.NotNull;
 import org.hibernate.validator.constraints.NotBlank;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -27,11 +26,17 @@ public class CategoryVO implements Serializable{
     /**
      * 排序号
      */
+    @NotNull(message = "排序号不能为空")
     private Integer sortNum;
     /**
      * 图片地址
      */
     private String ImageUrl;
+
+    /**
+     * 父级id
+     */
+    private Long parentId;
 
     public Long getId() {
         return id;
@@ -63,5 +68,13 @@ public class CategoryVO implements Serializable{
 
     public void setImageUrl(String imageUrl) {
         ImageUrl = imageUrl;
+    }
+
+    public Long getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
     }
 }

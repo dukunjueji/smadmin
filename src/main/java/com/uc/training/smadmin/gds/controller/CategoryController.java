@@ -7,6 +7,7 @@ import com.uc.training.smadmin.gds.vo.CategoryVO;
 import com.ycc.base.common.Result;
 import com.uc.training.smadmin.gds.re.CategoryRE;
 import com.uc.training.smadmin.gds.service.CategoryService;
+import com.zuche.base.common.web.taglib.util.StringUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,21 +22,25 @@ import java.util.List;
 
 /**
  * 版权声明： Copyright (c) 2008 ucarinc. All Rights Reserved.
+ *
  * @author 何麒（qi.he@ucarinc.com）
  * @Version 1.0
  * @date 2018/10/23
  */
 @Controller
 @RequestMapping("api/gds/category")
-public class CategoryController extends BaseController{
+public class CategoryController extends BaseController {
 
     @Autowired
     private CategoryService categoryService;
 
-    //获取所有没有被删除分类
+    /**
+     * 获取所有没有被删除分类
+     * @return
+     */
     @ResponseBody
     @AccessLogin
-    @RequestMapping(value = "getCategoryList.do_",method = RequestMethod.POST)
+    @RequestMapping(value = "getCategoryList.do_", method = RequestMethod.GET)
     public Result<List<CategoryRE>> getCategoryList() {
         //获取所有类型
         List<CategoryRE> list = categoryService.getCategoryList();
@@ -57,7 +62,12 @@ public class CategoryController extends BaseController{
         return Result.getSuccessResult(categoryList);
     }
 
-    //获取子类分类，参数：父级id，所有分类
+    /**
+     * 获取子类分类，参数：父级id，所有分类
+     * @param id
+     * @param category
+     * @return
+     */
     public List<CategoryRE> getChildren(Long id, List<CategoryRE> category) {
 
         List<CategoryRE> child = new ArrayList<>();
@@ -80,12 +90,44 @@ public class CategoryController extends BaseController{
         return child;
     }
 
+    /**
+     * 新增父级分类
+     *
+     * @param categoryVO
+     * @return
+     */
     @ResponseBody
     @AccessLogin
     @RequestMapping(value = "addParentCategory.do_", method = RequestMethod.POST)
     public Result addParentCategory(@Validated CategoryVO categoryVO) {
 
         Category category = new Category();
+        //将categoryVO的值映射到category中
+        BeanUtils.copyProperties(categoryVO, category);
+
+        category.setCreateEmp(getUid());
+        category.setModifyEmp(getUid());
+
+        return Result.getSuccessResult(categoryService.addCategory(category));
+    }
+
+    /**
+     * 新增子级分类
+     *
+     * @param categoryVO
+     * @return
+     */
+    @ResponseBody
+    @AccessLogin
+    @RequestMapping(value = "addChildCategory.do_", method = RequestMethod.POST)
+    public Result addChildCategory(@Validated CategoryVO categoryVO) {
+
+        if (StringUtil.isBlank(categoryVO.getImageUrl())) {
+            //return Result.getBusinessException("图片地址不能为空", null);
+        }
+
+        Category category = new Category();
+
         //将categoryVO的值映射到category中
         BeanUtils.copyProperties(categoryVO, category);
 
