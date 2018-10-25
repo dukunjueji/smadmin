@@ -98,7 +98,7 @@ public class AddressController extends BaseController {
         }
 
         Address address = new Address();
-        BeanUtils.copyProperties(address, addressVO);
+        BeanUtils.copyProperties(addressVO, address);
 
         address.setMemberId(getUid());
         address.setCreateEmp(getUid());
@@ -127,7 +127,7 @@ public class AddressController extends BaseController {
         }
 
         Address address = new Address();
-        BeanUtils.copyProperties(address, addressVO);
+        BeanUtils.copyProperties(addressVO, address);
 
         address.setMemberId(getUid());
         address.setModifyEmp(getUid());

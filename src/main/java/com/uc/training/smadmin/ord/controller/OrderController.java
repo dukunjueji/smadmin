@@ -1,9 +1,9 @@
 package com.uc.training.smadmin.ord.controller;
 
+import com.uc.training.smadmin.ord.re.OrderRe;
 import com.ycc.base.common.Result;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.smadmin.gds.service.GoodsService;
-import com.uc.training.smadmin.ord.model.OrdOrder;
 import com.uc.training.smadmin.ord.service.OrderService;
 import com.uc.training.smadmin.ord.vo.OrdCartGoodsVo;
 import com.uc.training.smadmin.ord.vo.OrdOrderGoodsVo;
@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.POST;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 订单控制类
@@ -46,6 +46,7 @@ public class OrderController extends BaseController {
         result.setRe(list);
         return result;
     }
+
     @ResponseBody
     @RequestMapping(value="updataCartgoods.do_",method = RequestMethod.POST)
     public Result updataCartgds(HttpServletRequest request,OrdCartGoodsVo ordCartGoodsVo) {
@@ -54,6 +55,7 @@ public class OrderController extends BaseController {
         orderService.updataCarGoodsNum(ordCartGoodsVo);
         return result;
     }
+
     @ResponseBody
     @RequestMapping(value = "getOrderList.do_",method = RequestMethod.GET)
     public Result<List<OrdOrderGoodsVo>> getOrderGds(String goodsList ) {
@@ -78,6 +80,7 @@ public class OrderController extends BaseController {
         orderService.addCarGoods(ordCartGoodsVo);
         return result;
     }
+
     @ResponseBody
     @RequestMapping(value = "deleteCartgoods.do_",method = RequestMethod.POST)
     public Result deleteCartgds(HttpServletRequest request,OrdCartGoodsVo ordCartGoodsVo) {
@@ -85,7 +88,6 @@ public class OrderController extends BaseController {
         orderService.deleteCarGoods(ordCartGoodsVo);
         return result;
     }
-
 
 
     @ResponseBody
@@ -96,4 +98,20 @@ public class OrderController extends BaseController {
         orderService.updateOrderInfo(orderInfoListNow);
         return result;
     }
+
+    @ResponseBody
+    @RequestMapping(value = "getOrderPage.do_",method = RequestMethod.POST)
+    public Result getOrderPage(OrdOrderVo orderVo){
+        //List<OrdOrderGoodsVo> orderInfoListNow = (List<OrdOrderGoodsVo>) JSONArray.toList(JSONArray.fromObject(orderInfoList), new OrdOrderGoodsVo(), new JsonConfig());
+        Result result = new Result();
+        List<OrderRe> list;
+        Map map =new HashMap();
+        list = orderService.getOrderPage(orderVo);
+        map.put("orderList",list);
+        Integer totalSize = orderService.getOrderTotal();
+        map.put("totalSize",totalSize);
+        result.setRe(map);
+        return result;
+    }
+
 }

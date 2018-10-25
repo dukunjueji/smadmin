@@ -1,6 +1,8 @@
 package com.uc.training.smadmin.ord.dao.impl;
 import com.uc.training.smadmin.ord.model.Order;
 import com.uc.training.smadmin.ord.dao.OrderDao;
+import com.uc.training.smadmin.ord.re.OrderRe;
+import com.uc.training.smadmin.ord.vo.OrdOrderVo;
 import com.zuche.framework.dao.CarIsIbatisDaoImpl;
 import org.springframework.stereotype.Repository;
 import java.util.List;
@@ -52,4 +54,13 @@ public class OrderDaoImpl extends CarIsIbatisDaoImpl implements OrderDao {
 		  return this.update("com.uc.training.smadmin.ord.dao.OrderDao.updateOrderById", record);
 	 }
 
+	@Override
+	public  List<OrderRe> getOrderPage(OrdOrderVo orderVo) {
+		return this.queryForList("com.uc.training.smadmin.ord.dao.OrderDao.getOrderPage",orderVo,orderVo.getStartIndex(),orderVo.getEndIndex());
+	}
+
+  @Override
+  public Integer getOrderTota() {
+    return (Integer) this.queryForObject("com.uc.training.smadmin.ord.dao.OrderDao.OrderCount");
+  }
 }

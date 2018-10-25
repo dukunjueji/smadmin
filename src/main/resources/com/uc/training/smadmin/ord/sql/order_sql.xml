@@ -98,6 +98,13 @@
 		 WHERE s.member_id = #memberId#
 	</select>
 
+	<!--查询订单表的总记录数-->
+	<select id="OrderCount" resultClass="java.lang.Integer">
+		 SELECT count(1)
+		 FROM t_ord_order s
+		 WHERE
+		 s.`is_delete` = 0
+	</select>
 	<!-- 插入 -->
 	<insert id="insertOrder" parameterClass="com.uc.training.smadmin.ord.model.Order">
 		 insert into t_ord_order
@@ -115,4 +122,26 @@
 		where id=#id#
 		</update>
 
+	<!--查询分页-->
+	<select id="getOrderPage" parameterClass="com.uc.training.smadmin.ord.vo.OrdOrderVo" resultClass="com.uc.training.smadmin.ord.re.OrderRe">
+		SELECT
+			s.id,
+			s.member_id as memberId,
+			s.order_num as orderNum,
+			s.order_price as orderPrice,
+			s.pay_price as payPrice,
+			s.is_delete as isDelete,
+			s.status as status,
+			s.receipt_name as receiptName,
+			s.receipt_tel as receiptTel,
+			s.receipt_address as receiptAddress,
+			date_format(s.create_time,'%Y-%m-%d %k:%i:%s') AS createTime
+		FROM  t_ord_order s
+		WHERE
+		1 = 1
+		AND
+		s.`is_delete` = 0
+	</select>
+
 </sqlMap>
+

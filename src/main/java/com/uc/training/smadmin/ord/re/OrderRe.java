@@ -1,31 +1,71 @@
-package com.uc.training.smadmin.ord.model;
+package com.uc.training.smadmin.ord.re;
 
 import java.io.Serializable;
 import java.util.Date;
 
 /**
- *用户订单信息
- * @author DK
- * @date 2018/10/15
+ * description: TODO
+ *
+ * @author 黄宏俊
+ * @version 1.0
+ * @date 2018/10/25  10:36
  */
+public class OrderRe implements Serializable {
+  private static final long serialVersionUID = -6912839796213052826L;
 
-public class OrdOrder implements Serializable{
-
+  /**主键id**/
   private Long id;
-  private Long memberId;
-  private String orderNum;
-  private Double orderPrice;
-  private Double payPrice;
-  private Long isDelete;
-  private Long status;
-  private String receiptName;
-  private String receiptTel;
-  private String receiptAddress;
-  private Long createEmp;
-  private Date createTime;
-  private Long modifyEmp;
-  private Date modifyTime;
 
+  /**会员id**/
+  private Long memberId;
+
+  /**订单号**/
+  private String orderNum;
+
+  /**订单总额**/
+  private Double orderPrice;
+
+  /**整个订单的实际支付金额**/
+  private Double payPrice;
+
+  /**是否删除:1表示删除，0表示未删除**/
+  private Integer isDelete;
+
+  /**状态:1待付款2取消订单3待发货4待收货5已完成**/
+  private Integer status;
+
+  /**收货人姓名**/
+  private String receiptName;
+
+  /**收货人电话**/
+  private String receiptTel;
+
+  /**收货人地址**/
+  private String receiptAddress;
+
+  /**下单时间**/
+  private Date createTime;
+
+  /**状态说明**/
+  private String showStatus;
+
+  private String teag;
+
+  public String getTeag() {
+    return teag;
+  }
+
+  public void setTeag(String teag) {
+    this.teag = teag;
+  }
+
+  public Date getCreateTime() {
+    return createTime;
+  }
+
+  public void setCreateTime(Date createTime) {
+    this.createTime = createTime;
+  }
 
   public Long getId() {
     return id;
@@ -34,7 +74,6 @@ public class OrdOrder implements Serializable{
   public void setId(Long id) {
     this.id = id;
   }
-
 
   public Long getMemberId() {
     return memberId;
@@ -52,7 +91,6 @@ public class OrdOrder implements Serializable{
     this.orderNum = orderNum;
   }
 
-
   public Double getOrderPrice() {
     return orderPrice;
   }
@@ -60,7 +98,6 @@ public class OrdOrder implements Serializable{
   public void setOrderPrice(Double orderPrice) {
     this.orderPrice = orderPrice;
   }
-
 
   public Double getPayPrice() {
     return payPrice;
@@ -70,24 +107,21 @@ public class OrdOrder implements Serializable{
     this.payPrice = payPrice;
   }
 
-
-  public Long getIsDelete() {
+  public Integer getIsDelete() {
     return isDelete;
   }
 
-  public void setIsDelete(Long isDelete) {
+  public void setIsDelete(Integer isDelete) {
     this.isDelete = isDelete;
   }
 
-
-  public Long getStatus() {
+  public Integer getStatus() {
     return status;
   }
 
-  public void setStatus(Long status) {
+  public void setStatus(Integer status) {
     this.status = status;
   }
-
 
   public String getReceiptName() {
     return receiptName;
@@ -97,7 +131,6 @@ public class OrdOrder implements Serializable{
     this.receiptName = receiptName;
   }
 
-
   public String getReceiptTel() {
     return receiptTel;
   }
@@ -105,7 +138,6 @@ public class OrdOrder implements Serializable{
   public void setReceiptTel(String receiptTel) {
     this.receiptTel = receiptTel;
   }
-
 
   public String getReceiptAddress() {
     return receiptAddress;
@@ -115,40 +147,11 @@ public class OrdOrder implements Serializable{
     this.receiptAddress = receiptAddress;
   }
 
-
-  public Long getCreateEmp() {
-    return createEmp;
+  public String getShowStatus() {
+    return showStatus;
   }
 
-  public void setCreateEmp(Long createEmp) {
-    this.createEmp = createEmp;
+  public void setShowStatus(String showStatus) {
+    this.showStatus = showStatus;
   }
-
-
-  public Date getCreateTime() {
-    return createTime;
-  }
-
-  public void setCreateTime(Date createTime) {
-    this.createTime = createTime;
-  }
-
-
-  public Long getModifyEmp() {
-    return modifyEmp;
-  }
-
-  public void setModifyEmp(Long modifyEmp) {
-    this.modifyEmp = modifyEmp;
-  }
-
-
-  public Date getModifyTime() {
-    return modifyTime;
-  }
-
-  public void setModifyTime(Date modifyTime) {
-    this.modifyTime = modifyTime;
-  }
-
 }

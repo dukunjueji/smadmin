@@ -1,8 +1,9 @@
 package com.uc.training.smadmin.ord.service;
 
-import com.uc.training.smadmin.ord.model.CartGoods;
+import com.uc.training.smadmin.ord.re.OrderRe;
 import com.uc.training.smadmin.ord.vo.OrdCartGoodsVo;
 import com.uc.training.smadmin.ord.vo.OrdOrderGoodsVo;
+import com.uc.training.smadmin.ord.vo.OrdOrderVo;
 
 import java.util.List;
 
@@ -62,4 +63,17 @@ public interface OrderService {
    * @return 所有订单数目
    */
   Integer queryOrderCount(Long memberId);
+
+  /**
+   * 获取订单查询分页
+   * @param orderVo
+   * @return
+   */
+  List<OrderRe> getOrderPage (OrdOrderVo orderVo);
+
+  /**
+   * 获取总记录数
+   * @return
+   */
+  Integer getOrderTotal();
 }
