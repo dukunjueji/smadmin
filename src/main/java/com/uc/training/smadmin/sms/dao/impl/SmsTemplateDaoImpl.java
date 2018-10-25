@@ -15,14 +15,15 @@ import java.util.List;
  */
 @Repository
 public class SmsTemplateDaoImpl extends CarIsIbatisDaoImpl implements SmsTemplateDao {
+    private static final String namespace = "com.uc.training.smadmin.sms.dao.SmsTemplateDao.";
     /**
      * 添加短信模板
      * @param template
      * @return
      */
     @Override
-    public Integer addTemplate(SmsTemplate template) {
-        return (Integer) this.insert("insertSmsTemplate", template);
+    public Long addTemplate(SmsTemplate template) {
+        return (Long) this.insert(namespace + "insertSmsTemplate", template);
     }
 
     /**
@@ -32,7 +33,7 @@ public class SmsTemplateDaoImpl extends CarIsIbatisDaoImpl implements SmsTemplat
      */
     @Override
     public Integer modifyTemplate(SmsTemplate template) {
-        return this.update("updateSmsTemplateById", template);
+        return this.update(namespace + "updateSmsTemplateById", template);
     }
 
     /**
@@ -41,7 +42,7 @@ public class SmsTemplateDaoImpl extends CarIsIbatisDaoImpl implements SmsTemplat
      */
     @Override
     public Integer deleteTemplate(Long id) {
-        return this.deleteObject("deleteById", id);
+        return this.deleteObject(namespace + "deleteById", id);
     }
 
     /**
@@ -51,7 +52,7 @@ public class SmsTemplateDaoImpl extends CarIsIbatisDaoImpl implements SmsTemplat
      */
     @Override
     public SmsTemplate getTemplateById(Long id) {
-        return (SmsTemplate) this.queryForObject("getSmsTemplateById", id);
+        return (SmsTemplate) this.queryForObject(namespace + "getSmsTemplateById", id);
     }
 
     /**
@@ -60,7 +61,7 @@ public class SmsTemplateDaoImpl extends CarIsIbatisDaoImpl implements SmsTemplat
      */
     @Override
     public List<SmsTemplate> getList(SmsTemplateListVO smsTemplateListVO) {
-        return this.queryForList("querySmsTemplateList", smsTemplateListVO);
+        return this.queryForList(namespace + "querySmsTemplateList", smsTemplateListVO);
     }
 
     /**
@@ -70,7 +71,17 @@ public class SmsTemplateDaoImpl extends CarIsIbatisDaoImpl implements SmsTemplat
      */
     @Override
     public Long getTemplateListCount(SmsTemplateListVO smsTemplateListVO) {
-        return (Long) this.queryForObject("querySmsTemplateCount");
+        return (Long) this.queryForObject(namespace + "querySmsTemplateCount");
+    }
+
+    /**
+     * 通过编码获取短信模板
+     * @param code
+     * @return
+     */
+    @Override
+    public SmsTemplate getByCode(String code) {
+        return (SmsTemplate) this.queryForObject(namespace + "getByCode", code);
     }
 
 }

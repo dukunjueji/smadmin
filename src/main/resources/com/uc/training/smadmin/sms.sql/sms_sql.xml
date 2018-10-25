@@ -21,7 +21,7 @@
   </sql>
 
   <!-- 查询分页列表 -->
-  <select id="querySmsList" parameterClass="com.uc.training.smadmin.sms.vo.SmsListVO" resultClass="com.uc.training.smadmin.sms.model.Sms">
+  <select id="querySmsList" parameterClass="com.uc.training.smadmin.sms.vo.SmsListVO" resultClass="com.uc.training.smadmin.sms.vo.SmsVO">
     SELECT
       s.id,
       s.telephone,

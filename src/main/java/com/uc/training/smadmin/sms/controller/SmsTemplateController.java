@@ -1,5 +1,6 @@
 package com.uc.training.smadmin.sms.controller;
 
+import com.uc.training.common.enums.SmsTemplateReplaceEnum;
 import com.ycc.base.common.Result;
 import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
@@ -7,11 +8,15 @@ import com.uc.training.common.vo.PageVO;
 import com.uc.training.smadmin.sms.model.SmsTemplate;
 import com.uc.training.smadmin.sms.service.SmsTemplateService;
 import com.uc.training.smadmin.sms.vo.SmsTemplateListVO;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -34,10 +39,21 @@ public class SmsTemplateController extends BaseController {
     @AccessLogin
     @RequestMapping(value = "/addTemplate", method = RequestMethod.POST)
     @ResponseBody
-    public Result<Integer> addTemplate(SmsTemplate template){
-
+    public Result<Long> addTemplate(SmsTemplate template){
+        // 判空
+        if (template == null || StringUtils.isEmpty(template.getCode())|| StringUtils.isEmpty(template.getTitle()) ||
+                StringUtils.isEmpty(template.getContent()) || StringUtils.isEmpty(template.getTypeDes())){
+            return Result.getBusinessException("短信模板添加失败", null);
+        }
+        // 编码已存在
+        SmsTemplate temp = smsTemplateService.getByCode(template.getCode());
+        if (temp != null) {
+            return Result.getBusinessException("编码已存在", null);
+        }
         template.setCreateEmp(getUid());
-        return Result.getSuccessResult(smsTemplateService.addTemplate(template));
+        Long id = smsTemplateService.addTemplate(template);
+        System.out.println(id);
+        return Result.getSuccessResult(id);
     }
 
     /**
@@ -53,7 +69,7 @@ public class SmsTemplateController extends BaseController {
     }
 
     /**
-     * 新增短信模板
+     * 修改短信模板
      * @param template
      * @return
      */
@@ -61,7 +77,18 @@ public class SmsTemplateController extends BaseController {
     @RequestMapping(value = "/modifyTemplate", method = RequestMethod.POST)
     @ResponseBody
     public Result<Integer> modifyTemplate(SmsTemplate template){
-
+        // 判空
+        if (template == null || StringUtils.isEmpty(template.getCode())|| StringUtils.isEmpty(template.getTitle()) ||
+                StringUtils.isEmpty(template.getContent()) || StringUtils.isEmpty(template.getTypeDes())){
+            return Result.getBusinessException("短信模板添加失败", null);
+        }
+        System.out.println(template.getType());
+        SmsTemplate t1 = smsTemplateService.getTemplateById(template.getId());
+        // 编码已存在
+        SmsTemplate temp = smsTemplateService.getByCode(template.getCode());
+        if (temp != null && !temp.getCode().equals(template.getCode())) {
+            return Result.getBusinessException("编码已存在", null);
+        }
         template.setModifyEmp(getUid());
         return Result.getSuccessResult(smsTemplateService.modifyTemplate(template));
     }
@@ -73,7 +100,7 @@ public class SmsTemplateController extends BaseController {
      */
     @AccessLogin
     @ResponseBody
-    @RequestMapping(value = "getSmsTemplatePage.do_", method = RequestMethod.GET)
+    @RequestMapping(value = "getSmsTemplatePage.do_", method = RequestMethod.POST)
     public Result<PageVO<SmsTemplate>> getDemoPage(SmsTemplateListVO smsTemplateListVO) {
         Result<PageVO<SmsTemplate>> res;
         try {
@@ -90,6 +117,15 @@ public class SmsTemplateController extends BaseController {
         return res;
     }
 
-
+    /**
+     * 获取替换字符
+     * @return
+     */
+    @AccessLogin
+    @ResponseBody
+    @RequestMapping(value = "getReplaceString.do_", method = RequestMethod.GET)
+    public Result<Map<String, String>> getReplaceString(){
+        return Result.getSuccessResult(SmsTemplateReplaceEnum.getMap());
+    }
 
 }

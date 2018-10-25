@@ -3,6 +3,7 @@ package com.uc.training.smadmin.sms.dao.impl;
 import com.uc.training.smadmin.sms.dao.SmsDao;
 import com.uc.training.smadmin.sms.model.Sms;
 import com.uc.training.smadmin.sms.vo.SmsListVO;
+import com.uc.training.smadmin.sms.vo.SmsVO;
 import com.zuche.framework.dao.CarIsIbatisDaoImpl;
 import org.springframework.stereotype.Repository;
 
@@ -15,14 +16,15 @@ import java.util.List;
  */
 @Repository
 public class SmsDaoImpl extends CarIsIbatisDaoImpl implements SmsDao {
+    private static final String namespace = "com.uc.training.smadmin.sms.dao.SmsDao.";
     /**
      * 查询短信列表
      * @param smsListVO
      * @return
      */
     @Override
-    public List<Sms> getList(SmsListVO smsListVO) {
-        return this.queryForList("com.uc.training.smadmin.sms.dao.SmsDao.querySmsList", smsListVO);
+    public List<SmsVO> getList(SmsListVO smsListVO) {
+        return this.queryForList(namespace + "querySmsList", smsListVO);
     }
 
     /**
@@ -32,7 +34,7 @@ public class SmsDaoImpl extends CarIsIbatisDaoImpl implements SmsDao {
      */
     @Override
     public Long querySmsCount(SmsListVO smsListVO) {
-        return (Long) this.queryForObject("com.uc.training.smadmin.sms.dao.SmsDao.querySmsCount", smsListVO);
+        return (Long) this.queryForObject(namespace + "querySmsCount", smsListVO);
     }
 
     /**
@@ -42,7 +44,7 @@ public class SmsDaoImpl extends CarIsIbatisDaoImpl implements SmsDao {
      */
     @Override
     public Sms getSms(Long id) {
-        return (Sms) this.queryForObject("com.uc.training.smadmin.sms.dao.SmsDao.getSms", id);
+        return (Sms) this.queryForObject( namespace + "SmsDao.getSms", id);
     }
 
 

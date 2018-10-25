@@ -26,7 +26,7 @@ public class SmsTemplateServiceImpl implements SmsTemplateService {
      * @return
      */
     @Override
-    public Integer addTemplate(SmsTemplate smsTemplate){
+    public Long addTemplate(SmsTemplate smsTemplate){
         return smsTemplateDao.addTemplate(smsTemplate);
     }
 
@@ -77,6 +77,16 @@ public class SmsTemplateServiceImpl implements SmsTemplateService {
     @Override
     public Long getTemplateListCount(SmsTemplateListVO smsTemplateListVO) {
         return smsTemplateDao.getTemplateListCount(smsTemplateListVO);
+    }
+
+    /**
+     * 通过编码获取短信模板
+     * @param code
+     * @return
+     */
+    @Override
+    public SmsTemplate getByCode(String code) {
+        return smsTemplateDao.getByCode(code);
     }
 
 }

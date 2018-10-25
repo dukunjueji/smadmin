@@ -2,6 +2,7 @@ package com.uc.training.smadmin.sms.service;
 
 import com.uc.training.smadmin.sms.model.Sms;
 import com.uc.training.smadmin.sms.vo.SmsListVO;
+import com.uc.training.smadmin.sms.vo.SmsVO;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ public interface SmsService {
      * @param smsListVO
      * @return
      */
-    public List<Sms> getList(SmsListVO smsListVO);
+    public List<SmsVO> getList(SmsListVO smsListVO);
 
     /**
      * 查询记录总数

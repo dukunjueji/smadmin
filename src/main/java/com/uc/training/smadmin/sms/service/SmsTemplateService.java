@@ -16,7 +16,7 @@ public interface SmsTemplateService {
      * @param smsTemplate
      * @return
      */
-    public Integer addTemplate(SmsTemplate smsTemplate);
+    public Long addTemplate(SmsTemplate smsTemplate);
 
     /**
      * 通过ID删除短信模板
@@ -51,5 +51,12 @@ public interface SmsTemplateService {
      * @return
      */
     public Long getTemplateListCount(SmsTemplateListVO smsTemplateListVO);
+
+    /**
+     * 通过编码获取短信模板
+     * @param code
+     * @return
+     */
+    public SmsTemplate getByCode(String code);
 
 }

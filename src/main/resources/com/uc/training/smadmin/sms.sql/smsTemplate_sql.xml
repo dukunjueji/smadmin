@@ -3,7 +3,7 @@
 <sqlMap namespace="com.uc.training.smadmin.sms.dao.SmsTemplateDao">
 
 	<!-- 根据对象的不为null的值作为条件进行查找 -->
-	<select id="getSmsTemplateById" resultClass="com.uc.training.smadmin.sms.model.SmsTemplate" parameterClass="long">
+	<select id="getSmsTemplateById" resultClass="com.uc.training.smadmin.sms.model.SmsTemplate" parameterClass="Long">
 		 SELECT
 		 s.id AS id,
 		 s.type AS type,
@@ -19,61 +19,29 @@
 
 
 	<sql id="where_query">
-
-		 <isNotEmpty property="id" prepend="and">
-			 s.id = #id#
-		 </isNotEmpty>
 		 <isNotEmpty property="type" prepend="and">
 			 s.type = #type#
 		 </isNotEmpty>
 		 <isNotEmpty property="code" prepend="and">
 			 s.code = #code#
 		 </isNotEmpty>
-		 <isNotEmpty property="title" prepend="and">
-			 s.title = #title#
-		 </isNotEmpty>
-		 <isNotEmpty property="content" prepend="and">
-			 s.content = #content#
-		 </isNotEmpty>
-		 <isNotEmpty property="createTime" prepend="and">
-			 s.create_time = #createTime#
-		 </isNotEmpty>
-		 <isNotEmpty property="createEmp" prepend="and">
-			 s.create_emp = #createEmp#
-		 </isNotEmpty>
-		 <isNotEmpty property="modifyTime" prepend="and">
-			 s.modify_time = #modifyTime#
-		 </isNotEmpty>
-		 <isNotEmpty property="modifyEmp" prepend="and">
-			 s.modify_emp = #modifyEmp#
-		 </isNotEmpty>
 	</sql>
 
 	<!-- 列表查询 -->
 	<select id="querySmsTemplateList" parameterClass="com.uc.training.smadmin.sms.vo.SmsTemplateListVO" resultClass="com.uc.training.smadmin.sms.model.SmsTemplate">
 		 SELECT
+		     s.id AS id,
 			 s.type AS type,
 			 s.code AS code,
 			 s.title AS title,
 			 s.content AS content,
-			 s.create_time AS createTime,
-			 s.create_emp AS createEmp,
-			 s.modify_time AS modifyTime,
-			 s.modify_emp AS modifyEmp
+			 s.create_time AS createTime
 		 FROM t_sys_sms_template s
 		 WHERE 1=1
-		<isNotEmpty property="type" prepend="and">
-			d.type = #type#
-		</isNotEmpty>
-		<!--<isNotEmpty property="sortField">
-			order by $sortField$
-		</isNotEmpty>-->
+		<include refid="where_query"/>
 		<isNotEmpty property="offset">
 			limit #offset#, #pageSize#
 		</isNotEmpty>
-		 <!--<include refid="where_query"/>-->
-		 <!--  <isEmpty property="queryType"> order by s.id DESC </isEmpty>  -->
-		 <!--  <isNotEmpty property="rows" prepend=" "> limit #start#,#rows#</isNotEmpty>/>  -->
 	</select>
 
 	<!-- 查找数据总记录数 -->
@@ -87,19 +55,31 @@
 		 <!--<include refid="where_query"/>-->
 	</select>
 
+	<!-- 通过code获取短信模板 -->
+	<select id="getByCode" parameterClass="String" resultClass="com.uc.training.smadmin.sms.model.SmsTemplate">
+		SELECT
+			s.id,
+			s.code,
+			s.type,
+			s.content
+		FROM t_sys_sms_template s
+		WHERE code = #code#
+	</select>
+
 	<!-- 插入 -->
 	<insert id="insertSmsTemplate" parameterClass="com.uc.training.smadmin.sms.model.SmsTemplate">
-		 insert into t_sys_sms_template
-			 (id, type, code, title, content, create_time, create_emp, modify_time, modify_emp)		 values (#id#,#type#,#code#,#title#,#content#,#createTime#,#createEmp#,#modifyTime#,#modifyEmp#)
-	<selectKey keyProperty="id">
-		select LAST_INSERT_ID() AS id
-	</selectKey>
+		insert into t_sys_sms_template
+			 (id, type, code, title, content, create_emp)
+		values (#id#,#type#,#code#,#title#,#content#,#createEmp#)
+		<selectKey resultClass="Long" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS id
+		</selectKey>
 	</insert>
 
 	<!-- 通过主键更新 -->
 	<update id="updateSmsTemplateById" parameterClass="com.uc.training.smadmin.sms.model.SmsTemplate">
 		 update t_sys_sms_template set
-		id = #id#, type = #type#, code = #code#, title = #title#, content = #content#, create_time = #createTime#, create_emp = #createEmp#, modify_time = #modifyTime#, modify_emp = #modifyEmp#
+		id = #id#, type = #type#, code = #code#, title = #title#, content = #content#, modify_emp = #modifyEmp#
 		where id=#id#
 	</update>
 
