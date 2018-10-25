@@ -17,7 +17,7 @@ public interface SmsTemplateDao {
      * @param template
      * @return
      */
-    public Integer addTemplate(SmsTemplate template);
+    public Long addTemplate(SmsTemplate template);
 
     /**
      * 修改短信模板
@@ -51,5 +51,12 @@ public interface SmsTemplateDao {
      * @return
      */
     public Long getTemplateListCount(SmsTemplateListVO smsTemplateListVO);
+
+    /**
+     * 通过编码获取短信模板
+     * @param code
+     * @return
+     */
+    public SmsTemplate getByCode(String code);
 
 }

@@ -2,6 +2,8 @@ package com.uc.training.smadmin.sms.controller;
 
 import com.uc.training.common.enums.SmsStatusEnum;
 import com.uc.training.common.enums.SmsTemplateTypeEnum;
+import com.uc.training.smadmin.sms.vo.SmsVO;
+import com.uc.training.smadmin.utils.TelCodeUtil;
 import com.ycc.base.common.Result;
 import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
@@ -9,6 +11,7 @@ import com.uc.training.common.vo.PageVO;
 import com.uc.training.smadmin.sms.model.Sms;
 import com.uc.training.smadmin.sms.service.SmsService;
 import com.uc.training.smadmin.sms.vo.SmsListVO;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,10 +40,14 @@ public class SmsController extends BaseController {
     @AccessLogin
     @ResponseBody
     @RequestMapping(value = "getSmsPage.do_", method = RequestMethod.POST)
-    public Result<PageVO<Sms>> getDemoPage(SmsListVO smsListVO) {
-        Result<PageVO<Sms>> res;
+    public Result<PageVO<SmsVO>> getDemoPage(SmsListVO smsListVO) {
+        Result<PageVO<SmsVO>> res;
+        // 判断手机号是否合法
+        if (!StringUtils.isEmpty(smsListVO.getTelephone()) && !TelCodeUtil.validateTel(smsListVO.getTelephone())) {
+            return Result.getBusinessException("手机号码不正确", null);
+        }
         try {
-            PageVO<Sms> pageVO = new PageVO<>();
+            PageVO<SmsVO> pageVO = new PageVO<>();
             pageVO.setPageIndex(smsListVO.getPageIndex());
             pageVO.setPageSize(smsListVO.getPageSize());
             pageVO.setTotal(smsService.querySmsCount(smsListVO));

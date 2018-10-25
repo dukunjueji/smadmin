@@ -4,6 +4,7 @@ import com.uc.training.smadmin.sms.dao.SmsDao;
 import com.uc.training.smadmin.sms.model.Sms;
 import com.uc.training.smadmin.sms.service.SmsService;
 import com.uc.training.smadmin.sms.vo.SmsListVO;
+import com.uc.training.smadmin.sms.vo.SmsVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +26,7 @@ public class SmsServiceImpl implements SmsService {
      * @return
      */
     @Override
-    public List<Sms> getList(SmsListVO smsListVO) {
+    public List<SmsVO> getList(SmsListVO smsListVO) {
         return smsDao.getList(smsListVO);
     }
 

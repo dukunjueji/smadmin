@@ -1,6 +1,7 @@
 package com.uc.training.smadmin.sms.model;
 
 import com.uc.training.common.base.model.BaseModel;
+import com.uc.training.common.enums.SmsTemplateTypeEnum;
 
 /**
  * @author 余旭东
@@ -38,6 +39,10 @@ public class SmsTemplate extends BaseModel {
 	 */
 	private String content;
 
+	/**
+	 * 类型描述
+	 */
+	private String typeDes;
 
 	public Long getId() {
 		return this.id;
@@ -77,6 +82,10 @@ public class SmsTemplate extends BaseModel {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	public String getTypeDes() {
+		return SmsTemplateTypeEnum.getMap().get(type);
 	}
 
 }

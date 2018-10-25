@@ -9,7 +9,15 @@ import com.uc.training.common.bean.PageQuery;
  */
 public class SmsTemplateListVO extends PageQuery {
     private static final long serialVersionUID = -384549456196291123L;
+    /**
+     * 短信类型
+     */
     private Integer type;
+
+    /**
+     * 短信编码
+     */
+    private String code;
 
     public Integer getType() {
         return type;
@@ -19,4 +27,11 @@ public class SmsTemplateListVO extends PageQuery {
         this.type = type;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 }
