@@ -21,10 +21,11 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * Description: controller返回结果基类.
- * All Rights Reserved.
+ * controller返回结果基类.
  *
- * @version 1.0 2017年12月20日14:04:40 宋孝东（xd.song@zuche.com）
+ * @author 吴佰川（baichuan.wu@ucarinc.com）创建
+ * @version 1.0 2018/10/25 17:47
+ * @date 2018/10/25 17:47
  */
 public class BaseController {
     protected Logger logger = LoggerFactory.getLogger(this.getClass());

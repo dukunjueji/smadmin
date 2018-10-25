@@ -23,16 +23,15 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Description: 示例Controller.
- * <p>
+ * 示例Controller.
  * 说明：
  * <li>返回值会自动封装上{@link Result}</li>
  * <li>抛出{@link BusinessRuntimeException}异常时,封装Result.status=-1对象,包含异常的code和msg,不会log日志.</li>
  * <li>抛出其他异常时,封装Result.status=-2对象,包含异常的msg,自动log异常日志.</li>
  * <p>
- * All Rights Reserved.
- *
- * @version 1.0 2017-12-20 14:06:29 by 刘庆魁（qk.liu@zuche.com）
+ * @author 吴佰川（baichuan.wu@ucarinc.com）创建
+ * @version 1.0
+ * @date 2018/10/25 17:49
  */
 @Controller
 @RequestMapping(value = "api/demo/demo")
@@ -49,39 +48,17 @@ public class DemoController extends BaseController {
      */
     @RequestMapping("validate.do_")
     @ResponseBody
-    public Result<Map<String, Object>> validate(@Validated DemoTestVO demoTestVO) {
-        Map<String, Object> re = new HashMap<String, Object>();
-        re.put("total", 10);
-        re.put("datas", new ArrayList<Object>());
-        return Result.getSuccessResult(re);
+    public Result validate(@Validated DemoTestVO demoTestVO) {
+        return Result.getSuccessResult("success");
     }
 
     /**
-     * Description: 员工列表展示.
+     * 查询所有
      *
-     * @version 1.0 2017-12-20 14:06:29 by 刘庆魁（qk.liu@zuche.com）
+     * @version 1.0 2018/10/25 17:49 by 吴佰川（baichuan.wu@ucarinc.com）创建
+     * @param
+     * @return com.ycc.base.common.Result<java.util.List<com.uc.training.smadmin.demo.model.Demo>>
      */
-    @RequestMapping("list.do_")
-    @ResponseBody
-    public Map<String, Object> list(HttpServletRequest request) {
-
-        Map<String, Object> re = new HashMap<String, Object>();
-        re.put("total", 10);
-        re.put("datas", new ArrayList<Object>());
-
-        if ("1".equals(request.getParameter("ex"))) {
-            //业务类异常, 例如校验, 最终会返回{"code":"001","msg":"参数校验错误","status":-1}
-            throw new BusinessRuntimeException("参数校验错误", "001");
-        }
-
-        if ("2".equals(request.getParameter("ex"))) {
-            //业务类异常, 例如校验, 最终会返回{"msg":"系统级别的异常","status":-2}
-            throw new RuntimeException("系统级别的异常");
-        }
-
-        return re;//返回普通对象,会自动封装Result,最终返回{"status":0,"msg":null,"code":null,"re":{"datas":[],"total":10}}
-    }
-
     @AccessLogin
     @ResponseBody
     @RequestMapping("listAll.do_")
@@ -96,6 +73,13 @@ public class DemoController extends BaseController {
         return res;
     }
 
+    /**
+     * 分页查询
+     *
+     * @author 吴佰川（baichuan.wu@ucarinc.com）创建
+     * @version 1.0
+     * @date 2018/10/25 17:50
+     */
     @AccessLogin
     @ResponseBody
     @RequestMapping("getDemoPage.do_")

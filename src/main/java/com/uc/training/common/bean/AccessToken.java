@@ -2,7 +2,13 @@ package com.uc.training.common.bean;
 
 import java.io.Serializable;
 import java.util.Date;
-
+/**
+ * token封装类
+ *
+ * @version 1.0 2018/10/25 18:04 by 吴佰川（baichuan.wu@ucarinc.com）创建
+ * @param
+ * @return
+ */
 public class AccessToken implements Serializable {
 	private static final long serialVersionUID = 1L;
 

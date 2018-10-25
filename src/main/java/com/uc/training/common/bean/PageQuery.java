@@ -1,13 +1,16 @@
 package com.uc.training.common.bean;
 
 
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+
 import java.io.Serializable;
 
 /**
- * 分页
+ * 分页查询基础类
  *
- * @copyright www.ucarinc.com All Rights Reserved.
- * @version 1.0 2018/10/17 11:37 by 吴佰川（baichuan.wu@ucarinc.com）创建
+ * @author 吴佰川（baichuan.wu@ucarinc.com）创建
+ * @version 1.0
+ * @date 2018/10/25 18:04
  */
 public class PageQuery implements Serializable {
 
@@ -15,14 +18,16 @@ public class PageQuery implements Serializable {
      * 初始位置
      */
     public transient Integer offset;
-    /**
-     * 页长
-     */
-    public Integer pageSize = 12;
+
     /**
      * 当前页数
      */
     public Integer pageIndex = 1;
+
+    /**
+     * 页长
+     */
+    public Integer pageSize = 12;
 
     public Integer getOffset() {
         if (offset != null) {
@@ -34,6 +39,13 @@ public class PageQuery implements Serializable {
         return (pageIndex - 1) * pageSize;
     }
 
+    public Integer getPageIndex() {
+        return pageIndex;
+    }
+
+    public void setPageIndex(Integer pageIndex) {
+        this.pageIndex = pageIndex;
+    }
 
     public void setOffset(Integer offset) {
         this.offset = offset;
@@ -47,11 +59,8 @@ public class PageQuery implements Serializable {
         this.pageSize = pageSize;
     }
 
-    public Integer getPageIndex() {
-        return pageIndex;
-    }
-
-    public void setPageIndex(Integer pageIndex) {
-        this.pageIndex = pageIndex;
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this);
     }
 }

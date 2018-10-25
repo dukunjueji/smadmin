@@ -19,9 +19,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
- * 对所有的 post 请求进行拦截，验证请求头中是否携带合法且未过期的 token
+ * 对所有的api请求进行拦截，验证请求头中是否携带合法且未过期的 token
  *
- * @version 1.0 2018/10/17 8:36 by 吴佰川（baichuan.wu@ucarinc.com）创建
+ * @version 1.0 2018/10/25 18:05 by 吴佰川（baichuan.wu@ucarinc.com）创建
  * @param
  * @return
  */
@@ -83,7 +83,7 @@ public class TokenInterceptor implements HandlerInterceptor {
     private void responseMsg(HttpServletResponse response, Result result) throws IOException {
         response.setCharacterEncoding("utf-8");
         response.setContentType("application/json; charset=utf-8");
-        response.setHeader("Content-Type", "text/html;charset=UTF-8");//这句话是解决乱码的
+        response.setHeader("Content-Type", "text/html;charset=UTF-8");
         String json = JSONObject.toJSONString(result);
         PrintWriter out = response.getWriter();
         out.print(json);

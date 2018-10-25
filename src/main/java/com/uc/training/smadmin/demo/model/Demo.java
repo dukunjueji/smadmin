@@ -4,9 +4,11 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @Description
- * @Copyright All Rights Reserved.
- * @version 1.0 2018/9/25 14:07 by 吴佰川（baichuan.wu@ucarinc.com）创建
+ * demo测试实体
+ *
+ * @author 吴佰川（baichuan.wu@ucarinc.com）创建
+ * @version 1.0
+ * @date 2018/10/25 17:48
  */
 public class Demo implements Serializable {
 

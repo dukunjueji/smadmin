@@ -3,7 +3,13 @@ package com.uc.training.common.base.model;
 
 import java.io.Serializable;
 import java.util.Date;
-
+/**
+ * 基类model
+ *
+ * @author 吴佰川（baichuan.wu@ucarinc.com）创建
+ * @date 2018/10/25 17:47
+ * @version 1.0 2018/10/25 17:47
+ */
 public abstract class BaseModel implements Serializable {
     /**
      * 创建人

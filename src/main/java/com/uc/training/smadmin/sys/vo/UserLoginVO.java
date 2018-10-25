@@ -1,5 +1,6 @@
 package com.uc.training.smadmin.sys.vo;
 
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.hibernate.validator.constraints.NotBlank;
 
 import java.io.Serializable;
@@ -31,5 +32,10 @@ public class UserLoginVO implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this);
     }
 }

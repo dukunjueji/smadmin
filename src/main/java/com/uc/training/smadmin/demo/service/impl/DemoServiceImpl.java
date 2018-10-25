@@ -9,11 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
 /**
- * @Description
- * @Copyright All Rights Reserved.
- * @Version 1.0 2018/9/25 14:04 by 吴佰川（baichuan.wu@ucarinc.com）创建
+ * 例子service实现类
+ *
+ * @author 吴佰川（baichuan.wu@ucarinc.com）创建
+ * @version 1.0
+ * @date 2018/10/25 17:51
  */
 @Service
 public class DemoServiceImpl implements DemoService {

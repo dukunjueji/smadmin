@@ -7,9 +7,11 @@ import com.uc.training.smadmin.demo.vo.DemoListVO;
 import java.util.List;
 
 /**
- * @Description
- * @Copyright All Rights Reserved.
- * @Version 1.0 2018/9/25 14:01 by 吴佰川（baichuan.wu@ucarinc.com）创建
+ * demo dao
+ *
+ * @author 吴佰川（baichuan.wu@ucarinc.com）创建
+ * @version 1.0
+ * @date 2018/10/25 17:50
  */
 public interface DemoDao {
     /**

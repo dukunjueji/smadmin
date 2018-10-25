@@ -1,4 +1,5 @@
 package com.uc.training.common.handler;
+
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Joiner;
 import com.ycc.base.common.Result;
@@ -18,9 +19,11 @@ import java.util.*;
 import java.util.Map.Entry;
 
 /**
- * Description: Controller异常拦截器.
- * All Rights Reserved.
- * @version 1.0 2017-12-20 14:06:29 by 刘庆魁（qk.liu@zuche.com）
+ * 异常拦截器
+ *
+ * @author 吴佰川（baichuan.wu@ucarinc.com）创建
+ * @version 1.0
+ * @date 2018/10/25 18:06
  */
 public class YccHandlerExceptionResolver implements HandlerExceptionResolver {
 
@@ -45,7 +48,7 @@ public class YccHandlerExceptionResolver implements HandlerExceptionResolver {
             if (logger.isDebugEnabled()) {
                 logger.debug("Controller返回结果包装：result={}", JSON.toJSONString(result));
             }
-        } else  if (ex instanceof BindException) {
+        } else if (ex instanceof BindException) {
             BindingResult bindResult = ((BindException) ex).getBindingResult();
             List<String> list = new ArrayList<String>();
             if (bindResult != null) {

@@ -1,33 +1,26 @@
 package com.uc.training.common.vo;
 
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+
 import java.util.List;
 
 /**
- * 分页
+ * 分页实体
  *
- * @version 1.0 2018/10/17 12:27 by 吴佰川（baichuan.wu@ucarinc.com）创建
- * @copyright www.ucarinc.com All Rights Reserved.
+ * @author 吴佰川（baichuan.wu@ucarinc.com）创建
+ * @date 2018/10/25 17:47
+ * @version 1.0 2018/10/25 17:47
  */
 public class PageVO<T> {
     /**
-     * 默认当前页码
+     * 页码
      */
-    private final static int DEFAULT_PAGE_NO = 1;
-
-    /**
-     * 默认查询记录数
-     */
-    private final static int DEFAULT_PAGE_SIZE = 16;
+    private Integer pageIndex;
 
     /**
      * 页码
      */
-    private Integer pageIndex = DEFAULT_PAGE_NO;
-
-    /**
-     * 页码
-     */
-    private Integer pageSize = DEFAULT_PAGE_SIZE;
+    private Integer pageSize;
 
     /**
      * 结果列表
@@ -83,5 +76,10 @@ public class PageVO<T> {
 
     public void setDataList(List<T> dataList) {
         this.dataList = dataList;
+    }
+
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this);
     }
 }

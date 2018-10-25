@@ -6,7 +6,13 @@ import com.uc.training.smadmin.demo.model.Demo;
 import com.uc.training.smadmin.demo.vo.DemoListVO;
 
 import java.util.List;
-
+/**
+ * demo service
+ *
+ * @author 吴佰川（baichuan.wu@ucarinc.com）创建
+ * @version 1.0
+ * @date 2018/10/25 17:51
+ */
 public interface DemoService {
 
     /**

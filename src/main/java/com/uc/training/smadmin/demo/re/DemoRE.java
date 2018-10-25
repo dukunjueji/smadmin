@@ -2,7 +2,13 @@ package com.uc.training.smadmin.demo.re;
 
 import java.io.Serializable;
 import java.util.Date;
-
+/**
+ * 返回列表vo
+ *
+ * @author 吴佰川（baichuan.wu@ucarinc.com）创建
+ * @version 1.0
+ * @date 2018/10/25 17:51
+ */
 public class DemoRE implements Serializable {
 
     private static final long serialVersionUID = -6912839796213052826L;
