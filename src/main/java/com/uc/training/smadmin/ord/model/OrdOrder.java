@@ -14,17 +14,17 @@ public class OrdOrder implements Serializable{
   private Long id;
   private Long memberId;
   private String orderNum;
-  private double orderPrice;
-  private double payPrice;
+  private Double orderPrice;
+  private Double payPrice;
   private Long isDelete;
   private Long status;
   private String receiptName;
   private String receiptTel;
   private String receiptAddress;
   private Long createEmp;
-  private java.sql.Timestamp createTime;
+  private Date createTime;
   private Long modifyEmp;
-  private java.sql.Timestamp modifyTime;
+  private Date modifyTime;
 
 
   public Long getId() {
@@ -53,20 +53,20 @@ public class OrdOrder implements Serializable{
   }
 
 
-  public double getOrderPrice() {
+  public Double getOrderPrice() {
     return orderPrice;
   }
 
-  public void setOrderPrice(double orderPrice) {
+  public void setOrderPrice(Double orderPrice) {
     this.orderPrice = orderPrice;
   }
 
 
-  public double getPayPrice() {
+  public Double getPayPrice() {
     return payPrice;
   }
 
-  public void setPayPrice(double payPrice) {
+  public void setPayPrice(Double payPrice) {
     this.payPrice = payPrice;
   }
 
@@ -125,11 +125,11 @@ public class OrdOrder implements Serializable{
   }
 
 
-  public java.sql.Timestamp getCreateTime() {
+  public Date getCreateTime() {
     return createTime;
   }
 
-  public void setCreateTime(java.sql.Timestamp createTime) {
+  public void setCreateTime(Date createTime) {
     this.createTime = createTime;
   }
 
@@ -143,11 +143,11 @@ public class OrdOrder implements Serializable{
   }
 
 
-  public java.sql.Timestamp getModifyTime() {
+  public Date getModifyTime() {
     return modifyTime;
   }
 
-  public void setModifyTime(java.sql.Timestamp modifyTime) {
+  public void setModifyTime(Date modifyTime) {
     this.modifyTime = modifyTime;
   }
 
