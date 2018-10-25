@@ -18,11 +18,11 @@ public class PageQuery implements Serializable {
     /**
      * 页长
      */
-    public Integer pageSize = 20;
+    public Integer pageSize = 12;
     /**
      * 当前页数
      */
-    public Integer pageIndex;
+    public Integer pageIndex = 1;
 
     public Integer getOffset() {
         if (offset != null) {
