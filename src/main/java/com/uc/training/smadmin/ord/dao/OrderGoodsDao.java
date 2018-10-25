@@ -32,4 +32,5 @@ public interface OrderGoodsDao{
 	 */
 	public int updateOrderGoodsById(OrderGoods record);
 
+
 }

@@ -1,6 +1,6 @@
 package com.uc.training.smadmin.ord.dao;
 import com.uc.training.smadmin.ord.model.Order;
-import com.uc.training.smadmin.ord.re.orderRe;
+import com.uc.training.smadmin.ord.re.OrderRe;
 import com.uc.training.smadmin.ord.vo.OrdOrderVo;
 
 import java.util.List;
@@ -39,7 +39,7 @@ public interface OrderDao{
 /**
  *获取查询分页
  */
-  List<orderRe> getOrderPage (OrdOrderVo orderVo);
+  List<OrderRe> getOrderPage (OrdOrderVo orderVo);
 
 	/**
 	 * 返回订单表的总记录数

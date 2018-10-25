@@ -1,10 +1,9 @@
 package com.uc.training.smadmin.ord.controller;
 
-import com.uc.training.smadmin.ord.re.orderRe;
+import com.uc.training.smadmin.ord.re.OrderRe;
 import com.ycc.base.common.Result;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.smadmin.gds.service.GoodsService;
-import com.uc.training.smadmin.ord.model.OrdOrder;
 import com.uc.training.smadmin.ord.service.OrderService;
 import com.uc.training.smadmin.ord.vo.OrdCartGoodsVo;
 import com.uc.training.smadmin.ord.vo.OrdOrderGoodsVo;
@@ -18,8 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.POST;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -107,7 +104,7 @@ public class OrderController extends BaseController {
     public Result getOrderPage(OrdOrderVo orderVo){
         //List<OrdOrderGoodsVo> orderInfoListNow = (List<OrdOrderGoodsVo>) JSONArray.toList(JSONArray.fromObject(orderInfoList), new OrdOrderGoodsVo(), new JsonConfig());
         Result result = new Result();
-        List<orderRe> list;
+        List<OrderRe> list;
         Map map =new HashMap();
         list = orderService.getOrderPage(orderVo);
         map.put("orderList",list);
