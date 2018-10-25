@@ -1,5 +1,9 @@
 package com.uc.training.smadmin.ord.dao;
-import com.uc.training.smadmin.ord.model.Order;import java.util.List;
+import com.uc.training.smadmin.ord.model.Order;
+import com.uc.training.smadmin.ord.re.orderRe;
+import com.uc.training.smadmin.ord.vo.OrdOrderVo;
+
+import java.util.List;
 /**
  * @author kun.du01@ucarinc.com
  * @date 2018-10-17 星期三 16:28
@@ -32,4 +36,15 @@ public interface OrderDao{
 	 */
 	public int updateOrderById(Order record);
 
+/**
+ *获取查询分页
+ */
+  List<orderRe> getOrderPage (OrdOrderVo orderVo);
+
+	/**
+	 * 返回订单表的总记录数
+	 * @return
+	 */
+
+	Integer getOrderTota();
 }

@@ -10,9 +10,11 @@ import com.uc.training.smadmin.ord.dao.OrderGoodsDao;
 import com.uc.training.smadmin.ord.model.CartGoods;
 import com.uc.training.smadmin.ord.model.Order;
 import com.uc.training.smadmin.ord.model.OrderGoods;
+import com.uc.training.smadmin.ord.re.orderRe;
 import com.uc.training.smadmin.ord.service.OrderService;
 import com.uc.training.smadmin.ord.vo.OrdCartGoodsVo;
 import com.uc.training.smadmin.ord.vo.OrdOrderGoodsVo;
+import com.uc.training.smadmin.ord.vo.OrdOrderVo;
 import com.uc.training.smadmin.utils.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -139,5 +141,15 @@ public class OrderServiceImpl implements OrderService {
       cartGoodsDao.deleteCartGoods(ordCartGoodsVo);
       orderGoodsDao.insertOrderGoods(orderGoods);
     }
+  }
+
+  @Override
+  public List<orderRe> getOrderPage(OrdOrderVo orderVo) {
+    return orderDao.getOrderPage(orderVo);
+  }
+
+  @Override
+  public Integer getOrderTotal() {
+    return orderDao.getOrderTota();
   }
 }
