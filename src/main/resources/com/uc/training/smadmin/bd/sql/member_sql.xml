@@ -170,12 +170,19 @@
 	</selectKey>
 	</insert>
 
-	<!-- 通过手机号码更新会员密码 -->
+	<!-- 通过手机号码或会员id更新会员密码 -->
 	<update id="updateMember" parameterClass="com.uc.training.smadmin.bd.model.Member">
 		 update t_bd_member set
 		password = #password#,
 		modify_time = now()
-		where telephone=#telephone#
+		<dynamic prepend="WHERE">
+			<isNotNull property="id" prepend="and">
+				id = #id#
+			</isNotNull>
+			<isNotEmpty property="telephone" prepend="and">
+				telephone=#telephone#
+			</isNotEmpty>
+		</dynamic>
 		</update>
 
 	<!-- 通过手机号码更新会员余额 -->

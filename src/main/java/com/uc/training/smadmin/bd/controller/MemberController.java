@@ -295,7 +295,7 @@ public class MemberController extends BaseController {
     *@throws：
     */
     @ResponseBody
-    @RequestMapping("/sendCode.do_")
+    @RequestMapping(value = "/sendCode.do_", method = RequestMethod.GET)
     @AccessLogin
     public Result sendCode(@Validated SendCodeVO sendCodeVO){
         Result re;
@@ -304,7 +304,7 @@ public class MemberController extends BaseController {
         member = memberService.queryOneMember(member);
         // 判断旧密码是否和库里的一致
         String oldpassword = EncryptUtil.md5(sendCodeVO.getOldpassword());
-        if((member.getPassword()).equals(oldpassword)){
+        if(!((member.getPassword()).equals(oldpassword))){
             re = Result.getBusinessException("原来的密码输入有误", null);
             return re;
         }
@@ -326,11 +326,33 @@ public class MemberController extends BaseController {
         return re;
     }
 
+    /**
+    *说明：修改会员密码
+    *@param passwordEditVO 修改会员密码接收的参数
+    *@return：com.ycc.base.common.Result
+    *@throws：
+    */
     @ResponseBody
-    @RequestMapping("/editMemberPassword.do_")
+    @RequestMapping(value = "/editMemberPassword.do_", method = RequestMethod.POST)
     @AccessLogin
-    public Result editMemberPassword(PasswordEditVO passwordEditVO){
-        Result re = null;
+    public Result editMemberPassword(@Validated PasswordEditVO passwordEditVO){
+        Result re;
+        Member member = new Member();
+        member.setId(getUid());
+        Member mem = memberService.queryOneMember(member);
+        // 判断旧密码是否和库里的一致
+        String oldpassword = EncryptUtil.md5(passwordEditVO.getOldpassword());
+        if(!((mem.getPassword()).equals(oldpassword))){
+            re = Result.getBusinessException("原来的密码输入有误", null);
+        }else if(!((passwordEditVO.getNewpassword()).equals(passwordEditVO.getConfirmpassword()))){
+            re = Result.getBusinessException("新的密码和确认密码不一致", null);
+        }else if((passwordEditVO.getCode()).equals(map.get("telCode"))){
+            member.setPassword(passwordEditVO.getNewpassword());
+            memberService.updateMember(member);
+            re = Result.getSuccessResult("成功");
+        }else {
+            re = Result.getBusinessException("输入的验证码有误", null);
+        }
         return re;
     }
 }
