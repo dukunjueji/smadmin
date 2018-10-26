@@ -1,6 +1,8 @@
 package com.uc.training.smadmin.bd.controller;
 
 import com.kenai.jaffl.annotations.In;
+import com.uc.training.smadmin.bd.model.Message;
+import com.uc.training.smadmin.bd.re.MessageRE;
 import com.ycc.base.common.Result;
 import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
@@ -28,6 +30,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -354,5 +357,30 @@ public class MemberController extends BaseController {
             re = Result.getBusinessException("输入的验证码有误", null);
         }
         return re;
+    }
+
+    /**
+    *说明：获取指定会员的消息列表
+    *@param
+    *@return：com.ycc.base.common.Result<java.util.List<com.uc.training.smadmin.bd.re.MessageRE>>
+    *@throws：
+    */
+    @ResponseBody
+    @AccessLogin
+    @RequestMapping(value = "queryMessageList.do_", method = RequestMethod.GET)
+    public Result<List<MessageRE>> queryMessageList(){
+        List<MessageRE> messageREList = messageService.queryMessageList(getUid());
+        return Result.getSuccessResult(messageREList);
+    }
+
+    @RequestMapping("/updateMessageStatus.do_")
+    @AccessLogin
+    @ResponseBody
+    public Result updateMessageStatus(@Validated MessageVO messageVO){
+        Message message = new Message();
+        message.setId(messageVO.getId());
+        message.setIsRead(messageVO.getIsRead());
+        message.setMemberId(getUid());
+        return Result.getSuccessResult( messageService.updateMessageStatus(message));
     }
 }

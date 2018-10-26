@@ -55,4 +55,14 @@ public class MessageDaoImpl extends CarIsIbatisDaoImpl implements MessageDao {
 		  return this.update("com.uc.training.smadmin.bd.dao.MessageDao.updateMessageById", record);
 	 }
 
+	@Override
+	public List<Message> queryMessageList(Long uid) {
+		return this.queryForList("com.uc.training.smadmin.bd.dao.MessageDao.queryMessageList", uid);
+	}
+
+	@Override
+	public int updateMessageStatus(Message message) {
+		return this.update("com.uc.training.smadmin.bd.dao.MessageDao.updateMessageStatus", message);
+	}
+
 }
