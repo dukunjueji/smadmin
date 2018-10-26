@@ -33,4 +33,11 @@ public interface CategoryService {
      * @return
      */
     Integer logicDeleteCategory(Long id);
+
+    /**
+     * 编辑分类
+     * @param category
+     * @return
+     */
+    Integer updateCategory(Category category);
 }

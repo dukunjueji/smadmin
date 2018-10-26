@@ -43,7 +43,7 @@
     <!--更新分类-->
     <update id="updateCategory" parameterClass="com.uc.training.smadmin.gds.model.Category">
         UPDATE t_gds_category
-        SET  `name`=#name#, sort_num=#sortNum#, parent_id=#parentId#, image_url=#imageUrl#, modify_emp=#modifyEmp#
+        SET  `name`=#name#, sort_num=#sortNum#, image_url=#imageUrl#, modify_emp=#modifyEmp#
         WHERE id = #id#
     </update>
 

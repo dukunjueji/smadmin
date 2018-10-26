@@ -52,9 +52,9 @@ public class UDFSFileService {
             vo.setData(bytes);
             vo.setBusinessLine(BusinessLineEnum.UC);
             vo.setPermission(UDFSPermissionEnum.GLOBAL);
-            UDFSUploadResultVO udfsUploadVO =  UDFSClient.upload(vo);
+            resultVO =  UDFSClient.upload(vo);
 
-            if(udfsUploadVO != null){
+            if(resultVO != null){
                 String testUdfs = FileTransferUtils.getUrlPrefix(); //需要灵活配置，写在配置文件
                 resultVO.addName("full_path", testUdfs + resultVO.getOriginalName()); //提供完整路径给前端
             }

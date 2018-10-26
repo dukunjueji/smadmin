@@ -30,7 +30,13 @@ public class UDFSUploadController {
 
     @RequestMapping(value = "/file.do_", method = RequestMethod.POST)
     @ResponseBody
-    public UDFSUploadResultVO upload(String name, MultipartFile file) {
+    public UDFSUploadResultVO imageUpload(String name, MultipartFile file) {
         return fileService.upload(name,file);
+    }
+
+    @RequestMapping(value = "/text.do_", method = RequestMethod.POST)
+    @ResponseBody
+    public UDFSUploadResultVO imageToTextUpload(String name, String imageText) {
+        return fileService.base64Upload(name, imageText);
     }
 }

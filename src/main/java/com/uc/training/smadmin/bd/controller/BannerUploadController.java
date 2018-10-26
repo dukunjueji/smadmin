@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.w3c.dom.Text;
 
 /**
  * 版权声明： Copyright (c) 2008 ucarinc. All Rights Reserved.
@@ -29,8 +30,18 @@ public class BannerUploadController {
     @ResponseBody
     @RequestMapping(value = "/upload.do_")
     public UDFSUploadResultVO upload(String name,MultipartFile file) {
-        UDFSUploadResultVO resultVO = fileService.upload(name,file);
-        return resultVO;
+        System.out.println(file.getName());
+        // UDFSUploadResultVO resultVO = fileService.upload(name,file);
+
+        return null;
+    }
+    @RequestMapping(value = "/text.do_", method = RequestMethod.POST)
+    @ResponseBody
+    public UDFSUploadResultVO imageToTextUpload(String name, String imageText) {
+
+
+
+        return null;
     }
 
 }

@@ -149,4 +149,36 @@ public class CategoryController extends BaseController {
     public Result deleteCategory(Long id) {
         return Result.getSuccessResult(categoryService.logicDeleteCategory(id));
     }
+
+    /**
+     * 新增子级分类
+     *
+     * @param categoryVO
+     * @return
+     */
+    @ResponseBody
+    @AccessLogin
+    @RequestMapping(value = "editCategory.do_", method = RequestMethod.POST)
+    public Result updateCategory(@Validated CategoryVO categoryVO) {
+
+        //数据校验
+        if (categoryVO.getParentId() != 0) {
+            if (StringUtil.isBlank(categoryVO.getImageUrl())) {
+                return Result.getBusinessException("请上传图片！", null);
+            }
+        } else {
+            if (StringUtil.isNotBlank(categoryVO.getImageUrl())) {
+                return Result.getBusinessException("不能上传图片！", null);
+            }
+        }
+
+        Category category = new Category();
+
+        //将categoryVO的值映射到category中
+        BeanUtils.copyProperties(categoryVO, category);
+
+        category.setModifyEmp(getUid());
+
+        return Result.getSuccessResult(categoryService.updateCategory(category));
+    }
 }

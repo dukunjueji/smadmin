@@ -64,4 +64,15 @@ public class CategoryServiceImpl implements CategoryService{
 
         return categoryDao.logicDeleteCategory(id);
     }
+
+    /**
+     * 编辑分类
+     *
+     * @param category
+     * @return
+     */
+    @Override
+    public Integer updateCategory(Category category) {
+        return categoryDao.updateCategory(category);
+    }
 }
