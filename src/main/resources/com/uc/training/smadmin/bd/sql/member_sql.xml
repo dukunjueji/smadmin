@@ -229,4 +229,13 @@
 			</isNotEmpty>
 		</dynamic>
 	</select>
+	<!-- 更新会员积分 -->
+	<update id="updateIntegralById" parameterClass="com.uc.training.smadmin.bd.vo.MemberIntegralVO">
+		UPDATE
+		t_bd_member
+		SET
+		integral = integral + #integral#,
+		modify_time = now()
+		WHERE id = #memberId#
+	</update>
 </sqlMap>
