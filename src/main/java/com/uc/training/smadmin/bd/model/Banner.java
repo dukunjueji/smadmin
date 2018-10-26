@@ -19,6 +19,8 @@ public class Banner implements Serializable {
 	/**广告类型1首页**/
 	private Integer type;
 
+	/**是否前台显示，1：是，0:否**/
+	private  Integer isShow;
 	/**排序**/
 	private Integer sortNum;
 
@@ -46,7 +48,13 @@ public class Banner implements Serializable {
 	/**修改时间**/
 	private java.util.Date modifyTime;
 
+	public Integer getIsShow() {
+		return isShow;
+	}
 
+	public void setIsShow(Integer isShow) {
+		this.isShow = isShow;
+	}
 
 	public void setId(Long id){
 		this.id = id;

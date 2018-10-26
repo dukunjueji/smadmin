@@ -1,6 +1,7 @@
 package com.uc.training.smadmin.bd.dao.impl;
 import com.uc.training.smadmin.bd.model.Banner;
 import com.uc.training.smadmin.bd.dao.BannerDao;
+import com.uc.training.smadmin.bd.re.BannerRE;
 import com.zuche.framework.dao.CarIsIbatisDaoImpl;
 import org.springframework.stereotype.Repository;
 import java.util.List;
@@ -16,8 +17,61 @@ public class BannerDaoImpl extends CarIsIbatisDaoImpl implements BannerDao {
 	 * @return
 	 */
 	@Override
-	public List<Banner> getBannerList() {
+	public List<BannerRE> getBannerList() {
 		return this.queryForList("com.uc.training.smadmin.bd.dao.BannerDao.getBannerList");
+	}
+
+	/**
+	 * 获取所有轮播图(后台)
+	 *
+	 * @return
+	 */
+	@Override
+	public List<Banner> getAllBannerList() {
+		return this.queryForList("com.uc.training.smadmin.bd.dao.BannerDao.getAllBannerList");
+	}
+
+	/**
+	 * 更新图片
+	 *
+	 * @param banner
+	 * @return
+	 */
+	@Override
+	public Integer updateBanner(Banner banner) {
+		return this.update("com.uc.training.smadmin.bd.dao.BannerDao.updateBanner", banner);
+	}
+
+	/**
+	 * 删除图片
+	 *
+	 * @param id
+	 * @return
+	 */
+	@Override
+	public Integer deleteBanner(Long id) {
+		return this.deleteObject("com.uc.training.smadmin.bd.dao.BannerDao.deleteBanner", id);
+	}
+
+	/**
+	 * 新增轮播图
+	 *
+	 * @param banner
+	 * @return
+	 */
+	@Override
+	public Long insertBannerById(Banner banner) {
+		return (Long) this.insert("com.uc.training.smadmin.bd.dao.BannerDao.deleteBanner", banner);
+	}
+
+	/**
+	 * 增加点击量
+	 *
+	 * @param id
+	 */
+	@Override
+	public void insertClick(Long id) {
+
 	}
 
 }

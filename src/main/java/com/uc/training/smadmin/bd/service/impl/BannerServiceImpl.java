@@ -2,6 +2,7 @@ package com.uc.training.smadmin.bd.service.impl;
 
 import com.uc.training.smadmin.bd.dao.BannerDao;
 import com.uc.training.smadmin.bd.model.Banner;
+import com.uc.training.smadmin.bd.re.BannerRE;
 import com.uc.training.smadmin.bd.service.BannerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,15 +18,67 @@ import java.util.List;
  */
 @Service
 public class BannerServiceImpl implements BannerService {
+
     @Autowired
     private BannerDao bannerDao;
 
     /**
-     * 获取广告列表信息
+     * 获取轮播图信息(不包含不显示的图片)
      * @return
      */
     @Override
-    public List<Banner> getBannerList() {
+    public List<BannerRE> getBannerList() {
         return bannerDao.getBannerList();
+    }
+
+    /**
+     * 查询所有图片
+     *
+     * @return
+     */
+    @Override
+    public List<Banner> getAllBannerList() {
+        return bannerDao.getAllBannerList();
+    }
+
+    /**
+     * 更新图片
+     *
+     * @param banner
+     * @return
+     */
+    @Override
+    public Integer updateBanner(Banner banner) {
+        return bannerDao.updateBanner(banner);
+    }
+
+    /**
+     * 删除图片
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public Integer deleteBannerById(Long id) {
+        return bannerDao.deleteBanner(id);
+    }
+
+    /**
+     * 新增轮播图
+     *
+     * @param banner
+     * @return
+     */
+    @Override
+    public Long insertBannerById(Banner banner) {
+        return bannerDao.insertBannerById(banner);
+    }
+
+    /**
+     * 增加点击量
+     */
+    @Override
+    public void insertClick(Long id) {
+        bannerDao.insertClick(id);
     }
 }

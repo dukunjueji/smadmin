@@ -1,5 +1,8 @@
 package com.uc.training.smadmin.bd.dao;
-import com.uc.training.smadmin.bd.model.Banner;import java.util.List;
+import com.uc.training.smadmin.bd.model.Banner;
+import com.uc.training.smadmin.bd.re.BannerRE;
+
+import java.util.List;
 /**
  * @author qi.he@ucarinc.com
  * @date 2018-10-17 03:40
@@ -7,8 +10,40 @@ import com.uc.training.smadmin.bd.model.Banner;import java.util.List;
  */
 public interface BannerDao{
 	/**
-	 * 获取轮播图
+	 * 获取轮播图(前台)
 	 * @return
 	 */
-	List<Banner> getBannerList();
+	List<BannerRE> getBannerList();
+
+	/**
+	 * 获取所有轮播图(后台)
+	 * @return
+     */
+	List<Banner> getAllBannerList();
+
+	/**
+	 * 更新图片
+	 * @param banner
+	 * @return
+     */
+	Integer updateBanner(Banner banner);
+
+	/**
+	 * 删除图片
+	 * @param id
+	 * @return
+     */
+	Integer deleteBanner(Long id);
+
+	/**
+	 * 新增轮播图
+	 * @param banner
+	 * @return
+     */
+	Long insertBannerById(Banner banner);
+
+	/**
+	 * 增加点击量
+	 */
+	void insertClick(Long id);
 }

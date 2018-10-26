@@ -2,72 +2,27 @@
 <!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
 <sqlMap namespace="com.uc.training.smadmin.bd.dao.BannerDao">
 
-	<!-- 根据对象的不为null的值作为条件进行查找 -->
-	<select id="getBannerList" resultClass="com.uc.training.smadmin.bd.model.Banner">
+	<!-- 前台获取图片 -->
+	<select id="getBannerList" resultClass="com.uc.training.smadmin.bd.re.BannerRE">
 		 SELECT
-        s.name AS name,
-        s.type AS type,
-        s.sort_num AS sortNum,
+        s.id AS id,
         s.image_url AS imageUrl,
-        s.url AS url,
-        s.clicks AS clicks,
-        s.description AS description,
-        s.create_emp AS createEmp,
-        s.create_time AS createTime,
-        s.modify_emp AS modifyEmp,
-        s.modify_time AS modifyTime
+        s.url AS url
         FROM t_bd_banner s
+        WHERE s.type = 1 AND s.is_show = 1
+        ORDER s.sort_num ASC
 	</select>
 
-
-	<sql id="where_query">
-
-		 <isNotEmpty property="id" prepend="and">
-			 s.id = #id#
-		 </isNotEmpty>
-		 <isNotEmpty property="name" prepend="and">
-			 s.name = #name#
-		 </isNotEmpty>
-		 <isNotEmpty property="type" prepend="and">
-			 s.type = #type#
-		 </isNotEmpty>
-		 <isNotEmpty property="sortNum" prepend="and">
-			 s.sort_num = #sortNum#
-		 </isNotEmpty>
-		 <isNotEmpty property="imageUrl" prepend="and">
-			 s.image_url = #imageUrl#
-		 </isNotEmpty>
-		 <isNotEmpty property="url" prepend="and">
-			 s.url = #url#
-		 </isNotEmpty>
-		 <isNotEmpty property="clicks" prepend="and">
-			 s.clicks = #clicks#
-		 </isNotEmpty>
-		 <isNotEmpty property="description" prepend="and">
-			 s.description = #description#
-		 </isNotEmpty>
-		 <isNotEmpty property="createEmp" prepend="and">
-			 s.create_emp = #createEmp#
-		 </isNotEmpty>
-		 <isNotEmpty property="createTime" prepend="and">
-			 s.create_time = #createTime#
-		 </isNotEmpty>
-		 <isNotEmpty property="modifyEmp" prepend="and">
-			 s.modify_emp = #modifyEmp#
-		 </isNotEmpty>
-		 <isNotEmpty property="modifyTime" prepend="and">
-			 s.modify_time = #modifyTime#
-		 </isNotEmpty>
-	</sql>
-
-	<!-- 列表查询 -->
+	<!-- 后台获取广告图片 -->
 	<select id="queryBannerList" resultClass="com.uc.training.smadmin.bd.model.Banner" parameterClass="com.uc.training.smadmin.bd.model.Banner">
 		 SELECT
+		 s.id AS id,
 		 s.name AS name,
 		 s.type AS type,
 		 s.sort_num AS sortNum,
 		 s.image_url AS imageUrl,
 		 s.url AS url,
+		 s.is_show AS isShow,
 		 s.clicks AS clicks,
 		 s.description AS description,
 		 s.create_emp AS createEmp,
@@ -75,24 +30,13 @@
 		 s.modify_emp AS modifyEmp,
 		 s.modify_time AS modifyTime
 		 FROM t_bd_banner s
-		 WHERE 1=1
-		 <include refid="where_query"/>
-		 <!--  <isEmpty property="queryType"> order by s.id DESC </isEmpty>  -->
-		 <!--  <isNotEmpty property="rows" prepend=" "> limit #start#,#rows#</isNotEmpty>/>  -->
-	</select>
-
-	<!-- 查找数据总记录数 -->
-	<select id="queryBannerCount" resultClass="java.lang.Integer" parameterClass="com.uc.training.smadmin.bd.model.Banner">
-		 SELECT count(1)
-		 FROM t_bd_banner s
-		 WHERE 1=1
-		 <include refid="where_query"/>
 	</select>
 
 	<!-- 插入 -->
 	<insert id="insertBanner" parameterClass="com.uc.training.smadmin.bd.model.Banner">
 		 insert into t_bd_banner
-			 (id, name, type, sort_num, image_url, url, clicks, description, create_emp, create_time, modify_emp, modify_time)		 values (#id#,#name#,#type#,#sortNum#,#imageUrl#,#url#,#clicks#,#description#,#createEmp#,#createTime#,#modifyEmp#,#modifyTime#)
+			 (name, type, sort_num, image_url, url,is_show, clicks, description, create_emp,modify_emp)
+		  values (#name#,#type#,#sortNum#,#imageUrl#,#url#,#isShow#,#clicks#,#description#,#createEmp#,#modifyEmp#)
 	<selectKey keyProperty="id">
 		select LAST_INSERT_ID() AS id
 	</selectKey>
@@ -101,8 +45,16 @@
 	<!-- 通过主键更新 -->
 	<update id="updateBannerById" parameterClass="com.uc.training.smadmin.bd.model.Banner">
 		 update t_bd_banner set
-		id = #id#, name = #name#, type = #type#, sort_num = #sortNum#, image_url = #imageUrl#, url = #url#, clicks = #clicks#, description = #description#, create_emp = #createEmp#, create_time = #createTime#, modify_emp = #modifyEmp#, modify_time = #modifyTime#
+	   name = #name#, type = #type#, sort_num = #sortNum#, image_url = #imageUrl#, url = #url#,is_show=#isShow# clicks = #clicks#, description = #description#, modify_emp = #modifyEmp#
 		where id=#id#
-		</update>
+	</update>
+	<!--根据主键id删除图片-->
+	<delete id="deleteBannerById" parameterClass="Long">
+		DELETE FROM t_bd_banner WHERE id = #id#
+	</delete>
 
+	<!--增加点击量-->
+	<update id="insertClick" parameterClass="Long">
+		UPDATE t_bd_banner t set t.clicks = +1 where id = #id#
+	</update>
 </sqlMap>
