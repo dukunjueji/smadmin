@@ -33,4 +33,9 @@ public interface MessageService {
     *@throws：
     */
     int updateMessageStatus(Message message);
+
+    /**
+     * 保存
+     */
+    public Long insertMessage(Message record);
 }

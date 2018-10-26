@@ -72,7 +72,7 @@
 	<!-- 插入 -->
 	<insert id="insertMessage" parameterClass="com.uc.training.smadmin.bd.model.Message">
 		 insert into t_bd_message
-			 (id, member_id, content, is_read, create_time, create_emp, modify_time, modify_emp)		 values (#id#,#memberId#,#content#,#isRead#,#createTime#,#createEmp#,#modifyTime#,#modifyEmp#)
+			 (member_id, content, is_read)		 values (#memberId#,#content#,0)
 	<selectKey keyProperty="id">
 		select LAST_INSERT_ID() AS id
 	</selectKey>

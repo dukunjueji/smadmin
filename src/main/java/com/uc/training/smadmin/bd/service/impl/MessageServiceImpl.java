@@ -53,4 +53,9 @@ public class MessageServiceImpl implements MessageService {
     public int updateMessageStatus(Message message) {
         return this.messageDao.updateMessageStatus(message);
     }
+
+    @Override
+    public Long insertMessage(Message record) {
+        return this.messageDao.insertMessage(record);
+    }
 }

@@ -725,14 +725,14 @@ public class IBatisGenerator {
         conn.close();
     }
 
-    /*public static void main(String[] args) {
+    public static void main(String[] args) {
         try {
             //String[] tables = new String[]{"t_mt_order","t_mt_order_extend","t_mt_order_bill","t_mt_order_balance","t_mt_order_refund"};
             String[] tables = new String[]{"t_bd_member_grade"};
 
-            IBatisGenerator generator = new IBatisGenerator();
+            IBatisGenerator generator = new IBatisGenerator(new IBatisGeneratorInfo());
             // 设置表前缀
-//            generator.tablePre = "t_bd_";
+            generator.tablePre = "t_bd_";
             for (String table:tables) {
                 generator.tableName = table;
                 generator.generateForDatabase();
@@ -746,5 +746,5 @@ public class IBatisGenerator {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }*/
+    }
 }

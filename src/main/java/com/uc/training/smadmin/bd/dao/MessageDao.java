@@ -51,4 +51,6 @@ public interface MessageDao{
 	*@throws：
 	*/
     int updateMessageStatus(Message message);
+
+
 }
