@@ -5,6 +5,7 @@ import com.uc.training.smadmin.bd.model.Member;
 import com.uc.training.smadmin.bd.re.MemberDetailRE;
 import com.uc.training.smadmin.bd.re.MemberInfoRE;
 import com.uc.training.smadmin.bd.vo.ChargeBalanceVO;
+import com.uc.training.smadmin.bd.vo.MemberGrowthVO;
 import com.uc.training.smadmin.bd.vo.MemberIntegralVO;
 import com.uc.training.smadmin.bd.vo.MemberLoginVO;
 import com.zuche.framework.dao.CarIsIbatisDaoImpl;
@@ -63,6 +64,11 @@ public class MemberDaoImpl extends CarIsIbatisDaoImpl implements MemberDao {
     @Override
     public void updateIntegralById(MemberIntegralVO memberIntegralVO) {
         this.update("com.uc.training.smadmin.bd.dao.MemberDao.updateIntegralById", memberIntegralVO);
+    }
+
+    @Override
+    public void updateGrowthById(MemberGrowthVO memberGrowthVO) {
+        this.update("com.uc.training.smadmin.bd.dao.MemberDao.updateGrowthById", memberGrowthVO);
     }
 
 }

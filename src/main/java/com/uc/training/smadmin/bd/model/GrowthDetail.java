@@ -3,7 +3,6 @@ package com.uc.training.smadmin.bd.model;
 import com.uc.training.common.base.model.BaseModel;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 版权说明：Copyright (c) 2018 ucarinc. All Rights Reserved.
@@ -13,7 +12,7 @@ import java.util.Date;
  * @date: 2018/10/15
  * 说明：成长值明细类
  */
-public class GrowDetail extends BaseModel implements Serializable {
+public class GrowthDetail extends BaseModel implements Serializable {
 
     private static final long serialVersionUID = 7837521452890068574L;
     /**

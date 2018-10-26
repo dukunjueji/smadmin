@@ -4,6 +4,7 @@ import com.uc.training.smadmin.bd.model.Member;
 import com.uc.training.smadmin.bd.re.MemberDetailRE;
 import com.uc.training.smadmin.bd.re.MemberInfoRE;
 import com.uc.training.smadmin.bd.vo.ChargeBalanceVO;
+import com.uc.training.smadmin.bd.vo.MemberGrowthVO;
 import com.uc.training.smadmin.bd.vo.MemberIntegralVO;
 import com.uc.training.smadmin.bd.vo.MemberLoginVO;
 
@@ -92,4 +93,12 @@ public interface MemberDao {
     *@throws：
     */
     void updateIntegralById(MemberIntegralVO memberIntegralVO);
+
+    /**
+    *说明：更新会员成长值
+    *@param memberGrowthVO
+    *@return：void
+    *@throws：
+    */
+    void updateGrowthById(MemberGrowthVO memberGrowthVO);
 }
