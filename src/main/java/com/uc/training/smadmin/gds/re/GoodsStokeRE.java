@@ -13,13 +13,38 @@ public class GoodsStokeRE {
      */
     private Long stoke;
     /**
-     * 是否删除
+     * 是否删除 0表示未删除，1表示删除
      */
     private int isDelete;
     /**
-     * 是否下架，1表示下架，0表示未下架
+     * 是否下架，0表示下架，1表示上架
      */
     private int status;
+    /**
+     * 商品名称
+     */
+    private String goodsName;
+
+    /**
+     * 商品属性
+     */
+    private String goodsProperty;
+
+    public String getGoodsName() {
+        return goodsName;
+    }
+
+    public void setGoodsName(String goodsName) {
+        this.goodsName = goodsName;
+    }
+
+    public String getGoodsProperty() {
+        return goodsProperty;
+    }
+
+    public void setGoodsProperty(String goodsProperty) {
+        this.goodsProperty = goodsProperty;
+    }
 
     public Long getPropertyId() {
         return propertyId;

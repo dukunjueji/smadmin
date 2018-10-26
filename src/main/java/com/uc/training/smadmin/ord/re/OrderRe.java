@@ -51,6 +51,19 @@ public class OrderRe implements Serializable {
 
   private String teag;
 
+  /**
+   * 商品状态码0表示删除/下架/库存不足 1上架
+   */
+  private Integer goodsStatus;
+
+  public Integer getGoodsStatus() {
+    return goodsStatus;
+  }
+
+  public void setGoodsStatus(Integer goodsStatus) {
+    this.goodsStatus = goodsStatus;
+  }
+
   public String getTeag() {
     return teag;
   }
