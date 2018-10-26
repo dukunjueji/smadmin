@@ -1,5 +1,6 @@
 package com.uc.training.smadmin.ord.service.impl;
 
+import com.uc.training.common.enums.OrderEnum;
 import com.sun.corba.se.spi.orb.ORBData;
 import com.uc.training.common.enums.GoodsStatusEnum;
 import com.uc.training.common.enums.UUIDTypeEnum;
@@ -15,6 +16,7 @@ import com.uc.training.smadmin.ord.model.CartGoods;
 import com.uc.training.smadmin.ord.model.Order;
 import com.uc.training.smadmin.ord.model.OrderGoods;
 import com.uc.training.smadmin.ord.re.OrderRe;
+import com.uc.training.smadmin.ord.re.OrderStatusRe;
 import com.uc.training.smadmin.ord.service.OrderService;
 import com.uc.training.smadmin.ord.vo.OrdCartGoodsVo;
 import com.uc.training.smadmin.ord.vo.OrdOrderGoodsVo;
@@ -54,6 +56,9 @@ public class OrderServiceImpl implements OrderService {
     List<CartGoods> cartList;
     List<OrdCartGoodsVo> list = new ArrayList<>();
     cartList = cartGoodsDao.getCartGoodsById(memberId);
+    if(cartList.size() <= 0){
+      return null;
+    }
     for (CartGoods cartGoods :cartList) {
       OrdCartGoodsVo ordCartgoodsVo = new OrdCartGoodsVo();
       GoodsDetailRE gdDTO ;
@@ -178,6 +183,7 @@ public class OrderServiceImpl implements OrderService {
       orderGoods.setOrderId(oderId);
       orderGoods.setGoodsId(orderInfoListNow.get(i).getGoodsId());
       orderGoods.setPayPrice(orderInfoListNow.get(i).getSalePrice());
+      orderGoods.setGoodsPropertyId(orderInfoListNow.get(i).getPropertyId());
       orderGoods.setGoodsNum(orderInfoListNow.get(i).getNum());
       orderGoods.setSalePrice(orderInfoListNow.get(i).getSalePrice());
       orderGoods.setDiscountPrice(0);
@@ -202,12 +208,51 @@ public class OrderServiceImpl implements OrderService {
 
   @Override
   public List<OrderRe> getOrderPage(OrdOrderVo orderVo) {
-    return orderDao.getOrderPage(orderVo);
+    List<OrderRe> list;
+    list = orderDao.getOrderPage(orderVo);
+    if(list.size()<=0){
+      return null;
+    }
+    for(OrderRe orderRe : list){
+      OrderEnum orderEnum;
+      orderEnum = OrderEnum.getEnumByKey(orderRe.getStatus());
+      if (orderEnum != null) {
+        orderRe.setShowStatus(orderEnum.getValue());
+      }
+    }
+    return list;
   }
 
   @Override
-  public Integer getOrderTotal() {
-    return orderDao.getOrderTota();
+  public Integer getOrderTotal(OrdOrderVo orderVo) {
+    return orderDao.getOrderTotal( orderVo);
+  }
+
+  @Override
+  public List<OrderStatusRe> getOrderEnum() {
+    List<OrderStatusRe> list = new ArrayList<OrderStatusRe>();
+    OrderEnum orderEnum;
+    int max = OrderEnum.getMaxKey();
+    int i = 0;
+    do {
+      OrderStatusRe orderStatusRe = new OrderStatusRe();
+      orderEnum = OrderEnum.getEnumByKey(i);
+      if (orderEnum != null) {
+        orderStatusRe.setValue(i);
+        orderStatusRe.setLabel(orderEnum.getValue());
+        list.add(orderStatusRe);
+      }
+      i++;
+    } while (max >= i);
+    OrderStatusRe orderStatusRe = new OrderStatusRe();
+    orderStatusRe.setLabel("全部");
+    list.add(orderStatusRe);
+    return list;
+  }
+
+  @Override
+  public int logicDelOrder(List<OrderRe> list) {
+    return orderDao.logicDelOrder(list);
   }
 }
 

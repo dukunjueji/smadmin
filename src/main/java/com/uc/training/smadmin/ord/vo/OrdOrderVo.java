@@ -5,49 +5,89 @@ import com.ycc.base.common.BaseDomain;
 import java.io.Serializable;
 
 /**
- *用户订单信息VO
+ * 用户订单信息VO
+ *
  * @author DK
  * @date 2018/10/15
  */
 
-public class OrdOrderVo extends BaseDomain implements Serializable{
-    public String getReceiptName() {
-        return receiptName;
+public class OrdOrderVo extends BaseDomain implements Serializable {
+  public String getReceiptName() {
+    return receiptName;
+  }
+
+  public void setReceiptName(String receiptName) {
+    this.receiptName = receiptName;
+  }
+
+  public String getReceiptTel() {
+    return receiptTel;
+  }
+
+  public void setReceiptTel(String receiptTel) {
+    this.receiptTel = receiptTel;
+  }
+
+  public String getReceiptAddress() {
+    return receiptAddress;
+  }
+
+  public void setReceiptAddress(String receiptAddress) {
+    this.receiptAddress = receiptAddress;
+  }
+
+    public Long getStatus() {
+        return status;
     }
 
-    public void setReceiptName(String receiptName) {
-        this.receiptName = receiptName;
+    public void setStatus(Long status) {
+        this.status = status;
     }
 
-    public String getReceiptTel() {
-        return receiptTel;
+    public String getOrderNum() {
+        return orderNum;
     }
 
-    public void setReceiptTel(String receiptTel) {
-        this.receiptTel = receiptTel;
+    public void setOrderNum(String orderNum) {
+        this.orderNum = orderNum;
     }
 
-    public String getReceiptAddress() {
-        return receiptAddress;
+    public String getOrderListStr() {
+        return orderListStr;
     }
 
-    public void setReceiptAddress(String receiptAddress) {
-        this.receiptAddress = receiptAddress;
+    public void setOrderListStr(String orderListStr) {
+        this.orderListStr = orderListStr;
     }
 
     /**
-     * 收货人姓名
-     */
-    private String receiptName;
+   * 收货人姓名
+   */
+  private String receiptName;
+
+  /**
+   * 收货人电话
+   */
+  private String receiptTel;
+
+  /**
+   * 收货人地址
+   */
+  private String receiptAddress;
+
+  /**
+   * 订单状态
+   */
+  private Long status;
+
+  /**
+   * 订单编码
+   */
+  private String orderNum;
 
     /**
-     * 收货人电话
+     *删除的订单信息
      */
-    private String receiptTel;
-
-    /**
-     * 收货人地址
-     */
-    private String receiptAddress;
+    private String orderListStr;
 
 }
