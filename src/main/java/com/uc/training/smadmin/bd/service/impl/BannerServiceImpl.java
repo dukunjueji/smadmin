@@ -2,6 +2,7 @@ package com.uc.training.smadmin.bd.service.impl;
 
 import com.uc.training.smadmin.bd.dao.BannerDao;
 import com.uc.training.smadmin.bd.model.Banner;
+import com.uc.training.smadmin.bd.re.BannerAllRE;
 import com.uc.training.smadmin.bd.re.BannerRE;
 import com.uc.training.smadmin.bd.service.BannerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ public class BannerServiceImpl implements BannerService {
      * @return
      */
     @Override
-    public List<Banner> getAllBannerList() {
+    public List<BannerAllRE> getAllBannerList() {
         return bannerDao.getAllBannerList();
     }
 

@@ -1,6 +1,7 @@
 package com.uc.training.smadmin.bd.controller;
 
 import com.uc.training.common.base.controller.BaseController;
+import com.uc.training.smadmin.bd.re.BannerAllRE;
 import com.uc.training.smadmin.bd.re.BannerRE;
 import com.ycc.base.common.Result;
 import com.uc.training.common.annotation.AccessLogin;
@@ -54,7 +55,7 @@ public class BannerController extends BaseController{
     @ResponseBody
     @AccessLogin
     @RequestMapping(value = "/getAllBannerList.do_", method = RequestMethod.POST)
-    public Result<List<Banner>> getAllBannerList() {
+    public Result<List<BannerAllRE>> getAllBannerList() {
         return Result.getSuccessResult(bannerService.getAllBannerList());
     }
 

@@ -1,5 +1,8 @@
 package com.uc.training.smadmin.bd.model;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author qi.he@ucarinc.com
@@ -40,13 +43,15 @@ public class Banner implements Serializable {
 	private Long createEmp;
 
 	/**创建时间**/
-	private java.util.Date createTime;
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	private Date createTime;
 
 	/**修改人**/
 	private Long modifyEmp;
 
 	/**修改时间**/
-	private java.util.Date modifyTime;
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	private Date modifyTime;
 
 	public Integer getIsShow() {
 		return isShow;

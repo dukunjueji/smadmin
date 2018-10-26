@@ -14,7 +14,7 @@
 	</select>
 
 	<!-- 后台获取广告图片 -->
-	<select id="queryBannerList" resultClass="com.uc.training.smadmin.bd.model.Banner" parameterClass="com.uc.training.smadmin.bd.model.Banner">
+	<select id="getAllBannerList" resultClass="com.uc.training.smadmin.bd.model.Banner" parameterClass="com.uc.training.smadmin.bd.re.BannerAllRE">
 		 SELECT
 		 s.id AS id,
 		 s.name AS name,

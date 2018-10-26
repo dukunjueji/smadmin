@@ -1,6 +1,7 @@
 package com.uc.training.smadmin.bd.service;
 
 import com.uc.training.smadmin.bd.model.Banner;
+import com.uc.training.smadmin.bd.re.BannerAllRE;
 import com.uc.training.smadmin.bd.re.BannerRE;
 
 import java.util.List;
@@ -23,7 +24,7 @@ public interface BannerService {
      * 获取所有轮播图(后台)
      * @return
      */
-    List<Banner> getAllBannerList();
+    List<BannerAllRE> getAllBannerList();
 
     /**
      * 更新图片
