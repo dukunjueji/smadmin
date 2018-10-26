@@ -5,11 +5,13 @@ import com.uc.training.smadmin.gds.re.GoodsRE;
 import com.uc.training.smadmin.gds.re.GoodsDetailRE;
 import com.uc.training.smadmin.gds.re.GoodsStokeRE;
 import com.uc.training.smadmin.gds.model.HotTag;
+import com.uc.training.smadmin.gds.re.PropertyUrlRE;
 import com.uc.training.smadmin.gds.vo.GoodsListVO;
 import com.uc.training.smadmin.gds.vo.GoodsStokeVO;
 import com.zuche.framework.dao.CarIsIbatisDaoImpl;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -41,6 +43,11 @@ public class GoodsDaoImpl  extends CarIsIbatisDaoImpl implements GoodsDao {
     }
 
     @Override
+    public int updateSales(HashMap map) {
+        return this.update("com.uc.training.smadmin.gds.dao.GoodsDao.updateSales",map);
+    }
+
+    @Override
     public List<GoodsDetailRE> getGoodsDetailByGoodsId(Long goodsId) {
         return this.queryForList("com.uc.training.smadmin.gds.dao.GoodsDao.getGoodsDetailByGoodsId",goodsId);
     }
@@ -63,6 +70,11 @@ public class GoodsDaoImpl  extends CarIsIbatisDaoImpl implements GoodsDao {
     @Override
     public List<HotTag> selectHotTag() {
         return this.queryForList("com.uc.training.smadmin.gds.dao.GoodsDao.selectHotTag");
+    }
+
+    @Override
+    public List<PropertyUrlRE> getPicUrlByPropertyId(Long propertyId) {
+        return this.queryForList("com.uc.training.smadmin.gds.dao.GoodsDao.getPicUrlByPropertyId",propertyId);
     }
 
 

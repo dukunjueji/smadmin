@@ -1,5 +1,6 @@
 package com.uc.training.smadmin.gds.controller;
 
+import com.google.inject.servlet.RequestParameters;
 import com.ycc.base.common.Result;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.common.vo.PageVO;
@@ -86,11 +87,11 @@ public class GoodsController extends BaseController {
      * @date: 2018/10/19 9:01
      */
     @ResponseBody
-    @RequestMapping(value = "getGoodsDetailByPropertyId.do_/{propertyId}",method = RequestMethod.GET)
-    public Result<GoodsDetailRE> getGoodsDetailByPropertyId(@PathVariable(value = "propertyId") Long propertyId) {
-        Result<GoodsDetailRE> res;
+    @RequestMapping(value = "getGoodsDetailByGoodsId.do_",method = RequestMethod.GET)
+    public Result<List<GoodsDetailRE>> getGoodsDetailByGoodsId(@RequestParam("goodsId") Long goodsId) {
+        Result<List<GoodsDetailRE>> res;
         try {
-            res = Result.getSuccessResult(goodsService.getGoodsDetailByPropertyId(propertyId));
+            res = Result.getSuccessResult(goodsService.getGoodsDetailByGoodsId(goodsId));
         } catch (Exception e) {
             logger.error("获取商品详情错误！", e);
             res = Result.getBusinessException("获取商品详情失败", null);

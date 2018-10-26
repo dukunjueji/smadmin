@@ -1,5 +1,7 @@
 package com.uc.training.smadmin.gds.re;
 
+import java.util.List;
+
 /**
  * 商品详情类
  *
@@ -18,7 +20,7 @@ public class GoodsDetailRE {
     /**
      * 商品图片
      */
-    private String picUrl;
+    private List<PropertyUrlRE> picUrl;
     /**
      * 商品名称
      */
@@ -116,11 +118,11 @@ public class GoodsDetailRE {
         return discountPrice;
     }
 
-    public String getPicUrl() {
+    public List<PropertyUrlRE> getPicUrl() {
         return picUrl;
     }
 
-    public void setPicUrl(String picUrl) {
+    public void setPicUrl(List<PropertyUrlRE> picUrl) {
         this.picUrl = picUrl;
     }
 
