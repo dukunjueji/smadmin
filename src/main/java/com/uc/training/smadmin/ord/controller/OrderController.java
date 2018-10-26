@@ -94,6 +94,8 @@ public class OrderController extends BaseController {
         return result;
       }
     }
+    //记得改为当前会员id
+    ordCartGoodsVo.setMemberId(1L);
     orderService.addCarGoods(ordCartGoodsVo);
     return result;
   }

@@ -77,10 +77,12 @@
 	<insert id="insertCartGoods" parameterClass="com.uc.training.smadmin.ord.vo.OrdCartGoodsVo">
 		 insert into t_ord_cart_goods
 	  (
-		goods_id,
+		goods_property_id,
+		goods_num,
 		member_id)
 		values (
-		#goodsId#,
+		#propertyId#,
+		#num#,
 		#memberId#)
 	<selectKey keyProperty="id">
 		select LAST_INSERT_ID() AS id
