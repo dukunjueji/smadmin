@@ -61,6 +61,10 @@ public class PageQuery implements Serializable {
 
     @Override
     public String toString() {
-        return ReflectionToStringBuilder.toString(this);
+        return "PageQuery{" +
+                "offset=" + offset +
+                ", pageIndex=" + pageIndex +
+                ", pageSize=" + pageSize +
+                '}';
     }
 }

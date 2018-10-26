@@ -5,9 +5,9 @@ import java.util.Date;
 /**
  * token封装类
  *
- * @version 1.0 2018/10/25 18:04 by 吴佰川（baichuan.wu@ucarinc.com）创建
- * @param
- * @return
+ * @author 吴佰川（baichuan.wu@ucarinc.com）创建
+ * @version 1.0
+ * @date 2018/10/26 8:36
  */
 public class AccessToken implements Serializable {
 	private static final long serialVersionUID = 1L;

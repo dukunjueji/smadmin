@@ -17,13 +17,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-
 /**
  * 对所有的api请求进行拦截，验证请求头中是否携带合法且未过期的 token
  *
- * @version 1.0 2018/10/25 18:05 by 吴佰川（baichuan.wu@ucarinc.com）创建
- * @param
- * @return
+ * @author 吴佰川（baichuan.wu@ucarinc.com）创建
+ * @version 1.0
+ * @date 2018/10/26 8:36
  */
 public class TokenInterceptor implements HandlerInterceptor {
     private static final Logger LOGGER = LoggerFactory.getLogger(TokenInterceptor.class);
