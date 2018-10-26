@@ -8,6 +8,7 @@ package com.uc.training.smadmin.gds.re;
  */
 public class GoodsRE {
     private Long categoryId;
+    private Long goodsId;
     private Long propertyId;
     private String name;
     private Long sales;
@@ -60,5 +61,13 @@ public class GoodsRE {
 
     public void setPropertyId(Long propertyId) {
         this.propertyId = propertyId;
+    }
+
+    public Long getGoodsId() {
+        return goodsId;
+    }
+
+    public void setGoodsId(Long goodsId) {
+        this.goodsId = goodsId;
     }
 }
