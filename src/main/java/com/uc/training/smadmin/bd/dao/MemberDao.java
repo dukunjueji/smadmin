@@ -4,6 +4,7 @@ import com.uc.training.smadmin.bd.model.Member;
 import com.uc.training.smadmin.bd.re.MemberDetailRE;
 import com.uc.training.smadmin.bd.re.MemberInfoRE;
 import com.uc.training.smadmin.bd.vo.ChargeBalanceVO;
+import com.uc.training.smadmin.bd.vo.MemberIntegralVO;
 import com.uc.training.smadmin.bd.vo.MemberLoginVO;
 
 /**
@@ -83,4 +84,12 @@ public interface MemberDao {
     *@throws：
     */
     MemberInfoRE queryOneMemberById(Long uid);
+
+    /**
+    *说明：更新会员积分
+    *@param memberIntegralVO
+    *@return：void
+    *@throws：
+    */
+    void updateIntegralById(MemberIntegralVO memberIntegralVO);
 }

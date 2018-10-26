@@ -5,7 +5,6 @@ import java.util.Date;
 
 /**
  * description: TODO
- *
  * @author 黄宏俊
  * @version 1.0
  * @date 2018/10/25  10:36
@@ -50,6 +49,19 @@ public class OrderRe implements Serializable {
   private String showStatus;
 
   private String teag;
+
+  /**
+   * 商品状态码0表示删除/下架/库存不足 1上架
+   */
+  private Integer goodsStatus;
+
+  public Integer getGoodsStatus() {
+    return goodsStatus;
+  }
+
+  public void setGoodsStatus(Integer goodsStatus) {
+    this.goodsStatus = goodsStatus;
+  }
 
   public String getTeag() {
     return teag;

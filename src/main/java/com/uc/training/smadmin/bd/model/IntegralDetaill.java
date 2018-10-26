@@ -27,17 +27,13 @@ public class IntegralDetaill extends BaseModel implements Serializable {
   /**
    *类型  1:签到、2:评价、3:购买商品、4:使用积分消费类型  1:签到、2:评价、3:购买商品、4:使用积分消费
    */
-  private Long type;
+  private Integer type;
 
   /**
    *积分值
    */
   private Long integral;
 
-  /**
-   * 日期
-   */
-  private Date date;
 
   public Long getId() {
     return id;
@@ -55,11 +51,11 @@ public class IntegralDetaill extends BaseModel implements Serializable {
     this.memberId = memberId;
   }
 
-  public Long getType() {
+  public Integer getType() {
     return type;
   }
 
-  public void setType(Long type) {
+  public void setType(Integer type) {
     this.type = type;
   }
 
@@ -71,13 +67,6 @@ public class IntegralDetaill extends BaseModel implements Serializable {
     this.integral = integral;
   }
 
-  public Date getDate() {
-    return date;
-  }
-
-  public void setDate(Date date) {
-    this.date = date;
-  }
 
 
 }

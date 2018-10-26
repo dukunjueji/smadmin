@@ -1,11 +1,14 @@
 package com.uc.training.smadmin.ord.service;
 
 import com.uc.training.smadmin.ord.re.OrderRe;
+import com.uc.training.smadmin.ord.re.OrderStatusRe;
 import com.uc.training.smadmin.ord.vo.OrdCartGoodsVo;
 import com.uc.training.smadmin.ord.vo.OrdOrderGoodsVo;
+import com.ycc.base.common.Result;
 import com.uc.training.smadmin.ord.vo.OrdOrderVo;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 订单服务
@@ -48,7 +51,7 @@ public interface OrderService {
   /**
    * 更新订单信息
    */
-  void updateOrderInfo(List<OrdOrderGoodsVo> orderInfoListNow);
+  List<OrderRe> updateOrderInfo(List<OrdOrderGoodsVo> orderInfoListNow);
 
 
   /**
@@ -75,5 +78,17 @@ public interface OrderService {
    * 获取总记录数
    * @return
    */
-  Integer getOrderTotal();
+  Integer getOrderTotal(OrdOrderVo orderVo);
+
+  /**
+   * 获取订单枚举选项
+   */
+  List<OrderStatusRe> getOrderEnum();
+
+  /**
+   * 逻辑删除订单
+   * @param list
+   * @return
+   */
+  int logicDelOrder (List<OrderRe> list);
 }

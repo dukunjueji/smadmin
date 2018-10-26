@@ -99,11 +99,17 @@
 	</select>
 
 	<!--查询订单表的总记录数-->
-	<select id="OrderCount" resultClass="java.lang.Integer">
+	<select id="OrderCount" resultClass="java.lang.Integer" parameterClass="com.uc.training.smadmin.ord.vo.OrdOrderVo">
 		 SELECT count(1)
 		 FROM t_ord_order s
 		 WHERE
-		 s.`is_delete` = 0
+		s.`is_delete` = 0
+		<isNotEmpty property="orderNum" prepend="and">
+			s.order_num = #orderNum#
+		</isNotEmpty>
+		<isNotEmpty property="status" prepend="and">
+			s.status = #status#
+		</isNotEmpty>
 	</select>
 	<!-- 插入 -->
 	<insert id="insertOrder" parameterClass="com.uc.training.smadmin.ord.model.Order">
@@ -135,13 +141,35 @@
 			s.receipt_name as receiptName,
 			s.receipt_tel as receiptTel,
 			s.receipt_address as receiptAddress,
-			date_format(s.create_time,'%Y-%m-%d %k:%i:%s') AS createTime
+			date_format(s.create_time,'%Y-%m-%d') AS createTime
 		FROM  t_ord_order s
 		WHERE
 		1 = 1
+		<isNotEmpty property="orderNum" prepend="and">
+			s.order_num = #orderNum#
+		</isNotEmpty>
+		<isNotEmpty property="status" prepend="and">
+			s.status = #status#
+		</isNotEmpty>
 		AND
 		s.`is_delete` = 0
 	</select>
+
+	<update id="logicDelOrder" parameterClass="list">
+		<!--BEGIN
+		<iterate conjunction="">-->
+			UPDATE t_ord_order s
+			SET
+			s.is_delete = 1
+			WHERE
+			s.id IN
+		   <iterate open="(" close=")" conjunction=",">
+			   #[].id#
+		   </iterate>
+
+		<!--</iterate>-->
+
+	</update>
 
 </sqlMap>
 

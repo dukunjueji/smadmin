@@ -37,4 +37,18 @@ public interface MessageDao{
 	 */
 	public int updateMessageById(Message record);
 
+	/**
+	 * 查询所有消息
+	 * @param uid 会员
+	 * @return
+	 */
+	public List<Message> queryMessageList(Long uid);
+
+	/**
+	*说明：更新消息状态
+	*@param message 消息
+	*@return：int
+	*@throws：
+	*/
+    int updateMessageStatus(Message message);
 }

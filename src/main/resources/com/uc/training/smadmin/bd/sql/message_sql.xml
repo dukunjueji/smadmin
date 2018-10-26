@@ -45,18 +45,19 @@
 		 </isNotEmpty>
 	</sql>
 
-	<!-- 列表查询 -->
-	<select id="queryMessageList" resultClass="com.uc.training.smadmin.bd.model.Message">
+	<!-- 通过会员id获取会员列表 -->
+	<select id="queryMessageList" resultClass="com.uc.training.smadmin.bd.model.Message" parameterClass="java.lang.Long">
 		 SELECT
+		 s.id AS id,
 		 s.member_id AS memberId,
 		 s.content AS content,
 		 s.is_read AS isRead,
-		 s.create_time AS createTime,
+		 date(s.create_time) AS createTime,
 		 s.create_emp AS createEmp,
 		 s.modify_time AS modifyTime,
 		 s.modify_emp AS modifyEmp
 		 FROM t_bd_message s
-		 WHERE 1=1
+		 WHERE s.member_id = #uid# ORDER BY s.create_time DESC
 		 <!--  <isEmpty property="queryType"> order by s.id DESC </isEmpty>  -->
 		 <!--  <isNotEmpty property="rows" prepend=" "> limit #start#,#rows#</isNotEmpty>/>  -->
 	</select>
@@ -65,7 +66,7 @@
 	<select id="queryMessageCount" resultClass="java.lang.Integer" parameterClass="java.lang.Long">
 		 SELECT count(1)
 		 FROM t_bd_message s
-		 WHERE s.member_id = #memberId#
+		 WHERE s.member_id = #memberId# and s.is_read=0
 	</select>
 
 	<!-- 插入 -->
@@ -78,10 +79,10 @@
 	</insert>
 
 	<!-- 通过主键更新 -->
-	<update id="updateMessageById" parameterClass="com.uc.training.smadmin.bd.model.Message">
+	<update id="updateMessageStatus" parameterClass="com.uc.training.smadmin.bd.model.Message">
 		 update t_bd_message set
-		id = #id#, member_id = #memberId#, content = #content#, is_read = #isRead#, create_time = #createTime#, create_emp = #createEmp#, modify_time = #modifyTime#, modify_emp = #modifyEmp#
-		where id=#id#
+		is_read = 1,  modify_time = now()
+		where id=#id# and member_id=#memberId#
 		</update>
 
 </sqlMap>

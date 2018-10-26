@@ -46,5 +46,12 @@ public interface OrderDao{
 	 * @return
 	 */
 
-	Integer getOrderTota();
+	Integer getOrderTotal(OrdOrderVo orderVo);
+
+	/**
+	 * 逻辑删除订单
+	 * @param list
+	 * @return
+	 */
+	int logicDelOrder(List<OrderRe> list);
 }

@@ -85,18 +85,20 @@
 	</select>
 
 	<!--减库存之前，检查是否下架、删除，在更新时检查是否有库存-->
-	<select id="selectGoodsStatus" parameterClass="long" resultClass="com.uc.training.smadmin.gds.re.GoodsStokeRE">
+	<select id="selectGoodsStatus" parameterClass="com.uc.training.smadmin.gds.vo.GoodsStokeVO" resultClass="com.uc.training.smadmin.gds.re.GoodsStokeRE">
 		select
 		goods.is_delete as isDelete,
 		goods.status,
-		gds_property.stock
-        gds_property.id as propertyId
+		gds_property.stock as stoke,
+        gds_property.id as propertyId,
+        goods.name as goodsName,
+        gds_property.property as goodsProperty
 		 FROM t_gds_property gds_property join t_gds_goods goods on goods.id=gds_property.goods_id
 		 where gds_property.id=#propertyId#
 	</select>
 
-	<update id="updateAndDeductStoke" parameterClass="long">
-		update t_gds_property set stock=#stock# where id=#propertyId#
+	<update id="updateAndDeductStoke" parameterClass="com.uc.training.smadmin.gds.vo.GoodsStokeVO" >
+		update t_gds_property set stock=stock-#stoke# where id=#propertyId#
 	</update>
 
 	<update id="updateSales" parameterClass="map">

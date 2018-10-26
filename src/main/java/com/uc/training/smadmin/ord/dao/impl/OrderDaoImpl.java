@@ -60,7 +60,13 @@ public class OrderDaoImpl extends CarIsIbatisDaoImpl implements OrderDao {
 	}
 
   @Override
-  public Integer getOrderTota() {
-    return (Integer) this.queryForObject("com.uc.training.smadmin.ord.dao.OrderDao.OrderCount");
+  public Integer getOrderTotal(OrdOrderVo orderVo) {
+    return (Integer) this.queryForObject("com.uc.training.smadmin.ord.dao.OrderDao.OrderCount",orderVo);
+  }
+
+  @Override
+  public int logicDelOrder(List<OrderRe> list) {
+
+    return this.update("com.uc.training.smadmin.ord.dao.OrderDao.logicDelOrder",list);
   }
 }
