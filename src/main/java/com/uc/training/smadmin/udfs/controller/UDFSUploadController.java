@@ -1,6 +1,9 @@
 package com.uc.training.smadmin.udfs.controller;
 
+import com.uc.training.common.annotation.AccessLogin;
+import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.smadmin.udfs.service.UDFSFileService;
+import com.ycc.base.common.Result;
 import com.zuche.framework.udfs.client.upload.UDFSUploadResultVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,22 +24,24 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @Controller
 @RequestMapping("/api/upload")
-public class UDFSUploadController {
+public class UDFSUploadController extends BaseController{
 
     private static final Logger logger = LoggerFactory.getLogger(UDFSUploadController.class);
 
     @Autowired
     private UDFSFileService fileService;
 
-    @RequestMapping(value = "/file.do_", method = RequestMethod.POST)
     @ResponseBody
-    public UDFSUploadResultVO imageUpload(String name, MultipartFile file) {
-        return fileService.upload(name,file);
+    @AccessLogin
+    @RequestMapping(value = "/file.do_", method = RequestMethod.POST)
+    public Result<UDFSUploadResultVO> imageUpload(String name, MultipartFile file) {
+        return Result.getSuccessResult(fileService.upload(name,file));
     }
 
-    @RequestMapping(value = "/text.do_", method = RequestMethod.POST)
     @ResponseBody
-    public UDFSUploadResultVO imageToTextUpload(String name, String imageText) {
-        return fileService.base64Upload(name, imageText);
+    @AccessLogin
+    @RequestMapping(value = "/text.do_", method = RequestMethod.POST)
+    public Result<UDFSUploadResultVO> imageToTextUpload(String name, String imageText) {
+        return Result.getSuccessResult(fileService.base64Upload(name, imageText));
     }
 }

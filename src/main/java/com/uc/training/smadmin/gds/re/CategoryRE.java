@@ -24,28 +24,32 @@ public class CategoryRE implements Serializable{
      * 类别名称
      */
     private String name;
-    /**
-     * 级别
-     */
-    private Integer level;
 
+    /**
+     * 排序
+     */
     private Integer sortNum;
 
     /**
      * 父级id
      */
     private Long parentId;
+
     /**
-     * 子级类别
+     * 图片地址
+     */
+    private String imageUrl;
+    /**
+     * 子级
      */
     private List<CategoryRE> children;
 
-    public Integer getLevel() {
-        return level;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setLevel(Integer level) {
-        this.level = level;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public Long getId() {

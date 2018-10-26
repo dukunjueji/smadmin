@@ -31,8 +31,6 @@ public class BannerUploadController {
     @RequestMapping(value = "/upload.do_")
     public UDFSUploadResultVO upload(String name,MultipartFile file) {
         System.out.println(file.getName());
-        // UDFSUploadResultVO resultVO = fileService.upload(name,file);
-
         return null;
     }
     @RequestMapping(value = "/text.do_", method = RequestMethod.POST)

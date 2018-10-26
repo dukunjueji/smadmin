@@ -7,7 +7,8 @@
         t.id AS id,
         t.name AS name,
         t.sort_num AS sortNum,
-        t.parent_id As parentId
+        t.parent_id As parentId,
+        t.image_url AS imageUrl
         FROM t_gds_category t
         WHERE t.is_delete = 0
         order by t.sort_num asc
