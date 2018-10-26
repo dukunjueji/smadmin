@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class CategoryController extends BaseController {
     private CategoryService categoryService;
 
     /**
-     * 获取所有没有被删除分类
+     * 获取所有有效分类
      * @return
      */
     @ResponseBody
@@ -51,7 +52,7 @@ public class CategoryController extends BaseController {
         //cateList中增加顶级分类
         for (CategoryRE categoryRE : list) {
             //不存在父级id的分类为顶级分类
-            if (categoryRE.getParentId() == null) {
+            if (categoryRE.getParentId() == 0) {
                 categoryList.add(categoryRE);
             }
         }
@@ -135,5 +136,17 @@ public class CategoryController extends BaseController {
         category.setModifyEmp(getUid());
 
         return Result.getSuccessResult(categoryService.addCategory(category));
+    }
+
+    /**
+     * 逻辑删除分类
+     * @param id
+     * @return
+     */
+    @ResponseBody
+    @AccessLogin
+    @RequestMapping(value = "logicDeleteCategory.do_", method = RequestMethod.POST)
+    public Result deleteCategory(Long id) {
+        return Result.getSuccessResult(categoryService.logicDeleteCategory(id));
     }
 }

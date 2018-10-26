@@ -1,6 +1,5 @@
 package com.uc.training.smadmin.gds.service.impl;
 
-import com.ycc.base.common.Result;
 import com.uc.training.smadmin.gds.dao.CategoryDao;
 import com.uc.training.smadmin.gds.model.Category;
 import com.uc.training.smadmin.gds.re.CategoryRE;
@@ -24,7 +23,7 @@ public class CategoryServiceImpl implements CategoryService{
     private CategoryDao categoryDao;
 
     /**
-     * 获取商品分类
+     * 获取有效的商品分类
      * @return
      */
     @Override
@@ -41,5 +40,28 @@ public class CategoryServiceImpl implements CategoryService{
     @Override
     public Long addCategory(Category category) {
         return categoryDao.addCategory(category);
+    }
+
+    /**
+     * 删除分类
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public Integer logicDeleteCategory(Long id) {
+        //查找id对应的分类
+        Category category = categoryDao.queryCategory(id);
+
+        if (category.getParentId() == null) {
+            //查找该分类的有效子分类
+            List<Long> childList = categoryDao.queryListCategoryByParentId(id);
+            //逻辑删除有效子分类
+            for (Long child : childList) {
+                categoryDao.logicDeleteCategory(child);
+            }
+        }
+
+        return categoryDao.logicDeleteCategory(id);
     }
 }

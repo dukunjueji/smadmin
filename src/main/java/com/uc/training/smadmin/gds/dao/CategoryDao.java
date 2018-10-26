@@ -26,4 +26,32 @@ public interface CategoryDao {
      * @return
      */
     Long addCategory(Category category);
+
+    /**
+     * 根据主键id查找分类
+     * @param id
+     * @return
+     */
+    Category queryCategory(Long id);
+
+    /**
+     * 更新分类
+     * @param category
+     * @return
+     */
+    Integer updateCategory(Category category);
+
+    /**
+     * 逻辑删除
+     * @param id
+     * @return
+     */
+    Integer logicDeleteCategory(Long id);
+
+    /**
+     * 根据父类id查找所有有效分类
+     * @param id
+     * @return
+     */
+    List<Long> queryListCategoryByParentId(Long id);
 }
