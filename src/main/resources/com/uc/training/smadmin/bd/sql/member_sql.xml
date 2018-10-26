@@ -238,4 +238,14 @@
 		modify_time = now()
 		WHERE id = #memberId#
 	</update>
+
+	<!-- 更新会员成长值 -->
+	<update id="updateGrowthById" parameterClass="com.uc.training.smadmin.bd.vo.MemberGrowthVO">
+		UPDATE
+		t_bd_member
+		SET
+		growth = growth + #growth#,
+		modify_time = now()
+		WHERE id = #memberId#
+	</update>
 </sqlMap>

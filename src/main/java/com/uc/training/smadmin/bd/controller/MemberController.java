@@ -230,7 +230,7 @@ public class MemberController extends BaseController {
     public Result chargeBalance(ChargeBalanceVO chargeBalanceVO){
         Result re;
         Member member = new Member();
-        member.setId(5L);
+        member.setId(getUid());
         member.setBalance(chargeBalanceVO.getBalance());
         BigDecimal bigDecimal = new BigDecimal(0);
         int i = chargeBalanceVO.getBalance().compareTo(bigDecimal);

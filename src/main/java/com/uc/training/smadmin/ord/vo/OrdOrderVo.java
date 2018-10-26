@@ -60,7 +60,15 @@ public class OrdOrderVo extends BaseDomain implements Serializable {
         this.orderListStr = orderListStr;
     }
 
-    /**
+  public Integer getOrderId() {
+    return orderId;
+  }
+
+  public void setOrderId(Integer orderId) {
+    this.orderId = orderId;
+  }
+
+  /**
    * 收货人姓名
    */
   private String receiptName;
@@ -89,5 +97,10 @@ public class OrdOrderVo extends BaseDomain implements Serializable {
      *删除的订单信息
      */
     private String orderListStr;
+
+  /**
+   * 订单id
+   */
+  private Integer orderId;
 
 }

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="com.uc.training.smadmin.bd.dao.GrowthDetailDao">
+	<!--<select id="getContinueSignDays" parameterClass="java.lang.Long" resultClass="com.uc.training.smadmin.bd.vo.ContinueSignDaysVO">
+		SELECT
+        member_id,
+        continue_sign_days,
+        temp_table.last_date
+        FROM
+        (
+        SELECT
+        member_id ,
+        @cont_day := (
+        CASE
+        WHEN (
+        @last_member_id = member_id AND DATEDIFF(last_date, @last_date) = 1
+        ) THEN
+        (@cont_day + 1)
+        WHEN (
+        @last_member_id = member_id AND DATEDIFF(last_date, @last_date) &lt; 1
+        ) THEN
+        (@cont_day + 0)
+        ELSE
+        1
+        END
+        ) AS continue_sign_days,
+        @last_member_id := member_id ,
+        @last_date := last_date as last_date
+        FROM
+        (
+        SELECT
+        member_id,
+        t_bd_growth_detail.create_time AS last_date
+        FROM
+        t_bd_growth_detail
+        where member_id=#{memberId} and (date_sub(curdate(), INTERVAL 7 DAY) &lt;= date(t_bd_growth_detail.create_time))
+        ORDER BY
+        last_date
+        ) AS t1,
+        (
+        SELECT
+        @last_member_id := '',
+        @last_date := '',
+        @cont_day := 0
+        ) AS t2
+        ) AS temp_table ORDER BY last_date DESC  limit 0,1
+	</select>-->
+
+	<update id="saveGrowthDetail" parameterClass="com.uc.training.smadmin.bd.model.GrowthDetail">
+		INSERT INTO
+		t_bd_growth_detail
+		(member_id, type, growth)
+		VALUES
+		(#memberId#, #type#, #growth#)
+	</update>
+</sqlMap>
