@@ -1,5 +1,6 @@
 package com.uc.training.smadmin.gds.dao;
 
+import com.uc.training.smadmin.gds.vo.CategoryVO;
 import com.ycc.base.common.Result;
 import com.uc.training.smadmin.gds.model.Category;
 import com.uc.training.smadmin.gds.re.CategoryRE;
@@ -53,5 +54,12 @@ public interface CategoryDao {
      * @param id
      * @return
      */
-    List<Long> queryListCategoryByParentId(Long id);
+    List<Long> queryIdByParentId(Long id);
+
+    /**
+     * 根据name和parentId查找数量
+     * @param categoryVO
+     * @return
+     */
+    Integer getCountByNameAndParentId(CategoryVO categoryVO);
 }

@@ -4,6 +4,7 @@ import com.uc.training.smadmin.gds.dao.CategoryDao;
 import com.uc.training.smadmin.gds.model.Category;
 import com.uc.training.smadmin.gds.re.CategoryRE;
 import com.uc.training.smadmin.gds.service.CategoryService;
+import com.uc.training.smadmin.gds.vo.CategoryVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -55,7 +56,7 @@ public class CategoryServiceImpl implements CategoryService{
 
         if (category.getParentId() == null) {
             //查找该分类的有效子分类
-            List<Long> childList = categoryDao.queryListCategoryByParentId(id);
+            List<Long> childList = categoryDao.queryIdByParentId(id);
             //逻辑删除有效子分类
             for (Long child : childList) {
                 categoryDao.logicDeleteCategory(child);
@@ -74,5 +75,16 @@ public class CategoryServiceImpl implements CategoryService{
     @Override
     public Integer updateCategory(Category category) {
         return categoryDao.updateCategory(category);
+    }
+
+    /**
+     * 根据name和parentId查找数量
+     *
+     * @param categoryVO
+     * @return
+     */
+    @Override
+    public Integer getCountByNameAndParentId(CategoryVO categoryVO) {
+        return categoryDao.getCountByNameAndParentId(categoryVO);
     }
 }

@@ -102,6 +102,13 @@ public class CategoryController extends BaseController {
     @RequestMapping(value = "addParentCategory.do_", method = RequestMethod.POST)
     public Result addParentCategory(@Validated CategoryVO categoryVO) {
 
+        categoryVO.setParentId(0L);
+
+        //判断同一级别是否存在同名
+        if (categoryService.getCountByNameAndParentId(categoryVO) > 0) {
+            return Result.getBusinessException("该名称已存在", null);
+        }
+
         Category category = new Category();
         //将categoryVO的值映射到category中
         BeanUtils.copyProperties(categoryVO, category);
@@ -123,8 +130,13 @@ public class CategoryController extends BaseController {
     @RequestMapping(value = "addChildCategory.do_", method = RequestMethod.POST)
     public Result addChildCategory(@Validated CategoryVO categoryVO) {
 
+        //判断同一级别是否存在同名
+        if (categoryService.getCountByNameAndParentId(categoryVO) > 0) {
+            return Result.getBusinessException("该名称已存在", null);
+        }
+        //判断图片地址
         if (StringUtil.isBlank(categoryVO.getImageUrl())) {
-            //return Result.getBusinessException("图片地址不能为空", null);
+            return Result.getBusinessException("图片地址不能为空", null);
         }
 
         Category category = new Category();

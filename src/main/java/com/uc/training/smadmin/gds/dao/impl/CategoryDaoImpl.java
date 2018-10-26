@@ -1,5 +1,6 @@
 package com.uc.training.smadmin.gds.dao.impl;
 
+import com.uc.training.smadmin.gds.vo.CategoryVO;
 import com.ycc.base.common.Result;
 import com.uc.training.smadmin.gds.dao.CategoryDao;
 import com.uc.training.smadmin.gds.model.Category;
@@ -72,13 +73,25 @@ public class CategoryDaoImpl extends CarIsIbatisDaoImpl implements CategoryDao {
     }
 
     /**
-     * 根据父类id查找所有有效分类
+     * 根据父类id查找所有有效分类id
      *
      * @param id
      * @return
      */
     @Override
-    public List<Long> queryListCategoryByParentId(Long id) {
-        return this.queryForList("com.uc.training.smadmin.gds.dao.CategoryDao.queryListCategoryByParentId", id);
+    public List<Long> queryIdByParentId(Long id) {
+        return this.queryForList("com.uc.training.smadmin.gds.dao.CategoryDao.queryIdByParentId", id);
     }
+
+    /**
+     * 根据name和parentId查找数量
+     *
+     * @param categoryVO
+     * @return
+     */
+    @Override
+    public Integer getCountByNameAndParentId(CategoryVO categoryVO) {
+        return (Integer) this.queryForObject("com.uc.training.smadmin.gds.dao.CategoryDao.getCountByNameAndParentId", categoryVO);
+    }
+
 }

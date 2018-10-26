@@ -1,5 +1,6 @@
 package com.uc.training.smadmin.gds.service;
 
+import com.uc.training.smadmin.gds.vo.CategoryVO;
 import com.ycc.base.common.Result;
 import com.uc.training.smadmin.gds.model.Category;
 import com.uc.training.smadmin.gds.re.CategoryRE;
@@ -40,4 +41,11 @@ public interface CategoryService {
      * @return
      */
     Integer updateCategory(Category category);
+
+    /**
+     * 根据name和parentId查找数量
+     * @param categoryVO
+     * @return
+     */
+    Integer getCountByNameAndParentId(CategoryVO categoryVO);
 }
