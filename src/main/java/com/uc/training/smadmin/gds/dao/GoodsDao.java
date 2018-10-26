@@ -4,9 +4,11 @@ import com.uc.training.smadmin.gds.re.GoodsRE;
 import com.uc.training.smadmin.gds.re.GoodsDetailRE;
 import com.uc.training.smadmin.gds.re.GoodsStokeRE;
 import com.uc.training.smadmin.gds.model.HotTag;
+import com.uc.training.smadmin.gds.re.PropertyUrlRE;
 import com.uc.training.smadmin.gds.vo.GoodsListVO;
 import com.uc.training.smadmin.gds.vo.GoodsStokeVO;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -44,13 +46,18 @@ public interface GoodsDao {
     public GoodsDetailRE getGoodsDetailByPropertyId(Long propertyId);
 
     /**
+     * 更新销量
+     * @param map key为goodsId、sales
+     * @return
+     */
+    public int updateSales(HashMap map);
+
+    /**
      * 通过商品id获取所有规格的商品详情
      * @param goodsId
      * @return
      */
     public List<GoodsDetailRE> getGoodsDetailByGoodsId(Long goodsId);
-
-
 
     /**
      * 减库存之前，查看商品是否下架、删除、检查库存是否足够
@@ -78,4 +85,11 @@ public interface GoodsDao {
      * @return
      */
     public List<HotTag> selectHotTag();
+
+    /**
+     * 通过属性id获取相应的图片
+     * @param propertyId
+     * @return
+     */
+    public List<PropertyUrlRE> getPicUrlByPropertyId(Long propertyId);
 }

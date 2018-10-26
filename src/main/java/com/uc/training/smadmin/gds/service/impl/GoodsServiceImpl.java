@@ -4,6 +4,7 @@ import com.uc.training.smadmin.gds.dao.GoodsDao;
 import com.uc.training.smadmin.gds.re.GoodsRE;
 import com.uc.training.smadmin.gds.re.GoodsDetailRE;
 import com.uc.training.smadmin.gds.model.HotTag;
+import com.uc.training.smadmin.gds.re.PropertyUrlRE;
 import com.uc.training.smadmin.gds.service.GoodsService;
 import com.uc.training.smadmin.gds.vo.GoodsListVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,12 +41,21 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Override
     public GoodsDetailRE getGoodsDetailByPropertyId(Long propertyId) {
-        return goodsDao.getGoodsDetailByPropertyId(propertyId);
+        GoodsDetailRE goodsDetailRE=goodsDao.getGoodsDetailByPropertyId(propertyId);
+        List<PropertyUrlRE> list=goodsDao.getPicUrlByPropertyId(propertyId);
+        goodsDetailRE.setPicUrl(list);
+        return goodsDetailRE;
     }
 
     @Override
     public List<GoodsDetailRE> getGoodsDetailByGoodsId(Long goodsId) {
-        return goodsDao.getGoodsDetailByGoodsId(goodsId);
+        List<GoodsDetailRE> goodsDetailREList=goodsDao.getGoodsDetailByGoodsId(goodsId);
+        List<PropertyUrlRE> urlPics=null;
+        for(int i = 0; i < goodsDetailREList.size(); i++) {
+            urlPics=goodsDao.getPicUrlByPropertyId(goodsDetailREList.get(i).getPropertyId());
+            goodsDetailREList.get(i).setPicUrl(urlPics);
+        }
+        return goodsDetailREList;
     }
 
     @Override

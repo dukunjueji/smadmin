@@ -66,7 +66,7 @@ public class OrderServiceImpl implements OrderService {
       ordCartgoodsVo.setCartId(cartGoods.getId());
       ordCartgoodsVo.setGoodsId(cartGoods.getGoodsId());
       ordCartgoodsVo.setGdsName(gdDTO.getName());
-      ordCartgoodsVo.setGdsUrl(gdDTO.getPicUrl());
+      ordCartgoodsVo.setGdsUrl(gdDTO.getPicUrl().get(0).getPicUrl());
       ordCartgoodsVo.setPropertyId(cartGoods.getGoodsPropertyId());
       ordCartgoodsVo.setProperty(gdDTO.getProperty());
       ordCartgoodsVo.setSalePrice(gdDTO.getSalePrice());
@@ -89,7 +89,7 @@ public class OrderServiceImpl implements OrderService {
       GoodsDetailRE gdDTO = goodsDao.getGoodsDetailByPropertyId(orderGodsList.get(i).getPropertyId());
       ordOrderGoodsVo.setGoodsId(orderGodsList.get(i).getGoodsId());
       ordOrderGoodsVo.setGdsName(gdDTO.getName());
-      ordOrderGoodsVo.setGdsUrl(gdDTO.getPicUrl());
+      ordOrderGoodsVo.setGdsUrl(gdDTO.getPicUrl().get(0).getPicUrl());
       ordOrderGoodsVo.setPropertyId(orderGodsList.get(i).getPropertyId());
       ordOrderGoodsVo.setProperty(gdDTO.getProperty());
       ordOrderGoodsVo.setSalePrice(gdDTO.getSalePrice());

@@ -54,11 +54,17 @@
 		gds_property.stock,
 		gds_property.property,
 		gds_property.is_discount as isDiscount,
-		gds_property.discount_price as discountPrice,
-		gds_pic.pic_url as picUrl
+		gds_property.discount_price as discountPrice
 		 FROM t_gds_property gds_property join t_gds_goods goods on goods.id=gds_property.goods_id
-		 join t_gds_goods_pic gds_pic on gds_property.id=gds_pic.property_id
-		 where gds_property.id=#goodsId#
+		 where gds_property.goods_id=#goodsId#
+	</select>
+
+	<select id="getPicUrlByPropertyId" resultClass="com.uc.training.smadmin.gds.re.PropertyUrlRE" parameterClass="long">
+		select
+		gds_pic.property_id as propertyId,
+		gds_pic.pic_url as picUrl
+		from t_gds_goods_pic gds_pic
+		 where gds_pic.property_id=#propertyId#
 	</select>
 
 	<select id="getGoodsDetailByPropertyId" resultClass="com.uc.training.smadmin.gds.re.GoodsDetailRE" parameterClass="long">
@@ -73,10 +79,8 @@
 		gds_property.stock,
 		gds_property.property,
 		gds_property.is_discount as isDiscount,
-		gds_property.discount_price as discountPrice,
-		gds_pic.pic_url as picUrl
+		gds_property.discount_price as discountPrice
 		 FROM t_gds_property gds_property join t_gds_goods goods on goods.id=gds_property.goods_id
-		 join t_gds_goods_pic gds_pic on gds_property.id=gds_pic.property_id
 		 where gds_property.id=#propertyId#
 	</select>
 
@@ -95,6 +99,10 @@
 
 	<update id="updateAndDeductStoke" parameterClass="com.uc.training.smadmin.gds.vo.GoodsStokeVO" >
 		update t_gds_property set stock=stock-#stoke# where id=#propertyId#
+	</update>
+
+	<update id="updateSales" parameterClass="map">
+		update t_gds_goods set sales=#sales# where id=#goodsId#
 	</update>
 
     <select id="searchByGoodsName" resultClass="com.uc.training.smadmin.gds.re.GoodsRE" parameterClass="String">
