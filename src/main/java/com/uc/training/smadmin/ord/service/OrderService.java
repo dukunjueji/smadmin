@@ -91,4 +91,10 @@ public interface OrderService {
    * @return
    */
   int logicDelOrder (List<OrderRe> list);
+
+  /**
+   * 更新订单状态
+   * @param ordOrderVo
+   */
+  void updateOrder(OrdOrderVo ordOrderVo);
 }

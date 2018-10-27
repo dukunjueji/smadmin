@@ -13,6 +13,19 @@ public class GoodsStokeVO {
      */
     private Long stoke;
 
+    public Long getGoodsId() {
+        return goodsId;
+    }
+
+    public void setGoodsId(Long goodsId) {
+        this.goodsId = goodsId;
+    }
+    /**
+     * 商品属性id
+     * @return
+     */
+    private Long goodsId;
+
     public Long getPropertyId() {
         return propertyId;
     }

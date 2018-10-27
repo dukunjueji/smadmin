@@ -19,6 +19,10 @@ public class MemberInfoVO implements Serializable {
     private String nickname;
 
     /**
+     * 会员id
+     */
+     private Long memberId;
+    /**
      * 邮箱
      */
     private String email;
@@ -32,6 +36,83 @@ public class MemberInfoVO implements Serializable {
      * 头像路径
      */
     private String imageUrl;
+
+    /**
+     *用户余额
+     */
+    private Double balances;
+
+    /**
+     * 用户订单号
+     * @return
+     */
+
+    private String orderName;
+
+    /**
+     * 用户订单商品id
+     * @return
+     */
+    private Long goodsId;
+
+    /**
+     * 用户订单总价
+     */
+    private Double totalPrice;
+
+    /**
+     * 用户订单商品对应的商品数目
+     * @return
+     */
+    private Long goodsNum;
+
+    public Double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public Long getGoodsId() {
+        return goodsId;
+    }
+
+    public void setGoodsId(Long goodsId) {
+        this.goodsId = goodsId;
+    }
+
+    public Long getGoodsNum() {
+        return goodsNum;
+    }
+
+    public void setGoodsNum(Long goodsNum) {
+        this.goodsNum = goodsNum;
+    }
+
+    public String getOrderName() {
+        return orderName;
+    }
+
+    public void setOrderName(String orderName) {
+        this.orderName = orderName;
+    }
+
+    public Double getBalances() {
+        return balances;
+    }
+
+    public void setBalances(Double balances) {
+        this.balances = balances;
+    }
+
+    public Long getMemberId() {
+        return memberId;
+    }
+
+    public void setMemberId(Long memberId) {
+        this.memberId = memberId;
+    }
 
     public String getNickname() {
         return nickname;

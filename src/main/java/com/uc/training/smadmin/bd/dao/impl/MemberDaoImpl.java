@@ -7,6 +7,7 @@ import com.uc.training.smadmin.bd.re.MemberInfoRE;
 import com.uc.training.smadmin.bd.vo.ChargeBalanceVO;
 import com.uc.training.smadmin.bd.vo.MemberGrowthVO;
 import com.uc.training.smadmin.bd.vo.MemberIntegralVO;
+import com.uc.training.smadmin.bd.vo.MemberInfoVO;
 import com.uc.training.smadmin.bd.vo.MemberLoginVO;
 import com.zuche.framework.dao.CarIsIbatisDaoImpl;
 import org.springframework.stereotype.Repository;
@@ -39,6 +40,15 @@ public class MemberDaoImpl extends CarIsIbatisDaoImpl implements MemberDao {
     @Override
     public void updateMemberBalance(Member member) {
         this.update("com.uc.training.smadmin.bd.dao.MemberDao.updateMemberBalance", member);
+    }
+
+    /**
+     * 查询余额
+     * @param memberId
+     */
+    @Override
+    public Double queryBalances(Long memberId) {
+         return (Double)this.queryForObject("com.uc.training.smadmin.bd.dao.MemberDao.queryBalances",memberId);
     }
 
     @Override
