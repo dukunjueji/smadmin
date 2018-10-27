@@ -54,12 +54,15 @@ public class CategoryServiceImpl implements CategoryService{
         //查找id对应的分类
         Category category = categoryDao.queryCategory(id);
 
-        if (category.getParentId() == null) {
+        if (category.getParentId() == 0) {
             //查找该分类的有效子分类
             List<Long> childList = categoryDao.queryIdByParentId(id);
-            //逻辑删除有效子分类
-            for (Long child : childList) {
-                categoryDao.logicDeleteCategory(child);
+            //判空
+            if (childList != null && !childList.isEmpty()) {
+                //逻辑删除有效子分类
+                for (Long child : childList) {
+                    categoryDao.logicDeleteCategory(child);
+                }
             }
         }
 

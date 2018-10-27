@@ -46,6 +46,10 @@ public class CategoryController extends BaseController {
         //获取所有类型
         List<CategoryRE> list = categoryService.getCategoryList();
 
+        if (list == null && list.isEmpty()) {
+            return Result.getSuccessResult(list);
+        }
+
         //最终的分类
         List<CategoryRE> categoryList = new ArrayList<>();
 
@@ -163,7 +167,7 @@ public class CategoryController extends BaseController {
     }
 
     /**
-     * 新增子级分类
+     * 更新子级分类
      *
      * @param categoryVO
      * @return
