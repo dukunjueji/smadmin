@@ -3,7 +3,7 @@
 <sqlMap namespace="com.uc.training.smadmin.ord.dao.OrderGoodsDao">
 
 	<!-- 根据对象的不为null的值作为条件进行查找 -->
-	<select id="getOrderGoodsById" resultClass="com.uc.training.smadmin.ord.model.OrderGoods" parameterClass="long">
+	<select id="getOrderGoodsById" resultClass="com.uc.training.smadmin.ord.model.OrderGoods" parameterClass="Integer">
 		 SELECT
 		 s.id AS id,
 		 s.order_id AS orderId,
@@ -17,7 +17,7 @@
 		 s.create_time AS createTime,
 		 s.modify_emp AS modifyEmp,
 		 s.modify_time AS modifyTime
-		 FROM t_ord_order_goods s		 WHERE s.id=#id#
+		 FROM t_ord_order_goods s		 WHERE s.order_id=#id#
 	</select>
 
 

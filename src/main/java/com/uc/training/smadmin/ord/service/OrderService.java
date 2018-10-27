@@ -1,5 +1,6 @@
 package com.uc.training.smadmin.ord.service;
 
+import com.uc.training.smadmin.ord.re.OrderGoodsDetailRe;
 import com.uc.training.smadmin.ord.re.OrderRe;
 import com.uc.training.smadmin.ord.re.OrderStatusRe;
 import com.uc.training.smadmin.ord.vo.OrdCartGoodsVo;
@@ -91,4 +92,6 @@ public interface OrderService {
    * @return
    */
   int logicDelOrder (List<OrderRe> list);
+
+  List<OrderGoodsDetailRe> getOrderGdsById(Integer id);
 }

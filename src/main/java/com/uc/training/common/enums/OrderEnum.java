@@ -7,7 +7,7 @@ package com.uc.training.common.enums;
 public enum OrderEnum {
   WAITPAY(1, "待付款"),
   CANCEL(2,"取消订单"),
-  WAITSHIP(3,"代发货"),
+  WAITSHIP(3,"待发货"),
   WAIRECEPIT(4,"待收货"),
   COMPLETED(5,"已完成");
   private final Integer key;

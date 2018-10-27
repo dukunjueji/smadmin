@@ -1,5 +1,6 @@
 package com.uc.training.smadmin.ord.controller;
 
+import com.uc.training.smadmin.ord.re.OrderGoodsDetailRe;
 import com.uc.training.smadmin.ord.re.OrderRe;
 import com.ycc.base.common.Result;
 import com.uc.training.common.base.controller.BaseController;
@@ -166,14 +167,16 @@ public class OrderController extends BaseController {
 
   /**
    * 获取订单商品详情
-   * @param orderVo
+   * @param id
    * @return
    */
   @ResponseBody
   @RequestMapping(value = "getOrderGoods.do_", method = RequestMethod.POST)
-  public Result getOrderGoods(OrdOrderVo orderVo) {
+  public Result getOrderGoods(Integer id) {
     Result result = new Result();
+    List<OrderGoodsDetailRe> list;
+    list = orderService.getOrderGdsById(id);
+    result.setRe(list);
     return result;
   }
-
 }

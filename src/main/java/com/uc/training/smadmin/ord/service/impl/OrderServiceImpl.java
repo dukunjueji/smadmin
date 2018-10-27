@@ -8,6 +8,7 @@ import com.uc.training.smadmin.gds.dao.GoodsDao;
 import com.uc.training.smadmin.gds.re.GoodsDetailRE;
 import com.uc.training.smadmin.gds.re.GoodsRE;
 import com.uc.training.smadmin.gds.re.GoodsStokeRE;
+import com.uc.training.smadmin.gds.re.PropertyUrlRE;
 import com.uc.training.smadmin.gds.vo.GoodsStokeVO;
 import com.uc.training.smadmin.ord.dao.CartGoodsDao;
 import com.uc.training.smadmin.ord.dao.OrderDao;
@@ -15,6 +16,7 @@ import com.uc.training.smadmin.ord.dao.OrderGoodsDao;
 import com.uc.training.smadmin.ord.model.CartGoods;
 import com.uc.training.smadmin.ord.model.Order;
 import com.uc.training.smadmin.ord.model.OrderGoods;
+import com.uc.training.smadmin.ord.re.OrderGoodsDetailRe;
 import com.uc.training.smadmin.ord.re.OrderRe;
 import com.uc.training.smadmin.ord.re.OrderStatusRe;
 import com.uc.training.smadmin.ord.service.OrderService;
@@ -63,10 +65,11 @@ public class OrderServiceImpl implements OrderService {
       OrdCartGoodsVo ordCartgoodsVo = new OrdCartGoodsVo();
       GoodsDetailRE gdDTO ;
       gdDTO = goodsDao.getGoodsDetailByPropertyId(cartGoods.getGoodsPropertyId());
+      List<PropertyUrlRE> list2=goodsDao.getPicUrlByPropertyId(cartGoods.getGoodsPropertyId());
       ordCartgoodsVo.setCartId(cartGoods.getId());
       ordCartgoodsVo.setGoodsId(cartGoods.getGoodsId());
       ordCartgoodsVo.setGdsName(gdDTO.getName());
-      ordCartgoodsVo.setGdsUrl(gdDTO.getPicUrl().get(0).getPicUrl());
+      ordCartgoodsVo.setGdsUrl(list2.get(0).getPicUrl());
       ordCartgoodsVo.setPropertyId(cartGoods.getGoodsPropertyId());
       ordCartgoodsVo.setProperty(gdDTO.getProperty());
       ordCartgoodsVo.setSalePrice(gdDTO.getSalePrice());
@@ -250,9 +253,35 @@ public class OrderServiceImpl implements OrderService {
     return list;
   }
 
+  /**
+   * 逻辑删除订单
+   * @param list
+   * @return
+   */
   @Override
   public int logicDelOrder(List<OrderRe> list) {
     return orderDao.logicDelOrder(list);
+  }
+
+  @Override
+  public List<OrderGoodsDetailRe> getOrderGdsById(Integer id){
+    List<OrderGoods> orderGdslist;
+    List<OrderGoodsDetailRe> list = new ArrayList<>();
+    orderGdslist = orderGoodsDao.getOrderGoodsByOrderId(id);
+    if(orderGdslist.size()<1){
+      return null;
+    }
+    for(OrderGoods orderGoods:orderGdslist){
+      GoodsDetailRE gdDTO ;
+      OrderGoodsDetailRe orderGoodsDetailRe = new OrderGoodsDetailRe();
+      gdDTO = goodsDao.getGoodsDetailByPropertyId(orderGoods.getGoodsPropertyId());
+      orderGoodsDetailRe.setGoodsName(gdDTO.getName());
+      orderGoodsDetailRe.setGoodsNum(orderGoods.getGoodsNum());
+      orderGoodsDetailRe.setGoodsProperty(gdDTO.getProperty());
+      orderGoodsDetailRe.setGoodsPrice(gdDTO.getSalePrice());
+      list.add(orderGoodsDetailRe);
+    }
+    return list;
   }
 }
 

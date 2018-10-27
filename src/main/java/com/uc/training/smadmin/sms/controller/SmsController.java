@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @Author: ä½™æ—­ä¸œ
+ * @Author: ÓàĞñ¶«
  * @Date: 2018/10/22 13:52
  * @Description:
  */
@@ -33,7 +33,7 @@ public class SmsController extends BaseController {
     private SmsService smsService;
 
     /**
-     * è·å–åˆ†é¡µåˆ—è¡¨
+     * »ñÈ¡·ÖÒ³ÁĞ±í
      * @param smsListVO
      * @return
      */
@@ -55,8 +55,8 @@ public class SmsController extends BaseController {
             res = Result.getSuccessResult(pageVO);
 
         } catch (Exception e) {
-            logger.error("æŸ¥è¯¢ç¬¦åˆæ¡ä»¶é”™è¯¯ï¼", e);
-            res = Result.getBusinessException("è·å–smsåˆ†é¡µå¤±è´¥", null);
+            logger.error("²éÑ¯·ûºÏÌõ¼ş´íÎó£¡", e);
+            res = Result.getBusinessException("»ñÈ¡sms·ÖÒ³Ê§°Ü", null);
         }
         return res;
     }
