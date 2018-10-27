@@ -8,7 +8,7 @@ import com.uc.training.smadmin.ord.model.OrderGoods;import java.util.List;
 public interface OrderGoodsDao{
 
 	/**
-	 * 通过主键来查找查找
+	 * 通过主键来查找
 	 */
 	 public List<OrderGoods>  getOrderGoodsById(Long id);
 

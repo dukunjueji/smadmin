@@ -90,7 +90,6 @@ public class OrderServiceImpl implements OrderService {
   @Override
   public List<OrdOrderGoodsVo> getOrderGoodsById(List<OrdOrderGoodsVo> orderGodsList) {
     List<OrdOrderGoodsVo> list = new ArrayList<>();
-    //orderList = cartGoodsDao.getCartGoodsById(1L);
     for (int i = 0;i < orderGodsList.size(); i ++) {
       OrdOrderGoodsVo ordOrderGoodsVo = new OrdOrderGoodsVo();
       GoodsDetailRE gdDTO = goodsDao.getGoodsDetailByPropertyId(orderGodsList.get(i).getPropertyId());
@@ -104,7 +103,6 @@ public class OrderServiceImpl implements OrderService {
       ordOrderGoodsVo.setDiscountPrice(gdDTO.getDiscountPrice());
       ordOrderGoodsVo.setStatus(gdDTO.getStatus());
       ordOrderGoodsVo.setIsDiscount(gdDTO.getIsDiscount());
-      //ordCartgoodsVo.setNum(cartGoods.getGoodsNum());
       list.add(ordOrderGoodsVo);
     }
     return list;
@@ -147,7 +145,7 @@ public class OrderServiceImpl implements OrderService {
         temp.append("您的商品："+goodsStokeRE.getGoodsName()+"\n"+"规格:");
         temp.append(goodsStokeRE.getGoodsProperty()+"已经被删除了，点击确认返回购物车，再重新选择");
         orderRe.setShowStatus(temp.toString());
-        orderRe.setGoodsStatus(0);
+        orderRe.setGoodsStatus(OrderEnum.NOORDER.getKey());
         list.add(orderRe);
         return list;
       }
@@ -156,7 +154,7 @@ public class OrderServiceImpl implements OrderService {
         temp.append("您的商品："+goodsStokeRE.getGoodsName()+"\n"+"规格:");
         temp.append(goodsStokeRE.getGoodsProperty()+"已经被下架了，点击确认返回购物车，再重新选择");
         orderRe.setShowStatus(temp.toString());
-        orderRe.setGoodsStatus(0);
+        orderRe.setGoodsStatus(OrderEnum.NOORDER.getKey());
         list.add(orderRe);
         return list;
       }
@@ -165,20 +163,20 @@ public class OrderServiceImpl implements OrderService {
         temp.append("您的商品："+goodsStokeRE.getGoodsName()+"\n"+"规格:");
         temp.append(goodsStokeRE.getGoodsProperty()+"已经被卖完了，点击返回购物车，再重新选择");
         orderRe.setShowStatus(temp.toString());
-        orderRe.setGoodsStatus(0);
+        orderRe.setGoodsStatus(OrderEnum.NOORDER.getKey());
         list.add(orderRe);
         return list;
       }
     }
     //插入用户订单表
     Order order = new Order();
-    order.setMemberId(1L);
+    order.setMemberId(orderInfoListNow.get(orderInfoListNow.size() - 2).getMemberId());
     order.setOrderPrice(orderInfoListNow.get(orderInfoListNow.size() - 1).getTotalPrice());
     order.setPayPrice(orderInfoListNow.get(orderInfoListNow.size() - 1).getTotalPrice());
     order.setReceiptAddress(orderInfoListNow.get(orderInfoListNow.size() - 2).getReceiptAddress());
     order.setReceiptName(orderInfoListNow.get(orderInfoListNow.size() - 2).getReceiptName());
     order.setReceiptTel(orderInfoListNow.get(orderInfoListNow.size() - 2).getReceiptTel());
-    order.setStatus(1);
+    order.setStatus(OrderEnum.WAITPAY.getKey());
     order.setIsDelete(0);
     //生成订单编号
     order.setOrderNum(UUIDUtil.getUuidByType(UUIDTypeEnum.ORDERID.getType()));
@@ -204,11 +202,11 @@ public class OrderServiceImpl implements OrderService {
       //删除购物车信息表
       OrdCartGoodsVo ordCartGoodsVo = new OrdCartGoodsVo();
       ordCartGoodsVo.setPropertyId(orderInfoListNow.get(i).getPropertyId());
-      ordCartGoodsVo.setMemberId(1L);
-      //cartGoodsDao.deleteCartGoods(ordCartGoodsVo);
+      ordCartGoodsVo.setMemberId(orderInfoListNow.get(orderInfoListNow.size() - 2).getMemberId());
+      cartGoodsDao.deleteCartGoods(ordCartGoodsVo);
     }
     orderRe.setShowStatus("已成功生成订单");
-    orderRe.setGoodsStatus(1);
+    orderRe.setGoodsStatus((int) OrderEnum.WAITPAY.getKey().longValue());
     orderRe.setOrderNum(order.getOrderNum());
     list.add(orderRe);
     return list;

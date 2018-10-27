@@ -2,9 +2,10 @@ package com.uc.training.common.enums;
 /**
  * @Author: hhj
  * @Date: 2018/10/25 16:52
- * @Description: 订单状态枚举类：1-待付款 2-取消订单 3-待发货 4-待收货 5-已完成
+ * @Description: 订单状态枚举类：0-未生成1-待付款 2-取消订单 3-待发货 4-待收货 5-已完成
  */
 public enum OrderEnum {
+  NOORDER(0,"未生成"),
   WAITPAY(1, "待付款"),
   CANCEL(2,"取消订单"),
   WAITSHIP(3,"代发货"),
