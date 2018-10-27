@@ -159,6 +159,13 @@
 		 WHERE 1=1
 	</select>
 
+	<!-- 查询用户余额 -->
+	<select id="queryBalances" resultClass="java.lang.Double" parameterClass="java.lang.Long">
+		 SELECT balance
+		 FROM t_bd_member s
+		 WHERE s.id=#memberid#
+	</select>
+
 	<!-- 注册会员信息 -->
 	<insert id="insertMember" parameterClass="com.uc.training.smadmin.bd.model.Member">
 		 insert into t_bd_member

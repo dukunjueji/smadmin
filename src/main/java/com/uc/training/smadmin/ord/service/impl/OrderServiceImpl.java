@@ -83,6 +83,11 @@ public class OrderServiceImpl implements OrderService {
     return list;
   }
 
+  /**
+   * 获取订单列表
+   * @param orderGodsList
+   * @return
+   */
   @Override
   public List<OrdOrderGoodsVo> getOrderGoodsById(List<OrdOrderGoodsVo> orderGodsList) {
     List<OrdOrderGoodsVo> list = new ArrayList<>();
@@ -90,9 +95,10 @@ public class OrderServiceImpl implements OrderService {
     for (int i = 0;i < orderGodsList.size(); i ++) {
       OrdOrderGoodsVo ordOrderGoodsVo = new OrdOrderGoodsVo();
       GoodsDetailRE gdDTO = goodsDao.getGoodsDetailByPropertyId(orderGodsList.get(i).getPropertyId());
+      List<PropertyUrlRE> tempList=goodsDao.getPicUrlByPropertyId(orderGodsList.get(i).getPropertyId());
       ordOrderGoodsVo.setGoodsId(orderGodsList.get(i).getGoodsId());
       ordOrderGoodsVo.setGdsName(gdDTO.getName());
-      ordOrderGoodsVo.setGdsUrl(gdDTO.getPicUrl().get(0).getPicUrl());
+      ordOrderGoodsVo.setGdsUrl(tempList.get(0).getPicUrl());
       ordOrderGoodsVo.setPropertyId(orderGodsList.get(i).getPropertyId());
       ordOrderGoodsVo.setProperty(gdDTO.getProperty());
       ordOrderGoodsVo.setSalePrice(gdDTO.getSalePrice());
@@ -140,7 +146,7 @@ public class OrderServiceImpl implements OrderService {
       if (goodsStokeRE.getIsDelete() == GoodsStatusEnum.GoodsIsDelete.getType()){
         StringBuilder temp = new StringBuilder();
         temp.append("您的商品："+goodsStokeRE.getGoodsName()+"\n"+"规格:");
-        temp.append(goodsStokeRE.getGoodsProperty()+"已经被删除了，请返回购物车重新选择");
+        temp.append(goodsStokeRE.getGoodsProperty()+"已经被删除了，点击确认返回购物车，再重新选择");
         orderRe.setShowStatus(temp.toString());
         orderRe.setGoodsStatus(0);
         list.add(orderRe);
@@ -149,7 +155,7 @@ public class OrderServiceImpl implements OrderService {
       if (goodsStokeRE.getStatus() == GoodsStatusEnum.GoodsIsShelves.getType()){
         StringBuilder temp = new StringBuilder();
         temp.append("您的商品："+goodsStokeRE.getGoodsName()+"\n"+"规格:");
-        temp.append(goodsStokeRE.getGoodsProperty()+"已经被下架了，请返回购物车重新选择");
+        temp.append(goodsStokeRE.getGoodsProperty()+"已经被下架了，点击确认返回购物车，再重新选择");
         orderRe.setShowStatus(temp.toString());
         orderRe.setGoodsStatus(0);
         list.add(orderRe);
@@ -158,7 +164,7 @@ public class OrderServiceImpl implements OrderService {
       if (goodsStokeRE.getStoke() < orderInfoListNow.get(i).getNum()){
         StringBuilder temp = new StringBuilder();
         temp.append("您的商品："+goodsStokeRE.getGoodsName()+"\n"+"规格:");
-        temp.append(goodsStokeRE.getGoodsProperty()+"已经被卖完了，请返回购物车重新选择");
+        temp.append(goodsStokeRE.getGoodsProperty()+"已经被卖完了，点击返回购物车，再重新选择");
         orderRe.setShowStatus(temp.toString());
         orderRe.setGoodsStatus(0);
         list.add(orderRe);
@@ -205,6 +211,7 @@ public class OrderServiceImpl implements OrderService {
     }
     orderRe.setShowStatus("已成功生成订单");
     orderRe.setGoodsStatus(1);
+    orderRe.setOrderNum(order.getOrderNum());
     list.add(orderRe);
     return list;
   }
@@ -262,6 +269,17 @@ public class OrderServiceImpl implements OrderService {
   public int logicDelOrder(List<OrderRe> list) {
     return orderDao.logicDelOrder(list);
   }
+
+  /**
+   * 更新订单状态
+   *
+   * @param ordOrderVo
+   */
+  @Override
+  public void updateOrder(OrdOrderVo ordOrderVo) {
+    orderDao.updateOrder(ordOrderVo);
+  }
+
 
   @Override
   public List<OrderGoodsDetailRe> getOrderGdsById(Integer id){

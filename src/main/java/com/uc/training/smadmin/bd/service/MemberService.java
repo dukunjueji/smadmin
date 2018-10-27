@@ -6,6 +6,9 @@ import com.uc.training.smadmin.bd.re.MemberInfoRE;
 import com.uc.training.smadmin.bd.vo.ChargeBalanceVO;
 import com.uc.training.smadmin.bd.vo.MemberInfoVO;
 import com.uc.training.smadmin.bd.vo.MemberLoginVO;
+import com.uc.training.smadmin.ord.re.OrderRe;
+
+import java.util.List;
 
 /**
  * 版权说明：Copyright (c) 2018 ucarinc. All Rights Reserved.
@@ -48,6 +51,14 @@ public interface MemberService {
     *@throws：
     */
     void updateMemberBalance(Member member);
+
+    /**
+     * 查询用户订单金额
+     * @param memberInfoVO
+     * @return 返回订单状态码和提示信息
+     */
+
+    List<OrderRe> queryBalances(List<MemberInfoVO> memberInfoVO);
 
     /**
     *说明：通过会员id得到会员的详细信息(包括会员等级)

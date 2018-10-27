@@ -4,6 +4,7 @@ import com.uc.training.smadmin.bd.model.Member;
 import com.uc.training.smadmin.bd.re.MemberDetailRE;
 import com.uc.training.smadmin.bd.re.MemberInfoRE;
 import com.uc.training.smadmin.bd.vo.ChargeBalanceVO;
+import com.uc.training.smadmin.bd.vo.MemberInfoVO;
 import com.uc.training.smadmin.bd.vo.MemberGrowthVO;
 import com.uc.training.smadmin.bd.vo.MemberIntegralVO;
 import com.uc.training.smadmin.bd.vo.MemberLoginVO;
@@ -51,6 +52,13 @@ public interface MemberDao {
      * @throws：
      */
     void updateMemberBalance(Member member);
+
+    /**
+     * 查询余额
+     * @param memberId
+     * @return
+     */
+    Double queryBalances(Long memberId);
 
     /**
      * 说明：通过会员id得到会员的详细信息(包括会员等级)

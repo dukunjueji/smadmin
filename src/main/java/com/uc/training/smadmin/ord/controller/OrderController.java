@@ -1,5 +1,9 @@
 package com.uc.training.smadmin.ord.controller;
 
+import com.uc.training.common.annotation.AccessLogin;
+import com.uc.training.smadmin.bd.model.Member;
+import com.uc.training.smadmin.bd.service.MemberService;
+import com.uc.training.smadmin.bd.vo.MemberInfoVO;
 import com.uc.training.smadmin.ord.re.OrderGoodsDetailRe;
 import com.uc.training.smadmin.ord.re.OrderRe;
 import com.ycc.base.common.Result;
@@ -19,6 +23,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.stringtemplate.v4.ST;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -40,6 +45,9 @@ public class OrderController extends BaseController {
 
   @Autowired
   GoodsService goodsService;
+
+  @Autowired
+  MemberService memberService;
 
   @ResponseBody
   @RequestMapping(value = "getCartList.do_", method = RequestMethod.GET)
@@ -179,4 +187,20 @@ public class OrderController extends BaseController {
     result.setRe(list);
     return result;
   }
+
+    /**
+     * 查询用户余额是否满足订单所需金额
+     * @param orderPayInfo
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "queryBalances.do_",method = RequestMethod.POST)
+    public Result queryBalances(String orderPayInfo){
+        List<MemberInfoVO> orderPayInfoNow = (List<MemberInfoVO>) JSONArray.toList(JSONArray.fromObject(orderPayInfo), new MemberInfoVO(), new JsonConfig());
+        List<OrderRe> list= memberService.queryBalances(orderPayInfoNow);
+        Result result =new Result();
+        result.setRe(list);
+        return result;
+    }
+
 }

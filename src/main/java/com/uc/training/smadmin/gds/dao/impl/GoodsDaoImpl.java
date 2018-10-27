@@ -43,8 +43,8 @@ public class GoodsDaoImpl  extends CarIsIbatisDaoImpl implements GoodsDao {
     }
 
     @Override
-    public int updateSales(HashMap map) {
-        return this.update("com.uc.training.smadmin.gds.dao.GoodsDao.updateSales",map);
+    public int updateSales(GoodsStokeVO goodsStokeVO) {
+        return this.update("com.uc.training.smadmin.gds.dao.GoodsDao.updateSales",goodsStokeVO);
     }
 
     @Override

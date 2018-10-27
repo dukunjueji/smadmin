@@ -69,4 +69,14 @@ public class OrderDaoImpl extends CarIsIbatisDaoImpl implements OrderDao {
 
     return this.update("com.uc.training.smadmin.ord.dao.OrderDao.logicDelOrder",list);
   }
+
+	/**
+	 * 更新订单状态
+	 *
+	 * @param ordOrderVo
+	 */
+	@Override
+	public void updateOrder(OrdOrderVo ordOrderVo) {
+		this.update("com.uc.training.smadmin.ord.dao.OrderDao.updateOrder",ordOrderVo);
+	}
 }

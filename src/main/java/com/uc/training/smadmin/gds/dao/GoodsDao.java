@@ -47,10 +47,10 @@ public interface GoodsDao {
 
     /**
      * 更新销量
-     * @param map key为goodsId、sales
+     * @param goodsStokeVO key为goodsId、sales
      * @return
      */
-    public int updateSales(HashMap map);
+    public int updateSales(GoodsStokeVO goodsStokeVO);
 
     /**
      * 通过商品id获取所有规格的商品详情
