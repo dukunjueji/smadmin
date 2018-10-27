@@ -46,6 +46,7 @@ public class CategoryController extends BaseController {
         //获取所有类型
         List<CategoryRE> list = categoryService.getCategoryList();
 
+        //判空
         if (list == null && list.isEmpty()) {
             return Result.getSuccessResult(list);
         }
@@ -60,6 +61,12 @@ public class CategoryController extends BaseController {
                 categoryList.add(categoryRE);
             }
         }
+
+        // 判空
+        if (categoryList == null && categoryList.isEmpty()) {
+            return Result.getSuccessResult(categoryList);
+        }
+
         //父类分类中增加子类分类
         for (CategoryRE category : categoryList) {
             category.setChildren(getChildren(category.getId(), list));
@@ -85,7 +92,7 @@ public class CategoryController extends BaseController {
         }
         /*
         //child为空时，停止查询
-        if (child.size() == 0) {
+        if (child.isEmpty()) {
             return null;
         }
         //递归查找子分类中的分类
