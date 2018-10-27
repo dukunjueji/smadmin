@@ -7,6 +7,7 @@ import com.ycc.base.common.Result;
 import com.uc.training.common.bean.AccessToken;
 import com.uc.training.common.constant.Constant;
 import org.apache.commons.lang.StringUtils;
+import org.apache.poi.ss.formula.functions.T;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.method.HandlerMethod;
@@ -32,7 +33,7 @@ public class TokenInterceptor implements HandlerInterceptor {
             //检查是否有AccessLogin注释，有则跳过认证
             AccessLogin accessLogin = ((HandlerMethod) handler).getMethodAnnotation(AccessLogin.class);
             // 没有注释不验证
-            if (accessLogin == null) {
+            if (accessLogin != null && !accessLogin.required()) {
                 return true;
             } else {
                 // 从 http 请求头中取出 token及uid
@@ -43,17 +44,17 @@ public class TokenInterceptor implements HandlerInterceptor {
                     if (accessToken.isVerify()) {
                         boolean isExpire = accessToken.isExpire();
                         if (isExpire) {
-                            responseMsg(response, Result.getServiceError("登录失效", String.valueOf(Constant.LOGIN_INVALID_STATUS)));
+                            responseMsg(response, Result.getServiceError("token invalid", null));
                             return false;
                         }
                         request.setAttribute(Constant.REQUEST_HEADER_UID, accessToken.getId());
                         return true;
                     } else {
-                        responseMsg(response, Result.getServiceError("无效token", String.valueOf(Constant.LOGIN_INVALID_STATUS)));
+                        responseMsg(response, Result.getServiceError("token wrong", null));
                         return false;
                     }
                 } else {
-                    responseMsg(response, Result.getServiceError("token不存在", String.valueOf(Constant.LOGIN_INVALID_STATUS)));
+                    responseMsg(response, Result.getServiceError("token does not exist", null));
                     return false;
                 }
             }
@@ -82,7 +83,6 @@ public class TokenInterceptor implements HandlerInterceptor {
     private void responseMsg(HttpServletResponse response, Result result) throws IOException {
         response.setCharacterEncoding("utf-8");
         response.setContentType("application/json; charset=utf-8");
-        response.setHeader("Content-Type", "text/html;charset=UTF-8");
         String json = JSONObject.toJSONString(result);
         PrintWriter out = response.getWriter();
         out.print(json);

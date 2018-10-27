@@ -46,6 +46,7 @@ public class SysUserController extends BaseController {
      * @version 1.0 2018/10/18 15:22 by 吴佰川（baichuan.wu@ucarinc.com）创建
      */
     @ResponseBody
+    @AccessLogin(required = false)
     @RequestMapping("login.do_")
     public Result<UserLoginRE> login(@Validated UserLoginVO userLoginVO) {
         Result<UserLoginRE> res;
@@ -77,7 +78,6 @@ public class SysUserController extends BaseController {
      * @return com.ycc.base.common.Result<com.uc.training.smadmin.sys.re.UserInfoRE>
      * @version 1.0 2018/10/18 20:18 by 吴佰川（baichuan.wu@ucarinc.com）创建
      */
-    @AccessLogin
     @ResponseBody
     @RequestMapping("getUserInfo.do_")
     public Result<UserInfoRE> getUserInfo() {
@@ -116,7 +116,6 @@ public class SysUserController extends BaseController {
      * @param userEditPasswordVo 用户修改密码参数vo
      * @return com.ycc.base.common.Result<java.lang.Integer>
      */
-    @AccessLogin
     @ResponseBody
     @RequestMapping("editPassword.do_")
     public Result<Integer> editPassword(@Validated UserEditPasswordVo userEditPasswordVo) {
