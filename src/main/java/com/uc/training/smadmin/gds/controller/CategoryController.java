@@ -40,7 +40,6 @@ public class CategoryController extends BaseController {
      * @return
      */
     @ResponseBody
-    @AccessLogin
     @RequestMapping(value = "getCategoryList.do_", method = RequestMethod.GET)
     public Result<List<CategoryRE>> getCategoryList() {
         //获取所有类型
