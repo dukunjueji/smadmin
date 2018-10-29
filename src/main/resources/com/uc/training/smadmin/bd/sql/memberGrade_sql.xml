@@ -51,23 +51,13 @@
 	</sql>
 
 	<!-- 列表查询 -->
-	<select id="queryMemberGradeList" parameterClass="com.uc.training.smadmin.bd.vo.MemberGradeListVO" resultClass="com.uc.training.smadmin.bd.model.MemberGrade">
+	<select id="queryMemberGradeList" resultClass="com.uc.training.smadmin.bd.model.MemberGrade">
 		 SELECT
 			 s.name AS name,
 			 s.min_growth AS minGrowth,
 			 s.max_growth AS maxGrowth,
-			 s.discount AS discount,
-			 s.create_time AS createTime,
-			 s.modify_time AS modifyTime,
-			 s.create_emp AS createEmp,
-			 s.modify_emp AS modifyEmp
+			 s.discount AS discount
 		 FROM t_bd_member_grade s
-		 WHERE 1=1
-		 <isNotEmpty property="offset">
-		 	 limit #offset#, #pageSize#
-		 </isNotEmpty>
-		 <!--  <isEmpty property="queryType"> order by s.id DESC </isEmpty>  -->
-		 <!--  <isNotEmpty property="rows" prepend=" "> limit #start#,#rows#</isNotEmpty>/>  -->
 	</select>
 
 	<!-- 查找数据总记录数 -->
@@ -88,8 +78,9 @@
 
 	<!-- 通过主键更新 -->
 	<update id="updateMemberGradeById" parameterClass="com.uc.training.smadmin.bd.model.MemberGrade">
-		 update t_bd_member_grade set
-		discount = #discount#, modify_time = #modifyTime#, modify_emp = #modifyEmp#
+		update t_bd_member_grade set
+			discount = #discount#,
+			modify_emp = #modifyEmp#
 		where id=#id#
 	</update>
 

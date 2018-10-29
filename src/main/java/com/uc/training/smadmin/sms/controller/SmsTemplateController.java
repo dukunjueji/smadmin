@@ -8,6 +8,8 @@ import com.uc.training.common.vo.PageVO;
 import com.uc.training.smadmin.sms.model.SmsTemplate;
 import com.uc.training.smadmin.sms.service.SmsTemplateService;
 import com.uc.training.smadmin.sms.vo.SmsTemplateListVO;
+import net.sf.json.JSONArray;
+import net.sf.json.JsonConfig;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.List;
-import java.util.Map;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 
 /**
@@ -25,7 +29,7 @@ import java.util.Map;
  * @Description: 短信模板控制器
  */
 @Controller
-@RequestMapping("api/smsTemplate")
+@RequestMapping("admin/smsTemplate")
 public class SmsTemplateController extends BaseController {
 
     @Autowired
@@ -62,7 +66,7 @@ public class SmsTemplateController extends BaseController {
      * @return
      */
     @AccessLogin
-    @RequestMapping(value = "/deleteTemplate", method = RequestMethod.POST)
+    @RequestMapping(value = "/deleteTemplate.do_", method = RequestMethod.POST)
     @ResponseBody
     public Result<Integer> deleteTemplate(Long id){
         return Result.getSuccessResult(smsTemplateService.deleteTemplateById(id));
@@ -82,11 +86,10 @@ public class SmsTemplateController extends BaseController {
                 StringUtils.isEmpty(template.getContent()) || StringUtils.isEmpty(template.getTypeDes())){
             return Result.getBusinessException("短信模板添加失败", null);
         }
-        System.out.println(template.getType());
         SmsTemplate t1 = smsTemplateService.getTemplateById(template.getId());
         // 编码已存在
         SmsTemplate temp = smsTemplateService.getByCode(template.getCode());
-        if (temp != null && !temp.getCode().equals(template.getCode())) {
+        if (temp != null && !temp.getCode().equals(t1.getCode())) {
             return Result.getBusinessException("编码已存在", null);
         }
         template.setModifyEmp(getUid());
@@ -126,6 +129,29 @@ public class SmsTemplateController extends BaseController {
     @RequestMapping(value = "getReplaceString.do_", method = RequestMethod.GET)
     public Result<Map<String, String>> getReplaceString(){
         return Result.getSuccessResult(SmsTemplateReplaceEnum.getMap());
+    }
+
+    /**
+     * 批量删除
+     * @param ids
+     * @return
+     */
+    @AccessLogin
+    @ResponseBody
+    @RequestMapping(value = "batchDeleteTemplate.do_", method = RequestMethod.POST)
+    public Result<Integer> batchDeleteTemplate(String ids){
+        if (ids == null) {
+            return Result.getBusinessException("删除失败", null);
+        }
+        String[] sp = StringUtils.split(ids.substring(1, ids.length()-1), ',');
+        if (sp == null || sp.length==0){
+            return Result.getBusinessException("删除失败", null);
+        }
+        List<Long> list = new ArrayList<>();
+        for (String s : sp) {
+            list.add(Long.parseLong(s));
+        }
+        return Result.getSuccessResult(smsTemplateService.batchDeleteById(list));
     }
 
 }

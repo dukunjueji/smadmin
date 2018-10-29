@@ -42,7 +42,8 @@ public class SmsTemplateDaoImpl extends CarIsIbatisDaoImpl implements SmsTemplat
      */
     @Override
     public Integer deleteTemplate(Long id) {
-        return this.deleteObject(namespace + "deleteById", id);
+        int res = this.deleteObject(namespace + "deleteById", id);
+        return res;
     }
 
     /**
@@ -82,6 +83,16 @@ public class SmsTemplateDaoImpl extends CarIsIbatisDaoImpl implements SmsTemplat
     @Override
     public SmsTemplate getByCode(String code) {
         return (SmsTemplate) this.queryForObject(namespace + "getByCode", code);
+    }
+
+    /**
+     * 根据ID列表批量删除
+     * @param ids
+     * @return
+     */
+    @Override
+    public Integer batchDeleteById(List<Long> ids){
+        return this.deleteObject(namespace + "batchDeleteById", ids);
     }
 
 }

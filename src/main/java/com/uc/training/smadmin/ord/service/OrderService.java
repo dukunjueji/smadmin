@@ -1,5 +1,6 @@
 package com.uc.training.smadmin.ord.service;
 
+import com.uc.training.smadmin.ord.re.OrderConfirmRE;
 import com.uc.training.smadmin.ord.re.OrderRe;
 import com.uc.training.smadmin.ord.re.OrderStatusRe;
 import com.uc.training.smadmin.ord.vo.OrdCartGoodsVo;
@@ -51,7 +52,7 @@ public interface OrderService {
   /**
    * 更新订单信息
    */
-  List<OrderRe> updateOrderInfo(List<OrdOrderGoodsVo> orderInfoListNow);
+  List<OrderConfirmRE> updateOrderInfo(List<OrdOrderGoodsVo> orderInfoListNow);
 
 
   /**

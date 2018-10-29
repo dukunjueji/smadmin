@@ -3,15 +3,15 @@ package com.uc.training.smadmin.bd.controller;
 import com.ycc.base.common.Result;
 import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
-import com.uc.training.common.vo.PageVO;
 import com.uc.training.smadmin.bd.model.MemberGrade;
 import com.uc.training.smadmin.bd.service.MemberGradeService;
-import com.uc.training.smadmin.bd.vo.MemberGradeListVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 /**
  * @Author: 余旭东
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @Description:
  */
 @Controller
-@RequestMapping("/api/memberGrade")
+@RequestMapping("/admin/memberGrade")
 public class MemberGradeController extends BaseController {
 
     @Autowired
@@ -31,21 +31,9 @@ public class MemberGradeController extends BaseController {
      */
     @AccessLogin
     @ResponseBody
-    @RequestMapping(value = "getDemoPage.do_", method = RequestMethod.GET)
-    public Result<PageVO<MemberGrade>> getDemoPage(MemberGradeListVO memberGradeListVO) {
-        Result<PageVO<MemberGrade>> res;
-        try {
-            PageVO<MemberGrade> pageVO = new PageVO<MemberGrade>();
-            pageVO.setPageIndex(memberGradeListVO.getPageIndex());
-            pageVO.setPageSize(memberGradeListVO.getPageSize());
-            pageVO.setTotal(memberGradeService.queryMemberGradeCount());
-            pageVO.setDataList(memberGradeService.getList(memberGradeListVO));
-            res = Result.getSuccessResult(pageVO);
-        } catch (Exception e) {
-            logger.error("查询符合条件错误！", e);
-            res = Result.getBusinessException("获取demo分页失败", null);
-        }
-        return res;
+    @RequestMapping(value = "getMemberGrade.do_", method = RequestMethod.GET)
+    public Result<List<MemberGrade>> getDemoPage() {
+        return Result.getSuccessResult(memberGradeService.getList());
     }
 
 

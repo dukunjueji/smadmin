@@ -13,7 +13,7 @@ public interface MemberGradeService {
      * 获取会员等级列表
      * @return
      */
-    public List<MemberGrade> getList(MemberGradeListVO memberGradeListVO);
+    public List<MemberGrade> getList();
 
     /**
      * 修改会员等级

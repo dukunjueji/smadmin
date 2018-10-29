@@ -21,8 +21,8 @@ public class MemberGradeServiceImpl implements MemberGradeService {
     private MemberGradeDao memberGradeDao;
 
     @Override
-    public List<MemberGrade> getList(MemberGradeListVO memberGradeListVO) {
-        return memberGradeDao.queryMemberGradeList(memberGradeListVO);
+    public List<MemberGrade> getList() {
+        return memberGradeDao.queryMemberGradeList();
     }
 
     @Override
