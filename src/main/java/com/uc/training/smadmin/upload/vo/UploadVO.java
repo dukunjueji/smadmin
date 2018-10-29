@@ -1,5 +1,7 @@
 package com.uc.training.smadmin.upload.vo;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.Serializable;
 
 /**
@@ -10,25 +12,30 @@ import java.io.Serializable;
  * @date 2018/10/29
  */
 public class UploadVO implements Serializable{
+
     private static final long serialVersionUID = 59283449140196354L;
+    /**
+     * 文件类型
+     */
+    private MultipartFile file;
+    /**
+     * Base64类型
+     */
+    private String imageText;
 
-    private String name;
-
-    private String OriginalName;
-
-    public String getName() {
-        return name;
+    public MultipartFile getFile() {
+        return file;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFile(MultipartFile file) {
+        this.file = file;
     }
 
-    public String getOriginalName() {
-        return OriginalName;
+    public String getImageText() {
+        return imageText;
     }
 
-    public void setOriginalName(String originalName) {
-        OriginalName = originalName;
+    public void setImageText(String imageText) {
+        this.imageText = imageText;
     }
 }

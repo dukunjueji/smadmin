@@ -1,6 +1,6 @@
 package com.uc.training.smadmin.upload.service;
 
-import com.uc.training.smadmin.upload.vo.UploadVO;
+import com.uc.training.smadmin.upload.re.UploadRE;
 import com.uc.training.smadmin.utils.FileTypeUtil;
 import com.ycc.tools.upload.FileTransferUtils;
 import com.zuche.framework.enums.BusinessLineEnum;
@@ -37,10 +37,10 @@ public class UploadService {
      * @param file
      * @return
      */
-    public UploadVO imageUpload(MultipartFile file) {
+    public UploadRE imageUpload(MultipartFile file) {
 
         UDFSUploadResultVO resultVO;
-        UploadVO uploadVO = new UploadVO();
+        UploadRE uploadRE = new UploadRE();
 
         try {
             // 如果是FileInputStream类型，进行转换
@@ -59,15 +59,15 @@ public class UploadService {
 
             if(resultVO != null){
                 String testUdfs = FileTransferUtils.getUrlPrefix(); //需要灵活配置，写在配置文件
-                uploadVO.setName(testUdfs + resultVO.getOriginalName());//提供完整路径给前端
-                uploadVO.setOriginalName(resultVO.getOriginalName()); //提供完整路径给前端
+                uploadRE.setName(testUdfs + resultVO.getOriginalName());//提供完整路径给前端
+                uploadRE.setOriginalName(resultVO.getOriginalName()); //提供完整路径给前端
             }
 
         } catch (IOException e) {
             logger.error("读取源文件失败", e);
         }
 
-        return uploadVO;
+        return uploadRE;
     }
 
     private byte[] getByteArrayInputStreamResource(InputStream inputStream) throws IOException {
@@ -86,9 +86,9 @@ public class UploadService {
      * @param imageText
      * @return
      */
-    public UploadVO imageToTextUpload(String imageText) {
+    public UploadRE imageToTextUpload(String imageText) {
         UDFSUploadResultVO resultVO;
-        UploadVO uploadVO = new UploadVO();
+        UploadRE uploadRE = new UploadRE();
         try {
             // 如果是FileInputStream类型，进行转换
             BASE64Decoder decoder = new BASE64Decoder();
@@ -106,14 +106,14 @@ public class UploadService {
 
             if(resultVO != null){
                 String testUdfs = FileTransferUtils.getUrlPrefix(); //需要灵活配置，写在配置文件
-                uploadVO.setName(testUdfs + resultVO.getOriginalName()); //提供完整路径给前端
-                uploadVO.setOriginalName(resultVO.getOriginalName()); //提供完整路径给前端
+                uploadRE.setName(testUdfs + resultVO.getOriginalName()); //提供完整路径给前端
+                uploadRE.setOriginalName(resultVO.getOriginalName()); //提供完整路径给前端
             }
 
         } catch (IOException e) {
             logger.error("读取源文件失败", e);
         }
-        return uploadVO;
+        return uploadRE;
     }
 
     public static InputStream base64ToInputStream(String base64string){

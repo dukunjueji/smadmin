@@ -3,9 +3,9 @@ package com.uc.training.smadmin.upload.controller;
 import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.smadmin.upload.service.UploadService;
+import com.uc.training.smadmin.upload.re.UploadRE;
 import com.uc.training.smadmin.upload.vo.UploadVO;
 import com.ycc.base.common.Result;
-import com.zuche.framework.udfs.client.upload.UDFSUploadResultVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,43 +27,38 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/admin/upload")
 public class UploadController extends BaseController{
 
-    private static final Logger logger = LoggerFactory.getLogger(UploadController.class);
-
     @Autowired
     private UploadService uploadService;
 
     /**
      * 图片上传
-     * @param file
+     * @param uploadVO
      * @return
      */
     @ResponseBody
     @AccessLogin
     @RequestMapping(value = "/file.do_", method = RequestMethod.POST)
-    public Result<UploadVO> imageUpload(MultipartFile file) {
+    public Result<UploadRE> imageUpload(UploadVO uploadVO) {
 
-        String name = file.getOriginalFilename();
-
-        if (file.isEmpty()) {
+        if (uploadVO.getFile().isEmpty()) {
             Result.getBusinessException("上传文件不能为空" , null);
         }
-        if (file.getSize() >= 4194304) {
+        if (uploadVO.getFile().getSize() >= 4194304) {
             Result.getBusinessException("上传文件不能超过4M", null);
         }
 
-        return Result.getSuccessResult(uploadService.imageUpload(file));
+        return Result.getSuccessResult(uploadService.imageUpload(uploadVO.getFile()));
     }
 
     /**
      * 图片转String上传
-     * @param name
-     * @param imageText
+     * @param uploadVO
      * @return
      */
     @ResponseBody
     @AccessLogin
     @RequestMapping(value = "/text.do_", method = RequestMethod.POST)
-    public Result<UploadVO> imageToTextUpload(String name, String imageText) {
-        return Result.getSuccessResult(uploadService.imageToTextUpload(imageText));
+    public Result<UploadRE> imageToTextUpload(UploadVO uploadVO) {
+        return Result.getSuccessResult(uploadService.imageToTextUpload(uploadVO.getImageText()));
     }
 }
