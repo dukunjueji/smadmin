@@ -45,18 +45,18 @@ public class CategoryController extends BaseController {
     @RequestMapping(value = "getCategoryList.do_", method = RequestMethod.GET)
     public Result<List<CategoryRE>> getCategoryList() {
         //获取所有类型
-        List<CategoryRE> list = categoryService.getCategoryList();
+        List<CategoryRE> categoryOriginList = categoryService.getCategoryList();
 
         //判空
-        if (CollectionUtils.isEmpty(list)) {
-            return Result.getSuccessResult(list);
+        if (CollectionUtils.isEmpty(categoryOriginList)) {
+            return Result.getSuccessResult(categoryOriginList);
         }
 
         //最终的分类
         List<CategoryRE> categoryList = new ArrayList<>();
 
         //cateList中增加顶级分类
-        for (CategoryRE categoryRE : list) {
+        for (CategoryRE categoryRE : categoryOriginList) {
             //不存在父级id的分类为顶级分类
             if (categoryRE.getParentId() == 0) {
                 categoryList.add(categoryRE);
@@ -70,7 +70,16 @@ public class CategoryController extends BaseController {
 
         //父类分类中增加子类分类
         for (CategoryRE category : categoryList) {
-            category.setChildren(getChildren(category.getId(), list));
+            category.setChildren(getChildren(category.getId(), categoryOriginList));
+
+            //在原始的集合中去除第二层的分类
+            if (!CollectionUtils.isEmpty(category.getChildren())) {
+                categoryOriginList.removeAll(category.getChildren());
+            }
+            // 判空
+            if (CollectionUtils.isEmpty(categoryOriginList)) {
+                return Result.getSuccessResult(categoryList);
+            }
         }
         return Result.getSuccessResult(categoryList);
     }

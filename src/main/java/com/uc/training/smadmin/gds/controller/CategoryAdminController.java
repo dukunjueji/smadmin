@@ -1,6 +1,6 @@
 package com.uc.training.smadmin.gds.controller;
 
-import com.uc.training.common.annotation.AccessLogin;
+import com.mysql.jdbc.ResultSetRow;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.smadmin.gds.model.Category;
 import com.uc.training.smadmin.gds.re.CategoryRE;
@@ -42,32 +42,39 @@ public class CategoryAdminController extends BaseController {
     @RequestMapping(value = "getCategoryList.do_", method = RequestMethod.GET)
     public Result<List<CategoryRE>> getCategoryList() {
         //获取所有类型
-        List<CategoryRE> list = categoryService.getCategoryList();
+        List<CategoryRE> categoryOriginList = categoryService.getCategoryList();
 
         //判空
-        if (CollectionUtils.isEmpty(list)) {
-            return Result.getSuccessResult(list);
+        if (CollectionUtils.isEmpty(categoryOriginList)) {
+            return Result.getSuccessResult(categoryOriginList);
         }
 
         //最终的分类
         List<CategoryRE> categoryList = new ArrayList<>();
 
         //cateList中增加顶级分类
-        for (CategoryRE categoryRE : list) {
+        for (CategoryRE categoryRE : categoryOriginList) {
             //不存在父级id的分类为顶级分类
             if (categoryRE.getParentId() == 0) {
                 categoryList.add(categoryRE);
             }
         }
 
-        // 判空
-        if (CollectionUtils.isEmpty(categoryList)) {
+        // 去除原始集合中的顶级分类
+        categoryOriginList.removeAll(categoryList);
+
+        if (CollectionUtils.isEmpty(categoryOriginList)) {
             return Result.getSuccessResult(categoryList);
         }
 
         //父类分类中增加子类分类
         for (CategoryRE category : categoryList) {
-            category.setChildren(getChildren(category.getId(), list));
+            category.setChildren(getChildren(category.getId(), categoryOriginList));
+
+            // 判空
+            if (CollectionUtils.isEmpty(categoryOriginList)) {
+                return Result.getSuccessResult(categoryList);
+            }
         }
 
         return Result.getSuccessResult(categoryList);
@@ -76,18 +83,22 @@ public class CategoryAdminController extends BaseController {
     /**
      * 获取子类分类，参数：父级id，所有分类
      * @param id
-     * @param category
+     * @param categoryOriginList
      * @return
      */
-    public List<CategoryRE> getChildren(Long id, List<CategoryRE> category) {
+    public List<CategoryRE> getChildren(Long id, List<CategoryRE> categoryOriginList) {
 
         List<CategoryRE> child = new ArrayList<>();
 
         //子分类添加到父类分类的集合中
-        for (CategoryRE categoryRE : category) {
+        for (CategoryRE categoryRE : categoryOriginList) {
             if (categoryRE.getParentId() != null && categoryRE.getParentId().equals(id)) {
                 child.add(categoryRE);
             }
+        }
+
+        if (!CollectionUtils.isEmpty(child)) {
+            categoryOriginList.removeAll(child);
         }
 
         return child;
