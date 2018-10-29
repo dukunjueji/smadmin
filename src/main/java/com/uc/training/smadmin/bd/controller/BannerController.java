@@ -33,6 +33,7 @@ public class BannerController extends BaseController{
      * @return
      */
     @ResponseBody
+    @AccessLogin(required = false)
     @RequestMapping(value = "/getBannerList.do_", method = RequestMethod.GET)
     public Result<List<BannerRE>> getBannerList() {
         return Result.getSuccessResult(bannerService.getBannerList());
@@ -43,6 +44,7 @@ public class BannerController extends BaseController{
      * @return
      */
     @ResponseBody
+    @AccessLogin(required = false)
     @RequestMapping(value = "/insertClick.do_", method = RequestMethod.GET)
     public void insertClick(Long id) {
         bannerService.insertClick(id);
@@ -53,7 +55,6 @@ public class BannerController extends BaseController{
      * @return
      */
     @ResponseBody
-    @AccessLogin
     @RequestMapping(value = "/getAllBannerList.do_", method = RequestMethod.POST)
     public Result<List<BannerAllRE>> getAllBannerList() {
         return Result.getSuccessResult(bannerService.getAllBannerList());
@@ -64,7 +65,6 @@ public class BannerController extends BaseController{
      * @return
      */
     @ResponseBody
-    @AccessLogin
     @RequestMapping(value = "/updateBanner.do_", method = RequestMethod.POST)
     public Result updateBanner(Banner banner) {
         return Result.getSuccessResult(bannerService.updateBanner(banner));
@@ -76,7 +76,6 @@ public class BannerController extends BaseController{
      * @return
      */
     @ResponseBody
-    @AccessLogin
     @RequestMapping(value = "/deleteBannerById.do_", method = RequestMethod.POST)
     public Result updateBanner(Long id) {
         return Result.getSuccessResult(bannerService.deleteBannerById(id));
@@ -88,7 +87,6 @@ public class BannerController extends BaseController{
      * @return
      */
     @ResponseBody
-    @AccessLogin
     @RequestMapping(value = "/insertBannerById.do_", method = RequestMethod.POST)
     public Result insertBannerById(Banner banner) {
 

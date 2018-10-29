@@ -37,7 +37,6 @@ public class AddressController extends BaseController {
      * @return
      */
     @ResponseBody
-    @AccessLogin
     @RequestMapping("/getAddressById.do_")
     public Result<AddressRE> getAddressById(Long id) {
 
@@ -51,7 +50,6 @@ public class AddressController extends BaseController {
      * @return
      */
     @ResponseBody
-    @AccessLogin
     @RequestMapping("/getDefaultAddress.do_")
     public Result<AddressRE> getDefaultAddress() {
 
@@ -65,7 +63,6 @@ public class AddressController extends BaseController {
      * @return
      */
     @ResponseBody
-    @AccessLogin
     @RequestMapping("/getAddressList.do_")
     public Result<List<AddressRE>> getAddressListBy() {
 
@@ -80,7 +77,6 @@ public class AddressController extends BaseController {
      * @return
      */
     @ResponseBody
-    @AccessLogin
     @RequestMapping(value = "/addAddress.do_", method = RequestMethod.POST)
     public Result addAddress(AddressVO addressVO) {
 
@@ -113,7 +109,6 @@ public class AddressController extends BaseController {
      * @return
      */
     @ResponseBody
-    @AccessLogin
     @RequestMapping(value = "/editAddress.do_", method = RequestMethod.POST)
     public Result editAddress(@Validated AddressVO addressVO) {
 
@@ -141,7 +136,6 @@ public class AddressController extends BaseController {
      * @return
      */
     @ResponseBody
-    @AccessLogin
     @RequestMapping(value = "/deleteAddress.do_", method = RequestMethod.POST)
     public Result deleteAddress(Long id) {
         return Result.getSuccessResult(addressService.deleteAddressById(id));

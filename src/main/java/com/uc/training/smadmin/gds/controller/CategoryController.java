@@ -11,6 +11,7 @@ import com.zuche.base.common.web.taglib.util.StringUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -40,13 +41,14 @@ public class CategoryController extends BaseController {
      * @return
      */
     @ResponseBody
+    @AccessLogin(required = false)
     @RequestMapping(value = "getCategoryList.do_", method = RequestMethod.GET)
     public Result<List<CategoryRE>> getCategoryList() {
         //获取所有类型
         List<CategoryRE> list = categoryService.getCategoryList();
 
         //判空
-        if (list == null && list.isEmpty()) {
+        if (CollectionUtils.isEmpty(list)) {
             return Result.getSuccessResult(list);
         }
 
@@ -62,7 +64,7 @@ public class CategoryController extends BaseController {
         }
 
         // 判空
-        if (categoryList == null && categoryList.isEmpty()) {
+        if (CollectionUtils.isEmpty(categoryList)) {
             return Result.getSuccessResult(categoryList);
         }
 
@@ -108,7 +110,6 @@ public class CategoryController extends BaseController {
      * @return
      */
     @ResponseBody
-    @AccessLogin
     @RequestMapping(value = "addParentCategory.do_", method = RequestMethod.POST)
     public Result addParentCategory(@Validated CategoryVO categoryVO) {
 
@@ -136,7 +137,6 @@ public class CategoryController extends BaseController {
      * @return
      */
     @ResponseBody
-    @AccessLogin
     @RequestMapping(value = "addChildCategory.do_", method = RequestMethod.POST)
     public Result addChildCategory(@Validated CategoryVO categoryVO) {
 
@@ -166,7 +166,6 @@ public class CategoryController extends BaseController {
      * @return
      */
     @ResponseBody
-    @AccessLogin
     @RequestMapping(value = "logicDeleteCategory.do_", method = RequestMethod.POST)
     public Result deleteCategory(Long id) {
         return Result.getSuccessResult(categoryService.logicDeleteCategory(id));
@@ -179,7 +178,6 @@ public class CategoryController extends BaseController {
      * @return
      */
     @ResponseBody
-    @AccessLogin
     @RequestMapping(value = "editCategory.do_", method = RequestMethod.POST)
     public Result updateCategory(@Validated CategoryVO categoryVO) {
 
