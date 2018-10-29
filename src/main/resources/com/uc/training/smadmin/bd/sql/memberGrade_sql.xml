@@ -84,4 +84,22 @@
 		where id=#id#
 	</update>
 
+	<!-- 通过用户ID获取会员等级信息 -->
+	<select id="getByUId" parameterClass="Long" resultClass="com.uc.training.smadmin.bd.model.MemberGrade">
+		<![CDATA[
+		SELECT
+		  g.id,
+		  g.name,
+		  g.min_growth,
+		  g.max_growth,
+		  g.discount
+		FROM
+		  t_bd_member_grade g,
+		  t_bd_member m
+		WHERE
+		  m.id = #id# AND
+		  m.growth > g.min_growth AND
+		  m.growth <= g.max_growth
+		]]>
+	</select>
 </sqlMap>

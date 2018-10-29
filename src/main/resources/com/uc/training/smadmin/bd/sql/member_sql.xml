@@ -134,7 +134,7 @@
 	</sql>
 
 	<!-- 列表查询 -->
-	<select id="queryMemberList" resultClass="com.uc.training.smadmin.bd.model.Member">
+	<select id="queryMemberList" parameterClass="com.uc.training.smadmin.bd.vo.MemberListVO" resultClass="com.uc.training.smadmin.bd.model.Member">
 		 SELECT
 		 s.membername AS memberName,
 		 s.telephone AS telephone,
@@ -143,20 +143,18 @@
 		 s.integral AS integral,
 		 s.nickname AS nickname,
 		 s.balance AS balance,
-		 s.image_url AS imageUrl,
-		 s.create_time AS createTime,
-		 s.modify_time AS modifyTime,
-		 s.create_emp AS createEmp,
-		 s.modify_emp AS modifyEmp
+		 s.image_url AS imageUrl
 		 FROM t_bd_member s
 		 WHERE 1=1
+		<include refid="where_query"/>
 	</select>
 
 	<!-- 查找数据总记录数 -->
-	<select id="queryMemberCount" resultClass="java.lang.Integer" parameterClass="com.uc.training.smadmin.bd.model.Member">
+	<select id="queryMemberCount" resultClass="java.lang.Long" parameterClass="com.uc.training.smadmin.bd.vo.MemberListVO">
 		 SELECT count(1)
 		 FROM t_bd_member s
 		 WHERE 1=1
+		<include refid="where_query"/>
 	</select>
 
 	<!-- 查询用户余额 -->

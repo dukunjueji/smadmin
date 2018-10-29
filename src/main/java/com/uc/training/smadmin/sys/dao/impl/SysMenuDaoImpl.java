@@ -1,6 +1,7 @@
 package com.uc.training.smadmin.sys.dao.impl;
 
 import com.uc.training.smadmin.sys.dao.SysMenuDao;
+import com.uc.training.smadmin.sys.model.SysMenu;
 import com.uc.training.smadmin.sys.model.SysUser;
 import com.zuche.framework.dao.CarIsIbatisDaoImpl;
 import org.springframework.stereotype.Repository;
@@ -18,8 +19,14 @@ import java.util.List;
 @Repository
 public class SysMenuDaoImpl extends CarIsIbatisDaoImpl implements SysMenuDao {
 
+    private static final String namespace = "com.uc.training.smadmin.sys.dao.SysMenuDao.";
     @Override
     public List<String> getUserPerms(Long userId) {
-        return (List<String>) this.queryForList("com.uc.training.smadmin.sys.dao.SysMenuDao.getUserPerms", userId);
+        return (List<String>) this.queryForList(namespace +"getUserPerms", userId);
+    }
+
+    @Override
+    public List<SysMenu> getMenuList() {
+        return null;
     }
 }

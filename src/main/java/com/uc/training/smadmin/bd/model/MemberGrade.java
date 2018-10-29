@@ -23,7 +23,7 @@ public class MemberGrade implements Serializable {
 	private Long maxGrowth;
 
 	/**折扣(以 x.xx 的形式使用，直接与原价相乘)**/
-	private Float discount;
+	private Double discount;
 
 	/**创建时间**/
 	private java.util.Date createTime;
@@ -71,11 +71,11 @@ public class MemberGrade implements Serializable {
 		return this.maxGrowth;
 	}
 
-	public void setDiscount(Float discount){
+	public void setDiscount(Double discount){
 		this.discount = discount;
 	}
 
-	public Float getDiscount(){
+	public Double getDiscount(){
 		return this.discount;
 	}
 

@@ -14,19 +14,19 @@ public class IBatisGeneratorInfo {
     /**
      * 包名，从com具体到模块名称之前，相对路径，会针对到
      */
-    private String packageName = "com.ycc.yccmall";
+    private String packageName = "com.uc.training";
     /**
      * 按不同系统的模块名称
      */
-    private String sysModuleName = "yccmall-os";
+    private String sysModuleName = "smadmin";
     /**
      * 按系统中的不同子模块名称
      */
-    private String moduleName = ".sms";
+    private String moduleName = ".sys";
     /**
      * 表名称的前缀，用于生成实体类名称去掉前缀名称让你更
      */
-    private String tablePre="t_bd_";
+    private String tablePre="t_sys_";
     /**
      * 表名称
      */
@@ -39,7 +39,7 @@ public class IBatisGeneratorInfo {
     public static void main(String[] args) {
         try {
             //String[] tables = new String[]{"t_mt_order","t_mt_order_extend","t_mt_order_bill","t_mt_order_balance","t_mt_order_refund"};
-            String[] tables = new String[]{"t_bd_sms"};
+            String[] tables = new String[]{"t_sys_menu"};
 
             IBatisGeneratorInfo info=new IBatisGeneratorInfo();
             IBatisGenerator generator;
