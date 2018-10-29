@@ -30,8 +30,8 @@ import java.util.Set;
  * @copyright All Rights Reserved.
  */
 @Controller
-@RequestMapping(value = "api/sys/user/")
-public class SysUserController extends BaseController {
+@RequestMapping(value = "admin/sys/user/")
+public class UserController extends BaseController {
     @Autowired
     private SysUserService userService;
     @Autowired
