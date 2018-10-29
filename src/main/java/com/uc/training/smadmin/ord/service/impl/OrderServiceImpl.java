@@ -275,15 +275,15 @@ public class OrderServiceImpl implements OrderService {
     return orderDao.logicDelOrder(list);
   }
 
-    /**
-     * 更新订单状态
-     *
-     * @param ordOrderVo
-     */
-    @Override
-    public void updateOrder(OrdOrderVo ordOrderVo) {
-        orderDao.updateOrder(ordOrderVo);
-    }
+  /**
+   * 更新订单状态
+   *
+   * @param ordOrderVo
+   */
+  @Override
+  public int  updateOrder(OrdOrderVo ordOrderVo) {
+    return orderDao.updateOrder(ordOrderVo);
+  }
 
 
   @Override

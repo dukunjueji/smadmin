@@ -76,7 +76,7 @@ public class OrderDaoImpl extends CarIsIbatisDaoImpl implements OrderDao {
 	 * @param ordOrderVo
 	 */
 	@Override
-	public void updateOrder(OrdOrderVo ordOrderVo) {
-		this.update("com.uc.training.smadmin.ord.dao.OrderDao.updateOrder",ordOrderVo);
+	public int updateOrder(OrdOrderVo ordOrderVo) {
+		return this.update("com.uc.training.smadmin.ord.dao.OrderDao.updateOrder",ordOrderVo);
 	}
 }

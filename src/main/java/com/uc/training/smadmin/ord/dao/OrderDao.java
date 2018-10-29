@@ -59,5 +59,5 @@ public interface OrderDao{
 	 * 更新订单状态
 	 * @param ordOrderVo
 	 */
-	void updateOrder(OrdOrderVo ordOrderVo);
+	int updateOrder(OrdOrderVo ordOrderVo);
 }

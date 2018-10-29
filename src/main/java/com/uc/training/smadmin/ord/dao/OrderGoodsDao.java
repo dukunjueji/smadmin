@@ -10,7 +10,7 @@ public interface OrderGoodsDao{
 	/**
 	 * 通过主键来查找
 	 */
-	 public List<OrderGoods>  getOrderGoodsById(Long id);
+	 public List<OrderGoods>  getOrderGoodsByOrderId(Integer id);
 
 	/**
 	 * 查询列表

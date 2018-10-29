@@ -98,7 +98,12 @@ public interface OrderService {
    * 更新订单状态
    * @param ordOrderVo
    */
-  void updateOrder(OrdOrderVo ordOrderVo);
+  int  updateOrder(OrdOrderVo ordOrderVo);
 
+  /**
+   * 根据订单ID获取订单商品详情
+   * @param id
+   * @return
+   */
   List<OrderGoodsDetailRe> getOrderGdsById(Integer id);
 }

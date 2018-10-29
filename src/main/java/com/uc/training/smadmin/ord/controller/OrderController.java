@@ -33,6 +33,7 @@ import java.util.*;
 
 /**
  * 订单控制类
+ *
  * @author DK
  * @date 20181021
  */
@@ -48,27 +49,38 @@ public class OrderController extends BaseController {
     @Autowired
     MemberService memberService;
 
-    @ResponseBody
-    @RequestMapping(value = "getCartList.do_", method = RequestMethod.GET)
-    public Result getCartgds() {
-        Result result = new Result();
-        List<OrdCartGoodsVo> list;
-        //memberId = UID();
-        list = orderService.getCarGoodsById(1L);
-        OrdCartGoodsVo cartGoodsVo = new OrdCartGoodsVo();
-        result.setRe(list);
-        return result;
-    }
+  /**
+   * 获取购物车用户商品列表
+   * @return
+   */
+  @ResponseBody
+  @AccessLogin
+  @RequestMapping(value = "getCartList.do_", method = RequestMethod.GET)
+  public Result getCartgds() {
+    Result result = new Result();
+    List<OrdCartGoodsVo> list;
+    list = orderService.getCarGoodsById(getUid());
+    OrdCartGoodsVo cartGoodsVo = new OrdCartGoodsVo();
+    result.setRe(list);
+    return result;
+  }
 
-    @ResponseBody
-    @RequestMapping(value = "updataCartgoods.do_", method = RequestMethod.POST)
-    public Result updataCartgds(HttpServletRequest request, OrdCartGoodsVo ordCartGoodsVo) {
-        Result result = new Result();
-        //memberId = UID();
-        ordCartGoodsVo.setMemberId(1L);
-        orderService.updataCarGoodsNum(ordCartGoodsVo);
-        return result;
-    }
+  /**
+   * 更改购物车信息（更改商品数量）
+   * @param request
+   * @param ordCartGoodsVo
+   * @return
+   */
+  @ResponseBody
+  @AccessLogin
+  @RequestMapping(value = "updataCartgoods.do_", method = RequestMethod.POST)
+  public Result updataCartgds(HttpServletRequest request, OrdCartGoodsVo ordCartGoodsVo) {
+    Result result = new Result();
+    //memberId = UID();
+    ordCartGoodsVo.setMemberId(getUid());
+    orderService.updataCarGoodsNum(ordCartGoodsVo);
+    return result;
+  }
 
     /**
      * 获取订单列表
@@ -89,47 +101,47 @@ public class OrderController extends BaseController {
         return Result.getSuccessResult(orderList);
     }
 
-    /**
-     * 加入购物车
-     *
-     * @param request
-     * @param ordCartGoodsVo
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping("addCartgoods.do_")
-    public Result addCartgds(HttpServletRequest request, OrdCartGoodsVo ordCartGoodsVo) {
-        Result result = new Result();
-        List<OrdCartGoodsVo> list;
-        //memberId = UID();
-        list = orderService.getCarGoodsById(1L);
-        for (OrdCartGoodsVo cartGdsList : list) {
-            if (cartGdsList.getPropertyId().equals(ordCartGoodsVo.getPropertyId())) {
-                result.setMsg("该商品在购物车已经存在！！");
-                return result;
-            }
-        }
-        //记得改为当前会员id
-        ordCartGoodsVo.setMemberId(1L);
-        orderService.addCarGoods(ordCartGoodsVo);
+  /**
+   * 加入购物车
+   * @param request
+   * @param ordCartGoodsVo
+   * @return
+   */
+  @ResponseBody
+  @AccessLogin
+  @RequestMapping("addCartgoods.do_")
+  public Result addCartgds(HttpServletRequest request, OrdCartGoodsVo ordCartGoodsVo) {
+    Result result = new Result();
+    List<OrdCartGoodsVo> list;
+    //memberId = UID();
+    list = orderService.getCarGoodsById(getUid());
+    for (OrdCartGoodsVo cartGdsList : list) {
+      if (cartGdsList.getPropertyId().equals(ordCartGoodsVo.getPropertyId())) {
+        result.setMsg("该商品在购物车已经存在！！");
         return result;
+      }
     }
+    //记得改为当前会员id
+    ordCartGoodsVo.setMemberId(getUid());
+    orderService.addCarGoods(ordCartGoodsVo);
+    return result;
+  }
 
-    /**
-     * 删除购物车
-     *
-     * @param request
-     * @param ordCartGoodsVo
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping(value = "deleteCartgoods.do_", method = RequestMethod.POST)
-    public Result deleteCartgds(HttpServletRequest request, OrdCartGoodsVo ordCartGoodsVo) {
-        Result result = new Result();
-        ordCartGoodsVo.setMemberId(1L);
-        orderService.deleteCarGoods(ordCartGoodsVo);
-        return result;
-    }
+  /**
+   * 删除购物车
+   * @param request
+   * @param ordCartGoodsVo
+   * @return
+   */
+  @ResponseBody
+  @AccessLogin
+  @RequestMapping(value = "deleteCartgoods.do_", method = RequestMethod.POST)
+  public Result deleteCartgds(HttpServletRequest request, OrdCartGoodsVo ordCartGoodsVo) {
+    Result result = new Result();
+    ordCartGoodsVo.setMemberId(getUid());
+    orderService.deleteCarGoods(ordCartGoodsVo);
+    return result;
+  }
 
 
     /**
@@ -152,46 +164,46 @@ public class OrderController extends BaseController {
         return Result.getSuccessResult(OrderConfirmInfo);
     }
 
-    /**
-     * 获取订单分页
-     *
-     * @param orderVo
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping(value = "getOrderPage.do_", method = RequestMethod.POST)
-    public Result getOrderPage(OrdOrderVo orderVo) {
-        List<OrderStatusRe> statuaList;
-        Result result = new Result();
-        List<OrderRe> list;
-        Map map = new HashMap();
-        list = orderService.getOrderPage(orderVo);
-        statuaList = orderService.getOrderEnum();
-        map.put("orderList", list);
-        Integer totalSize = orderService.getOrderTotal(orderVo);
-        map.put("totalSize", totalSize);
-        map.put("statuaList", statuaList);
-        result.setRe(map);
-        return result;
-    }
+  /**
+   * 获取订单分页
+   * @param orderVo
+   * @return
+   */
+  @ResponseBody
+  @AccessLogin
+  @RequestMapping(value = "getOrderPage.do_", method = RequestMethod.POST)
+  public Result getOrderPage(OrdOrderVo orderVo) {
+    List<OrderStatusRe> statuaList;
+    Result result = new Result();
+    List<OrderRe> list;
+    Map map = new HashMap();
+    list = orderService.getOrderPage(orderVo);
+    statuaList = orderService.getOrderEnum();
+    map.put("orderList", list);
+    Integer totalSize = orderService.getOrderTotal(orderVo);
+    map.put("totalSize", totalSize);
+    map.put("statuaList",statuaList);
+    result.setRe(map);
+    return result;
+  }
 
-    /**
-     * 批量删除订单（更改状态）
-     *
-     * @param orderVo（orderVo.getOrderListStr()）
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping(value = "admDelOrder.do_", method = RequestMethod.POST)
-    public Result delOrderPage(OrdOrderVo orderVo) {
-        Result result = new Result();
-        List<OrderRe> delList = (List<OrderRe>) JSONArray.toList(JSONArray.fromObject(orderVo.getOrderListStr()), new OrderRe(), new JsonConfig());
-        int num = orderService.logicDelOrder(delList);
-        if (num > 0) {
-            result.setMsg("删除： " + num + "条信息");
-        }
-        return result;
+  /**
+   * 批量删除订单（更改删除/进度状态）
+   * @param orderVo（orderVo.getOrderListStr()）
+   * @return
+   */
+  @ResponseBody
+  @AccessLogin
+  @RequestMapping(value = "admDelOrder.do_", method = RequestMethod.POST)
+  public Result delOrderPage(OrdOrderVo orderVo) {
+    Result result = new Result();
+    List<OrderRe> delList = (List<OrderRe>) JSONArray.toList(JSONArray.fromObject(orderVo.getOrderListStr()), new OrderRe(), new JsonConfig());
+    int num = orderService.logicDelOrder(delList);
+    if (num > 0) {
+      result.setMsg("删除： "+num+"条信息");
     }
+    return result;
+  }
 
   /**
    * 获取订单商品详情
@@ -199,6 +211,7 @@ public class OrderController extends BaseController {
    * @return
    */
   @ResponseBody
+  @AccessLogin
   @RequestMapping(value = "getOrderGoods.do_", method = RequestMethod.POST)
   public Result getOrderGoods(Integer id) {
     Result result = new Result();
@@ -227,4 +240,19 @@ public class OrderController extends BaseController {
         return Result.getSuccessResult(list);
     }
 
+  /**
+   * 根据订单号更新状态
+   * @param ordOrderVo
+   * @return
+   */
+  @ResponseBody
+  @AccessLogin
+  @RequestMapping(value = "upOrderStatus.do_",method = RequestMethod.POST)
+  public Result upOrderStatus(OrdOrderVo ordOrderVo){
+    Result result =new Result();
+    if(orderService.updateOrder(ordOrderVo) > 0){
+      result.setMsg("已更新状态");
+    }
+    return result;
+  }
 }
