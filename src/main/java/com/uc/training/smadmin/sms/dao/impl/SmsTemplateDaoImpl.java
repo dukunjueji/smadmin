@@ -72,7 +72,7 @@ public class SmsTemplateDaoImpl extends CarIsIbatisDaoImpl implements SmsTemplat
      */
     @Override
     public Long getTemplateListCount(SmsTemplateListVO smsTemplateListVO) {
-        return (Long) this.queryForObject(namespace + "querySmsTemplateCount");
+        return (Long) this.queryForObject(namespace + "querySmsTemplateCount", smsTemplateListVO);
     }
 
     /**

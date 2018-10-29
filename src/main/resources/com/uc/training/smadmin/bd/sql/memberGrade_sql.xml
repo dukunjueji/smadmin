@@ -53,6 +53,7 @@
 	<!-- 列表查询 -->
 	<select id="queryMemberGradeList" resultClass="com.uc.training.smadmin.bd.model.MemberGrade">
 		 SELECT
+		 	 s.id AS id,
 			 s.name AS name,
 			 s.min_growth AS minGrowth,
 			 s.max_growth AS maxGrowth,

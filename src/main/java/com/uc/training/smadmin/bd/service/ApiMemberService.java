@@ -19,7 +19,7 @@ import java.util.List;
  * @date: 2018/10/16
  * 说明：用户功能逻辑判断接口
  */
-public interface MemberService {
+public interface ApiMemberService {
 
     /**
     *说明：插入会员信息逻辑

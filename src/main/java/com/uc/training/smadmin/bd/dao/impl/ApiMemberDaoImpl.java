@@ -1,13 +1,11 @@
 package com.uc.training.smadmin.bd.dao.impl;
 
-import com.uc.training.smadmin.bd.dao.MemberDao;
+import com.uc.training.smadmin.bd.dao.ApiMemberDao;
 import com.uc.training.smadmin.bd.model.Member;
 import com.uc.training.smadmin.bd.re.MemberDetailRE;
 import com.uc.training.smadmin.bd.re.MemberInfoRE;
-import com.uc.training.smadmin.bd.vo.ChargeBalanceVO;
 import com.uc.training.smadmin.bd.vo.MemberGrowthVO;
 import com.uc.training.smadmin.bd.vo.MemberIntegralVO;
-import com.uc.training.smadmin.bd.vo.MemberInfoVO;
 import com.uc.training.smadmin.bd.vo.MemberLoginVO;
 import com.zuche.framework.dao.CarIsIbatisDaoImpl;
 import org.springframework.stereotype.Repository;
@@ -21,7 +19,7 @@ import org.springframework.stereotype.Repository;
  * 说明：用户持久化层实现类
  */
 @Repository
-public class MemberDaoImpl extends CarIsIbatisDaoImpl implements MemberDao {
+public class ApiMemberDaoImpl extends CarIsIbatisDaoImpl implements ApiMemberDao {
     @Override
     public void insertMember(Member member) {
         this.insert("com.uc.training.smadmin.bd.dao.MemberDao.insertMember", member);

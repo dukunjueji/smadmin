@@ -1,23 +1,19 @@
 package com.uc.training.smadmin.ord.controller;
 
 import com.uc.training.common.annotation.AccessLogin;
-import com.uc.training.smadmin.bd.model.Member;
-import com.uc.training.smadmin.bd.service.MemberService;
+import com.uc.training.smadmin.bd.service.ApiMemberService;
 import com.uc.training.smadmin.bd.vo.MemberInfoVO;
-import com.uc.training.smadmin.ord.model.Order;
 import com.uc.training.smadmin.ord.re.OrderGoodsDetailRe;
 import com.uc.training.smadmin.ord.re.OrderConfirmRE;
 import com.uc.training.smadmin.ord.re.OrderRe;
 import com.ycc.base.common.Result;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.smadmin.gds.service.GoodsService;
-import com.uc.training.smadmin.ord.re.OrderRe;
 import com.uc.training.smadmin.ord.re.OrderStatusRe;
 import com.uc.training.smadmin.ord.service.OrderService;
 import com.uc.training.smadmin.ord.vo.OrdCartGoodsVo;
 import com.uc.training.smadmin.ord.vo.OrdOrderGoodsVo;
 import com.uc.training.smadmin.ord.vo.OrdOrderVo;
-import com.ycc.base.common.Result;
 import net.sf.json.JSONArray;
 import net.sf.json.JsonConfig;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +22,6 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.stringtemplate.v4.ST;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
@@ -47,7 +42,7 @@ public class OrderController extends BaseController {
     GoodsService goodsService;
 
     @Autowired
-    MemberService memberService;
+    ApiMemberService apiMemberService;
 
   /**
    * 获取购物车用户商品列表
@@ -234,7 +229,7 @@ public class OrderController extends BaseController {
         if (CollectionUtils.isEmpty(orderPayInfoNow)) {
             return Result.getBusinessException("支付失败", null);
         }
-        List<OrderConfirmRE> list = memberService.queryBalances(orderPayInfoNow);
+        List<OrderConfirmRE> list = apiMemberService.queryBalances(orderPayInfoNow);
         if (CollectionUtils.isEmpty(list)) {
             return Result.getBusinessException("支付失败", null);
         }

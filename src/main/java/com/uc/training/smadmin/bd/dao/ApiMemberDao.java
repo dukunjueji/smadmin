@@ -17,7 +17,7 @@ import com.uc.training.smadmin.bd.vo.MemberLoginVO;
  * @date: 2018/10/16
  * 说明：用户接口
  */
-public interface MemberDao {
+public interface ApiMemberDao {
 
     /**
      * 插入会员信息

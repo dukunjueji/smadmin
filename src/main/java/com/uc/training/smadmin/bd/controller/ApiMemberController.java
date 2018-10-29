@@ -1,6 +1,5 @@
 package com.uc.training.smadmin.bd.controller;
 
-import com.kenai.jaffl.annotations.In;
 import com.uc.training.smadmin.bd.model.Message;
 import com.uc.training.smadmin.bd.re.MessageRE;
 import com.ycc.base.common.Result;
@@ -10,7 +9,7 @@ import com.uc.training.smadmin.bd.model.Member;
 import com.uc.training.smadmin.bd.re.MemberDetailRE;
 import com.uc.training.smadmin.bd.re.MemberInfoRE;
 import com.uc.training.smadmin.bd.re.MemberLoginRE;
-import com.uc.training.smadmin.bd.service.MemberService;
+import com.uc.training.smadmin.bd.service.ApiMemberService;
 import com.uc.training.smadmin.bd.service.MessageService;
 import com.uc.training.smadmin.bd.vo.*;
 import com.uc.training.smadmin.ord.service.OrderService;
@@ -43,10 +42,10 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("api/member")
-public class MemberController extends BaseController {
+public class ApiMemberController extends BaseController {
 
     @Autowired
-    private MemberService memberService;
+    private ApiMemberService apiMemberService;
 
     @Autowired
     private OrderService orderService;
@@ -56,7 +55,7 @@ public class MemberController extends BaseController {
 
     private Map<String, String> map = new HashMap<>();
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MemberController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ApiMemberController.class);
     /**
      *注册时，生成验证码及短信
      * @param createCodeVO 生成验证码的请求参数
@@ -75,7 +74,7 @@ public class MemberController extends BaseController {
         //根据手机号查询会员信息
         Member mem = new Member();
         mem.setTelephone(createCodeVO.getTelephone());
-        Member member = memberService.queryOneMember(mem);
+        Member member = apiMemberService.queryOneMember(mem);
         if(member != null){
             re = Result.getBusinessException("手机号码已被注册", null);
         } else {
@@ -112,11 +111,11 @@ public class MemberController extends BaseController {
         Member member = new Member();
         member.setTelephone(memberRegisterVO.getTelephone());
         member.setPassword(memberRegisterVO.getPassword());
-        Member mem = memberService.queryOneMember(member);
+        Member mem = apiMemberService.queryOneMember(member);
         if(mem != null){
             re = Result.getBusinessException("手机号码已被注册",null);
         } else if(memberRegisterVO.getTelCode().equals(map.get("telCode"))){
-            memberService.insertMember(member);
+            apiMemberService.insertMember(member);
             re = Result.getSuccessResult("成功");
         }else {
             re = Result.getBusinessException("验证码不正确", null);
@@ -144,7 +143,7 @@ public class MemberController extends BaseController {
                 return result;
             }
             memberLoginVO.setPassword(EncryptUtil.md5(memberLoginVO.getPassword()));
-            Member member = memberService.getMemberLogin(memberLoginVO);
+            Member member = apiMemberService.getMemberLogin(memberLoginVO);
             if (member == null) {
                 result = Result.getBusinessException("手机号或密码错误", null);
                 return result;
@@ -177,7 +176,7 @@ public class MemberController extends BaseController {
         }
         Member member = new Member();
         member.setTelephone(createCodeVO.getTelephone());
-        member = memberService.queryOneMember(member);
+        member = apiMemberService.queryOneMember(member);
         if(member == null){
             re = Result.getBusinessException("手机号还没被注册", null);
         } else {
@@ -211,12 +210,12 @@ public class MemberController extends BaseController {
         }
         Member mem = new Member();
         mem.setTelephone(memberRegisterVO.getTelephone());
-        Member member = memberService.queryOneMember(mem);
+        Member member = apiMemberService.queryOneMember(mem);
         if(member == null){
             re = Result.getBusinessException("手机号还没被注册", null);
         } else if(memberRegisterVO.getTelCode().equals(map.get("telCode"))){
             mem.setPassword(memberRegisterVO.getPassword());
-            memberService.updateMember(mem);
+            apiMemberService.updateMember(mem);
             re = Result.getSuccessResult("成功");
         }else {
             re = Result.getBusinessException("验证码不正确", null);
@@ -242,7 +241,7 @@ public class MemberController extends BaseController {
         if (chargeBalanceVO.getBalance() == null || i == -1) {
             re = Result.getBusinessException("充值余额必须大于0", null);
         }else {
-            memberService.updateMemberBalance(member);
+            apiMemberService.updateMemberBalance(member);
             re = Result.getSuccessResult("成功");
         }
         return re;
@@ -258,7 +257,7 @@ public class MemberController extends BaseController {
     @ResponseBody
     @AccessLogin
     public Result<MemberDetailRE> getMemberDetailById(){
-        MemberDetailRE memberDetailRE = memberService.getMemberDetailById(getUid());
+        MemberDetailRE memberDetailRE = apiMemberService.getMemberDetailById(getUid());
         //会员的订单数量
         Integer orderSum = orderService.queryOrderCount(getUid());
         memberDetailRE.setOrderSum(orderSum);
@@ -289,9 +288,9 @@ public class MemberController extends BaseController {
             member.setImageUrl(memberInfoVO.getImageUrl());
         }
         //更新会员信息
-        memberService.updateMemberInfo(member);
+        apiMemberService.updateMemberInfo(member);
         //查询指定会员信息
-        MemberInfoRE memberInfoRE = memberService.queryOneMemberById(getUid());
+        MemberInfoRE memberInfoRE = apiMemberService.queryOneMemberById(getUid());
 
         return Result.getSuccessResult(memberInfoRE);
     }
@@ -309,7 +308,7 @@ public class MemberController extends BaseController {
         Result re;
         Member member = new Member();
         member.setId(getUid());
-        member = memberService.queryOneMember(member);
+        member = apiMemberService.queryOneMember(member);
         // 判断旧密码是否和库里的一致
         String oldpassword = EncryptUtil.md5(sendCodeVO.getOldpassword());
         if(!((member.getPassword()).equals(oldpassword))){
@@ -347,7 +346,7 @@ public class MemberController extends BaseController {
         Result re;
         Member member = new Member();
         member.setId(getUid());
-        Member mem = memberService.queryOneMember(member);
+        Member mem = apiMemberService.queryOneMember(member);
         // 判断旧密码是否和库里的一致
         String oldpassword = EncryptUtil.md5(passwordEditVO.getOldpassword());
         if(!((mem.getPassword()).equals(oldpassword))){
@@ -356,7 +355,7 @@ public class MemberController extends BaseController {
             re = Result.getBusinessException("新的密码和确认密码不一致", null);
         }else if((passwordEditVO.getCode()).equals(map.get("telCode"))){
             member.setPassword(passwordEditVO.getNewpassword());
-            memberService.updateMember(member);
+            apiMemberService.updateMember(member);
             re = Result.getSuccessResult("成功");
         }else {
             re = Result.getBusinessException("输入的验证码有误", null);

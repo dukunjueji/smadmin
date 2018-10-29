@@ -1,13 +1,11 @@
 package com.uc.training.smadmin.bd.service.impl;
 
-import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.enums.OrderEnum;
-import com.uc.training.smadmin.bd.dao.MemberDao;
+import com.uc.training.smadmin.bd.dao.ApiMemberDao;
 import com.uc.training.smadmin.bd.model.Member;
 import com.uc.training.smadmin.bd.re.MemberDetailRE;
 import com.uc.training.smadmin.bd.re.MemberInfoRE;
-import com.uc.training.smadmin.bd.service.MemberService;
-import com.uc.training.smadmin.bd.vo.ChargeBalanceVO;
+import com.uc.training.smadmin.bd.service.ApiMemberService;
 import com.uc.training.smadmin.bd.vo.MemberInfoVO;
 import com.uc.training.smadmin.bd.vo.MemberLoginVO;
 import com.uc.training.smadmin.gds.dao.GoodsDao;
@@ -31,10 +29,10 @@ import java.util.List;
  * 说明：用户逻辑判断实现类
  */
 @Service
-public class MemberServiceImpl implements MemberService {
+public class ApiMemberServiceImpl implements ApiMemberService {
 
     @Autowired
-    private MemberDao memberDao;
+    private ApiMemberDao apiMemberDao;
 
     @Autowired
     private GoodsDao goodsDao;
@@ -46,7 +44,7 @@ public class MemberServiceImpl implements MemberService {
     public void insertMember(Member member) {
         String encryptPaswd = EncryptUtil.md5(member.getPassword());
         member.setPassword(encryptPaswd);
-        memberDao.insertMember(member);
+        apiMemberDao.insertMember(member);
     }
 
     @Override
@@ -55,19 +53,19 @@ public class MemberServiceImpl implements MemberService {
             //密码加密
             member.setPassword(EncryptUtil.md5(member.getPassword()));
         }
-        return memberDao.queryOneMember(member);
+        return apiMemberDao.queryOneMember(member);
     }
 
     @Override
     public void updateMember(Member member) {
         String newPaswd = EncryptUtil.md5(member.getPassword());
         member.setPassword(newPaswd);
-        memberDao.updateMember(member);
+        apiMemberDao.updateMember(member);
     }
 
     @Override
     public void updateMemberBalance(Member member) {
-        memberDao.updateMemberBalance(member);
+        apiMemberDao.updateMemberBalance(member);
     }
 
     /**
@@ -82,7 +80,7 @@ public class MemberServiceImpl implements MemberService {
         memberInfoVO.setTotalPrice(orderPayInfoNow.get(0).getTotalPrice());
         memberInfoVO.setOrderName(orderPayInfoNow.get(0).getOrderName());
         memberInfoVO.setMemberId(1L);
-        Double accountBalances = memberDao.queryBalances(memberInfoVO.getMemberId());
+        Double accountBalances = apiMemberDao.queryBalances(memberInfoVO.getMemberId());
         if ( accountBalances > memberInfoVO.getTotalPrice()){
             // 加上对应的商品销量
             for (int i = 1, j = orderPayInfoNow.size();i < j; i++){
@@ -117,22 +115,22 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public MemberDetailRE getMemberDetailById(Long memberId) {
-        return memberDao.getMemberDetailById(memberId);
+        return apiMemberDao.getMemberDetailById(memberId);
     }
 
     @Override
     public Member getMemberLogin(MemberLoginVO memberLoginVO) {
-        return memberDao.getMemberLogin(memberLoginVO);
+        return apiMemberDao.getMemberLogin(memberLoginVO);
     }
 
     @Override
     public int updateMemberInfo(Member member) {
-        return this.memberDao.updateMemberInfo(member);
+        return this.apiMemberDao.updateMemberInfo(member);
     }
 
     @Override
     public MemberInfoRE queryOneMemberById(Long uid) {
-        return memberDao.queryOneMemberById(uid);
+        return apiMemberDao.queryOneMemberById(uid);
     }
 
 }
