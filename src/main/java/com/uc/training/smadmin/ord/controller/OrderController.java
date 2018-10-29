@@ -4,6 +4,7 @@ import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.smadmin.bd.model.Member;
 import com.uc.training.smadmin.bd.service.MemberService;
 import com.uc.training.smadmin.bd.vo.MemberInfoVO;
+import com.uc.training.smadmin.ord.model.Order;
 import com.uc.training.smadmin.ord.re.OrderGoodsDetailRe;
 import com.uc.training.smadmin.ord.re.OrderRe;
 import com.ycc.base.common.Result;
@@ -72,11 +73,12 @@ public class OrderController extends BaseController {
   }
 
   /**
-   * 获取订单
+   * 获取订单列表
    * @param goodsList
    * @return
    */
   @ResponseBody
+  @AccessLogin
   @RequestMapping(value = "getOrderList.do_", method = RequestMethod.GET)
   public Result<List<OrdOrderGoodsVo>> getOrderGds(String goodsList) {
     List<OrdOrderGoodsVo> orderGodsList = (List<OrdOrderGoodsVo>) JSONArray.toList(JSONArray.fromObject(goodsList), new OrdOrderGoodsVo(), new JsonConfig());
@@ -124,11 +126,18 @@ public class OrderController extends BaseController {
   }
 
 
+  /**
+   * 更新订单信息
+   * @param orderInfoList
+   * @return
+   */
     @ResponseBody
+    @AccessLogin
     @RequestMapping(value = "updateOrderInfo.do_", method = RequestMethod.POST)
     public Result updateOrderInfo(String orderInfoList) {
         Result result = new Result();
         List<OrdOrderGoodsVo> orderInfoListNow = (List<OrdOrderGoodsVo>) JSONArray.toList(JSONArray.fromObject(orderInfoList), new OrdOrderGoodsVo(), new JsonConfig());
+        orderInfoListNow.get(orderInfoListNow.size()-2).setMemberId(getUid());
         List<OrderRe> orderRe = orderService.updateOrderInfo(orderInfoListNow);
         result.setRe(orderRe);
         return result;
