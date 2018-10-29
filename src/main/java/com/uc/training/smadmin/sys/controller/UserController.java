@@ -31,7 +31,7 @@ import java.util.Set;
  */
 @Controller
 @RequestMapping(value = "admin/sys/user/")
-public class SysUserController extends BaseController {
+public class UserController extends BaseController {
     @Autowired
     private SysUserService userService;
     @Autowired
