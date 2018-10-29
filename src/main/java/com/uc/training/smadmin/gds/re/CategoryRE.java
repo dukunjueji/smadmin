@@ -1,7 +1,5 @@
 package com.uc.training.smadmin.gds.re;
 
-import com.uc.training.smadmin.gds.model.Category;
-
 import java.io.Serializable;
 import java.util.List;
 

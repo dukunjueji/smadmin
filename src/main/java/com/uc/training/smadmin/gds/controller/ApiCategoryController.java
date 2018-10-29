@@ -2,22 +2,16 @@ package com.uc.training.smadmin.gds.controller;
 
 import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
-import com.uc.training.smadmin.gds.model.Category;
-import com.uc.training.smadmin.gds.vo.CategoryVO;
 import com.ycc.base.common.Result;
 import com.uc.training.smadmin.gds.re.CategoryRE;
 import com.uc.training.smadmin.gds.service.CategoryService;
-import com.zuche.base.common.web.taglib.util.StringUtil;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +25,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("api/gds/category")
-public class CategoryController extends BaseController {
+public class ApiCategoryController extends BaseController {
 
     @Autowired
     private CategoryService categoryService;

@@ -1,7 +1,6 @@
 package com.uc.training.smadmin.gds.service;
 
 import com.uc.training.smadmin.gds.vo.CategoryVO;
-import com.ycc.base.common.Result;
 import com.uc.training.smadmin.gds.model.Category;
 import com.uc.training.smadmin.gds.re.CategoryRE;
 

@@ -1,6 +1,5 @@
 package com.uc.training.smadmin.gds.controller;
 
-import com.mysql.jdbc.ResultSetRow;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.smadmin.gds.model.Category;
 import com.uc.training.smadmin.gds.re.CategoryRE;
@@ -29,7 +28,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("admin/gds/category")
-public class CategoryAdminController extends BaseController {
+public class AdminCategoryController extends BaseController {
 
     @Autowired
     private CategoryService categoryService;
