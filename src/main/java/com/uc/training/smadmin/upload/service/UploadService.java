@@ -1,13 +1,13 @@
-package com.uc.training.smadmin.udfs.service;
+package com.uc.training.smadmin.upload.service;
 
-import com.ycc.tools.upload.FileTransferUtils;
+import com.uc.training.smadmin.upload.vo.UploadVO;
 import com.uc.training.smadmin.utils.FileTypeUtil;
+import com.ycc.tools.upload.FileTransferUtils;
 import com.zuche.framework.enums.BusinessLineEnum;
 import com.zuche.framework.udfs.client.UDFSClient;
 import com.zuche.framework.udfs.client.UDFSPermissionEnum;
 import com.zuche.framework.udfs.client.upload.UDFSUploadResultVO;
 import com.zuche.framework.udfs.client.upload.UDFSUploadVO;
-import com.zuche.framework.utils.StringUtils;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,30 +15,33 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import sun.misc.BASE64Decoder;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
- * description: 文件上传服务
+ * 版权声明： Copyright (c) 2008 ucarinc. All Rights Reserved.
  *
- * @author yiqiang.du@ucarinc.com
- * @version 1.0
- * @date 2018/9/18 16:32
+ * @author 何麒（qi.he@ucarinc.com）
+ * @Version 1.0
+ * @date 2018/10/29
  */
 @Service
-public class UDFSFileService {
+public class UploadService {
 
-    private static final Logger logger = LoggerFactory.getLogger(UDFSFileService.class);
+    private static final Logger logger = LoggerFactory.getLogger(UploadService.class);
 
     /**
-     * 上传文件
-     *
-     * @param name
+     * 上传图片文件
      * @param file
-     * @return 上传成功返回文件url地址，上传失败返回原因
-     *  {"success":true,"message":"图片上传成功","data":{"names":{"ORIGINAL":"R__P__/QQ图片20180911104337.jpg"},"originalName":"R__P__/QQ图片20180911104337.jpg"}}
+     * @return
      */
-    public UDFSUploadResultVO upload(String name, MultipartFile file) {
-        UDFSUploadResultVO resultVO = null;
+    public UploadVO imageUpload(MultipartFile file) {
+
+        UDFSUploadResultVO resultVO;
+        UploadVO uploadVO = new UploadVO();
+
         try {
             // 如果是FileInputStream类型，进行转换
             InputStream in = file.getInputStream();
@@ -56,18 +59,15 @@ public class UDFSFileService {
 
             if(resultVO != null){
                 String testUdfs = FileTransferUtils.getUrlPrefix(); //需要灵活配置，写在配置文件
-                resultVO.addName("full_path", testUdfs + resultVO.getOriginalName()); //提供完整路径给前端
-            }
-
-            if(!StringUtils.isEmpty(name)){
-                resultVO.addName("from_name", name); //前端发送改过来的请求标识，用于前端自己分辨该结果属于哪个请求
+                uploadVO.setName(testUdfs + resultVO.getOriginalName());//提供完整路径给前端
+                uploadVO.setOriginalName(resultVO.getOriginalName()); //提供完整路径给前端
             }
 
         } catch (IOException e) {
             logger.error("读取源文件失败", e);
         }
 
-        return resultVO;
+        return uploadVO;
     }
 
     private byte[] getByteArrayInputStreamResource(InputStream inputStream) throws IOException {
@@ -83,18 +83,16 @@ public class UDFSFileService {
 
     /**
      * base64上传文件
-     *
-     * @param name
-     * @param base64string
-     * @return 上传成功返回文件url地址，上传失败返回原因
-     *  {"success":true,"message":"图片上传成功","data":{"names":{"ORIGINAL":"R__P__/QQ图片20180911104337.jpg"},"originalName":"R__P__/QQ图片20180911104337.jpg"}}
+     * @param imageText
+     * @return
      */
-    public UDFSUploadResultVO base64Upload(String name, String base64string) {
-        UDFSUploadResultVO resultVO = null;
+    public UploadVO imageToTextUpload(String imageText) {
+        UDFSUploadResultVO resultVO;
+        UploadVO uploadVO = new UploadVO();
         try {
             // 如果是FileInputStream类型，进行转换
             BASE64Decoder decoder = new BASE64Decoder();
-            byte[] bytes = decoder.decodeBuffer(base64string);
+            byte[] bytes = decoder.decodeBuffer(imageText);
             UDFSUploadVO vo = new UDFSUploadVO();
 
             //如果客户端没有传名字，则自动设置文件名
@@ -104,21 +102,18 @@ public class UDFSFileService {
             vo.setData(bytes);
             vo.setBusinessLine(BusinessLineEnum.FCAR);
             vo.setPermission(UDFSPermissionEnum.GLOBAL);
-            resultVO = (UDFSUploadResultVO) UDFSClient.upload(vo);
+            resultVO = UDFSClient.upload(vo);
 
             if(resultVO != null){
                 String testUdfs = FileTransferUtils.getUrlPrefix(); //需要灵活配置，写在配置文件
-                resultVO.addName("full_path", testUdfs + resultVO.getOriginalName()); //提供完整路径给前端
-                resultVO.addName("image_path", resultVO.getOriginalName()); //提供完整路径给前端
+                uploadVO.setName(testUdfs + resultVO.getOriginalName()); //提供完整路径给前端
+                uploadVO.setOriginalName(resultVO.getOriginalName()); //提供完整路径给前端
             }
 
-            if(!StringUtils.isEmpty(name)){
-                resultVO.addName("from_name", name); //前端发送改过来的请求标识，用于前端自己分辨该结果属于哪个请求
-            }
         } catch (IOException e) {
             logger.error("读取源文件失败", e);
         }
-        return resultVO;
+        return uploadVO;
     }
 
     public static InputStream base64ToInputStream(String base64string){
@@ -132,4 +127,6 @@ public class UDFSFileService {
         }
         return stream;
     }
+
+
 }

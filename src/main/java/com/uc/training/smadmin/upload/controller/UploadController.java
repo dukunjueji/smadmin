@@ -1,13 +1,10 @@
-package com.uc.training.smadmin.udfs.controller;
+package com.uc.training.smadmin.upload.controller;
 
-import com.mysql.jdbc.ResultSetRow;
-import com.mysql.jdbc.StringUtils;
 import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
-import com.uc.training.smadmin.udfs.service.UDFSFileService;
-import com.uc.training.smadmin.udfs.service.UploadService;
+import com.uc.training.smadmin.upload.service.UploadService;
+import com.uc.training.smadmin.upload.vo.UploadVO;
 import com.ycc.base.common.Result;
-import com.zuche.base.common.web.taglib.util.StringUtil;
 import com.zuche.framework.udfs.client.upload.UDFSUploadResultVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @date 2018/9/18 16:32
  */
 @Controller
-@RequestMapping("/api/upload")
+@RequestMapping("/admin/upload")
 public class UploadController extends BaseController{
 
     private static final Logger logger = LoggerFactory.getLogger(UploadController.class);
@@ -43,18 +40,18 @@ public class UploadController extends BaseController{
     @ResponseBody
     @AccessLogin
     @RequestMapping(value = "/file.do_", method = RequestMethod.POST)
-    public Result<UDFSUploadResultVO> imageUpload(MultipartFile file) {
+    public Result<UploadVO> imageUpload(MultipartFile file) {
 
         String name = file.getOriginalFilename();
 
-        if (file == null) {
+        if (file.isEmpty()) {
             Result.getBusinessException("上传文件不能为空" , null);
         }
         if (file.getSize() >= 4194304) {
             Result.getBusinessException("上传文件不能超过4M", null);
         }
 
-        return Result.getSuccessResult(uploadService.imageUpload(name,file));
+        return Result.getSuccessResult(uploadService.imageUpload(file));
     }
 
     /**
@@ -66,7 +63,7 @@ public class UploadController extends BaseController{
     @ResponseBody
     @AccessLogin
     @RequestMapping(value = "/text.do_", method = RequestMethod.POST)
-    public Result<UDFSUploadResultVO> imageToTextUpload(String name, String imageText) {
-        return Result.getSuccessResult(uploadService.imageToTextUpload(name, imageText));
+    public Result<UploadVO> imageToTextUpload(String name, String imageText) {
+        return Result.getSuccessResult(uploadService.imageToTextUpload(imageText));
     }
 }
