@@ -9,5 +9,5 @@ import com.uc.training.smadmin.bd.model.Banner;
  * @Version 1.0
  * @date 2018/10/26
  */
-public class BannerAllRE extends Banner{
+public class BannerAdminRE extends Banner{
 }

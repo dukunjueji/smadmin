@@ -1,7 +1,7 @@
 package com.uc.training.smadmin.bd.dao.impl;
 import com.uc.training.smadmin.bd.model.Banner;
 import com.uc.training.smadmin.bd.dao.BannerDao;
-import com.uc.training.smadmin.bd.re.BannerAllRE;
+import com.uc.training.smadmin.bd.re.BannerAdminRE;
 import com.uc.training.smadmin.bd.re.BannerRE;
 import com.zuche.framework.dao.CarIsIbatisDaoImpl;
 import org.springframework.stereotype.Repository;
@@ -28,7 +28,7 @@ public class BannerDaoImpl extends CarIsIbatisDaoImpl implements BannerDao {
 	 * @return
 	 */
 	@Override
-	public List<BannerAllRE> getAllBannerList() {
+	public List<BannerAdminRE> getAllBannerList() {
 		return this.queryForList("com.uc.training.smadmin.bd.dao.BannerDao.getAllBannerList");
 	}
 
