@@ -2,7 +2,7 @@ package com.uc.training.smadmin.bd.service.impl;
 
 import com.uc.training.common.enums.GrowthEnum;
 import com.uc.training.smadmin.bd.dao.GrowthDetailDao;
-import com.uc.training.smadmin.bd.dao.ApiMemberDao;
+import com.uc.training.smadmin.bd.dao.MemberDao;
 import com.uc.training.smadmin.bd.model.GrowthDetail;
 import com.uc.training.smadmin.bd.service.GrowthDetailService;
 import com.uc.training.smadmin.bd.vo.GrowthVO;
@@ -26,7 +26,7 @@ public class GrowthDetailServiceImpl implements GrowthDetailService {
     private GrowthDetailDao growthDetailDao;
 
     @Autowired
-    private ApiMemberDao apiMemberDao;
+    private MemberDao memberDao;
 
     public Long saveGrowthDetail(GrowthVO growthVO){
         GrowthDetail growthDetail = new GrowthDetail();
@@ -46,7 +46,7 @@ public class GrowthDetailServiceImpl implements GrowthDetailService {
         memberGrowthVO.setMemberId(growthVO.getMemberId());
 
         // 更新会员成长值
-        apiMemberDao.updateGrowthById(memberGrowthVO);
+        memberDao.updateGrowthById(memberGrowthVO);
         return growthVaule;
     }
 

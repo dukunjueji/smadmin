@@ -1,6 +1,6 @@
 package com.uc.training.smadmin.bd.dao.impl;
 
-import com.uc.training.smadmin.bd.dao.ApiMemberDao;
+import com.uc.training.smadmin.bd.dao.MemberDao;
 import com.uc.training.smadmin.bd.model.Member;
 import com.uc.training.smadmin.bd.re.MemberDetailRE;
 import com.uc.training.smadmin.bd.re.MemberInfoRE;
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Repository;
  * 说明：用户持久化层实现类
  */
 @Repository
-public class ApiMemberDaoImpl extends CarIsIbatisDaoImpl implements ApiMemberDao {
+public class MemberDaoImpl extends CarIsIbatisDaoImpl implements MemberDao {
     @Override
     public void insertMember(Member member) {
         this.insert("com.uc.training.smadmin.bd.dao.MemberDao.insertMember", member);

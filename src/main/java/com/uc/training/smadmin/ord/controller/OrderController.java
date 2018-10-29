@@ -1,7 +1,7 @@
 package com.uc.training.smadmin.ord.controller;
 
 import com.uc.training.common.annotation.AccessLogin;
-import com.uc.training.smadmin.bd.service.ApiMemberService;
+import com.uc.training.smadmin.bd.service.MemberService;
 import com.uc.training.smadmin.bd.vo.MemberInfoVO;
 import com.uc.training.smadmin.ord.re.OrderGoodsDetailRe;
 import com.uc.training.smadmin.ord.re.OrderConfirmRE;
@@ -42,7 +42,7 @@ public class OrderController extends BaseController {
     GoodsService goodsService;
 
     @Autowired
-    ApiMemberService apiMemberService;
+    MemberService memberService;
 
   /**
    * 获取购物车用户商品列表
@@ -229,7 +229,7 @@ public class OrderController extends BaseController {
         if (CollectionUtils.isEmpty(orderPayInfoNow)) {
             return Result.getBusinessException("支付失败", null);
         }
-        List<OrderConfirmRE> list = apiMemberService.queryBalances(orderPayInfoNow);
+        List<OrderConfirmRE> list = memberService.queryBalances(orderPayInfoNow);
         if (CollectionUtils.isEmpty(list)) {
             return Result.getBusinessException("支付失败", null);
         }

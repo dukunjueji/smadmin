@@ -2,7 +2,7 @@ package com.uc.training.smadmin.bd.service.impl;
 
 import com.uc.training.common.enums.IntegralEnum;
 import com.uc.training.smadmin.bd.dao.IntegralDetailDao;
-import com.uc.training.smadmin.bd.dao.ApiMemberDao;
+import com.uc.training.smadmin.bd.dao.MemberDao;
 import com.uc.training.smadmin.bd.model.IntegralDetaill;
 import com.uc.training.smadmin.bd.service.IntegralDetailService;
 import com.uc.training.smadmin.bd.vo.IntegralVO;
@@ -27,7 +27,7 @@ public class IntegralDetailServiceImpl implements IntegralDetailService {
     private IntegralDetailDao integralDetailDao;
 
     @Autowired
-    private ApiMemberDao apiMemberDao;
+    private MemberDao memberDao;
 
     @Override
     public Long saveIntegralDetail(IntegralVO integralVO){
@@ -62,7 +62,7 @@ public class IntegralDetailServiceImpl implements IntegralDetailService {
         memberIntegralVO.setMemberId(integralVO.getMemberId());
 
         //更新会员积分
-        apiMemberDao.updateIntegralById(memberIntegralVO);
+        memberDao.updateIntegralById(memberIntegralVO);
         return integralValue;
     }
 }
