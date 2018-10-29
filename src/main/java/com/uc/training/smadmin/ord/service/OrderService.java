@@ -50,9 +50,9 @@ public interface OrderService {
   int deleteCarGoods(OrdCartGoodsVo ordCartGoodsVo);
 
   /**
-   * 更新订单信息
+   * 提交订单信息
    */
-  List<OrderConfirmRE> updateOrderInfo(List<OrdOrderGoodsVo> orderInfoListNow);
+  List<OrderConfirmRE> confirmOrderInfo(List<OrdOrderGoodsVo> orderInfoListNow);
 
 
   /**

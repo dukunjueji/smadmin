@@ -28,11 +28,10 @@ import com.ycc.base.common.Result;
 import org.apache.poi.util.SystemOutLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.rmi.CORBA.Util;
+import java.util.*;
 
 /**
  * 订单服务实现
@@ -96,7 +95,13 @@ public class OrderServiceImpl implements OrderService {
         for (int i = 0; i < orderGodsList.size(); i++) {
             OrdOrderGoodsVo ordOrderGoodsVo = new OrdOrderGoodsVo();
             GoodsDetailRE gdDTO = goodsDao.getGoodsDetailByPropertyId(orderGodsList.get(i).getPropertyId());
+            if (gdDTO == null){
+                return list;
+            }
             List<PropertyUrlRE> tempList = goodsDao.getPicUrlByPropertyId(orderGodsList.get(i).getPropertyId());
+            if (CollectionUtils.isEmpty(tempList)){
+                return list;
+            }
             ordOrderGoodsVo.setGoodsId(orderGodsList.get(i).getGoodsId());
             ordOrderGoodsVo.setGdsName(gdDTO.getName());
             ordOrderGoodsVo.setGdsUrl(tempList.get(0).getPicUrl());
@@ -135,7 +140,7 @@ public class OrderServiceImpl implements OrderService {
      * 提交订单验证信息
      */
     @Override
-    public List<OrderConfirmRE> updateOrderInfo(List<OrdOrderGoodsVo> orderInfoListNow) {
+    public List<OrderConfirmRE> confirmOrderInfo(List<OrdOrderGoodsVo> orderInfoListNow) {
         OrderConfirmRE orderConfirmRE = new OrderConfirmRE();
         List<OrderConfirmRE> list = new ArrayList<>();
         for (int i = 0; i < orderInfoListNow.size() - 2; i++) {
