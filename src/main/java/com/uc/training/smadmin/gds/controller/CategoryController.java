@@ -91,15 +91,7 @@ public class CategoryController extends BaseController {
                 child.add(categoryRE);
             }
         }
-        /*
-        //child为空时，停止查询
-        if (child.isEmpty()) {
-            return null;
-        }
-        //递归查找子分类中的分类
-        for (CategoryRE c : child) {
-            c.setChildren(getChildren(c.getId(), category));
-        }*/
+
         return child;
     }
 }

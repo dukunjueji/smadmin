@@ -1,7 +1,6 @@
 package com.uc.training.smadmin.bd.controller;
 
 import com.uc.training.common.base.controller.BaseController;
-import com.uc.training.smadmin.bd.model.Banner;
 import com.uc.training.smadmin.bd.re.BannerAdminRE;
 import com.uc.training.smadmin.bd.service.BannerService;
 import com.ycc.base.common.Result;
