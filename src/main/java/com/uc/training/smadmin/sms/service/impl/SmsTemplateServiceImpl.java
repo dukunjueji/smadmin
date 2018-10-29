@@ -89,4 +89,13 @@ public class SmsTemplateServiceImpl implements SmsTemplateService {
         return smsTemplateDao.getByCode(code);
     }
 
+    /**
+     * 根据ID列表批量删除
+     * @param ids
+     * @return
+     */
+    @Override
+    public Integer batchDeleteById(List<Long> ids){
+        return smsTemplateDao.batchDeleteById(ids);
+    }
 }

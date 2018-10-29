@@ -1,7 +1,11 @@
 package com.uc.training.smadmin.sms.vo;
 
 import com.uc.training.common.bean.PageQuery;
+import org.apache.commons.lang.StringUtils;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -36,6 +40,43 @@ public class SmsListVO extends PageQuery {
      * 查询的终止日期
      */
     private Date endDate;
+
+    private String startTime;
+
+    private String endTime;
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+        if (!StringUtils.isEmpty(startTime)) {
+            DateFormat ds = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            try {
+                this.startDate = ds.parse(startTime);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+        if (!StringUtils.isEmpty(endTime)) {
+            DateFormat ds = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            try {
+                this.endDate = ds.parse(endTime);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     public String getTelephone() {
         return telephone;

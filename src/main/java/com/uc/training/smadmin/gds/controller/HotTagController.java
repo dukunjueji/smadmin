@@ -1,5 +1,6 @@
 package com.uc.training.smadmin.gds.controller;
 
+import com.uc.training.common.annotation.AccessLogin;
 import com.ycc.base.common.Result;
 import com.uc.training.smadmin.gds.model.HotTag;
 import com.uc.training.smadmin.gds.re.HotTagRE;
@@ -30,6 +31,7 @@ public class HotTagController {
      * @return
      */
     @ResponseBody
+    @AccessLogin(required = false)
     @RequestMapping(value = "selectHotTag.do_",method = RequestMethod.GET)
     public Result<List<HotTagRE>> selectHotTag() {
         Result<List<HotTagRE>> result = Result.getSuccessResult(hotTagService.selectHotTag());

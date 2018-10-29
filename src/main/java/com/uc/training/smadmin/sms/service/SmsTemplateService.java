@@ -59,4 +59,11 @@ public interface SmsTemplateService {
      */
     public SmsTemplate getByCode(String code);
 
+    /**
+     * 根据ID列表批量删除
+     * @param ids
+     * @return
+     */
+    public Integer batchDeleteById(List<Long> ids);
+
 }

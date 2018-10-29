@@ -1,5 +1,6 @@
 package com.uc.training.smadmin.ord.service;
 
+import com.uc.training.smadmin.ord.re.OrderConfirmRE;
 import com.uc.training.smadmin.ord.re.OrderGoodsDetailRe;
 import com.uc.training.smadmin.ord.re.OrderRe;
 import com.uc.training.smadmin.ord.re.OrderStatusRe;
@@ -50,9 +51,9 @@ public interface OrderService {
   int deleteCarGoods(OrdCartGoodsVo ordCartGoodsVo);
 
   /**
-   * 更新订单信息
+   * 提交订单信息
    */
-  List<OrderRe> updateOrderInfo(List<OrdOrderGoodsVo> orderInfoListNow);
+  List<OrderConfirmRE> confirmOrderInfo(List<OrdOrderGoodsVo> orderInfoListNow);
 
 
   /**

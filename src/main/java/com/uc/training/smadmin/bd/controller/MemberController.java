@@ -64,6 +64,7 @@ public class MemberController extends BaseController {
      */
     @RequestMapping(value = "/createCode.do_", method = RequestMethod.POST)
     @ResponseBody
+    @AccessLogin(required = false)
     public Result createCode(CreateCodeVO createCodeVO) {
         Result re;
         //校验手机号格式
@@ -101,6 +102,7 @@ public class MemberController extends BaseController {
     */
     @RequestMapping(value = "/memberRegister.do_", method = RequestMethod.POST)
     @ResponseBody
+    @AccessLogin(required = false)
     public Result memberRegister(MemberRegisterVO memberRegisterVO){
         Result re;
         if (!TelCodeUtil.validateTel(memberRegisterVO.getTelephone()) || StringUtils.isEmpty(memberRegisterVO.getPassword()) || StringUtils.isEmpty(memberRegisterVO.getTelCode())){
@@ -129,6 +131,7 @@ public class MemberController extends BaseController {
      */
     @RequestMapping(value = "/memberLogin.do_", method = RequestMethod.POST)
     @ResponseBody
+    @AccessLogin(required = false)
     public Result<MemberLoginRE> memberLogin(MemberLoginVO memberLoginVO){
         Result<MemberLoginRE> result;
         try {
@@ -165,6 +168,7 @@ public class MemberController extends BaseController {
      */
     @RequestMapping(value = "/passwordCode.do_", method = RequestMethod.POST)
     @ResponseBody
+    @AccessLogin(required = false)
     public Result passwordCode(CreateCodeVO createCodeVO) {
         Result re;
         if (!TelCodeUtil.validateTel(createCodeVO.getTelephone())) {
@@ -198,6 +202,7 @@ public class MemberController extends BaseController {
      */
     @RequestMapping(value = "/memberPassword.do_", method = RequestMethod.POST)
     @ResponseBody
+    @AccessLogin(required = false)
     public Result memberPassword(MemberRegisterVO memberRegisterVO){
         Result re;
         if (!TelCodeUtil.validateTel(memberRegisterVO.getTelephone()) || StringUtils.isEmpty(memberRegisterVO.getPassword()) || StringUtils.isEmpty(memberRegisterVO.getTelCode())){
