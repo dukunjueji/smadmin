@@ -1,9 +1,13 @@
 package com.uc.training.smadmin.gds.service;
 
+import com.uc.training.common.vo.PageVO;
+import com.uc.training.smadmin.gds.re.AdminGoodsRE;
 import com.uc.training.smadmin.gds.re.GoodsRE;
 import com.uc.training.smadmin.gds.re.GoodsDetailRE;
 import com.uc.training.smadmin.gds.model.HotTag;
+import com.uc.training.smadmin.gds.vo.AdminGoodsVO;
 import com.uc.training.smadmin.gds.vo.GoodsListVO;
+import com.ycc.base.common.Result;
 
 import java.util.List;
 
@@ -36,6 +40,13 @@ public interface GoodsService {
     public List<GoodsRE> getGoodsList(GoodsListVO goodsListVO);
 
     /**
+     * 后台获取所有商品
+     * @param goodsListVO
+     * @return
+     */
+    List<AdminGoodsRE> getAdminGoodsList(GoodsListVO goodsListVO);
+
+    /**
      * 通过属性id商品详情
      * @param propertyId
      * @return
@@ -61,4 +72,11 @@ public interface GoodsService {
      * @return
      */
     public List<HotTag> selectHotTag();
+
+    /**
+     * 后台新增商品
+     * @param adminGoodsVO
+     * @return
+     */
+    Long adminInsertGoods(AdminGoodsVO adminGoodsVO);
 }

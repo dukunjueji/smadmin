@@ -2,6 +2,8 @@ package com.uc.training.smadmin.gds.model;
 
 import com.uc.training.common.base.model.BaseModel;
 
+import java.math.BigDecimal;
+
 
 public class Property extends BaseModel {
 
@@ -13,15 +15,15 @@ public class Property extends BaseModel {
   /**
    * 库存
    */
-  private long stock;
+  private Integer stock;
   /**
    * 打折价格
    */
-  private double discountPrice;
+  private BigDecimal discountPrice;
   /**
    * 出售价格
    */
-  private double salePrice;
+  private BigDecimal salePrice;
   /**
    * 规格
    */
@@ -55,28 +57,25 @@ public class Property extends BaseModel {
     return stock;
   }
 
-  public void setStock(long stock) {
+  public void setStock(Integer stock) {
     this.stock = stock;
   }
 
-
-  public double getDiscountPrice() {
+  public BigDecimal getDiscountPrice() {
     return discountPrice;
   }
 
-  public void setDiscountPrice(double discountPrice) {
+  public void setDiscountPrice(BigDecimal discountPrice) {
     this.discountPrice = discountPrice;
   }
 
-
-  public double getSalePrice() {
+  public BigDecimal getSalePrice() {
     return salePrice;
   }
 
-  public void setSalePrice(double salePrice) {
+  public void setSalePrice(BigDecimal salePrice) {
     this.salePrice = salePrice;
   }
-
 
   public String getProperty() {
     return property;

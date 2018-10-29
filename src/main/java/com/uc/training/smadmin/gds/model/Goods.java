@@ -2,6 +2,8 @@ package com.uc.training.smadmin.gds.model;
 
 import com.uc.training.common.base.model.BaseModel;
 
+import java.math.BigDecimal;
+
 /**
  * 商品
  */
@@ -23,7 +25,7 @@ public class Goods extends BaseModel {
   /**
    * 出售价格
    */
-  private long sales;
+  private BigDecimal sales;
   /**
    * 详情
    */
@@ -72,14 +74,13 @@ public class Goods extends BaseModel {
   }
 
 
-  public long getSales() {
+  public BigDecimal getSales() {
     return sales;
   }
 
-  public void setSales(long sales) {
+  public void setSales(BigDecimal sales) {
     this.sales = sales;
   }
-
 
   public String getDetail() {
     return detail;
