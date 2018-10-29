@@ -43,17 +43,21 @@ public class SmsListVO extends PageQuery {
 
     private String startTime;
 
+    private String endTime;
+
     public String getStartTime() {
         return startTime;
     }
 
     public void setStartTime(String startTime) {
         this.startTime = startTime;
-        DateFormat ds = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        try {
-            this.startDate = ds.parse(startTime);
-        } catch (ParseException e) {
-            e.printStackTrace();
+        if (!StringUtils.isEmpty(startTime)) {
+            DateFormat ds = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            try {
+                this.startDate = ds.parse(startTime);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -63,15 +67,16 @@ public class SmsListVO extends PageQuery {
 
     public void setEndTime(String endTime) {
         this.endTime = endTime;
-        DateFormat ds = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        try {
-            this.endDate = ds.parse(endTime);
-        } catch (ParseException e) {
-            e.printStackTrace();
+        if (!StringUtils.isEmpty(endTime)) {
+            DateFormat ds = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            try {
+                this.endDate = ds.parse(endTime);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    private String endTime;
 
     public String getTelephone() {
         return telephone;

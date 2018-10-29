@@ -18,7 +18,7 @@ public interface MemberGradeDao{
 	/**
 	 * 查询列表
 	 */
-	 public List<MemberGrade>  queryMemberGradeList(MemberGradeListVO memberGradeListVO);
+	 public List<MemberGrade>  queryMemberGradeList();
 
 	/**
 	 * 查找数据总记录数

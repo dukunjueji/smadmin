@@ -13,20 +13,21 @@ import java.util.List;
 @Repository
 public class MemberGradeDaoImpl extends CarIsIbatisDaoImpl implements MemberGradeDao {
 
+	private static final String namespace = "com.uc.training.smadmin.bd.dao.MemberGradeDao.";
 	/**
 	 * 通过主键来查找查找
 	 */
 	 @Override
 	 public List<MemberGrade> getMemberGradeById(Long id){
-		  return (List<MemberGrade>) this.queryForObject("com.uc.training.smadmin.bd.dao.MemberGradeDao.getMemberGradeById", id);
+		  return (List<MemberGrade>) this.queryForObject(namespace + "getMemberGradeById", id);
 	 }
 
 	/**
 	 * 查询列表
 	 */
 	 @Override
-	 public List<MemberGrade>  queryMemberGradeList(MemberGradeListVO memberGradeListVO){
-		  return this.queryForList("com.uc.training.smadmin.bd.dao.MemberGradeDao.queryMemberGradeList", memberGradeListVO);
+	 public List<MemberGrade>  queryMemberGradeList(){
+		  return this.queryForList(namespace + "queryMemberGradeList");
 	 }
 
 	/**
@@ -34,15 +35,15 @@ public class MemberGradeDaoImpl extends CarIsIbatisDaoImpl implements MemberGrad
 	 */
 	 @Override
 	public Long queryMemberGradeCount(){
-		  return (Long) this.queryForObject("com.uc.training.smadmin.bd.dao.MemberGradeDao.queryMemberGradeCount");
+		  return (Long) this.queryForObject(namespace + "queryMemberGradeCount");
 	 }
 
 	/**
-	 * 保存
+	 * 新增
 	 */
 	 @Override
 	public Long insertMemberGrade( MemberGrade record ){
-		  return (Long) this.insert("com.uc.training.smadmin.bd.dao.MemberGradeDao.insertMemberGrade", record);
+		  return (Long) this.insert(namespace + "insertMemberGrade", record);
 	 }
 
 	/**
@@ -50,7 +51,7 @@ public class MemberGradeDaoImpl extends CarIsIbatisDaoImpl implements MemberGrad
 	 */
 	 @Override
 	public Integer updateMemberGradeById( MemberGrade record ){
-		  return this.update("com.uc.training.smadmin.bd.dao.MemberGradeDao.updateMemberGradeById", record);
+		  return this.update(namespace + "updateMemberGradeById", record);
 	 }
 
 }
