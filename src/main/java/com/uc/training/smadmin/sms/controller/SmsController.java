@@ -18,6 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +31,7 @@ import java.util.Map;
  * @Description:
  */
 @Controller
-@RequestMapping("api/sms")
+@RequestMapping("admin/sms")
 public class SmsController extends BaseController {
     @Autowired
     private SmsService smsService;

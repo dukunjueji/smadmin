@@ -86,8 +86,16 @@
 
 	<!-- 通过ID删除短信模板 -->
 	<delete id="deleteById" parameterClass="java.lang.Long">
-		DELETE
-		FROM t_sys_sms_template
+		DELETE FROM t_sys_sms_template
 		WHERE id = #id#
+	</delete>
+
+	<!-- 通过ID批量删除 -->
+	<delete id="batchDeleteById" parameterClass="java.util.List">
+		DELETE FROM t_sys_sms_template
+		WHERE id IN
+		<iterate open="(" close=")" conjunction=",">
+			#ids[]#
+		</iterate>
 	</delete>
 </sqlMap>
