@@ -13,7 +13,7 @@ import com.uc.training.smadmin.bd.vo.MemberLoginVO;
 import com.uc.training.smadmin.gds.dao.GoodsDao;
 import com.uc.training.smadmin.gds.vo.GoodsStokeVO;
 import com.uc.training.smadmin.ord.dao.OrderDao;
-import com.uc.training.smadmin.ord.re.OrderRe;
+import com.uc.training.smadmin.ord.re.OrderConfirmRE;
 import com.uc.training.smadmin.ord.vo.OrdOrderVo;
 import com.uc.training.smadmin.utils.EncryptUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,9 +75,9 @@ public class MemberServiceImpl implements MemberService {
      * @param orderPayInfoNow
      */
     @Override
-    public List<OrderRe> queryBalances(List<MemberInfoVO> orderPayInfoNow) {
-        List<OrderRe> list = new ArrayList<>();
-        OrderRe orderRe =new OrderRe();
+    public List<OrderConfirmRE> queryBalances(List<MemberInfoVO> orderPayInfoNow) {
+        List<OrderConfirmRE> list = new ArrayList<>();
+        OrderConfirmRE orderConfirmRE =new OrderConfirmRE();
         MemberInfoVO memberInfoVO = new MemberInfoVO();
         memberInfoVO.setTotalPrice(orderPayInfoNow.get(0).getTotalPrice());
         memberInfoVO.setOrderName(orderPayInfoNow.get(0).getOrderName());
@@ -94,19 +94,19 @@ public class MemberServiceImpl implements MemberService {
             //加成长值，积分
 
             //更新订单状态
-            orderRe.setStatus(OrderEnum.WAITSHIP.getKey());
+            orderConfirmRE.setStatus(OrderEnum.WAITSHIP.getKey());
             OrdOrderVo ordOrderVo = new OrdOrderVo();
             ordOrderVo.setOrderNum(orderPayInfoNow.get(0).getOrderName());
             ordOrderVo.setStatus(OrderEnum.WAITSHIP.getKey().longValue());
-            orderRe.setShowStatus("成功购买商品");
+            orderConfirmRE.setShowStatus("成功购买商品");
             orderDao.updateOrder(ordOrderVo);
             //减去用户余额
-            list.add(orderRe);
+            list.add(orderConfirmRE);
             return list;
         }else {
-            orderRe.setShowStatus("余额不足，请充值或者返回购物车重新选取商品");
-            list.add(orderRe);
-            orderRe.setStatus(OrderEnum.WAITPAY.getKey());
+            orderConfirmRE.setShowStatus("余额不足，请充值或者返回购物车重新选取商品");
+            list.add(orderConfirmRE);
+            orderConfirmRE.setStatus(OrderEnum.WAITPAY.getKey());
             return list;
         }
     }

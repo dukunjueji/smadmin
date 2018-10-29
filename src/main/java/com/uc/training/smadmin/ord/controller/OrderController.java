@@ -5,6 +5,7 @@ import com.uc.training.smadmin.bd.model.Member;
 import com.uc.training.smadmin.bd.service.MemberService;
 import com.uc.training.smadmin.bd.vo.MemberInfoVO;
 import com.uc.training.smadmin.ord.model.Order;
+import com.uc.training.smadmin.ord.re.OrderConfirmRE;
 import com.uc.training.smadmin.ord.re.OrderRe;
 import com.ycc.base.common.Result;
 import com.uc.training.common.base.controller.BaseController;
@@ -136,7 +137,7 @@ public class OrderController extends BaseController {
         Result result = new Result();
         List<OrdOrderGoodsVo> orderInfoListNow = (List<OrdOrderGoodsVo>) JSONArray.toList(JSONArray.fromObject(orderInfoList), new OrdOrderGoodsVo(), new JsonConfig());
         orderInfoListNow.get(orderInfoListNow.size()-2).setMemberId(getUid());
-        List<OrderRe> orderRe = orderService.updateOrderInfo(orderInfoListNow);
+        List<OrderConfirmRE> orderRe = orderService.updateOrderInfo(orderInfoListNow);
         result.setRe(orderRe);
         return result;
     }
@@ -201,7 +202,7 @@ public class OrderController extends BaseController {
     @RequestMapping(value = "queryBalances.do_",method = RequestMethod.POST)
     public Result queryBalances(String orderPayInfo){
         List<MemberInfoVO> orderPayInfoNow = (List<MemberInfoVO>) JSONArray.toList(JSONArray.fromObject(orderPayInfo), new MemberInfoVO(), new JsonConfig());
-        List<OrderRe> list= memberService.queryBalances(orderPayInfoNow);
+        List<OrderConfirmRE> list= memberService.queryBalances(orderPayInfoNow);
         Result result =new Result();
         result.setRe(list);
         return result;
