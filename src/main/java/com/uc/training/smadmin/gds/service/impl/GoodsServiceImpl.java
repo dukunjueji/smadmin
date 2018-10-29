@@ -1,12 +1,15 @@
 package com.uc.training.smadmin.gds.service.impl;
 
+import com.uc.training.smadmin.bd.service.MemberGradeService;
 import com.uc.training.smadmin.gds.dao.GoodsDao;
 import com.uc.training.smadmin.gds.re.GoodsRE;
 import com.uc.training.smadmin.gds.re.GoodsDetailRE;
 import com.uc.training.smadmin.gds.model.HotTag;
+import com.uc.training.smadmin.gds.re.GoodsStokeRE;
 import com.uc.training.smadmin.gds.re.PropertyUrlRE;
 import com.uc.training.smadmin.gds.service.GoodsService;
 import com.uc.training.smadmin.gds.vo.GoodsListVO;
+import com.uc.training.smadmin.gds.vo.GoodsStokeVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +25,8 @@ import java.util.List;
 public class GoodsServiceImpl implements GoodsService {
     @Autowired
     GoodsDao goodsDao;
+    @Autowired
+    MemberGradeService memberGradeService;
 
 
     @Override
@@ -70,8 +75,17 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Override
     public double getMemberDiscountPoint(Long uid) {
+        return memberGradeService.getDiscountByUId(uid);
+    }
 
-        return 0;
+    @Override
+    public void updateAndDeductStoke(GoodsStokeVO goodsStokeVO) {
+        GoodsStokeRE goodsStokeRE=goodsDao.selectGoodsStatus(goodsStokeVO);
+        if(goodsStokeRE != null && goodsStokeRE.getIsDelete()==0 && goodsStokeRE.getStatus()==1 && goodsStokeRE.getStoke()>=goodsStokeVO.getStoke()){
+            goodsDao.updateAndDeductStoke(goodsStokeVO);
+        }else{
+            System.out.println("库存有问题！--------------------------------------");
+        }
     }
 
 }

@@ -1,7 +1,9 @@
 package com.uc.training.smadmin.gds.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.google.inject.servlet.RequestParameters;
 import com.uc.training.common.annotation.AccessLogin;
+import com.uc.training.smadmin.gds.vo.GoodsStokeVO;
 import com.ycc.base.common.Result;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.common.vo.PageVO;
@@ -173,6 +175,27 @@ public class GoodsController extends BaseController {
         } catch (Exception e) {
             logger.error("获取会员的折扣点错误！", e);
             res = Result.getBusinessException("获取会员的折扣点失败", null);
+        }
+        return res;
+    }
+
+    /**
+     * 测试高并发下的减库存安全
+     * @param goodsStokeVO
+     */
+    @ResponseBody
+    @RequestMapping(value = "updateAndDeductStoke.do_")
+    public Result<String> updateAndDeductStoke(GoodsStokeVO goodsStokeVO){
+        goodsStokeVO.setPropertyId(4L);
+        goodsStokeVO.setStoke(1L);
+        Result<String> res;
+        System.out.println(JSON.toJSON(goodsStokeVO));
+        try {
+            goodsService.updateAndDeductStoke(goodsStokeVO);
+            res = Result.getSuccessResult("减库存成功");
+        } catch (Exception e) {
+            logger.error("减库存错误！", e);
+            res = Result.getBusinessException("减库存失败", null);
         }
         return res;
     }

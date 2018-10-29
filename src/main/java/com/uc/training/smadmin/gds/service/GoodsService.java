@@ -4,6 +4,7 @@ import com.uc.training.smadmin.gds.re.GoodsRE;
 import com.uc.training.smadmin.gds.re.GoodsDetailRE;
 import com.uc.training.smadmin.gds.model.HotTag;
 import com.uc.training.smadmin.gds.vo.GoodsListVO;
+import com.uc.training.smadmin.gds.vo.GoodsStokeVO;
 
 import java.util.List;
 
@@ -68,4 +69,10 @@ public interface GoodsService {
      * @return
      */
     public double getMemberDiscountPoint(Long uid);
+
+    /**
+     * 测试高并发下的减库存安全
+     * @param goodsStokeVO
+     */
+    public void updateAndDeductStoke(GoodsStokeVO goodsStokeVO);
 }

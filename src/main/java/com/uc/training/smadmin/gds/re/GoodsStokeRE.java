@@ -9,7 +9,7 @@ package com.uc.training.smadmin.gds.re;
 public class GoodsStokeRE {
     private Long propertyId;
     /**
-     * 需要扣除的库存
+     * 库存
      */
     private Long stoke;
     /**
