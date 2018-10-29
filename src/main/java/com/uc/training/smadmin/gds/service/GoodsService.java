@@ -61,4 +61,11 @@ public interface GoodsService {
      * @return
      */
     public List<HotTag> selectHotTag();
+
+    /**
+     * 获取会员的折扣点
+     * @param uid
+     * @return
+     */
+    public double getMemberDiscountPoint(Long uid);
 }

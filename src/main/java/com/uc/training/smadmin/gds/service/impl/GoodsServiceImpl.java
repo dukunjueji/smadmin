@@ -68,4 +68,10 @@ public class GoodsServiceImpl implements GoodsService {
         return goodsDao.selectHotTag();
     }
 
+    @Override
+    public double getMemberDiscountPoint(Long uid) {
+
+        return 0;
+    }
+
 }

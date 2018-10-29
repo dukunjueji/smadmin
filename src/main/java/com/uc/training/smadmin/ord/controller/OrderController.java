@@ -139,6 +139,7 @@ public class OrderController extends BaseController {
   public Result deleteCartgds(HttpServletRequest request, OrdCartGoodsVo ordCartGoodsVo) {
     Result result = new Result();
     ordCartGoodsVo.setMemberId(getUid());
+    ordCartGoodsVo.setMemberId(1L);
     orderService.deleteCarGoods(ordCartGoodsVo);
     return result;
   }
