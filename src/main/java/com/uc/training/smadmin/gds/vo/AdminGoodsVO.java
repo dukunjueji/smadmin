@@ -14,63 +14,6 @@ import java.io.Serializable;
 public class AdminGoodsVO extends AdminGoodsRE implements Serializable{
 
     private static final long serialVersionUID = -8084737002616351560L;
-    /**
-     * 商品类型
-     */
-    private Integer categoryId;
-    /**
-     * 图片名称
-     */
-    private String picName;
 
-    /**
-     * 创建人
-     */
-    private Long createEmp;
-    /**
-     *修改人
-     */
-    private Long modifyEmp;
 
-    public Integer getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(Integer categoryId) {
-        this.categoryId = categoryId;
-    }
-
-    public String getPicName() {
-        return picName;
-    }
-
-    public void setPicName(String picName) {
-        this.picName = picName;
-    }
-
-    public Long getCreateEmp() {
-        return createEmp;
-    }
-
-    public void setCreateEmp(Long createEmp) {
-        this.createEmp = createEmp;
-    }
-
-    public Long getModifyEmp() {
-        return modifyEmp;
-    }
-
-    public void setModifyEmp(Long modifyEmp) {
-        this.modifyEmp = modifyEmp;
-    }
-
-    @Override
-    public String toString() {
-        return "AdminGoodsVO{" +
-                "categoryId=" + categoryId +
-                ", picName='" + picName + '\'' +
-                ", createEmp=" + createEmp +
-                ", modifyEmp=" + modifyEmp +
-                '}';
-    }
 }

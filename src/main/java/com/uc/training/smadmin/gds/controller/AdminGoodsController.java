@@ -75,19 +75,13 @@ public class AdminGoodsController extends BaseController {
         // 新增商品属性
         Property property = new Property();
 
-        property.setStock(adminGoodsVO.getStock());
-        property.setDiscountPrice(adminGoodsVO.getDiscountPrice());
-        property.setSalePrice(adminGoodsVO.getSalePrice());
-        property.setProperty(adminGoodsVO.getProperty());
-        property.setIsDiscount(adminGoodsVO.getIsDiscount());
+
         property.setCreateEmp(getUid());
         property.setModifyEmp(getUid());
 
         // 新增图片
         GoodsPic goodsPic = new GoodsPic();
 
-        goodsPic.setPicName(adminGoodsVO.getPicName());
-        goodsPic.setPicUrl(adminGoodsVO.getPicUrl());
         goodsPic.setCreateEmp(getUid());
         goodsPic.setModifyEmp(getUid());
 

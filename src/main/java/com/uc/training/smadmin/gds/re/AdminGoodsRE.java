@@ -29,6 +29,11 @@ public class AdminGoodsRE implements Serializable{
     private String name;
 
     /**
+     * 商品类型
+     */
+    private Long categoryId;
+
+    /**
      * 出售价格
      */
     private BigDecimal sales;
@@ -37,42 +42,11 @@ public class AdminGoodsRE implements Serializable{
      * 详情
      */
     private String detail;
+
     /**
-     * 商品状态
+     * 商品状态（上架，下架）
      */
     private Integer status;
-
-    /**
-     * 类型名称
-     */
-    private String categoryName;
-
-    /**
-     * 库存量
-     */
-    private Integer stock;
-
-    /**
-     * 打折价格
-     */
-    private BigDecimal discountPrice;
-
-    private String property;
-
-    /**
-     * 定价
-     */
-    private BigDecimal salePrice;
-
-    /**
-     * 是否打折
-     */
-    private Integer isDiscount;
-
-    /**
-     * 图片地址
-     */
-    private String picUrl;
 
     public Long getId() {
         return id;
@@ -98,6 +72,14 @@ public class AdminGoodsRE implements Serializable{
         this.name = name;
     }
 
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
+    }
+
     public BigDecimal getSales() {
         return sales;
     }
@@ -114,14 +96,6 @@ public class AdminGoodsRE implements Serializable{
         this.detail = detail;
     }
 
-    public String getProperty() {
-        return property;
-    }
-
-    public void setProperty(String property) {
-        this.property = property;
-    }
-
     public Integer getStatus() {
         return status;
     }
@@ -130,51 +104,16 @@ public class AdminGoodsRE implements Serializable{
         this.status = status;
     }
 
-    public String getCategoryName() {
-        return categoryName;
-    }
-
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
-    }
-
-    public Integer getStock() {
-        return stock;
-    }
-
-    public void setStock(Integer stock) {
-        this.stock = stock;
-    }
-
-    public BigDecimal getDiscountPrice() {
-        return discountPrice;
-    }
-
-    public void setDiscountPrice(BigDecimal discountPrice) {
-        this.discountPrice = discountPrice;
-    }
-
-    public BigDecimal getSalePrice() {
-        return salePrice;
-    }
-
-    public void setSalePrice(BigDecimal salePrice) {
-        this.salePrice = salePrice;
-    }
-
-    public Integer getIsDiscount() {
-        return isDiscount;
-    }
-
-    public void setIsDiscount(Integer isDiscount) {
-        this.isDiscount = isDiscount;
-    }
-
-    public String getPicUrl() {
-        return picUrl;
-    }
-
-    public void setPicUrl(String picUrl) {
-        this.picUrl = picUrl;
+    @Override
+    public String toString() {
+        return "AdminGoodsRE{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                ", name='" + name + '\'' +
+                ", categoryId=" + categoryId +
+                ", sales=" + sales +
+                ", detail='" + detail + '\'' +
+                ", status=" + status +
+                '}';
     }
 }

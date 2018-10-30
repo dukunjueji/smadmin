@@ -152,13 +152,6 @@ public class GoodsServiceImpl implements GoodsService {
         Property property = new Property();
 
         property.setGoodsId(adminGoodsVO.getId());
-        property.setStock(adminGoodsVO.getStock());
-        property.setDiscountPrice(adminGoodsVO.getDiscountPrice());
-        property.setSalePrice(adminGoodsVO.getSalePrice());
-        property.setProperty(adminGoodsVO.getProperty());
-        property.setIsDiscount(adminGoodsVO.getIsDiscount());
-        property.setCreateEmp(adminGoodsVO.getCreateEmp());
-        property.setModifyEmp(adminGoodsVO.getModifyEmp());
 
         Integer propertyId = propertyService.updateProperty(property);
 
@@ -166,10 +159,6 @@ public class GoodsServiceImpl implements GoodsService {
         GoodsPic goodsPic = new GoodsPic();
 
         goodsPic.setPropertyId(propertyId);
-        goodsPic.setPicName(adminGoodsVO.getPicName());
-        goodsPic.setPicUrl(adminGoodsVO.getPicUrl());
-        goodsPic.setCreateEmp(adminGoodsVO.getCreateEmp());
-        goodsPic.setModifyEmp(adminGoodsVO.getModifyEmp());
 
         goodsPicService.updateGoodsPic(goodsPic);
 
