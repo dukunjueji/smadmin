@@ -9,10 +9,15 @@ package com.uc.training.common.enums;
  * 说明：成长值枚举
  */
 public enum GrowthEnum {
+    //登陆
     LOGININ("登陆", 1, 5L),
+    //签到
     SINGIN("签到", 2, 5L),
+    //购买商品
     PURCHASE("购买商品", 3, 5L),
+    //评价
     COMMENT("评价", 4, 10L),
+    //分享
     SHARE("分享", 5, 10L);
 
     GrowthEnum(String describe, Integer growthType, Long value) {
