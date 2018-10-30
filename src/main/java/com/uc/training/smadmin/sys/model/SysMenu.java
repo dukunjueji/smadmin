@@ -3,8 +3,6 @@ package com.uc.training.smadmin.sys.model;
 import com.uc.training.common.base.model.BaseModel;
 
 import java.io.Serializable;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -118,20 +116,4 @@ public class SysMenu extends BaseModel implements Serializable {
         this.parentId = parentId;
     }
 
-    /**
-     * 根据sorNum进行排序
-     * @return
-     */
-    public Comparator<SysMenu> order() {
-        Comparator<SysMenu> comparator = new Comparator<SysMenu>() {
-            @Override
-            public int compare(SysMenu o1, SysMenu o2) {
-                if (!o1.getSortNum().equals(o2.getSortNum())){
-                    return (int) (o1.getSortNum() - o2.getSortNum());
-                }
-                return 0;
-            }
-        };
-        return comparator;
-    }
 }

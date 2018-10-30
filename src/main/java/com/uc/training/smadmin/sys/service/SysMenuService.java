@@ -1,5 +1,7 @@
 package com.uc.training.smadmin.sys.service;
 
+import com.uc.training.smadmin.sys.model.SysMenu;
+
 import java.util.List;
 
 /**
@@ -19,4 +21,10 @@ public interface SysMenuService {
      * @version 1.0 2018/10/18 20:29 by 吴佰川（baichuan.wu@ucarinc.com）创建
      */
     List<String> getUserPerms(Long userId);
+
+    /**
+     * 获取菜单列表
+     * @return
+     */
+    List<SysMenu> getMenuList();
 }

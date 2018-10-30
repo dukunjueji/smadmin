@@ -27,6 +27,6 @@ public class SysMenuDaoImpl extends CarIsIbatisDaoImpl implements SysMenuDao {
 
     @Override
     public List<SysMenu> getMenuList() {
-        return null;
+        return this.queryForList(NAMESPACE + "getMenuList");
     }
 }
