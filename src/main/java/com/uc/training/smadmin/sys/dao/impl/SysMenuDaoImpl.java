@@ -19,10 +19,10 @@ import java.util.List;
 @Repository
 public class SysMenuDaoImpl extends CarIsIbatisDaoImpl implements SysMenuDao {
 
-    private static final String namespace = "com.uc.training.smadmin.sys.dao.SysMenuDao.";
+    private static final String NAMESPACE = "com.uc.training.smadmin.sys.dao.SysMenuDao.";
     @Override
     public List<String> getUserPerms(Long userId) {
-        return (List<String>) this.queryForList(namespace +"getUserPerms", userId);
+        return (List<String>) this.queryForList(NAMESPACE +"getUserPerms", userId);
     }
 
     @Override

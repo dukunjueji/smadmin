@@ -15,7 +15,7 @@ import java.util.List;
  */
 @Repository
 public class SmsTemplateDaoImpl extends CarIsIbatisDaoImpl implements SmsTemplateDao {
-    private static final String namespace = "com.uc.training.smadmin.sms.dao.SmsTemplateDao.";
+    private static final String NAMESPACE = "com.uc.training.smadmin.sms.dao.SmsTemplateDao.";
     /**
      * 添加短信模板
      * @param template
@@ -23,7 +23,7 @@ public class SmsTemplateDaoImpl extends CarIsIbatisDaoImpl implements SmsTemplat
      */
     @Override
     public Long addTemplate(SmsTemplate template) {
-        return (Long) this.insert(namespace + "insertSmsTemplate", template);
+        return (Long) this.insert(NAMESPACE + "insertSmsTemplate", template);
     }
 
     /**
@@ -33,7 +33,7 @@ public class SmsTemplateDaoImpl extends CarIsIbatisDaoImpl implements SmsTemplat
      */
     @Override
     public Integer modifyTemplate(SmsTemplate template) {
-        return this.update(namespace + "updateSmsTemplateById", template);
+        return this.update(NAMESPACE + "updateSmsTemplateById", template);
     }
 
     /**
@@ -42,7 +42,7 @@ public class SmsTemplateDaoImpl extends CarIsIbatisDaoImpl implements SmsTemplat
      */
     @Override
     public Integer deleteTemplate(Long id) {
-        int res = this.deleteObject(namespace + "deleteById", id);
+        int res = this.deleteObject(NAMESPACE + "deleteById", id);
         return res;
     }
 
@@ -53,7 +53,7 @@ public class SmsTemplateDaoImpl extends CarIsIbatisDaoImpl implements SmsTemplat
      */
     @Override
     public SmsTemplate getTemplateById(Long id) {
-        return (SmsTemplate) this.queryForObject(namespace + "getSmsTemplateById", id);
+        return (SmsTemplate) this.queryForObject(NAMESPACE + "getSmsTemplateById", id);
     }
 
     /**
@@ -62,7 +62,7 @@ public class SmsTemplateDaoImpl extends CarIsIbatisDaoImpl implements SmsTemplat
      */
     @Override
     public List<SmsTemplate> getList(SmsTemplateListVO smsTemplateListVO) {
-        return this.queryForList(namespace + "querySmsTemplateList", smsTemplateListVO);
+        return this.queryForList(NAMESPACE + "querySmsTemplateList", smsTemplateListVO);
     }
 
     /**
@@ -72,7 +72,7 @@ public class SmsTemplateDaoImpl extends CarIsIbatisDaoImpl implements SmsTemplat
      */
     @Override
     public Long getTemplateListCount(SmsTemplateListVO smsTemplateListVO) {
-        return (Long) this.queryForObject(namespace + "querySmsTemplateCount", smsTemplateListVO);
+        return (Long) this.queryForObject(NAMESPACE + "querySmsTemplateCount", smsTemplateListVO);
     }
 
     /**
@@ -82,7 +82,7 @@ public class SmsTemplateDaoImpl extends CarIsIbatisDaoImpl implements SmsTemplat
      */
     @Override
     public SmsTemplate getByCode(String code) {
-        return (SmsTemplate) this.queryForObject(namespace + "getByCode", code);
+        return (SmsTemplate) this.queryForObject(NAMESPACE + "getByCode", code);
     }
 
     /**
@@ -92,7 +92,7 @@ public class SmsTemplateDaoImpl extends CarIsIbatisDaoImpl implements SmsTemplat
      */
     @Override
     public Integer batchDeleteById(List<Long> ids){
-        return this.deleteObject(namespace + "batchDeleteById", ids);
+        return this.deleteObject(NAMESPACE + "batchDeleteById", ids);
     }
 
 }

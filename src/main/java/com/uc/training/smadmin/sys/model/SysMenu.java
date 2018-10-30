@@ -3,7 +3,9 @@ package com.uc.training.smadmin.sys.model;
 import com.uc.training.common.base.model.BaseModel;
 
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 版权说明：Copyright (c) 2018 ucarinc. All Rights Reserved.
@@ -49,6 +51,16 @@ public class SysMenu extends BaseModel implements Serializable {
      * 父级
      */
     private Long parentId;
+
+    private List<SysMenu> children;
+
+    public List<SysMenu> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<SysMenu> children) {
+        this.children = children;
+    }
 
     public Long getId() {
         return id;
@@ -104,5 +116,22 @@ public class SysMenu extends BaseModel implements Serializable {
 
     public void setParentId(Long parentId) {
         this.parentId = parentId;
+    }
+
+    /**
+     * 根据sorNum进行排序
+     * @return
+     */
+    public Comparator<SysMenu> order() {
+        Comparator<SysMenu> comparator = new Comparator<SysMenu>() {
+            @Override
+            public int compare(SysMenu o1, SysMenu o2) {
+                if (!o1.getSortNum().equals(o2.getSortNum())){
+                    return (int) (o1.getSortNum() - o2.getSortNum());
+                }
+                return 0;
+            }
+        };
+        return comparator;
     }
 }

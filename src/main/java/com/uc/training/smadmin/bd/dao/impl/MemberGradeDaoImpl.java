@@ -1,7 +1,6 @@
 package com.uc.training.smadmin.bd.dao.impl;
 import com.uc.training.smadmin.bd.model.MemberGrade;
 import com.uc.training.smadmin.bd.dao.MemberGradeDao;
-import com.uc.training.smadmin.bd.vo.MemberGradeListVO;
 import com.zuche.framework.dao.CarIsIbatisDaoImpl;
 import org.springframework.stereotype.Repository;
 import java.util.List;
@@ -13,21 +12,14 @@ import java.util.List;
 @Repository
 public class MemberGradeDaoImpl extends CarIsIbatisDaoImpl implements MemberGradeDao {
 
-	private static final String namespace = "com.uc.training.smadmin.bd.dao.MemberGradeDao.";
-	/**
-	 * 通过主键来查找查找
-	 */
-	 @Override
-	 public List<MemberGrade> getMemberGradeById(Long id){
-		  return (List<MemberGrade>) this.queryForObject(namespace + "getMemberGradeById", id);
-	 }
+	private static final String NAMESPACE = "com.uc.training.smadmin.bd.dao.MemberGradeDao.";
 
 	/**
 	 * 查询列表
 	 */
 	 @Override
 	 public List<MemberGrade>  queryMemberGradeList(){
-		  return this.queryForList(namespace + "queryMemberGradeList");
+		  return this.queryForList(NAMESPACE + "queryMemberGradeList");
 	 }
 
 	/**
@@ -35,7 +27,7 @@ public class MemberGradeDaoImpl extends CarIsIbatisDaoImpl implements MemberGrad
 	 */
 	 @Override
 	public Long queryMemberGradeCount(){
-		  return (Long) this.queryForObject(namespace + "queryMemberGradeCount");
+		  return (Long) this.queryForObject(NAMESPACE + "queryMemberGradeCount");
 	 }
 
 	/**
@@ -43,7 +35,7 @@ public class MemberGradeDaoImpl extends CarIsIbatisDaoImpl implements MemberGrad
 	 */
 	 @Override
 	public Long insertMemberGrade( MemberGrade record ){
-		  return (Long) this.insert(namespace + "insertMemberGrade", record);
+		  return (Long) this.insert(NAMESPACE + "insertMemberGrade", record);
 	 }
 
 	/**
@@ -51,12 +43,12 @@ public class MemberGradeDaoImpl extends CarIsIbatisDaoImpl implements MemberGrad
 	 */
 	 @Override
 	public Integer updateMemberGradeById( MemberGrade record ){
-		  return this.update(namespace + "updateMemberGradeById", record);
+		  return this.update(NAMESPACE + "updateMemberGradeById", record);
 	 }
 
 	@Override
 	public MemberGrade getByUId(Long id) {
-		return (MemberGrade) this.queryForObject(namespace + "getByUId", id);
+		return (MemberGrade) this.queryForObject(NAMESPACE + "getByUId", id);
 	}
 
 }

@@ -1,6 +1,5 @@
 package com.uc.training.smadmin.bd.dao;
 import com.uc.training.smadmin.bd.model.MemberGrade;
-import com.uc.training.smadmin.bd.vo.MemberGradeListVO;
 
 import java.util.List;
 /**
@@ -11,27 +10,28 @@ import java.util.List;
 public interface MemberGradeDao{
 
 	/**
-	 * 通过主键来查找查找
+	 * 查询会员等级列表
+	 * @return 会员等级列表
 	 */
-	 public List<MemberGrade>  getMemberGradeById(Long id);
+	public List<MemberGrade>  queryMemberGradeList();
 
 	/**
-	 * 查询列表
-	 */
-	 public List<MemberGrade>  queryMemberGradeList();
-
-	/**
-	 * 查找数据总记录数
+	 * 查询会员等级数量
+	 * @return
 	 */
 	public Long queryMemberGradeCount();
 
 	/**
-	 * 保存
+	 * 新增会员等级
+	 * @param record 会员等级信息
+	 * @return
 	 */
 	public Long insertMemberGrade(MemberGrade record);
 
 	/**
-	 * 更新
+	 * 更新会员等级
+	 * @param record 会员等级信息
+	 * @return
 	 */
 	public Integer updateMemberGradeById(MemberGrade record);
 

@@ -22,5 +22,9 @@ public interface SysMenuDao {
      */
     List<String> getUserPerms(Long userId);
 
+    /**
+     * 获取菜单列表
+     * @return
+     */
     List<SysMenu> getMenuList();
 }

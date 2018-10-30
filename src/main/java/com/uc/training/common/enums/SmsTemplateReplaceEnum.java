@@ -10,8 +10,17 @@ import java.util.Map;
  */
 public enum SmsTemplateReplaceEnum {
 
+    /**
+     * 验证码
+     */
     VERIFICATIONCODE("验证码", "${code}"),
+    /**
+     * 用户名
+     */
     MEMBERNAME("用户名", "${memberName}"),
+    /**
+     * 订单编号
+     */
     ORDERNUM("订单编号", "${orderNumber}");
 
     /**
