@@ -27,4 +27,11 @@ public class ChargeBalanceVO implements Serializable {
     public void setBalance(BigDecimal balance) {
         this.balance = balance;
     }
+
+    @Override
+    public String toString() {
+        return "ChargeBalanceVO{" +
+                "balance=" + balance +
+                '}';
+    }
 }

@@ -145,4 +145,20 @@ public class MemberInfoVO implements Serializable {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
+
+    @Override
+    public String toString() {
+        return "MemberInfoVO{" +
+                "nickname='" + nickname + '\'' +
+                ", memberId=" + memberId +
+                ", email='" + email + '\'' +
+                ", sex=" + sex +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", balances=" + balances +
+                ", orderName='" + orderName + '\'' +
+                ", goodsId=" + goodsId +
+                ", totalPrice=" + totalPrice +
+                ", goodsNum=" + goodsNum +
+                '}';
+    }
 }

@@ -64,4 +64,14 @@ public class IntegralVO implements Serializable {
     public void setIntegral(Long integral) {
         this.integral = integral;
     }
+
+    @Override
+    public String toString() {
+        return "IntegralVO{" +
+                "integralType=" + integralType +
+                ", purchaseValue=" + purchaseValue +
+                ", memberId=" + memberId +
+                ", integral=" + integral +
+                '}';
+    }
 }

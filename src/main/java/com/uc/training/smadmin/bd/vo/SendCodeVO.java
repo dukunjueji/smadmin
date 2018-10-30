@@ -57,4 +57,13 @@ public class SendCodeVO implements Serializable {
     public void setConfirmpassword(String confirmpassword) {
         this.confirmpassword = confirmpassword;
     }
+
+    @Override
+    public String toString() {
+        return "SendCodeVO{" +
+                "oldpassword='" + oldpassword + '\'' +
+                ", newpassword='" + newpassword + '\'' +
+                ", confirmpassword='" + confirmpassword + '\'' +
+                '}';
+    }
 }

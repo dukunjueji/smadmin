@@ -51,4 +51,13 @@ public class GrowthVO implements Serializable {
     public void setMemberId(Long memberId) {
         this.memberId = memberId;
     }
+
+    @Override
+    public String toString() {
+        return "GrowthVO{" +
+                "growthType=" + growthType +
+                ", purchaseValue=" + purchaseValue +
+                ", memberId=" + memberId +
+                '}';
+    }
 }

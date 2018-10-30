@@ -24,4 +24,11 @@ public class CreateCodeVO implements Serializable {
     public void setTelephone(String telephone) {
         this.telephone = telephone;
     }
+
+    @Override
+    public String toString() {
+        return "CreateCodeVO{" +
+                "telephone='" + telephone + '\'' +
+                '}';
+    }
 }

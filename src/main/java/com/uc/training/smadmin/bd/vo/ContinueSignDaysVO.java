@@ -22,7 +22,7 @@ public class ContinueSignDaysVO implements Serializable {
     /**
      * 获取离今天最近的连续签到天数
      */
-    private int continueSignDays;
+    private Integer continueSignDays;
     /**
      * 获取de连续签到天数的最后日期
      */
@@ -36,11 +36,11 @@ public class ContinueSignDaysVO implements Serializable {
         this.memberId = memberId;
     }
 
-    public int getContinueSignDays() {
+    public Integer getContinueSignDays() {
         return continueSignDays;
     }
 
-    public void setContinueSignDays(int continueSignDays) {
+    public void setContinueSignDays(Integer continueSignDays) {
         this.continueSignDays = continueSignDays;
     }
 
@@ -50,5 +50,14 @@ public class ContinueSignDaysVO implements Serializable {
 
     public void setLastDate(Date lastDate) {
         this.lastDate = lastDate;
+    }
+
+    @Override
+    public String toString() {
+        return "ContinueSignDaysVO{" +
+                "memberId=" + memberId +
+                ", continueSignDays=" + continueSignDays +
+                ", lastDate=" + lastDate +
+                '}';
     }
 }
