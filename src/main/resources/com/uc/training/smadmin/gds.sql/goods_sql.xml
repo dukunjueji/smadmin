@@ -130,7 +130,7 @@
         limit 0, 10
     </select>
 
-    <!-- 后台查询所有商品信息 -->
+    <!-- 后台分页查询所有商品信息 -->
     <select id="getAdminGoodsList" parameterClass="com.uc.training.smadmin.gds.vo.GoodsListVO" resultClass="com.uc.training.smadmin.gds.re.AdminGoodsRE">
         SELECT
         gg.id AS id,
@@ -142,24 +142,32 @@
         gc.name AS  categoryName,
         gp.stock  AS stock,
         gp.discount_price AS  discountPrice,
+		gp.property AS property,
         gp.sale_price  AS salePrice,
         gp.is_discount AS  isDiscount,
         pic.pic_url  AS picUrl
         FROM
-        t_gds_goods 		    gg,
-        t_gds_goods_pic		   pic,
-        t_gds_property 			gp,
-        t_gds_category 			gc
-
-        WHERE
-        gg.id = gp.goods_id AND
-        gg.category_id = gc.id AND
-        gp.id = pic.property_id AND
-        gg.is_delete = 0
-        ORDER BY gg.id ASC
-        <isNotEmpty property="offset">
-            limit #offset#, #pageSize#
-        </isNotEmpty>
+        t_gds_goods 		gg	LEFT JOIN t_gds_property	  	gp  ON   gg.id = gp.goods_id
+								LEFT JOIN t_gds_goods_pic  	pic ON   gp.id = pic.property_id
+								LEFT JOIN t_gds_category 	  gc ON   gg.category_id = gc.id
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and">
+				gg.is_delete = 0
+			</isNotEmpty>
+			<isNotEmpty property="code" prepend="and">
+				gg.code LIKE concat("%",#code#,"%")
+			</isNotEmpty>
+			<isNotEmpty property="name" prepend="and">
+				gg.name LIKE concat("%",#name#,"%")
+			</isNotEmpty>
+			<isNotEmpty property="categoryId" prepend="and">
+				gc.id = #categoryId#
+			</isNotEmpty>
+		</dynamic>
+		ORDER BY gg.id ASC
+		<isNotNull property="offset">
+			limit #offset#, #pageSize#
+		</isNotNull>
     </select>
 
     <insert id="insertGoods" parameterClass="com.uc.training.smadmin.gds.model.Goods">

@@ -18,6 +18,11 @@ public class GoodsListVO extends PageQuery {
      */
     private String name;
 
+    /**
+     * 商品编号
+     */
+    private String code;
+
     public String getName() {
         return name;
     }
@@ -32,5 +37,13 @@ public class GoodsListVO extends PageQuery {
 
     public void setCategoryId(Long categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 }

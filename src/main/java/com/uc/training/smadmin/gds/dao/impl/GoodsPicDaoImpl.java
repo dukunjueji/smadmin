@@ -2,7 +2,6 @@ package com.uc.training.smadmin.gds.dao.impl;
 
 import com.uc.training.smadmin.gds.dao.GoodsPicDao;
 import com.uc.training.smadmin.gds.model.GoodsPic;
-import com.uc.training.smadmin.gds.model.Property;
 import com.zuche.framework.dao.CarIsIbatisDaoImpl;
 import org.springframework.stereotype.Repository;
 
@@ -24,7 +23,7 @@ public class GoodsPicDaoImpl extends CarIsIbatisDaoImpl implements GoodsPicDao {
      */
     @Override
     public Long insertGoodsPic(GoodsPic goodsPic) {
-        return (Long) this.insert("com.uc.training.smadmin.gds.dao.GoodsPic.insertGoodsPic", goodsPic);
+        return (Long) this.insert("com.uc.training.smadmin.gds.dao.GoodsPicDao.insertGoodsPic", goodsPic);
     }
 
     /**
@@ -35,6 +34,6 @@ public class GoodsPicDaoImpl extends CarIsIbatisDaoImpl implements GoodsPicDao {
      */
     @Override
     public Integer updateGoodsPic(GoodsPic goodsPic) {
-        return update("com.uc.training.smadmin.gds.dao.GoodsPic.updateGoodsPic", goodsPic);
+        return update("com.uc.training.smadmin.gds.dao.GoodsPicDao.updateGoodsPic", goodsPic);
     }
 }
