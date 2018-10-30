@@ -14,41 +14,26 @@ import java.util.List;
 @Repository
 public class OrderDaoImpl extends CarIsIbatisDaoImpl implements OrderDao {
 
-	/**
-	 * 通过主键来查找查找
-	 */
 	 @Override
 	 public List<Order> getOrderById(Long memberId){
 		  return this.queryForList("com.uc.training.smadmin.ord.dao.OrderDao.getOrderById", memberId);
 	 }
 
-	/**
-	 * 查询列表
-	 */
 	 @Override
 	 public List<Order>  queryOrderList(){
 		  return this.queryForList("com.uc.training.smadmin.ord.dao.OrderDao.queryOrderList");
 	 }
 
-	/**
-	 * 查找指定会员订单总记录数
-	 */
 	 @Override
 	public Integer queryOrderCount(Long memberId){
 		  return (Integer) this.queryForObject("com.uc.training.smadmin.ord.dao.OrderDao.queryOrderCount", memberId);
 	 }
 
-	/**
-	 * 保存
-	 */
 	 @Override
 	public Long insertOrder( Order record ){
 		  return (Long) this.insert("com.uc.training.smadmin.ord.dao.OrderDao.insertOrder", record);
 	 }
 
-	/**
-	 * 更新
-	 */
 	 @Override
 	public int updateOrderById( Order record ){
 		  return this.update("com.uc.training.smadmin.ord.dao.OrderDao.updateOrderById", record);
@@ -70,11 +55,6 @@ public class OrderDaoImpl extends CarIsIbatisDaoImpl implements OrderDao {
     return this.update("com.uc.training.smadmin.ord.dao.OrderDao.logicDelOrder",list);
   }
 
-	/**
-	 * 更新订单状态
-	 *
-	 * @param ordOrderVo
-	 */
 	@Override
 	public int updateOrder(OrdOrderVo ordOrderVo) {
 		return this.update("com.uc.training.smadmin.ord.dao.OrderDao.updateOrder",ordOrderVo);

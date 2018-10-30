@@ -41,9 +41,6 @@ public class OrderServiceImpl implements OrderService {
   CartGoodsDao cartGoodsDao;
 
   @Autowired
-  GoodsDao goodsDao;
-
-  @Autowired
   OrderDao orderDao;
 
   @Autowired
@@ -54,7 +51,7 @@ public class OrderServiceImpl implements OrderService {
 
   @Override
   public List<CartGoods> getCarGoodsById(Long memberId) {
-    List<CartGoods> cartList = cartGoodsDao.getCartGoodsById(memberId);;
+    List<CartGoods> cartList = cartGoodsDao.getCartGoodsById(memberId);
     if (cartList.size() <= 0) {
       return null;
     }
@@ -72,17 +69,13 @@ public class OrderServiceImpl implements OrderService {
         OrdOrderGoodsVo ordOrderGoodsVo;
         for (int i = 0; i < orderGodsList.size(); i++) {
             ordOrderGoodsVo = new OrdOrderGoodsVo();
-            GoodsDetailRE gdDTO = goodsDao.getGoodsDetailByPropertyId(orderGodsList.get(i).getPropertyId());
+            GoodsDetailRE gdDTO = goodsService.getGoodsDetailByPropertyId(orderGodsList.get(i).getPropertyId());
             if (gdDTO == null) {
-                return list;
-            }
-            List<PropertyUrlRE> tempList = goodsDao.getPicUrlByPropertyId(orderGodsList.get(i).getPropertyId());
-            if (CollectionUtils.isEmpty(tempList)) {
                 return list;
             }
             ordOrderGoodsVo.setGoodsId(orderGodsList.get(i).getGoodsId());
             ordOrderGoodsVo.setGdsName(gdDTO.getName());
-            ordOrderGoodsVo.setGdsUrl(tempList.get(0).getPicUrl());
+            ordOrderGoodsVo.setGdsUrl(gdDTO.getPicUrl().get(0).getPicUrl());
             ordOrderGoodsVo.setPropertyId(orderGodsList.get(i).getPropertyId());
             ordOrderGoodsVo.setProperty(gdDTO.getProperty());
             ordOrderGoodsVo.setSalePrice(gdDTO.getSalePrice());
@@ -120,11 +113,12 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderConfirmRE> confirmOrderInfo(List<OrdOrderGoodsVo> orderInfoListNow) {
         OrderConfirmRE orderConfirmRE = new OrderConfirmRE();
         List<OrderConfirmRE> list = new ArrayList<>();
-        for (int i = 0; i < orderInfoListNow.size() - 2; i++) {
+        int a = 2;
+        for (int i = 0; i < orderInfoListNow.size() - a; i++) {
             //更新库存表、插入用户订单表和订单商品信息表、删除购物车商品信息,判断商品是否删除或者下架和库存是否足够
             GoodsStokeVO goodsStokeVO = new GoodsStokeVO();
             goodsStokeVO.setPropertyId(orderInfoListNow.get(i).getPropertyId());
-            GoodsStokeRE goodsStokeRE = goodsDao.selectGoodsStatus(goodsStokeVO);
+            GoodsStokeRE goodsStokeRE = goodsService.selectGoodsStatus(goodsStokeVO);
             if (goodsStokeRE.getIsDelete() == GoodsStatusEnum.GoodsIsDelete.getType()) {
                 StringBuilder temp = new StringBuilder();
                 temp.append("您的商品：" + goodsStokeRE.getGoodsName() + "\n" + "规格:");
@@ -169,7 +163,7 @@ public class OrderServiceImpl implements OrderService {
         //遍历orderInfoListNow
         OrderGoods orderGoods;
         GoodsStokeVO goodsStokeVO;
-        for (int i = 0; i < orderInfoListNow.size() - 2; i++) {
+        for (int i = 0; i < orderInfoListNow.size() - a; i++) {
             //插入订单商品信息表
             orderGoods = new OrderGoods();
             goodsStokeVO = new GoodsStokeVO();
@@ -185,7 +179,7 @@ public class OrderServiceImpl implements OrderService {
             //更新商品对应的库存
             goodsStokeVO.setStoke(orderGoods.getGoodsNum().longValue());
             goodsStokeVO.setPropertyId(orderGoods.getGoodsPropertyId());
-            goodsDao.updateAndDeductStoke(goodsStokeVO);
+          goodsService.updateAndDeductStoke(goodsStokeVO);
             //删除购物车信息表
             OrdCartGoodsVo ordCartGoodsVo = new OrdCartGoodsVo();
             ordCartGoodsVo.setPropertyId(orderInfoListNow.get(i).getPropertyId());
@@ -243,54 +237,39 @@ public class OrderServiceImpl implements OrderService {
     return list;
   }
 
-    /**
-     * 逻辑删除订单
-     *
-     * @param list
-     * @return
-     */
-    @Override
-    public int logicDelOrder(List<OrderRe> list) {
-        return orderDao.logicDelOrder(list);
+  @Override
+  public int logicDelOrder(List<OrderRe> list) {
+    return orderDao.logicDelOrder(list);
+  }
+
+  @Override
+  public int updateOrder(OrdOrderVo ordOrderVo) {
+    return orderDao.updateOrder(ordOrderVo);
+  }
+
+
+  @Override
+  public List<OrderGoodsDetailRe> getOrderGdsById(Integer id) {
+    List<OrderGoods> orderGdslist;
+    List<OrderGoodsDetailRe> list = new ArrayList<>();
+    orderGdslist = orderGoodsDao.getOrderGoodsByOrderId(id);
+    if (CollectionUtils.isEmpty(orderGdslist)) {
+      return null;
     }
-
-    /**
-     * 更新订单状态
-     *
-     * @param ordOrderVo
-     */
-    @Override
-    public int updateOrder(OrdOrderVo ordOrderVo) {
-        return orderDao.updateOrder(ordOrderVo);
+    OrderGoodsDetailRe orderGoodsDetailRe;
+    GoodsDetailRE gdDTO;
+    for (OrderGoods orderGoods : orderGdslist) {
+      orderGoodsDetailRe = new OrderGoodsDetailRe();
+      gdDTO = goodsService.getGoodsDetailByPropertyId(orderGoods.getGoodsPropertyId());
+      orderGoodsDetailRe.setGoodsName(gdDTO.getName());
+      orderGoodsDetailRe.setGoodsNum(orderGoods.getGoodsNum());
+      orderGoodsDetailRe.setGoodsProperty(gdDTO.getProperty());
+      orderGoodsDetailRe.setGoodsPrice(gdDTO.getSalePrice());
+      list.add(orderGoodsDetailRe);
     }
+    return list;
+  }
 
-
-    @Override
-    public List<OrderGoodsDetailRe> getOrderGdsById(Integer id) {
-        List<OrderGoods> orderGdslist;
-        List<OrderGoodsDetailRe> list = new ArrayList<>();
-        orderGdslist = orderGoodsDao.getOrderGoodsByOrderId(id);
-        if (orderGdslist.size() < 1) {
-            return null;
-        }
-        for (OrderGoods orderGoods : orderGdslist) {
-            GoodsDetailRE gdDTO;
-            OrderGoodsDetailRe orderGoodsDetailRe = new OrderGoodsDetailRe();
-            gdDTO = goodsDao.getGoodsDetailByPropertyId(orderGoods.getGoodsPropertyId());
-            orderGoodsDetailRe.setGoodsName(gdDTO.getName());
-            orderGoodsDetailRe.setGoodsNum(orderGoods.getGoodsNum());
-            orderGoodsDetailRe.setGoodsProperty(gdDTO.getProperty());
-            orderGoodsDetailRe.setGoodsPrice(gdDTO.getSalePrice());
-            list.add(orderGoodsDetailRe);
-        }
-        return list;
-    }
-
-    /**
-     * 根据会员id获取订单信息列表
-     *
-     * @param memberId
-     */
     @Override
     public List<OrderInfoRE> getOrderInfoListByMemberId(Long memberId) {
         //先获该用户的取订单id，然后查询每条订单的状态，订单的金额 以及获取订单的商品信息
