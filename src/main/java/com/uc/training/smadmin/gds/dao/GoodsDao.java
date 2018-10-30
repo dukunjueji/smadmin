@@ -20,6 +20,7 @@ import java.util.List;
 public interface GoodsDao {
     /**
      * 获取热门推荐
+     * @param listSize
      * @return
      */
     public List<GoodsRE> getHotRecommend(int listSize);

@@ -2,7 +2,15 @@ package com.uc.training.smadmin.gds.model;
 
 import com.uc.training.common.base.model.BaseModel;
 
-
+/**
+ *
+ * 功能描述: 热门标签
+ *
+ * @param:
+ * @return: 
+ * @auther: ling
+ * @date: 2018/10/30 10:05
+ */
 public class HotTag extends BaseModel {
 
   private long id;

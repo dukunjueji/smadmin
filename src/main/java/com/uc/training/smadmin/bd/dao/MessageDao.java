@@ -12,29 +12,43 @@ import java.util.List;
  */
 public interface MessageDao{
 
-	/**
-	 * 通过主键来查找查找
+	 /**
+	 *说明：通过主键来查找查找
+	 *@param id 消息id
+	 *@return：java.util.List<com.uc.training.smadmin.bd.model.Message>
+	 *@throws：
 	 */
 	 public List<Message>  getMessageById(Long id);
 
-	/**
-	 * 查询列表
+	 /**
+	 *说明：查询消息列表
+	 *@return：java.util.List<com.uc.training.smadmin.bd.model.Message>
+	 *@throws：
 	 */
 	 public List<Message>  queryMessageList();
 
 	/**
-	 * 查找指定会员消息总记录数
-	 */
+	*说明：查找指定会员消息总记录数
+	*@param memberId 会员id
+	*@return：java.lang.Integer
+	*@throws：
+	*/
 	public Integer queryMessageCount(Long memberId);
 
 	/**
-	 * 保存
-	 */
+	*说明：保存消息
+	*@param record 消息类
+	*@return：java.lang.Long
+	*@throws：
+	*/
 	public Long insertMessage(Message record);
 
 	/**
-	 * 更新
-	 */
+	*说明：更新消息
+	*@param record 消息类
+	*@return：int
+	*@throws：
+	*/
 	public int updateMessageById(Message record);
 
 	/**
