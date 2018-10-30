@@ -11,10 +11,6 @@ import java.io.Serializable;
 
 
 public class OrdCartGoodsVo implements Serializable {
-  /**
-   * id
-   */
-  private Long id;
 
   /**
    * 会员id
@@ -73,22 +69,9 @@ public class OrdCartGoodsVo implements Serializable {
   private long isDiscount;
 
   /**
-   * 选定状态
-   */
-  private boolean chooseStatus;
-
-  /**
    * 商品状态(是否下架)
    */
   private long status;
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
 
   public Long getMemberId() {
     return memberId;
@@ -194,11 +177,4 @@ public class OrdCartGoodsVo implements Serializable {
     this.stock = stock;
   }
 
-  public boolean isChooseStatus() {
-    return chooseStatus;
-  }
-
-  public void setChooseStatus(boolean chooseStatus) {
-    this.chooseStatus = chooseStatus;
-  }
 }
