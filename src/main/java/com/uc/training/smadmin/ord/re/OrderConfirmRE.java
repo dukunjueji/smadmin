@@ -23,7 +23,7 @@ public class OrderConfirmRE implements Serializable {
     /**
      * 订单编码
      */
-    private String OrderNum;
+    private String orderNum;
 
 
     /**
@@ -60,10 +60,10 @@ public class OrderConfirmRE implements Serializable {
     }
 
     public String getOrderNum() {
-        return OrderNum;
+        return orderNum;
     }
 
     public void setOrderNum(String orderNum) {
-        OrderNum = orderNum;
+        orderNum = orderNum;
     }
 }

@@ -50,7 +50,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public Member queryOneMember(Member member) {
-        if (member.getPassword() != null){
+        if (member.getPassword() != null) {
             //密码加密
             member.setPassword(EncryptUtil.md5(member.getPassword()));
         }
@@ -71,20 +71,21 @@ public class MemberServiceImpl implements MemberService {
 
     /**
      * 查询余额
+     *
      * @param orderPayInfoNow
      */
     @Override
     public List<OrderConfirmRE> queryBalances(List<MemberInfoVO> orderPayInfoNow) {
         List<OrderConfirmRE> list = new ArrayList<>();
-        OrderConfirmRE orderConfirmRE =new OrderConfirmRE();
+        OrderConfirmRE orderConfirmRE = new OrderConfirmRE();
         MemberInfoVO memberInfoVO = new MemberInfoVO();
         memberInfoVO.setTotalPrice(orderPayInfoNow.get(0).getTotalPrice());
         memberInfoVO.setOrderName(orderPayInfoNow.get(0).getOrderName());
         memberInfoVO.setMemberId(1L);
         Double accountBalances = memberDao.queryBalances(memberInfoVO.getMemberId());
-        if ( accountBalances > memberInfoVO.getTotalPrice()){
+        if (accountBalances > memberInfoVO.getTotalPrice()) {
             // 加上对应的商品销量
-            for (int i = 1, j = orderPayInfoNow.size();i < j; i++){
+            for (int i = 1, j = orderPayInfoNow.size(); i < j; i++) {
                 GoodsStokeVO goodsStokeVO = new GoodsStokeVO();
                 goodsStokeVO.setStoke(orderPayInfoNow.get(i).getGoodsNum());
                 goodsStokeVO.setGoodsId(orderPayInfoNow.get(i).getGoodsId());
@@ -102,16 +103,13 @@ public class MemberServiceImpl implements MemberService {
             //减去用户余额
             list.add(orderConfirmRE);
             return list;
-        }else {
+        } else {
             orderConfirmRE.setShowStatus("余额不足，请充值或者返回购物车重新选取商品");
             list.add(orderConfirmRE);
             orderConfirmRE.setStatus(OrderEnum.WAITPAY.getKey());
             return list;
         }
     }
-
-
-
 
 
     @Override

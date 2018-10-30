@@ -12,29 +12,29 @@ import java.io.Serializable;
  */
 
 public class OrdOrderVo extends BaseDomain implements Serializable {
-  public String getReceiptName() {
-    return receiptName;
-  }
+    public String getReceiptName() {
+        return receiptName;
+    }
 
-  public void setReceiptName(String receiptName) {
-    this.receiptName = receiptName;
-  }
+    public void setReceiptName(String receiptName) {
+        this.receiptName = receiptName;
+    }
 
-  public String getReceiptTel() {
-    return receiptTel;
-  }
+    public String getReceiptTel() {
+        return receiptTel;
+    }
 
-  public void setReceiptTel(String receiptTel) {
-    this.receiptTel = receiptTel;
-  }
+    public void setReceiptTel(String receiptTel) {
+        this.receiptTel = receiptTel;
+    }
 
-  public String getReceiptAddress() {
-    return receiptAddress;
-  }
+    public String getReceiptAddress() {
+        return receiptAddress;
+    }
 
-  public void setReceiptAddress(String receiptAddress) {
-    this.receiptAddress = receiptAddress;
-  }
+    public void setReceiptAddress(String receiptAddress) {
+        this.receiptAddress = receiptAddress;
+    }
 
     public Long getStatus() {
         return status;
@@ -60,47 +60,74 @@ public class OrdOrderVo extends BaseDomain implements Serializable {
         this.orderListStr = orderListStr;
     }
 
-  public Integer getOrderId() {
-    return orderId;
-  }
+    public Integer getOrderId() {
+        return orderId;
+    }
 
-  public void setOrderId(Integer orderId) {
-    this.orderId = orderId;
-  }
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
+    }
 
-  /**
-   * 收货人姓名
-   */
-  private String receiptName;
+    public Double getOrderPrice() {
+        return orderPrice;
+    }
 
-  /**
-   * 收货人电话
-   */
-  private String receiptTel;
+    public void setOrderPrice(Double orderPrice) {
+        this.orderPrice = orderPrice;
+    }
 
-  /**
-   * 收货人地址
-   */
-  private String receiptAddress;
+    public Double getPayPrice() {
+        return payPrice;
+    }
 
-  /**
-   * 订单状态
-   */
-  private Long status;
-
-  /**
-   * 订单编码
-   */
-  private String orderNum;
+    public void setPayPrice(Double payPrice) {
+        this.payPrice = payPrice;
+    }
 
     /**
-     *删除的订单信息
+     * 收货人姓名
+     */
+    private String receiptName;
+
+    /**
+     * 收货人电话
+     */
+    private String receiptTel;
+
+    /**
+     * 收货人地址
+     */
+    private String receiptAddress;
+
+    /**
+     * 订单状态
+     */
+    private Long status;
+
+    /**
+     * 订单编码
+     */
+    private String orderNum;
+
+    /**
+     * 删除的订单信息
      */
     private String orderListStr;
 
-  /**
-   * 订单id
-   */
-  private Integer orderId;
+    /**
+     * 订单id
+     */
+    private Integer orderId;
 
+    /**
+     * 订单金额
+     */
+
+    private Double orderPrice;
+
+    /**
+     * 订单实际支付金额
+     */
+
+    private Double payPrice;
 }

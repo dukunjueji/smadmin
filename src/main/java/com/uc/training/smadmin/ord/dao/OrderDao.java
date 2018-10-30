@@ -14,7 +14,7 @@ public interface OrderDao{
 	/**
 	 * 通过主键来查找查找
 	 */
-	 public List<Order>  getOrderById(Long id);
+	 public List<Order>  getOrderById(Long memberId);
 
 	/**
 	 * 查询列表
