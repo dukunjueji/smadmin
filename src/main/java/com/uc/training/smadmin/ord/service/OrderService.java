@@ -44,11 +44,15 @@ public interface OrderService {
 
   /**
    * 删除购物车商品
+   * @param ordCartGoodsVo
+   * @return
    */
   int deleteCarGoods(OrdCartGoodsVo ordCartGoodsVo);
 
   /**
    * 提交订单信息
+   * @param orderInfoListNow
+   * @return
    */
   List<OrderConfirmRE> confirmOrderInfo(List<OrdOrderGoodsVo> orderInfoListNow);
 
@@ -56,6 +60,7 @@ public interface OrderService {
   /**
    * 更新购物车商品数量
    * @param ordCartGoodsVo
+   * @return 返回影响条数
    */
   int updataCarGoodsNum(OrdCartGoodsVo ordCartGoodsVo);
 
@@ -75,12 +80,14 @@ public interface OrderService {
 
   /**
    * 获取总记录数
+   * @param orderVo
    * @return
    */
   Integer getOrderTotal(OrdOrderVo orderVo);
 
   /**
    * 获取订单枚举选项
+   * @return
    */
   List<OrderStatusRe> getOrderEnum();
 
@@ -94,6 +101,7 @@ public interface OrderService {
   /**
    * 更新订单状态
    * @param ordOrderVo
+   * @return int
    */
   int  updateOrder(OrdOrderVo ordOrderVo);
 
@@ -105,7 +113,9 @@ public interface OrderService {
   List<OrderGoodsDetailRe> getOrderGdsById(Integer id);
 
   /**
-   * 获取订单信息列表()
+   *  获取订单信息列表
+   * @param memberId
+   * @return List<OrderInfoRE>(订单信息列表)
    */
 
   List<OrderInfoRE> getOrderInfoListByMemberId(Long memberId);

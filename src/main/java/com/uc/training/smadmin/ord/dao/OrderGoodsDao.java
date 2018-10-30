@@ -9,26 +9,34 @@ public interface OrderGoodsDao{
 
 	/**
 	 * 通过主键来查找
+	 * @param id
+	 * @return
 	 */
 	 public List<OrderGoods>  getOrderGoodsByOrderId(Integer id);
 
 	/**
 	 * 查询列表
+	 * @return
 	 */
 	 public List<OrderGoods>  queryOrderGoodsList();
 
 	/**
 	 * 查找数据总记录数
+	 * @return
 	 */
 	public Integer queryOrderGoodsCount();
 
 	/**
 	 * 保存
+	 * @param record
+	 * @return
 	 */
 	public Long insertOrderGoods(OrderGoods record);
 
 	/**
 	 * 更新
+	 * @param record
+	 * @return
 	 */
 	public int updateOrderGoodsById(OrderGoods record);
 

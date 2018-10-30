@@ -11,19 +11,46 @@ import java.util.Date;
 
 public class OrdOrder implements Serializable{
 
+  /**自增主键id **/
   private Long id;
+
+  /**会员id**/
   private Long memberId;
+
+  /**商品数量**/
   private String orderNum;
+
+  /**订单价格**/
   private Double orderPrice;
+
+  /**支付价格**/
   private Double payPrice;
+
+  /**删除状态**/
   private Long isDelete;
+
+  /**状态:1待付款2取消订单3待发货4待收货5已完成**/
   private Long status;
+
+  /**下单用户名**/
   private String receiptName;
+
+  /**下单电话**/
   private String receiptTel;
+
+  /**下单地址**/
   private String receiptAddress;
+
+  /**创建人**/
   private Long createEmp;
+
+  /**创建时间**/
   private Date createTime;
+
+  /**修改人**/
   private Long modifyEmp;
+
+  /**修改时间**/
   private Date modifyTime;
 
 
