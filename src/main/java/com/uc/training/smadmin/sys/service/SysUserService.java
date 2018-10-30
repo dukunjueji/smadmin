@@ -15,8 +15,9 @@ public interface SysUserService {
     /**
      * 用户登录获取用户
      *
-     * @copyright www.ucarinc.com All Rights Reserved.
-     * @version 1.0 2018/10/18 15:30 by 吴佰川（baichuan.wu@ucarinc.com）创建
+     * @version 1.0 2018/10/30 15:51 by 吴佰川（baichuan.wu@ucarinc.com）创建
+     * @param userLoginVO 用户登录请求参数
+     * @return com.uc.training.smadmin.sys.model.SysUser
      */
     SysUser getUserLogin(UserLoginVO userLoginVO);
 
