@@ -80,6 +80,15 @@ public class OrdCartGoodsVo implements Serializable{
    * 商品状态(是否下架)
    */
   private long status;
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
   public Long getMemberId() {
     return memberId;
   }
