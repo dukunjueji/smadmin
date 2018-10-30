@@ -38,4 +38,12 @@ public class UploadVO implements Serializable{
     public void setImageText(String imageText) {
         this.imageText = imageText;
     }
+
+    @Override
+    public String toString() {
+        return "UploadVO{" +
+                "file=" + file +
+                ", imageText='" + imageText + '\'' +
+                '}';
+    }
 }

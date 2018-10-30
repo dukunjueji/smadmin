@@ -15,10 +15,10 @@ import java.util.List;
 public interface AddressService {
     /**
      * 获取用户所有地址
-     * @param MemberId
+     * @param memberId
      * @return
      */
-    List<AddressRE> getAddressByMemberId(Long MemberId);
+    List<AddressRE> getAddressByMemberId(Long memberId);
 
     /**
      * 新增地址

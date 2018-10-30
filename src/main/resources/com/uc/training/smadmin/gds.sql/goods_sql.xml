@@ -129,4 +129,68 @@
         order by tag.sort_num asc
         limit 0, 10
     </select>
+
+    <!-- 后台查询所有商品信息 -->
+    <select id="getAdminGoodsList" parameterClass="com.uc.training.smadmin.gds.vo.GoodsListVO" resultClass="com.uc.training.smadmin.gds.re.AdminGoodsRE">
+        SELECT
+        gg.id AS id,
+        gg.code AS code,
+        gg.name AS  name,
+        gg.sales AS  sales,
+        gg.detail  AS detail,
+        gg.status  AS status,
+        gc.name AS  categoryName,
+        gp.stock  AS stock,
+        gp.discount_price AS  discountPrice,
+        gp.sale_price  AS salePrice,
+        gp.is_discount AS  isDiscount,
+        pic.pic_url  AS picUrl
+        FROM
+        t_gds_goods 		    gg,
+        t_gds_goods_pic		   pic,
+        t_gds_property 			gp,
+        t_gds_category 			gc
+
+        WHERE
+        gg.id = gp.goods_id AND
+        gg.category_id = gc.id AND
+        gp.id = pic.property_id AND
+        gg.is_delete = 0
+        ORDER BY gg.id ASC
+        <isNotEmpty property="offset">
+            limit #offset#, #pageSize#
+        </isNotEmpty>
+    </select>
+
+    <insert id="insertGoods" parameterClass="com.uc.training.smadmin.gds.model.Goods">
+        INSERT INTO t_gds_goods
+        (code, name, category_id, sales, detail, status, is_delete, create_emp, modify_emp)
+        VALUES (#code#, #name#, #categoryId#, #sales#, #detail#, #status#, #isDelete#, #createEmp#, #modifyEmp#)
+        <selectKey resultClass="long" keyProperty="id">
+            SELECT LAST_INSERT_ID() as id;
+        </selectKey>
+    </insert>
+
+    <!--更新商品属性-->
+    <update id="updateGoodsPic" parameterClass="com.uc.training.smadmin.gds.model.Goods">
+        UPDATE t_gds_goods
+        SET
+              code=#code#,
+              name=#name#,
+              category_id=#categoryId#,
+              sales=#sales#,
+              detail=#detail#,
+              status=#status#,
+              is_delete=#isDelete#,
+              create_emp=#createEmp#,
+              modify_emp=#modifyEmp#
+        WHERE id = #id#
+    </update>
+
+    <!--逻辑删除-->
+    <update id="logicDeleteGoods" parameterClass="Long">
+        UPDATE t_gds_goods
+        SET  is_delete=1
+        WHERE id = #id#
+    </update>
 </sqlMap>

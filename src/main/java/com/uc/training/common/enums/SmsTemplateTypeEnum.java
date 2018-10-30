@@ -14,11 +14,15 @@ import java.util.Map;
  * 说明：
  */
 public enum SmsTemplateTypeEnum {
-    //模板类型：1注册，2，登录，3充值，4订单信息，5会员等级
+    //注册
     REGISTER("注册", 1),
+    //登录
     LOGIN("登陆", 2),
+    //充值
     RECHARGE("充值", 3),
+    //订单信息
     ORDERINFO("订单信息", 4),
+    //会员等级
     MEMBERGRADE("会员等级", 5);
     /**
      * 描述

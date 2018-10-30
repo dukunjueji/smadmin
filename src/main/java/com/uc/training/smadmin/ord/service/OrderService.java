@@ -5,6 +5,7 @@ import com.uc.training.smadmin.ord.re.OrderConfirmRE;
 import com.uc.training.smadmin.ord.re.OrderGoodsDetailRe;
 import com.uc.training.smadmin.ord.re.OrderRe;
 import com.uc.training.smadmin.ord.re.OrderStatusRe;
+import com.uc.training.smadmin.ord.re.*;
 import com.uc.training.smadmin.ord.vo.OrdCartGoodsVo;
 import com.uc.training.smadmin.ord.vo.OrdOrderGoodsVo;
 import com.ycc.base.common.Result;
@@ -21,11 +22,6 @@ import java.util.Map;
 public interface OrderService {
   /**
    * 根据用户id查询购物车信息表
-   * @param memberId
-   * @return
-   */
-  /**
-   * 获取用户购物车商品信息
    * @param memberId
    * @return
    */
@@ -107,4 +103,10 @@ public interface OrderService {
    * @return
    */
   List<OrderGoodsDetailRe> getOrderGdsById(Integer id);
+
+  /**
+   * 获取订单信息列表()
+   */
+
+  List<OrderInfoRE> getOrderInfoListByMemberId(Long memberId);
 }

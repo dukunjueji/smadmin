@@ -66,7 +66,7 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public Integer editAddress(Address address) {
 
-        if (address.getIsDefault() == AddressTypeEnum.ISDEFAULT.getType()) {
+        if (address.getIsDefault().equals(AddressTypeEnum.ISDEFAULT.getType())) {
             addressDao.updateIsDefault(address);
         }
 
