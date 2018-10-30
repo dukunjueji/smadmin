@@ -19,14 +19,14 @@
 	<!-- 获取所有的菜单 -->
 	<select id="getMenuList" resultClass="com.uc.training.smadmin.sys.model.SysMenu">
 		SELECT
-		 m.id,
-		 m.name,
-		 m.type,
-		 m.level,
-		 m.parent_id,
-		 m.sort_num,
-		 m.url,
-		 m.rel
+		 m.id AS id,
+		 m.name AS name,
+		 m.type AS type,
+		 m.level AS level,
+		 m.parent_id AS parentId,
+		 m.sort_num AS sortNum,
+		 m.url AS url,
+		 m.rel AS rel
 		FROM t_sys_menu m
 	</select>
 </sqlMap>
