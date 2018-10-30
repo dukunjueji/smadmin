@@ -41,6 +41,7 @@ public interface SmsTemplateService {
 
     /**
      * 获取短信模板列表
+     * @param smsTemplateListVO
      * @return
      */
     public List<SmsTemplate> getTemplateList(SmsTemplateListVO smsTemplateListVO);

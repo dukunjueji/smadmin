@@ -6,6 +6,11 @@ import com.uc.training.smadmin.sms.vo.SmsVO;
 
 import java.util.List;
 
+/**
+ * @author 余旭东
+ * @date 2018/10/30
+ * @descripte
+ */
 public interface SmsDao {
     /**
      * 查询短信列表

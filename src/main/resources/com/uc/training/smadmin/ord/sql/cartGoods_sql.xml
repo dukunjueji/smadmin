@@ -84,9 +84,6 @@
 		#propertyId#,
 		#num#,
 		#memberId#)
-	<selectKey keyProperty="id">
-		select LAST_INSERT_ID() AS id
-	</selectKey>
 	</insert>
 
 	<delete id="delCartGoods" parameterClass="com.uc.training.smadmin.ord.vo.OrdCartGoodsVo">

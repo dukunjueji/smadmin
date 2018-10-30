@@ -1,7 +1,6 @@
 package com.uc.training.smadmin.bd.service;
 
 import com.uc.training.smadmin.bd.model.MemberGrade;
-import com.uc.training.smadmin.bd.vo.MemberGradeListVO;
 
 import java.util.List;
 
@@ -17,13 +16,14 @@ public interface MemberGradeService {
 
     /**
      * 修改会员等级
-     * @param grade
-     * @return
+     * @param grade 会员等级信息
+     * @return 被修改的行数
      */
     public Integer modifyMemberGrade(MemberGrade grade);
 
     /**
      * 查找数据总记录数
+     * @return
      */
     public Long queryMemberGradeCount();
 

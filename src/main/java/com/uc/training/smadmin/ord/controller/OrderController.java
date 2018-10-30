@@ -33,9 +33,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 订单控制类
@@ -137,6 +135,7 @@ public class OrderController extends BaseController {
   /**
    * hhj
    * 加入购物车
+   *
    * @param request
    * @param ordCartGoodsVo
    * @return
@@ -197,13 +196,34 @@ public class OrderController extends BaseController {
     if (CollectionUtils.isEmpty(orderInfoListNow)) {
       return Result.getBusinessException("提交订单失败", null);
     }
-    orderInfoListNow.get(orderInfoListNow.size() - 2).setMemberId(getUid());
+    int a = 2;
+    orderInfoListNow.get(orderInfoListNow.size() - a).setMemberId(getUid());
     List<OrderConfirmRE> orderConfirmInfo = orderService.confirmOrderInfo(orderInfoListNow);
     if (CollectionUtils.isEmpty(orderConfirmInfo)) {
       return Result.getBusinessException("提交订单失败", null);
     }
     return Result.getSuccessResult(orderConfirmInfo);
   }
+
+  /**
+   * 批量删除订单（更改删除/进度状态）
+   *
+   * @param orderVo（orderVo.getOrderListStr()）
+   * @return
+   */
+  @ResponseBody
+  @AccessLogin
+  @RequestMapping(value = "admDelOrder.do_", method = RequestMethod.POST)
+  public Result delOrderPage(OrdOrderVo orderVo) {
+    Result result = new Result();
+    List<OrderRe> delList = (List<OrderRe>) JSONArray.toList(JSONArray.fromObject(orderVo.getOrderListStr()), new OrderRe(), new JsonConfig());
+    int num = orderService.logicDelOrder(delList);
+    if (num > 0) {
+      result.setMsg("删除： " + num + "条信息");
+    }
+    return result;
+  }
+
   /**
    * 获取订单商品详情
    *
@@ -243,6 +263,7 @@ public class OrderController extends BaseController {
 
   /**
    * 根据订单号更新状态
+   *
    * @param ordOrderVo
    * @return
    */

@@ -10,8 +10,10 @@ import java.io.Serializable;
  */
 public class OrderStatusRe implements Serializable {
   private static final long serialVersionUID = -6912839796213052826L;
+
   /**order枚举key**/
   private Integer value;
+
   /**order枚举value**/
   private String label;
 

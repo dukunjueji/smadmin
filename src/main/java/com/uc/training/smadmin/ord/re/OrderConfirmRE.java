@@ -8,7 +8,6 @@ import java.io.Serializable;
  * @author DK
  */
 public class OrderConfirmRE implements Serializable {
-    // TODO: 2018/10/29  序列化
 
     /**
      * 状态说明

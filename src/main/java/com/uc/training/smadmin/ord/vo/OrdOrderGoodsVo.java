@@ -87,6 +87,11 @@ public class OrdOrderGoodsVo implements Serializable{
     private String receiptTel;
 
     /**
+     * 订单总额
+     */
+    private double totalPrice;
+
+    /**
      * 收货人地址
      */
     private String receiptAddress;
@@ -107,10 +112,6 @@ public class OrdOrderGoodsVo implements Serializable{
         this.totalPrice = totalPrice;
     }
 
-    /**
-     * 订单总额
-     */
-    private double totalPrice;
     public Long getMemberId() {
         return memberId;
     }

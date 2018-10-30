@@ -12,41 +12,26 @@ import java.util.List;
 @Repository
 public class OrderGoodsDaoImpl extends CarIsIbatisDaoImpl implements OrderGoodsDao {
 
-	/**
-	 * 通过主键来查找查找
-	 */
 	 @Override
 	 public List<OrderGoods> getOrderGoodsByOrderId(Integer id){
 		  return (List<OrderGoods>) this.queryForList("com.uc.training.smadmin.ord.dao.OrderGoodsDao.getOrderGoodsById", id);
 	 }
 
-	/**
-	 * 查询列表
-	 */
 	 @Override
 	 public List<OrderGoods>  queryOrderGoodsList(){
 		  return this.queryForList("com.uc.training.smadmin.ord.dao.OrderGoodsDao.queryOrderGoodsList");
 	 }
 
-	/**
-	 * 查找数据总记录数
-	 */
 	 @Override
 	public Integer queryOrderGoodsCount(){
 		  return (Integer) this.queryForObject("com.uc.training.smadmin.ord.dao.OrderGoodsDao.queryOrderGoodsCount");
 	 }
 
-	/**
-	 * 保存
-	 */
 	 @Override
 	public Long insertOrderGoods( OrderGoods record ){
 		  return (Long) this.insert("com.uc.training.smadmin.ord.dao.OrderGoodsDao.insertOrderGoods", record);
 	 }
 
-	/**
-	 * 更新
-	 */
 	 @Override
 	public int updateOrderGoodsById( OrderGoods record ){
 		  return this.update("com.uc.training.smadmin.ord.dao.OrderGoodsDao.updateOrderGoodsById", record);

@@ -34,4 +34,13 @@ public class SmsTemplateListVO extends PageQuery {
     public void setCode(String code) {
         this.code = code;
     }
+
+    @Override
+    public String toString() {
+        super.toString();
+        return "SmsTemplateListVO{" +
+                "type=" + type +
+                ", code='" + code + '\'' +
+                '}';
+    }
 }

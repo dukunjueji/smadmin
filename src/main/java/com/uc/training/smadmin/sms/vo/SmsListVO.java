@@ -117,4 +117,18 @@ public class SmsListVO extends PageQuery {
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
+
+    @Override
+    public String toString() {
+        super.toString();
+        return "SmsListVO{" +
+                "telephone='" + telephone + '\'' +
+                ", type=" + type +
+                ", status=" + status +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", startTime='" + startTime + '\'' +
+                ", endTime='" + endTime + '\'' +
+                '}';
+    }
 }

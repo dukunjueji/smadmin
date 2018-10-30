@@ -3,7 +3,6 @@ package com.uc.training.smadmin.bd.service.impl;
 import com.uc.training.smadmin.bd.dao.MemberGradeDao;
 import com.uc.training.smadmin.bd.model.MemberGrade;
 import com.uc.training.smadmin.bd.service.MemberGradeService;
-import com.uc.training.smadmin.bd.vo.MemberGradeListVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

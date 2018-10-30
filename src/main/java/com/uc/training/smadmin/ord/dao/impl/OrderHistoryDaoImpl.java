@@ -12,41 +12,26 @@ import java.util.List;
 @Repository
 public class OrderHistoryDaoImpl extends CarIsIbatisDaoImpl implements OrderHistoryDao {
 
-	/**
-	 * 通过主键来查找查找
-	 */
 	 @Override
 	 public List<OrderHistory> getOrderHistoryById(Long id){
 		  return (List<OrderHistory>) this.queryForObject("com.uc.training.smadmin.ord.dao.OrderHistoryDao.getOrderHistoryById", id);
 	 }
 
-	/**
-	 * 查询列表
-	 */
 	 @Override
 	 public List<OrderHistory>  queryOrderHistoryList(){
 		  return this.queryForList("com.uc.training.smadmin.ord.dao.OrderHistoryDao.queryOrderHistoryList");
 	 }
 
-	/**
-	 * 查找数据总记录数
-	 */
 	 @Override
 	public Integer queryOrderHistoryCount(){
 		  return (Integer) this.queryForObject("com.uc.training.smadmin.ord.dao.OrderHistoryDao.queryOrderHistoryCount");
 	 }
 
-	/**
-	 * 保存
-	 */
 	 @Override
 	public Long insertOrderHistory( OrderHistory record ){
 		  return (Long) this.insert("com.uc.training.smadmin.ord.dao.OrderHistoryDao.insertOrderHistory", record);
 	 }
 
-	/**
-	 * 更新
-	 */
 	 @Override
 	public int updateOrderHistoryById( OrderHistory record ){
 		  return this.update("com.uc.training.smadmin.ord.dao.OrderHistoryDao.updateOrderHistoryById", record);

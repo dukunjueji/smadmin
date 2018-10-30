@@ -16,7 +16,7 @@ import java.util.List;
  */
 @Repository
 public class SmsDaoImpl extends CarIsIbatisDaoImpl implements SmsDao {
-    private static final String namespace = "com.uc.training.smadmin.sms.dao.SmsDao.";
+    private static final String NAMESPACE = "com.uc.training.smadmin.sms.dao.SmsDao.";
     /**
      * 查询短信列表
      * @param smsListVO
@@ -24,7 +24,7 @@ public class SmsDaoImpl extends CarIsIbatisDaoImpl implements SmsDao {
      */
     @Override
     public List<SmsVO> getList(SmsListVO smsListVO) {
-        return this.queryForList(namespace + "querySmsList", smsListVO);
+        return this.queryForList(NAMESPACE + "querySmsList", smsListVO);
     }
 
     /**
@@ -34,7 +34,7 @@ public class SmsDaoImpl extends CarIsIbatisDaoImpl implements SmsDao {
      */
     @Override
     public Long querySmsCount(SmsListVO smsListVO) {
-        return (Long) this.queryForObject(namespace + "querySmsCount", smsListVO);
+        return (Long) this.queryForObject(NAMESPACE + "querySmsCount", smsListVO);
     }
 
     /**
@@ -44,7 +44,7 @@ public class SmsDaoImpl extends CarIsIbatisDaoImpl implements SmsDao {
      */
     @Override
     public Sms getSms(Long id) {
-        return (Sms) this.queryForObject( namespace + "SmsDao.getSms", id);
+        return (Sms) this.queryForObject( NAMESPACE + "SmsDao.getSms", id);
     }
 
 
