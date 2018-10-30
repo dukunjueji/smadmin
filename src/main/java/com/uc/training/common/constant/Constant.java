@@ -52,4 +52,8 @@ public class Constant {
      */
     public static int LOGIN_INVALID_STATUS = -3;
 
+    /**
+     * 手机验证码
+     */
+    public static String CODE = "telCode";
 }

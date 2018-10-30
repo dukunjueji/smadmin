@@ -28,6 +28,7 @@ public class GrowthDetailServiceImpl implements GrowthDetailService {
     @Autowired
     private MemberDao memberDao;
 
+    @Override
     public Long saveGrowthDetail(GrowthVO growthVO){
         GrowthDetail growthDetail = new GrowthDetail();
         Long growthVaule = 0L;

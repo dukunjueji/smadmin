@@ -92,7 +92,7 @@
 	<delete id="delCartGoods" parameterClass="com.uc.training.smadmin.ord.vo.OrdCartGoodsVo">
 		DELETE FROM t_ord_cart_goods
 		WHERE
-		member_id = #memberId# and goods_property_id = #propertyId#
+		id = #cartId#
 	</delete>
 
 	<!-- 通过主键更新 -->

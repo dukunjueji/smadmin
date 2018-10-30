@@ -3,11 +3,9 @@ package com.uc.training.smadmin.bd.dao;
 import com.uc.training.smadmin.bd.model.Member;
 import com.uc.training.smadmin.bd.re.MemberDetailRE;
 import com.uc.training.smadmin.bd.re.MemberInfoRE;
-import com.uc.training.smadmin.bd.vo.ChargeBalanceVO;
-import com.uc.training.smadmin.bd.vo.MemberInfoVO;
-import com.uc.training.smadmin.bd.vo.MemberGrowthVO;
-import com.uc.training.smadmin.bd.vo.MemberIntegralVO;
-import com.uc.training.smadmin.bd.vo.MemberLoginVO;
+import com.uc.training.smadmin.bd.vo.*;
+
+import java.util.List;
 
 /**
  * 版权说明：Copyright (c) 2018 ucarinc. All Rights Reserved.
@@ -109,4 +107,18 @@ public interface MemberDao {
     *@throws：
     */
     void updateGrowthById(MemberGrowthVO memberGrowthVO);
+
+    /**
+     * 获取用户信息分页页面
+     * @param memberListVO
+     * @return
+     */
+    List<Member> getMemberList(MemberListVO memberListVO);
+
+    /**
+     * 查询会员数量
+     * @param memberListVO
+     * @return
+     */
+    Long queryMemberCount(MemberListVO memberListVO);
 }

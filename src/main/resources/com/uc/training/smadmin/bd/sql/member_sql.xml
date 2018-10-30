@@ -88,15 +88,8 @@
 	</select>
 
 	<sql id="where_query">
-
-		 <isNotEmpty property="id" prepend="and">
-			 s.id = #id#
-		 </isNotEmpty>
 		 <isNotEmpty property="memberName" prepend="and">
 			 s.membername = #memberName#
-		 </isNotEmpty>
-		 <isNotEmpty property="password" prepend="and">
-			 s.password = #password#
 		 </isNotEmpty>
 		 <isNotEmpty property="telephone" prepend="and">
 			 s.telephone = #telephone#
@@ -113,29 +106,12 @@
 		 <isNotEmpty property="nickname" prepend="and">
 			 s.nickname = #nickname#
 		 </isNotEmpty>
-		 <isNotEmpty property="balance" prepend="and">
-			 s.balance = #balance#
-		 </isNotEmpty>
-		 <isNotEmpty property="imageUrl" prepend="and">
-			 s.image_url = #imageUrl#
-		 </isNotEmpty>
-		 <isNotEmpty property="createTime" prepend="and">
-			 s.create_time = #createTime#
-		 </isNotEmpty>
-		 <isNotEmpty property="modifyTime" prepend="and">
-			 s.modify_time = #modifyTime#
-		 </isNotEmpty>
-		 <isNotEmpty property="createEmp" prepend="and">
-			 s.create_emp = #createEmp#
-		 </isNotEmpty>
-		 <isNotEmpty property="modifyEmp" prepend="and">
-			 s.modify_emp = #modifyEmp#
-		 </isNotEmpty>
 	</sql>
 
 	<!-- 列表查询 -->
 	<select id="queryMemberList" parameterClass="com.uc.training.smadmin.bd.vo.MemberListVO" resultClass="com.uc.training.smadmin.bd.model.Member">
 		 SELECT
+		 s.id AS id,
 		 s.membername AS memberName,
 		 s.telephone AS telephone,
 		 s.sex AS sex,

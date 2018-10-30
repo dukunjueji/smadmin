@@ -1,5 +1,6 @@
 package com.uc.training.smadmin.bd.controller;
 
+import com.uc.training.common.constant.Constant;
 import com.uc.training.smadmin.bd.model.Message;
 import com.uc.training.smadmin.bd.re.MessageRE;
 import com.ycc.base.common.Result;
@@ -81,7 +82,7 @@ public class ApiMemberController extends BaseController {
             //生成随机六位数验证码
             String telCode = TelCodeUtil.createCode();
             //把验证码存入到redis里
-            map.put("telCode", telCode);
+            map.put(Constant.CODE, telCode);
             //调取短信模板获取相应的短信信息
 
             //把验证码放入模板里获取相应短信
@@ -114,7 +115,7 @@ public class ApiMemberController extends BaseController {
         Member mem = memberService.queryOneMember(member);
         if(mem != null){
             re = Result.getBusinessException("手机号码已被注册",null);
-        } else if(memberRegisterVO.getTelCode().equals(map.get("telCode"))){
+        } else if(memberRegisterVO.getTelCode().equals(map.get(Constant.CODE))){
             memberService.insertMember(member);
             re = Result.getSuccessResult("成功");
         }else {
@@ -182,7 +183,7 @@ public class ApiMemberController extends BaseController {
         } else {
             String telCode = TelCodeUtil.createCode();
             //把验证码存入到redis里
-            map.put("telCode", telCode);
+            map.put(Constant.CODE, telCode);
             //调取短信模板
 
             //获取短信
@@ -213,7 +214,7 @@ public class ApiMemberController extends BaseController {
         Member member = memberService.queryOneMember(mem);
         if(member == null){
             re = Result.getBusinessException("手机号还没被注册", null);
-        } else if(memberRegisterVO.getTelCode().equals(map.get("telCode"))){
+        } else if(memberRegisterVO.getTelCode().equals(map.get(Constant.CODE))){
             mem.setPassword(memberRegisterVO.getPassword());
             memberService.updateMember(mem);
             re = Result.getSuccessResult("成功");
@@ -320,7 +321,7 @@ public class ApiMemberController extends BaseController {
             // 产生验证码
             String telCode = TelCodeUtil.createCode();
             //把验证码存入到redis里
-            map.put("telCode", telCode);
+            map.put(Constant.CODE, telCode);
             //调取短信模板
 
             //获取短信
@@ -353,7 +354,7 @@ public class ApiMemberController extends BaseController {
             re = Result.getBusinessException("原来的密码输入有误", null);
         }else if(!((passwordEditVO.getNewpassword()).equals(passwordEditVO.getConfirmpassword()))){
             re = Result.getBusinessException("新的密码和确认密码不一致", null);
-        }else if((passwordEditVO.getCode()).equals(map.get("telCode"))){
+        }else if((passwordEditVO.getCode()).equals(map.get(Constant.CODE))){
             member.setPassword(passwordEditVO.getNewpassword());
             memberService.updateMember(member);
             re = Result.getSuccessResult("成功");

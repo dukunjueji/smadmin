@@ -1,5 +1,6 @@
 package com.uc.training.smadmin.ord.service;
 
+import com.uc.training.smadmin.ord.model.CartGoods;
 import com.uc.training.smadmin.ord.re.OrderConfirmRE;
 import com.uc.training.smadmin.ord.re.OrderGoodsDetailRe;
 import com.uc.training.smadmin.ord.re.OrderRe;
@@ -28,7 +29,7 @@ public interface OrderService {
    * @param memberId
    * @return
    */
-  List<OrdCartGoodsVo> getCarGoodsById(Long memberId);
+  List<CartGoods> getCarGoodsById(Long memberId);
 
   /**
    * 根据用户id获取订单商品信息
