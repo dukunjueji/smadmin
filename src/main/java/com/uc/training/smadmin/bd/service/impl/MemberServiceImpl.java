@@ -6,6 +6,7 @@ import com.uc.training.smadmin.bd.model.Member;
 import com.uc.training.smadmin.bd.re.MemberDetailRE;
 import com.uc.training.smadmin.bd.re.MemberInfoRE;
 import com.uc.training.smadmin.bd.service.MemberService;
+import com.uc.training.smadmin.bd.vo.MemberBalanceVO;
 import com.uc.training.smadmin.bd.vo.MemberInfoVO;
 import com.uc.training.smadmin.bd.vo.MemberListVO;
 import com.uc.training.smadmin.bd.vo.MemberLoginVO;
@@ -140,6 +141,11 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public Long queryMemberCount(MemberListVO memberListVO) {
         return memberDao.queryMemberCount(memberListVO);
+    }
+
+    @Override
+    public void updateBalance(MemberBalanceVO memberBalanceVO) {
+        this.memberDao.updateBalance(memberBalanceVO);
     }
 
 }

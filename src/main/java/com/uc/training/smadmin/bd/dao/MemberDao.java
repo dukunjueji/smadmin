@@ -121,4 +121,12 @@ public interface MemberDao {
      * @return
      */
     Long queryMemberCount(MemberListVO memberListVO);
+
+    /**
+    *说明：支付商品更新余额
+    *@param memberBalanceVO
+    *@return：void
+    *@throws：
+    */
+    void updateBalance(MemberBalanceVO memberBalanceVO);
 }

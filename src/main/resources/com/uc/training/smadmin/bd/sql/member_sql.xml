@@ -174,6 +174,13 @@
 		where id=#id#
 	</update>
 
+	<!-- 通过会员id更新支付余额 -->
+	<update id="updateBalance" parameterClass="com.uc.training.smadmin.bd.vo.MemberBalanceVO">
+		 update t_bd_member set
+		balance = balance - #totalMoney#,
+		modify_time = now()
+		where id=#memberId#
+	</update>
 	<!-- 通过会员id更新会员信息 -->
 	<update id="updateMemberInfo"  parameterClass="com.uc.training.smadmin.bd.model.Member" >
 		 update t_bd_member set
