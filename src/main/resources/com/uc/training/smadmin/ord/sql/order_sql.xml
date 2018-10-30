@@ -130,9 +130,10 @@
 
 	<!-- 通过订单编号更新 -->
 	<update id="updateOrder" parameterClass="com.uc.training.smadmin.ord.vo.OrdOrderVo">
-		 update t_ord_order set
-		order_num = #orderNum#,status = #status#
-		where order_num=#orderNum#
+		 update t_ord_order s set
+		s.status = #status#
+		where
+			s.order_num = #orderNum#
 		</update>
 
 	<!--查询分页-->

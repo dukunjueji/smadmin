@@ -26,4 +26,11 @@ public interface MemberGradeService {
      * 查找数据总记录数
      */
     public Long queryMemberGradeCount();
+
+    /**
+     * 通过用户ID获取折扣
+     * @param id
+     * @return
+     */
+    public Double getDiscountByUId(Long id);
 }

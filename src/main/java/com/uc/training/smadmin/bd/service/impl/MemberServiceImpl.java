@@ -1,14 +1,13 @@
 package com.uc.training.smadmin.bd.service.impl;
 
-import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.enums.OrderEnum;
 import com.uc.training.smadmin.bd.dao.MemberDao;
 import com.uc.training.smadmin.bd.model.Member;
 import com.uc.training.smadmin.bd.re.MemberDetailRE;
 import com.uc.training.smadmin.bd.re.MemberInfoRE;
 import com.uc.training.smadmin.bd.service.MemberService;
-import com.uc.training.smadmin.bd.vo.ChargeBalanceVO;
 import com.uc.training.smadmin.bd.vo.MemberInfoVO;
+import com.uc.training.smadmin.bd.vo.MemberListVO;
 import com.uc.training.smadmin.bd.vo.MemberLoginVO;
 import com.uc.training.smadmin.gds.dao.GoodsDao;
 import com.uc.training.smadmin.gds.vo.GoodsStokeVO;
@@ -133,6 +132,16 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public MemberInfoRE queryOneMemberById(Long uid) {
         return memberDao.queryOneMemberById(uid);
+    }
+
+    @Override
+    public List<Member> getMemberList(MemberListVO memberListVO) {
+        return memberDao.getMemberList(memberListVO);
+    }
+
+    @Override
+    public Long queryMemberCount(MemberListVO memberListVO) {
+        return memberDao.queryMemberCount(memberListVO);
     }
 
 }

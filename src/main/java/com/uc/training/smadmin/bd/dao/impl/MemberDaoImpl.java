@@ -4,13 +4,14 @@ import com.uc.training.smadmin.bd.dao.MemberDao;
 import com.uc.training.smadmin.bd.model.Member;
 import com.uc.training.smadmin.bd.re.MemberDetailRE;
 import com.uc.training.smadmin.bd.re.MemberInfoRE;
-import com.uc.training.smadmin.bd.vo.ChargeBalanceVO;
 import com.uc.training.smadmin.bd.vo.MemberGrowthVO;
 import com.uc.training.smadmin.bd.vo.MemberIntegralVO;
-import com.uc.training.smadmin.bd.vo.MemberInfoVO;
+import com.uc.training.smadmin.bd.vo.MemberListVO;
 import com.uc.training.smadmin.bd.vo.MemberLoginVO;
 import com.zuche.framework.dao.CarIsIbatisDaoImpl;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * 版权说明：Copyright (c) 2018 ucarinc. All Rights Reserved.
@@ -79,6 +80,16 @@ public class MemberDaoImpl extends CarIsIbatisDaoImpl implements MemberDao {
     @Override
     public void updateGrowthById(MemberGrowthVO memberGrowthVO) {
         this.update("com.uc.training.smadmin.bd.dao.MemberDao.updateGrowthById", memberGrowthVO);
+    }
+
+    @Override
+    public List<Member> getMemberList(MemberListVO memberListVO) {
+        return this.queryForList("com.uc.training.smadmin.bd.dao.MemberDao.queryMemberList", memberListVO);
+    }
+
+    @Override
+    public Long queryMemberCount(MemberListVO memberListVO) {
+        return (Long) this.queryForObject("com.uc.training.smadmin.bd.dao.MemberDao.queryMemberCount", memberListVO);
     }
 
 }

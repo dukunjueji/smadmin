@@ -15,10 +15,6 @@ public class OrdOrderGoodsVo implements Serializable{
     private Long id;
 
     /**
-     * 订单商品信息
-     */
-
-    /**
      * 会员id
      */
     private Long memberId;

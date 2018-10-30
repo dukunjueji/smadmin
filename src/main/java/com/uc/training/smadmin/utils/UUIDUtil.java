@@ -16,10 +16,18 @@ import java.util.concurrent.locks.ReentrantLock;
  * @since 2018年10月15日 15:04
  */
 public class UUIDUtil {
-
-    private static volatile long lastSecond;//记录上一秒的时间戳
-    public static BlockingQueue<UUIDData> queue;//堵塞队列，使用FIFO策略存储获取流水线号
-    public static AtomicInteger count;//流水线号 原子操作
+    /**
+     *记录上一秒的时间戳
+     */
+    private static volatile long lastSecond;
+    /**
+     *堵塞队列，使用FIFO策略存储获取流水线号
+     */
+    public static BlockingQueue<UUIDData> queue;
+    /**
+     *流水线号 原子操作
+     */
+    public static AtomicInteger count;
 
     /**
      * 通过编号类型获取uuid：uuid=编号类型+时间戳+流水线号
@@ -46,13 +54,16 @@ public class UUIDUtil {
         //TODO:消费数据，低于 UUIDTypeEnum.MINQUEUESIZE，开始生成数据
         if(queue==null){
             queue=new ArrayBlockingQueue<UUIDData>(UUIDTypeEnum.QUEUESIZE,true);
-            count= new AtomicInteger(0);// 流水线号 初始化从1开始
+            // 流水线号 初始化从1开始
+            count= new AtomicInteger(0);
             lastSecond=System.currentTimeMillis()/1000;
         }else{
             long currentTime=System.currentTimeMillis()/1000;
-            if(currentTime-lastSecond > 1){//新的一秒，重新初始化
+            //新的一秒，重新初始化
+            if(currentTime-lastSecond > 1){
                 queue=new ArrayBlockingQueue<UUIDData>(UUIDTypeEnum.QUEUESIZE,true);
-                count= new AtomicInteger(0);// 流水线号 初始化从1开始
+                // 流水线号 初始化从1开始
+                count= new AtomicInteger(0);
 
                 lastSecond=System.currentTimeMillis()/1000;
             }
@@ -62,7 +73,6 @@ public class UUIDUtil {
         return uuid.toString();
     }
     public static void main(String[] args) {
-
         String uuid=UUIDUtil.getUuidByType(UUIDTypeEnum.GOODSID.getType());
         System.out.println("------------------------"+uuid+"------------------------------------------------");
     }
@@ -70,7 +80,10 @@ public class UUIDUtil {
 class GetAndProductUUID {
 
     private static final Lock lock = new ReentrantLock();
-    private static boolean isRunning=true;//控制生产者线程是否退出
+    /**
+     *控制生产者线程是否退出
+     */
+    private static boolean isRunning=true;
 
     /**
      * 消费者，获取队列中的流水线号
@@ -94,21 +107,6 @@ class GetAndProductUUID {
         return null;
     }
 
-    public static void producerNumInQueue() {
-        UUIDData data = null;
-        while(true) {
-            if(UUIDUtil.queue.size()>=UUIDTypeEnum.ONEPRODUCTQUEUESIZE){
-                break;
-            }
-            data = new UUIDData(UUIDUtil.count.incrementAndGet());
-            System.out.println("生产了数据" + data.getData());
-            try {
-                UUIDUtil.queue.offer(data, 1, TimeUnit.SECONDS);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
     /**
      * 生产者线程
      */
@@ -137,7 +135,10 @@ class GetAndProductUUID {
     }
 }
 class UUIDData {
-    private final int data;//存储水流线号
+    /**
+     *存储水流线号
+     */
+    private final int data;
     public UUIDData(int d){
         data = d;
     }

@@ -16,8 +16,8 @@ public class OrderGoodsDaoImpl extends CarIsIbatisDaoImpl implements OrderGoodsD
 	 * 通过主键来查找查找
 	 */
 	 @Override
-	 public List<OrderGoods> getOrderGoodsById(Long id){
-		  return (List<OrderGoods>) this.queryForObject("com.uc.training.smadmin.ord.dao.OrderGoodsDao.getOrderGoodsById", id);
+	 public List<OrderGoods> getOrderGoodsByOrderId(Integer id){
+		  return (List<OrderGoods>) this.queryForList("com.uc.training.smadmin.ord.dao.OrderGoodsDao.getOrderGoodsById", id);
 	 }
 
 	/**

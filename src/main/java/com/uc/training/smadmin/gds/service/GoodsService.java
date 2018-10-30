@@ -1,16 +1,9 @@
 package com.uc.training.smadmin.gds.service;
 
-import com.uc.training.common.vo.PageVO;
-import com.uc.training.smadmin.gds.model.Goods;
-import com.uc.training.smadmin.gds.model.GoodsPic;
-import com.uc.training.smadmin.gds.model.Property;
-import com.uc.training.smadmin.gds.re.AdminGoodsRE;
 import com.uc.training.smadmin.gds.re.GoodsRE;
 import com.uc.training.smadmin.gds.re.GoodsDetailRE;
 import com.uc.training.smadmin.gds.model.HotTag;
-import com.uc.training.smadmin.gds.vo.AdminGoodsVO;
 import com.uc.training.smadmin.gds.vo.GoodsListVO;
-import com.ycc.base.common.Result;
 
 import java.util.List;
 
@@ -23,6 +16,7 @@ import java.util.List;
 public interface GoodsService {
     /**
      * 获取热门推荐
+     * @param listSize
      * @return
      */
     public List<GoodsRE> getHotRecommend(int listSize);
@@ -68,6 +62,19 @@ public interface GoodsService {
      * @return
      */
     public List<HotTag> selectHotTag();
+
+    /**
+     * 获取会员的折扣点
+     * @param uid
+     * @return
+     */
+    public double getMemberDiscountPoint(Long uid);
+
+    /**
+     * 测试高并发下的减库存安全
+     * @param goodsStokeVO
+     */
+    public void updateAndDeductStoke(GoodsStokeVO goodsStokeVO);
 
     /**
      * 后台获取所有商品

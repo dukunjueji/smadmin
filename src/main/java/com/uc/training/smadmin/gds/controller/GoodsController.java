@@ -1,6 +1,9 @@
 package com.uc.training.smadmin.gds.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.google.inject.servlet.RequestParameters;
+import com.uc.training.common.annotation.AccessLogin;
+import com.uc.training.smadmin.gds.vo.GoodsStokeVO;
 import com.ycc.base.common.Result;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.common.vo.PageVO;
@@ -37,6 +40,7 @@ public class GoodsController extends BaseController {
      * @auther: ling
      * @date: 2018/10/17 17:17
      */
+    @AccessLogin(required = false)
     @ResponseBody
     @RequestMapping(value = "getHotRecommend.do_",method = RequestMethod.POST)
     public Result<List<GoodsRE>> getHotRecommend(int listSize) {
@@ -59,6 +63,7 @@ public class GoodsController extends BaseController {
      * @auther: ling
      * @date: 2018/10/19 9:02
      */
+    @AccessLogin(required = false)
     @ResponseBody
     @RequestMapping(value = "getGoodsPageByCategory.do_",method = RequestMethod.POST)
     public Result<PageVO<GoodsRE>> getGoodsPageByCategory(GoodsListVO goodsListVO) {
@@ -86,6 +91,7 @@ public class GoodsController extends BaseController {
      * @auther: ling
      * @date: 2018/10/19 9:01
      */
+    @AccessLogin(required = false)
     @ResponseBody
     @RequestMapping(value = "getGoodsDetailByGoodsId.do_",method = RequestMethod.GET)
     public Result<List<GoodsDetailRE>> getGoodsDetailByGoodsId(@RequestParam("goodsId") Long goodsId) {
@@ -108,6 +114,7 @@ public class GoodsController extends BaseController {
      * @auther: ling
      * @date: 2018/10/22 9:49
      */
+    @AccessLogin(required = false)
     @ResponseBody
     @RequestMapping(value = "searchByGoodsName.do_",method = RequestMethod.POST)
     public Result<List<GoodsRE>> searchByGoodsName(@RequestParam(value = "goodsName")String goodsName) {
@@ -133,6 +140,7 @@ public class GoodsController extends BaseController {
      * @auther: ling
      * @date: 2018/10/22 9:50
      */
+    @AccessLogin(required = false)
     @ResponseBody
     @RequestMapping(value = "selectHotTag.do_",method = RequestMethod.GET)
     public Result<List<HotTag>> selectHotTag() {
@@ -143,6 +151,51 @@ public class GoodsController extends BaseController {
         } catch (Exception e) {
             logger.error("获取热门标签错误！", e);
             res = Result.getBusinessException("获取热门标签失败", null);
+        }
+        return res;
+    }
+
+    /**
+     *
+     * 功能描述: 获取会员的折扣点
+     *
+     * @param:
+     * @return:
+     * @auther: ling
+     * @date: 2018/10/22 9:50
+     */
+    @AccessLogin(required = true)
+    @ResponseBody
+    @RequestMapping(value = "getMemberDiscountPoint.do_",method = RequestMethod.GET)
+    public Result<Double> getMemberDiscountPoint() {
+        Long uid = getUid();
+        Result<Double> res;
+        try {
+            res = Result.getSuccessResult(goodsService.getMemberDiscountPoint(uid));
+        } catch (Exception e) {
+            logger.error("获取会员的折扣点错误！", e);
+            res = Result.getBusinessException("获取会员的折扣点失败", null);
+        }
+        return res;
+    }
+
+    /**
+     * 测试高并发下的减库存安全
+     * @param goodsStokeVO
+     */
+    @ResponseBody
+    @RequestMapping(value = "updateAndDeductStoke.do_")
+    public Result<String> updateAndDeductStoke(GoodsStokeVO goodsStokeVO){
+        goodsStokeVO.setPropertyId(4L);
+        goodsStokeVO.setStoke(1L);
+        Result<String> res;
+        System.out.println(JSON.toJSON(goodsStokeVO));
+        try {
+            goodsService.updateAndDeductStoke(goodsStokeVO);
+            res = Result.getSuccessResult("减库存成功");
+        } catch (Exception e) {
+            logger.error("减库存错误！", e);
+            res = Result.getBusinessException("减库存失败", null);
         }
         return res;
     }

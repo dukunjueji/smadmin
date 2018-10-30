@@ -1,6 +1,8 @@
 package com.uc.training.smadmin.ord.service;
 
+import com.uc.training.smadmin.ord.model.CartGoods;
 import com.uc.training.smadmin.ord.re.OrderConfirmRE;
+import com.uc.training.smadmin.ord.re.OrderGoodsDetailRe;
 import com.uc.training.smadmin.ord.re.OrderRe;
 import com.uc.training.smadmin.ord.re.OrderStatusRe;
 import com.uc.training.smadmin.ord.vo.OrdCartGoodsVo;
@@ -27,7 +29,7 @@ public interface OrderService {
    * @param memberId
    * @return
    */
-  List<OrdCartGoodsVo> getCarGoodsById(Long memberId);
+  List<CartGoods> getCarGoodsById(Long memberId);
 
   /**
    * 根据用户id获取订单商品信息
@@ -50,9 +52,9 @@ public interface OrderService {
   int deleteCarGoods(OrdCartGoodsVo ordCartGoodsVo);
 
   /**
-   * 更新订单信息
+   * 提交订单信息
    */
-  List<OrderConfirmRE> updateOrderInfo(List<OrdOrderGoodsVo> orderInfoListNow);
+  List<OrderConfirmRE> confirmOrderInfo(List<OrdOrderGoodsVo> orderInfoListNow);
 
 
   /**
@@ -97,5 +99,12 @@ public interface OrderService {
    * 更新订单状态
    * @param ordOrderVo
    */
-  void updateOrder(OrdOrderVo ordOrderVo);
+  int  updateOrder(OrdOrderVo ordOrderVo);
+
+  /**
+   * 根据订单ID获取订单商品详情
+   * @param id
+   * @return
+   */
+  List<OrderGoodsDetailRe> getOrderGdsById(Integer id);
 }

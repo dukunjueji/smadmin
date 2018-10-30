@@ -1,5 +1,7 @@
 package com.uc.training.smadmin.sys.dao;
 
+import com.uc.training.smadmin.sys.model.SysMenu;
+
 import java.util.List;
 
 /**
@@ -19,4 +21,6 @@ public interface SysMenuDao {
      * @version 1.0 2018/10/18 20:30 by 吴佰川（baichuan.wu@ucarinc.com）创建
      */
     List<String> getUserPerms(Long userId);
+
+    List<SysMenu> getMenuList();
 }

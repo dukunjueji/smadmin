@@ -35,5 +35,10 @@ public class MemberGradeServiceImpl implements MemberGradeService {
         return memberGradeDao.queryMemberGradeCount();
     }
 
+    @Override
+    public Double getDiscountByUId(Long id) {
+        return memberGradeDao.getByUId(id).getDiscount();
+    }
+
 
 }

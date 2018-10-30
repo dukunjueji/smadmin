@@ -2,9 +2,15 @@ package com.uc.training.smadmin.gds.model;
 
 import com.uc.training.common.base.model.BaseModel;
 
-import java.math.BigDecimal;
-
-
+/**
+ *
+ * 功能描述: 商品属性
+ *
+ * @param:
+ * @return:
+ * @auther: ling
+ * @date: 2018/10/30 10:05
+ */
 public class Property extends BaseModel {
 
   private long id;
@@ -76,6 +82,7 @@ public class Property extends BaseModel {
   public void setSalePrice(BigDecimal salePrice) {
     this.salePrice = salePrice;
   }
+
 
   public String getProperty() {
     return property;

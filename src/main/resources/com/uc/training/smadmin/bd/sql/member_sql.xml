@@ -88,15 +88,8 @@
 	</select>
 
 	<sql id="where_query">
-
-		 <isNotEmpty property="id" prepend="and">
-			 s.id = #id#
-		 </isNotEmpty>
 		 <isNotEmpty property="memberName" prepend="and">
 			 s.membername = #memberName#
-		 </isNotEmpty>
-		 <isNotEmpty property="password" prepend="and">
-			 s.password = #password#
 		 </isNotEmpty>
 		 <isNotEmpty property="telephone" prepend="and">
 			 s.telephone = #telephone#
@@ -113,29 +106,12 @@
 		 <isNotEmpty property="nickname" prepend="and">
 			 s.nickname = #nickname#
 		 </isNotEmpty>
-		 <isNotEmpty property="balance" prepend="and">
-			 s.balance = #balance#
-		 </isNotEmpty>
-		 <isNotEmpty property="imageUrl" prepend="and">
-			 s.image_url = #imageUrl#
-		 </isNotEmpty>
-		 <isNotEmpty property="createTime" prepend="and">
-			 s.create_time = #createTime#
-		 </isNotEmpty>
-		 <isNotEmpty property="modifyTime" prepend="and">
-			 s.modify_time = #modifyTime#
-		 </isNotEmpty>
-		 <isNotEmpty property="createEmp" prepend="and">
-			 s.create_emp = #createEmp#
-		 </isNotEmpty>
-		 <isNotEmpty property="modifyEmp" prepend="and">
-			 s.modify_emp = #modifyEmp#
-		 </isNotEmpty>
 	</sql>
 
 	<!-- 列表查询 -->
-	<select id="queryMemberList" resultClass="com.uc.training.smadmin.bd.model.Member">
+	<select id="queryMemberList" parameterClass="com.uc.training.smadmin.bd.vo.MemberListVO" resultClass="com.uc.training.smadmin.bd.model.Member">
 		 SELECT
+		 s.id AS id,
 		 s.membername AS memberName,
 		 s.telephone AS telephone,
 		 s.sex AS sex,
@@ -143,20 +119,18 @@
 		 s.integral AS integral,
 		 s.nickname AS nickname,
 		 s.balance AS balance,
-		 s.image_url AS imageUrl,
-		 s.create_time AS createTime,
-		 s.modify_time AS modifyTime,
-		 s.create_emp AS createEmp,
-		 s.modify_emp AS modifyEmp
+		 s.image_url AS imageUrl
 		 FROM t_bd_member s
 		 WHERE 1=1
+		<include refid="where_query"/>
 	</select>
 
 	<!-- 查找数据总记录数 -->
-	<select id="queryMemberCount" resultClass="java.lang.Integer" parameterClass="com.uc.training.smadmin.bd.model.Member">
+	<select id="queryMemberCount" resultClass="java.lang.Long" parameterClass="com.uc.training.smadmin.bd.vo.MemberListVO">
 		 SELECT count(1)
 		 FROM t_bd_member s
 		 WHERE 1=1
+		<include refid="where_query"/>
 	</select>
 
 	<!-- 查询用户余额 -->

@@ -15,14 +15,17 @@ import java.util.List;
  */
 public interface MessageService {
     /**
-     * 查找指定会员消息总记录数
-     */
+    *说明：查找指定会员消息总记录数
+    *@param memberId 会员id
+    *@return：java.lang.Integer 消息的数目
+    *@throws：
+    */
     public Integer queryMessageCount(Long memberId);
 
     /**
      * 查询指定会员的所有消息
      * @param uid 会员id
-     * @return
+     * @return 会员列表
      */
     public List<MessageRE> queryMessageList(Long uid);
 
@@ -35,7 +38,10 @@ public interface MessageService {
     int updateMessageStatus(Message message);
 
     /**
-     * 保存
-     */
+    *说明：保存消息
+    *@param record 消息类
+    *@return：java.lang.Long 影响数目
+    *@throws：
+    */
     public Long insertMessage(Message record);
 }

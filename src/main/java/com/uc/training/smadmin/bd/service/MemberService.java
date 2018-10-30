@@ -5,6 +5,7 @@ import com.uc.training.smadmin.bd.re.MemberDetailRE;
 import com.uc.training.smadmin.bd.re.MemberInfoRE;
 import com.uc.training.smadmin.bd.vo.ChargeBalanceVO;
 import com.uc.training.smadmin.bd.vo.MemberInfoVO;
+import com.uc.training.smadmin.bd.vo.MemberListVO;
 import com.uc.training.smadmin.bd.vo.MemberLoginVO;
 import com.uc.training.smadmin.ord.re.OrderConfirmRE;
 import com.uc.training.smadmin.ord.re.OrderRe;
@@ -93,4 +94,18 @@ public interface MemberService {
     *@throws：
     */
     MemberInfoRE queryOneMemberById(Long uid);
+
+    /**
+     * 获取会员信息分页页面
+     * @param memberListVO
+     * @return
+     */
+    List<Member> getMemberList(MemberListVO memberListVO);
+
+    /**
+     * 获取会员数量
+     * @param memberListVO
+     * @return
+     */
+    Long queryMemberCount(MemberListVO memberListVO);
 }

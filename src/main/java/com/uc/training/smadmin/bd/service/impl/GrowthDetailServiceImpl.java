@@ -3,7 +3,6 @@ package com.uc.training.smadmin.bd.service.impl;
 import com.uc.training.common.enums.GrowthEnum;
 import com.uc.training.smadmin.bd.dao.GrowthDetailDao;
 import com.uc.training.smadmin.bd.dao.MemberDao;
-import com.uc.training.smadmin.bd.vo.ContinueSignDaysVO;
 import com.uc.training.smadmin.bd.model.GrowthDetail;
 import com.uc.training.smadmin.bd.service.GrowthDetailService;
 import com.uc.training.smadmin.bd.vo.GrowthVO;
@@ -12,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 /**
  * 版权说明：Copyright (c) 2018 ucarinc. All Rights Reserved.
@@ -30,6 +28,7 @@ public class GrowthDetailServiceImpl implements GrowthDetailService {
     @Autowired
     private MemberDao memberDao;
 
+    @Override
     public Long saveGrowthDetail(GrowthVO growthVO){
         GrowthDetail growthDetail = new GrowthDetail();
         Long growthVaule = 0L;

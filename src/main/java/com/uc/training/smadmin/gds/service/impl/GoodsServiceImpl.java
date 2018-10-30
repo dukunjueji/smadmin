@@ -1,24 +1,12 @@
 package com.uc.training.smadmin.gds.service.impl;
 
-import com.uc.training.common.enums.UUIDTypeEnum;
-import com.uc.training.common.vo.PageVO;
-import com.uc.training.smadmin.gds.dao.CategoryDao;
 import com.uc.training.smadmin.gds.dao.GoodsDao;
-import com.uc.training.smadmin.gds.dao.GoodsPicDao;
-import com.uc.training.smadmin.gds.dao.PropertyDao;
-import com.uc.training.smadmin.gds.model.*;
-import com.uc.training.smadmin.gds.re.AdminGoodsRE;
 import com.uc.training.smadmin.gds.re.GoodsRE;
 import com.uc.training.smadmin.gds.re.GoodsDetailRE;
+import com.uc.training.smadmin.gds.model.HotTag;
 import com.uc.training.smadmin.gds.re.PropertyUrlRE;
-import com.uc.training.smadmin.gds.service.CategoryService;
-import com.uc.training.smadmin.gds.service.GoodsPicService;
 import com.uc.training.smadmin.gds.service.GoodsService;
-import com.uc.training.smadmin.gds.service.PropertyService;
-import com.uc.training.smadmin.gds.vo.AdminGoodsVO;
 import com.uc.training.smadmin.gds.vo.GoodsListVO;
-import com.uc.training.smadmin.utils.UUIDUtil;
-import com.ycc.base.common.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +22,8 @@ import java.util.List;
 public class GoodsServiceImpl implements GoodsService {
     @Autowired
     GoodsDao goodsDao;
+    @Autowired
+    MemberGradeService memberGradeService;
 
     @Autowired
     private CategoryService categoryService;
@@ -86,6 +76,21 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     public List<HotTag> selectHotTag() {
         return goodsDao.selectHotTag();
+    }
+
+    @Override
+    public double getMemberDiscountPoint(Long uid) {
+        return memberGradeService.getDiscountByUId(uid);
+    }
+
+    @Override
+    public void updateAndDeductStoke(GoodsStokeVO goodsStokeVO) {
+        GoodsStokeRE goodsStokeRE=goodsDao.selectGoodsStatus(goodsStokeVO);
+        if(goodsStokeRE != null && goodsStokeRE.getIsDelete()==0 && goodsStokeRE.getStatus()==1 && goodsStokeRE.getStoke()>=goodsStokeVO.getStoke()){
+            goodsDao.updateAndDeductStoke(goodsStokeVO);
+        }else{
+            System.out.println("库存有问题！--------------------------------------");
+        }
     }
 
     /**

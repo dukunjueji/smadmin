@@ -35,4 +35,11 @@ public interface MemberGradeDao{
 	 */
 	public Integer updateMemberGradeById(MemberGrade record);
 
+	/**
+	 * 通过用户ID获取对应的等级信息
+	 * @param id
+	 * @return
+	 */
+	public MemberGrade getByUId(Long id);
+
 }

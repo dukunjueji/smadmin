@@ -5,7 +5,13 @@ import com.uc.training.common.base.model.BaseModel;
 import java.math.BigDecimal;
 
 /**
- * 商品
+ *
+ * 功能描述:商品
+ *
+ * @param:
+ * @return:
+ * @auther: ling
+ * @date: 2018/10/30 10:04
  */
 public class Goods extends BaseModel {
 

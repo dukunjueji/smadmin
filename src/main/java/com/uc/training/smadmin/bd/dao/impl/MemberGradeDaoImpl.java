@@ -54,4 +54,9 @@ public class MemberGradeDaoImpl extends CarIsIbatisDaoImpl implements MemberGrad
 		  return this.update(namespace + "updateMemberGradeById", record);
 	 }
 
+	@Override
+	public MemberGrade getByUId(Long id) {
+		return (MemberGrade) this.queryForObject(namespace + "getByUId", id);
+	}
+
 }

@@ -49,10 +49,7 @@
 		 SELECT count(1)
 		 FROM t_sys_sms_template s
 		 WHERE 1=1
-		<isNotEmpty property="type" prepend="and">
-			s.type = #type#
-		</isNotEmpty>
-		 <!--<include refid="where_query"/>-->
+		<include refid="where_query"/>
 	</select>
 
 	<!-- 通过code获取短信模板 -->
