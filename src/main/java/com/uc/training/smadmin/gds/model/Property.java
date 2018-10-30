@@ -2,6 +2,8 @@ package com.uc.training.smadmin.gds.model;
 
 import com.uc.training.common.base.model.BaseModel;
 
+import java.math.BigDecimal;
+
 /**
  *
  * 功能描述: 商品属性
@@ -37,7 +39,7 @@ public class Property extends BaseModel {
   /**
    * 是否打折
    */
-  private long isDiscount;
+  private Long isDiscount;
 
 
 
@@ -97,7 +99,7 @@ public class Property extends BaseModel {
     return isDiscount;
   }
 
-  public void setIsDiscount(long isDiscount) {
+  public void setIsDiscount(Long isDiscount) {
     this.isDiscount = isDiscount;
   }
 
