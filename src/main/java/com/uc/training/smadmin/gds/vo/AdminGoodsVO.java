@@ -30,7 +30,7 @@ public class AdminGoodsVO extends AdminGoodsRE implements Serializable{
     /**
      *修改人
      */
-    private Long ModifyEmp;
+    private Long modifyEmp;
 
     public Integer getCategoryId() {
         return categoryId;
@@ -57,10 +57,20 @@ public class AdminGoodsVO extends AdminGoodsRE implements Serializable{
     }
 
     public Long getModifyEmp() {
-        return ModifyEmp;
+        return modifyEmp;
     }
 
     public void setModifyEmp(Long modifyEmp) {
-        ModifyEmp = modifyEmp;
+        this.modifyEmp = modifyEmp;
+    }
+
+    @Override
+    public String toString() {
+        return "AdminGoodsVO{" +
+                "categoryId=" + categoryId +
+                ", picName='" + picName + '\'' +
+                ", createEmp=" + createEmp +
+                ", modifyEmp=" + modifyEmp +
+                '}';
     }
 }

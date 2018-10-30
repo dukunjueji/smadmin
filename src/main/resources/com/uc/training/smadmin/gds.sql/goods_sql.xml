@@ -142,7 +142,7 @@
         gc.name AS  categoryName,
         gp.stock  AS stock,
         gp.discount_price AS  discountPrice,
-        gp.sale_price  AS sale_price,
+        gp.sale_price  AS salePrice,
         gp.is_discount AS  isDiscount,
         pic.pic_url  AS picUrl
         FROM
@@ -164,7 +164,7 @@
 
     <insert id="insertGoods" parameterClass="com.uc.training.smadmin.gds.model.Goods">
         INSERT INTO t_gds_goods
-        (code, name, category_id, sales, detail, status, is_delete, create_emp modify_emp)
+        (code, name, category_id, sales, detail, status, is_delete, create_emp, modify_emp)
         VALUES (#code#, #name#, #categoryId#, #sales#, #detail#, #status#, #isDelete#, #createEmp#, #modifyEmp#)
         <selectKey resultClass="long" keyProperty="id">
             SELECT LAST_INSERT_ID() as id;

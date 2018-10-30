@@ -1,11 +1,16 @@
 package com.uc.training.smadmin.gds.controller;
 
 import com.uc.training.common.base.controller.BaseController;
+import com.uc.training.common.enums.UUIDTypeEnum;
 import com.uc.training.common.vo.PageVO;
+import com.uc.training.smadmin.gds.model.Goods;
+import com.uc.training.smadmin.gds.model.GoodsPic;
+import com.uc.training.smadmin.gds.model.Property;
 import com.uc.training.smadmin.gds.re.AdminGoodsRE;
 import com.uc.training.smadmin.gds.service.GoodsService;
 import com.uc.training.smadmin.gds.vo.AdminGoodsVO;
 import com.uc.training.smadmin.gds.vo.GoodsListVO;
+import com.uc.training.smadmin.utils.UUIDUtil;
 import com.ycc.base.common.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -54,10 +59,51 @@ public class AdminGoodsController extends BaseController {
     @RequestMapping(value = "adminInsertGoods.do_", method = RequestMethod.POST)
     public Result adminInsertGoods(AdminGoodsVO adminGoodsVO) {
 
-        adminGoodsVO.setCreateEmp(getUid());
-        adminGoodsVO.setModifyEmp(getUid());
+        //新增商品
+        Goods goods = new Goods();
 
-        return Result.getSuccessResult(goodsService.adminInsertGoods(adminGoodsVO));
+        //生成商品编号
+        goods.setCode(UUIDUtil.getUuidByType(UUIDTypeEnum.GOODSID.getType()));
+        goods.setName(adminGoodsVO.getName());
+        goods.setCategoryId(adminGoodsVO.getCategoryId());
+        goods.setSales(adminGoodsVO.getSales());
+        goods.setDetail(adminGoodsVO.getDetail());
+        goods.setStatus(adminGoodsVO.getStatus());
+        goods.setCreateEmp(getUid());
+        goods.setModifyEmp(getUid());
+
+        // 新增商品属性
+        Property property = new Property();
+
+        property.setStock(adminGoodsVO.getStock());
+        property.setDiscountPrice(adminGoodsVO.getDiscountPrice());
+        property.setSalePrice(adminGoodsVO.getSalePrice());
+        property.setProperty(adminGoodsVO.getProperty());
+        property.setIsDiscount(adminGoodsVO.getIsDiscount());
+        property.setCreateEmp(getUid());
+        property.setModifyEmp(getUid());
+
+        // 新增图片
+        GoodsPic goodsPic = new GoodsPic();
+
+        goodsPic.setPicName(adminGoodsVO.getPicName());
+        goodsPic.setPicUrl(adminGoodsVO.getPicUrl());
+        goodsPic.setCreateEmp(getUid());
+        goodsPic.setModifyEmp(getUid());
+
+
+        return Result.getSuccessResult(goodsService.adminInsertGoods(goods, property, goodsPic));
+    }
+
+    /**
+     * 逻辑删除商品
+     * @param id
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "logicDeleteGoods.do_", method = RequestMethod.POST)
+    public Result logicDeleteGoods(Long id) {
+        return Result.getSuccessResult(goodsService.logicDeleteGoods(id));
     }
 
 }

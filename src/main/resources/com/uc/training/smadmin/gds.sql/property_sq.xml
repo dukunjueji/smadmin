@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
-<sqlMap namespace="com.uc.training.smadmin.gds.dao.HotTagDao">
+<sqlMap namespace="com.uc.training.smadmin.gds.dao.PropertyDao">
     <!--新增商品属性-->
     <insert id="insertProperty" parameterClass="com.uc.training.smadmin.gds.model.Property">
         INSERT INTO t_gds_property
-        (`goods_id`, stock, discount_price, sale_price,property, is_discount, create_emp, modify_emp)
-        VALUES (#gooodsId#,#stock#,#discountPrice#,salePrice,#property#,#isDiscount#,#createEmp#,#modifyEmp#)
+        (goods_id, stock, discount_price, sale_price, property, is_discount, create_emp, modify_emp)
+        VALUES (#goodsId#,#stock#,#discountPrice#,salePrice,#property#,#isDiscount#,#createEmp#,#modifyEmp#)
         <selectKey resultClass="long" keyProperty="id">
             SELECT LAST_INSERT_ID() as id;
         </selectKey>
     </insert>
 
     <!--更新商品属性-->
-    <update id="updateCategory" parameterClass="com.uc.training.smadmin.gds.model.Property">
+    <update id="updateProperty" parameterClass="com.uc.training.smadmin.gds.model.Property">
         UPDATE t_gds_property
         SET   stock=#stock#,
               discount_price=#discountPrice#,

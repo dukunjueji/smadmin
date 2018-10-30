@@ -60,7 +60,7 @@ public class AdminGoodsRE implements Serializable{
     private String property;
 
     /**
-     * 出售价格
+     * 定价
      */
     private BigDecimal salePrice;
 
