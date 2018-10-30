@@ -3,13 +3,14 @@ package com.uc.training.smadmin.ord.vo;
 import java.io.Serializable;
 
 /**
- *购物车商品信息VO
+ * 购物车商品信息VO
+ *
  * @author hhj
  * @date 2018/10/22
  */
 
 
-public class OrdCartGoodsVo implements Serializable{
+public class OrdCartGoodsVo implements Serializable {
   /**
    * id
    */
@@ -29,14 +30,9 @@ public class OrdCartGoodsVo implements Serializable{
   private Long goodsId;
 
   /**
-   * 商品选定状态
-   */
-  private boolean chooseStatus = false;
-
-  /**
    * 商品图片
    */
-  private String  gdsUrl;
+  private String gdsUrl;
 
   /**
    * 商品名称
@@ -77,6 +73,11 @@ public class OrdCartGoodsVo implements Serializable{
   private long isDiscount;
 
   /**
+   * 选定状态
+   */
+  private boolean chooseStatus;
+
+  /**
    * 商品状态(是否下架)
    */
   private long status;
@@ -103,14 +104,6 @@ public class OrdCartGoodsVo implements Serializable{
 
   public void setGoodsId(Long goodsId) {
     this.goodsId = goodsId;
-  }
-
-  public boolean isChooseStatus() {
-    return chooseStatus;
-  }
-
-  public void setChooseStatus(boolean chooseStatus) {
-    this.chooseStatus = chooseStatus;
   }
 
   public String getGdsUrl() {
@@ -152,6 +145,7 @@ public class OrdCartGoodsVo implements Serializable{
   public void setSalePrice(double salePrice) {
     this.salePrice = salePrice;
   }
+
   public Long getPropertyId() {
     return propertyId;
   }
@@ -198,5 +192,13 @@ public class OrdCartGoodsVo implements Serializable{
 
   public void setStock(long stock) {
     this.stock = stock;
+  }
+
+  public boolean isChooseStatus() {
+    return chooseStatus;
+  }
+
+  public void setChooseStatus(boolean chooseStatus) {
+    this.chooseStatus = chooseStatus;
   }
 }
