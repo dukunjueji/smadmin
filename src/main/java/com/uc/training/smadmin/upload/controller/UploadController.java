@@ -43,7 +43,7 @@ public class UploadController extends BaseController{
         if (uploadVO.getFile().isEmpty()) {
             Result.getBusinessException("上传文件不能为空" , null);
         }
-        if (uploadVO.getFile().getSize() >= 4194304) {
+        if (uploadVO.getFile().getSize() >= 4*1024*1024) {
             Result.getBusinessException("上传文件不能超过4M", null);
         }
 

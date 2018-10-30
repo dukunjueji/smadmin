@@ -14,7 +14,7 @@ public class UploadRE implements Serializable{
 
     private String name;
 
-    private String OriginalName;
+    private String originalName;
 
     public String getName() {
         return name;
@@ -25,10 +25,10 @@ public class UploadRE implements Serializable{
     }
 
     public String getOriginalName() {
-        return OriginalName;
+        return originalName;
     }
 
     public void setOriginalName(String originalName) {
-        OriginalName = originalName;
+        this.originalName = originalName;
     }
 }

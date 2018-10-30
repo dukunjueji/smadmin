@@ -1,5 +1,6 @@
 package com.uc.training.smadmin.bd.vo;
 import com.sun.istack.NotNull;
+import org.hibernate.validator.constraints.NotBlank;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -17,11 +18,11 @@ public class AddressVO implements Serializable {
     private Long id;
 
 	/**收货人**/
-	@NotNull()
+	@NotBlank(message = "收货人不能为空")
 	private String receiver;
 
 	/**手机号**/
-    @NotNull()
+	@NotBlank(message = "手机号不能为空")
 	private String telephone;
 
 	/**省**/
@@ -34,12 +35,15 @@ public class AddressVO implements Serializable {
 	private String district;
 
 	/**区域编号**/
+	@NotBlank(message = "省市区不能为空")
 	private String areaCode;
 
 	/**详细地址**/
+	@NotBlank(message = "详细地址不能为空")
 	private String addrDetail;
 
 	/**是否默认地址**/
+	@javax.validation.constraints.NotNull(message = "默认地址不能为空")
 	private Integer isDefault;
 
     public Long getId() {
@@ -112,5 +116,20 @@ public class AddressVO implements Serializable {
 
 	public void setIsDefault(Integer isDefault) {
 		this.isDefault = isDefault;
+	}
+
+	@Override
+	public String toString() {
+		return "AddressVO{" +
+				"id=" + id +
+				", receiver='" + receiver + '\'' +
+				", telephone='" + telephone + '\'' +
+				", province='" + province + '\'' +
+				", city='" + city + '\'' +
+				", district='" + district + '\'' +
+				", areaCode='" + areaCode + '\'' +
+				", addrDetail='" + addrDetail + '\'' +
+				", isDefault=" + isDefault +
+				'}';
 	}
 }
