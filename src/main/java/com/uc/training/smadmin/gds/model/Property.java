@@ -39,7 +39,7 @@ public class Property extends BaseModel {
   /**
    * 是否打折
    */
-  private Long isDiscount;
+  private Integer isDiscount;
 
 
 
@@ -99,7 +99,7 @@ public class Property extends BaseModel {
     return isDiscount;
   }
 
-  public void setIsDiscount(Long isDiscount) {
+  public void setIsDiscount(Integer isDiscount) {
     this.isDiscount = isDiscount;
   }
 
