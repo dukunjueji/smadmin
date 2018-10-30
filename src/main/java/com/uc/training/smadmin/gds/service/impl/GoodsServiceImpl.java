@@ -88,4 +88,9 @@ public class GoodsServiceImpl implements GoodsService {
         }
     }
 
+    @Override
+    public GoodsStokeRE selectGoodsStatus(GoodsStokeVO goodsStokeVO) {
+        return goodsDao.selectGoodsStatus(goodsStokeVO);
+    }
+
 }
