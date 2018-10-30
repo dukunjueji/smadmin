@@ -63,6 +63,6 @@ public class OrderConfirmRE implements Serializable {
     }
 
     public void setOrderNum(String orderNum) {
-        orderNum = orderNum;
+        this.orderNum = orderNum;
     }
 }

@@ -89,7 +89,16 @@
 	<delete id="delCartGoods" parameterClass="com.uc.training.smadmin.ord.vo.OrdCartGoodsVo">
 		DELETE FROM t_ord_cart_goods
 		WHERE
-		id = #cartId#
+		1=1
+		<isNotEmpty property="propertyId" prepend="and">
+			goods_property_id = #propertyId#
+		</isNotEmpty>
+		<isNotEmpty property="memberId" prepend="and">
+			member_id = #memberId#
+		</isNotEmpty>
+		<isNotEmpty property="cartId" prepend="or">
+			s.id = #cartId#
+		</isNotEmpty>
 	</delete>
 
 	<!-- 通过主键更新 -->

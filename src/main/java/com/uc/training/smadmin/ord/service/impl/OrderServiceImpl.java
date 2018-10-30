@@ -37,26 +37,27 @@ import java.util.List;
  */
 @Service
 public class OrderServiceImpl implements OrderService {
-  @Autowired
-  CartGoodsDao cartGoodsDao;
+    @Autowired
+    CartGoodsDao cartGoodsDao;
 
-  @Autowired
-  OrderDao orderDao;
+    @Autowired
+    OrderDao orderDao;
 
-  @Autowired
-  GoodsService goodsService;
+    @Autowired
+    GoodsService goodsService;
 
-  @Autowired
-  OrderGoodsDao orderGoodsDao;
+    @Autowired
+    OrderGoodsDao orderGoodsDao;
 
-  @Override
-  public List<CartGoods> getCarGoodsById(Long memberId) {
-    List<CartGoods> cartList = cartGoodsDao.getCartGoodsById(memberId);
-    if (cartList.size() <= 0) {
-      return null;
+    @Override
+    public List<CartGoods> getCarGoodsById(Long memberId) {
+        List<CartGoods> cartList = cartGoodsDao.getCartGoodsById(memberId);
+        if (cartList.size() <= 0) {
+            return null;
+        }
+        return cartList;
     }
-    return cartList;
-  }
+
     /**
      * 获取订单商品列表
      *
@@ -87,25 +88,26 @@ public class OrderServiceImpl implements OrderService {
         return list;
     }
 
-  @Override
-  public void addCarGoods(OrdCartGoodsVo ordCartGoodsVo) {
-    cartGoodsDao.insertCartGoods(ordCartGoodsVo);
-  }
+    @Override
+    public void addCarGoods(OrdCartGoodsVo ordCartGoodsVo) {
+        cartGoodsDao.insertCartGoods(ordCartGoodsVo);
+    }
 
-  @Override
-  public int deleteCarGoods(OrdCartGoodsVo ordCartGoodsVo) {
-    return cartGoodsDao.deleteCartGoods(ordCartGoodsVo);
-  }
+    @Override
+    public int deleteCarGoods(OrdCartGoodsVo ordCartGoodsVo) {
+        return cartGoodsDao.deleteCartGoods(ordCartGoodsVo);
+    }
 
-  @Override
-  public int updataCarGoodsNum(OrdCartGoodsVo ordCartGoodsVo) {
-    return cartGoodsDao.updataCartGoodsNum(ordCartGoodsVo);
-  }
+    @Override
+    public int updataCarGoodsNum(OrdCartGoodsVo ordCartGoodsVo) {
+        return cartGoodsDao.updataCartGoodsNum(ordCartGoodsVo);
+    }
 
-  @Override
-  public Integer queryOrderCount(Long memberId) {
-    return this.orderDao.queryOrderCount(memberId);
-  }
+    @Override
+    public Integer queryOrderCount(Long memberId) {
+        return this.orderDao.queryOrderCount(memberId);
+    }
+
     /**
      * 提交订单验证信息
      */
@@ -114,10 +116,12 @@ public class OrderServiceImpl implements OrderService {
         OrderConfirmRE orderConfirmRE = new OrderConfirmRE();
         List<OrderConfirmRE> list = new ArrayList<>();
         int a = 2;
+        GoodsStokeVO goodsStokeVO;
         for (int i = 0; i < orderInfoListNow.size() - a; i++) {
             //更新库存表、插入用户订单表和订单商品信息表、删除购物车商品信息,判断商品是否删除或者下架和库存是否足够
-            GoodsStokeVO goodsStokeVO = new GoodsStokeVO();
+            goodsStokeVO = new GoodsStokeVO();
             goodsStokeVO.setPropertyId(orderInfoListNow.get(i).getPropertyId());
+            goodsStokeVO.setStoke((long) orderInfoListNow.get(i).getNum());
             GoodsStokeRE goodsStokeRE = goodsService.selectGoodsStatus(goodsStokeVO);
             if (goodsStokeRE.getIsDelete() == GoodsStatusEnum.GoodsIsDelete.getType()) {
                 StringBuilder temp = new StringBuilder();
@@ -162,7 +166,7 @@ public class OrderServiceImpl implements OrderService {
         Long oderId = orderDao.insertOrder(order);
         //遍历orderInfoListNow
         OrderGoods orderGoods;
-        GoodsStokeVO goodsStokeVO;
+        OrdCartGoodsVo ordCartGoodsVo;
         for (int i = 0; i < orderInfoListNow.size() - a; i++) {
             //插入订单商品信息表
             orderGoods = new OrderGoods();
@@ -179,9 +183,9 @@ public class OrderServiceImpl implements OrderService {
             //更新商品对应的库存
             goodsStokeVO.setStoke(orderGoods.getGoodsNum().longValue());
             goodsStokeVO.setPropertyId(orderGoods.getGoodsPropertyId());
-          goodsService.updateAndDeductStoke(goodsStokeVO);
+            goodsService.updateAndDeductStoke(goodsStokeVO);
             //删除购物车信息表
-            OrdCartGoodsVo ordCartGoodsVo = new OrdCartGoodsVo();
+            ordCartGoodsVo = new OrdCartGoodsVo();
             ordCartGoodsVo.setPropertyId(orderInfoListNow.get(i).getPropertyId());
             ordCartGoodsVo.setMemberId(orderInfoListNow.get(orderInfoListNow.size() - 2).getMemberId());
             cartGoodsDao.deleteCartGoods(ordCartGoodsVo);
@@ -193,83 +197,89 @@ public class OrderServiceImpl implements OrderService {
         return list;
     }
 
-  @Override
-  public List<OrderRe> getOrderPage(OrdOrderVo orderVo) {
-    List<OrderRe> list;
-    list = orderDao.getOrderPage(orderVo);
-    if (list.size() <= 0) {
-      return null;
+    @Override
+    public List<OrderRe> getOrderPage(OrdOrderVo orderVo) {
+        List<OrderRe> list;
+        list = orderDao.getOrderPage(orderVo);
+        if (list.size() <= 0) {
+            return null;
+        }
+        for (OrderRe orderRe : list) {
+            OrderEnum orderEnum;
+            orderEnum = OrderEnum.getEnumByKey(orderRe.getStatus());
+            if (orderEnum != null) {
+                orderRe.setShowStatus(orderEnum.getValue());
+            }
+        }
+        return list;
     }
-    for (OrderRe orderRe : list) {
-      OrderEnum orderEnum;
-      orderEnum = OrderEnum.getEnumByKey(orderRe.getStatus());
-      if (orderEnum != null) {
-        orderRe.setShowStatus(orderEnum.getValue());
-      }
+
+    @Override
+    public Integer getOrderTotal(OrdOrderVo orderVo) {
+        return orderDao.getOrderTotal(orderVo);
     }
-    return list;
-  }
 
-  @Override
-  public Integer getOrderTotal(OrdOrderVo orderVo) {
-    return orderDao.getOrderTotal(orderVo);
-  }
-
-  @Override
-  public List<OrderStatusRe> getOrderEnum() {
-    List<OrderStatusRe> list = new ArrayList<OrderStatusRe>();
-    OrderEnum orderEnum;
-    int max = OrderEnum.getMaxKey();
-    int i = 0;
-    do {
-      OrderStatusRe orderStatusRe = new OrderStatusRe();
-      orderEnum = OrderEnum.getEnumByKey(i);
-      if (orderEnum != null) {
-        orderStatusRe.setValue(i);
-        orderStatusRe.setLabel(orderEnum.getValue());
+    @Override
+    public List<OrderStatusRe> getOrderEnum() {
+        List<OrderStatusRe> list = new ArrayList<OrderStatusRe>();
+        OrderEnum orderEnum;
+        int max = OrderEnum.getMaxKey();
+        int i = 0;
+        do {
+            OrderStatusRe orderStatusRe = new OrderStatusRe();
+            orderEnum = OrderEnum.getEnumByKey(i);
+            if (orderEnum != null) {
+                orderStatusRe.setValue(i);
+                orderStatusRe.setLabel(orderEnum.getValue());
+                list.add(orderStatusRe);
+            }
+            i++;
+        } while (max >= i);
+        OrderStatusRe orderStatusRe = new OrderStatusRe();
+        orderStatusRe.setLabel("全部");
         list.add(orderStatusRe);
-      }
-      i++;
-    } while (max >= i);
-    OrderStatusRe orderStatusRe = new OrderStatusRe();
-    orderStatusRe.setLabel("全部");
-    list.add(orderStatusRe);
-    return list;
-  }
-
-  @Override
-  public int logicDelOrder(List<OrderRe> list) {
-    return orderDao.logicDelOrder(list);
-  }
-
-  @Override
-  public int updateOrder(OrdOrderVo ordOrderVo) {
-    return orderDao.updateOrder(ordOrderVo);
-  }
-
-
-  @Override
-  public List<OrderGoodsDetailRe> getOrderGdsById(Integer id) {
-    List<OrderGoods> orderGdslist;
-    List<OrderGoodsDetailRe> list = new ArrayList<>();
-    orderGdslist = orderGoodsDao.getOrderGoodsByOrderId(id);
-    if (CollectionUtils.isEmpty(orderGdslist)) {
-      return null;
+        return list;
     }
-    OrderGoodsDetailRe orderGoodsDetailRe;
-    GoodsDetailRE gdDTO;
-    for (OrderGoods orderGoods : orderGdslist) {
-      orderGoodsDetailRe = new OrderGoodsDetailRe();
-      gdDTO = goodsService.getGoodsDetailByPropertyId(orderGoods.getGoodsPropertyId());
-      orderGoodsDetailRe.setGoodsName(gdDTO.getName());
-      orderGoodsDetailRe.setGoodsNum(orderGoods.getGoodsNum());
-      orderGoodsDetailRe.setGoodsProperty(gdDTO.getProperty());
-      orderGoodsDetailRe.setGoodsPrice(gdDTO.getSalePrice());
-      list.add(orderGoodsDetailRe);
-    }
-    return list;
-  }
 
+    @Override
+    public int logicDelOrder(List<OrderRe> list) {
+        return orderDao.logicDelOrder(list);
+    }
+
+    @Override
+    public int updateOrder(OrdOrderVo ordOrderVo) {
+        return orderDao.updateOrder(ordOrderVo);
+    }
+
+
+    @Override
+    public List<OrderGoodsDetailRe> getOrderGdsById(Integer id) {
+        List<OrderGoods> orderGdslist;
+        List<OrderGoodsDetailRe> list = new ArrayList<>();
+        orderGdslist = orderGoodsDao.getOrderGoodsByOrderId(id);
+        if (CollectionUtils.isEmpty(orderGdslist)) {
+            return null;
+        }
+        OrderGoodsDetailRe orderGoodsDetailRe;
+        GoodsDetailRE gdDTO;
+        for (OrderGoods orderGoods : orderGdslist) {
+            orderGoodsDetailRe = new OrderGoodsDetailRe();
+            gdDTO = goodsService.getGoodsDetailByPropertyId(orderGoods.getGoodsPropertyId());
+            orderGoodsDetailRe.setGoodsName(gdDTO.getName());
+            orderGoodsDetailRe.setGoodsNum(orderGoods.getGoodsNum());
+            orderGoodsDetailRe.setGoodsProperty(gdDTO.getProperty());
+            orderGoodsDetailRe.setGoodsPrice(gdDTO.getSalePrice());
+            orderGoodsDetailRe.setGoodsUrl(gdDTO.getPicUrl().get(0).getPicUrl());
+            list.add(orderGoodsDetailRe);
+        }
+        return list;
+    }
+
+    /**
+     * 根据会员id获取订单信息
+     * @param memberId
+     * @return
+     */
     @Override
     public List<OrderInfoRE> getOrderInfoListByMemberId(Long memberId) {
         //先获该用户的取订单id，然后查询每条订单的状态，订单的金额 以及获取订单的商品信息

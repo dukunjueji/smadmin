@@ -195,5 +195,16 @@ public class GoodsServiceImpl implements GoodsService {
         return goodsDao.logicDeleteGoods(id);
     }
 
+    /**
+     * 更新销量
+     *
+     * @param goodsStokeVO
+     * @return
+     */
+    @Override
+    public int updateSales(GoodsStokeVO goodsStokeVO) {
+        return goodsDao.updateSales(goodsStokeVO);
+    }
+
 
 }

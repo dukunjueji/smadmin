@@ -1,7 +1,6 @@
 package com.uc.training.smadmin.bd.vo;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 /**
  * 版权说明：Copyright (c) 2018 ucarinc. All Rights Reserved.
@@ -22,7 +21,7 @@ public class MemberBalanceVO implements Serializable {
     /**
      * 总支付金额
      */
-    private BigDecimal totalMoney;
+    private Double totalMoney;
 
     public Long getMemberId() {
         return memberId;
@@ -32,11 +31,11 @@ public class MemberBalanceVO implements Serializable {
         this.memberId = memberId;
     }
 
-    public BigDecimal getTotalMoney() {
+    public Double getTotalMoney() {
         return totalMoney;
     }
 
-    public void setTotalMoney(BigDecimal totalMoney) {
+    public void setTotalMoney(Double totalMoney) {
         this.totalMoney = totalMoney;
     }
 
