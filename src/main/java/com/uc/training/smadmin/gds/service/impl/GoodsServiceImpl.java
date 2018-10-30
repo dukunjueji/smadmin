@@ -93,6 +93,11 @@ public class GoodsServiceImpl implements GoodsService {
         }
     }
 
+    @Override
+    public GoodsStokeRE selectGoodsStatus(GoodsStokeVO goodsStokeVO) {
+        return goodsDao.selectGoodsStatus(goodsStokeVO);
+    }
+
     /**
      * 后台新增商品
      * @param goods

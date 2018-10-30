@@ -9,10 +9,13 @@ package com.uc.training.common.enums;
  * 说明：积分枚举类
  */
 public enum IntegralEnum {
-
+    //签到
     SINGIN("签到", 1, 1L),
+    //评价
     ASSESS("评价", 2, 2L),
+    //购买商品
     PURCHASE("购买商品", 3, 3L),
+    //使用积分消费
     INTEGRALCONSUME("使用积分消费", 4, null);
 
     IntegralEnum(String describe, Integer integralType, Long value) {

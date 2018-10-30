@@ -3,7 +3,9 @@ package com.uc.training.smadmin.gds.service;
 import com.uc.training.smadmin.gds.re.GoodsRE;
 import com.uc.training.smadmin.gds.re.GoodsDetailRE;
 import com.uc.training.smadmin.gds.model.HotTag;
+import com.uc.training.smadmin.gds.re.GoodsStokeRE;
 import com.uc.training.smadmin.gds.vo.GoodsListVO;
+import com.uc.training.smadmin.gds.vo.GoodsStokeVO;
 
 import java.util.List;
 
@@ -75,6 +77,13 @@ public interface GoodsService {
      * @param goodsStokeVO
      */
     public void updateAndDeductStoke(GoodsStokeVO goodsStokeVO);
+
+    /**
+     * 减库存之前，查看商品是否下架、删除、检查库存是否足够
+     * @param goodsStokeVO
+     * @return
+     */
+    public GoodsStokeRE selectGoodsStatus(GoodsStokeVO goodsStokeVO);
 
     /**
      * 后台获取所有商品
