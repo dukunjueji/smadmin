@@ -48,9 +48,5 @@ public class TelCodeUtil {
         Matcher m = p.matcher(cellphone);
         return m.matches();
     }
-    public static void main(String[] args) {
-        for (int i = 0; i < 100; i++){
-            System.out.println("6位数字手机验证第" + (i+1) +"个是："+ createCode());
-        }
-    }
+
 }

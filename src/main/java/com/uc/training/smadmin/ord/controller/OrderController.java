@@ -8,7 +8,13 @@ import com.uc.training.smadmin.gds.re.GoodsDetailRE;
 import com.uc.training.smadmin.gds.service.GoodsService;
 import com.uc.training.smadmin.ord.model.CartGoods;
 import com.uc.training.smadmin.ord.re.OrderConfirmRE;
+import com.uc.training.smadmin.ord.model.Order;
+import com.uc.training.smadmin.ord.re.*;
 import com.uc.training.smadmin.ord.re.OrderGoodsDetailRe;
+import com.uc.training.smadmin.ord.re.OrderRe;
+import com.ycc.base.common.Result;
+import com.uc.training.common.base.controller.BaseController;
+import com.uc.training.smadmin.gds.service.GoodsService;
 import com.uc.training.smadmin.ord.re.OrderRe;
 import com.uc.training.smadmin.ord.re.OrderStatusRe;
 import com.uc.training.smadmin.ord.service.OrderService;
@@ -131,7 +137,6 @@ public class OrderController extends BaseController {
   /**
    * hhj
    * 加入购物车
-   *
    * @param request
    * @param ordCartGoodsVo
    * @return
@@ -193,32 +198,12 @@ public class OrderController extends BaseController {
       return Result.getBusinessException("提交订单失败", null);
     }
     orderInfoListNow.get(orderInfoListNow.size() - 2).setMemberId(getUid());
-    List<OrderConfirmRE> OrderConfirmInfo = orderService.confirmOrderInfo(orderInfoListNow);
-    if (CollectionUtils.isEmpty(OrderConfirmInfo)) {
+    List<OrderConfirmRE> orderConfirmInfo = orderService.confirmOrderInfo(orderInfoListNow);
+    if (CollectionUtils.isEmpty(orderConfirmInfo)) {
       return Result.getBusinessException("提交订单失败", null);
     }
-    return Result.getSuccessResult(OrderConfirmInfo);
+    return Result.getSuccessResult(orderConfirmInfo);
   }
-
-  /**
-   * 批量删除订单（更改删除/进度状态）
-   *
-   * @param orderVo（orderVo.getOrderListStr()）
-   * @return
-   */
-  @ResponseBody
-  @AccessLogin
-  @RequestMapping(value = "admDelOrder.do_", method = RequestMethod.POST)
-  public Result delOrderPage(OrdOrderVo orderVo) {
-    Result result = new Result();
-    List<OrderRe> delList = (List<OrderRe>) JSONArray.toList(JSONArray.fromObject(orderVo.getOrderListStr()), new OrderRe(), new JsonConfig());
-    int num = orderService.logicDelOrder(delList);
-    if (num > 0) {
-      result.setMsg("删除： " + num + "条信息");
-    }
-    return result;
-  }
-
   /**
    * 获取订单商品详情
    *
@@ -258,7 +243,6 @@ public class OrderController extends BaseController {
 
   /**
    * 根据订单号更新状态
-   *
    * @param ordOrderVo
    * @return
    */
@@ -272,4 +256,15 @@ public class OrderController extends BaseController {
     }
     return result;
   }
+    /**
+     * 获取用户订单信息列表
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "getOrderInfoList.do_",method = RequestMethod.POST)
+    public Result getOrderInfoList(){
+        List<OrderInfoRE> orderInfoREList  = orderService.getOrderInfoListByMemberId(getUid());
+        return Result.getSuccessResult(orderInfoREList);
+    }
+
 }

@@ -45,27 +45,6 @@ public class AdminOrderController extends BaseController {
 
   @Autowired
   MemberService memberService;
-
-  /**
-   * 获取订单列表
-   *
-   * @param goodsList
-   * @return
-   */
-  @ResponseBody
-  @RequestMapping(value = "getOrderList.do_", method = RequestMethod.GET)
-  public Result<List<OrdOrderGoodsVo>> getOrderGds(String goodsList) {
-    List<OrdOrderGoodsVo> orderGodsList = (List<OrdOrderGoodsVo>) JSONArray.toList(JSONArray.fromObject(goodsList), new OrdOrderGoodsVo(), new JsonConfig());
-    if (CollectionUtils.isEmpty(orderGodsList)) {
-      return Result.getBusinessException("获取订单列表失败", "");
-    }
-    List<OrdOrderGoodsVo> orderList = orderService.getOrderGoodsById(orderGodsList);
-    if (CollectionUtils.isEmpty(orderList)) {
-      return Result.getBusinessException("获取订单列表失败", "");
-    }
-    return Result.getSuccessResult(orderList);
-  }
-
   /**
    * 获取订单分页
    *

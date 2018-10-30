@@ -18,8 +18,8 @@ public class OrderDaoImpl extends CarIsIbatisDaoImpl implements OrderDao {
 	 * 通过主键来查找查找
 	 */
 	 @Override
-	 public List<Order> getOrderById(Long id){
-		  return (List<Order>) this.queryForObject("com.uc.training.smadmin.ord.dao.OrderDao.getOrderById", id);
+	 public List<Order> getOrderById(Long memberId){
+		  return this.queryForList("com.uc.training.smadmin.ord.dao.OrderDao.getOrderById", memberId);
 	 }
 
 	/**

@@ -14,12 +14,8 @@
 		 s.status AS status,
 		 s.receipt_name AS receiptName,
 		 s.receipt_tel AS receiptTel,
-		 s.receipt_address AS receiptAddress,
-		 s.create_emp AS createEmp,
-		 s.create_time AS createTime,
-		 s.modify_emp AS modifyEmp,
-		 s.modify_time AS modifyTime
-		 FROM t_ord_order s		 WHERE s.id=#id#
+		 s.receipt_address AS receiptAddress
+		 FROM t_ord_order s		 WHERE s.member_id=#memberId#
 	</select>
 
 
