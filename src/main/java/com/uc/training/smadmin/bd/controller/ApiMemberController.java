@@ -1,15 +1,14 @@
 package com.uc.training.smadmin.bd.controller;
 
-import com.uc.training.common.constant.Constant;
-import com.uc.training.smadmin.bd.model.Message;
-import com.uc.training.smadmin.bd.re.MessageRE;
-import com.ycc.base.common.Result;
 import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
+import com.uc.training.common.constant.Constant;
 import com.uc.training.smadmin.bd.model.Member;
+import com.uc.training.smadmin.bd.model.Message;
 import com.uc.training.smadmin.bd.re.MemberDetailRE;
 import com.uc.training.smadmin.bd.re.MemberInfoRE;
 import com.uc.training.smadmin.bd.re.MemberLoginRE;
+import com.uc.training.smadmin.bd.re.MessageRE;
 import com.uc.training.smadmin.bd.service.MemberService;
 import com.uc.training.smadmin.bd.service.MessageService;
 import com.uc.training.smadmin.bd.vo.*;
@@ -17,7 +16,8 @@ import com.uc.training.smadmin.ord.service.OrderService;
 import com.uc.training.smadmin.utils.EncryptUtil;
 import com.uc.training.smadmin.utils.TelCodeUtil;
 import com.uc.training.smadmin.utils.TokenUtil;
-import com.uc.training.smadmin.utils.ValidatorUtil;
+import com.uc.training.smadmin.utils.ValidateUtil;
+import com.ycc.base.common.Result;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -139,7 +139,7 @@ public class ApiMemberController extends BaseController {
                 result = Result.getBusinessException("手机号码或密码为空", null);
                 return result;
             }
-            if (!ValidatorUtil.isCellphone(memberLoginVO.getTelephone())){
+            if (!ValidateUtil.isCellphone(memberLoginVO.getTelephone())){
                 result = Result.getBusinessException("手机号码格式不正确", null);
                 return result;
             }
