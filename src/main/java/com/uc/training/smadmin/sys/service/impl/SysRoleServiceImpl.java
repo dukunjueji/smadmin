@@ -1,7 +1,9 @@
 package com.uc.training.smadmin.sys.service.impl;
 
 import com.uc.training.smadmin.sys.dao.SysRoleDao;
+import com.uc.training.smadmin.sys.model.SysRole;
 import com.uc.training.smadmin.sys.service.SysRoleService;
+import com.uc.training.smadmin.sys.vo.RoleListVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,5 +25,30 @@ public class SysRoleServiceImpl implements SysRoleService {
     @Override
     public List<String> getUserRoles(Long userId) {
         return roleDao.getUserRoles(userId);
+    }
+
+    @Override
+    public List<SysRole> getRolePage(RoleListVO roleListVO) {
+        return roleDao.getRolePage(roleListVO);
+    }
+
+    @Override
+    public Long getCount(RoleListVO roleListVO) {
+        return roleDao.getCount(roleListVO);
+    }
+
+    @Override
+    public Integer updateRole(SysRole sysRole) {
+        return roleDao.updateRole(sysRole);
+    }
+
+    @Override
+    public Integer deleteById(Long id) {
+        return roleDao.deleteById(id);
+    }
+
+    @Override
+    public Long addRole(SysRole sysRole) {
+        return roleDao.addRole(sysRole);
     }
 }

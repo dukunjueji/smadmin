@@ -1,5 +1,8 @@
 package com.uc.training.smadmin.sys.service;
 
+import com.uc.training.smadmin.sys.model.SysRole;
+import com.uc.training.smadmin.sys.vo.RoleListVO;
+
 import java.util.List;
 
 /**
@@ -19,4 +22,39 @@ public interface SysRoleService {
      * @return java.lang.String[]
      */
     List<String> getUserRoles(Long userId);
+
+    /**
+     * 获取角色列表页面
+     * @param roleListVO
+     * @return
+     */
+    List<SysRole> getRolePage(RoleListVO roleListVO);
+
+    /**
+     * 获取角色总数
+     * @param roleListVO
+     * @return
+     */
+    Long getCount(RoleListVO roleListVO);
+
+    /**
+     * 更新角色信息
+     * @param sysRole
+     * @return
+     */
+    Integer updateRole(SysRole sysRole);
+
+    /**
+     * 根据ID删除角色
+     * @param id
+     * @return
+     */
+    Integer deleteById(Long id);
+
+    /**
+     * 新增角色
+     * @param sysRole
+     * @return
+     */
+    Long addRole(SysRole sysRole);
 }
