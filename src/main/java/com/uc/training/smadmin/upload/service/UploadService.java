@@ -51,16 +51,20 @@ public class UploadService {
             //如果客户端没有传名字，则自动设置文件名
             String md5 = DigestUtils.md5Hex(bytes);
             String fileType = FileTypeUtil.getFileTypeByStream(bytes);
-            vo.setName(md5 + "." + fileType); //此处必须传文件的格式作为后缀, 否则RPC调用失败
+            //此处必须传文件的格式作为后缀, 否则RPC调用失败
+            vo.setName(md5 + "." + fileType);
             vo.setData(bytes);
             vo.setBusinessLine(BusinessLineEnum.UC);
             vo.setPermission(UDFSPermissionEnum.GLOBAL);
             resultVO =  UDFSClient.upload(vo);
 
             if(resultVO != null){
-                String testUdfs = FileTransferUtils.getUrlPrefix(); //需要灵活配置，写在配置文件
-                uploadRE.setName(testUdfs + resultVO.getOriginalName());//提供完整路径给前端
-                uploadRE.setOriginalName(resultVO.getOriginalName()); //提供完整路径给前端
+                //需要灵活配置，写在配置文件
+                String testUdfs = FileTransferUtils.getUrlPrefix();
+                //提供完整路径给前端
+                uploadRE.setName(testUdfs + resultVO.getOriginalName());
+                //提供完整路径给前端
+                uploadRE.setOriginalName(resultVO.getOriginalName());
             }
 
         } catch (IOException e) {
@@ -98,16 +102,20 @@ public class UploadService {
             //如果客户端没有传名字，则自动设置文件名
             String md5 = DigestUtils.md5Hex(bytes);
             String fileType = FileTypeUtil.getFileTypeByStream(bytes);
-            vo.setName(md5 + "." + fileType); //此处必须传文件的格式作为后缀, 否则RPC调用失败
+            //此处必须传文件的格式作为后缀, 否则RPC调用失败
+            vo.setName(md5 + "." + fileType);
             vo.setData(bytes);
             vo.setBusinessLine(BusinessLineEnum.FCAR);
             vo.setPermission(UDFSPermissionEnum.GLOBAL);
             resultVO = UDFSClient.upload(vo);
 
             if(resultVO != null){
-                String testUdfs = FileTransferUtils.getUrlPrefix(); //需要灵活配置，写在配置文件
-                uploadRE.setName(testUdfs + resultVO.getOriginalName()); //提供完整路径给前端
-                uploadRE.setOriginalName(resultVO.getOriginalName()); //提供完整路径给前端
+                //需要灵活配置，写在配置文件
+                String testUdfs = FileTransferUtils.getUrlPrefix();
+                //提供完整路径给前端
+                uploadRE.setName(testUdfs + resultVO.getOriginalName());
+                //提供完整路径给前端
+                uploadRE.setOriginalName(resultVO.getOriginalName());
             }
 
         } catch (IOException e) {

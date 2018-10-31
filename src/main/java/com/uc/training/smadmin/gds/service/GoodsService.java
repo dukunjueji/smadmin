@@ -1,9 +1,14 @@
 package com.uc.training.smadmin.gds.service;
 
+import com.uc.training.smadmin.gds.model.Goods;
+import com.uc.training.smadmin.gds.model.GoodsPic;
+import com.uc.training.smadmin.gds.model.Property;
+import com.uc.training.smadmin.gds.re.AdminGoodsRE;
 import com.uc.training.smadmin.gds.re.GoodsRE;
 import com.uc.training.smadmin.gds.re.GoodsDetailRE;
 import com.uc.training.smadmin.gds.model.HotTag;
 import com.uc.training.smadmin.gds.re.GoodsStokeRE;
+import com.uc.training.smadmin.gds.vo.AdminGoodsVO;
 import com.uc.training.smadmin.gds.vo.GoodsListVO;
 import com.uc.training.smadmin.gds.vo.GoodsStokeVO;
 
@@ -84,4 +89,41 @@ public interface GoodsService {
      * @return
      */
     public GoodsStokeRE selectGoodsStatus(GoodsStokeVO goodsStokeVO);
+
+    /**
+     * 后台获取所有商品
+     * @param goodsListVO
+     * @return
+     */
+    List<AdminGoodsRE> getAdminGoodsList(GoodsListVO goodsListVO);
+
+    /**
+     * 后台更新商品
+     * @param adminGoodsVO
+     * @return
+     */
+    Integer adminUpdateGoods(AdminGoodsVO adminGoodsVO);
+
+    /**
+     * 后台新增商品
+     * @param goods
+     * @param property
+     * @param goodsPic
+     * @return
+     */
+    Long adminInsertGoods(Goods goods, Property property, GoodsPic goodsPic);
+
+    /**
+     * 逻辑删除商品
+     * @param id
+     * @return
+     */
+    Integer logicDeleteGoods(Long id);
+
+    /**
+     * 更新销量
+     * @param goodsStokeVO
+     * @return
+     */
+    public int updateSales(GoodsStokeVO goodsStokeVO);
 }

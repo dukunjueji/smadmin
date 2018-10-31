@@ -1,17 +1,14 @@
 package com.uc.training.smadmin.gds.dao.impl;
 
 import com.uc.training.smadmin.gds.dao.GoodsDao;
-import com.uc.training.smadmin.gds.re.GoodsRE;
-import com.uc.training.smadmin.gds.re.GoodsDetailRE;
-import com.uc.training.smadmin.gds.re.GoodsStokeRE;
+import com.uc.training.smadmin.gds.model.Goods;
+import com.uc.training.smadmin.gds.re.*;
 import com.uc.training.smadmin.gds.model.HotTag;
-import com.uc.training.smadmin.gds.re.PropertyUrlRE;
 import com.uc.training.smadmin.gds.vo.GoodsListVO;
 import com.uc.training.smadmin.gds.vo.GoodsStokeVO;
 import com.zuche.framework.dao.CarIsIbatisDaoImpl;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -80,6 +77,50 @@ public class GoodsDaoImpl  extends CarIsIbatisDaoImpl implements GoodsDao {
     @Override
     public List<PropertyUrlRE> getPicUrlByPropertyId(Long propertyId) {
         return this.queryForList("com.uc.training.smadmin.gds.dao.GoodsDao.getPicUrlByPropertyId",propertyId);
+    }
+
+    /**
+     * 后台获取商品列表
+     *
+     * @param goodsListVO
+     * @return
+     */
+    @Override
+    public List<AdminGoodsRE> getAdminGoodsList(GoodsListVO goodsListVO) {
+        return this.queryForList("com.uc.training.smadmin.gds.dao.GoodsDao.getAdminGoodsList", goodsListVO);
+    }
+
+    /**
+     * 新增商品
+     *
+     * @param goods
+     * @return
+     */
+    @Override
+    public Long insertGoods(Goods goods) {
+        return (Long) this.insert("com.uc.training.smadmin.gds.dao.GoodsDao.insertGoods", goods);
+    }
+
+    /**
+     * 更新商品
+     *
+     * @param goods
+     * @return
+     */
+    @Override
+    public Integer updateGoods(Goods goods) {
+        return this.update("com.uc.training.smadmin.gds.dao.GoodsDao.updateGoods", goods);
+    }
+
+    /**
+     * 逻辑删除商品
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public Integer logicDeleteGoods(Long id) {
+        return this.update("com.uc.training.smadmin.gds.dao.GoodsDao.logicDeleteGoods", id);
     }
 
 

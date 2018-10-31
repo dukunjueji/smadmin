@@ -25,7 +25,6 @@ public class HotTagDaoImpl extends CarIsIbatisDaoImpl implements HotTagDao{
      */
     @Override
     public List<HotTagRE> selectHotTag() {
-        List<HotTagRE> list = this.queryForList("com.uc.training.smadmin.gds.dao.HotTagDao.selectHotTag");
-        return list;
+        return this.queryForList("com.uc.training.smadmin.gds.dao.HotTagDao.selectHotTag");
     }
 }

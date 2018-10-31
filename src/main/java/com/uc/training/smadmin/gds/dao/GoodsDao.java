@@ -1,14 +1,11 @@
 package com.uc.training.smadmin.gds.dao;
 
-import com.uc.training.smadmin.gds.re.GoodsRE;
-import com.uc.training.smadmin.gds.re.GoodsDetailRE;
-import com.uc.training.smadmin.gds.re.GoodsStokeRE;
+import com.uc.training.smadmin.gds.model.Goods;
+import com.uc.training.smadmin.gds.re.*;
 import com.uc.training.smadmin.gds.model.HotTag;
-import com.uc.training.smadmin.gds.re.PropertyUrlRE;
 import com.uc.training.smadmin.gds.vo.GoodsListVO;
 import com.uc.training.smadmin.gds.vo.GoodsStokeVO;
 
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -100,4 +97,32 @@ public interface GoodsDao {
      * @return
      */
     public List<PropertyUrlRE> getPicUrlByPropertyId(Long propertyId);
+
+    /**
+     * 后台获取商品列表
+     * @param goodsListVO
+     * @return
+     */
+    List<AdminGoodsRE> getAdminGoodsList(GoodsListVO goodsListVO);
+
+    /**
+     * 新增商品
+     * @param goods
+     * @return
+     */
+    Long insertGoods(Goods goods);
+
+    /**
+     * 更新商品
+     * @param goods
+     * @return
+     */
+    Integer updateGoods(Goods goods);
+
+    /**
+     * 逻辑删除商品
+     * @param id
+     * @return
+     */
+    Integer logicDeleteGoods(Long id);
 }

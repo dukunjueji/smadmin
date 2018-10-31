@@ -7,4 +7,8 @@ package com.uc.training.smadmin.ord.dto;
  */
 
 public class OrderDTO {
+  @Override
+  public String toString() {
+    return "OrderDTO{}";
+  }
 }

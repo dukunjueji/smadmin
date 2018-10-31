@@ -3,7 +3,7 @@ package com.uc.training.smadmin.sys.model;
 import com.uc.training.common.base.model.BaseModel;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.List;
 
 /**
  * 版权说明：Copyright (c) 2018 ucarinc. All Rights Reserved.
@@ -49,6 +49,16 @@ public class SysMenu extends BaseModel implements Serializable {
      * 父级
      */
     private Long parentId;
+
+    private List<SysMenu> children;
+
+    public List<SysMenu> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<SysMenu> children) {
+        this.children = children;
+    }
 
     public Long getId() {
         return id;
@@ -105,4 +115,5 @@ public class SysMenu extends BaseModel implements Serializable {
     public void setParentId(Long parentId) {
         this.parentId = parentId;
     }
+
 }

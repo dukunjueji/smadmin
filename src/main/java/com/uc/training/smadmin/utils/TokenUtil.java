@@ -28,9 +28,9 @@ public class TokenUtil {
      */
     private static final String SECRET = "432d2eb39bc04f6e7142f3620dba3633";
     /**
-     * 默认过期时间30分钟
+     * 默认过期2小时
      */
-    private static final long EXPIRE_TIME = 60 * 60 * 1000;
+    private static final long EXPIRE_TIME = 2 * 60 * 60 * 1000;
     private static final String JWT_ISSUER = "JWT";
     private static final String ID_CLAIM = "id";
 

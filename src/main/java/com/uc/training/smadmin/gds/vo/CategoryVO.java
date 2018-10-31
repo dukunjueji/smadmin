@@ -31,7 +31,7 @@ public class CategoryVO implements Serializable{
     /**
      * 图片地址
      */
-    private String ImageUrl;
+    private String imageUrl;
 
     /**
      * 父级id
@@ -63,11 +63,11 @@ public class CategoryVO implements Serializable{
     }
 
     public String getImageUrl() {
-        return ImageUrl;
+        return imageUrl;
     }
 
     public void setImageUrl(String imageUrl) {
-        ImageUrl = imageUrl;
+        this.imageUrl = imageUrl;
     }
 
     public Long getParentId() {
@@ -76,5 +76,16 @@ public class CategoryVO implements Serializable{
 
     public void setParentId(Long parentId) {
         this.parentId = parentId;
+    }
+
+    @Override
+    public String toString() {
+        return "CategoryVO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", sortNum=" + sortNum +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", parentId=" + parentId +
+                '}';
     }
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="com.uc.training.smadmin.gds.dao.GoodsPicDao">
+    <!--新增商品属性-->
+    <insert id="insertGoodsPic" parameterClass="com.uc.training.smadmin.gds.model.GoodsPic">
+        INSERT INTO t_gds_goods_pic
+        (property_id, pic_name, pic_url, create_emp, modify_emp)
+        VALUES (#propertyId#,#picName#,#picUrl#,#createEmp#,#modifyEmp#)
+        <selectKey resultClass="long" keyProperty="id">
+            SELECT LAST_INSERT_ID() as id;
+        </selectKey>
+    </insert>
+
+    <!--更新商品属性-->
+    <update id="updateGoodsPic" parameterClass="com.uc.training.smadmin.gds.model.GoodsPic">
+        UPDATE t_gds_goods_pic
+        SET   property_id=#propertyId#,
+              pic_name=#picName#,
+              pic_url=#picUrl#,
+              modify_emp=#modifyEmp#
+        WHERE property_id = #propertyId#
+    </update>
+</sqlMap>

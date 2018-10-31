@@ -28,6 +28,7 @@ public interface SmsTemplateDao {
 
     /**
      * 通过ID删除短信模板
+     * @param id
      * @return
      */
     public Integer deleteTemplate(Long id);
@@ -41,6 +42,7 @@ public interface SmsTemplateDao {
 
     /**
      * 获取短信模板列表
+     * @param smsTemplateListVO
      * @return
      */
     public List<SmsTemplate> getList(SmsTemplateListVO smsTemplateListVO);

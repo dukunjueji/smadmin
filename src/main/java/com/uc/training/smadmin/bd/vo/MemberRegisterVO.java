@@ -53,4 +53,13 @@ public class MemberRegisterVO implements Serializable {
     public void setTelCode(String telCode) {
         this.telCode = telCode;
     }
+
+    @Override
+    public String toString() {
+        return "MemberRegisterVO{" +
+                "telephone='" + telephone + '\'' +
+                ", password='" + password + '\'' +
+                ", telCode='" + telCode + '\'' +
+                '}';
+    }
 }

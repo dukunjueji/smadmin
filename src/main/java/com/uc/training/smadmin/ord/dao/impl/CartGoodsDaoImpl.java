@@ -13,41 +13,26 @@ import java.util.List;
 @Repository
 public class CartGoodsDaoImpl extends CarIsIbatisDaoImpl implements CartGoodsDao {
 
-	/**
-	 * 通过主键来查找查找
-	 */
 	 @Override
 	 public List<CartGoods> getCartGoodsById(Long id){
 		  return (List<CartGoods>) this.queryForList("com.uc.training.smadmin.ord.dao.CartGoodsDao.getCartGoodsById", id);
 	 }
 
-	/**
-	 * 查询列表
-	 */
 	 @Override
 	 public List<CartGoods>  queryCartGoodsList(){
 		  return this.queryForList("com.uc.training.smadmin.ord.dao.CartGoodsDao.queryCartGoodsList");
 	 }
 
-	/**
-	 * 查找数据总记录数
-	 */
 	 @Override
 	public Integer queryCartGoodsCount(){
 		  return (Integer) this.queryForObject("com.uc.training.smadmin.ord.dao.CartGoodsDao.queryCartGoodsCount");
 	 }
 
-	/**
-	 * 保存
-	 */
 	 @Override
-	public Long insertCartGoods( OrdCartGoodsVo ordCartGoodsVo ){
-		  return (Long) this.insert("com.uc.training.smadmin.ord.dao.CartGoodsDao.insertCartGoods", ordCartGoodsVo);
+	public int insertCartGoods( OrdCartGoodsVo ordCartGoodsVo ){
+		  return  (int)this.insert("com.uc.training.smadmin.ord.dao.CartGoodsDao.insertCartGoods", ordCartGoodsVo);
 	 }
 
-	/**
-	 * 更新
-	 */
 	 @Override
 	public int updateCartGoodsById( CartGoods record ){
 		  return this.update("com.uc.training.smadmin.ord.dao.CartGoodsDao.updateCartGoodsById", record);

@@ -45,6 +45,7 @@ public interface BannerDao{
 
 	/**
 	 * 增加点击量
-	 */
+	 * @param id
+     */
 	void insertClick(Long id);
 }

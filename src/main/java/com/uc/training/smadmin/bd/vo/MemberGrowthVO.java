@@ -38,4 +38,12 @@ public class MemberGrowthVO implements Serializable {
     public void setGrowth(Long growth) {
         this.growth = growth;
     }
+
+    @Override
+    public String toString() {
+        return "MemberGrowthVO{" +
+                "memberId=" + memberId +
+                ", growth=" + growth +
+                '}';
+    }
 }

@@ -196,7 +196,7 @@ public class ValidateUtil {
      * @param value 要验证的字符串
      * @return 如果是符合格式的字符串,返回 <b>true </b>,否则为 <b>false </b>
      */
-    public static boolean Is31Days(String value){
+    public static boolean isThirtyOneDays(String value){
         return match(V_31DAYS,value);
     }
 
@@ -307,7 +307,7 @@ public class ValidateUtil {
      * @param value 要验证的字符串
      * @return 如果是符合格式的字符串,返回 <b>true </b>,否则为 <b>false </b>
      */
-    public static boolean isLetter_i(String value){
+    public static boolean isLowerCaseLetter(String value){
         return match(V_LETTER_I,value);
     }
 
@@ -316,7 +316,7 @@ public class ValidateUtil {
      * @param value 要验证的字符串
      * @return 如果是符合格式的字符串,返回 <b>true </b>,否则为 <b>false </b>
      */
-    public static boolean isLetter_u(String value){
+    public static boolean isUpperCaseLetter(String value){
         return match(V_LETTER_U,value);
     }
 

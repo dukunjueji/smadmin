@@ -1,0 +1,26 @@
+package com.uc.training.smadmin.gds.service;
+
+import com.uc.training.smadmin.gds.model.Property;
+
+/**
+ * 版权声明： Copyright (c) 2008 ucarinc. All Rights Reserved.
+ *
+ * @author 何麒（qi.he@ucarinc.com）
+ * @Version 1.0
+ * @date 2018/10/30
+ */
+public interface PropertyService {
+    /**
+     * 新增商品属性
+     * @param property
+     * @return
+     */
+    Long insertProperty(Property property);
+
+    /**
+     * 更新商品
+     * @param property
+     * @return
+     */
+    Integer updateProperty(Property property);
+}

@@ -12,41 +12,49 @@ public interface CartGoodsDao{
 
 	/**
 	 * 通过主键来查找
+	 * @param id （商品列表id）
+	 * @return 购物车商品列表
 	 */
-	 public List<CartGoods>  getCartGoodsById(Long id);
+	  List<CartGoods>  getCartGoodsById(Long id);
 
 	/**
 	 * 查询列表
+	 * @return List<CartGoods>(购物车商品列表)
 	 */
-	 public List<CartGoods>  queryCartGoodsList();
+	  List<CartGoods>  queryCartGoodsList();
 
 	/**
 	 * 查找数据总记录数
+	 * @return 总记录数
 	 */
-	public Integer queryCartGoodsCount();
+	 Integer queryCartGoodsCount();
 
 	/**
 	 * 保存
+	 * @param ordCartGoodsVo (参数对象)
+	 * @return 更改条数
 	 */
-	public Long insertCartGoods(OrdCartGoodsVo ordCartGoodsVo);
+	 int insertCartGoods(OrdCartGoodsVo ordCartGoodsVo);
 
 	/**
 	 * 更新
+	 * @param record
+	 * @return 更改条数
 	 */
-	public int updateCartGoodsById(CartGoods record);
+	 int updateCartGoodsById(CartGoods record);
 
 	/**
 	 * 删除
 	 * @param ordCartGoodsVo
-	 * @return
+	 * @return 更改条数
 	 */
-  public int deleteCartGoods(OrdCartGoodsVo ordCartGoodsVo);
+   int deleteCartGoods(OrdCartGoodsVo ordCartGoodsVo);
 
 	/**
 	 * 更新商品数量
 	 * @param ordCartGoodsVo
-	 * @return
+	 * @return 更改条数
 	 */
-	public int updataCartGoodsNum(OrdCartGoodsVo ordCartGoodsVo);
+	 int updataCartGoodsNum(OrdCartGoodsVo ordCartGoodsVo);
 
 }

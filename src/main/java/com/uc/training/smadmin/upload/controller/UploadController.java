@@ -2,6 +2,7 @@ package com.uc.training.smadmin.upload.controller;
 
 import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
+import com.uc.training.common.enums.UploadEnum;
 import com.uc.training.smadmin.upload.service.UploadService;
 import com.uc.training.smadmin.upload.re.UploadRE;
 import com.uc.training.smadmin.upload.vo.UploadVO;
@@ -43,7 +44,7 @@ public class UploadController extends BaseController{
         if (uploadVO.getFile().isEmpty()) {
             Result.getBusinessException("上传文件不能为空" , null);
         }
-        if (uploadVO.getFile().getSize() >= 4194304) {
+        if (uploadVO.getFile().getSize() >= UploadEnum.MAX_IMAGE_SIZE.getSize()) {
             Result.getBusinessException("上传文件不能超过4M", null);
         }
 
