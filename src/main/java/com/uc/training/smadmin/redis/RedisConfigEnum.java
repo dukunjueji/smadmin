@@ -45,7 +45,7 @@ public enum RedisConfigEnum implements IRedisConfig {
 
     @Override
     public String getGroupName() {
-        return null;
+        return groupName;
     }
 
     @Override
