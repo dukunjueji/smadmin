@@ -125,6 +125,12 @@ public class AddressController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/deleteAddress.do_", method = RequestMethod.POST)
     public Result deleteAddress(Long id) {
+
+        // 判断是否为默认地址
+        if (addressService.getAddressById(id).getIsDefault() == 1) {
+            return Result.getBusinessException("默认地址不能删除！",null);
+        }
+
         return Result.getSuccessResult(addressService.deleteAddressById(id));
     }
 }
