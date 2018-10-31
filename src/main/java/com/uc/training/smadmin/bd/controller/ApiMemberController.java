@@ -18,6 +18,9 @@ import com.uc.training.smadmin.utils.TelCodeUtil;
 import com.uc.training.smadmin.utils.TokenUtil;
 import com.uc.training.smadmin.utils.ValidateUtil;
 import com.ycc.base.common.Result;
+import com.ycc.tools.middleware.metaq.MQHelperAdapter;
+import com.ycc.tools.middleware.metaq.MetaQUtils;
+import com.zuche.framework.metaq.handler.DefaultExecutorMessageListener;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,13 +68,8 @@ public class ApiMemberController extends BaseController {
     @RequestMapping(value = "/createCode.do_", method = RequestMethod.POST)
     @ResponseBody
     @AccessLogin(required = false)
-    public Result createCode(CreateCodeVO createCodeVO) {
+    public Result createCode(@Validated CreateCodeVO createCodeVO) {
         Result re;
-        //校验手机号格式
-        if (!TelCodeUtil.validateTel(createCodeVO.getTelephone())) {
-            re = Result.getBusinessException("手机号码不正确", null);
-            return re;
-        }
         //根据手机号查询会员信息
         Member mem = new Member();
         mem.setTelephone(createCodeVO.getTelephone());
@@ -103,12 +101,8 @@ public class ApiMemberController extends BaseController {
     @RequestMapping(value = "/memberRegister.do_", method = RequestMethod.POST)
     @ResponseBody
     @AccessLogin(required = false)
-    public Result memberRegister(MemberRegisterVO memberRegisterVO){
+    public Result memberRegister(@Validated MemberRegisterVO memberRegisterVO){
         Result re;
-        if (!TelCodeUtil.validateTel(memberRegisterVO.getTelephone()) || StringUtils.isEmpty(memberRegisterVO.getPassword()) || StringUtils.isEmpty(memberRegisterVO.getTelCode())){
-            re = Result.getBusinessException("手机号码格式不正确或者密码不能为空或验证码不能为空", null);
-            return re;
-        }
         Member member = new Member();
         member.setTelephone(memberRegisterVO.getTelephone());
         member.setPassword(memberRegisterVO.getPassword());
@@ -161,12 +155,8 @@ public class ApiMemberController extends BaseController {
     @RequestMapping(value = "/passwordCode.do_", method = RequestMethod.POST)
     @ResponseBody
     @AccessLogin(required = false)
-    public Result passwordCode(CreateCodeVO createCodeVO) {
+    public Result passwordCode(@Validated CreateCodeVO createCodeVO) {
         Result re;
-        if (!TelCodeUtil.validateTel(createCodeVO.getTelephone())) {
-            re = Result.getBusinessException("手机号码不正确", null);
-            return re;
-        }
         Member member = new Member();
         member.setTelephone(createCodeVO.getTelephone());
         member = memberService.queryOneMember(member);
@@ -195,12 +185,8 @@ public class ApiMemberController extends BaseController {
     @RequestMapping(value = "/memberPassword.do_", method = RequestMethod.POST)
     @ResponseBody
     @AccessLogin(required = false)
-    public Result memberPassword(MemberRegisterVO memberRegisterVO){
+    public Result memberPassword(@Validated MemberRegisterVO memberRegisterVO){
         Result re;
-        if (!TelCodeUtil.validateTel(memberRegisterVO.getTelephone()) || StringUtils.isEmpty(memberRegisterVO.getPassword()) || StringUtils.isEmpty(memberRegisterVO.getTelCode())){
-            re = Result.getBusinessException("手机号码格式不正确或者密码不能为空或验证码不能为空", null);
-            return re;
-        }
         Member mem = new Member();
         mem.setTelephone(memberRegisterVO.getTelephone());
         Member member = memberService.queryOneMember(mem);
@@ -224,7 +210,7 @@ public class ApiMemberController extends BaseController {
     @AccessLogin
     @RequestMapping(value = "/chargeBalance.do_", method = RequestMethod.POST)
     @ResponseBody
-    public Result chargeBalance(ChargeBalanceVO chargeBalanceVO){
+    public Result chargeBalance(@Validated ChargeBalanceVO chargeBalanceVO){
         Result re;
         Member member = new Member();
         member.setId(getUid());
@@ -276,10 +262,8 @@ public class ApiMemberController extends BaseController {
         member.setEmail(memberInfoVO.getEmail());
         member.setSex(memberInfoVO.getSex());
         member.setId(getUid());
-        boolean flag = "../../../static/images/user/header.png".equals(memberInfoVO.getImageUrl());
-        if (!flag) {
-            member.setImageUrl(memberInfoVO.getImageUrl());
-        }
+        member.setImageUrl(memberInfoVO.getImageUrl());
+
         //更新会员信息
         memberService.updateMemberInfo(member);
         //查询指定会员信息

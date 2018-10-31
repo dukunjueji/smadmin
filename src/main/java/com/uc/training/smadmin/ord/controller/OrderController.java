@@ -107,7 +107,7 @@ public class OrderController extends BaseController {
     if(gdDTO.getStock() <= ordCartGoodsVo.getNum()){
       ordCartGoodsVo.setNum(gdDTO.getStock());
       orderService.updataCarGoodsNum(ordCartGoodsVo);
-      return Result.getBusinessException("+++++++",null);
+      return Result.getBusinessException("库存不足",null);
     }
     orderService.updataCarGoodsNum(ordCartGoodsVo);
     return Result.getSuccessResult(null);
@@ -221,25 +221,6 @@ public class OrderController extends BaseController {
             return Result.getBusinessException("提交订单失败", null);
         }
         return Result.getSuccessResult(orderConfirmInfo);
-    }
-
-    /**
-     * 批量删除订单（更改删除/进度状态）
-     *
-     * @param orderVo（orderVo.getOrderListStr()）
-     * @return
-     */
-    @ResponseBody
-    @AccessLogin
-    @RequestMapping(value = "admDelOrder.do_", method = RequestMethod.POST)
-    public Result delOrderPage(OrdOrderVo orderVo) {
-        Result result = new Result();
-        List<OrderRe> delList = (List<OrderRe>) JSONArray.toList(JSONArray.fromObject(orderVo.getOrderListStr()), new OrderRe(), new JsonConfig());
-        int num = orderService.logicDelOrder(delList);
-        if (num > 0) {
-            result.setMsg("删除： " + num + "条信息");
-        }
-        return result;
     }
 
     /**

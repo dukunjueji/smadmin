@@ -50,7 +50,7 @@ public class OrderDaoImpl extends CarIsIbatisDaoImpl implements OrderDao {
   }
 
   @Override
-  public int logicDelOrder(List<OrderRe> list) {
+  public int logicDelOrder(List<Long> list) {
 
     return this.update("com.uc.training.smadmin.ord.dao.OrderDao.logicDelOrder",list);
   }
