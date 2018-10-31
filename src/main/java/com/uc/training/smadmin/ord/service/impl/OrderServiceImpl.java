@@ -197,59 +197,58 @@ public class OrderServiceImpl implements OrderService {
         return list;
     }
 
-    @Override
-    public List<OrderRe> getOrderPage(OrdOrderVo orderVo) {
-        List<OrderRe> list;
-        list = orderDao.getOrderPage(orderVo);
-        if (list.size() <= 0) {
-            return null;
-        }
-        for (OrderRe orderRe : list) {
-            OrderEnum orderEnum;
-            orderEnum = OrderEnum.getEnumByKey(orderRe.getStatus());
-            if (orderEnum != null) {
-                orderRe.setShowStatus(orderEnum.getValue());
-            }
-        }
-        return list;
+  @Override
+  public List<OrderRe> getOrderPage(OrdOrderVo orderVo) {
+    List<OrderRe> list = orderDao.getOrderPage(orderVo);
+    if (list.size() <= 0) {
+      return null;
     }
+/*    for (OrderRe orderRe : list) {
+      OrderEnum orderEnum;
+      orderEnum = OrderEnum.getEnumByKey(orderRe.getStatus());
+      if (orderEnum != null) {
+        orderRe.setShowStatus(orderEnum.getValue());
+      }
+    }*/
+    return list;
+  }
 
     @Override
     public Integer getOrderTotal(OrdOrderVo orderVo) {
         return orderDao.getOrderTotal(orderVo);
     }
 
-    @Override
-    public List<OrderStatusRe> getOrderEnum() {
-        List<OrderStatusRe> list = new ArrayList<OrderStatusRe>();
-        OrderEnum orderEnum;
-        int max = OrderEnum.getMaxKey();
-        int i = 0;
-        do {
-            OrderStatusRe orderStatusRe = new OrderStatusRe();
-            orderEnum = OrderEnum.getEnumByKey(i);
-            if (orderEnum != null) {
-                orderStatusRe.setValue(i);
-                orderStatusRe.setLabel(orderEnum.getValue());
-                list.add(orderStatusRe);
-            }
-            i++;
-        } while (max >= i);
-        OrderStatusRe orderStatusRe = new OrderStatusRe();
-        orderStatusRe.setLabel("全部");
+  @Override
+  public List<OrderStatusRe> getOrderEnum() {
+    List<OrderStatusRe> list = new ArrayList<OrderStatusRe>();
+    OrderEnum orderEnum;
+    int max = OrderEnum.getMaxKey();
+    int i = 0;
+    do {
+      OrderStatusRe orderStatusRe = new OrderStatusRe();
+      orderEnum = OrderEnum.getEnumByKey(i);
+      if (orderEnum != null) {
+        orderStatusRe.setValue(i);
+        orderStatusRe.setLabel(orderEnum.getValue());
         list.add(orderStatusRe);
-        return list;
-    }
+      }
+      i++;
+    } while (max >= i);
+    OrderStatusRe orderStatusRe = new OrderStatusRe();
+    orderStatusRe.setLabel("全部");
+    list.add(orderStatusRe);
+    return list;
+  }
 
-    @Override
-    public int logicDelOrder(List<OrderRe> list) {
-        return orderDao.logicDelOrder(list);
-    }
+  @Override
+  public int logicDelOrder(List<OrderRe> list) {
+    return orderDao.logicDelOrder(list);
+  }
 
-    @Override
-    public int updateOrder(OrdOrderVo ordOrderVo) {
-        return orderDao.updateOrder(ordOrderVo);
-    }
+  @Override
+  public int updateOrder(OrdOrderVo ordOrderVo) {
+    return orderDao.updateOrder(ordOrderVo);
+  }
 
 
     @Override

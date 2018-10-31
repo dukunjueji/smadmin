@@ -44,8 +44,8 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "/api/order/")
 public class OrderController extends BaseController {
-    @Autowired
-    OrderService orderService;
+  @Autowired
+  OrderService orderService;
 
     @Autowired
     GoodsService goodsService;
@@ -54,67 +54,68 @@ public class OrderController extends BaseController {
     MemberService memberService;
 
 
-    /**
-     * 获取购物车用户商品列表
-     * hhj
-     *
-     * @return
-     */
-    @ResponseBody
-    @AccessLogin
-    @RequestMapping(value = "getCartList.do_", method = RequestMethod.GET)
-    public Result getCartgds() {
-        Result result = new Result();
-        List<OrdCartGoodsVo> list = new ArrayList<>();
-        List<CartGoods> cartList = orderService.getCarGoodsById(getUid());
-        //判空
-        if (CollectionUtils.isEmpty(cartList)) {
-            return result;
-        }
-        OrdCartGoodsVo ordCartgoodsVo;
-        GoodsDetailRE gdDTO;
-        for (CartGoods cartGoods : cartList) {
-            ordCartgoodsVo = new OrdCartGoodsVo();
-            gdDTO = goodsService.getGoodsDetailByPropertyId(cartGoods.getGoodsPropertyId());
-            ordCartgoodsVo.setCartId(cartGoods.getId());
-            ordCartgoodsVo.setGoodsId(cartGoods.getGoodsId());
-            ordCartgoodsVo.setGdsName(gdDTO.getName());
-            ordCartgoodsVo.setGdsUrl(gdDTO.getPicUrl().get(0).getPicUrl());
-            ordCartgoodsVo.setPropertyId(cartGoods.getGoodsPropertyId());
-            ordCartgoodsVo.setProperty(gdDTO.getProperty());
-            ordCartgoodsVo.setSalePrice(gdDTO.getSalePrice());
-            ordCartgoodsVo.setDiscountPrice(gdDTO.getDiscountPrice());
-            ordCartgoodsVo.setStatus(gdDTO.getStatus());
-            ordCartgoodsVo.setIsDiscount(gdDTO.getIsDiscount());
-            ordCartgoodsVo.setNum(cartGoods.getGoodsNum());
-            ordCartgoodsVo.setStock(gdDTO.getStock());
-            list.add(ordCartgoodsVo);
-        }
-        result.setRe(list);
-        return result;
+  /**
+   * 获取购物车用户商品列表
+   *@author hhj
+   * @return
+   */
+  @ResponseBody
+  @AccessLogin
+  @RequestMapping(value = "getCartList.do_", method = RequestMethod.GET)
+  public Result getCartgds() {
+    List<OrdCartGoodsVo> list = new ArrayList<>();
+    List<CartGoods> cartList = orderService.getCarGoodsById(getUid());
+    //判空
+    if (CollectionUtils.isEmpty(cartList)) {
+      return Result.getSuccessResult(null);
     }
+    OrdCartGoodsVo ordCartgoodsVo;
+    GoodsDetailRE gdDTO;
+    for (CartGoods cartGoods : cartList) {
+      ordCartgoodsVo = new OrdCartGoodsVo();
+      gdDTO = goodsService.getGoodsDetailByPropertyId(cartGoods.getGoodsPropertyId());
+      ordCartgoodsVo.setCartId(cartGoods.getId());
+      ordCartgoodsVo.setGoodsId(cartGoods.getGoodsId());
+      ordCartgoodsVo.setGdsName(gdDTO.getName());
+      ordCartgoodsVo.setGdsUrl(gdDTO.getPicUrl().get(0).getPicUrl());
+      ordCartgoodsVo.setPropertyId(cartGoods.getGoodsPropertyId());
+      ordCartgoodsVo.setProperty(gdDTO.getProperty());
+      ordCartgoodsVo.setSalePrice(gdDTO.getSalePrice());
+      ordCartgoodsVo.setDiscountPrice(gdDTO.getDiscountPrice());
+      ordCartgoodsVo.setStatus(gdDTO.getStatus());
+      ordCartgoodsVo.setIsDiscount(gdDTO.getIsDiscount());
+      ordCartgoodsVo.setNum(cartGoods.getGoodsNum());
+      ordCartgoodsVo.setStock(gdDTO.getStock());
+      list.add(ordCartgoodsVo);
+    }
+    return Result.getSuccessResult(list);
+  }
 
-    /**
-     * 更改购物车信息（更改商品数量）
-     * hhj
-     *
-     * @param request
-     * @param ordCartGoodsVo
-     * @return
-     */
-    @ResponseBody
-    @AccessLogin
-    @RequestMapping(value = "updataCartgoods.do_", method = RequestMethod.POST)
-    public Result updataCartgds(HttpServletRequest request, OrdCartGoodsVo ordCartGoodsVo) {
-        Result result = new Result();
-        ordCartGoodsVo.setMemberId(getUid());
-        orderService.updataCarGoodsNum(ordCartGoodsVo);
-        return result;
+  /**
+   * 更改购物车信息（更改商品数量）
+   * @author hhj
+   * @param request
+   * @param ordCartGoodsVo
+   * @return
+   */
+  @ResponseBody
+  @AccessLogin
+  @RequestMapping(value = "updataCartgoods.do_", method = RequestMethod.POST)
+  public Result updataCartgds(HttpServletRequest request, OrdCartGoodsVo ordCartGoodsVo) {
+    ordCartGoodsVo.setMemberId(getUid());
+    GoodsDetailRE gdDTO = goodsService.getGoodsDetailByPropertyId(ordCartGoodsVo.getPropertyId());
+    if(gdDTO.getStock() <= ordCartGoodsVo.getNum()){
+      ordCartGoodsVo.setNum(gdDTO.getStock());
+      orderService.updataCarGoodsNum(ordCartGoodsVo);
+      return Result.getBusinessException("+++++++",null);
     }
+    orderService.updataCarGoodsNum(ordCartGoodsVo);
+    return Result.getSuccessResult(null);
+  }
 
     /**
      * 获取订单列表
-     *
+     *@author DK
      * @param goodsList
      * @return
      */
@@ -132,55 +133,71 @@ public class OrderController extends BaseController {
         return Result.getSuccessResult(orderList);
     }
 
-    /**
-     * hhj
-     * 加入购物车
-     *
-     * @param request
-     * @param ordCartGoodsVo
-     * @return
-     */
-    @ResponseBody
-    @AccessLogin
-    @RequestMapping("addCartgoods.do_")
-    public Result addCartgds(HttpServletRequest request, OrdCartGoodsVo ordCartGoodsVo) {
-        Result result = new Result();
-        List<CartGoods> list;
-        list = orderService.getCarGoodsById(getUid());
-        if (!CollectionUtils.isEmpty(list)) {
-            for (CartGoods cartGds : list) {
-                //判断该商品是否存在
-                if (cartGds.getGoodsPropertyId().equals(ordCartGoodsVo.getPropertyId())) {
-                    //如果存在增加数量
-                    ordCartGoodsVo.setNum(ordCartGoodsVo.getNum() + cartGds.getGoodsNum());
-                    ordCartGoodsVo.setMemberId(getUid());
-                    orderService.updataCarGoodsNum(ordCartGoodsVo);
-                    return result;
-                }
-            }
+  /**
+   *
+   * 加入购物车
+   * @author hhj
+   * @param request
+   * @param ordCartGoodsVo
+   * @return
+   */
+  @ResponseBody
+  @AccessLogin
+  @RequestMapping("addCartgoods.do_")
+  public Result addCartgds(HttpServletRequest request, OrdCartGoodsVo ordCartGoodsVo) {
+    List<CartGoods> list;
+    list = orderService.getCarGoodsById(getUid());
+    GoodsDetailRE gdDTO = goodsService.getGoodsDetailByPropertyId(ordCartGoodsVo.getPropertyId());
+    if(gdDTO.getStock() < ordCartGoodsVo.getNum()){
+      return Result.getBusinessException("添加数量超过库存量",null);
+    }
+    if (!CollectionUtils.isEmpty(list)) {
+      for (CartGoods cartGds : list) {
+        //判断该商品是否存在
+        if (cartGds.getGoodsPropertyId().equals(ordCartGoodsVo.getPropertyId())) {
+          //如果存在增加数量
+          ordCartGoodsVo.setNum(ordCartGoodsVo.getNum() + cartGds.getGoodsNum());
+          ordCartGoodsVo.setMemberId(getUid());
+          try {
+            orderService.updataCarGoodsNum(ordCartGoodsVo);
+            return Result.getSuccessResult(null);
+          } catch (Exception e) {
+            logger.error("添加异常", e);
+            return Result.getBusinessException("修改异常",null);
+          }
         }
-        ordCartGoodsVo.setMemberId(getUid());
-        orderService.addCarGoods(ordCartGoodsVo);
-        return result;
+      }
     }
+    ordCartGoodsVo.setMemberId(getUid());
+    try {
+      ordCartGoodsVo.setMemberId(getUid());
+      orderService.addCarGoods(ordCartGoodsVo);
+    } catch (Exception e) {
+      logger.error("添加异常", e);
+      return Result.getBusinessException("添加异常",null);
+    }
+    return Result.getSuccessResult(null);
+  }
 
-    /**
-     * 删除购物车
-     * hhj
-     *
-     * @param request
-     * @param ordCartGoodsVo
-     * @return
-     */
-    @ResponseBody
-    @AccessLogin
-    @RequestMapping(value = "deleteCartgoods.do_", method = RequestMethod.POST)
-    public Result deleteCartgds(HttpServletRequest request, OrdCartGoodsVo ordCartGoodsVo) {
-        Result result = new Result();
-        ordCartGoodsVo.setMemberId(getUid());
-        orderService.deleteCarGoods(ordCartGoodsVo);
-        return result;
+  /**
+   * 删除购物车
+   * @author hhj
+   * @param request
+   * @param ordCartGoodsVo
+   * @return
+   */
+  @ResponseBody
+  @AccessLogin
+  @RequestMapping(value = "deleteCartgoods.do_", method = RequestMethod.POST)
+  public Result deleteCartgds(HttpServletRequest request, OrdCartGoodsVo ordCartGoodsVo) {
+    try {
+      orderService.deleteCarGoods(ordCartGoodsVo);
+    } catch (Exception e) {
+      logger.error("删除异常", e);
+      return Result.getBusinessException("删除异常",null);
     }
+    return Result.getSuccessResult(null);
+  }
 
 
     /**
