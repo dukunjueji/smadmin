@@ -97,7 +97,7 @@
 			member_id = #memberId#
 		</isNotEmpty>
 		<isNotEmpty property="cartId" prepend="or">
-			s.id = #cartId#
+			id = #cartId#
 		</isNotEmpty>
 	</delete>
 
