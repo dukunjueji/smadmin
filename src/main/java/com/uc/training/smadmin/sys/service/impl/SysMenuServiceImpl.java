@@ -29,4 +29,31 @@ public class SysMenuServiceImpl implements SysMenuService {
     public List<SysMenu> getMenuList() {
         return menuDao.getMenuList();
     }
+
+    @Override
+    public SysMenu getById(Long id) {
+        return menuDao.getMenuById(id);
+    }
+
+    @Override
+    public Long addMenu(SysMenu menu) {
+        return menuDao.addMenu(menu);
+    }
+
+    @Override
+    public Integer deleteById(Long id) {
+        return menuDao.deleteMenuById(id);
+    }
+
+    @Override
+    public Integer updateMenu(SysMenu menu) {
+        return menuDao.updateMenu(menu);
+    }
+
+    @Override
+    public Integer batchDelete(List<Long> ids) {
+        return menuDao.batchDelete(ids);
+    }
+
+
 }

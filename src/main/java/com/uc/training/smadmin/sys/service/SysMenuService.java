@@ -27,4 +27,39 @@ public interface SysMenuService {
      * @return
      */
     List<SysMenu> getMenuList();
+
+    /**
+     * 通过ID获取菜单
+     * @param id
+     * @return
+     */
+    SysMenu getById(Long id);
+
+    /**
+     * 新增菜单
+     * @param menu
+     * @return
+     */
+    Long addMenu(SysMenu menu);
+
+    /**
+     * 通过ID删除菜单
+     * @param id
+     * @return
+     */
+    Integer deleteById(Long id);
+
+    /**
+     * 更新菜单
+     * @param menu
+     * @return
+     */
+    Integer updateMenu(SysMenu menu);
+
+    /**
+     * 批量删除
+     * @param ids
+     * @return
+     */
+    Integer batchDelete(List<Long> ids);
 }

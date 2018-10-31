@@ -1,8 +1,6 @@
 package com.uc.training.smadmin.sys.pojo;
 
 import com.uc.training.smadmin.sys.model.SysMenu;
-import com.uc.training.smadmin.sys.service.SysMenuService;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.*;
 
@@ -13,24 +11,6 @@ import java.util.*;
  */
 public class MenuTree {
 
-
-    /**
-     * 根据sorNum进行排序
-     * @return
-     */
-    public static Comparator<SysMenu> order() {
-        Comparator<SysMenu> comparator = new Comparator<SysMenu>() {
-            @Override
-            public int compare(SysMenu o1, SysMenu o2) {
-                if (!o1.getSortNum().equals(o2.getSortNum())){
-                    return (int) (o1.getSortNum() - o2.getSortNum());
-                }
-                return 0;
-            }
-        };
-        return comparator;
-    }
-
     /**
      * 生成树
      * @param allMenu 所有菜单列表
@@ -39,14 +19,13 @@ public class MenuTree {
     public static List<SysMenu> findTree(List<SysMenu> allMenu){
         // 根节点
         List<SysMenu> rootMenu = new ArrayList<>();
-        for (SysMenu menu : allMenu) {
-            if (menu.getParentId() == 0) {
+        for (int i=0;i<allMenu.size();i++) {
+            if (allMenu.get(i).getParentId() == 0) {
                 // 父节点为0的节点为根节点
-                rootMenu.add(menu);
+                rootMenu.add(allMenu.get(i));
             }
         }
-        // 根据菜单的 orderNum 进行排序
-        Collections.sort(rootMenu, order());
+        allMenu.removeAll(rootMenu);
         // 为跟节点设置子节点，递归调用getChild方法
         for (SysMenu menu : rootMenu) {
             List<SysMenu> childList = getChild(menu.getId(), allMenu);
@@ -64,22 +43,51 @@ public class MenuTree {
     public static List<SysMenu> getChild(Long id, List<SysMenu> allMenu) {
         // 子菜单
         List<SysMenu> childList = new ArrayList<>();
-        for (SysMenu menu : allMenu) {
-            if (menu.getParentId().equals(id)) {
-                childList.add(menu);
+        for (int i=0;i<allMenu.size();i++) {
+            if (allMenu.get(i).getParentId().equals(id)) {
+                childList.add(allMenu.get(i));
             }
         }
+        allMenu.removeAll(childList);
         // 递归
         for (SysMenu menu : childList) {
             menu.setChildren(getChild(menu.getId(), allMenu));
         }
-        // 排序
-        Collections.sort(childList, order());
         // 如果子节点为空，退出递归
         if (childList.size() == 0) {
             return new ArrayList<SysMenu>();
         }
         return childList;
+    }
+
+    /**
+     * 通过要删除的节点的ID获取所有子孙节点的ID
+     * @param id
+     * @return
+     */
+    public static List<Long> getDeleteList(Long id, List<SysMenu> allMenu) {
+        List<Long> deleteList = new ArrayList<>();
+        deleteList.add(id);
+        deleteChildren(id, deleteList, allMenu);
+        return deleteList;
+    }
+
+    private static void deleteChildren(Long pid, List<Long> deleteList, List<SysMenu> allMenu){
+        List<Long> childList = new ArrayList<>();
+        for (int i=0;i<allMenu.size();i++) {
+            // 父节点ID匹配
+            if (allMenu.get(i).getParentId().equals(pid)) {
+                childList.add(allMenu.get(i).getId());
+            }
+        }
+        if (childList.size() == 0) {
+            return;
+        }
+        allMenu.removeAll(childList);
+        deleteList.addAll(childList);
+        for (int i=0;i<childList.size();i++) {
+            deleteChildren(childList.get(i), deleteList, allMenu);
+        }
     }
 
     private MenuTree(){}

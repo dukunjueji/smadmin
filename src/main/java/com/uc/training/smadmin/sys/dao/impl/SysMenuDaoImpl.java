@@ -29,4 +29,31 @@ public class SysMenuDaoImpl extends CarIsIbatisDaoImpl implements SysMenuDao {
     public List<SysMenu> getMenuList() {
         return this.queryForList(NAMESPACE + "getMenuList");
     }
+
+    @Override
+    public Long addMenu(SysMenu menu) {
+        return (Long) this.insert(NAMESPACE + "addMenu", menu);
+    }
+
+    @Override
+    public Integer updateMenu(SysMenu menu) {
+        return this.update(NAMESPACE + "updateById", menu);
+    }
+
+    @Override
+    public Integer deleteMenuById(Long id) {
+        return this.deleteObject(NAMESPACE + "deleteById", id);
+    }
+
+    @Override
+    public SysMenu getMenuById(Long id) {
+        return (SysMenu) this.queryForObject(NAMESPACE + "getById", id);
+    }
+
+    @Override
+    public Integer batchDelete(List<Long> ids) {
+        return this.deleteObject(NAMESPACE + "batchDelete", ids);
+    }
+
+
 }

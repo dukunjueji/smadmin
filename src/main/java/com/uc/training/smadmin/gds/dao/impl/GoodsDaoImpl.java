@@ -39,6 +39,17 @@ public class GoodsDaoImpl  extends CarIsIbatisDaoImpl implements GoodsDao {
         return (GoodsDetailRE)this.queryForObject("com.uc.training.smadmin.gds.dao.GoodsDao.getGoodsDetailByPropertyId",propertyId);
     }
 
+    /**
+     * 通过属性id商品详情
+     *
+     * @param propertyIds
+     * @return
+     */
+    @Override
+    public List<GoodsDetailRE> getGoodsDetailByPropertyIds(List<Long> propertyIds) {
+        return this.queryForList("com.uc.training.smadmin.gds.dao.GoodsDao.getGoodsDetailByPropertyIds",propertyIds);
+    }
+
     @Override
     public int updateSales(GoodsStokeVO goodsStokeVO) {
         return this.update("com.uc.training.smadmin.gds.dao.GoodsDao.updateSales",goodsStokeVO);
@@ -77,6 +88,17 @@ public class GoodsDaoImpl  extends CarIsIbatisDaoImpl implements GoodsDao {
     @Override
     public List<PropertyUrlRE> getPicUrlByPropertyId(Long propertyId) {
         return this.queryForList("com.uc.training.smadmin.gds.dao.GoodsDao.getPicUrlByPropertyId",propertyId);
+    }
+
+    /**
+     * 通过属性list列表id获取相应的图片
+     *
+     * @param propertyId
+     * @return
+     */
+    @Override
+    public List<List<PropertyUrlRE>> getPicUrlByPropertyIds(List<Long> propertyId) {
+        return this.queryForList("com.uc.training.smadmin.gds.dao.GoodsDao.getPicUrlByPropertyIds",propertyId);
     }
 
     /**

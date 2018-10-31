@@ -7,6 +7,7 @@ import com.uc.training.smadmin.ord.re.OrderRe;
 import com.uc.training.smadmin.ord.re.OrderStatusRe;
 import com.uc.training.smadmin.ord.re.*;
 import com.uc.training.smadmin.ord.vo.OrdCartGoodsVo;
+import com.uc.training.smadmin.ord.vo.OrdMemberVO;
 import com.uc.training.smadmin.ord.vo.OrdOrderGoodsVo;
 import com.ycc.base.common.Result;
 import com.uc.training.smadmin.ord.vo.OrdOrderVo;
@@ -96,7 +97,7 @@ public interface OrderService {
    * @param list
    * @return
    */
-  int logicDelOrder (List<OrderRe> list);
+  int logicDelOrder (List<Long> list);
 
   /**
    * 更新订单状态
@@ -114,9 +115,9 @@ public interface OrderService {
 
   /**
    *  获取订单信息列表
-   * @param memberId
+   * @param ordMemberVO
    * @return List<OrderInfoRE>(订单信息列表)
    */
 
-  List<OrderInfoRE> getOrderInfoListByMemberId(Long memberId);
+  List<OrderInfoRE> getOrderInfoListByMemberId(OrdMemberVO ordMemberVO);
 }

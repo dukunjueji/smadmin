@@ -2,6 +2,7 @@ package com.uc.training.smadmin.ord.dao.impl;
 import com.uc.training.smadmin.ord.model.Order;
 import com.uc.training.smadmin.ord.dao.OrderDao;
 import com.uc.training.smadmin.ord.re.OrderRe;
+import com.uc.training.smadmin.ord.vo.OrdMemberVO;
 import com.uc.training.smadmin.ord.vo.OrdOrderVo;
 import com.zuche.framework.dao.CarIsIbatisDaoImpl;
 import org.springframework.stereotype.Repository;
@@ -15,8 +16,8 @@ import java.util.List;
 public class OrderDaoImpl extends CarIsIbatisDaoImpl implements OrderDao {
 
 	 @Override
-	 public List<Order> getOrderById(Long memberId){
-		  return this.queryForList("com.uc.training.smadmin.ord.dao.OrderDao.getOrderById", memberId);
+	 public List<Order> getOrderById(OrdMemberVO ordMemberVO){
+		  return this.queryForList("com.uc.training.smadmin.ord.dao.OrderDao.getOrderById", ordMemberVO,ordMemberVO.getStartIndex(),ordMemberVO.getEndIndex());
 	 }
 
 	 @Override
@@ -50,7 +51,7 @@ public class OrderDaoImpl extends CarIsIbatisDaoImpl implements OrderDao {
   }
 
   @Override
-  public int logicDelOrder(List<OrderRe> list) {
+  public int logicDelOrder(List<Long> list) {
 
     return this.update("com.uc.training.smadmin.ord.dao.OrderDao.logicDelOrder",list);
   }

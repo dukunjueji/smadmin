@@ -1,5 +1,8 @@
 package com.uc.training.smadmin.bd.vo;
 
+import org.hibernate.validator.constraints.NotBlank;
+
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
 /**
@@ -25,6 +28,8 @@ public class MemberInfoVO implements Serializable {
     /**
      * 邮箱
      */
+    @NotBlank(message = "邮箱不能为空")
+    @Pattern(regexp = "^[a-z0-9A-Z]+[- | a-z0-9A-Z . _]+@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\\\.)+[a-z]{2,}$", message = "邮箱格式不正确")
     private String email;
 
     /**

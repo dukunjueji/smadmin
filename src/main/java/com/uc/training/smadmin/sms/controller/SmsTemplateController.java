@@ -56,7 +56,6 @@ public class SmsTemplateController extends BaseController {
         }
         template.setCreateEmp(getUid());
         Long id = smsTemplateService.addTemplate(template);
-        System.out.println(id);
         return Result.getSuccessResult(id);
     }
 

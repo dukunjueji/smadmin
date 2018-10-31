@@ -3,15 +3,13 @@ package com.uc.training.smadmin.ord.controller;
 import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.smadmin.bd.service.MemberService;
-import com.uc.training.smadmin.bd.vo.MemberInfoVO;
 import com.uc.training.smadmin.gds.service.GoodsService;
-import com.uc.training.smadmin.ord.re.OrderConfirmRE;
 import com.uc.training.smadmin.ord.re.OrderGoodsDetailRe;
 import com.uc.training.smadmin.ord.re.OrderRe;
 import com.uc.training.smadmin.ord.re.OrderStatusRe;
 import com.uc.training.smadmin.ord.service.OrderService;
-import com.uc.training.smadmin.ord.vo.OrdCartGoodsVo;
 import com.uc.training.smadmin.ord.vo.OrdOrderGoodsVo;
+import org.apache.commons.lang.StringUtils;
 import com.uc.training.smadmin.ord.vo.OrdOrderVo;
 import com.ycc.base.common.Result;
 import net.sf.json.JSONArray;
@@ -23,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +29,7 @@ import java.util.Map;
 /**
  * 订单控制类
  *
- * @author DK
+ * @author hhj
  * @date 20181021
  */
 @Controller
@@ -47,7 +45,7 @@ public class AdminOrderController extends BaseController {
   MemberService memberService;
   /**
    * 获取订单分页
-   *
+   *@author hhj
    * @param orderVo
    * @return
    */
@@ -56,59 +54,65 @@ public class AdminOrderController extends BaseController {
   @RequestMapping(value = "getOrderPage.do_", method = RequestMethod.POST)
   public Result getOrderPage(OrdOrderVo orderVo) {
     List<OrderStatusRe> statuaList;
-    Result result = new Result();
     List<OrderRe> list;
-    Map map = new HashMap();
+    Map map = new HashMap(10);
     list = orderService.getOrderPage(orderVo);
-    statuaList = orderService.getOrderEnum();
+    if(CollectionUtils.isEmpty(list)){
+      return Result.getBusinessException("获取订单列表失败",null);
+    }
     map.put("orderList", list);
     Integer totalSize = orderService.getOrderTotal(orderVo);
     map.put("totalSize", totalSize);
-    map.put("statuaList", statuaList);
-    result.setRe(map);
-    return result;
+    return Result.getSuccessResult(map);
   }
 
   /**
    * 批量删除订单（更改删除/进度状态）
-   *
-   * @param orderVo（orderVo.getOrderListStr()）
+   *@author hhj
+   * @param delId（orderVo.getOrderListStr()）
    * @return
    */
   @ResponseBody
   @AccessLogin
   @RequestMapping(value = "admDelOrder.do_", method = RequestMethod.POST)
-  public Result delOrderPage(OrdOrderVo orderVo) {
+  public Result delOrderPage(String delId) {
     Result result = new Result();
-    List<OrderRe> delList = (List<OrderRe>) JSONArray.toList(JSONArray.fromObject(orderVo.getOrderListStr()), new OrderRe(), new JsonConfig());
-    int num = orderService.logicDelOrder(delList);
-    if (num > 0) {
-      result.setMsg("删除： " + num + "条信息");
+    System.out.println(delId);
+    String[] deleteId = StringUtils.split(delId.substring(1, delId.length()-1), ',');
+    List<Long> list = new ArrayList<>();
+    for (String s : deleteId) {
+      list.add(Long.parseLong(s));
     }
-    return result;
+    int num = orderService.logicDelOrder(list);
+    if (num > 0) {
+      return Result.getSuccessResult(null);
+    }
+    return Result.getBusinessException("删除失败",null);
   }
 
   /**
    * 获取订单商品详情
-   *
-   * @param id
+   *@author hhj
+   * @param id(订单id)
    * @return
    */
   @ResponseBody
   @AccessLogin
   @RequestMapping(value = "getOrderGoods.do_", method = RequestMethod.POST)
   public Result getOrderGoods(Integer id) {
-    Result result = new Result();
     List<OrderGoodsDetailRe> list;
-    list = orderService.getOrderGdsById(id);
-    result.setRe(list);
-    return result;
+    try {
+      list = orderService.getOrderGdsById(id);
+    } catch (Exception e) {
+      return Result.getBusinessException("获取异常",null);
+    }
+    return Result.getSuccessResult(list);
   }
 
 
   /**
    * 根据订单号更新状态
-   *
+   *@author hhj
    * @param ordOrderVo
    * @return
    */
@@ -118,8 +122,8 @@ public class AdminOrderController extends BaseController {
   public Result upOrderStatus(OrdOrderVo ordOrderVo) {
     Result result = new Result();
     if (orderService.updateOrder(ordOrderVo) > 0) {
-      result.setMsg("已更新状态");
+      return Result.getSuccessResult(null);
     }
-    return result;
+    return Result.getBusinessException("更新失败",null);
   }
 }

@@ -43,7 +43,7 @@ public class TelCodeUtil {
         if (cellphone == null){
             return false;
         }
-        String regExp = "^(13[0-9]|15[0-9]|17[0-9]|18[0-9]|14[0-9])[0-9]{8}$";
+        String regExp = "^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])[0-9]{8}$";
         Pattern p = Pattern.compile(regExp);
         Matcher m = p.matcher(cellphone);
         return m.matches();

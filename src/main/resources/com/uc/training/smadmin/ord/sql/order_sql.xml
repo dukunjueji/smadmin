@@ -3,7 +3,7 @@
 <sqlMap namespace="com.uc.training.smadmin.ord.dao.OrderDao">
 
 	<!-- 根据对象的不为null的值作为条件进行查找 -->
-	<select id="getOrderById" resultClass="com.uc.training.smadmin.ord.model.Order" parameterClass="long">
+	<select id="getOrderById" resultClass="com.uc.training.smadmin.ord.model.Order" parameterClass="com.uc.training.smadmin.ord.vo.OrdMemberVO">
 		 SELECT
 		 s.id AS id,
 		 s.member_id AS memberId,
@@ -16,6 +16,7 @@
 		 s.receipt_tel AS receiptTel,
 		 s.receipt_address AS receiptAddress
 		 FROM t_ord_order s		 WHERE s.member_id=#memberId#
+		 Order By modify_time Desc
 	</select>
 
 
@@ -145,7 +146,7 @@
 			s.receipt_name as receiptName,
 			s.receipt_tel as receiptTel,
 			s.receipt_address as receiptAddress,
-			date_format(s.create_time,'%Y-%m-%d') AS createTime
+			s.create_time AS createTime
 		FROM  t_ord_order s
 		WHERE
 		1 = 1
@@ -168,7 +169,7 @@
 			WHERE
 			s.id IN
 		   <iterate open="(" close=")" conjunction=",">
-			   #[].id#
+			   #list[]#
 		   </iterate>
 
 		<!--</iterate>-->

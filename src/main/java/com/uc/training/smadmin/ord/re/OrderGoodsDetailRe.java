@@ -11,6 +11,10 @@ import java.io.Serializable;
  */
 public class OrderGoodsDetailRe implements Serializable {
     private static final long serialVersionUID = -6912839796213052826L;
+  /**
+   * 图片
+   */
+  private String goodsUrl;
     /**
      * 商品名
      */
@@ -28,62 +32,43 @@ public class OrderGoodsDetailRe implements Serializable {
      */
     private String goodsProperty;
 
-    /**
-     * 改商品总计价格
-     */
-    private Double totalPrice;
+  public String getGoodsUrl() {
+    return goodsUrl;
+  }
 
-    /**
-     * 商品URL
-     */
+  public void setGoodsUrl(String goodsUrl) {
+    this.goodsUrl = goodsUrl;
+  }
 
-    private String goodsUrl;
+  public String getGoodsName() {
+    return goodsName;
+  }
 
-    public String getGoodsUrl() {
-        return goodsUrl;
-    }
+  public void setGoodsName(String goodsName) {
+    this.goodsName = goodsName;
+  }
 
-    public void setGoodsUrl(String goodsUrl) {
-        this.goodsUrl = goodsUrl;
-    }
+  public Integer getGoodsNum() {
+    return goodsNum;
+  }
 
-    public Double getTotalPrice() {
-        return this.goodsPrice * this.goodsNum;
-    }
+  public void setGoodsNum(Integer goodsNum) {
+    this.goodsNum = goodsNum;
+  }
 
-    public void setTotalPrice(Double totalPrice) {
-        this.totalPrice = totalPrice;
-    }
+  public Double getGoodsPrice() {
+    return goodsPrice;
+  }
 
-    public String getGoodsName() {
-        return goodsName;
-    }
+  public void setGoodsPrice(Double goodsPrice) {
+    this.goodsPrice = goodsPrice;
+  }
 
-    public void setGoodsName(String goodsName) {
-        this.goodsName = goodsName;
-    }
+  public String getGoodsProperty() {
+    return goodsProperty;
+  }
 
-    public Integer getGoodsNum() {
-        return goodsNum;
-    }
-
-    public void setGoodsNum(Integer goodsNum) {
-        this.goodsNum = goodsNum;
-    }
-
-    public Double getGoodsPrice() {
-        return goodsPrice;
-    }
-
-    public void setGoodsPrice(Double goodsPrice) {
-        this.goodsPrice = goodsPrice;
-    }
-
-    public String getGoodsProperty() {
-        return goodsProperty;
-    }
-
-    public void setGoodsProperty(String goodsProperty) {
-        this.goodsProperty = goodsProperty;
-    }
+  public void setGoodsProperty(String goodsProperty) {
+    this.goodsProperty = goodsProperty;
+  }
 }

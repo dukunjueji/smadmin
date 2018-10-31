@@ -1,5 +1,6 @@
 package com.uc.training.smadmin.bd.vo;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -18,6 +19,7 @@ public class ChargeBalanceVO implements Serializable {
     /**
      * 充值余额
      */
+    @NotNull(message = "充值金额不能为空")
     private BigDecimal balance;
 
     public BigDecimal getBalance() {
