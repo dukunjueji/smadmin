@@ -97,7 +97,7 @@ public class UserController extends BaseController {
 
                 UserInfoRE userLoginRE = new UserInfoRE();
                 userLoginRE.setUsername(user.getUserName());
-                userLoginRE.setAvatar("https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80");
+                userLoginRE.setAdmin(user.getIsAdmin() == 1 ? true : false);
                 userLoginRE.setRoles(roles);
                 userLoginRE.setPerms(perms);
                 res = Result.getSuccessResult(userLoginRE);

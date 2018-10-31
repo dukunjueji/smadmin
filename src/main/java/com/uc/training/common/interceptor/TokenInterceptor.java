@@ -2,12 +2,11 @@ package com.uc.training.common.interceptor;
 
 import com.alibaba.fastjson.JSONObject;
 import com.uc.training.common.annotation.AccessLogin;
-import com.uc.training.smadmin.utils.TokenUtil;
-import com.ycc.base.common.Result;
 import com.uc.training.common.bean.AccessToken;
 import com.uc.training.common.constant.Constant;
+import com.uc.training.smadmin.utils.TokenUtil;
+import com.ycc.base.common.Result;
 import org.apache.commons.lang.StringUtils;
-import org.apache.poi.ss.formula.functions.T;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.method.HandlerMethod;
@@ -44,17 +43,17 @@ public class TokenInterceptor implements HandlerInterceptor {
                     if (accessToken.isVerify()) {
                         boolean isExpire = accessToken.isExpire();
                         if (isExpire) {
-                            responseMsg(response, Result.getServiceError("token invalid", null));
+                            responseMsg(response, "token invalid");
                             return false;
                         }
                         request.setAttribute(Constant.REQUEST_HEADER_UID, accessToken.getId());
                         return true;
                     } else {
-                        responseMsg(response, Result.getServiceError("token wrong", null));
+                        responseMsg(response, "token wrong");
                         return false;
                     }
                 } else {
-                    responseMsg(response, Result.getServiceError("token does not exist", null));
+                    responseMsg(response, "token does not exist");
                     return false;
                 }
             }
@@ -77,10 +76,13 @@ public class TokenInterceptor implements HandlerInterceptor {
      * 请求不通过，返回错误信息给客户端
      *
      * @param response 返回response
-     * @param result   返回信息
+     * @param msg   返回信息
      * @return void
      */
-    private void responseMsg(HttpServletResponse response, Result result) throws IOException {
+    private void responseMsg(HttpServletResponse response, String msg) throws IOException {
+        Result result = new Result();
+        result.setStatus(-3);
+        result.setMsg(msg);
         response.setCharacterEncoding("utf-8");
         response.setContentType("application/json; charset=utf-8");
         String json = JSONObject.toJSONString(result);
@@ -89,6 +91,4 @@ public class TokenInterceptor implements HandlerInterceptor {
         out.flush();
         out.close();
     }
-
-
 }

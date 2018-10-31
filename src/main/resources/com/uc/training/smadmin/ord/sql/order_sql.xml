@@ -168,7 +168,7 @@
 			WHERE
 			s.id IN
 		   <iterate open="(" close=")" conjunction=",">
-			   #[].id#
+			   #list[]#
 		   </iterate>
 
 		<!--</iterate>-->

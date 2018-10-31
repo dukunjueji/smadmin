@@ -9,6 +9,7 @@ import com.uc.training.smadmin.ord.re.OrderRe;
 import com.uc.training.smadmin.ord.re.OrderStatusRe;
 import com.uc.training.smadmin.ord.service.OrderService;
 import com.uc.training.smadmin.ord.vo.OrdOrderGoodsVo;
+import org.apache.commons.lang.StringUtils;
 import com.uc.training.smadmin.ord.vo.OrdOrderVo;
 import com.ycc.base.common.Result;
 import net.sf.json.JSONArray;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,16 +69,21 @@ public class AdminOrderController extends BaseController {
   /**
    * 批量删除订单（更改删除/进度状态）
    *@author hhj
-   * @param orderVo（orderVo.getOrderListStr()）
+   * @param delId（orderVo.getOrderListStr()）
    * @return
    */
   @ResponseBody
   @AccessLogin
   @RequestMapping(value = "admDelOrder.do_", method = RequestMethod.POST)
-  public Result delOrderPage(OrdOrderVo orderVo) {
+  public Result delOrderPage(String delId) {
     Result result = new Result();
-    List<OrderRe> delList = (List<OrderRe>) JSONArray.toList(JSONArray.fromObject(orderVo.getOrderListStr()), new OrderRe(), new JsonConfig());
-    int num = orderService.logicDelOrder(delList);
+    System.out.println(delId);
+    String[] deleteId = StringUtils.split(delId.substring(1, delId.length()-1), ',');
+    List<Long> list = new ArrayList<>();
+    for (String s : deleteId) {
+      list.add(Long.parseLong(s));
+    }
+    int num = orderService.logicDelOrder(list);
     if (num > 0) {
       return Result.getSuccessResult(null);
     }

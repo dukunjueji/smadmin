@@ -27,6 +27,7 @@
             u.id AS	id,
             u.username AS username,
             u.password AS password,
+            u.is_admin AS isAdmin,
             u.create_time AS createTime,
             u.modify_time AS modifyTime
         FROM

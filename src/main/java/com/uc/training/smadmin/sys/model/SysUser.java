@@ -30,6 +30,20 @@ public class SysUser extends BaseModel implements Serializable {
      */
     private String password;
 
+    /**
+     * 是否是超级管理员(0:否1：是)
+     *
+     */
+    private Integer isAdmin;
+
+    public Integer getIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(Integer isAdmin) {
+        this.isAdmin = isAdmin;
+    }
+
     public Long getId() {
         return id;
     }
