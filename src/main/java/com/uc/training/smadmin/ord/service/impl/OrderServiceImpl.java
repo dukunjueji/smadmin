@@ -19,6 +19,7 @@ import com.uc.training.smadmin.ord.model.OrderGoods;
 import com.uc.training.smadmin.ord.re.*;
 import com.uc.training.smadmin.ord.service.OrderService;
 import com.uc.training.smadmin.ord.vo.OrdCartGoodsVo;
+import com.uc.training.smadmin.ord.vo.OrdMemberVO;
 import com.uc.training.smadmin.ord.vo.OrdOrderGoodsVo;
 import com.uc.training.smadmin.ord.vo.OrdOrderVo;
 import com.uc.training.smadmin.utils.UUIDUtil;
@@ -275,15 +276,51 @@ public class OrderServiceImpl implements OrderService {
     }
 
     /**
+     * 获取订单商品信息
+     * @param id
+     * @return
+     */
+    public List<OrderGoodsDetailRe> getOrderGdsByIds(Integer id) {
+        List<OrderGoods> orderGdslist;
+        // TODO: 2018/10/31 待改进--查询商品属性语句 
+        List<OrderGoodsDetailRe> list = new ArrayList<>();
+        orderGdslist = orderGoodsDao.getOrderGoodsByOrderId(id);
+        if (CollectionUtils.isEmpty(orderGdslist)) {
+            return null;
+        }
+        OrderGoodsDetailRe orderGoodsDetailRe;
+        GoodsDetailRE gdDTO;
+        Long time1=System.currentTimeMillis()/1000;
+        List<Long> propertyIds =new ArrayList<>();
+        for (int i = 0; i < orderGdslist.size(); i++) {
+            propertyIds.add(orderGdslist.get(i).getGoodsPropertyId());
+        }
+        List<GoodsDetailRE> goodsDetailRES=goodsService.getGoodsDetailByPropertyIds(propertyIds);
+        for (int i = 0; i < orderGdslist.size(); i++) {
+            orderGoodsDetailRe = new OrderGoodsDetailRe();
+            //gdDTO = goodsService.getGoodsDetailByPropertyId(orderGoods.getGoodsPropertyId());
+            orderGoodsDetailRe.setGoodsName(goodsDetailRES.get(i).getName());
+            orderGoodsDetailRe.setGoodsNum(orderGdslist.get(i).getGoodsNum());
+            orderGoodsDetailRe.setGoodsProperty(goodsDetailRES.get(i).getProperty());
+            orderGoodsDetailRe.setGoodsPrice(goodsDetailRES.get(i).getSalePrice());
+            orderGoodsDetailRe.setGoodsUrl(goodsDetailRES.get(i).getPicUrl().get(0).getPicUrl());
+            list.add(orderGoodsDetailRe);
+        }
+        Long time2=System.currentTimeMillis()/1000;
+        System.out.println("------time1-----"+(time2-time1));
+        return list;
+    }
+
+    /**
      * 根据会员id获取订单信息
-     * @param memberId
+     * @param ordMemberVO
      * @return
      */
     @Override
-    public List<OrderInfoRE> getOrderInfoListByMemberId(Long memberId) {
+    public List<OrderInfoRE> getOrderInfoListByMemberId(OrdMemberVO ordMemberVO) {
         //先获该用户的取订单id，然后查询每条订单的状态，订单的金额 以及获取订单的商品信息
         List<OrderInfoRE> orderInfoREList = new ArrayList<>();
-        List<Order> orderList = orderDao.getOrderById(memberId);
+        List<Order> orderList = orderDao.getOrderById(ordMemberVO);
         if (CollectionUtils.isEmpty(orderList)) {
             return orderInfoREList;
         }

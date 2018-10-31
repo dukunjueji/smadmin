@@ -12,6 +12,7 @@ import com.uc.training.smadmin.ord.model.Order;
 import com.uc.training.smadmin.ord.re.*;
 import com.uc.training.smadmin.ord.re.OrderGoodsDetailRe;
 import com.uc.training.smadmin.ord.re.OrderRe;
+import com.uc.training.smadmin.ord.vo.OrdMemberVO;
 import com.ycc.base.common.Result;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.smadmin.gds.service.GoodsService;
@@ -24,6 +25,7 @@ import com.uc.training.smadmin.ord.vo.OrdOrderVo;
 import com.ycc.base.common.Result;
 import net.sf.json.JSONArray;
 import net.sf.json.JsonConfig;
+import org.apache.commons.collections.OrderedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
@@ -285,8 +287,9 @@ public class OrderController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "getOrderInfoList.do_", method = RequestMethod.POST)
-    public Result getOrderInfoList() {
-        List<OrderInfoRE> orderInfoREList = orderService.getOrderInfoListByMemberId(getUid());
+    public Result getOrderInfoList(OrdMemberVO ordMemberVO) {
+        ordMemberVO.setMemberId(getUid());
+        List<OrderInfoRE> orderInfoREList = orderService.getOrderInfoListByMemberId(ordMemberVO);
         return Result.getSuccessResult(orderInfoREList);
     }
 }

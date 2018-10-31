@@ -50,6 +50,24 @@ public class GoodsServiceImpl implements GoodsService {
         return goodsDao.getHotRecommend(listSize);
     }
 
+    /**
+     * 通过属性id商品详情
+     *
+     * @param propertyIds
+     * @return
+     */
+    @Override
+    public List<GoodsDetailRE> getGoodsDetailByPropertyIds(List<Long> propertyIds) {
+        List<GoodsDetailRE> goodsDetailRE =  goodsDao.getGoodsDetailByPropertyIds(propertyIds);
+        List<List<PropertyUrlRE>> list=(List<List<PropertyUrlRE>>)goodsDao.getPicUrlByPropertyIds(propertyIds);
+        for (int i = 0;i < list.size();i++){
+            System.out.println("------------");
+            System.out.println(list.get(i).toString());
+            //goodsDetailRE.get(i).setPicUrl((List<PropertyUrlRE>)list.get(i));
+        }
+        return goodsDetailRE;
+    }
+
     @Override
     public Long getGoodsListCount(GoodsListVO goodsListVO) {
         return goodsDao.getGoodsListCount(goodsListVO);
