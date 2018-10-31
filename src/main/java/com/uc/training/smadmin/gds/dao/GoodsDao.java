@@ -76,7 +76,14 @@ public interface GoodsDao {
      * @param goodsName
      * @return
      */
-    public List<GoodsRE> searchByGoodsName(String goodsName);
+    public List<Long> searchByGoodsName(String goodsName);
+
+    /**
+     * 通过属性查询商品列表
+     * @param propertyIds
+     * @return
+     */
+    public List<GoodsRE> searchByPropertyId(List<Long> propertyIds);
 
     /**
      * 获取热门标签

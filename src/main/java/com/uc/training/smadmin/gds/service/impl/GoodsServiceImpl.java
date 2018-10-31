@@ -19,6 +19,8 @@ import com.uc.training.smadmin.utils.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -79,7 +81,12 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Override
     public List<GoodsRE> searchByGoodsName(String goodsName) {
-        return goodsDao.searchByGoodsName(goodsName);
+        List<Long> propertyIds = goodsDao.searchByGoodsName(goodsName);
+        List<GoodsRE> list = new ArrayList<GoodsRE>();
+        if(propertyIds.size()>0){
+            list = goodsDao.searchByPropertyId(propertyIds);
+        }
+        return list;
     }
 
     @Override
@@ -182,6 +189,17 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     public Integer logicDeleteGoods(Long id) {
         return goodsDao.logicDeleteGoods(id);
+    }
+
+    /**
+     * 更新销量
+     *
+     * @param goodsStokeVO
+     * @return
+     */
+    @Override
+    public int updateSales(GoodsStokeVO goodsStokeVO) {
+        return goodsDao.updateSales(goodsStokeVO);
     }
 
 

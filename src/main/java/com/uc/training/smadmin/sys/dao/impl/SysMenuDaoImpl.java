@@ -19,14 +19,41 @@ import java.util.List;
 @Repository
 public class SysMenuDaoImpl extends CarIsIbatisDaoImpl implements SysMenuDao {
 
-    private static final String namespace = "com.uc.training.smadmin.sys.dao.SysMenuDao.";
+    private static final String NAMESPACE = "com.uc.training.smadmin.sys.dao.SysMenuDao.";
     @Override
     public List<String> getUserPerms(Long userId) {
-        return (List<String>) this.queryForList(namespace +"getUserPerms", userId);
+        return (List<String>) this.queryForList(NAMESPACE +"getUserPerms", userId);
     }
 
     @Override
     public List<SysMenu> getMenuList() {
-        return null;
+        return this.queryForList(NAMESPACE + "getMenuList");
     }
+
+    @Override
+    public Long addMenu(SysMenu menu) {
+        return (Long) this.insert(NAMESPACE + "addMenu", menu);
+    }
+
+    @Override
+    public Integer updateMenu(SysMenu menu) {
+        return this.update(NAMESPACE + "updateById", menu);
+    }
+
+    @Override
+    public Integer deleteMenuById(Long id) {
+        return this.deleteObject(NAMESPACE + "deleteById", id);
+    }
+
+    @Override
+    public SysMenu getMenuById(Long id) {
+        return (SysMenu) this.queryForObject(NAMESPACE + "getById", id);
+    }
+
+    @Override
+    public Integer batchDelete(List<Long> ids) {
+        return this.deleteObject(NAMESPACE + "batchDelete", ids);
+    }
+
+
 }

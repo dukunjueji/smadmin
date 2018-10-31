@@ -1,5 +1,7 @@
 package com.uc.training.smadmin.sys.service;
 
+import com.uc.training.smadmin.sys.model.SysMenu;
+
 import java.util.List;
 
 /**
@@ -19,4 +21,45 @@ public interface SysMenuService {
      * @version 1.0 2018/10/18 20:29 by 吴佰川（baichuan.wu@ucarinc.com）创建
      */
     List<String> getUserPerms(Long userId);
+
+    /**
+     * 获取菜单列表
+     * @return
+     */
+    List<SysMenu> getMenuList();
+
+    /**
+     * 通过ID获取菜单
+     * @param id
+     * @return
+     */
+    SysMenu getById(Long id);
+
+    /**
+     * 新增菜单
+     * @param menu
+     * @return
+     */
+    Long addMenu(SysMenu menu);
+
+    /**
+     * 通过ID删除菜单
+     * @param id
+     * @return
+     */
+    Integer deleteById(Long id);
+
+    /**
+     * 更新菜单
+     * @param menu
+     * @return
+     */
+    Integer updateMenu(SysMenu menu);
+
+    /**
+     * 批量删除
+     * @param ids
+     * @return
+     */
+    Integer batchDelete(List<Long> ids);
 }

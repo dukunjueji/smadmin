@@ -7,11 +7,11 @@ import java.io.Serializable;
  *
  * @author：shixian.zhang@ucarinc.com
  * @version：v1.0
- * @date: 2018/10/26
- * 说明：会员成长值参数
+ * @date: 2018/10/30
+ * 说明：支付商品扣余额参数
  */
-public class MemberGrowthVO implements Serializable {
-    private static final long serialVersionUID = -5967808906011851140L;
+public class MemberBalanceVO implements Serializable {
+    private static final long serialVersionUID = -580231173327959134L;
 
     /**
      * 会员id
@@ -19,9 +19,9 @@ public class MemberGrowthVO implements Serializable {
     private Long memberId;
 
     /**
-     * 成长值
+     * 总支付金额
      */
-    private Long growth;
+    private Double totalMoney;
 
     public Long getMemberId() {
         return memberId;
@@ -31,19 +31,19 @@ public class MemberGrowthVO implements Serializable {
         this.memberId = memberId;
     }
 
-    public Long getGrowth() {
-        return growth;
+    public Double getTotalMoney() {
+        return totalMoney;
     }
 
-    public void setGrowth(Long growth) {
-        this.growth = growth;
+    public void setTotalMoney(Double totalMoney) {
+        this.totalMoney = totalMoney;
     }
 
     @Override
     public String toString() {
-        return "MemberGrowthVO{" +
+        return "MemberBalanceVO{" +
                 "memberId=" + memberId +
-                ", growth=" + growth +
+                ", totalMoney=" + totalMoney +
                 '}';
     }
 }

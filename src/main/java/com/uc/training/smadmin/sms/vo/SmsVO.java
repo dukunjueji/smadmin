@@ -88,4 +88,17 @@ public class SmsVO {
     public String getStatusDes() {
         return SmsStatusEnum.getMap().get(status);
     }
+
+    @Override
+    public String toString() {
+        return "SmsVO{" +
+                "id=" + id +
+                ", telephone='" + telephone + '\'' +
+                ", type=" + type +
+                ", status=" + status +
+                ", createTime=" + createTime +
+                ", typeDes='" + typeDes + '\'' +
+                ", statusDes='" + statusDes + '\'' +
+                '}';
+    }
 }

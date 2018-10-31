@@ -42,4 +42,12 @@ public class MessageVO implements Serializable {
     public void setIsRead(Integer isRead) {
         this.isRead = isRead;
     }
+
+    @Override
+    public String toString() {
+        return "MessageVO{" +
+                "id=" + id +
+                ", isRead=" + isRead +
+                '}';
+    }
 }

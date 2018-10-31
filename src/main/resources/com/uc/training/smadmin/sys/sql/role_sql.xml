@@ -19,4 +19,56 @@
 		WHERE
 			u.id = #userId#
     </select>
+
+	<sql id="where_query">
+		<isNotEmpty property="id" prepend="and">
+			s.id = #id#
+		</isNotEmpty>
+		<isNotEmpty property="name" prepend="and">
+			s.name = #name#
+		</isNotEmpty>
+	</sql>
+
+	<!-- 获取角色页面列表 -->
+	<select id="getRolePage" parameterClass="com.uc.training.smadmin.sys.vo.RoleListVO" resultClass="com.uc.training.smadmin.sys.model.SysRole">
+		SELECT
+		s.id AS id,
+		s.name AS name
+		FROM t_sys_role s
+		WHERE 1=1
+		<include refid="where_query"/>
+		<isNotEmpty property="offset">
+			limit #offset#, #pageSize#
+		</isNotEmpty>
+	</select>
+
+	<!-- 查找数据总记录数 -->
+	<select id="queryCount" resultClass="java.lang.Long" parameterClass="com.uc.training.smadmin.sys.vo.RoleListVO">
+		SELECT count(1)
+		FROM t_sys_role s
+		WHERE 1=1
+		<include refid="where_query"/>
+	</select>
+
+	<!-- 更新角色信息 -->
+	<update id="updateRole" parameterClass="com.uc.training.smadmin.sys.model.SysRole">
+		UPDATE t_sys_role
+		SET name = #name#
+		WHERE id = #id#
+	</update>
+
+	<!-- 删除角色 -->
+	<delete id="deleteById" parameterClass="Long">
+		DELETE FROM t_sys_role
+		WHERE id = #id#
+	</delete>
+
+	<!-- 新增角色 -->
+	<insert id="addRole" parameterClass="com.uc.training.smadmin.sys.model.SysRole">
+		INSERT INTO t_sys_role (name)
+		VALUE (#name#)
+		<selectKey resultClass="Long" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS id
+		</selectKey>
+	</insert>
 </sqlMap>

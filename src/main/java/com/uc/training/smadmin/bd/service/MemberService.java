@@ -3,13 +3,11 @@ package com.uc.training.smadmin.bd.service;
 import com.uc.training.smadmin.bd.model.Member;
 import com.uc.training.smadmin.bd.re.MemberDetailRE;
 import com.uc.training.smadmin.bd.re.MemberInfoRE;
-import com.uc.training.smadmin.bd.vo.ChargeBalanceVO;
-import com.uc.training.smadmin.bd.vo.MemberInfoVO;
-import com.uc.training.smadmin.bd.vo.MemberListVO;
-import com.uc.training.smadmin.bd.vo.MemberLoginVO;
+import com.uc.training.smadmin.bd.vo.*;
 import com.uc.training.smadmin.ord.re.OrderConfirmRE;
 import com.uc.training.smadmin.ord.re.OrderRe;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -47,7 +45,7 @@ public interface MemberService {
     void updateMember(Member member);
 
     /**
-    *说明：更新余额
+    *说明：更新余额(用于充值)
     *@param member
     *@return：void
     *@throws：
@@ -108,4 +106,12 @@ public interface MemberService {
      * @return
      */
     Long queryMemberCount(MemberListVO memberListVO);
+
+    /**
+    *说明：支付商品更新余额
+    *@param memberBalanceVO 支付商品扣余额参数
+    *@return：void
+    *@throws：
+    */
+    void updateBalance(MemberBalanceVO memberBalanceVO);
 }

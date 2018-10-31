@@ -4,10 +4,7 @@ import com.uc.training.smadmin.bd.dao.MemberDao;
 import com.uc.training.smadmin.bd.model.Member;
 import com.uc.training.smadmin.bd.re.MemberDetailRE;
 import com.uc.training.smadmin.bd.re.MemberInfoRE;
-import com.uc.training.smadmin.bd.vo.MemberGrowthVO;
-import com.uc.training.smadmin.bd.vo.MemberIntegralVO;
-import com.uc.training.smadmin.bd.vo.MemberListVO;
-import com.uc.training.smadmin.bd.vo.MemberLoginVO;
+import com.uc.training.smadmin.bd.vo.*;
 import com.zuche.framework.dao.CarIsIbatisDaoImpl;
 import org.springframework.stereotype.Repository;
 
@@ -90,6 +87,11 @@ public class MemberDaoImpl extends CarIsIbatisDaoImpl implements MemberDao {
     @Override
     public Long queryMemberCount(MemberListVO memberListVO) {
         return (Long) this.queryForObject("com.uc.training.smadmin.bd.dao.MemberDao.queryMemberCount", memberListVO);
+    }
+
+    @Override
+    public void updateBalance(MemberBalanceVO memberBalanceVO) {
+        this.update("com.uc.training.smadmin.bd.dao.MemberDao.updateBalance", memberBalanceVO);
     }
 
 }

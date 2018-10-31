@@ -3,8 +3,17 @@ package com.uc.training.smadmin.ord.re;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * description://TODO
+ *
+ * @param
+ * @author DK
+ * @date 2018/10/30  11:04
+ * @return
+ **/
+
+
 public class OrderInfoRE implements Serializable {
-    // TODO: 2018/10/29 序列化
 
     /**
      * 订单id

@@ -46,6 +46,7 @@
 	<select id="getGoodsDetailByGoodsId" resultClass="com.uc.training.smadmin.gds.re.GoodsDetailRE" parameterClass="long">
 		select
 		 goods.name,
+		 goods.id as goodsId,
 		goods.sales,
 		goods.code,
 		goods.detail,
@@ -106,18 +107,32 @@
 		update t_gds_goods set sales=#stoke#+sales where id=#goodsId#
 	</update>
 
-    <select id="searchByGoodsName" resultClass="com.uc.training.smadmin.gds.re.GoodsRE" parameterClass="String">
+	<select id="searchByGoodsName" resultClass="long" parameterClass="String">
         SELECT
-        DISTINCT goods.name,
+		max(gds_property.id) AS propertyId
+		FROM
+		t_gds_property gds_property
+		left JOIN t_gds_goods goods ON goods.id = gds_property.goods_id
+        where goods.name like concat("%",#goodsName#,"%")
+        GROUP BY goods.id
+        limit 0, 10
+    </select>
+
+    <select id="searchByPropertyId" resultClass="com.uc.training.smadmin.gds.re.GoodsRE" parameterClass="java.util.List">
+        SELECT
+        goods.name,
+        goods.id as goodsId,
         goods.sales,
         gds_property.id as propertyId,
         gds_property.sale_price as salePrice,
         gds_pic.pic_url as picUrl
         FROM t_gds_property gds_property join t_gds_goods goods on goods.id=gds_property.goods_id
         join t_gds_goods_pic gds_pic on gds_property.id=gds_pic.property_id
-        where goods.name like concat("%",#goodsName#,"%")
-        order by goods.sales desc
-        limit 0, 10
+        where gds_property.id
+		IN
+		<iterate open="(" close=")" conjunction=",">
+		#propertyIds[]#
+	    </iterate>
     </select>
 
     <select id="selectHotTag" resultClass="com.uc.training.smadmin.gds.model.HotTag">

@@ -22,5 +22,44 @@ public interface SysMenuDao {
      */
     List<String> getUserPerms(Long userId);
 
+    /**
+     * 获取菜单列表
+     * @return
+     */
     List<SysMenu> getMenuList();
+
+    /**
+     * 新增菜单
+     * @param menu
+     * @return
+     */
+    Long addMenu(SysMenu menu);
+
+    /**
+     * 更新菜单
+     * @param menu
+     * @return
+     */
+    Integer updateMenu(SysMenu menu);
+
+    /**
+     * 通过菜单ID删除菜单
+     * @param id
+     * @return
+     */
+    Integer deleteMenuById(Long id);
+
+    /**
+     * 通过ID获取菜单
+     * @param id
+     * @return
+     */
+    SysMenu getMenuById(Long id);
+
+    /**
+     * 批量删除
+     * @param ids
+     * @return
+     */
+    Integer batchDelete(List<Long> ids);
 }

@@ -119,4 +119,11 @@ public interface GoodsService {
      * @return
      */
     Integer logicDeleteGoods(Long id);
+
+    /**
+     * 更新销量
+     * @param goodsStokeVO
+     * @return
+     */
+    public int updateSales(GoodsStokeVO goodsStokeVO);
 }

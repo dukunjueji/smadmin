@@ -6,13 +6,16 @@ import com.uc.training.smadmin.bd.model.Member;
 import com.uc.training.smadmin.bd.re.MemberDetailRE;
 import com.uc.training.smadmin.bd.re.MemberInfoRE;
 import com.uc.training.smadmin.bd.service.MemberService;
+import com.uc.training.smadmin.bd.vo.MemberBalanceVO;
 import com.uc.training.smadmin.bd.vo.MemberInfoVO;
 import com.uc.training.smadmin.bd.vo.MemberListVO;
 import com.uc.training.smadmin.bd.vo.MemberLoginVO;
 import com.uc.training.smadmin.gds.dao.GoodsDao;
+import com.uc.training.smadmin.gds.service.GoodsService;
 import com.uc.training.smadmin.gds.vo.GoodsStokeVO;
 import com.uc.training.smadmin.ord.dao.OrderDao;
 import com.uc.training.smadmin.ord.re.OrderConfirmRE;
+import com.uc.training.smadmin.ord.service.OrderService;
 import com.uc.training.smadmin.ord.vo.OrdOrderVo;
 import com.uc.training.smadmin.utils.EncryptUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,10 +39,10 @@ public class MemberServiceImpl implements MemberService {
     private MemberDao memberDao;
 
     @Autowired
-    private GoodsDao goodsDao;
+    GoodsService goodsService;
 
     @Autowired
-    private OrderDao orderDao;
+    OrderService orderService;
 
     @Override
     public void insertMember(Member member) {
@@ -81,7 +84,7 @@ public class MemberServiceImpl implements MemberService {
         MemberInfoVO memberInfoVO = new MemberInfoVO();
         memberInfoVO.setTotalPrice(orderPayInfoNow.get(0).getTotalPrice());
         memberInfoVO.setOrderName(orderPayInfoNow.get(0).getOrderName());
-        memberInfoVO.setMemberId(1L);
+        memberInfoVO.setMemberId(orderPayInfoNow.get(0).getMemberId());
         Double accountBalances = memberDao.queryBalances(memberInfoVO.getMemberId());
         if (accountBalances > memberInfoVO.getTotalPrice()) {
             // 加上对应的商品销量
@@ -89,8 +92,13 @@ public class MemberServiceImpl implements MemberService {
                 GoodsStokeVO goodsStokeVO = new GoodsStokeVO();
                 goodsStokeVO.setStoke(orderPayInfoNow.get(i).getGoodsNum());
                 goodsStokeVO.setGoodsId(orderPayInfoNow.get(i).getGoodsId());
-                goodsDao.updateSales(goodsStokeVO);
+                goodsService.updateSales(goodsStokeVO);
             }
+            //减去用户余额
+            MemberBalanceVO memberBalanceVO = new MemberBalanceVO();
+            memberBalanceVO.setMemberId(memberInfoVO.getMemberId());
+            memberBalanceVO.setTotalMoney(memberInfoVO.getTotalPrice());
+            memberDao.updateBalance(memberBalanceVO);
             //加成长值，积分
 
             //更新订单状态
@@ -99,8 +107,7 @@ public class MemberServiceImpl implements MemberService {
             ordOrderVo.setOrderNum(orderPayInfoNow.get(0).getOrderName());
             ordOrderVo.setStatus(OrderEnum.WAITSHIP.getKey().longValue());
             orderConfirmRE.setShowStatus("成功购买商品");
-            orderDao.updateOrder(ordOrderVo);
-            //减去用户余额
+            orderService.updateOrder(ordOrderVo);
             list.add(orderConfirmRE);
             return list;
         } else {
@@ -140,6 +147,11 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public Long queryMemberCount(MemberListVO memberListVO) {
         return memberDao.queryMemberCount(memberListVO);
+    }
+
+    @Override
+    public void updateBalance(MemberBalanceVO memberBalanceVO) {
+        this.memberDao.updateBalance(memberBalanceVO);
     }
 
 }
