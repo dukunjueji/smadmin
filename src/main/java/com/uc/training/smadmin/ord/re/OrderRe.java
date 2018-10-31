@@ -45,9 +45,6 @@ public class OrderRe implements Serializable {
   /**下单时间**/
   private Date createTime;
 
-  /**状态说明**/
-  private String showStatus;
-
   private String teag;
 
   /**
@@ -159,11 +156,4 @@ public class OrderRe implements Serializable {
     this.receiptAddress = receiptAddress;
   }
 
-  public String getShowStatus() {
-    return showStatus;
-  }
-
-  public void setShowStatus(String showStatus) {
-    this.showStatus = showStatus;
-  }
 }

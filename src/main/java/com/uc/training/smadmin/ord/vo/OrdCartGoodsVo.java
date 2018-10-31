@@ -38,7 +38,7 @@ public class OrdCartGoodsVo implements Serializable {
   /**
    * 商品数量
    */
-  private int num;
+  private long num;
 
   /**
    * 商品规格
@@ -105,11 +105,11 @@ public class OrdCartGoodsVo implements Serializable {
     this.gdsName = gdsName;
   }
 
-  public int getNum() {
+  public long getNum() {
     return num;
   }
 
-  public void setNum(int num) {
+  public void setNum(long num) {
     this.num = num;
   }
 

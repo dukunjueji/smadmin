@@ -145,7 +145,7 @@
 			s.receipt_name as receiptName,
 			s.receipt_tel as receiptTel,
 			s.receipt_address as receiptAddress,
-			date_format(s.create_time,'%Y-%m-%d') AS createTime
+			s.create_time AS createTime
 		FROM  t_ord_order s
 		WHERE
 		1 = 1
