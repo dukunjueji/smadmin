@@ -50,6 +50,19 @@ public class SysMenu extends BaseModel implements Serializable {
      */
     private Long parentId;
 
+    /**
+     * 菜单类型 1：目录   2：按钮
+     */
+    private Integer type;
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
     private List<SysMenu> children;
 
     public List<SysMenu> getChildren() {

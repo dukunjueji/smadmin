@@ -60,8 +60,13 @@ public class GoodsDaoImpl  extends CarIsIbatisDaoImpl implements GoodsDao {
     }
 
     @Override
-    public List<GoodsRE> searchByGoodsName(String goodsName) {
+    public List<Long> searchByGoodsName(String goodsName) {
         return this.queryForList("com.uc.training.smadmin.gds.dao.GoodsDao.searchByGoodsName",goodsName);
+    }
+
+    @Override
+    public List<GoodsRE> searchByPropertyId(List<Long> propertyIds) {
+        return this.queryForList("com.uc.training.smadmin.gds.dao.GoodsDao.searchByPropertyId",propertyIds);
     }
 
     @Override

@@ -10,6 +10,10 @@ import java.util.List;
  */
 public class GoodsDetailRE {
     /**
+     * 商品id
+     */
+    private long goodsId;
+    /**
      * 商品属性id
      */
     private long propertyId;
@@ -152,5 +156,13 @@ public class GoodsDetailRE {
 
     public void setIsDiscount(long isDiscount) {
         this.isDiscount = isDiscount;
+    }
+
+    public long getGoodsId() {
+        return goodsId;
+    }
+
+    public void setGoodsId(long goodsId) {
+        this.goodsId = goodsId;
     }
 }
