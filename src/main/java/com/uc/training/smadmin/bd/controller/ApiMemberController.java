@@ -132,17 +132,9 @@ public class ApiMemberController extends BaseController {
     @RequestMapping(value = "/memberLogin.do_", method = RequestMethod.POST)
     @ResponseBody
     @AccessLogin(required = false)
-    public Result<MemberLoginRE> memberLogin(MemberLoginVO memberLoginVO){
+    public Result<MemberLoginRE> memberLogin(@Validated MemberLoginVO memberLoginVO){
         Result<MemberLoginRE> result;
         try {
-            if (StringUtils.isEmpty(memberLoginVO.getTelephone()) || StringUtils.isEmpty(memberLoginVO.getPassword())) {
-                result = Result.getBusinessException("手机号码或密码为空", null);
-                return result;
-            }
-            if (!ValidateUtil.isCellphone(memberLoginVO.getTelephone())){
-                result = Result.getBusinessException("手机号码格式不正确", null);
-                return result;
-            }
             memberLoginVO.setPassword(EncryptUtil.md5(memberLoginVO.getPassword()));
             Member member = memberService.getMemberLogin(memberLoginVO);
             if (member == null) {
