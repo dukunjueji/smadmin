@@ -24,7 +24,7 @@ public class AddressVO implements Serializable {
 
 	/**手机号**/
 	@NotBlank(message = "手机号不能为空")
-	// TODO: 2018/10/31 手机号校验 
+	@Pattern(regexp = "^1[3456789]\\d{9}$", message = "手机号格式不正确")
 	private String telephone;
 
 	/**省**/
