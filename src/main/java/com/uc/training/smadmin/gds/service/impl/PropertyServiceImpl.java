@@ -2,9 +2,12 @@ package com.uc.training.smadmin.gds.service.impl;
 
 import com.uc.training.smadmin.gds.dao.PropertyDao;
 import com.uc.training.smadmin.gds.model.Property;
+import com.uc.training.smadmin.gds.re.AdminPropertyListRE;
 import com.uc.training.smadmin.gds.service.PropertyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * 版权声明： Copyright (c) 2008 ucarinc. All Rights Reserved.
@@ -39,5 +42,27 @@ public class PropertyServiceImpl implements PropertyService{
     @Override
     public Integer updateProperty(Property property) {
         return propertyDao.updateProperty(property);
+    }
+
+    /**
+     * 通过商品id获取类型数量
+     *
+     * @param goodsId
+     * @return
+     */
+    @Override
+    public Integer getPropertyCountByGoodsId(Long goodsId) {
+        return propertyDao.getPropertyCountByGoodsId(goodsId);
+    }
+
+    /**
+     * 通过商品id获取商品属性
+     *
+     * @param goodsId
+     * @return
+     */
+    @Override
+    public List<AdminPropertyListRE> getPropertyListByGoodsId(Long goodsId) {
+        return propertyDao.getPropertyListByGoodsId(goodsId);
     }
 }

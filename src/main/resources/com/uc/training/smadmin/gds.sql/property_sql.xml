@@ -22,4 +22,27 @@
               modify_emp=#modifyEmp#
         WHERE goods_id = #goodsId#
     </update>
+
+    <!--后台通过商品id获取商品属性-->
+    <select id="getPropertyListByGoodsId" parameterClass="Long" resultClass="com.uc.training.smadmin.gds.re.AdminPropertyListRE">
+        SELECT
+            gp.id AS id,
+            gp.goods_id AS goodsId,
+            gp.stock AS stock,
+            gp.discount_price AS discountPrice,
+            gp.sale_price AS  salePrice,
+            gp.property AS property,
+            gp.is_discount AS isDiscount
+        FROM   t_gds_property gp
+        WHERE gp.goods_id = #goodsId#
+    </select>
+
+    <!-- 通过商品id查找商品类型数量 -->
+    <select id="getPropertyCountByGoodsId" parameterClass="Long" resultClass="Integer">
+        SELECT
+          count(1)
+        FROM
+          t_gds_property
+        WHERE goods_id = #goodsId#
+    </select>
 </sqlMap>

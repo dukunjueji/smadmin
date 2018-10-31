@@ -2,6 +2,9 @@ package com.uc.training.smadmin.gds.dao;
 
 import com.uc.training.smadmin.gds.model.GoodsPic;
 import com.uc.training.smadmin.gds.model.Property;
+import com.uc.training.smadmin.gds.re.AdminGoodsPicRE;
+
+import java.util.List;
 
 /**
  * 版权声明： Copyright (c) 2008 ucarinc. All Rights Reserved.
@@ -26,4 +29,10 @@ public interface GoodsPicDao {
      */
     Integer updateGoodsPic(GoodsPic goodsPic);
 
+    /**
+     * 根据商品属性id获取商品图片
+     * @param propertyId
+     * @return
+     */
+    List<AdminGoodsPicRE> getGoodsPicListByPropertyId(Long propertyId);
 }

@@ -8,9 +8,7 @@ import com.uc.training.smadmin.gds.re.GoodsRE;
 import com.uc.training.smadmin.gds.re.GoodsDetailRE;
 import com.uc.training.smadmin.gds.model.HotTag;
 import com.uc.training.smadmin.gds.re.GoodsStokeRE;
-import com.uc.training.smadmin.gds.vo.AdminGoodsVO;
-import com.uc.training.smadmin.gds.vo.GoodsListVO;
-import com.uc.training.smadmin.gds.vo.GoodsStokeVO;
+import com.uc.training.smadmin.gds.vo.*;
 
 import java.util.List;
 
@@ -99,10 +97,10 @@ public interface GoodsService {
 
     /**
      * 后台更新商品
-     * @param adminGoodsVO
+     * @param adminUpdateGoodsVO
      * @return
      */
-    Integer adminUpdateGoods(AdminGoodsVO adminGoodsVO);
+    Integer adminUpdateGoods(AdminUpdateGoodsVO adminUpdateGoodsVO);
 
     /**
      * 后台新增商品
@@ -111,7 +109,7 @@ public interface GoodsService {
      * @param goodsPic
      * @return
      */
-    Long adminInsertGoods(Goods goods, Property property, GoodsPic goodsPic);
+    Long adminInsertGoods(Goods goods);
 
     /**
      * 逻辑删除商品
@@ -126,4 +124,25 @@ public interface GoodsService {
      * @return
      */
     public int updateSales(GoodsStokeVO goodsStokeVO);
+
+    /**
+     * 后台获取商品数量
+     * @param goodsListVO
+     * @return
+     */
+    Long getAdminGoodsListCount(GoodsListVO goodsListVO);
+
+    /**
+     * 商品上架
+     * @param adminPullGoodsVO
+     * @return
+     */
+    Integer pullOnGoods(AdminPullGoodsVO adminPullGoodsVO);
+
+    /**
+     * 商品下架
+     * @param adminPullGoodsVO
+     * @return
+     */
+    Integer pullOffGoods(AdminPullGoodsVO adminPullGoodsVO);
 }

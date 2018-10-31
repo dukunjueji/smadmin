@@ -1,6 +1,9 @@
 package com.uc.training.smadmin.gds.service;
 
 import com.uc.training.smadmin.gds.model.GoodsPic;
+import com.uc.training.smadmin.gds.re.AdminGoodsPicRE;
+
+import java.util.List;
 
 /**
  * 版权声明： Copyright (c) 2008 ucarinc. All Rights Reserved.
@@ -24,4 +27,10 @@ public interface GoodsPicService {
      */
     Integer updateGoodsPic(GoodsPic goodsPic);
 
+    /**
+     * 根据商品属性id获取图片信息
+     * @param propertyId
+     * @return
+     */
+    List<AdminGoodsPicRE> getGoodsPicListByPropertyId(Long propertyId);
 }

@@ -2,9 +2,12 @@ package com.uc.training.smadmin.gds.service.impl;
 
 import com.uc.training.smadmin.gds.dao.GoodsPicDao;
 import com.uc.training.smadmin.gds.model.GoodsPic;
+import com.uc.training.smadmin.gds.re.AdminGoodsPicRE;
 import com.uc.training.smadmin.gds.service.GoodsPicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * 版权声明： Copyright (c) 2008 ucarinc. All Rights Reserved.
@@ -39,5 +42,16 @@ public class GoodsPicServiceImpl implements GoodsPicService{
     @Override
     public Integer updateGoodsPic(GoodsPic goodsPic) {
         return goodsPicDao.updateGoodsPic(goodsPic);
+    }
+
+    /**
+     * 根据商品属性id获取图片信息
+     *
+     * @param propertyId
+     * @return
+     */
+    @Override
+    public List<AdminGoodsPicRE> getGoodsPicListByPropertyId(Long propertyId) {
+        return goodsPicDao.getGoodsPicListByPropertyId(propertyId);
     }
 }

@@ -31,7 +31,7 @@ public class Goods extends BaseModel {
   /**
    * 出售价格
    */
-  private BigDecimal sales;
+  private Integer sales;
   /**
    * 详情
    */
@@ -80,11 +80,11 @@ public class Goods extends BaseModel {
   }
 
 
-  public BigDecimal getSales() {
+  public Integer getSales() {
     return sales;
   }
 
-  public void setSales(BigDecimal sales) {
+  public void setSales(Integer sales) {
     this.sales = sales;
   }
 

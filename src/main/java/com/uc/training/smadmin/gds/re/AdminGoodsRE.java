@@ -1,5 +1,7 @@
 package com.uc.training.smadmin.gds.re;
 
+import com.uc.training.smadmin.gds.vo.AdminGoodsVO;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -10,7 +12,7 @@ import java.math.BigDecimal;
  * @Version 1.0
  * @date 2018/10/29
  */
-public class AdminGoodsRE implements Serializable{
+public class AdminGoodsRE extends AdminGoodsVO implements Serializable{
 
     private static final long serialVersionUID = 8124458596259805857L;
 
@@ -20,40 +22,34 @@ public class AdminGoodsRE implements Serializable{
     private Long id;
 
     /**
-     * 商品编号
+     * 商品编码
      */
     private String code;
-    /**
-     * 商品名称
-     */
-    private String name;
 
     /**
-     * 商品类型
+     * 销量
      */
-    private Long categoryId;
-
-    /**
-     * 出售价格
-     */
-    private BigDecimal sales;
-
-    /**
-     * 详情
-     */
-    private String detail;
+    private Integer sales;
 
     /**
      * 商品状态（上架，下架）
      */
     private Integer status;
 
-    public Long getId() {
-        return id;
-    }
+    /**
+     * 商品分类名称
+     */
+    private String categoryName;
 
-    public void setId(Long id) {
-        this.id = id;
+    @Override
+    public String toString() {
+        return "AdminGoodsRE{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                ", sales=" + sales +
+                ", status=" + status +
+                ", categoryName='" + categoryName + '\'' +
+                '}';
     }
 
     public String getCode() {
@@ -64,36 +60,20 @@ public class AdminGoodsRE implements Serializable{
         this.code = code;
     }
 
-    public String getName() {
-        return name;
+    public Long getId() {
+        return id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public Long getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
-    }
-
-    public BigDecimal getSales() {
+    public Integer getSales() {
         return sales;
     }
 
-    public void setSales(BigDecimal sales) {
+    public void setSales(Integer sales) {
         this.sales = sales;
-    }
-
-    public String getDetail() {
-        return detail;
-    }
-
-    public void setDetail(String detail) {
-        this.detail = detail;
     }
 
     public Integer getStatus() {
@@ -104,16 +84,11 @@ public class AdminGoodsRE implements Serializable{
         this.status = status;
     }
 
-    @Override
-    public String toString() {
-        return "AdminGoodsRE{" +
-                "id=" + id +
-                ", code='" + code + '\'' +
-                ", name='" + name + '\'' +
-                ", categoryId=" + categoryId +
-                ", sales=" + sales +
-                ", detail='" + detail + '\'' +
-                ", status=" + status +
-                '}';
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 }
