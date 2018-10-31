@@ -241,7 +241,7 @@ public class OrderServiceImpl implements OrderService {
   }
 
   @Override
-  public int logicDelOrder(List<OrderRe> list) {
+  public int logicDelOrder(List<Long> list) {
     return orderDao.logicDelOrder(list);
   }
 

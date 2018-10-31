@@ -67,7 +67,7 @@ public interface OrderDao {
 	 * @param list
 	 * @return
 	 */
-  int logicDelOrder(List<OrderRe> list);
+  int logicDelOrder(List<Long> list);
 
 	/**
 	 * 更新订单状态
