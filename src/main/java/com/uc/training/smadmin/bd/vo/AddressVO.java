@@ -2,6 +2,7 @@ package com.uc.training.smadmin.bd.vo;
 import com.sun.istack.NotNull;
 import org.hibernate.validator.constraints.NotBlank;
 
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -23,19 +24,23 @@ public class AddressVO implements Serializable {
 
 	/**手机号**/
 	@NotBlank(message = "手机号不能为空")
+	@Pattern(regexp = "^1[3456789]\\d{9}$", message = "手机号格式不正确")
 	private String telephone;
 
 	/**省**/
+	@NotBlank(message = "请选择区域")
 	private String province;
 
 	/**市**/
+	@NotBlank(message = "请选择区域")
 	private String city;
 
 	/**区**/
+	@NotBlank(message = "请选择区域")
 	private String district;
 
 	/**区域编号**/
-	@NotBlank(message = "省市区不能为空")
+	@NotBlank(message = "请选择区域")
 	private String areaCode;
 
 	/**详细地址**/

@@ -2,9 +2,10 @@ package com.uc.training.smadmin.bd.service.impl;
 
 import com.uc.training.smadmin.bd.dao.BannerDao;
 import com.uc.training.smadmin.bd.model.Banner;
-import com.uc.training.smadmin.bd.re.BannerAdminRE;
+import com.uc.training.smadmin.bd.re.AdminBannerListRE;
 import com.uc.training.smadmin.bd.re.BannerRE;
 import com.uc.training.smadmin.bd.service.BannerService;
+import com.uc.training.smadmin.bd.vo.AdminBannerListVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,8 +39,8 @@ public class BannerServiceImpl implements BannerService {
      * @return
      */
     @Override
-    public List<BannerAdminRE> getAllBannerList() {
-        return bannerDao.getAllBannerList();
+    public List<AdminBannerListRE> getAllBannerList(AdminBannerListVO adminBannerListVO) {
+        return bannerDao.getAllBannerList(adminBannerListVO);
     }
 
     /**
@@ -61,7 +62,7 @@ public class BannerServiceImpl implements BannerService {
      */
     @Override
     public Integer deleteBannerById(Long id) {
-        return bannerDao.deleteBanner(id);
+        return bannerDao.deleteBannerById(id);
     }
 
     /**
@@ -71,8 +72,8 @@ public class BannerServiceImpl implements BannerService {
      * @return
      */
     @Override
-    public Long insertBannerById(Banner banner) {
-        return bannerDao.insertBannerById(banner);
+    public Long insertBanner(Banner banner) {
+        return bannerDao.insertBanner(banner);
     }
 
     /**

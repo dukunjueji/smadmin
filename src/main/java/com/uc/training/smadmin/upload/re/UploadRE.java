@@ -11,9 +11,13 @@ import java.io.Serializable;
  */
 public class UploadRE implements Serializable{
     private static final long serialVersionUID = 59283449140196354L;
-
+    /**
+     * 图片完整路径
+     */
     private String name;
-
+    /**
+     * 图片原始路径
+     */
     private String originalName;
 
     public String getName() {

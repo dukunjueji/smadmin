@@ -43,14 +43,12 @@ public class Banner implements Serializable {
 	private Long createEmp;
 
 	/**创建时间**/
-	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private Date createTime;
 
 	/**修改人**/
 	private Long modifyEmp;
 
 	/**修改时间**/
-	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private Date modifyTime;
 
 	public Integer getIsShow() {

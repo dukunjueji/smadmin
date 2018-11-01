@@ -3,7 +3,7 @@
 <sqlMap namespace="com.uc.training.smadmin.bd.dao.MessageDao">
 
 	<!-- 根据对象的不为null的值作为条件进行查找 -->
-	<select id="getMessageById" resultClass="com.uc.training.smadmin.bd.model.Message" parameterClass="long">
+	<select id="queryOneMessageById" resultClass="com.uc.training.smadmin.bd.model.Message" parameterClass="java.lang.Long">
 		 SELECT
 		 s.id AS id,
 		 s.member_id AS memberId,
@@ -13,7 +13,7 @@
 		 s.create_emp AS createEmp,
 		 s.modify_time AS modifyTime,
 		 s.modify_emp AS modifyEmp
-		 FROM t_bd_message s		 WHERE s.id=#id#
+		 FROM t_bd_message s		 WHERE s.id=#messageId#
 	</select>
 
 
@@ -46,7 +46,7 @@
 	</sql>
 
 	<!-- 通过会员id获取会员列表 -->
-	<select id="queryMessageList" resultClass="com.uc.training.smadmin.bd.model.Message" parameterClass="java.lang.Long">
+	<select id="queryMessageList" resultClass="com.uc.training.smadmin.bd.model.Message">
 		 SELECT
 		 s.id AS id,
 		 s.member_id AS memberId,
@@ -57,18 +57,23 @@
 		 s.modify_time AS modifyTime,
 		 s.modify_emp AS modifyEmp
 		 FROM t_bd_message s
-		 WHERE s.member_id = #uid# ORDER BY s.create_time DESC
+		 WHERE s.member_id = #memberId# ORDER BY s.create_time DESC
 		 <!--  <isEmpty property="queryType"> order by s.id DESC </isEmpty>  -->
 		 <!--  <isNotEmpty property="rows" prepend=" "> limit #start#,#rows#</isNotEmpty>/>  -->
 	</select>
 
-	<!-- 查找指定会员消息总记录数 -->
+	<!-- 查找指定会员未读消息总记录数 -->
 	<select id="queryMessageCount" resultClass="java.lang.Integer" parameterClass="java.lang.Long">
 		 SELECT count(1)
 		 FROM t_bd_message s
 		 WHERE s.member_id = #memberId# and s.is_read=0
 	</select>
-
+	<!-- 查找指定会员消息总记录数 -->
+	<select id="queryAllMessageCount" resultClass="java.lang.Integer" parameterClass="java.lang.Long">
+		 SELECT count(1)
+		 FROM t_bd_message s
+		 WHERE s.member_id = #memberId#
+	</select>
 	<!-- 插入 -->
 	<insert id="insertMessage" parameterClass="com.uc.training.smadmin.bd.model.Message">
 		 insert into t_bd_message

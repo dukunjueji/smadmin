@@ -2,6 +2,7 @@ package com.uc.training.smadmin.gds.model;
 
 import com.uc.training.common.base.model.BaseModel;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
@@ -13,13 +14,15 @@ import java.math.BigDecimal;
  * @auther: ling
  * @date: 2018/10/30 10:05
  */
-public class Property extends BaseModel {
+public class Property extends BaseModel implements Serializable{
 
-  private long id;
+  private static final long serialVersionUID = 4467616407682429649L;
+
+  private Long id;
   /**
    * 商品id
    */
-  private long goodsId;
+  private Long goodsId;
   /**
    * 库存
    */
@@ -41,66 +44,72 @@ public class Property extends BaseModel {
    */
   private Integer isDiscount;
 
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-  public long getId() {
-    return id;
-  }
+    public Long getGoodsId() {
+        return goodsId;
+    }
 
-  public void setId(long id) {
-    this.id = id;
-  }
+    public void setGoodsId(Long goodsId) {
+        this.goodsId = goodsId;
+    }
 
+    public Integer getStock() {
+        return stock;
+    }
 
-  public long getGoodsId() {
-    return goodsId;
-  }
+    public void setStock(Integer stock) {
+        this.stock = stock;
+    }
 
-  public void setGoodsId(long goodsId) {
-    this.goodsId = goodsId;
-  }
+    public BigDecimal getDiscountPrice() {
+        return discountPrice;
+    }
 
+    public void setDiscountPrice(BigDecimal discountPrice) {
+        this.discountPrice = discountPrice;
+    }
 
-  public long getStock() {
-    return stock;
-  }
+    public BigDecimal getSalePrice() {
+        return salePrice;
+    }
 
-  public void setStock(Integer stock) {
-    this.stock = stock;
-  }
+    public void setSalePrice(BigDecimal salePrice) {
+        this.salePrice = salePrice;
+    }
 
-  public BigDecimal getDiscountPrice() {
-    return discountPrice;
-  }
+    public String getProperty() {
+        return property;
+    }
 
-  public void setDiscountPrice(BigDecimal discountPrice) {
-    this.discountPrice = discountPrice;
-  }
+    public void setProperty(String property) {
+        this.property = property;
+    }
 
-  public BigDecimal getSalePrice() {
-    return salePrice;
-  }
+    public Integer getIsDiscount() {
+        return isDiscount;
+    }
 
-  public void setSalePrice(BigDecimal salePrice) {
-    this.salePrice = salePrice;
-  }
+    public void setIsDiscount(Integer isDiscount) {
+        this.isDiscount = isDiscount;
+    }
 
-
-  public String getProperty() {
-    return property;
-  }
-
-  public void setProperty(String property) {
-    this.property = property;
-  }
-
-
-  public long getIsDiscount() {
-    return isDiscount;
-  }
-
-  public void setIsDiscount(Integer isDiscount) {
-    this.isDiscount = isDiscount;
-  }
-
+    @Override
+    public String toString() {
+        return "Property{" +
+                "id=" + id +
+                ", goodsId=" + goodsId +
+                ", stock=" + stock +
+                ", discountPrice=" + discountPrice +
+                ", salePrice=" + salePrice +
+                ", property='" + property + '\'' +
+                ", isDiscount=" + isDiscount +
+                '}';
+    }
 }

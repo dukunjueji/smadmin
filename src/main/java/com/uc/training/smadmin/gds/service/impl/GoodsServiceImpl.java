@@ -1,21 +1,18 @@
 package com.uc.training.smadmin.gds.service.impl;
 
-import com.uc.training.common.enums.UUIDTypeEnum;
 import com.uc.training.smadmin.bd.service.MemberGradeService;
 import com.uc.training.smadmin.gds.dao.GoodsDao;
 import com.uc.training.smadmin.gds.model.Goods;
-import com.uc.training.smadmin.gds.model.GoodsPic;
-import com.uc.training.smadmin.gds.model.Property;
 import com.uc.training.smadmin.gds.re.*;
 import com.uc.training.smadmin.gds.model.HotTag;
 import com.uc.training.smadmin.gds.service.CategoryService;
 import com.uc.training.smadmin.gds.service.GoodsPicService;
 import com.uc.training.smadmin.gds.service.GoodsService;
 import com.uc.training.smadmin.gds.service.PropertyService;
-import com.uc.training.smadmin.gds.vo.AdminGoodsVO;
+import com.uc.training.smadmin.gds.vo.AdminPullGoodsVO;
+import com.uc.training.smadmin.gds.vo.AdminUpdateGoodsVO;
 import com.uc.training.smadmin.gds.vo.GoodsListVO;
 import com.uc.training.smadmin.gds.vo.GoodsStokeVO;
-import com.uc.training.smadmin.utils.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -135,23 +132,11 @@ public class GoodsServiceImpl implements GoodsService {
     /**
      * 后台新增商品
      * @param goods
-     * @param property
-     * @param goodsPic
      * @return
      */
     @Override
-    public Long adminInsertGoods(Goods goods, Property property, GoodsPic goodsPic) {
-
-        // 新增商品
-        Long goodsId = goodsDao.insertGoods(goods);
-
-        //新增商品类型
-        property.setGoodsId(goodsId);
-        Long propertyId = propertyService.insertProperty(property);
-
-        // 新增图片
-        goodsPic.setPropertyId(propertyId);
-        return goodsPicService.insertGoodsPic(goodsPic);
+    public Long adminInsertGoods(Goods goods) {
+        return goodsDao.insertGoods(goods);
     }
 
     /**
@@ -167,47 +152,12 @@ public class GoodsServiceImpl implements GoodsService {
 
     /**
      * 后台更新商品
-     * @param adminGoodsVO
+     * @param adminUpdateGoodsVO
      * @return
      */
     @Override
-    public Integer adminUpdateGoods(AdminGoodsVO adminGoodsVO) {
-
-        // 修改商品属性
-        Property property = new Property();
-
-        property.setGoodsId(adminGoodsVO.getId());
-        property.setStock(adminGoodsVO.getStock());
-        property.setDiscountPrice(adminGoodsVO.getDiscountPrice());
-        property.setSalePrice(adminGoodsVO.getSalePrice());
-        property.setProperty(adminGoodsVO.getProperty());
-        property.setIsDiscount(adminGoodsVO.getIsDiscount());
-        property.setCreateEmp(adminGoodsVO.getCreateEmp());
-        property.setModifyEmp(adminGoodsVO.getModifyEmp());
-
-        Integer propertyId = propertyService.updateProperty(property);
-
-        // 新增图片
-        GoodsPic goodsPic = new GoodsPic();
-
-        goodsPic.setPropertyId(propertyId);
-        goodsPic.setPicName(adminGoodsVO.getPicName());
-        goodsPic.setPicUrl(adminGoodsVO.getPicUrl());
-        goodsPic.setCreateEmp(adminGoodsVO.getCreateEmp());
-        goodsPic.setModifyEmp(adminGoodsVO.getModifyEmp());
-
-        goodsPicService.updateGoodsPic(goodsPic);
-
-        //新增商品
-        Goods goods = new Goods();
-        //生成商品编号
-        goods.setCode(UUIDUtil.getUuidByType(UUIDTypeEnum.GOODSID.getType()));
-        goods.setCategoryId(adminGoodsVO.getCategoryId());
-        goods.setSales(adminGoodsVO.getSales());
-        goods.setDetail(adminGoodsVO.getDetail());
-        goods.setStatus(adminGoodsVO.getStatus());
-
-        return goodsDao.updateGoods(goods);
+    public Integer adminUpdateGoods(AdminUpdateGoodsVO adminUpdateGoodsVO) {
+        return goodsDao.updateGoods(adminUpdateGoodsVO);
     }
 
     /**
@@ -229,6 +179,39 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     public int updateSales(GoodsStokeVO goodsStokeVO) {
         return goodsDao.updateSales(goodsStokeVO);
+    }
+
+    /**
+     * 后台获取商品数量
+     *
+     * @param goodsListVO
+     * @return
+     */
+    @Override
+    public Long getAdminGoodsListCount(GoodsListVO goodsListVO) {
+        return goodsDao.getAdminGoodsListCount(goodsListVO);
+    }
+
+    /**
+     * 商品上架
+     *
+     * @param adminPullGoodsVO
+     * @return
+     */
+    @Override
+    public Integer pullOnGoods(AdminPullGoodsVO adminPullGoodsVO) {
+        return goodsDao.pullOnGoods(adminPullGoodsVO);
+    }
+
+    /**
+     * 商品下架
+     *
+     * @param adminPullGoodsVO
+     * @return
+     */
+    @Override
+    public Integer pullOffGoods(AdminPullGoodsVO adminPullGoodsVO) {
+        return goodsDao.pullOffGoods(adminPullGoodsVO);
     }
 
 
