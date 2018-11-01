@@ -17,14 +17,6 @@ import java.util.List;
 public class MessageDaoImpl extends CarIsIbatisDaoImpl implements MessageDao {
 
 	/**
-	 * 通过主键来查找查找
-	 */
-	 @Override
-	 public List<Message> getMessageById(Long id){
-		  return (List<Message>) this.queryForObject("com.uc.training.smadmin.bd.dao.MessageDao.getMessageById", id);
-	 }
-
-	/**
 	 * 查找数据总记录数
 	 */
 	 @Override
@@ -61,6 +53,11 @@ public class MessageDaoImpl extends CarIsIbatisDaoImpl implements MessageDao {
 	@Override
 	public int updateMessageStatus(Message message) {
 		return this.update("com.uc.training.smadmin.bd.dao.MessageDao.updateMessageStatus", message);
+	}
+
+	@Override
+	public Message queryOneMessageById(Long messageId) {
+		return (Message)this.queryForObject("com.uc.training.smadmin.bd.dao.MessageDao.queryOneMessageById", messageId);
 	}
 
 }

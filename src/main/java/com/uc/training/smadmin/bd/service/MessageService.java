@@ -2,6 +2,7 @@ package com.uc.training.smadmin.bd.service;
 
 import com.uc.training.smadmin.bd.model.Message;
 import com.uc.training.smadmin.bd.re.MessageRE;
+import com.uc.training.smadmin.bd.vo.MessageDetailVO;
 import com.uc.training.smadmin.bd.vo.MessageListVO;
 
 import java.util.List;
@@ -53,4 +54,12 @@ public interface MessageService {
     *@throws：
     */
     public Long insertMessage(Message record);
+
+    /**
+    *说明：通过消息id获取消息的详情
+    *@param messageId
+    *@return：com.uc.training.smadmin.bd.vo.MessageDetailVO
+    *@throws：
+    */
+    MessageDetailVO queryOneMessageById(Long messageId);
 }
