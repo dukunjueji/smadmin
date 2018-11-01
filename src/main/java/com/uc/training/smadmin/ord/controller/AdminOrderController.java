@@ -53,7 +53,6 @@ public class AdminOrderController extends BaseController {
   @AccessLogin
   @RequestMapping(value = "getOrderPage.do_", method = RequestMethod.POST)
   public Result getOrderPage(OrdOrderVo orderVo) {
-    List<OrderStatusRe> statuaList;
     List<OrderRe> list;
     Map map = new HashMap(10);
     list = orderService.getOrderPage(orderVo);
@@ -77,9 +76,14 @@ public class AdminOrderController extends BaseController {
   @RequestMapping(value = "admDelOrder.do_", method = RequestMethod.POST)
   public Result delOrderPage(String delId) {
     Result result = new Result();
-    System.out.println(delId);
-    String[] deleteId = StringUtils.split(delId.substring(1, delId.length()-1), ',');
+    //截取字符串
+    String del = delId.substring(1, delId.length()-1);
+    String[] deleteId = StringUtils.split(del, ',');
     List<Long> list = new ArrayList<>();
+    //判空
+    if (StringUtils.isEmpty(delId)) {
+      return Result.getBusinessException("删除失败",null);
+    }
     for (String s : deleteId) {
       list.add(Long.parseLong(s));
     }
