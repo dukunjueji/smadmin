@@ -10,7 +10,7 @@ import com.ycc.tools.middleware.redis.RedisCacheUtils;
  */
 public class RedisUtil {
     public static void main(String[] args) {
-        RedisCacheUtils redis = RedisCacheUtils.getInstance(RedisConfigEnum.Goods_DETAIL);
+        RedisCacheUtils redis = RedisCacheUtils.getInstance(RedisConfigEnum.GOODS_DETAIL);
         redis.set("hello","world");
         System.out.println(redis.get("hello"));
     }

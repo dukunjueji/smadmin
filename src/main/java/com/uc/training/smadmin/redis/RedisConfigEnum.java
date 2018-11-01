@@ -17,7 +17,7 @@ public enum RedisConfigEnum implements IRedisConfig {
     /**
      * 商品详情缓存
      */
-    Goods_DETAIL(RedisConfigConstant.GROUPNAME,RedisConfigConstant.NAMESPACE, true, RedisNameSpaceEnum.Goods_DETAIL.getTimeout(), RedisNameSpaceEnum.Goods_DETAIL.getUnit());
+    GOODS_DETAIL(RedisConfigConstant.GROUPNAME,RedisConfigConstant.NAMESPACE_ORDER_DETAIL, true, RedisNameSpaceEnum.GOODS_DETAIL.getTimeout(), RedisNameSpaceEnum.GOODS_DETAIL.getUnit());
 
     /** 集群名*/
     private String groupName;

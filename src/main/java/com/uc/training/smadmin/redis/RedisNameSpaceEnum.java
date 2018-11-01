@@ -4,47 +4,47 @@ import java.util.concurrent.TimeUnit;
 
 public enum RedisNameSpaceEnum {
 
-	//商品详情缓存
-	Goods_DETAIL("goods", "商品详情缓存",1,TimeUnit.DAYS);
+    //商品详情缓存
+    GOODS_DETAIL("goods", "商品详情缓存", 1, TimeUnit.DAYS);
 
-	/**
-	 * 前缀
-	 */
-	private String pre;
-	/**
-	 * 描述
-	 */
-	private String discrible;
-	/**
-	 * 超时设置
-	 */
-	private long timeout;
-	/**
-	 * 超时单位
-	 */
-	private TimeUnit unit;
+    /**
+     * 前缀
+     */
+    private String pre;
+    /**
+     * 描述
+     */
+    private String discrible;
+    /**
+     * 超时设置
+     */
+    private long timeout;
+    /**
+     * 超时单位
+     */
+    private TimeUnit unit;
 
-	RedisNameSpaceEnum(String pre, String discrible, long timeout, TimeUnit unit) {
-		this.pre = pre;
-		this.discrible = discrible;
-		this.timeout = timeout;
-		this.unit = unit;
-	}
+    RedisNameSpaceEnum(String pre, String discrible, long timeout, TimeUnit unit) {
+        this.pre = pre;
+        this.discrible = discrible;
+        this.timeout = timeout;
+        this.unit = unit;
+    }
 
-	public String getPre() {
-		return pre;
-	}
+    public String getPre() {
+        return pre;
+    }
 
 
-	public String getDiscrible() {
-		return discrible;
-	}
+    public String getDiscrible() {
+        return discrible;
+    }
 
-	public long getTimeout() {
-		return timeout;
-	}
+    public long getTimeout() {
+        return timeout;
+    }
 
-	public TimeUnit getUnit() {
-		return unit;
-	}
+    public TimeUnit getUnit() {
+        return unit;
+    }
 }

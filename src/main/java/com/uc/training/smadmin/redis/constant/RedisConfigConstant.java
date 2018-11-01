@@ -9,10 +9,12 @@ package com.uc.training.smadmin.redis.constant;
 public class RedisConfigConstant {
     /**
      * 命名空间
+     * 5000000-5099999 mmc-web
+     * 5100000-5199999 mmc-wap
      */
-    public static final int NAMESPACE =500001;
+    public static final int NAMESPACE_ORDER_DETAIL =500001;
     /**
      * 集群名
      */
-    public static final String GROUPNAME ="uc_one";
+    public static final String GROUPNAME ="smadmin_group";
 }
