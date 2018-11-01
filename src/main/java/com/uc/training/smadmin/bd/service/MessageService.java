@@ -2,6 +2,7 @@ package com.uc.training.smadmin.bd.service;
 
 import com.uc.training.smadmin.bd.model.Message;
 import com.uc.training.smadmin.bd.re.MessageRE;
+import com.uc.training.smadmin.bd.vo.MessageListVO;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ import java.util.List;
  */
 public interface MessageService {
     /**
-    *说明：查找指定会员消息总记录数
+    *说明：查找指定会员未读消息总记录数
     *@param memberId 会员id
     *@return：java.lang.Integer 消息的数目
     *@throws：
@@ -23,11 +24,19 @@ public interface MessageService {
     public Integer queryMessageCount(Long memberId);
 
     /**
+     *说明：查找指定会员消息总记录数
+     *@param memberId 会员id
+     *@return：java.lang.Integer 消息的数目
+     *@throws：
+     */
+    public Integer queryAllMessageCount(Long memberId);
+
+    /**
      * 查询指定会员的所有消息
-     * @param uid 会员id
+     * @param messageListVO
      * @return 会员列表
      */
-    public List<MessageRE> queryMessageList(Long uid);
+    public List<MessageRE> queryMessageList(MessageListVO messageListVO);
 
     /**
     *说明：更新消息状态
