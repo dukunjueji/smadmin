@@ -1,6 +1,7 @@
 package com.uc.training.smadmin.ord.dao;
 import com.uc.training.smadmin.ord.model.Order;
 import com.uc.training.smadmin.ord.re.OrderRe;
+import com.uc.training.smadmin.ord.vo.OrdMemberVO;
 import com.uc.training.smadmin.ord.vo.OrdOrderVo;
 import java.util.List;
 
@@ -12,11 +13,11 @@ import java.util.List;
 public interface OrderDao {
 
 	/**
-	 * 通过主键来查找
-	 * @param id （订单表id）
+	 * 通过会员id来查找
+	 * @param ordMemberVO （订单表id）
 	 * @return
 	 */
-  List<Order> getOrderById(Long id);
+  List<Order> getOrderById(OrdMemberVO ordMemberVO);
 
 	/**
 	 * 查询列表

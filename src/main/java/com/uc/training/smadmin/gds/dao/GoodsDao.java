@@ -46,6 +46,13 @@ public interface GoodsDao {
     public GoodsDetailRE getGoodsDetailByPropertyId(Long propertyId);
 
     /**
+     * 通过属性id商品详情
+     * @param propertyIds
+     * @return
+     */
+    public List<GoodsDetailRE> getGoodsDetailByPropertyIds(List<Long> propertyIds);
+
+    /**
      * 更新销量
      * @param goodsStokeVO key为goodsId、sales
      * @return
@@ -58,6 +65,7 @@ public interface GoodsDao {
      * @return
      */
     public List<GoodsDetailRE> getGoodsDetailByGoodsId(Long goodsId);
+
 
     /**
      * 减库存之前，查看商品是否下架、删除、检查库存是否足够
@@ -99,6 +107,13 @@ public interface GoodsDao {
      * @return
      */
     public List<PropertyUrlRE> getPicUrlByPropertyId(Long propertyId);
+
+    /**
+     * 通过属性list列表id获取相应的图片
+     * @param propertyId
+     * @return
+     */
+    public List<List<PropertyUrlRE>> getPicUrlByPropertyIds(List<Long> propertyId);
 
     /**
      * 后台获取商品列表

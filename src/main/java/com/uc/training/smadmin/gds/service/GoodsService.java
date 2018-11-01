@@ -26,6 +26,12 @@ public interface GoodsService {
      */
     public List<GoodsRE> getHotRecommend(int listSize);
 
+    /**
+     * 通过属性id商品详情
+     * @param propertyIds
+     * @return
+     */
+    public List<GoodsDetailRE> getGoodsDetailByPropertyIds(List<Long> propertyIds);
 
     /**
      * 通过分类来获取商品数量

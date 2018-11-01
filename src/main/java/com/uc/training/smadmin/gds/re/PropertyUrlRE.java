@@ -31,4 +31,12 @@ public class PropertyUrlRE {
     public void setPicUrl(String picUrl) {
         this.picUrl = picUrl;
     }
+
+    @Override
+    public String toString() {
+        return "PropertyUrlRE{" +
+                "propertyId=" + propertyId +
+                ", picUrl='" + picUrl + '\'' +
+                '}';
+    }
 }
