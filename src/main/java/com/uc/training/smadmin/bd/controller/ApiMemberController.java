@@ -361,7 +361,13 @@ public class ApiMemberController extends BaseController {
         return Result.getSuccessResult(allMessageRE);
     }
 
-    @RequestMapping("/updateMessageStatus.do_")
+    /**
+    *说明：更新消息的状态
+    *@param messageVO
+    *@return：com.ycc.base.common.Result
+    *@throws：
+    */
+    @RequestMapping(value = "/updateMessageStatus.do_", method = RequestMethod.POST)
     @AccessLogin
     @ResponseBody
     public Result updateMessageStatus(@Validated MessageVO messageVO){
@@ -370,5 +376,13 @@ public class ApiMemberController extends BaseController {
         message.setIsRead(messageVO.getIsRead());
         message.setMemberId(getUid());
         return Result.getSuccessResult( messageService.updateMessageStatus(message));
+    }
+
+    @RequestMapping(value = "/queryOneMessageById.do_", method = RequestMethod.GET)
+    @AccessLogin
+    @ResponseBody
+    public Result<MessageDetailVO> queryOneMessageById(Long messageId){
+        MessageDetailVO messageDetailVO = messageService.queryOneMessageById(messageId);
+        return Result.getSuccessResult( messageDetailVO);
     }
 }

@@ -3,7 +3,7 @@
 <sqlMap namespace="com.uc.training.smadmin.bd.dao.MessageDao">
 
 	<!-- 根据对象的不为null的值作为条件进行查找 -->
-	<select id="getMessageById" resultClass="com.uc.training.smadmin.bd.model.Message" parameterClass="long">
+	<select id="queryOneMessageById" resultClass="com.uc.training.smadmin.bd.model.Message" parameterClass="java.lang.Long">
 		 SELECT
 		 s.id AS id,
 		 s.member_id AS memberId,
@@ -13,7 +13,7 @@
 		 s.create_emp AS createEmp,
 		 s.modify_time AS modifyTime,
 		 s.modify_emp AS modifyEmp
-		 FROM t_bd_message s		 WHERE s.id=#id#
+		 FROM t_bd_message s		 WHERE s.id=#messageId#
 	</select>
 
 

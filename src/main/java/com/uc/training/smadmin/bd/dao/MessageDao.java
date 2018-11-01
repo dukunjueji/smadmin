@@ -13,15 +13,6 @@ import java.util.List;
  */
 public interface MessageDao{
 
-	 /**
-	 *说明：通过主键来查找查找
-	 *@param id 消息id
-	 *@return：java.util.List<com.uc.training.smadmin.bd.model.Message>
-	 *@throws：
-	 */
-	 public List<Message>  getMessageById(Long id);
-
-
 	/**
 	*说明：查找指定会员未读消息总记录数
 	*@param memberId 会员id
@@ -69,5 +60,11 @@ public interface MessageDao{
 	*/
     int updateMessageStatus(Message message);
 
-
+	/**
+	*说明：通过消息id获取消息的详情
+	*@param messageId
+	*@return：com.uc.training.smadmin.bd.model.Message
+	*@throws：
+	*/
+    Message queryOneMessageById(Long messageId);
 }
