@@ -5,10 +5,7 @@ import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.common.enums.UploadEnum;
 import com.uc.training.smadmin.upload.service.UploadService;
 import com.uc.training.smadmin.upload.re.UploadRE;
-import com.uc.training.smadmin.upload.vo.UploadVO;
 import com.ycc.base.common.Result;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @date 2018/9/18 16:32
  */
 @Controller
-@RequestMapping("/admin/upload")
+@RequestMapping("admin/upload")
 public class UploadController extends BaseController{
 
     @Autowired
@@ -33,33 +30,31 @@ public class UploadController extends BaseController{
 
     /**
      * 图片上传
-     * @param uploadVO
+     * @param file
      * @return
      */
     @ResponseBody
-    @AccessLogin
     @RequestMapping(value = "/file.do_", method = RequestMethod.POST)
-    public Result<UploadRE> imageUpload(UploadVO uploadVO) {
+    public Result<UploadRE> imageUpload(MultipartFile file) {
 
-        if (uploadVO.getFile().isEmpty()) {
+        if (file.isEmpty()) {
             Result.getBusinessException("上传文件不能为空" , null);
         }
-        if (uploadVO.getFile().getSize() >= UploadEnum.MAX_IMAGE_SIZE.getSize()) {
+        if (file.getSize() >= UploadEnum.MAX_IMAGE_SIZE.getSize()) {
             Result.getBusinessException("上传文件不能超过4M", null);
         }
 
-        return Result.getSuccessResult(uploadService.imageUpload(uploadVO.getFile()));
+        return Result.getSuccessResult(uploadService.imageUpload(file));
     }
 
     /**
      * 图片转String上传
-     * @param uploadVO
+     * @param imageText
      * @return
      */
     @ResponseBody
-    @AccessLogin
     @RequestMapping(value = "/text.do_", method = RequestMethod.POST)
-    public Result<UploadRE> imageToTextUpload(UploadVO uploadVO) {
-        return Result.getSuccessResult(uploadService.imageToTextUpload(uploadVO.getImageText()));
+    public Result<UploadRE> imageToTextUpload(String imageText) {
+        return Result.getSuccessResult(uploadService.imageToTextUpload(imageText));
     }
 }

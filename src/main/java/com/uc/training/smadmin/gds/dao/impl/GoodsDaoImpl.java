@@ -4,6 +4,8 @@ import com.uc.training.smadmin.gds.dao.GoodsDao;
 import com.uc.training.smadmin.gds.model.Goods;
 import com.uc.training.smadmin.gds.re.*;
 import com.uc.training.smadmin.gds.model.HotTag;
+import com.uc.training.smadmin.gds.vo.AdminPullGoodsVO;
+import com.uc.training.smadmin.gds.vo.AdminUpdateGoodsVO;
 import com.uc.training.smadmin.gds.vo.GoodsListVO;
 import com.uc.training.smadmin.gds.vo.GoodsStokeVO;
 import com.zuche.framework.dao.CarIsIbatisDaoImpl;
@@ -126,12 +128,12 @@ public class GoodsDaoImpl  extends CarIsIbatisDaoImpl implements GoodsDao {
     /**
      * 更新商品
      *
-     * @param goods
+     * @param adminUpdateGoodsVO
      * @return
      */
     @Override
-    public Integer updateGoods(Goods goods) {
-        return this.update("com.uc.training.smadmin.gds.dao.GoodsDao.updateGoods", goods);
+    public Integer updateGoods(AdminUpdateGoodsVO adminUpdateGoodsVO) {
+        return this.update("com.uc.training.smadmin.gds.dao.GoodsDao.updateGoods", adminUpdateGoodsVO);
     }
 
     /**
@@ -143,6 +145,39 @@ public class GoodsDaoImpl  extends CarIsIbatisDaoImpl implements GoodsDao {
     @Override
     public Integer logicDeleteGoods(Long id) {
         return this.update("com.uc.training.smadmin.gds.dao.GoodsDao.logicDeleteGoods", id);
+    }
+
+    /**
+     * 后台获取商品数量
+     *
+     * @param goodsListVO
+     * @return
+     */
+    @Override
+    public Long getAdminGoodsListCount(GoodsListVO goodsListVO) {
+        return (Long) this.queryForObject("com.uc.training.smadmin.gds.dao.GoodsDao.getAdminGoodsListCount", goodsListVO);
+    }
+
+    /**
+     * 商品上架
+     *
+     * @param adminPullGoodsVO
+     * @return
+     */
+    @Override
+    public Integer pullOnGoods(AdminPullGoodsVO adminPullGoodsVO) {
+        return this.update("com.uc.training.smadmin.gds.dao.GoodsDao.pullOnGoods", adminPullGoodsVO);
+    }
+
+    /**
+     * 商品下架
+     *
+     * @param adminPullGoodsVO
+     * @return
+     */
+    @Override
+    public Integer pullOffGoods(AdminPullGoodsVO adminPullGoodsVO) {
+        return this.update("com.uc.training.smadmin.gds.dao.GoodsDao.pullOffGoods", adminPullGoodsVO);
     }
 
 

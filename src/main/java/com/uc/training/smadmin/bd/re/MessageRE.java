@@ -38,6 +38,7 @@ public class MessageRE implements Serializable {
      */
     private String title;
 
+
     public String getContent() {
         return content;
     }
@@ -77,4 +78,6 @@ public class MessageRE implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
+
 }

@@ -78,20 +78,7 @@ public class AddressController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/addAddress.do_", method = RequestMethod.POST)
-    public Result addAddress(AddressVO addressVO) {
-
-        //判断收件人
-        if (addressVO.getReceiver() == null || addressVO.getReceiver().length() <= 0) {
-            return Result.getBusinessException("收件人不能为空", null);
-        }
-        //判断手机号
-        if (!TelCodeUtil.validateTel(addressVO.getTelephone())) {
-            return Result.getBusinessException("请输入正确手机号", null);
-        }
-        //判断详细地址
-        if (addressVO.getReceiver() == null || addressVO.getReceiver().length() <= 0) {
-            return Result.getBusinessException("请输入地址", null);
-        }
+    public Result addAddress(@Validated AddressVO addressVO) {
 
         Address address = new Address();
         BeanUtils.copyProperties(addressVO, address);
@@ -138,6 +125,12 @@ public class AddressController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/deleteAddress.do_", method = RequestMethod.POST)
     public Result deleteAddress(Long id) {
+
+        // 判断是否为默认地址
+        if (addressService.getAddressById(id).getIsDefault() == 1) {
+            return Result.getBusinessException("默认地址不能删除！",null);
+        }
+
         return Result.getSuccessResult(addressService.deleteAddressById(id));
     }
 }

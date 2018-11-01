@@ -1,7 +1,8 @@
 package com.uc.training.smadmin.gds.vo;
 
-import com.uc.training.smadmin.gds.re.AdminGoodsRE;
+import org.hibernate.validator.constraints.NotBlank;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -11,66 +12,57 @@ import java.io.Serializable;
  * @Version 1.0
  * @date 2018/10/29
  */
-public class AdminGoodsVO extends AdminGoodsRE implements Serializable{
+public class AdminGoodsVO implements Serializable{
 
     private static final long serialVersionUID = -8084737002616351560L;
-    /**
-     * 商品类型
-     */
-    private Integer categoryId;
-    /**
-     * 图片名称
-     */
-    private String picName;
 
     /**
-     * 创建人
+     * 商品名称
      */
-    private Long createEmp;
-    /**
-     *修改人
-     */
-    private Long modifyEmp;
+    @NotBlank(message = "商品名称不能为空")
+    private String name;
 
-    public Integer getCategoryId() {
+    /**
+     * 商品属性
+     */
+    @NotNull(message = "请选择商品类型！")
+    private Long categoryId;
+
+    /**
+     * 详情
+     */
+    private String detail;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Long getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(Integer categoryId) {
+    public void setCategoryId(Long categoryId) {
         this.categoryId = categoryId;
     }
 
-    public String getPicName() {
-        return picName;
+    public String getDetail() {
+        return detail;
     }
 
-    public void setPicName(String picName) {
-        this.picName = picName;
-    }
-
-    public Long getCreateEmp() {
-        return createEmp;
-    }
-
-    public void setCreateEmp(Long createEmp) {
-        this.createEmp = createEmp;
-    }
-
-    public Long getModifyEmp() {
-        return modifyEmp;
-    }
-
-    public void setModifyEmp(Long modifyEmp) {
-        this.modifyEmp = modifyEmp;
+    public void setDetail(String detail) {
+        this.detail = detail;
     }
 
     @Override
     public String toString() {
         return "AdminGoodsVO{" +
-                "categoryId=" + categoryId +
-                ", picName='" + picName + '\'' +
-                ", createEmp=" + createEmp +
-                ", modifyEmp=" + modifyEmp +
+                "name='" + name + '\'' +
+                ", categoryId=" + categoryId +
+                ", detail='" + detail + '\'' +
                 '}';
     }
 }

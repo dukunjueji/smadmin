@@ -3,6 +3,8 @@ package com.uc.training.smadmin.gds.dao;
 import com.uc.training.smadmin.gds.model.Goods;
 import com.uc.training.smadmin.gds.re.*;
 import com.uc.training.smadmin.gds.model.HotTag;
+import com.uc.training.smadmin.gds.vo.AdminPullGoodsVO;
+import com.uc.training.smadmin.gds.vo.AdminUpdateGoodsVO;
 import com.uc.training.smadmin.gds.vo.GoodsListVO;
 import com.uc.training.smadmin.gds.vo.GoodsStokeVO;
 
@@ -129,10 +131,10 @@ public interface GoodsDao {
 
     /**
      * 更新商品
-     * @param goods
+     * @param adminUpdateGoodsVO
      * @return
      */
-    Integer updateGoods(Goods goods);
+    Integer updateGoods(AdminUpdateGoodsVO adminUpdateGoodsVO);
 
     /**
      * 逻辑删除商品
@@ -140,4 +142,25 @@ public interface GoodsDao {
      * @return
      */
     Integer logicDeleteGoods(Long id);
+
+    /**
+     * 后台获取商品数量
+     * @param goodsListVO
+     * @return
+     */
+    Long getAdminGoodsListCount(GoodsListVO goodsListVO);
+
+    /**
+     * 商品上架
+     * @param adminPullGoodsVO
+     * @return
+     */
+    Integer pullOnGoods(AdminPullGoodsVO adminPullGoodsVO);
+
+    /**
+     * 商品下架
+     * @param adminPullGoodsVO
+     * @return
+     */
+    Integer pullOffGoods(AdminPullGoodsVO adminPullGoodsVO);
 }
