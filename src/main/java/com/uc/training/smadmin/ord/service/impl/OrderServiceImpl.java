@@ -204,13 +204,6 @@ public class OrderServiceImpl implements OrderService {
     if (list.size() <= 0) {
       return null;
     }
-/*    for (OrderRe orderRe : list) {
-      OrderEnum orderEnum;
-      orderEnum = OrderEnum.getEnumByKey(orderRe.getStatus());
-      if (orderEnum != null) {
-        orderRe.setShowStatus(orderEnum.getValue());
-      }
-    }*/
     return list;
   }
 
@@ -298,7 +291,6 @@ public class OrderServiceImpl implements OrderService {
         List<GoodsDetailRE> goodsDetailRES=goodsService.getGoodsDetailByPropertyIds(propertyIds);
         for (int i = 0; i < orderGdslist.size(); i++) {
             orderGoodsDetailRe = new OrderGoodsDetailRe();
-            //gdDTO = goodsService.getGoodsDetailByPropertyId(orderGoods.getGoodsPropertyId());
             orderGoodsDetailRe.setGoodsName(goodsDetailRES.get(i).getName());
             orderGoodsDetailRe.setGoodsNum(orderGdslist.get(i).getGoodsNum());
             orderGoodsDetailRe.setGoodsProperty(goodsDetailRES.get(i).getProperty());
