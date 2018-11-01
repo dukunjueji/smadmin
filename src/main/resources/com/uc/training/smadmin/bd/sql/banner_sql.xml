@@ -10,7 +10,7 @@
         s.url AS url
         FROM t_bd_banner s
         WHERE s.type = 1 AND s.is_show = 1
-        ORDER s.sort_num ASC
+        ORDER BY s.sort_num ASC
 	</select>
 
 	<!-- 后台获取广告图片 -->
