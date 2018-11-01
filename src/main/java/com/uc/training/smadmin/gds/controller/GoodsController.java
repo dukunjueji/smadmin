@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.google.inject.servlet.RequestParameters;
 import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.smadmin.gds.vo.GoodsStokeVO;
+import com.uc.training.smadmin.redis.RedisConfigEnum;
 import com.ycc.base.common.Result;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.common.vo.PageVO;
@@ -12,6 +13,7 @@ import com.uc.training.smadmin.gds.re.GoodsDetailRE;
 import com.uc.training.smadmin.gds.model.HotTag;
 import com.uc.training.smadmin.gds.service.GoodsService;
 import com.uc.training.smadmin.gds.vo.GoodsListVO;
+import com.ycc.tools.middleware.redis.RedisCacheUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,7 +28,7 @@ import java.util.List;
  * @since 2018年10月16日 11:17
  */
 @Controller
-@RequestMapping("api/gds")
+@RequestMapping("api/gds/goods")
 public class GoodsController extends BaseController {
     @Autowired
     GoodsService goodsService;
@@ -196,6 +198,26 @@ public class GoodsController extends BaseController {
         } catch (Exception e) {
             logger.error("减库存错误！", e);
             res = Result.getBusinessException("减库存失败", null);
+        }
+        return res;
+    }
+
+    /**
+     * 测试redis
+     */
+    @AccessLogin(required = false)
+    @ResponseBody
+    @RequestMapping(value = "testRdis.do_")
+    public Result<String> testRdis(){
+        Result<String> res;
+        RedisCacheUtils redis = RedisCacheUtils.getInstance(RedisConfigEnum.GOODS_DETAIL);
+        redis.set("helloTesst","world");
+        System.out.println(redis.get("hello"));
+        try {
+            res = Result.getSuccessResult("成功");
+        } catch (Exception e) {
+            logger.error("错误！", e);
+            res = Result.getBusinessException("失败", null);
         }
         return res;
     }
