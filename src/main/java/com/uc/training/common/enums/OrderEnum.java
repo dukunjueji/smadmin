@@ -5,13 +5,27 @@ package com.uc.training.common.enums;
  * @Description: 订单状态枚举类：0-未生成1-待付款 2-取消订单 3-待发货 4-待收货 5-已完成
  */
 public enum OrderEnum {
+  //未生成
   NOORDER(0,"未生成"),
+  //待付款
   WAITPAY(1, "待付款"),
+  //取消订单
   CANCEL(2,"取消订单"),
+  //代发货
   WAITSHIP(3,"待发货"),
+  //待收货
   WAIRECEPIT(4,"待收货"),
+  //已完成
   COMPLETED(5,"已完成");
+
+  /**
+   * 数据库订单状态码
+   */
   private final Integer key;
+
+  /**
+   * 状态描述
+   */
   private final String value;
 
   OrderEnum(Integer key, String value) {
