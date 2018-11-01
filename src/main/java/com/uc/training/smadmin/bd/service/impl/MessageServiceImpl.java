@@ -4,6 +4,7 @@ import com.uc.training.smadmin.bd.dao.MessageDao;
 import com.uc.training.smadmin.bd.model.Message;
 import com.uc.training.smadmin.bd.re.MessageRE;
 import com.uc.training.smadmin.bd.service.MessageService;
+import com.uc.training.smadmin.bd.vo.MessageListVO;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,8 +33,13 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public List<MessageRE> queryMessageList(Long uid) {
-        List<Message> messageList = this.messageDao.queryMessageList(uid);
+    public Integer queryAllMessageCount(Long memberId) {
+        return this.messageDao.queryAllMessageCount(memberId);
+    }
+
+    @Override
+    public List<MessageRE> queryMessageList(MessageListVO messageListVO) {
+        List<Message> messageList = this.messageDao.queryMessageList(messageListVO);
         List<MessageRE> messageListRE = new ArrayList<>();
         for (Message message: messageList){
             MessageRE messageRE = new MessageRE();

@@ -3,12 +3,11 @@ package com.uc.training.smadmin.bd.controller;
 import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.common.constant.Constant;
+import com.uc.training.common.enums.GrowthEnum;
 import com.uc.training.smadmin.bd.model.Member;
 import com.uc.training.smadmin.bd.model.Message;
-import com.uc.training.smadmin.bd.re.MemberDetailRE;
-import com.uc.training.smadmin.bd.re.MemberInfoRE;
-import com.uc.training.smadmin.bd.re.MemberLoginRE;
-import com.uc.training.smadmin.bd.re.MessageRE;
+import com.uc.training.smadmin.bd.mq.GrowthMqProducer;
+import com.uc.training.smadmin.bd.re.*;
 import com.uc.training.smadmin.bd.service.MemberService;
 import com.uc.training.smadmin.bd.service.MessageService;
 import com.uc.training.smadmin.bd.vo.*;
@@ -16,12 +15,8 @@ import com.uc.training.smadmin.ord.service.OrderService;
 import com.uc.training.smadmin.utils.EncryptUtil;
 import com.uc.training.smadmin.utils.TelCodeUtil;
 import com.uc.training.smadmin.utils.TokenUtil;
-import com.uc.training.smadmin.utils.ValidateUtil;
 import com.ycc.base.common.Result;
-import com.ycc.tools.middleware.metaq.MQHelperAdapter;
 import com.ycc.tools.middleware.metaq.MetaQUtils;
-import com.zuche.framework.metaq.handler.DefaultExecutorMessageListener;
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -138,6 +133,12 @@ public class ApiMemberController extends BaseController {
                 String token = TokenUtil.sign(member.getId());
                 MemberLoginRE memberLoginRE = new MemberLoginRE();
                 memberLoginRE.setToken(token);
+
+                LoginMqVO loginMqVO = new LoginMqVO();
+                loginMqVO.setMemberId(member.getId());
+                loginMqVO.setGrowthType(GrowthEnum.LOGININ.getGrowthType());
+                MetaQUtils.sendMsgNoException(new GrowthMqProducer(loginMqVO));
+
                 result = Result.getSuccessResult(memberLoginRE);
             }
         } catch (Exception e) {
@@ -343,15 +344,21 @@ public class ApiMemberController extends BaseController {
     /**
     *说明：获取指定会员的消息列表
     *@param
-    *@return：com.ycc.base.common.Result<java.util.List<com.uc.training.smadmin.bd.re.MessageRE>>
+    *@return：
     *@throws：
     */
     @ResponseBody
-    @AccessLogin
+    @AccessLogin()
     @RequestMapping(value = "queryMessageList.do_", method = RequestMethod.GET)
-    public Result<List<MessageRE>> queryMessageList(){
-        List<MessageRE> messageREList = messageService.queryMessageList(getUid());
-        return Result.getSuccessResult(messageREList);
+    public Result<AllMessageRE> queryMessageList(MessageListVO messageListVO){
+        messageListVO.setMemberId(getUid());
+        List<MessageRE> messageREList = messageService.queryMessageList(messageListVO);
+        Integer totalNum = messageService.queryAllMessageCount(getUid());
+
+        AllMessageRE allMessageRE = new AllMessageRE();
+        allMessageRE.setMessageREList(messageREList);
+        allMessageRE.setTotalNum(totalNum);
+        return Result.getSuccessResult(allMessageRE);
     }
 
     @RequestMapping("/updateMessageStatus.do_")

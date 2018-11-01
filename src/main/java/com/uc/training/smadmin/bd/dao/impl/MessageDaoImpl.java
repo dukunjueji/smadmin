@@ -1,6 +1,7 @@
 package com.uc.training.smadmin.bd.dao.impl;
 import com.uc.training.smadmin.bd.dao.MessageDao;
 import com.uc.training.smadmin.bd.model.Message;
+import com.uc.training.smadmin.bd.vo.MessageListVO;
 import com.zuche.framework.dao.CarIsIbatisDaoImpl;
 import org.springframework.stereotype.Repository;
 import java.util.List;
@@ -24,20 +25,17 @@ public class MessageDaoImpl extends CarIsIbatisDaoImpl implements MessageDao {
 	 }
 
 	/**
-	 * 查询列表
-	 */
-	 @Override
-	 public List<Message>  queryMessageList(){
-		  return this.queryForList("com.uc.training.smadmin.bd.dao.MessageDao.queryMessageList");
-	 }
-
-	/**
 	 * 查找数据总记录数
 	 */
 	 @Override
 	public Integer queryMessageCount(Long memberId){
 		  return (Integer) this.queryForObject("com.uc.training.smadmin.bd.dao.MessageDao.queryMessageCount", memberId);
 	 }
+
+	@Override
+	public Integer queryAllMessageCount(Long memberId) {
+		return (Integer) this.queryForObject("com.uc.training.smadmin.bd.dao.MessageDao.queryAllMessageCount", memberId);
+	}
 
 	/**
 	 * 保存
@@ -56,8 +54,8 @@ public class MessageDaoImpl extends CarIsIbatisDaoImpl implements MessageDao {
 	 }
 
 	@Override
-	public List<Message> queryMessageList(Long uid) {
-		return this.queryForList("com.uc.training.smadmin.bd.dao.MessageDao.queryMessageList", uid);
+	public List<Message> queryMessageList(MessageListVO messageListVO) {
+		return this.queryForList("com.uc.training.smadmin.bd.dao.MessageDao.queryMessageList", messageListVO,messageListVO.getStartIndex(),messageListVO.getEndIndex());
 	}
 
 	@Override
