@@ -210,7 +210,7 @@ public class GoodsController extends BaseController {
     @RequestMapping(value = "testRdis.do_")
     public Result<String> testRdis(){
         Result<String> res;
-        RedisCacheUtils redis = RedisCacheUtils.getInstance(RedisConfigEnum.Goods_DETAIL);
+        RedisCacheUtils redis = RedisCacheUtils.getInstance(RedisConfigEnum.GOODS_DETAIL);
         redis.set("helloTesst","world");
         System.out.println(redis.get("hello"));
         try {
