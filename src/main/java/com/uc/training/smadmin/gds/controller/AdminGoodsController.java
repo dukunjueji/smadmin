@@ -5,6 +5,7 @@ import com.uc.training.common.enums.UUIDTypeEnum;
 import com.uc.training.common.vo.PageVO;
 import com.uc.training.smadmin.gds.model.Goods;
 import com.uc.training.smadmin.gds.re.AdminGoodsRE;
+import com.uc.training.smadmin.gds.service.GoodsPicService;
 import com.uc.training.smadmin.gds.service.GoodsService;
 import com.uc.training.smadmin.gds.service.PropertyService;
 import com.uc.training.smadmin.gds.vo.AdminGoodsVO;
@@ -16,10 +17,14 @@ import com.ycc.base.common.Result;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * 版权声明： Copyright (c) 2008 ucarinc. All Rights Reserved.
@@ -37,6 +42,9 @@ public class AdminGoodsController extends BaseController {
 
     @Autowired
     private PropertyService propertyService;
+
+    @Autowired
+    private GoodsPicService goodsPicService;
 
     /**
      * 后台查看所有商品
@@ -103,18 +111,28 @@ public class AdminGoodsController extends BaseController {
 
     /**
      * 商品上架
-     * @param adminPullGoodsVO
+     * @param id
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "pullOnGoods.do_", method = RequestMethod.POST)
-    public Result pullOnGoods(@Validated AdminPullGoodsVO adminPullGoodsVO) {
+    public Result pullOnGoods(@NotNull(message = "请选择商品!") Long id) {
 
-        //判断商品有无商品类型
-        if (propertyService.getPropertyCountByGoodsId(adminPullGoodsVO.getId()) == 0) {
-            return Result.getBusinessException("请添加商品类型！", null);
+        //判断商品商品属性数量
+        List<Long> propertyIdList = propertyService.getPropertyIdListByGoodsId(id);
+        if (CollectionUtils.isEmpty(propertyIdList)) {
+            return Result.getBusinessException("请添加商品属性！", null);
+        } else {
+            for (Long propertyId : propertyIdList) {
+                //判断商品属性的商品图片数量
+                if (goodsPicService.getGoodsPicCountByPropertyId(propertyId) == 0) {
+                    return Result.getBusinessException("商品属性中的图片信息不完整!", null);
+                }
+            }
         }
 
+        AdminPullGoodsVO adminPullGoodsVO = new AdminPullGoodsVO();
+        adminPullGoodsVO.setId(id);
         adminPullGoodsVO.setModifyEmp(getUid());
 
         return Result.getSuccessResult(goodsService.pullOnGoods(adminPullGoodsVO));

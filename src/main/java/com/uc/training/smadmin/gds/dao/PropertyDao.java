@@ -30,11 +30,11 @@ public interface PropertyDao {
     Integer updateProperty(Property property);
 
     /**
-     * 通过商品id获取商品类型数量
+     * 通过商品id获取商品属性id
      * @param goodsId
      * @return
      */
-    Integer getPropertyCountByGoodsId(Long goodsId);
+    List<Long> getPropertyIdListByGoodsId(Long goodsId);
 
     /**
      * 通过商品id获取商品所有属性
@@ -42,4 +42,25 @@ public interface PropertyDao {
      * @return
      */
     List<AdminPropertyListRE> getPropertyListByGoodsId(Long goodsId);
+
+    /**
+     * 通过主键id删除商品属性
+     * @param id
+     * @return
+     */
+    Integer deletePropertyById(Long id);
+
+    /**
+     * 通过商品属性id获取商品的状态（上架，下架）
+     * @param id
+     * @return
+     */
+    Integer getGoodsStatusById(Long id);
+
+    /**
+     * 通过商品属性id获取商品的商品属性数量
+     * @param id
+     * @return
+     */
+    Integer getGoodsIdCountById(Long id);
 }

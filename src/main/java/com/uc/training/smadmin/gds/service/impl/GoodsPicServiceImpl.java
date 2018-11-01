@@ -54,4 +54,59 @@ public class GoodsPicServiceImpl implements GoodsPicService{
     public List<AdminGoodsPicRE> getGoodsPicListByPropertyId(Long propertyId) {
         return goodsPicDao.getGoodsPicListByPropertyId(propertyId);
     }
+
+    /**
+     * 通过主键id删除商品属性图片
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public Integer deleteGoodsPicById(Long id) {
+        return goodsPicDao.deleteGoodsPicById(id);
+    }
+
+    /**
+     * 通过商品属性id删除图片
+     *
+     * @param propertyId
+     * @return
+     */
+    @Override
+    public Integer deleteGoodsPicByPropertyId(Long propertyId) {
+        return goodsPicDao.deleteGoodsPicByPropertyId(propertyId);
+    }
+
+    /**
+     * 后台通过图片id获取表中对应商品属性的的数量
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public Integer getPropertyIdCountById(Long id) {
+        return goodsPicDao.getPropertyIdCountById(id);
+    }
+
+    /**
+     * 通过主键id查找商品状态（1：上架，0：下架）
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public Integer getGoodsStatusById(Long id) {
+        return goodsPicDao.getGoodsStatusById(id);
+    }
+
+    /**
+     * 通过商品属性id查找商品图片的数量
+     *
+     * @param propertyId
+     * @return
+     */
+    @Override
+    public Integer getGoodsPicCountByPropertyId(Long propertyId) {
+        return goodsPicDao.getGoodsPicCountByPropertyId(propertyId);
+    }
 }

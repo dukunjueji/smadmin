@@ -23,7 +23,7 @@ public class AdminGoodsVO implements Serializable{
     private String name;
 
     /**
-     * 商品类型
+     * 商品属性
      */
     @NotNull(message = "请选择商品类型！")
     private Long categoryId;

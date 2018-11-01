@@ -10,6 +10,11 @@
             SELECT LAST_INSERT_ID() as id;
         </selectKey>
     </insert>
+    <!--删除商品属性-->
+    <delete id="deletePropertyById" parameterClass="Long">
+      DELETE FROM  t_gds_property
+      WHERE id = #id#
+    </delete>
 
     <!--更新商品属性-->
     <update id="updateProperty" parameterClass="com.uc.training.smadmin.gds.model.Property">
@@ -37,10 +42,32 @@
         WHERE gp.goods_id = #goodsId#
     </select>
 
-    <!-- 通过商品id查找商品类型数量 -->
-    <select id="getPropertyCountByGoodsId" parameterClass="Long" resultClass="Integer">
+    <!--后台通过主键id查找该商品的商品属性的数量-->
+    <select id="getGoodsIdCountById" parameterClass="Long" resultClass="Integer">
+        SELECT count(1)
+        FROM t_gds_property
+        WHERE goods_id = (
+                          SELECT goods_id
+                          FROM t_gds_property
+                          WHERE id = #id#)
+    </select>
+
+    <!--后台通过主键id查找该商品的状态-->
+    <select id="getGoodsStatusById" parameterClass="Long" resultClass="Integer">
+        select `status`
+        from t_gds_goods gg
+        where  gg.id = (
+                          select goods_id
+                          from t_gds_property
+                          where id = #id#)
+    </select>
+
+
+
+    <!-- 通过商品id查找商品属性数量 -->
+    <select id="getPropertyIdListByGoodsId" parameterClass="Long" resultClass="Long">
         SELECT
-          count(1)
+          id
         FROM
           t_gds_property
         WHERE goods_id = #goodsId#

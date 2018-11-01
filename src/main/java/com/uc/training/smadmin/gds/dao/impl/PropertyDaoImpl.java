@@ -17,7 +17,7 @@ import java.util.List;
  * @date 2018/10/29
  */
 @Repository
-public class PropertyDaoImpl  extends CarIsIbatisDaoImpl implements PropertyDao{
+public class PropertyDaoImpl extends CarIsIbatisDaoImpl implements PropertyDao{
     /**
      * 新增商品属性
      *
@@ -40,14 +40,14 @@ public class PropertyDaoImpl  extends CarIsIbatisDaoImpl implements PropertyDao{
     }
 
     /**
-     * 通过商品id获取商品类型数量
+     * 通过商品id获取商品属性数量
      *
      * @param goodsId
      * @return
      */
     @Override
-    public Integer getPropertyCountByGoodsId(Long goodsId) {
-        return (Integer) this.queryForObject("com.uc.training.smadmin.gds.dao.PropertyDao.getPropertyCountByGoodsId", goodsId);
+    public List<Long> getPropertyIdListByGoodsId(Long goodsId) {
+        return this.queryForList("com.uc.training.smadmin.gds.dao.PropertyDao.getPropertyIdListByGoodsId", goodsId);
     }
 
     /**
@@ -59,5 +59,37 @@ public class PropertyDaoImpl  extends CarIsIbatisDaoImpl implements PropertyDao{
     @Override
     public List<AdminPropertyListRE> getPropertyListByGoodsId(Long goodsId) {
         return this.queryForList("com.uc.training.smadmin.gds.dao.PropertyDao.getPropertyListByGoodsId", goodsId);
+    }
+
+    /**
+     * 通过主键id删除商品属性
+     * @param id
+     * @return
+     */
+    @Override
+    public Integer deletePropertyById(Long id) {
+        return this.deleteObject("com.uc.training.smadmin.gds.dao.PropertyDao.deletePropertyById", id);
+    }
+
+    /**
+     * 通过商品属性id获取商品的状态（上架，下架）
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public Integer getGoodsStatusById(Long id) {
+        return (Integer) this.queryForObject("com.uc.training.smadmin.gds.dao.PropertyDao.getGoodsStatusById", id);
+    }
+
+    /**
+     * 通过商品属性id获取商品的商品属性数量
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public Integer getGoodsIdCountById(Long id) {
+        return (Integer) this.queryForObject("com.uc.training.smadmin.gds.dao.PropertyDao.getGoodsIdCountById", id);
     }
 }
