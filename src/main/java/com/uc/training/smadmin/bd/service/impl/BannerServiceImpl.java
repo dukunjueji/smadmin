@@ -80,7 +80,7 @@ public class BannerServiceImpl implements BannerService {
      * 增加点击量
      */
     @Override
-    public void insertClick(Long id) {
-        bannerDao.insertClick(id);
+    public Integer insertClick(Long id) {
+        return bannerDao.insertClick(id);
     }
 }

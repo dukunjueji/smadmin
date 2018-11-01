@@ -72,8 +72,8 @@ public class BannerDaoImpl extends CarIsIbatisDaoImpl implements BannerDao {
 	 * @param id
 	 */
 	@Override
-	public void insertClick(Long id) {
-
+	public Integer insertClick(Long id) {
+		return this.update("com.uc.training.smadmin.bd.dao.BannerDao.insertClick", id);
 	}
 
 }

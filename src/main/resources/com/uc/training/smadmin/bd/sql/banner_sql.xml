@@ -65,6 +65,6 @@
 
 	<!--增加点击量-->
 	<update id="insertClick" parameterClass="Long">
-		UPDATE t_bd_banner t set t.clicks = +1 where id = #id#
+		UPDATE t_bd_banner set clicks = clicks+1 where id = #id#
 	</update>
 </sqlMap>

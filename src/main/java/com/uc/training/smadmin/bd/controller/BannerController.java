@@ -44,8 +44,8 @@ public class BannerController extends BaseController{
     @ResponseBody
     @AccessLogin(required = false)
     @RequestMapping(value = "/insertClick.do_", method = RequestMethod.GET)
-    public void insertClick(Long id) {
-        bannerService.insertClick(id);
+    public Result insertClick(Long id) {
+        return Result.getSuccessResult(bannerService.insertClick(id));
     }
 
 }
