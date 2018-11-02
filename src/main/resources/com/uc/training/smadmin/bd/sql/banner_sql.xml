@@ -10,11 +10,11 @@
         s.url AS url
         FROM t_bd_banner s
         WHERE s.type = 1 AND s.is_show = 1
-        ORDER s.sort_num ASC
+        ORDER BY s.sort_num ASC
 	</select>
 
 	<!-- 后台获取广告图片 -->
-	<select id="getAllBannerList" resultClass="com.uc.training.smadmin.bd.model.Banner" parameterClass="com.uc.training.smadmin.bd.re.BannerAdminRE">
+	<select id="getAllBannerList" resultClass="com.uc.training.smadmin.bd.re.AdminBannerListRE" parameterClass="com.uc.training.smadmin.bd.vo.AdminBannerListVO">
 		 SELECT
 		 s.id AS id,
 		 s.name AS name,
@@ -29,7 +29,17 @@
 		 s.create_time AS createTime,
 		 s.modify_emp AS modifyEmp,
 		 s.modify_time AS modifyTime
-		 FROM t_bd_banner s
+		FROM
+			t_bd_banner  s
+		<dynamic prepend="where">
+			<isNotEmpty property="name" prepend="and">
+				s.name LIKE concat("%",#name#,"%")
+			</isNotEmpty>
+			<isNotEmpty property="isShow" prepend="and">
+				s.is_show = #isShow#
+			</isNotEmpty>
+		</dynamic>
+		ORDER BY s.id ASC
 	</select>
 
 	<!-- 插入 -->
@@ -42,10 +52,10 @@
 	</selectKey>
 	</insert>
 
-	<!-- 通过主键更新 -->
-	<update id="updateBannerById" parameterClass="com.uc.training.smadmin.bd.model.Banner">
+	<!-- 更新 -->
+	<update id="updateBanner" parameterClass="com.uc.training.smadmin.bd.model.Banner">
 		 update t_bd_banner set
-	   name = #name#, type = #type#, sort_num = #sortNum#, image_url = #imageUrl#, url = #url#,is_show=#isShow# clicks = #clicks#, description = #description#, modify_emp = #modifyEmp#
+	   `name` = #name#, `type` = #type#, sort_num = #sortNum#, image_url = #imageUrl#, url = #url#,is_show=#isShow#, description = #description#, modify_emp = #modifyEmp#
 		where id=#id#
 	</update>
 	<!--根据主键id删除图片-->
@@ -55,6 +65,6 @@
 
 	<!--增加点击量-->
 	<update id="insertClick" parameterClass="Long">
-		UPDATE t_bd_banner t set t.clicks = +1 where id = #id#
+		UPDATE t_bd_banner set clicks = clicks+1 where id = #id#
 	</update>
 </sqlMap>

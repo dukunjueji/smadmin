@@ -1,8 +1,9 @@
 package com.uc.training.smadmin.bd.dao.impl;
 import com.uc.training.smadmin.bd.model.Banner;
 import com.uc.training.smadmin.bd.dao.BannerDao;
-import com.uc.training.smadmin.bd.re.BannerAdminRE;
+import com.uc.training.smadmin.bd.re.AdminBannerListRE;
 import com.uc.training.smadmin.bd.re.BannerRE;
+import com.uc.training.smadmin.bd.vo.AdminBannerListVO;
 import com.zuche.framework.dao.CarIsIbatisDaoImpl;
 import org.springframework.stereotype.Repository;
 import java.util.List;
@@ -28,8 +29,8 @@ public class BannerDaoImpl extends CarIsIbatisDaoImpl implements BannerDao {
 	 * @return
 	 */
 	@Override
-	public List<BannerAdminRE> getAllBannerList() {
-		return this.queryForList("com.uc.training.smadmin.bd.dao.BannerDao.getAllBannerList");
+	public List<AdminBannerListRE> getAllBannerList(AdminBannerListVO adminBannerListVO) {
+		return this.queryForList("com.uc.training.smadmin.bd.dao.BannerDao.getAllBannerList", adminBannerListVO);
 	}
 
 	/**
@@ -50,8 +51,8 @@ public class BannerDaoImpl extends CarIsIbatisDaoImpl implements BannerDao {
 	 * @return
 	 */
 	@Override
-	public Integer deleteBanner(Long id) {
-		return this.deleteObject("com.uc.training.smadmin.bd.dao.BannerDao.deleteBanner", id);
+	public Integer deleteBannerById(Long id) {
+		return this.deleteObject("com.uc.training.smadmin.bd.dao.BannerDao.deleteBannerById", id);
 	}
 
 	/**
@@ -61,8 +62,8 @@ public class BannerDaoImpl extends CarIsIbatisDaoImpl implements BannerDao {
 	 * @return
 	 */
 	@Override
-	public Long insertBannerById(Banner banner) {
-		return (Long) this.insert("com.uc.training.smadmin.bd.dao.BannerDao.deleteBanner", banner);
+	public Long insertBanner(Banner banner) {
+		return (Long) this.insert("com.uc.training.smadmin.bd.dao.BannerDao.insertBanner", banner);
 	}
 
 	/**
@@ -71,8 +72,8 @@ public class BannerDaoImpl extends CarIsIbatisDaoImpl implements BannerDao {
 	 * @param id
 	 */
 	@Override
-	public void insertClick(Long id) {
-
+	public Integer insertClick(Long id) {
+		return this.update("com.uc.training.smadmin.bd.dao.BannerDao.insertClick", id);
 	}
 
 }

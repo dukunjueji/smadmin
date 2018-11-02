@@ -1,11 +1,17 @@
 package com.uc.training.smadmin.bd.controller;
 
 import com.uc.training.common.base.controller.BaseController;
-import com.uc.training.smadmin.bd.re.BannerAdminRE;
+import com.uc.training.smadmin.bd.model.Banner;
+import com.uc.training.smadmin.bd.re.AdminBannerListRE;
 import com.uc.training.smadmin.bd.service.BannerService;
+import com.uc.training.smadmin.bd.vo.AdminBannerListVO;
+import com.uc.training.smadmin.bd.vo.AdminInsertBannerVO;
+import com.uc.training.smadmin.bd.vo.AdminUpdateBannerVO;
 import com.ycc.base.common.Result;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,7 +27,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/admin/banner")
-public class BannerAdminController extends BaseController {
+public class AdminBannerController extends BaseController {
 
     @Autowired
     private BannerService bannerService;
@@ -33,8 +39,8 @@ public class BannerAdminController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/getAllBannerList.do_", method = RequestMethod.POST)
-    public Result<List<BannerAdminRE>> getAllBannerList() {
-        return Result.getSuccessResult(bannerService.getAllBannerList());
+    public Result<List<AdminBannerListRE>> getAllBannerList(AdminBannerListVO adminBannerListVO) {
+        return Result.getSuccessResult(bannerService.getAllBannerList(adminBannerListVO));
     }
 
     /**
@@ -43,8 +49,14 @@ public class BannerAdminController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/updateBanner.do_", method = RequestMethod.POST)
-    public Result updateBanner(BannerAdminRE bannerAdminRE) {
-        return Result.getSuccessResult(bannerService.updateBanner(bannerAdminRE));
+    public Result updateBanner(@Validated AdminUpdateBannerVO adminUpdateBannerVO) {
+
+        Banner banner = new Banner();
+        BeanUtils.copyProperties(adminUpdateBannerVO, banner);
+
+        banner.setModifyEmp(getUid());
+
+        return Result.getSuccessResult(bannerService.updateBanner(banner));
     }
 
     /**
@@ -60,17 +72,20 @@ public class BannerAdminController extends BaseController {
 
     /**
      * 新增轮播图
-     * @param bannerAdminRE
+     * @param adminInsertBannerVO
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/insertBannerById.do_", method = RequestMethod.POST)
-    public Result insertBannerById(BannerAdminRE bannerAdminRE) {
+    @RequestMapping(value = "/insertBanner.do_", method = RequestMethod.POST)
+    public Result insertBannerById(@Validated AdminInsertBannerVO adminInsertBannerVO) {
 
-        bannerAdminRE.setCreateEmp(getUid());
-        bannerAdminRE.setModifyEmp(getUid());
+        Banner banner = new Banner();
+        BeanUtils.copyProperties(adminInsertBannerVO, banner);
 
-        return Result.getSuccessResult(bannerService.insertBannerById(bannerAdminRE));
+        banner.setCreateEmp(getUid());
+        banner.setModifyEmp(getUid());
+
+        return Result.getSuccessResult(bannerService.insertBanner(banner));
     }
 
 }
