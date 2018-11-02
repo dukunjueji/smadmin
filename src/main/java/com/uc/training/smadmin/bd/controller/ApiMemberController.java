@@ -7,7 +7,6 @@ import com.uc.training.common.enums.GrowthEnum;
 import com.uc.training.smadmin.bd.model.LoginLog;
 import com.uc.training.smadmin.bd.model.Member;
 import com.uc.training.smadmin.bd.model.Message;
-import com.uc.training.smadmin.bd.mq.GrowthMqProducer;
 import com.uc.training.smadmin.bd.re.*;
 import com.uc.training.smadmin.bd.service.LoginLogService;
 import com.uc.training.smadmin.bd.service.MemberService;
