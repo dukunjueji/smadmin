@@ -41,4 +41,9 @@ public class GoodsStokeVO {
     public void setStoke(Long stoke) {
         this.stoke = stoke;
     }
+
+    @Override
+    public String toString() {
+        return "GoodsStokeVO{" + "propertyId=" + propertyId + ", stoke=" + stoke + ", goodsId=" + goodsId + '}';
+    }
 }

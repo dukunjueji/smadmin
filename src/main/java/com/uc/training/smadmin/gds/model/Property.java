@@ -5,14 +5,12 @@ import com.uc.training.common.base.model.BaseModel;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+
 /**
+ * 商品属性
  *
- * 功能描述: 商品属性
- *
- * @param:
- * @return:
- * @auther: ling
- * @date: 2018/10/30 10:05
+ * @author zhongling(ling.zhong @ ucarinc.com)
+ * @since 2018年10月15日 15:04
  */
 public class Property extends BaseModel implements Serializable{
 

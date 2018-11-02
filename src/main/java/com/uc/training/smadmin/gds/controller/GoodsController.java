@@ -2,7 +2,9 @@ package com.uc.training.smadmin.gds.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.google.inject.servlet.RequestParameters;
+import com.kenai.jaffl.annotations.In;
 import com.uc.training.common.annotation.AccessLogin;
+import com.uc.training.common.enums.StokeStatusEnum;
 import com.uc.training.smadmin.gds.re.PageRE;
 import com.uc.training.smadmin.gds.vo.GoodsStokeVO;
 import com.uc.training.smadmin.redis.RedisConfigEnum;
@@ -72,7 +74,7 @@ public class GoodsController extends BaseController {
      */
     @AccessLogin(required = false)
     @ResponseBody
-    @RequestMapping(value = "getGoodsPageByCategory.do_",method = RequestMethod.POST)
+    @RequestMapping(value = "getGoodsPageByCategory.do_",method = RequestMethod.GET)
     public Result<List<GoodsRE>> getGoodsPageByCategory(GoodsListVO goodsListVO) {
         try {
             /*PageVO<GoodsRE> pageVO = new PageVO<GoodsRE>();
@@ -183,13 +185,17 @@ public class GoodsController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "updateAndDeductStoke.do_")
-    public Result<String> updateAndDeductStoke(GoodsStokeVO goodsStokeVO){
+    public Result<Integer> updateAndDeductStoke(GoodsStokeVO goodsStokeVO){
         goodsStokeVO.setPropertyId(4L);
         goodsStokeVO.setStoke(1L);
-        System.out.println(JSON.toJSON(goodsStokeVO));
         try {
-            goodsService.updateAndDeductStoke(goodsStokeVO);
-            return Result.getSuccessResult("减库存成功");
+            Integer status=goodsService.updateAndDeductStoke(goodsStokeVO);
+            System.out.println(status+"------------------------------------");
+            if(status.equals(StokeStatusEnum.SUCCESS_STATUS.getStatus())){
+                return Result.getSuccessResult(status);
+            }else{
+                return Result.getBusinessException("减库存失败", null);
+            }
         } catch (Exception e) {
             logger.error("减库存错误！", e);
             return Result.getBusinessException("减库存失败", null);

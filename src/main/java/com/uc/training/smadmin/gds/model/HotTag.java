@@ -3,13 +3,10 @@ package com.uc.training.smadmin.gds.model;
 import com.uc.training.common.base.model.BaseModel;
 
 /**
+ * 热门标签
  *
- * 功能描述: 热门标签
- *
- * @param:
- * @return: 
- * @auther: ling
- * @date: 2018/10/30 10:05
+ * @author zhongling(ling.zhong @ ucarinc.com)
+ * @since 2018年10月15日 15:04
  */
 public class HotTag extends BaseModel {
 

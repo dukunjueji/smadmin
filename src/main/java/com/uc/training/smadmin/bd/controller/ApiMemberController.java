@@ -17,7 +17,6 @@ import com.uc.training.smadmin.utils.EncryptUtil;
 import com.uc.training.smadmin.utils.TelCodeUtil;
 import com.uc.training.smadmin.utils.TokenUtil;
 import com.ycc.base.common.Result;
-import com.ycc.tools.middleware.metaq.MetaQUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
