@@ -64,7 +64,7 @@
 	</select>
 
 	<!-- 插入 -->
-	<insert id="insertSmsTemplate" parameterClass="com.uc.training.smadmin.sms.model.SmsTemplate">
+	<insert id="insertSmsTemplate" parameterClass="com.uc.training.smadmin.sms.vo.SmsTemplateVO">
 		insert into t_sys_sms_template
 			 (type, code, title, content, create_emp)
 		values (#type#,#code#,#title#,#content#,#createEmp#)
@@ -74,7 +74,7 @@
 	</insert>
 
 	<!-- 通过主键更新 -->
-	<update id="updateSmsTemplateById" parameterClass="com.uc.training.smadmin.sms.model.SmsTemplate">
+	<update id="updateSmsTemplateById" parameterClass="com.uc.training.smadmin.sms.vo.SmsTemplateVO">
 		 update t_sys_sms_template set
 		type = #type#, title = #title#, content = #content#, modify_emp = #modifyEmp#
 		where id=#id#

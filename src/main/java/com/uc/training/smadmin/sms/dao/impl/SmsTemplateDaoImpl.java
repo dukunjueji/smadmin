@@ -3,6 +3,7 @@ package com.uc.training.smadmin.sms.dao.impl;
 import com.uc.training.smadmin.sms.dao.SmsTemplateDao;
 import com.uc.training.smadmin.sms.model.SmsTemplate;
 import com.uc.training.smadmin.sms.vo.SmsTemplateListVO;
+import com.uc.training.smadmin.sms.vo.SmsTemplateVO;
 import com.zuche.framework.dao.CarIsIbatisDaoImpl;
 import org.springframework.stereotype.Repository;
 
@@ -22,7 +23,7 @@ public class SmsTemplateDaoImpl extends CarIsIbatisDaoImpl implements SmsTemplat
      * @return
      */
     @Override
-    public Long addTemplate(SmsTemplate template) {
+    public Long addTemplate(SmsTemplateVO template) {
         return (Long) this.insert(NAMESPACE + "insertSmsTemplate", template);
     }
 
@@ -32,7 +33,7 @@ public class SmsTemplateDaoImpl extends CarIsIbatisDaoImpl implements SmsTemplat
      * @return
      */
     @Override
-    public Integer modifyTemplate(SmsTemplate template) {
+    public Integer modifyTemplate(SmsTemplateVO template) {
         return this.update(NAMESPACE + "updateSmsTemplateById", template);
     }
 

@@ -4,6 +4,7 @@ import com.uc.training.smadmin.sms.dao.SmsTemplateDao;
 import com.uc.training.smadmin.sms.model.SmsTemplate;
 import com.uc.training.smadmin.sms.service.SmsTemplateService;
 import com.uc.training.smadmin.sms.vo.SmsTemplateListVO;
+import com.uc.training.smadmin.sms.vo.SmsTemplateVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +27,7 @@ public class SmsTemplateServiceImpl implements SmsTemplateService {
      * @return
      */
     @Override
-    public Long addTemplate(SmsTemplate smsTemplate){
+    public Long addTemplate(SmsTemplateVO smsTemplate){
         return smsTemplateDao.addTemplate(smsTemplate);
     }
 
@@ -46,7 +47,7 @@ public class SmsTemplateServiceImpl implements SmsTemplateService {
      * @return
      */
     @Override
-    public Integer modifyTemplate(SmsTemplate smsTemplate){
+    public Integer modifyTemplate(SmsTemplateVO smsTemplate){
         return smsTemplateDao.modifyTemplate(smsTemplate);
     }
 

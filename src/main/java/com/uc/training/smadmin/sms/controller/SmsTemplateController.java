@@ -1,5 +1,6 @@
 package com.uc.training.smadmin.sms.controller;
 
+import com.uc.training.smadmin.sms.vo.SmsTemplateVO;
 import com.ycc.base.common.Result;
 import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
@@ -38,7 +39,7 @@ public class SmsTemplateController extends BaseController {
     @AccessLogin
     @RequestMapping(value = "/addTemplate", method = RequestMethod.POST)
     @ResponseBody
-    public Result<Long> addTemplate(@Validated SmsTemplate template){
+    public Result<Long> addTemplate(@Validated SmsTemplateVO template){
         if (StringUtils.isEmpty(template.getCode())) {
             return Result.getBusinessException("编码不能为空", null);
         }
@@ -72,7 +73,7 @@ public class SmsTemplateController extends BaseController {
     @AccessLogin
     @RequestMapping(value = "/modifyTemplate", method = RequestMethod.POST)
     @ResponseBody
-    public Result<Integer> modifyTemplate(@Validated SmsTemplate template){
+    public Result<Integer> modifyTemplate(@Validated SmsTemplateVO template){
         SmsTemplate t1 = smsTemplateService.getTemplateById(template.getId());
         template.setModifyEmp(getUid());
         return Result.getSuccessResult(smsTemplateService.modifyTemplate(template));
