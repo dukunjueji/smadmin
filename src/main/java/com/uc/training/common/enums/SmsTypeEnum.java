@@ -14,14 +14,16 @@ import java.util.Map;
 public enum SmsTypeEnum {
     //注册
     REGISTER("注册", 1),
-    //登录
-    LOGIN("登陆", 2),
+    //忘记密码
+    FORGET_PASSWORD("忘记密码", 2),
+    //修改密码
+    CHANGE_PASSWORD("修改密码", 3),
     //充值
-    RECHARGE("充值", 3),
+    RECHARGE("充值", 4),
     //订单信息
-    ORDERINFO("订单信息", 4),
+    ORDER_INFO("订单信息", 5),
     //会员等级
-    MEMBERGRADE("会员等级", 5);
+    MEMBER_GRADE("会员等级", 6);
     /**
      * 描述
      */

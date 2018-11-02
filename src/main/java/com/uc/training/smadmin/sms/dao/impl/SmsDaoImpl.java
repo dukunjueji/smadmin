@@ -7,6 +7,7 @@ import com.uc.training.smadmin.sms.vo.SmsVO;
 import com.zuche.framework.dao.CarIsIbatisDaoImpl;
 import org.springframework.stereotype.Repository;
 
+import javax.xml.stream.events.Namespace;
 import java.util.List;
 
 /**
@@ -45,6 +46,17 @@ public class SmsDaoImpl extends CarIsIbatisDaoImpl implements SmsDao {
     @Override
     public Sms getSms(Long id) {
         return (Sms) this.queryForObject( NAMESPACE + "getSms", id);
+    }
+
+    /**
+     * 新增短信
+     *
+     * @param sms
+     * @return
+     */
+    @Override
+    public Long insertSms(Sms sms) {
+        return (Long) this.insert(NAMESPACE + "insertSms", sms);
     }
 
 

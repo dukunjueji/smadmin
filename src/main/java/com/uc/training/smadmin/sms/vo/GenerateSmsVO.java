@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @Version 1.0
  * @date 2018/11/2
  */
-public class GenerateSysVO implements Serializable {
+public class GenerateSmsVO implements Serializable {
 
     private static final long serialVersionUID = 8413116707963300713L;
     /**
@@ -27,7 +27,7 @@ public class GenerateSysVO implements Serializable {
 
     @Override
     public String toString() {
-        return "GenerateSysVO{" +
+        return "GenerateSmsVO{" +
                 "telephone='" + telephone + '\'' +
                 ", type=" + type +
                 ", message='" + message + '\'' +

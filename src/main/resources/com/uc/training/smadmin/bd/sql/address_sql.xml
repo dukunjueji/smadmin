@@ -44,8 +44,8 @@
     <!-- 插入地址 -->
     <insert id="insertAddress"  parameterClass="com.uc.training.smadmin.bd.model.Address">
         insert into t_bd_address
-        (member_id, receiver, telephone, province, city, district, area_code, addr_detail, is_default, create_emp, modify_emp, modify_time, create_time)
-        values(#memberId#,#receiver#,#telephone#,#province#,#city#,#district#,#areaCode#,#addrDetail#,#isDefault#,#createEmp#,#modifyEmp#,NOW(),NOW())
+        (member_id, receiver, telephone, province, city, district, area_code, addr_detail, is_default, create_emp, modify_emp)
+        values(#memberId#,#receiver#,#telephone#,#province#,#city#,#district#,#areaCode#,#addrDetail#,#isDefault#,#createEmp#)
         <selectKey resultClass="long" keyProperty="id">
             SELECT LAST_INSERT_ID() as id;
         </selectKey>

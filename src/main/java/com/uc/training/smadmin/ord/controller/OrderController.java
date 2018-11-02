@@ -73,7 +73,7 @@ public class OrderController extends BaseController {
     GoodsDetailRE gdDTO;
     for (CartGoods cartGoods : cartList) {
       ordCartgoodsVo = new OrdCartGoodsVo();
-      gdDTO = goodsService.getGoodsDetailByPropertyId(cartGoods.getGoodsPropertyId());
+      gdDTO = goodsService.getGoodsDetailByPropertyId(2L);
       ordCartgoodsVo.setCartId(cartGoods.getId());
       ordCartgoodsVo.setGoodsId(cartGoods.getGoodsId());
       ordCartgoodsVo.setGdsName(gdDTO.getName());

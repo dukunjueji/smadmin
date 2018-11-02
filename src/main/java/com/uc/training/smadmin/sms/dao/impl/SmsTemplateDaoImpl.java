@@ -2,6 +2,7 @@ package com.uc.training.smadmin.sms.dao.impl;
 
 import com.uc.training.smadmin.sms.dao.SmsTemplateDao;
 import com.uc.training.smadmin.sms.model.SmsTemplate;
+import com.uc.training.smadmin.sms.vo.GenerateSmsVO;
 import com.uc.training.smadmin.sms.vo.SmsTemplateListVO;
 import com.uc.training.smadmin.sms.vo.SmsTemplateVO;
 import com.zuche.framework.dao.CarIsIbatisDaoImpl;
@@ -94,6 +95,17 @@ public class SmsTemplateDaoImpl extends CarIsIbatisDaoImpl implements SmsTemplat
     @Override
     public Integer batchDeleteById(List<Long> ids){
         return this.deleteObject(NAMESPACE + "batchDeleteById", ids);
+    }
+
+    /**
+     * 生成短信
+     *
+     * @param generateSmsVO
+     * @return
+     */
+    @Override
+    public String generateSMS(GenerateSmsVO generateSmsVO) {
+        return (String) this.queryForObject(NAMESPACE + "generateSMS", generateSmsVO);
     }
 
 }

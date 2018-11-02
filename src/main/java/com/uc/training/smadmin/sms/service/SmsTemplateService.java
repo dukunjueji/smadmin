@@ -1,6 +1,7 @@
 package com.uc.training.smadmin.sms.service;
 
 import com.uc.training.smadmin.sms.model.SmsTemplate;
+import com.uc.training.smadmin.sms.vo.GenerateSmsVO;
 import com.uc.training.smadmin.sms.vo.SmsTemplateListVO;
 import com.uc.training.smadmin.sms.vo.SmsTemplateVO;
 
@@ -67,5 +68,12 @@ public interface SmsTemplateService {
      * @return
      */
     public Integer batchDeleteById(List<Long> ids);
+
+    /**
+     * 生成短信
+     * @param generateSmsVO
+     * @return
+     */
+    Integer generateSMS(GenerateSmsVO generateSmsVO);
 
 }

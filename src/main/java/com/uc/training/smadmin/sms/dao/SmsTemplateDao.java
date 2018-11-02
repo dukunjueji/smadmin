@@ -1,6 +1,7 @@
 package com.uc.training.smadmin.sms.dao;
 
 import com.uc.training.smadmin.sms.model.SmsTemplate;
+import com.uc.training.smadmin.sms.vo.GenerateSmsVO;
 import com.uc.training.smadmin.sms.vo.SmsTemplateListVO;
 import com.uc.training.smadmin.sms.vo.SmsTemplateVO;
 
@@ -68,4 +69,11 @@ public interface SmsTemplateDao {
      * @return
      */
     public Integer batchDeleteById(List<Long> ids);
+
+    /**
+     * 生成短信
+     * @param generateSmsVO
+     * @return
+     */
+    String generateSMS(GenerateSmsVO generateSmsVO);
 }

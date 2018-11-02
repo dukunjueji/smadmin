@@ -32,4 +32,12 @@ public interface SmsDao {
      * @return
      */
     public Sms getSms(Long id);
+
+    /**
+     * 新增短信
+     * @param sms
+     * @return
+     */
+    Long insertSms(Sms sms);
+
 }

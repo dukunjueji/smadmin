@@ -37,6 +37,15 @@
     </isNotEmpty>
   </select>
 
+  <insert id="insertSms" parameterClass="com.uc.training.smadmin.sms.model.Sms">
+    insert into t_bd_sms
+    (telephone, content, `type`, status)
+    values (#telephone#, #content#, #type#, #status#)
+    <selectKey resultClass="long" keyProperty="id">
+      SELECT LAST_INSERT_ID() as id;
+    </selectKey>
+  </insert>
+
   <!-- 查询记录总数 -->
   <select id="querySmsCount" resultClass="java.lang.Long" parameterClass="com.uc.training.smadmin.sms.vo.SmsListVO">
     SELECT count(1)

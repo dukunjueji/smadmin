@@ -1,10 +1,18 @@
 package com.uc.training.smadmin.sms.service.impl;
 
+import com.uc.training.common.enums.SmsTypeEnum;
+import com.uc.training.smadmin.redis.RedisConfigEnum;
 import com.uc.training.smadmin.sms.dao.SmsTemplateDao;
+import com.uc.training.smadmin.sms.model.Sms;
 import com.uc.training.smadmin.sms.model.SmsTemplate;
+import com.uc.training.smadmin.sms.service.SmsService;
 import com.uc.training.smadmin.sms.service.SmsTemplateService;
+import com.uc.training.smadmin.sms.vo.GenerateSmsVO;
 import com.uc.training.smadmin.sms.vo.SmsTemplateListVO;
 import com.uc.training.smadmin.sms.vo.SmsTemplateVO;
+import com.uc.training.smadmin.utils.TelCodeUtil;
+import com.ycc.tools.middleware.redis.RedisCacheUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +28,9 @@ public class SmsTemplateServiceImpl implements SmsTemplateService {
 
     @Autowired
     private SmsTemplateDao smsTemplateDao;
+
+    @Autowired
+    private SmsService smsService;
 
     /**
      * 新增短信模板
@@ -99,4 +110,41 @@ public class SmsTemplateServiceImpl implements SmsTemplateService {
     public Integer batchDeleteById(List<Long> ids){
         return smsTemplateDao.batchDeleteById(ids);
     }
+
+    /**
+     * 生成短信
+     *
+     * @param generateSmsVO
+     * @return
+     */
+    @Override
+    public Integer generateSMS(GenerateSmsVO generateSmsVO) {
+
+        // redis
+        RedisCacheUtils redis = RedisCacheUtils.getInstance(RedisConfigEnum.SYS_CODE);
+
+        if (SmsTypeEnum.CHANGE_PASSWORD.getType().equals(generateSmsVO.getType()) ||
+                SmsTypeEnum.FORGET_PASSWORD.getType().equals(generateSmsVO.getType()) ||
+                SmsTypeEnum.REGISTER.getType().equals(generateSmsVO.getType())) {
+
+            generateSmsVO.setMessage(TelCodeUtil.createCode());
+            //手机号 验证码
+            redis.set(generateSmsVO.getTelephone(), generateSmsVO.getMessage());
+        }
+        //获取短信内容
+        String content = smsTemplateDao.generateSMS(generateSmsVO);
+        // 发送短信
+        Integer status = smsService.sendSys(content);
+
+        Sms sms = new Sms();
+        BeanUtils.copyProperties(generateSmsVO, sms);
+
+        sms.setContent(content);
+        sms.setStatus(status);
+
+        smsService.insertSms(sms);
+
+        return status;
+    }
+
 }

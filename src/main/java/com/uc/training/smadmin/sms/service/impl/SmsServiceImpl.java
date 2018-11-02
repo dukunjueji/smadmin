@@ -1,9 +1,9 @@
 package com.uc.training.smadmin.sms.service.impl;
 
+import com.uc.training.common.enums.SmsStatusEnum;
 import com.uc.training.smadmin.sms.dao.SmsDao;
 import com.uc.training.smadmin.sms.model.Sms;
 import com.uc.training.smadmin.sms.service.SmsService;
-import com.uc.training.smadmin.sms.vo.GenerateSysVO;
 import com.uc.training.smadmin.sms.vo.SmsListVO;
 import com.uc.training.smadmin.sms.vo.SmsVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +51,7 @@ public class SmsServiceImpl implements SmsService {
         return smsDao.getSms(id);
     }
 
+
     /**
      * 发送短信
      *
@@ -62,17 +63,17 @@ public class SmsServiceImpl implements SmsService {
 
         System.out.println(content);
 
-        return null;
+        return SmsStatusEnum.SUCCESS.getKey();
     }
 
     /**
-     * 生成短信
+     * 新增短信
      *
-     * @param generateSysVO
+     * @param sms
      * @return
      */
     @Override
-    public Integer GenerateSMS(GenerateSysVO generateSysVO) {
-        return 1;
+    public Long insertSms(Sms sms) {
+        return smsDao.insertSms(sms);
     }
 }
