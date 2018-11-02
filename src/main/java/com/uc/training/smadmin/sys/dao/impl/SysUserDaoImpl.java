@@ -1,6 +1,7 @@
 package com.uc.training.smadmin.sys.dao.impl;
 
 import com.uc.training.smadmin.sys.dao.SysUserDao;
+import com.uc.training.smadmin.sys.model.SysMenu;
 import com.uc.training.smadmin.sys.model.SysUser;
 import com.uc.training.smadmin.sys.service.SysUserService;
 import com.uc.training.smadmin.sys.vo.UserListVO;
@@ -61,5 +62,10 @@ public class SysUserDaoImpl extends CarIsIbatisDaoImpl implements SysUserDao {
     @Override
     public Integer updateUser(SysUser user) {
         return this.update(NAMESPACE + "updateUser", user);
+    }
+
+    @Override
+    public List<SysMenu> getMenuListByUserId(Long uid) {
+        return this.queryForList(NAMESPACE + "getMenuByUserId", uid);
     }
 }

@@ -4,8 +4,6 @@ import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.common.constant.Constant;
 import com.uc.training.common.enums.GrowthEnum;
-import com.uc.training.common.enums.SmsStatusEnum;
-import com.uc.training.common.enums.SmsTypeEnum;
 import com.uc.training.smadmin.bd.model.LoginLog;
 import com.uc.training.smadmin.bd.model.Member;
 import com.uc.training.smadmin.bd.model.Message;
@@ -15,9 +13,6 @@ import com.uc.training.smadmin.bd.service.MemberService;
 import com.uc.training.smadmin.bd.service.MessageService;
 import com.uc.training.smadmin.bd.vo.*;
 import com.uc.training.smadmin.ord.service.OrderService;
-import com.uc.training.smadmin.sms.service.SmsTemplateService;
-import com.uc.training.smadmin.sms.vo.GenerateSmsVO;
-import com.uc.training.smadmin.sms.vo.SmsTemplateVO;
 import com.uc.training.smadmin.utils.EncryptUtil;
 import com.uc.training.smadmin.utils.TelCodeUtil;
 import com.uc.training.smadmin.utils.TokenUtil;
@@ -104,6 +99,7 @@ public class ApiMemberController extends BaseController {
         } else {
             return Result.getSuccessResult(SmsStatusEnum.FAIL.getValue());
         }
+        return re;
     }
 
     /***
@@ -155,18 +151,15 @@ public class ApiMemberController extends BaseController {
 
                 //生成登陆日志
                 LoginLog loginLog = new LoginLog();
-                loginLog.setMemberId(getUid());
+                loginLog.setMemberId(member.getId());
                 loginLog.setIp(getLocalhostIp());
-                loginLogService.insertLog(loginLog);
 
-                //判断是否第一次登陆
-                Integer loginNum = loginLogService.queryLoginCount(loginLog);
-                if (loginNum == 1){
-                    LoginMqVO loginMqVO = new LoginMqVO();
-                    loginMqVO.setMemberId(member.getId());
-                    loginMqVO.setGrowthType(GrowthEnum.LOGININ.getGrowthType());
-                    //MetaQUtils.sendMsgNoException(new GrowthMqProducer(loginMqVO));
-                }
+                //生成消息体
+                MqVO mqVO = new MqVO();
+                mqVO.setMemberId(member.getId());
+                mqVO.setGrowthType(GrowthEnum.LOGININ.getGrowthType());
+
+                memberService.memberLogin(loginLog, mqVO);
                 result = Result.getSuccessResult(memberLoginRE);
             }
         } catch (Exception e) {
@@ -406,6 +399,12 @@ public class ApiMemberController extends BaseController {
         return Result.getSuccessResult( messageService.updateMessageStatus(message));
     }
 
+    /**
+    *说明：查询一个会员信息
+    *@param messageId
+    *@return：com.ycc.base.common.Result<com.uc.training.smadmin.bd.vo.MessageDetailVO>
+    *@throws：
+    */
     @RequestMapping(value = "/queryOneMessageById.do_", method = RequestMethod.GET)
     @AccessLogin
     @ResponseBody

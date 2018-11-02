@@ -2,6 +2,8 @@ package com.uc.training.smadmin.sys.controller;
 
 import com.uc.training.common.constant.Constant;
 import com.uc.training.common.vo.PageVO;
+import com.uc.training.smadmin.sys.model.SysMenu;
+import com.uc.training.smadmin.sys.pojo.MenuTree;
 import com.uc.training.smadmin.sys.vo.UserEditPasswordVo;
 import com.uc.training.smadmin.sys.vo.UserListVO;
 import com.ycc.base.common.Result;
@@ -214,9 +216,26 @@ public class UserController extends BaseController {
     public Result<Integer> editUser(SysUser user){
         // 判空
         if (user == null || StringUtils.isEmpty(user.getUserName())|| user.getId() == null){
-            return Result.getBusinessException("短信模板添加失败", null);
+            return Result.getBusinessException("用户更新失败", null);
         }
         user.setModifyEmp(getUid());
         return Result.getSuccessResult(userService.updateUser(user));
+    }
+
+    /**
+     * 根据用户ID获取用户的菜单权限
+     * @param uid
+     * @return
+     */
+    @AccessLogin
+    @RequestMapping(value = "/getUserMenuAuth.do_", method = RequestMethod.POST)
+    @ResponseBody
+    public Result<List<SysMenu>> getUserMenuAuth(Long uid){
+        if (uid == null) {
+            return Result.getBusinessException("权限获取失败", null);
+        }
+        List<SysMenu> allMenu = userService.getMenuListByUserId(uid);
+        List<SysMenu> rootMenu = MenuTree.findTree(allMenu);
+        return Result.getSuccessResult(rootMenu);
     }
 }

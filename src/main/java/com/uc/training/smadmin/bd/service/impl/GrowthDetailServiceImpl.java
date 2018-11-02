@@ -3,10 +3,13 @@ package com.uc.training.smadmin.bd.service.impl;
 import com.uc.training.common.enums.GrowthEnum;
 import com.uc.training.smadmin.bd.dao.GrowthDetailDao;
 import com.uc.training.smadmin.bd.dao.MemberDao;
+import com.uc.training.smadmin.bd.dao.impl.GrowthDetailDaoImpl;
+import com.uc.training.smadmin.bd.dao.impl.MemberDaoImpl;
 import com.uc.training.smadmin.bd.model.GrowthDetail;
 import com.uc.training.smadmin.bd.service.GrowthDetailService;
 import com.uc.training.smadmin.bd.vo.GrowthVO;
 import com.uc.training.smadmin.bd.vo.MemberGrowthVO;
+import com.zuche.framework.common.SpringApplicationContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,11 +28,21 @@ public class GrowthDetailServiceImpl implements GrowthDetailService {
     @Autowired
     private GrowthDetailDao growthDetailDao;
 
+    public void setGrowthDetailDao(GrowthDetailDao growthDetailDao) {
+        this.growthDetailDao = growthDetailDao;
+    }
+
     @Autowired
     private MemberDao memberDao;
 
+    public void setMemberDao(MemberDao memberDao) {
+        this.memberDao = memberDao;
+    }
+
     @Override
     public Long saveGrowthDetail(GrowthVO growthVO){
+        growthDetailDao = (GrowthDetailDaoImpl)SpringApplicationContext.getBean("growthDetailDao");
+        memberDao = (MemberDaoImpl)SpringApplicationContext.getBean("memberDao");
         GrowthDetail growthDetail = new GrowthDetail();
         Long growthVaule = 0L;
 
