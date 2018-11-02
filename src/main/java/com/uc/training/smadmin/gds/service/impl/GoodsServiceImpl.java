@@ -90,6 +90,9 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     public GoodsDetailRE getGoodsDetailByPropertyId(Long propertyId) {
         GoodsDetailRE goodsDetailRE=goodsDao.getGoodsDetailByPropertyId(propertyId);
+        if(goodsDetailRE==null){
+            return null;
+        }
         List<PropertyUrlRE> list=goodsDao.getPicUrlByPropertyId(propertyId);
         if(list.size()>0){
             goodsDetailRE.setPicUrl(list);
