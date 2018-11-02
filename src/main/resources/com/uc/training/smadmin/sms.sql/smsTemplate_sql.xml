@@ -66,8 +66,8 @@
 	<!-- 插入 -->
 	<insert id="insertSmsTemplate" parameterClass="com.uc.training.smadmin.sms.model.SmsTemplate">
 		insert into t_sys_sms_template
-			 (id, type, code, title, content, create_emp)
-		values (#id#,#type#,#code#,#title#,#content#,#createEmp#)
+			 (type, code, title, content, create_emp)
+		values (#type#,#code#,#title#,#content#,#createEmp#)
 		<selectKey resultClass="Long" keyProperty="id">
 			SELECT LAST_INSERT_ID() AS id
 		</selectKey>
@@ -76,7 +76,7 @@
 	<!-- 通过主键更新 -->
 	<update id="updateSmsTemplateById" parameterClass="com.uc.training.smadmin.sms.model.SmsTemplate">
 		 update t_sys_sms_template set
-		id = #id#, type = #type#, code = #code#, title = #title#, content = #content#, modify_emp = #modifyEmp#
+		type = #type#, title = #title#, content = #content#, modify_emp = #modifyEmp#
 		where id=#id#
 	</update>
 

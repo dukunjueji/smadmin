@@ -1,7 +1,5 @@
 package com.uc.training.common.enums;
 
-import com.alibaba.fastjson.JSONObject;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,7 +11,7 @@ import java.util.Map;
  * @date: 2018/10/16
  * 说明：
  */
-public enum SmsTemplateTypeEnum {
+public enum SmsTypeEnum {
     //注册
     REGISTER("注册", 1),
     //登录
@@ -34,7 +32,7 @@ public enum SmsTemplateTypeEnum {
      */
     private Integer type;
 
-    SmsTemplateTypeEnum(String describe, Integer type) {
+    SmsTypeEnum(String describe, Integer type) {
         this.describe = describe;
         this.type = type;
     }
@@ -57,7 +55,7 @@ public enum SmsTemplateTypeEnum {
 
     public static Map<Integer, String> getMap() {
         Map<Integer, String> map = new HashMap<>();
-        for (SmsTemplateTypeEnum s : SmsTemplateTypeEnum.values()) {
+        for (SmsTypeEnum s : SmsTypeEnum.values()) {
             map.put(s.type, s.describe);
         }
         return map;

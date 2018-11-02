@@ -52,7 +52,9 @@ public class SysMenuServiceImpl implements SysMenuService {
 
     @Override
     public Integer batchDelete(List<Long> ids) {
-        return menuDao.batchDelete(ids);
+        int count = menuDao.batchDelete(ids);
+        menuDao.deleteRoleMenuByMenuList(ids);
+        return count;
     }
 
 

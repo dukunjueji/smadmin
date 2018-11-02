@@ -3,6 +3,7 @@ package com.uc.training.smadmin.sms.service.impl;
 import com.uc.training.smadmin.sms.dao.SmsDao;
 import com.uc.training.smadmin.sms.model.Sms;
 import com.uc.training.smadmin.sms.service.SmsService;
+import com.uc.training.smadmin.sms.vo.GenerateSysVO;
 import com.uc.training.smadmin.sms.vo.SmsListVO;
 import com.uc.training.smadmin.sms.vo.SmsVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,5 +49,30 @@ public class SmsServiceImpl implements SmsService {
     @Override
     public Sms getSms(Long id) {
         return smsDao.getSms(id);
+    }
+
+    /**
+     * 发送短信
+     *
+     * @param content
+     * @return
+     */
+    @Override
+    public Integer sendSys(String content) {
+
+        System.out.println(content);
+
+        return null;
+    }
+
+    /**
+     * 生成短信
+     *
+     * @param generateSysVO
+     * @return
+     */
+    @Override
+    public Integer GenerateSMS(GenerateSysVO generateSysVO) {
+        return 1;
     }
 }

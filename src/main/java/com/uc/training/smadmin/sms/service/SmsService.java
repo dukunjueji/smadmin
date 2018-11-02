@@ -1,6 +1,7 @@
 package com.uc.training.smadmin.sms.service;
 
 import com.uc.training.smadmin.sms.model.Sms;
+import com.uc.training.smadmin.sms.vo.GenerateSysVO;
 import com.uc.training.smadmin.sms.vo.SmsListVO;
 import com.uc.training.smadmin.sms.vo.SmsVO;
 
@@ -33,4 +34,18 @@ public interface SmsService {
      * @return
      */
     public Sms getSms(Long id);
+
+    /**
+     * 发送短信
+     * @param content
+     * @return
+     */
+    Integer sendSys(String content);
+
+    /**
+     * 生成短信
+     * @param generateSysVO
+     * @return
+     */
+    Integer GenerateSMS(GenerateSysVO generateSysVO);
 }

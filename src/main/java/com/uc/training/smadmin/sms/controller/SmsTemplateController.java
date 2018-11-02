@@ -1,6 +1,5 @@
 package com.uc.training.smadmin.sms.controller;
 
-import com.uc.training.common.enums.SmsTemplateReplaceEnum;
 import com.ycc.base.common.Result;
 import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
@@ -11,6 +10,7 @@ import com.uc.training.smadmin.sms.vo.SmsTemplateListVO;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -38,11 +38,9 @@ public class SmsTemplateController extends BaseController {
     @AccessLogin
     @RequestMapping(value = "/addTemplate", method = RequestMethod.POST)
     @ResponseBody
-    public Result<Long> addTemplate(SmsTemplate template){
-        // 判空
-        if (template == null || StringUtils.isEmpty(template.getCode())|| StringUtils.isEmpty(template.getTitle()) ||
-                StringUtils.isEmpty(template.getContent()) || StringUtils.isEmpty(template.getTypeDes())){
-            return Result.getBusinessException("短信模板添加失败", null);
+    public Result<Long> addTemplate(@Validated SmsTemplate template){
+        if (StringUtils.isEmpty(template.getCode())) {
+            return Result.getBusinessException("编码不能为空", null);
         }
         // 编码已存在
         SmsTemplate temp = smsTemplateService.getByCode(template.getCode());
@@ -74,18 +72,8 @@ public class SmsTemplateController extends BaseController {
     @AccessLogin
     @RequestMapping(value = "/modifyTemplate", method = RequestMethod.POST)
     @ResponseBody
-    public Result<Integer> modifyTemplate(SmsTemplate template){
-        // 判空
-        if (template == null || StringUtils.isEmpty(template.getCode())|| StringUtils.isEmpty(template.getTitle()) ||
-                StringUtils.isEmpty(template.getContent()) || StringUtils.isEmpty(template.getTypeDes())){
-            return Result.getBusinessException("短信模板添加失败", null);
-        }
+    public Result<Integer> modifyTemplate(@Validated SmsTemplate template){
         SmsTemplate t1 = smsTemplateService.getTemplateById(template.getId());
-        // 编码已存在
-        SmsTemplate temp = smsTemplateService.getByCode(template.getCode());
-        if (temp != null && !temp.getCode().equals(t1.getCode())) {
-            return Result.getBusinessException("编码已存在", null);
-        }
         template.setModifyEmp(getUid());
         return Result.getSuccessResult(smsTemplateService.modifyTemplate(template));
     }
@@ -100,29 +88,13 @@ public class SmsTemplateController extends BaseController {
     @RequestMapping(value = "getSmsTemplatePage.do_", method = RequestMethod.POST)
     public Result<PageVO<SmsTemplate>> getDemoPage(SmsTemplateListVO smsTemplateListVO) {
         Result<PageVO<SmsTemplate>> res;
-        try {
-            PageVO<SmsTemplate> pageVO = new PageVO<SmsTemplate>();
-            pageVO.setPageIndex(smsTemplateListVO.getPageIndex());
-            pageVO.setPageSize(smsTemplateListVO.getPageSize());
-            pageVO.setTotal(smsTemplateService.getTemplateListCount(smsTemplateListVO));
-            pageVO.setDataList(smsTemplateService.getTemplateList(smsTemplateListVO));
-            res = Result.getSuccessResult(pageVO);
-        } catch (Exception e) {
-            logger.error("查询符合条件错误！", e);
-            res = Result.getBusinessException("获取smsTemplate分页失败", null);
-        }
+        PageVO<SmsTemplate> pageVO = new PageVO<SmsTemplate>();
+        pageVO.setPageIndex(smsTemplateListVO.getPageIndex());
+        pageVO.setPageSize(smsTemplateListVO.getPageSize());
+        pageVO.setTotal(smsTemplateService.getTemplateListCount(smsTemplateListVO));
+        pageVO.setDataList(smsTemplateService.getTemplateList(smsTemplateListVO));
+        res = Result.getSuccessResult(pageVO);
         return res;
-    }
-
-    /**
-     * 获取替换字符
-     * @return
-     */
-    @AccessLogin
-    @ResponseBody
-    @RequestMapping(value = "getReplaceString.do_", method = RequestMethod.GET)
-    public Result<Map<String, String>> getReplaceString(){
-        return Result.getSuccessResult(SmsTemplateReplaceEnum.getMap());
     }
 
     /**
