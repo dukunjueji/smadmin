@@ -1,5 +1,7 @@
 package com.uc.training.smadmin.gds.service;
 
+import com.kenai.jaffl.annotations.In;
+import com.uc.training.smadmin.gds.vo.PageVO;
 import com.uc.training.smadmin.gds.model.Goods;
 import com.uc.training.smadmin.gds.model.GoodsPic;
 import com.uc.training.smadmin.gds.model.Property;
@@ -21,10 +23,16 @@ import java.util.List;
 public interface GoodsService {
     /**
      * 获取热门推荐
-     * @param listSize
+     * @param pageVO
      * @return
      */
-    public List<GoodsRE> getHotRecommend(int listSize);
+    public List<GoodsRE> getHotRecommend(PageVO pageVO);
+
+    /**
+     * 获取热门推荐总数量
+     * @return
+     */
+    public Integer getHotRecommendCount();
 
     /**
      * 通过属性id商品详情

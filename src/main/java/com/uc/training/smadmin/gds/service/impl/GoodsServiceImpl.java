@@ -1,5 +1,6 @@
 package com.uc.training.smadmin.gds.service.impl;
 
+import com.uc.training.smadmin.gds.vo.PageVO;
 import com.uc.training.smadmin.bd.service.MemberGradeService;
 import com.uc.training.smadmin.gds.dao.GoodsDao;
 import com.uc.training.smadmin.gds.model.Goods;
@@ -43,8 +44,13 @@ public class GoodsServiceImpl implements GoodsService {
     private GoodsPicService goodsPicService;
 
     @Override
-    public List<GoodsRE> getHotRecommend(int listSize) {
-        return goodsDao.getHotRecommend(listSize);
+    public List<GoodsRE> getHotRecommend(PageVO pageVO) {
+        return goodsDao.getHotRecommend(pageVO);
+    }
+
+    @Override
+    public Integer getHotRecommendCount() {
+        return goodsDao.getHotRecommendCount();
     }
 
     /**

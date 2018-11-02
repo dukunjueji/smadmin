@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
  * redis配置枚举类
  *
  * @author zhongling(ling.zhong @ ucarinc.com)
- * @since 2018年10月31日 15:49
+ * @since 2018年10月31日 15:49+
  */
 public enum RedisConfigEnum implements IRedisConfig {
 
