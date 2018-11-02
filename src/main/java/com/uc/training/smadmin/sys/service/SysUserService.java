@@ -1,5 +1,6 @@
 package com.uc.training.smadmin.sys.service;
 
+import com.uc.training.smadmin.sys.model.SysMenu;
 import com.uc.training.smadmin.sys.model.SysUser;
 import com.uc.training.smadmin.sys.vo.UserListVO;
 import com.uc.training.smadmin.sys.vo.UserLoginVO;
@@ -76,4 +77,11 @@ public interface SysUserService {
      * @return
      */
     Integer updateUser(SysUser user);
+
+    /**
+     * 通过用户ID获取用户的菜单权限
+     * @param uid
+     * @return
+     */
+    List<SysMenu> getMenuListByUserId(Long uid);
 }
