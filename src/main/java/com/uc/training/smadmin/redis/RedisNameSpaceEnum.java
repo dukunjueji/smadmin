@@ -5,7 +5,10 @@ import java.util.concurrent.TimeUnit;
 public enum RedisNameSpaceEnum {
 
     //商品详情缓存
-    GOODS_DETAIL("goods", "商品详情缓存", 1, TimeUnit.DAYS);
+    GOODS_DETAIL("goods", "商品详情缓存", 1, TimeUnit.DAYS),
+
+    //验证码缓存
+    SYS_CODE("sys", "验证码缓存", 1, TimeUnit.MINUTES);
 
     /**
      * 前缀

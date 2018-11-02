@@ -12,11 +12,17 @@ import java.io.Serializable;
 public class GenerateSysVO implements Serializable {
 
     private static final long serialVersionUID = 8413116707963300713L;
-
+    /**
+     * 手机号
+     */
     private String telephone;
-
+    /**
+     * 类型（短信类型：1注册，2，登录，3充值，4订单信息，5会员等级），枚举SmsTypeEnum
+     */
     private Integer type;
-
+    /**
+     * 信息
+     */
     private String message;
 
     @Override
