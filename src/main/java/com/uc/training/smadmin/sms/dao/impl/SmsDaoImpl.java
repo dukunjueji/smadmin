@@ -44,7 +44,7 @@ public class SmsDaoImpl extends CarIsIbatisDaoImpl implements SmsDao {
      */
     @Override
     public Sms getSms(Long id) {
-        return (Sms) this.queryForObject( NAMESPACE + "SmsDao.getSms", id);
+        return (Sms) this.queryForObject( NAMESPACE + "getSms", id);
     }
 
 
