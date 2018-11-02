@@ -165,12 +165,12 @@ public class RoleController extends BaseController {
     public Result<Long> addUserRole(Long uid, String ids){
         // 判空
         if (StringUtils.isEmpty(ids)) {
-            return Result.getBusinessException("删除失败", null);
+            return Result.getBusinessException("角色添加失败", null);
         }
         // 获取ID列表
         String[] sp = StringUtils.split(ids.substring(1, ids.length()-1), ',');
         if (sp == null || sp.length==0){
-            return Result.getBusinessException("删除失败", null);
+            return Result.getBusinessException("角色添加失败", null);
         }
         List<Long> list = new ArrayList<>();
         for (String s : sp) {

@@ -1,7 +1,12 @@
 package com.uc.training.smadmin.redis;
 
 import java.util.concurrent.TimeUnit;
-
+/**
+ * 命名空间枚举类
+ *
+ * @author zhongling(ling.zhong @ ucarinc.com)
+ * @since 2018年10月31日 15:49+
+ */
 public enum RedisNameSpaceEnum {
 
     //商品详情缓存

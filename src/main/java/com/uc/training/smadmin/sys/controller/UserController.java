@@ -1,5 +1,6 @@
 package com.uc.training.smadmin.sys.controller;
 
+import com.uc.training.common.constant.Constant;
 import com.uc.training.common.vo.PageVO;
 import com.uc.training.smadmin.sys.vo.UserEditPasswordVo;
 import com.uc.training.smadmin.sys.vo.UserListVO;
@@ -183,8 +184,7 @@ public class UserController extends BaseController {
         if (user == null || StringUtils.isEmpty(user.getUserName())){
             return Result.getBusinessException("用户添加失败", null);
         }
-        String defaultPwd = "123456";
-        String pwd = EncryptUtil.md5(defaultPwd);
+        String pwd = EncryptUtil.md5(Constant.DEFAULT_PASSWORD);
         user.setCreateEmp(getUid());
         user.setPassword(pwd);
         Long id = userService.addUser(user);

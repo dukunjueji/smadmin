@@ -55,5 +55,8 @@ public class SysMenuDaoImpl extends CarIsIbatisDaoImpl implements SysMenuDao {
         return this.deleteObject(NAMESPACE + "batchDelete", ids);
     }
 
-
+    @Override
+    public Integer deleteRoleMenuByMenuList(List<Long> mid) {
+        return this.deleteObject(NAMESPACE + "deleteRoleMenuByMenuList", mid);
+    }
 }

@@ -96,4 +96,9 @@ public class SysRoleDaoImpl extends CarIsIbatisDaoImpl implements SysRoleDao {
         return (Long) this.insert(NAMESPACE + "batchInsertRole", map);
     }
 
+    @Override
+    public Integer deleteUserRoleByRid(Long rid) {
+        return this.deleteObject(NAMESPACE + "deleteUserRoleByRid", rid);
+    }
+
 }

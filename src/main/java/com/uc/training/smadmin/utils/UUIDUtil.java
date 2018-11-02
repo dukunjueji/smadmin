@@ -79,7 +79,7 @@ public class UUIDUtil {
 }
 class GetAndProductUUID {
 
-    private static final Lock lock = new ReentrantLock();
+    private static final Lock LOCK = new ReentrantLock();
     /**
      *控制生产者线程是否退出
      */
@@ -96,13 +96,13 @@ class GetAndProductUUID {
                 thread.start();
 //                producerNumInQueue();
             }
-            lock.lock();
+            LOCK.lock();
             UUIDData data = UUIDUtil.queue.take();
             return data.getData();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }finally {
-            lock.unlock();
+            LOCK.unlock();
         }
         return null;
     }

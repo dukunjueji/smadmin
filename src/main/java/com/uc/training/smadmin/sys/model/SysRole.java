@@ -1,6 +1,7 @@
 package com.uc.training.smadmin.sys.model;
 
 import com.uc.training.common.base.model.BaseModel;
+import org.hibernate.validator.constraints.NotBlank;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -23,6 +24,7 @@ public class SysRole extends BaseModel implements Serializable {
     /**
      *角色名字
      */
+    @NotBlank
     private String name;
 
     public Long getId() {

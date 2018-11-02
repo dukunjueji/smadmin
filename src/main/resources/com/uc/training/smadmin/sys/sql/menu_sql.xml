@@ -82,4 +82,13 @@
 		#ids[]#
 	  </iterate>
   </delete>
+
+  <!-- 根据被删除的菜单ID删除角色菜单权限 -->
+  <delete id="deleteRoleMenuByMenuList" parameterClass="java.util.List">
+	  DELETE FROM t_sys_role_menu
+	  WHERE menu_id IN
+	  <iterate open="(" close=")" conjunction=",">
+		#mid[]#
+	  </iterate>
+  </delete>
 </sqlMap>

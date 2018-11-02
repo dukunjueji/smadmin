@@ -10,6 +10,7 @@ import com.uc.training.smadmin.gds.vo.GoodsListVO;
 import com.uc.training.smadmin.gds.vo.GoodsStokeVO;
 import com.zuche.framework.dao.CarIsIbatisDaoImpl;
 import org.springframework.stereotype.Repository;
+import com.uc.training.smadmin.gds.vo.PageVO;
 
 import java.util.List;
 
@@ -22,8 +23,13 @@ import java.util.List;
 @Repository
 public class GoodsDaoImpl  extends CarIsIbatisDaoImpl implements GoodsDao {
     @Override
-    public List<GoodsRE> getHotRecommend(int listSize) {
-        return this.queryForList("com.uc.training.smadmin.gds.dao.GoodsDao.getHotRecommend",listSize);
+    public List<GoodsRE> getHotRecommend(PageVO pageVO) {
+        return this.queryForList("com.uc.training.smadmin.gds.dao.GoodsDao.getHotRecommend",pageVO,pageVO.getStartIndex(),pageVO.getEndIndex());
+    }
+
+    @Override
+    public Integer getHotRecommendCount() {
+        return (Integer)this.queryForObject("com.uc.training.smadmin.gds.dao.GoodsDao.getHotRecommendCount");
     }
 
     @Override

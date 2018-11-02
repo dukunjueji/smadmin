@@ -44,6 +44,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 
     @Override
     public Integer deleteById(Long id) {
+        roleDao.deleteUserRoleByRid(id);
         return roleDao.deleteById(id);
     }
 
