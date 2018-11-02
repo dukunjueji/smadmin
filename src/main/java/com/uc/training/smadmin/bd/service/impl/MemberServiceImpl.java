@@ -2,22 +2,21 @@ package com.uc.training.smadmin.bd.service.impl;
 
 import com.uc.training.common.enums.OrderEnum;
 import com.uc.training.smadmin.bd.dao.MemberDao;
+import com.uc.training.smadmin.bd.model.LoginLog;
 import com.uc.training.smadmin.bd.model.Member;
+import com.uc.training.smadmin.bd.mq.MqProducer;
 import com.uc.training.smadmin.bd.re.MemberDetailRE;
 import com.uc.training.smadmin.bd.re.MemberInfoRE;
+import com.uc.training.smadmin.bd.service.LoginLogService;
 import com.uc.training.smadmin.bd.service.MemberService;
-import com.uc.training.smadmin.bd.vo.MemberBalanceVO;
-import com.uc.training.smadmin.bd.vo.MemberInfoVO;
-import com.uc.training.smadmin.bd.vo.MemberListVO;
-import com.uc.training.smadmin.bd.vo.MemberLoginVO;
-import com.uc.training.smadmin.gds.dao.GoodsDao;
+import com.uc.training.smadmin.bd.vo.*;
 import com.uc.training.smadmin.gds.service.GoodsService;
 import com.uc.training.smadmin.gds.vo.GoodsStokeVO;
-import com.uc.training.smadmin.ord.dao.OrderDao;
 import com.uc.training.smadmin.ord.re.OrderConfirmRE;
 import com.uc.training.smadmin.ord.service.OrderService;
 import com.uc.training.smadmin.ord.vo.OrdOrderVo;
 import com.uc.training.smadmin.utils.EncryptUtil;
+import com.ycc.tools.middleware.metaq.MetaQUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,6 +42,9 @@ public class MemberServiceImpl implements MemberService {
 
     @Autowired
     OrderService orderService;
+
+    @Autowired
+    private LoginLogService loginLogService;
 
     @Override
     public void insertMember(Member member) {
@@ -152,6 +154,16 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public void updateBalance(MemberBalanceVO memberBalanceVO) {
         this.memberDao.updateBalance(memberBalanceVO);
+    }
+
+    @Override
+    public void memberLogin(LoginLog loginLog, MqVO mqVO) {
+        loginLogService.insertLog(loginLog);
+        //判断是否第一次登陆
+        Integer loginNum = loginLogService.queryLoginCount(loginLog);
+        if (loginNum == 1){
+            MetaQUtils.sendMsgNoException(new MqProducer(mqVO));
+        }
     }
 
 }

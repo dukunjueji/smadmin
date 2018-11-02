@@ -1,5 +1,6 @@
 package com.uc.training.smadmin.bd.service;
 
+import com.uc.training.smadmin.bd.model.LoginLog;
 import com.uc.training.smadmin.bd.model.Member;
 import com.uc.training.smadmin.bd.re.MemberDetailRE;
 import com.uc.training.smadmin.bd.re.MemberInfoRE;
@@ -114,4 +115,13 @@ public interface MemberService {
     *@throws：
     */
     void updateBalance(MemberBalanceVO memberBalanceVO);
+
+    /**
+    *说明：会员登陆
+    *@param loginLog
+    *@param mqVO
+    *@return：void
+    *@throws：
+    */
+    void memberLogin(LoginLog loginLog, MqVO mqVO);
 }

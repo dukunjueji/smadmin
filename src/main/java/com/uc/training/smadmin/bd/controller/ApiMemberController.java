@@ -8,7 +8,6 @@ import com.uc.training.smadmin.bd.model.LoginLog;
 import com.uc.training.smadmin.bd.model.Member;
 import com.uc.training.smadmin.bd.model.Message;
 import com.uc.training.smadmin.bd.re.*;
-import com.uc.training.smadmin.bd.service.LoginLogService;
 import com.uc.training.smadmin.bd.service.MemberService;
 import com.uc.training.smadmin.bd.service.MessageService;
 import com.uc.training.smadmin.bd.vo.*;
@@ -51,9 +50,6 @@ public class ApiMemberController extends BaseController {
 
     @Autowired
     private MessageService messageService;
-
-    @Autowired
-    private LoginLogService loginLogService;
 
     private Map<String, String> map = new HashMap<>();
 
@@ -139,18 +135,15 @@ public class ApiMemberController extends BaseController {
 
                 //生成登陆日志
                 LoginLog loginLog = new LoginLog();
-                loginLog.setMemberId(getUid());
+                loginLog.setMemberId(member.getId());
                 loginLog.setIp(getLocalhostIp());
-                loginLogService.insertLog(loginLog);
 
-                //判断是否第一次登陆
-                Integer loginNum = loginLogService.queryLoginCount(loginLog);
-                if (loginNum == 1){
-                    LoginMqVO loginMqVO = new LoginMqVO();
-                    loginMqVO.setMemberId(member.getId());
-                    loginMqVO.setGrowthType(GrowthEnum.LOGININ.getGrowthType());
-                    //MetaQUtils.sendMsgNoException(new GrowthMqProducer(loginMqVO));
-                }
+                //生成消息体
+                MqVO mqVO = new MqVO();
+                mqVO.setMemberId(member.getId());
+                mqVO.setGrowthType(GrowthEnum.LOGININ.getGrowthType());
+
+                memberService.memberLogin(loginLog, mqVO);
                 result = Result.getSuccessResult(memberLoginRE);
             }
         } catch (Exception e) {
@@ -390,6 +383,12 @@ public class ApiMemberController extends BaseController {
         return Result.getSuccessResult( messageService.updateMessageStatus(message));
     }
 
+    /**
+    *说明：查询一个会员信息
+    *@param messageId
+    *@return：com.ycc.base.common.Result<com.uc.training.smadmin.bd.vo.MessageDetailVO>
+    *@throws：
+    */
     @RequestMapping(value = "/queryOneMessageById.do_", method = RequestMethod.GET)
     @AccessLogin
     @ResponseBody
