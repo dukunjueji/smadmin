@@ -2,6 +2,7 @@ package com.uc.training.smadmin.sms.model;
 
 import com.uc.training.common.base.model.BaseModel;
 import com.uc.training.common.enums.SmsTypeEnum;
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * @author 余旭东
