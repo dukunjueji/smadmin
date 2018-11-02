@@ -74,6 +74,6 @@ public interface SmsTemplateService {
      * @param generateSmsVO
      * @return
      */
-    Integer generateSMS(GenerateSmsVO generateSmsVO);
+    Integer generateSms(GenerateSmsVO generateSmsVO);
 
 }

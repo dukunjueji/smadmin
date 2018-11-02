@@ -75,5 +75,5 @@ public interface SmsTemplateDao {
      * @param generateSmsVO
      * @return
      */
-    String generateSMS(GenerateSmsVO generateSmsVO);
+    String generateSms(GenerateSmsVO generateSmsVO);
 }

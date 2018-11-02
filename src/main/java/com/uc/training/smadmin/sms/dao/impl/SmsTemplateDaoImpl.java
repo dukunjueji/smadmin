@@ -104,8 +104,8 @@ public class SmsTemplateDaoImpl extends CarIsIbatisDaoImpl implements SmsTemplat
      * @return
      */
     @Override
-    public String generateSMS(GenerateSmsVO generateSmsVO) {
-        return (String) this.queryForObject(NAMESPACE + "generateSMS", generateSmsVO);
+    public String generateSms(GenerateSmsVO generateSmsVO) {
+        return (String) this.queryForObject(NAMESPACE + "generateSms", generateSmsVO);
     }
 
 }

@@ -4,15 +4,18 @@ import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.common.constant.Constant;
 import com.uc.training.common.enums.GrowthEnum;
+import com.uc.training.common.enums.SmsStatusEnum;
+import com.uc.training.common.enums.SmsTypeEnum;
 import com.uc.training.smadmin.bd.model.LoginLog;
 import com.uc.training.smadmin.bd.model.Member;
 import com.uc.training.smadmin.bd.model.Message;
 import com.uc.training.smadmin.bd.re.*;
-import com.uc.training.smadmin.bd.service.LoginLogService;
 import com.uc.training.smadmin.bd.service.MemberService;
 import com.uc.training.smadmin.bd.service.MessageService;
 import com.uc.training.smadmin.bd.vo.*;
 import com.uc.training.smadmin.ord.service.OrderService;
+import com.uc.training.smadmin.sms.service.SmsTemplateService;
+import com.uc.training.smadmin.sms.vo.GenerateSmsVO;
 import com.uc.training.smadmin.utils.EncryptUtil;
 import com.uc.training.smadmin.utils.TelCodeUtil;
 import com.uc.training.smadmin.utils.TokenUtil;
@@ -53,8 +56,6 @@ public class ApiMemberController extends BaseController {
     private MessageService messageService;
 
     @Autowired
-    private LoginLogService loginLogService;
-    @Autowired
     private SmsTemplateService smsTemplateService;
 
     private Map<String, String> map = new HashMap<>();
@@ -93,13 +94,12 @@ public class ApiMemberController extends BaseController {
         GenerateSmsVO generateSmsVO = new GenerateSmsVO();
         generateSmsVO.setTelephone(createCodeVO.getTelephone());
         generateSmsVO.setType(SmsTypeEnum.REGISTER.getType());
-;
-        if (SmsStatusEnum.SUCCESS.getKey() == smsTemplateService.generateSMS(generateSmsVO)) {
+
+        if (SmsStatusEnum.SUCCESS.getKey() == smsTemplateService.generateSms(generateSmsVO)) {
             return Result.getSuccessResult(SmsStatusEnum.SUCCESS.getValue());
         } else {
-            return Result.getSuccessResult(SmsStatusEnum.FAIL.getValue());
+            return Result.getBusinessException(SmsStatusEnum.FAIL.getValue(), null);
         }
-        return re;
     }
 
     /***

@@ -118,7 +118,7 @@ public class SmsTemplateServiceImpl implements SmsTemplateService {
      * @return
      */
     @Override
-    public Integer generateSMS(GenerateSmsVO generateSmsVO) {
+    public Integer generateSms(GenerateSmsVO generateSmsVO) {
 
         // redis
         RedisCacheUtils redis = RedisCacheUtils.getInstance(RedisConfigEnum.SYS_CODE);
@@ -132,7 +132,7 @@ public class SmsTemplateServiceImpl implements SmsTemplateService {
             redis.set(generateSmsVO.getTelephone(), generateSmsVO.getMessage());
         }
         //获取短信内容
-        String content = smsTemplateDao.generateSMS(generateSmsVO);
+        String content = smsTemplateDao.generateSms(generateSmsVO);
         // 发送短信
         Integer status = smsService.sendSys(content);
 
