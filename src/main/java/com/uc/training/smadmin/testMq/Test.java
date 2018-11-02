@@ -3,6 +3,7 @@ package com.uc.training.smadmin.testMq;
 import com.uc.training.smadmin.ord.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ import java.util.List;
  * @date 2018/11/1  18:13
  */
 @Controller
+@RequestMapping(value = "adminhh/order/")
 public class Test {
   @Autowired
   OrderService orderService;
@@ -21,6 +23,9 @@ public class Test {
   List<Long> list;
 
   Integer um = 0;
+
+  public Test() {
+  }
 
   public Test(List list) {
     this.list = list;

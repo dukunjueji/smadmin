@@ -7,7 +7,7 @@
         SELECT
         s.id AS id,
         s.receiver AS receiver,
-        s.telephone AS telephone,
+        CONCAT(LEFT(s.telephone,3), '****' ,RIGHT(s.telephone,4)) AS telephone,
         s.area_code AS areaCode,
         s.addr_detail AS addrDetail,
         s.is_default AS isDefault
@@ -26,7 +26,7 @@
         s.is_default AS isDefault
         FROM t_bd_address s
         WHERE s.member_id = #memberId#
-        ORDER BY s.id ASC
+        ORDER BY s.modify_time DESC
     </select>
 
     <!-- 通过会员id查询默认地址 -->
