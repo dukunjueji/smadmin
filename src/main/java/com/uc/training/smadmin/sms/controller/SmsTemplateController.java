@@ -8,8 +8,6 @@ import com.uc.training.common.vo.PageVO;
 import com.uc.training.smadmin.sms.model.SmsTemplate;
 import com.uc.training.smadmin.sms.service.SmsTemplateService;
 import com.uc.training.smadmin.sms.vo.SmsTemplateListVO;
-import net.sf.json.JSONArray;
-import net.sf.json.JsonConfig;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,9 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 
@@ -139,9 +134,11 @@ public class SmsTemplateController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "batchDeleteTemplate.do_", method = RequestMethod.POST)
     public Result<Integer> batchDeleteTemplate(String ids){
-        if (ids == null) {
+        // 判空
+        if (StringUtils.isEmpty(ids)) {
             return Result.getBusinessException("删除失败", null);
         }
+        // 获取ID列表
         String[] sp = StringUtils.split(ids.substring(1, ids.length()-1), ',');
         if (sp == null || sp.length==0){
             return Result.getBusinessException("删除失败", null);

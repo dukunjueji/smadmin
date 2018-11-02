@@ -57,4 +57,56 @@ public interface SysRoleDao {
      * @return
      */
     Long addRole(SysRole sysRole);
+
+    /**
+     * 通过角色ID获取角色菜单权限ID列表
+     * @param rid
+     * @return
+     */
+    List<Long> queryMenuAuthByRid(Long rid);
+
+    /**
+     * 通过RID删除角色权限
+     * @param rid
+     * @return
+     */
+    Integer deleteAuthByRid(Long rid);
+
+    /**
+     * 批量新增角色权限
+     * @param rid 角色ID
+     * @param mid 菜单ID
+     * @param createEmp 创建角色ID
+     * @return
+     */
+    Long batchInsertAuth(Long rid, List<Long> mid, Long createEmp);
+
+    /**
+     * 获取角色列表
+     * @return
+     */
+    List<SysRole> getRoleList();
+
+    /**
+     * 通过用户ID获取角色ID
+     * @param uid
+     * @return
+     */
+    List<Long> getRoleListByUid(Long uid);
+
+    /**
+     * 通过RID删除角色权限
+     * @param uid
+     * @return
+     */
+    Integer deleteRoleByUid(Long uid);
+
+    /**
+     * 批量新增角色权限
+     * @param uid 角色ID
+     * @param rid 菜单ID
+     * @param createEmp 创建角色ID
+     * @return
+     */
+    Long batchInsertRole(Long uid, List<Long> rid, Long createEmp);
 }

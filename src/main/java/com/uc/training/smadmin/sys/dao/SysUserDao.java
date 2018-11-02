@@ -1,7 +1,10 @@
 package com.uc.training.smadmin.sys.dao;
 
 import com.uc.training.smadmin.sys.model.SysUser;
+import com.uc.training.smadmin.sys.vo.UserListVO;
 import com.uc.training.smadmin.sys.vo.UserLoginVO;
+
+import java.util.List;
 
 /**
  * 版权说明：Copyright (c) 2018 ucarinc. All Rights Reserved.
@@ -38,4 +41,39 @@ public interface SysUserDao {
      * @return java.lang.Long
      */
     int updatePassword(SysUser user);
+
+    /**
+     * 获取用户分页列表
+     * @param userListVO
+     * @return
+     */
+    List<SysUser> getUserList(UserListVO userListVO);
+
+    /**
+     * 获取用户数量
+     * @param userListVO
+     * @return
+     */
+    Long queryUserCount(UserListVO userListVO);
+
+    /**
+     * 新增用户
+     * @param user
+     * @return
+     */
+    Long addUser(SysUser user);
+
+    /**
+     * 通过ID删除用户
+     * @param id
+     * @return
+     */
+    Integer deleteById(Long id);
+
+    /**
+     * 更新用户信息
+     * @param user
+     * @return
+     */
+    Integer updateUser(SysUser user);
 }
