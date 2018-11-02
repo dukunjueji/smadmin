@@ -2,6 +2,7 @@ package com.uc.training.smadmin.sms.dao;
 
 import com.uc.training.smadmin.sms.model.SmsTemplate;
 import com.uc.training.smadmin.sms.vo.SmsTemplateListVO;
+import com.uc.training.smadmin.sms.vo.SmsTemplateVO;
 
 import java.util.List;
 
@@ -17,14 +18,14 @@ public interface SmsTemplateDao {
      * @param template
      * @return
      */
-    public Long addTemplate(SmsTemplate template);
+    public Long addTemplate(SmsTemplateVO template);
 
     /**
      * 修改短信模板
      * @param template
      * @return
      */
-    public Integer modifyTemplate(SmsTemplate template);
+    public Integer modifyTemplate(SmsTemplateVO template);
 
     /**
      * 通过ID删除短信模板

@@ -1,5 +1,7 @@
 package com.uc.training.smadmin.gds.service;
 
+import com.kenai.jaffl.annotations.In;
+import com.uc.training.smadmin.gds.vo.PageVO;
 import com.uc.training.smadmin.gds.model.Goods;
 import com.uc.training.smadmin.gds.model.GoodsPic;
 import com.uc.training.smadmin.gds.model.Property;
@@ -21,10 +23,16 @@ import java.util.List;
 public interface GoodsService {
     /**
      * 获取热门推荐
-     * @param listSize
+     * @param pageVO
      * @return
      */
-    public List<GoodsRE> getHotRecommend(int listSize);
+    public List<GoodsRE> getHotRecommend(PageVO pageVO);
+
+    /**
+     * 获取热门推荐总数量
+     * @return
+     */
+    public Integer getHotRecommendCount();
 
     /**
      * 通过属性id商品详情
@@ -85,7 +93,7 @@ public interface GoodsService {
      * 测试高并发下的减库存安全
      * @param goodsStokeVO
      */
-    public void updateAndDeductStoke(GoodsStokeVO goodsStokeVO);
+    public Integer updateAndDeductStoke(GoodsStokeVO goodsStokeVO);
 
     /**
      * 减库存之前，查看商品是否下架、删除、检查库存是否足够

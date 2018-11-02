@@ -44,11 +44,39 @@ public class SysRoleServiceImpl implements SysRoleService {
 
     @Override
     public Integer deleteById(Long id) {
+        roleDao.deleteUserRoleByRid(id);
         return roleDao.deleteById(id);
     }
 
     @Override
     public Long addRole(SysRole sysRole) {
         return roleDao.addRole(sysRole);
+    }
+
+    @Override
+    public Long addRoleAuth(Long rid, List<Long> mid, Long createEmp) {
+        roleDao.deleteAuthByRid(rid);
+        return roleDao.batchInsertAuth(rid, mid, createEmp);
+    }
+
+    @Override
+    public List<Long> getRoleMenuIdByRid(Long rid) {
+        return roleDao.queryMenuAuthByRid(rid);
+    }
+
+    @Override
+    public List<SysRole> getRoleList() {
+        return roleDao.getRoleList();
+    }
+
+    @Override
+    public List<Long> getRoleListByUid(Long uid) {
+        return roleDao.getRoleListByUid(uid);
+    }
+
+    @Override
+    public Long addUserRole(Long uid, List<Long> rid, Long createEmp) {
+        roleDao.deleteRoleByUid(uid);
+        return roleDao.batchInsertRole(uid, rid, createEmp);
     }
 }

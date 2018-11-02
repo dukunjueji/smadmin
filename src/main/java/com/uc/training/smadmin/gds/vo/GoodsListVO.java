@@ -46,4 +46,9 @@ public class GoodsListVO extends PageQuery {
     public void setCode(String code) {
         this.code = code;
     }
+
+    @Override
+    public String toString() {
+        return "GoodsListVO{" + "categoryId=" + categoryId + ", name='" + name + '\'' + ", code='" + code + '\'' + ", offset=" + offset + ", pageIndex=" + pageIndex + ", pageSize=" + pageSize + '}';
+    }
 }

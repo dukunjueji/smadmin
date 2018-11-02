@@ -76,16 +76,19 @@ public class AdminOrderController extends BaseController {
   @RequestMapping(value = "admDelOrder.do_", method = RequestMethod.POST)
   public Result delOrderPage(String delId) {
     Result result = new Result();
-    //截取字符串
-    String del = delId.substring(1, delId.length()-1);
-    String[] deleteId = StringUtils.split(del, ',');
-    List<Long> list = new ArrayList<>();
-    //判空
     if (StringUtils.isEmpty(delId)) {
       return Result.getBusinessException("删除失败",null);
     }
-    for (String s : deleteId) {
-      list.add(Long.parseLong(s));
+    //截取字符串
+    String[] deleteId = StringUtils.split(delId.substring(1, delId.length()-1), ',');
+    List<Long> list = new ArrayList<>();
+    //判空
+    if (deleteId.length > 1) {
+      for (String s : deleteId) {
+        list.add(Long.parseLong(s));
+      }
+    } else {
+      return Result.getBusinessException("删除失败",null);
     }
     int num = orderService.logicDelOrder(list);
     if (num > 0) {

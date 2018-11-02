@@ -12,20 +12,18 @@ import com.uc.training.smadmin.ord.model.Order;
 import com.uc.training.smadmin.ord.re.*;
 import com.uc.training.smadmin.ord.re.OrderGoodsDetailRe;
 import com.uc.training.smadmin.ord.re.OrderRe;
-import com.uc.training.smadmin.ord.vo.OrdMemberVO;
+import com.uc.training.smadmin.ord.vo.*;
 import com.ycc.base.common.Result;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.smadmin.gds.service.GoodsService;
 import com.uc.training.smadmin.ord.re.OrderRe;
 import com.uc.training.smadmin.ord.re.OrderStatusRe;
 import com.uc.training.smadmin.ord.service.OrderService;
-import com.uc.training.smadmin.ord.vo.OrdCartGoodsVo;
-import com.uc.training.smadmin.ord.vo.OrdOrderGoodsVo;
-import com.uc.training.smadmin.ord.vo.OrdOrderVo;
 import com.ycc.base.common.Result;
 import net.sf.json.JSONArray;
 import net.sf.json.JsonConfig;
 import org.apache.commons.collections.OrderedMap;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
@@ -201,7 +199,6 @@ public class OrderController extends BaseController {
     return Result.getSuccessResult(null);
   }
 
-
     /**
      * 提交订单信息
      *
@@ -264,20 +261,31 @@ public class OrderController extends BaseController {
     }
 
     /**
-     * 根据订单号更新状态
-     *
-     * @param ordOrderVo
+     * 去结算校验库存
+     *@author hhj
+     * @param goodsList
      * @return
      */
     @ResponseBody
     @AccessLogin
-    @RequestMapping(value = "upOrderStatus.do_", method = RequestMethod.POST)
-    public Result upOrderStatus(OrdOrderVo ordOrderVo) {
-        Result result = new Result();
-        if (orderService.updateOrder(ordOrderVo) > 0) {
-            result.setMsg("已更新状态");
+    @RequestMapping(value = "checkStock.do_", method = RequestMethod.POST)
+    public Result checkStock(String goodsList) {
+      List<OrdGoodsVO> list = (List<OrdGoodsVO>) JSONArray.toList(JSONArray.fromObject(goodsList), new OrdGoodsVO(), new JsonConfig());
+      GoodsDetailRE gdDTO;
+      if (CollectionUtils.isEmpty(list)) {
+        return Result.getBusinessException("请选择商品再提交",null);
+      } else {
+        for (OrdGoodsVO cargd:list ) {
+          gdDTO = goodsService.getGoodsDetailByPropertyId(cargd.getPropertyId());
+          if(gdDTO == null){
+            return Result.getBusinessException("选择的商品中出现不存在请刷新",null);
+          }
+          if(gdDTO.getStock()<cargd.getGoodsNum() || gdDTO.getStatus() ==0 ){
+            return Result.getBusinessException("选择的商品中存在库存不足问题",null);
+          }
         }
-        return result;
+      }
+        return Result.getSuccessResult(null);
     }
 
     /**

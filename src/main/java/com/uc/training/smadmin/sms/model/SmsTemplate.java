@@ -1,7 +1,8 @@
 package com.uc.training.smadmin.sms.model;
 
 import com.uc.training.common.base.model.BaseModel;
-import com.uc.training.common.enums.SmsTemplateTypeEnum;
+import com.uc.training.common.enums.SmsTypeEnum;
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * @author 余旭东
@@ -32,11 +33,13 @@ public class SmsTemplate extends BaseModel {
 	/**
 	 * 模板标题
 	 */
+	@NotBlank
 	private String title;
 
 	/**
 	 * 模板内容
 	 */
+	@NotBlank
 	private String content;
 
 	/**
@@ -85,7 +88,7 @@ public class SmsTemplate extends BaseModel {
 	}
 
 	public String getTypeDes() {
-		return SmsTemplateTypeEnum.getMap().get(type);
+		return SmsTypeEnum.getMap().get(type);
 	}
 
 }

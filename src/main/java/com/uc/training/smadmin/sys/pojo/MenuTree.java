@@ -1,5 +1,6 @@
 package com.uc.training.smadmin.sys.pojo;
 
+import com.uc.training.common.enums.MenuEnum;
 import com.uc.training.smadmin.sys.model.SysMenu;
 
 import java.util.*;
@@ -20,7 +21,7 @@ public class MenuTree {
         // 根节点
         List<SysMenu> rootMenu = new ArrayList<>();
         for (int i=0;i<allMenu.size();i++) {
-            if (allMenu.get(i).getParentId() == 0) {
+            if (allMenu.get(i).getParentId() == MenuEnum.ROOTPID.getNumber()) {
                 // 父节点为0的节点为根节点
                 rootMenu.add(allMenu.get(i));
             }
@@ -52,10 +53,6 @@ public class MenuTree {
         // 递归
         for (SysMenu menu : childList) {
             menu.setChildren(getChild(menu.getId(), allMenu));
-        }
-        // 如果子节点为空，退出递归
-        if (childList.size() == 0) {
-            return new ArrayList<SysMenu>();
         }
         return childList;
     }

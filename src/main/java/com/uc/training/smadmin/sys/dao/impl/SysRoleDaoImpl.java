@@ -7,7 +7,9 @@ import com.zuche.framework.dao.CarIsIbatisDaoImpl;
 import org.apache.poi.ss.formula.functions.Na;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 版权说明：Copyright (c) 2018 ucarinc. All Rights Reserved.
@@ -50,4 +52,53 @@ public class SysRoleDaoImpl extends CarIsIbatisDaoImpl implements SysRoleDao {
     public Long addRole(SysRole sysRole) {
         return (Long) this.insert(NAMESPACE + "addRole", sysRole);
     }
+
+    @Override
+    public List<Long> queryMenuAuthByRid(Long rid) {
+        return this.queryForList(NAMESPACE + "queryMenuAuthByRid", rid);
+    }
+
+    @Override
+    public Integer deleteAuthByRid(Long rid) {
+        return this.deleteObject(NAMESPACE + "deleteAuthByRid", rid);
+    }
+
+    @Override
+    public Long batchInsertAuth(Long rid, List<Long> mid, Long createEmp) {
+        Map map = new HashMap();
+        map.put("rid", rid);
+        map.put("mid", mid);
+        map.put("createEmp", createEmp);
+        return (Long) this.insert(NAMESPACE + "batchInsertAuth", map);
+    }
+
+    @Override
+    public List<SysRole> getRoleList() {
+        return this.queryForList(NAMESPACE + "getRoleList");
+    }
+
+    @Override
+    public List<Long> getRoleListByUid(Long uid) {
+        return this.queryForList(NAMESPACE + "getRoleListByUid", uid);
+    }
+
+    @Override
+    public Integer deleteRoleByUid(Long uid) {
+        return this.deleteObject(NAMESPACE + "deleteRoleByUid", uid);
+    }
+
+    @Override
+    public Long batchInsertRole(Long uid, List<Long> rid, Long createEmp) {
+        Map map = new HashMap();
+        map.put("rid", rid);
+        map.put("uid", uid);
+        map.put("createEmp", createEmp);
+        return (Long) this.insert(NAMESPACE + "batchInsertRole", map);
+    }
+
+    @Override
+    public Integer deleteUserRoleByRid(Long rid) {
+        return this.deleteObject(NAMESPACE + "deleteUserRoleByRid", rid);
+    }
+
 }

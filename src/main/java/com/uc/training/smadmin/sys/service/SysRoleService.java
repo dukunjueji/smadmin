@@ -57,4 +57,42 @@ public interface SysRoleService {
      * @return
      */
     Long addRole(SysRole sysRole);
+
+    /**
+     * 通过用户ID和菜单ID列表添加用户权限
+     * @param rid
+     * @param mid
+     * @param createEmp
+     * @return
+     */
+   Long addRoleAuth(Long rid, List<Long> mid, Long createEmp);
+
+    /**
+     * 通过角色ID获取该ID所有的菜单权限
+     * @param rid
+     * @return
+     */
+   List<Long> getRoleMenuIdByRid(Long rid);
+
+    /**
+     * 获取角色列表
+     * @return
+     */
+    List<SysRole> getRoleList();
+
+    /**
+     * 通过用户ID获取角色ID
+     * @param uid
+     * @return
+     */
+    List<Long> getRoleListByUid(Long uid);
+
+    /**
+     * 通过用户ID和菜单ID列表添加用户权限
+     * @param rid
+     * @param uid
+     * @param createEmp
+     * @return
+     */
+    Long addUserRole(Long uid, List<Long> rid, Long createEmp);
 }

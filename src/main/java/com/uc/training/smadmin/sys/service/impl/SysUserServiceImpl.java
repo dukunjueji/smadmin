@@ -1,11 +1,15 @@
 package com.uc.training.smadmin.sys.service.impl;
 
 import com.uc.training.smadmin.sys.dao.SysUserDao;
+import com.uc.training.smadmin.sys.model.SysMenu;
 import com.uc.training.smadmin.sys.model.SysUser;
 import com.uc.training.smadmin.sys.service.SysUserService;
+import com.uc.training.smadmin.sys.vo.UserListVO;
 import com.uc.training.smadmin.sys.vo.UserLoginVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * 版权说明：Copyright (c) 2018 ucarinc. All Rights Reserved.
@@ -33,5 +37,35 @@ public class SysUserServiceImpl implements SysUserService {
     @Override
     public int updatePassword(SysUser user) {
         return userDao.updatePassword(user);
+    }
+
+    @Override
+    public List<SysUser> getUserList(UserListVO userListVO) {
+        return userDao.getUserList(userListVO);
+    }
+
+    @Override
+    public Long queryUserCount(UserListVO userListVO) {
+        return userDao.queryUserCount(userListVO);
+    }
+
+    @Override
+    public Long addUser(SysUser user) {
+        return userDao.addUser(user);
+    }
+
+    @Override
+    public Integer deleteById(Long id) {
+        return userDao.deleteById(id);
+    }
+
+    @Override
+    public Integer updateUser(SysUser user) {
+        return userDao.updateUser(user);
+    }
+
+    @Override
+    public List<SysMenu> getMenuListByUserId(Long uid) {
+        return userDao.getMenuListByUserId(uid);
     }
 }

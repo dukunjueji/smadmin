@@ -1,6 +1,11 @@
 package com.uc.training.smadmin.sys.controller;
 
+import com.uc.training.common.constant.Constant;
+import com.uc.training.common.vo.PageVO;
+import com.uc.training.smadmin.sys.model.SysMenu;
+import com.uc.training.smadmin.sys.pojo.MenuTree;
 import com.uc.training.smadmin.sys.vo.UserEditPasswordVo;
+import com.uc.training.smadmin.sys.vo.UserListVO;
 import com.ycc.base.common.Result;
 import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
@@ -14,6 +19,7 @@ import com.uc.training.smadmin.sys.service.SysUserService;
 import com.uc.training.smadmin.sys.vo.UserLoginVO;
 import com.uc.training.smadmin.utils.EncryptUtil;
 import com.uc.training.smadmin.utils.TokenUtil;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -142,5 +148,94 @@ public class UserController extends BaseController {
             res = Result.getServiceError("用户修改密码异常", null);
         }
         return res;
+    }
+
+    /**
+     * 获取用户列表
+     * @param userListVO
+     * @return
+     */
+    @RequestMapping(value = "/getUserPage.do_", method = RequestMethod.POST)
+    @ResponseBody
+    public Result<PageVO<SysUser>> getUserList(UserListVO userListVO){
+        Result<PageVO<SysUser>> res;
+        try {
+            PageVO<SysUser> pageVO = new PageVO<SysUser>();
+            pageVO.setPageIndex(userListVO.getPageIndex());
+            pageVO.setPageSize(userListVO.getPageSize());
+            pageVO.setTotal(userService.queryUserCount(userListVO));
+            pageVO.setDataList(userService.getUserList(userListVO));
+            res = Result.getSuccessResult(pageVO);
+        } catch (Exception e) {
+            logger.error("查询符合条件错误！", e);
+            res = Result.getBusinessException("获取分页失败", null);
+        }
+        return res;
+    }
+
+    /**
+     * 新增用户
+     * @param user
+     * @return
+     */
+    @AccessLogin
+    @RequestMapping(value = "/addUser.do_", method = RequestMethod.POST)
+    @ResponseBody
+    public Result<Long> addUser(SysUser user){
+        // 判空
+        if (user == null || StringUtils.isEmpty(user.getUserName())){
+            return Result.getBusinessException("用户添加失败", null);
+        }
+        String pwd = EncryptUtil.md5(Constant.DEFAULT_PASSWORD);
+        user.setCreateEmp(getUid());
+        user.setPassword(pwd);
+        Long id = userService.addUser(user);
+        return Result.getSuccessResult(id);
+    }
+
+    /**
+     * 根据ID删除用户
+     * @param id
+     * @return
+     */
+    @AccessLogin
+    @RequestMapping(value = "/deleteUser.do_", method = RequestMethod.POST)
+    @ResponseBody
+    public Result<Integer> deleteUser(Long id){
+        return Result.getSuccessResult(userService.deleteById(id));
+    }
+
+    /**
+     * 更新用户信息
+     * @param user
+     * @return
+     */
+    @AccessLogin
+    @RequestMapping(value = "/editUser.do_", method = RequestMethod.POST)
+    @ResponseBody
+    public Result<Integer> editUser(SysUser user){
+        // 判空
+        if (user == null || StringUtils.isEmpty(user.getUserName())|| user.getId() == null){
+            return Result.getBusinessException("用户更新失败", null);
+        }
+        user.setModifyEmp(getUid());
+        return Result.getSuccessResult(userService.updateUser(user));
+    }
+
+    /**
+     * 根据用户ID获取用户的菜单权限
+     * @param uid
+     * @return
+     */
+    @AccessLogin
+    @RequestMapping(value = "/getUserMenuAuth.do_", method = RequestMethod.POST)
+    @ResponseBody
+    public Result<List<SysMenu>> getUserMenuAuth(Long uid){
+        if (uid == null) {
+            return Result.getBusinessException("权限获取失败", null);
+        }
+        List<SysMenu> allMenu = userService.getMenuListByUserId(uid);
+        List<SysMenu> rootMenu = MenuTree.findTree(allMenu);
+        return Result.getSuccessResult(rootMenu);
     }
 }

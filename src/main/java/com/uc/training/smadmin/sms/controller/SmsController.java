@@ -1,32 +1,27 @@
 package com.uc.training.smadmin.sms.controller;
 
 import com.uc.training.common.enums.SmsStatusEnum;
-import com.uc.training.common.enums.SmsTemplateTypeEnum;
+import com.uc.training.common.enums.SmsTypeEnum;
 import com.uc.training.smadmin.sms.vo.SmsVO;
 import com.uc.training.smadmin.utils.TelCodeUtil;
 import com.ycc.base.common.Result;
 import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.common.vo.PageVO;
-import com.uc.training.smadmin.sms.model.Sms;
 import com.uc.training.smadmin.sms.service.SmsService;
 import com.uc.training.smadmin.sms.vo.SmsListVO;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 /**
- * @Author: ÓàĞñ¶«
+ * @Author: ä½™æ—­ä¸œ
  * @Date: 2018/10/22 13:52
  * @Description:
  */
@@ -37,19 +32,15 @@ public class SmsController extends BaseController {
     private SmsService smsService;
 
     /**
-     * »ñÈ¡·ÖÒ³ÁĞ±í
+     * è·å–çŸ­ä¿¡åˆ†é¡µåˆ—è¡¨
      * @param smsListVO
      * @return
      */
     @AccessLogin
     @ResponseBody
     @RequestMapping(value = "getSmsPage.do_", method = RequestMethod.POST)
-    public Result<PageVO<SmsVO>> getDemoPage(SmsListVO smsListVO) {
+    public Result<PageVO<SmsVO>> getDemoPage(@Validated SmsListVO smsListVO) {
         Result<PageVO<SmsVO>> res;
-        // åˆ¤æ–­æ‰‹æœºå·æ˜¯å¦åˆæ³•
-        if (!StringUtils.isEmpty(smsListVO.getTelephone()) && !TelCodeUtil.validateTel(smsListVO.getTelephone())) {
-            return Result.getBusinessException("æ‰‹æœºå·ç ä¸æ­£ç¡®", null);
-        }
         try {
             PageVO<SmsVO> pageVO = new PageVO<>();
             pageVO.setPageIndex(smsListVO.getPageIndex());
@@ -59,8 +50,8 @@ public class SmsController extends BaseController {
             res = Result.getSuccessResult(pageVO);
 
         } catch (Exception e) {
-            logger.error("²éÑ¯·ûºÏÌõ¼ş´íÎó£¡", e);
-            res = Result.getBusinessException("»ñÈ¡sms·ÖÒ³Ê§°Ü", null);
+            logger.error("æŸ¥è¯¢ç¬¦åˆæ¡ä»¶é”™è¯¯ï¼", e);
+            res = Result.getBusinessException("è·å–smsåˆ†é¡µå¤±è´¥", null);
         }
         return res;
     }
@@ -76,7 +67,7 @@ public class SmsController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "getType.do_", method = RequestMethod.GET)
     public Result<Map<Integer, String>> getType(){
-        return Result.getSuccessResult(SmsTemplateTypeEnum.getMap());
+        return Result.getSuccessResult(SmsTypeEnum.getMap());
     }
 
 }

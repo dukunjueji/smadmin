@@ -4,6 +4,9 @@ import com.uc.training.common.base.model.BaseModel;
 
 /**
  * 商品类别
+ *
+ * @author zhongling(ling.zhong @ ucarinc.com)
+ * @since 2018年10月15日 15:04
  */
 public class Category extends BaseModel {
 

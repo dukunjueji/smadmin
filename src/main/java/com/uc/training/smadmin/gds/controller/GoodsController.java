@@ -2,12 +2,15 @@ package com.uc.training.smadmin.gds.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.google.inject.servlet.RequestParameters;
+import com.kenai.jaffl.annotations.In;
 import com.uc.training.common.annotation.AccessLogin;
+import com.uc.training.common.enums.StokeStatusEnum;
+import com.uc.training.smadmin.gds.re.PageRE;
 import com.uc.training.smadmin.gds.vo.GoodsStokeVO;
 import com.uc.training.smadmin.redis.RedisConfigEnum;
 import com.ycc.base.common.Result;
 import com.uc.training.common.base.controller.BaseController;
-import com.uc.training.common.vo.PageVO;
+import com.uc.training.smadmin.gds.vo.PageVO;
 import com.uc.training.smadmin.gds.re.GoodsRE;
 import com.uc.training.smadmin.gds.re.GoodsDetailRE;
 import com.uc.training.smadmin.gds.model.HotTag;
@@ -19,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -45,9 +49,14 @@ public class GoodsController extends BaseController {
     @AccessLogin(required = false)
     @ResponseBody
     @RequestMapping(value = "getHotRecommend.do_",method = RequestMethod.POST)
-    public Result<List<GoodsRE>> getHotRecommend(int listSize) {
+    public Result<PageRE<List<GoodsRE>>> getHotRecommend(PageVO pageVO) {
         try {
-            return Result.getSuccessResult(goodsService.getHotRecommend(listSize));
+            List<GoodsRE> list = goodsService.getHotRecommend(pageVO);
+            Integer totalNum = goodsService.getHotRecommendCount();
+            PageRE<List<GoodsRE>> pageRE = new PageRE<>();
+            pageRE.setData(list);
+            pageRE.setTotalNum(totalNum);
+            return Result.getSuccessResult(pageRE);
         } catch (Exception e) {
             logger.error("查询符合条件错误！", e);
             return Result.getBusinessException("获取热门推荐失败", null);
@@ -65,15 +74,16 @@ public class GoodsController extends BaseController {
      */
     @AccessLogin(required = false)
     @ResponseBody
-    @RequestMapping(value = "getGoodsPageByCategory.do_",method = RequestMethod.POST)
-    public Result<PageVO<GoodsRE>> getGoodsPageByCategory(GoodsListVO goodsListVO) {
+    @RequestMapping(value = "getGoodsPageByCategory.do_",method = RequestMethod.GET)
+    public Result<List<GoodsRE>> getGoodsPageByCategory(GoodsListVO goodsListVO) {
         try {
-            PageVO<GoodsRE> pageVO = new PageVO<GoodsRE>();
+            /*PageVO<GoodsRE> pageVO = new PageVO<GoodsRE>();
             pageVO.setPageIndex(goodsListVO.getPageIndex());
             pageVO.setPageSize(goodsListVO.getPageSize());
             pageVO.setTotal(goodsService.getGoodsListCount(goodsListVO));
-            pageVO.setDataList(goodsService.getGoodsList(goodsListVO));
-            return Result.getSuccessResult(pageVO);
+            pageVO.setDataList(goodsService.getGoodsList(goodsListVO));*/
+            List<GoodsRE> goodsREList=new ArrayList<>();
+            return Result.getSuccessResult(goodsREList);
         } catch (Exception e) {
             logger.error("查询符合条件错误！", e);
             return Result.getBusinessException("获取商品分页失败", null);
@@ -175,13 +185,17 @@ public class GoodsController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "updateAndDeductStoke.do_")
-    public Result<String> updateAndDeductStoke(GoodsStokeVO goodsStokeVO){
+    public Result<Integer> updateAndDeductStoke(GoodsStokeVO goodsStokeVO){
         goodsStokeVO.setPropertyId(4L);
         goodsStokeVO.setStoke(1L);
-        System.out.println(JSON.toJSON(goodsStokeVO));
         try {
-            goodsService.updateAndDeductStoke(goodsStokeVO);
-            return Result.getSuccessResult("减库存成功");
+            Integer status=goodsService.updateAndDeductStoke(goodsStokeVO);
+            System.out.println(status+"------------------------------------");
+            if(status.equals(StokeStatusEnum.SUCCESS_STATUS.getStatus())){
+                return Result.getSuccessResult(status);
+            }else{
+                return Result.getBusinessException("减库存失败", null);
+            }
         } catch (Exception e) {
             logger.error("减库存错误！", e);
             return Result.getBusinessException("减库存失败", null);

@@ -1,7 +1,9 @@
 package com.uc.training.smadmin.sys.model;
 
 import com.uc.training.common.base.model.BaseModel;
+import org.hibernate.validator.constraints.NotBlank;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
 
@@ -23,21 +25,25 @@ public class SysMenu extends BaseModel implements Serializable {
     /**
      * 菜单名字
      */
+    @NotBlank
     private String name;
 
     /**
      * 菜单路径
      */
+    @NotBlank
     private String url;
 
     /**
      * 标识
      */
+    @NotBlank
     private String rel;
 
     /**
      * 排序
      */
+    @NotNull
     private Long sortNum;
 
     /**

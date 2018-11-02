@@ -1,7 +1,7 @@
 package com.uc.training.smadmin.sms.vo;
 
 import com.uc.training.common.enums.SmsStatusEnum;
-import com.uc.training.common.enums.SmsTemplateTypeEnum;
+import com.uc.training.common.enums.SmsTypeEnum;
 
 import java.util.Date;
 
@@ -81,7 +81,7 @@ public class SmsVO {
     }
 
     public String getTypeDes() {
-        return SmsTemplateTypeEnum.getMap().get(type);
+        return SmsTypeEnum.getMap().get(type);
     }
 
 
