@@ -52,5 +52,5 @@ public interface BannerService {
      * 增加点击量
      * @param id
      */
-    void insertClick(Long id);
+    Integer insertClick(Long id);
 }

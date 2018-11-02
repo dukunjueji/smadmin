@@ -46,14 +46,12 @@ public class GoodsController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "getHotRecommend.do_",method = RequestMethod.POST)
     public Result<List<GoodsRE>> getHotRecommend(int listSize) {
-        Result<List<GoodsRE>> res;
         try {
-            res = Result.getSuccessResult(goodsService.getHotRecommend(listSize));
+            return Result.getSuccessResult(goodsService.getHotRecommend(listSize));
         } catch (Exception e) {
             logger.error("查询符合条件错误！", e);
-            res = Result.getBusinessException("获取热门推荐失败", null);
+            return Result.getBusinessException("获取热门推荐失败", null);
         }
-        return res;
     }
 
     /**
@@ -69,19 +67,17 @@ public class GoodsController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "getGoodsPageByCategory.do_",method = RequestMethod.POST)
     public Result<PageVO<GoodsRE>> getGoodsPageByCategory(GoodsListVO goodsListVO) {
-        Result<PageVO<GoodsRE>> res;
         try {
             PageVO<GoodsRE> pageVO = new PageVO<GoodsRE>();
             pageVO.setPageIndex(goodsListVO.getPageIndex());
             pageVO.setPageSize(goodsListVO.getPageSize());
             pageVO.setTotal(goodsService.getGoodsListCount(goodsListVO));
             pageVO.setDataList(goodsService.getGoodsList(goodsListVO));
-            res = Result.getSuccessResult(pageVO);
+            return Result.getSuccessResult(pageVO);
         } catch (Exception e) {
             logger.error("查询符合条件错误！", e);
-            res = Result.getBusinessException("获取商品分页失败", null);
+            return Result.getBusinessException("获取商品分页失败", null);
         }
-        return res;
     }
 
     /**
@@ -97,14 +93,12 @@ public class GoodsController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "getGoodsDetailByGoodsId.do_",method = RequestMethod.GET)
     public Result<List<GoodsDetailRE>> getGoodsDetailByGoodsId(@RequestParam("goodsId") Long goodsId) {
-        Result<List<GoodsDetailRE>> res;
         try {
-            res = Result.getSuccessResult(goodsService.getGoodsDetailByGoodsId(goodsId));
+            return Result.getSuccessResult(goodsService.getGoodsDetailByGoodsId(goodsId));
         } catch (Exception e) {
             logger.error("获取商品详情错误！", e);
-            res = Result.getBusinessException("获取商品详情失败", null);
+            return Result.getBusinessException("获取商品详情失败", null);
         }
-        return res;
     }
 
     /**
@@ -123,14 +117,12 @@ public class GoodsController extends BaseController {
         if(StringUtils.isEmpty(goodsName)){
             return null;
         }
-        Result<List<GoodsRE>> res;
         try {
-            res = Result.getSuccessResult(goodsService.searchByGoodsName(goodsName));
+            return Result.getSuccessResult(goodsService.searchByGoodsName(goodsName));
         } catch (Exception e) {
             logger.error("模糊查询商品错误！", e);
-            res = Result.getBusinessException("模糊查询商品失败", null);
+            return Result.getBusinessException("模糊查询商品失败", null);
         }
-        return res;
     }
 
     /**
@@ -147,14 +139,12 @@ public class GoodsController extends BaseController {
     @RequestMapping(value = "selectHotTag.do_",method = RequestMethod.GET)
     public Result<List<HotTag>> selectHotTag() {
 
-        Result<List<HotTag>> res;
         try {
-            res = Result.getSuccessResult(goodsService.selectHotTag());
+            return Result.getSuccessResult(goodsService.selectHotTag());
         } catch (Exception e) {
             logger.error("获取热门标签错误！", e);
-            res = Result.getBusinessException("获取热门标签失败", null);
+            return Result.getBusinessException("获取热门标签失败", null);
         }
-        return res;
     }
 
     /**
@@ -171,14 +161,12 @@ public class GoodsController extends BaseController {
     @RequestMapping(value = "getMemberDiscountPoint.do_",method = RequestMethod.GET)
     public Result<Double> getMemberDiscountPoint() {
         Long uid = getUid();
-        Result<Double> res;
         try {
-            res = Result.getSuccessResult(goodsService.getMemberDiscountPoint(uid));
+            return Result.getSuccessResult(goodsService.getMemberDiscountPoint(uid));
         } catch (Exception e) {
             logger.error("获取会员的折扣点错误！", e);
-            res = Result.getBusinessException("获取会员的折扣点失败", null);
+            return Result.getBusinessException("获取会员的折扣点失败", null);
         }
-        return res;
     }
 
     /**
@@ -190,16 +178,14 @@ public class GoodsController extends BaseController {
     public Result<String> updateAndDeductStoke(GoodsStokeVO goodsStokeVO){
         goodsStokeVO.setPropertyId(4L);
         goodsStokeVO.setStoke(1L);
-        Result<String> res;
         System.out.println(JSON.toJSON(goodsStokeVO));
         try {
             goodsService.updateAndDeductStoke(goodsStokeVO);
-            res = Result.getSuccessResult("减库存成功");
+            return Result.getSuccessResult("减库存成功");
         } catch (Exception e) {
             logger.error("减库存错误！", e);
-            res = Result.getBusinessException("减库存失败", null);
+            return Result.getBusinessException("减库存失败", null);
         }
-        return res;
     }
 
     /**
@@ -209,16 +195,14 @@ public class GoodsController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "testRdis.do_")
     public Result<String> testRdis(){
-        Result<String> res;
         RedisCacheUtils redis = RedisCacheUtils.getInstance(RedisConfigEnum.GOODS_DETAIL);
         redis.set("helloTesst","world");
         System.out.println(redis.get("hello"));
         try {
-            res = Result.getSuccessResult("成功");
+            return Result.getSuccessResult("成功");
         } catch (Exception e) {
             logger.error("错误！", e);
-            res = Result.getBusinessException("失败", null);
+            return Result.getBusinessException("失败", null);
         }
-        return res;
     }
 }

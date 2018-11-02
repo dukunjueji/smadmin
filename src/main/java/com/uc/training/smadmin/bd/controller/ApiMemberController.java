@@ -4,10 +4,11 @@ import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.common.constant.Constant;
 import com.uc.training.common.enums.GrowthEnum;
+import com.uc.training.smadmin.bd.model.LoginLog;
 import com.uc.training.smadmin.bd.model.Member;
 import com.uc.training.smadmin.bd.model.Message;
-import com.uc.training.smadmin.bd.mq.GrowthMqProducer;
 import com.uc.training.smadmin.bd.re.*;
+import com.uc.training.smadmin.bd.service.LoginLogService;
 import com.uc.training.smadmin.bd.service.MemberService;
 import com.uc.training.smadmin.bd.service.MessageService;
 import com.uc.training.smadmin.bd.vo.*;
@@ -51,6 +52,9 @@ public class ApiMemberController extends BaseController {
 
     @Autowired
     private MessageService messageService;
+
+    @Autowired
+    private LoginLogService loginLogService;
 
     private Map<String, String> map = new HashMap<>();
 
@@ -134,11 +138,20 @@ public class ApiMemberController extends BaseController {
                 MemberLoginRE memberLoginRE = new MemberLoginRE();
                 memberLoginRE.setToken(token);
 
-                LoginMqVO loginMqVO = new LoginMqVO();
-                loginMqVO.setMemberId(member.getId());
-                loginMqVO.setGrowthType(GrowthEnum.LOGININ.getGrowthType());
-                MetaQUtils.sendMsgNoException(new GrowthMqProducer(loginMqVO));
+                //生成登陆日志
+                LoginLog loginLog = new LoginLog();
+                loginLog.setMemberId(getUid());
+                loginLog.setIp(getLocalhostIp());
+                loginLogService.insertLog(loginLog);
 
+                //判断是否第一次登陆
+                Integer loginNum = loginLogService.queryLoginCount(loginLog);
+                if (loginNum == 1){
+                    LoginMqVO loginMqVO = new LoginMqVO();
+                    loginMqVO.setMemberId(member.getId());
+                    loginMqVO.setGrowthType(GrowthEnum.LOGININ.getGrowthType());
+                    //MetaQUtils.sendMsgNoException(new GrowthMqProducer(loginMqVO));
+                }
                 result = Result.getSuccessResult(memberLoginRE);
             }
         } catch (Exception e) {
