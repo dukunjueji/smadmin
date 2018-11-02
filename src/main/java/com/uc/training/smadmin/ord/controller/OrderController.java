@@ -275,7 +275,7 @@ public class OrderController extends BaseController {
       if (CollectionUtils.isEmpty(list)) {
         return Result.getBusinessException("请选择商品再提交",null);
       } else {
-        for (OrdGoodsVO cargd: list) {
+        for (OrdGoodsVO cargd:list ) {
           gdDTO = goodsService.getGoodsDetailByPropertyId(cargd.getPropertyId());
           if(gdDTO == null){
             return Result.getBusinessException("选择的商品中出现不存在请刷新",null);
