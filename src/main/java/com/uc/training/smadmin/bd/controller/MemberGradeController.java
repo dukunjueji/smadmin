@@ -46,6 +46,9 @@ public class MemberGradeController extends BaseController {
     @RequestMapping(value = "/modifyGrade.do_", method = RequestMethod.POST)
     @ResponseBody
     public Result<Integer> modifyGrade(MemberGrade grade){
+        if (grade.getId() == null) {
+            return Result.getBusinessException("会员ID不能为空", null);
+        }
         grade.setModifyEmp(getUid());
         return Result.getSuccessResult(memberGradeService.modifyMemberGrade(grade));
     }

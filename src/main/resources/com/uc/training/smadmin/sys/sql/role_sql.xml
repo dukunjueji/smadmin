@@ -124,4 +124,9 @@
 		</iterate>
 	</insert>
 
+	<!-- 通过角色ID删除用户角色 -->
+	<delete id="deleteUserRoleByRid" parameterClass="Long">
+		DELETE FROM t_sys_user_role
+		WHERE role_id = #rid#
+	</delete>
 </sqlMap>

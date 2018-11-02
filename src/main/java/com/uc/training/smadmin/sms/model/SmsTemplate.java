@@ -32,11 +32,13 @@ public class SmsTemplate extends BaseModel {
 	/**
 	 * 模板标题
 	 */
+	@NotBlank
 	private String title;
 
 	/**
 	 * 模板内容
 	 */
+	@NotBlank
 	private String content;
 
 	/**

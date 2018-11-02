@@ -1,13 +1,14 @@
 package com.uc.training.smadmin.sys.controller;
 
 import com.uc.training.common.base.controller.BaseController;
+import com.uc.training.common.enums.MenuEnum;
 import com.uc.training.smadmin.sys.model.SysMenu;
 import com.uc.training.smadmin.sys.pojo.MenuTree;
 import com.uc.training.smadmin.sys.service.SysMenuService;
 import com.ycc.base.common.Result;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -44,18 +45,14 @@ public class MenuController extends BaseController {
      */
     @RequestMapping(value = "addMenu.do_", method = RequestMethod.POST)
     @ResponseBody
-    public Result<Long> addMenu(SysMenu menu) {
+    public Result<Long> addMenu(@Validated SysMenu menu) {
         // 判空
-        boolean verify = (menu == null || menu.getParentId() == null || menu.getSortNum() == null ||
-                menu.getLevel() == null || menu.getType() == null ||
-                StringUtils.isEmpty(menu.getName()) || StringUtils.isEmpty(menu.getUrl()) ||
-                StringUtils.isEmpty(menu.getRel()));
+        boolean verify = (menu.getParentId() == null || menu.getLevel() == null || menu.getType() == null );
         if (verify) {
             return Result.getBusinessException("条件不完整", null);
         }
         // 判断菜单类型是否合法
-        int catalog = 1, btn = 2;
-        if (menu.getType() != catalog && menu.getType() != btn){
+        if (menu.getType() != MenuEnum.CATALOG.getNumber() && menu.getType() != MenuEnum.BUTTON.getNumber()){
             return Result.getBusinessException("菜单类型不合法", null);
         }
         return Result.getSuccessResult(sysMenuService.addMenu(menu));
@@ -68,12 +65,7 @@ public class MenuController extends BaseController {
      */
     @RequestMapping(value = "updateMenu.do_", method = RequestMethod.POST)
     @ResponseBody
-    public Result<Integer> updateMenu(SysMenu menu) {
-        // 判空
-        if (menu == null || menu.getSortNum() == null || StringUtils.isEmpty(menu.getName()) || StringUtils.isEmpty(menu.getUrl()) ||
-                StringUtils.isEmpty(menu.getRel())){
-            return Result.getBusinessException("条件不完整", null);
-        }
+    public Result<Integer> updateMenu(@Validated SysMenu menu) {
         return Result.getSuccessResult(sysMenuService.updateMenu(menu));
     }
 

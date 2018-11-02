@@ -62,4 +62,11 @@ public interface SysMenuDao {
      * @return
      */
     Integer batchDelete(List<Long> ids);
+
+    /**
+     * 批量删除角色菜单中的权限
+     * @param mid
+     * @return
+     */
+    Integer deleteRoleMenuByMenuList(List<Long> mid);
 }

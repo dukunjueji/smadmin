@@ -109,4 +109,11 @@ public interface SysRoleDao {
      * @return
      */
     Long batchInsertRole(Long uid, List<Long> rid, Long createEmp);
+
+    /**
+     * 通过角色ID删除用户角色关联数据
+     * @param rid
+     * @return
+     */
+    Integer deleteUserRoleByRid(Long rid);
 }

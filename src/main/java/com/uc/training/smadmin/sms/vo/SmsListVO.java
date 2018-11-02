@@ -2,7 +2,9 @@ package com.uc.training.smadmin.sms.vo;
 
 import com.uc.training.common.bean.PageQuery;
 import org.apache.commons.lang.StringUtils;
+import org.hibernate.validator.constraints.NotBlank;
 
+import javax.validation.constraints.Pattern;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

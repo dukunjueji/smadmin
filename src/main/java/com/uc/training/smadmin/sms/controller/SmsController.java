@@ -13,6 +13,7 @@ import com.uc.training.smadmin.sms.vo.SmsListVO;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -38,12 +39,8 @@ public class SmsController extends BaseController {
     @AccessLogin
     @ResponseBody
     @RequestMapping(value = "getSmsPage.do_", method = RequestMethod.POST)
-    public Result<PageVO<SmsVO>> getDemoPage(SmsListVO smsListVO) {
+    public Result<PageVO<SmsVO>> getDemoPage(@Validated SmsListVO smsListVO) {
         Result<PageVO<SmsVO>> res;
-        // 判断手机号是否合法
-        if (!StringUtils.isEmpty(smsListVO.getTelephone()) && !TelCodeUtil.validateTel(smsListVO.getTelephone())) {
-            return Result.getBusinessException("手机号码不正确", null);
-        }
         try {
             PageVO<SmsVO> pageVO = new PageVO<>();
             pageVO.setPageIndex(smsListVO.getPageIndex());
