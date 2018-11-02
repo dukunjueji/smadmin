@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * @Author: 余旭东
@@ -39,9 +42,33 @@ public class RoleController extends BaseController {
             res = Result.getSuccessResult(pageVO);
         } catch (Exception e) {
             logger.error("查询符合条件错误！", e);
-            res = Result.getBusinessException("获取smsTemplate分页失败", null);
+            res = Result.getBusinessException("获取分页失败", null);
         }
         return res;
+    }
+
+    /**
+     * 获取角色列表
+     * @return
+     */
+    @RequestMapping(value = "getRoleList.do_", method = RequestMethod.GET)
+    @ResponseBody
+    public Result<List<SysRole>> getRoleList() {
+        return Result.getSuccessResult(sysRoleService.getRoleList());
+    }
+
+    /**
+     * 获取指定用户的角色列表
+     * @param uid
+     * @return
+     */
+    @RequestMapping(value = "getRoleByUid.do_", method = RequestMethod.POST)
+    @ResponseBody
+    public Result<List<Long>> getRoleByUid(Long uid) {
+        if (uid == null){
+            return Result.getBusinessException("用户ID为空", null);
+        }
+        return Result.getSuccessResult(sysRoleService.getRoleListByUid(uid));
     }
 
     /**
@@ -55,6 +82,7 @@ public class RoleController extends BaseController {
         if (sysRole == null || StringUtils.isEmpty(sysRole.getName())){
             return Result.getBusinessException("角色名为空", null);
         }
+        sysRole.setCreateEmp(getUid());
         return Result.getSuccessResult(sysRoleService.addRole(sysRole));
     }
 
@@ -84,5 +112,70 @@ public class RoleController extends BaseController {
             return Result.getBusinessException("id为空", null);
         }
         return Result.getSuccessResult(sysRoleService.deleteById(id));
+    }
+
+    /**
+     * 添加角色权限
+     * @param rid
+     * @param ids
+     * @return
+     */
+    @RequestMapping(value = "addAuth.do_", method = RequestMethod.POST)
+    @ResponseBody
+    public Result<Long> addAuth(Long rid, String ids){
+        // 判空
+        if (StringUtils.isEmpty(ids)) {
+            return Result.getBusinessException("删除失败", null);
+        }
+        // 获取ID列表
+        String[] sp = StringUtils.split(ids.substring(1, ids.length()-1), ',');
+        if (sp == null || sp.length==0){
+            return Result.getBusinessException("删除失败", null);
+        }
+        List<Long> list = new ArrayList<>();
+        for (String s : sp) {
+            list.add(Long.parseLong(s));
+        }
+        return Result.getSuccessResult(sysRoleService.addRoleAuth(rid, list, getUid()));
+    }
+
+    /**
+     * 获取角色菜单权限ID
+     * @param rid
+     * @return
+     */
+    @RequestMapping(value = "getRoleMenu.do_", method = RequestMethod.POST)
+    @ResponseBody
+    public Result<List<Long>> getRoleMenu(Long rid){
+        if (rid == null) {
+            return Result.getBusinessException("查询失败", null);
+        }
+        return Result.getSuccessResult(sysRoleService.getRoleMenuIdByRid(rid));
+    }
+
+
+    /**
+     * 添加用户角色
+     * @param uid
+     * @param ids
+     * @return
+     */
+    @RequestMapping(value = "addUserRole.do_", method = RequestMethod.POST)
+    @ResponseBody
+    public Result<Long> addUserRole(Long uid, String ids){
+        // 判空
+        if (StringUtils.isEmpty(ids)) {
+            return Result.getBusinessException("删除失败", null);
+        }
+        // 获取ID列表
+        String[] sp = StringUtils.split(ids.substring(1, ids.length()-1), ',');
+        if (sp == null || sp.length==0){
+            return Result.getBusinessException("删除失败", null);
+        }
+        List<Long> list = new ArrayList<>();
+        for (String s : sp) {
+            list.add(Long.parseLong(s));
+        }
+        return Result.getSuccessResult(sysRoleService.addUserRole(uid, list, getUid()));
     }
 }

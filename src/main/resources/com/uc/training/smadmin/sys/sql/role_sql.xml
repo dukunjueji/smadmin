@@ -25,7 +25,7 @@
 			s.id = #id#
 		</isNotEmpty>
 		<isNotEmpty property="name" prepend="and">
-			s.name = #name#
+			s.name LIKE '%$name$%'
 		</isNotEmpty>
 	</sql>
 
@@ -71,4 +71,57 @@
 			SELECT LAST_INSERT_ID() AS id
 		</selectKey>
 	</insert>
+
+	<!-- 通过角色ID获取角色菜单权限ID列表 -->
+	<select id="queryMenuAuthByRid" parameterClass="Long" resultClass="Long">
+		SELECT menu_id
+		FROM t_sys_role_menu
+		WHERE role_id = #rid#
+	</select>
+
+	<!-- 通过角色ID删除角色权限 -->
+	<delete id="deleteAuthByRid" parameterClass="Long">
+		DELETE FROM t_sys_role_menu
+		WHERE role_id = #rid#
+	</delete>
+
+	<!-- 批量新增角色权限 -->
+	<insert id="batchInsertAuth" parameterClass="java.util.Map">
+		INSERT INTO t_sys_role_menu
+		(role_id, menu_id, create_emp)
+		VALUES
+		<iterate property="mid" conjunction=",">
+			(#rid#, #mid[]#, #createEmp#)
+		</iterate>
+	</insert>
+
+	<!-- 获取所有角色 -->
+	<select id="getRoleList" resultClass="com.uc.training.smadmin.sys.model.SysRole">
+		SELECT s.id, s.name
+		FROM t_sys_role s
+	</select>
+
+	<!-- 通过用户ID获取角色ID -->
+	<select id="getRoleListByUid" parameterClass="Long" resultClass="Long">
+		SELECT role_id
+		FROM t_sys_user_role
+		WHERE user_id = #uid#
+	</select>
+
+	<!-- 通过角色ID删除角色权限 -->
+	<delete id="deleteRoleByUid" parameterClass="Long">
+		DELETE FROM t_sys_user_role
+		WHERE user_id = #uid#
+	</delete>
+
+	<!-- 批量新增角色权限 -->
+	<insert id="batchInsertRole" parameterClass="java.util.Map">
+		INSERT INTO t_sys_user_role
+		(user_id, role_id, create_emp)
+		VALUES
+		<iterate property="rid" conjunction=",">
+			(#uid#, #rid[]#, #createEmp#)
+		</iterate>
+	</insert>
+
 </sqlMap>
