@@ -2,6 +2,7 @@ package com.uc.training.smadmin.sms.service;
 
 import com.uc.training.smadmin.sms.model.SmsTemplate;
 import com.uc.training.smadmin.sms.vo.SmsTemplateListVO;
+import com.uc.training.smadmin.sms.vo.SmsTemplateVO;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ public interface SmsTemplateService {
      * @param smsTemplate
      * @return
      */
-    public Long addTemplate(SmsTemplate smsTemplate);
+    public Long addTemplate(SmsTemplateVO smsTemplate);
 
     /**
      * 通过ID删除短信模板
@@ -30,7 +31,7 @@ public interface SmsTemplateService {
      * @param smsTemplate
      * @return
      */
-    public Integer modifyTemplate(SmsTemplate smsTemplate);
+    public Integer modifyTemplate(SmsTemplateVO smsTemplate);
 
     /**
      * 通过ID获取指定的短信模板
