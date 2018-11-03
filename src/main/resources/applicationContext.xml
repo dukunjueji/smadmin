@@ -17,19 +17,6 @@
     <context:component-scan base-package="com.uc.training">
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
-
-    <bean id="growthDetailDao" class="com.uc.training.smadmin.bd.dao.impl.GrowthDetailDaoImpl">
-    </bean>
-    <bean id="memberDao" class="com.uc.training.smadmin.bd.dao.impl.MemberDaoImpl">
-    </bean>
-    <bean id="growthDetailService" class="com.uc.training.smadmin.bd.service.impl.GrowthDetailServiceImpl">
-        <property name="growthDetailDao">
-            <ref bean="growthDetailDao"></ref>
-        </property>
-        <property name="memberDao">
-            <ref bean="memberDao"></ref>
-        </property>
-    </bean>
     <!-- 远程服务调用代理 -->
     <bean class="com.ycc.base.framework.remote.client.spring.RemoteServiceScannerConfigurer">
         <property name="basePackage" value="com.uc.training.**.api"/>
