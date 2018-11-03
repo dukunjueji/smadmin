@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.Map;
 
 /**
  * 版权说明：Copyright (c) 2018 ucarinc. All Rights Reserved.
@@ -28,21 +29,15 @@ public class GrowthDetailServiceImpl implements GrowthDetailService {
     @Autowired
     private GrowthDetailDao growthDetailDao;
 
-    public void setGrowthDetailDao(GrowthDetailDao growthDetailDao) {
-        this.growthDetailDao = growthDetailDao;
-    }
-
     @Autowired
     private MemberDao memberDao;
 
-    public void setMemberDao(MemberDao memberDao) {
-        this.memberDao = memberDao;
-    }
-
     @Override
     public Long saveGrowthDetail(GrowthVO growthVO){
-        growthDetailDao = (GrowthDetailDaoImpl)SpringApplicationContext.getBean("growthDetailDao");
-        memberDao = (MemberDaoImpl)SpringApplicationContext.getBean("memberDao");
+        Map<String, GrowthDetailDao> growthDetailMap = SpringApplicationContext.getBeansByType(GrowthDetailDao.class);
+        growthDetailDao = growthDetailMap.get("growthDetailDaoImpl");
+        Map<String, MemberDao> memberMap = SpringApplicationContext.getBeansByType(MemberDao.class);
+        memberDao = memberMap.get("memberDaoImpl");
         GrowthDetail growthDetail = new GrowthDetail();
         Long growthVaule = 0L;
 
