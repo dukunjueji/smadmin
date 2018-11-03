@@ -166,4 +166,15 @@ public class MemberServiceImpl implements MemberService {
         }
     }
 
+    @Override
+    public Member queryMemberTel(Long memberId) {
+        return memberDao.queryMemberTel(memberId);
+    }
+
+    @Override
+    public void memberRecharge(Member member, MqVO mqVO) {
+          this.updateMemberBalance(member);
+          MetaQUtils.sendMsgNoException(new MqProducer(mqVO));
+    }
+
 }

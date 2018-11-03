@@ -9,6 +9,7 @@ import com.uc.training.smadmin.bd.model.GrowthDetail;
 import com.uc.training.smadmin.bd.service.GrowthDetailService;
 import com.uc.training.smadmin.bd.vo.GrowthVO;
 import com.uc.training.smadmin.bd.vo.MemberGrowthVO;
+import com.uc.training.smadmin.utils.InjectionUtils;
 import com.zuche.framework.common.SpringApplicationContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,10 +35,8 @@ public class GrowthDetailServiceImpl implements GrowthDetailService {
 
     @Override
     public Long saveGrowthDetail(GrowthVO growthVO){
-        Map<String, GrowthDetailDao> growthDetailMap = SpringApplicationContext.getBeansByType(GrowthDetailDao.class);
-        growthDetailDao = growthDetailMap.get("growthDetailDaoImpl");
-        Map<String, MemberDao> memberMap = SpringApplicationContext.getBeansByType(MemberDao.class);
-        memberDao = memberMap.get("memberDaoImpl");
+        this.growthDetailDao = InjectionUtils.getInjectionInstance(GrowthDetailDao.class);
+        this.memberDao = InjectionUtils.getInjectionInstance(MemberDao.class);
         GrowthDetail growthDetail = new GrowthDetail();
         Long growthVaule = 0L;
 

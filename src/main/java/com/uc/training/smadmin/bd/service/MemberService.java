@@ -124,4 +124,21 @@ public interface MemberService {
     *@throws：
     */
     void memberLogin(LoginLog loginLog, MqVO mqVO);
+
+    /**
+     *说明：通过会员id查询会员的手机号
+     *@param memberId
+     *@return：void
+     *@throws：
+     */
+    Member queryMemberTel(Long memberId);
+
+    /**
+    *说明：会员充值业务(包括更新余额和发送消息)
+    *@param member
+    *@param mqVO
+    *@return：void
+    *@throws：
+    */
+    void memberRecharge(Member member, MqVO mqVO);
 }

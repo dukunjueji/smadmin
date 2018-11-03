@@ -94,4 +94,9 @@ public class MemberDaoImpl extends CarIsIbatisDaoImpl implements MemberDao {
         this.update("com.uc.training.smadmin.bd.dao.MemberDao.updateBalance", memberBalanceVO);
     }
 
+    @Override
+    public Member queryMemberTel(Long memberId) {
+        return (Member) this.queryForObject("com.uc.training.smadmin.bd.dao.MemberDao.queryMemberTel", memberId);
+    }
+
 }

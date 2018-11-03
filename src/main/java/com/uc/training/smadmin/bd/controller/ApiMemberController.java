@@ -3,6 +3,7 @@ package com.uc.training.smadmin.bd.controller;
 import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.common.constant.Constant;
+import com.uc.training.common.enums.ConsumerTypeEnum;
 import com.uc.training.common.enums.GrowthEnum;
 import com.uc.training.common.enums.SmsStatusEnum;
 import com.uc.training.common.enums.SmsTypeEnum;
@@ -14,12 +15,14 @@ import com.uc.training.smadmin.bd.service.MemberService;
 import com.uc.training.smadmin.bd.service.MessageService;
 import com.uc.training.smadmin.bd.vo.*;
 import com.uc.training.smadmin.ord.service.OrderService;
+import com.uc.training.smadmin.redis.RedisConfigEnum;
 import com.uc.training.smadmin.sms.service.SmsTemplateService;
 import com.uc.training.smadmin.sms.vo.GenerateSmsVO;
 import com.uc.training.smadmin.utils.EncryptUtil;
 import com.uc.training.smadmin.utils.TelCodeUtil;
 import com.uc.training.smadmin.utils.TokenUtil;
 import com.ycc.base.common.Result;
+import com.ycc.tools.middleware.redis.RedisCacheUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,20 +80,6 @@ public class ApiMemberController extends BaseController {
         if(member != null){
             return Result.getBusinessException("手机号码已被注册", null);
         }
-
-        /*else {
-            //生成随机六位数验证码
-            String telCode = TelCodeUtil.createCode();
-            //把验证码存入到redis里
-            map.put(Constant.CODE, telCode);
-            //调取短信模板获取相应的短信信息
-
-            //把验证码放入模板里获取相应短信
-            String message = telCode;
-            //控制台打印出短信信息，让用户看到验证码
-            System.out.println("短信信息：" + message);
-            re = Result.getSuccessResult("成功");
-        }*/
         GenerateSmsVO generateSmsVO = new GenerateSmsVO();
         generateSmsVO.setTelephone(createCodeVO.getTelephone());
         generateSmsVO.setType(SmsTypeEnum.REGISTER.getType());
@@ -117,9 +106,11 @@ public class ApiMemberController extends BaseController {
         member.setTelephone(memberRegisterVO.getTelephone());
         member.setPassword(memberRegisterVO.getPassword());
         Member mem = memberService.queryOneMember(member);
+        //redis
+        RedisCacheUtils redis = RedisCacheUtils.getInstance(RedisConfigEnum.SYS_CODE);
         if(mem != null){
             re = Result.getBusinessException("手机号码已被注册",null);
-        } else if(memberRegisterVO.getTelCode().equals(map.get(Constant.CODE))){
+        } else if(memberRegisterVO.getTelCode().equals(redis.get(memberRegisterVO.getTelephone()))){
             memberService.insertMember(member);
             re = Result.getSuccessResult("成功");
         }else {
@@ -158,6 +149,7 @@ public class ApiMemberController extends BaseController {
                 MqVO mqVO = new MqVO();
                 mqVO.setMemberId(member.getId());
                 mqVO.setGrowthType(GrowthEnum.LOGININ.getGrowthType());
+                mqVO.setConsumerType(ConsumerTypeEnum.GROWTHTYPE.getConsumerType());
 
                 memberService.memberLogin(loginLog, mqVO);
                 result = Result.getSuccessResult(memberLoginRE);
@@ -178,24 +170,21 @@ public class ApiMemberController extends BaseController {
     @ResponseBody
     @AccessLogin(required = false)
     public Result passwordCode(@Validated CreateCodeVO createCodeVO) {
-        Result re;
         Member member = new Member();
         member.setTelephone(createCodeVO.getTelephone());
         member = memberService.queryOneMember(member);
         if(member == null){
-            re = Result.getBusinessException("手机号还没被注册", null);
-        } else {
-            String telCode = TelCodeUtil.createCode();
-            //把验证码存入到redis里
-            map.put(Constant.CODE, telCode);
-            //调取短信模板
-
-            //获取短信
-            String message = telCode;
-            System.out.println("手机短信为：" + message);
-            re = Result.getSuccessResult("成功");
+            return Result.getBusinessException("手机号还没被注册", null);
         }
-        return re;
+        GenerateSmsVO generateSmsVO = new GenerateSmsVO();
+        generateSmsVO.setTelephone(createCodeVO.getTelephone());
+        generateSmsVO.setType(SmsTypeEnum.FORGET_PASSWORD.getType());
+
+        if (SmsStatusEnum.SUCCESS.getKey() == smsTemplateService.generateSms(generateSmsVO)) {
+            return Result.getSuccessResult(SmsStatusEnum.SUCCESS.getValue());
+        } else {
+            return Result.getBusinessException(SmsStatusEnum.FAIL.getValue(), null);
+        }
     }
 
     /***
@@ -212,9 +201,11 @@ public class ApiMemberController extends BaseController {
         Member mem = new Member();
         mem.setTelephone(memberRegisterVO.getTelephone());
         Member member = memberService.queryOneMember(mem);
+        //redis
+        RedisCacheUtils redis = RedisCacheUtils.getInstance(RedisConfigEnum.SYS_CODE);
         if(member == null){
             re = Result.getBusinessException("手机号还没被注册", null);
-        } else if(memberRegisterVO.getTelCode().equals(map.get(Constant.CODE))){
+        } else if(memberRegisterVO.getTelCode().equals(redis.get(memberRegisterVO.getTelephone()))){
             mem.setPassword(memberRegisterVO.getPassword());
             memberService.updateMember(mem);
             re = Result.getSuccessResult("成功");
@@ -242,7 +233,13 @@ public class ApiMemberController extends BaseController {
         if (chargeBalanceVO.getBalance() == null || i == -1) {
             re = Result.getBusinessException("充值余额必须大于0", null);
         }else {
-            memberService.updateMemberBalance(member);
+            //生成消息体
+            MqVO mqVO = new MqVO();
+            mqVO.setMemberId(getUid());
+            mqVO.setRechargeValue(chargeBalanceVO.getBalance());
+            mqVO.setConsumerType(ConsumerTypeEnum.RECHARGEMESSAGETYPE.getConsumerType());
+
+            memberService.memberRecharge(member, mqVO);
             re = Result.getSuccessResult("成功");
         }
         return re;
@@ -305,9 +302,7 @@ public class ApiMemberController extends BaseController {
     @AccessLogin
     public Result sendCode(@Validated SendCodeVO sendCodeVO){
         Result re;
-        Member member = new Member();
-        member.setId(getUid());
-        member = memberService.queryOneMember(member);
+        Member member = memberService.queryMemberTel(getUid());
         // 判断旧密码是否和库里的一致
         String oldpassword = EncryptUtil.md5(sendCodeVO.getOldpassword());
         if(!((member.getPassword()).equals(oldpassword))){
@@ -316,16 +311,15 @@ public class ApiMemberController extends BaseController {
         }
         // 判断新密码和确认密码是否一致
         if ((sendCodeVO.getNewpassword()).equals(sendCodeVO.getConfirmpassword())){
-            // 产生验证码
-            String telCode = TelCodeUtil.createCode();
-            //把验证码存入到redis里
-            map.put(Constant.CODE, telCode);
-            //调取短信模板
+            GenerateSmsVO generateSmsVO = new GenerateSmsVO();
+            generateSmsVO.setTelephone(member.getTelephone());
+            generateSmsVO.setType(SmsTypeEnum.CHANGE_PASSWORD.getType());
 
-            //获取短信
-            String message = telCode;
-            System.out.println("手机短信为：" + message);
-            re = Result.getSuccessResult("成功");
+            if (SmsStatusEnum.SUCCESS.getKey() == smsTemplateService.generateSms(generateSmsVO)) {
+                return Result.getSuccessResult(SmsStatusEnum.SUCCESS.getValue());
+            } else {
+                return Result.getBusinessException(SmsStatusEnum.FAIL.getValue(), null);
+            }
         }else {
             re = Result.getBusinessException("新的密码和确认密码不一致", null);
         }
@@ -345,14 +339,16 @@ public class ApiMemberController extends BaseController {
         Result re;
         Member member = new Member();
         member.setId(getUid());
-        Member mem = memberService.queryOneMember(member);
+        Member mem = memberService.queryMemberTel(getUid());
         // 判断旧密码是否和库里的一致
         String oldpassword = EncryptUtil.md5(passwordEditVO.getOldpassword());
+        //redis
+        RedisCacheUtils redis = RedisCacheUtils.getInstance(RedisConfigEnum.SYS_CODE);
         if(!((mem.getPassword()).equals(oldpassword))){
             re = Result.getBusinessException("原来的密码输入有误", null);
         }else if(!((passwordEditVO.getNewpassword()).equals(passwordEditVO.getConfirmpassword()))){
             re = Result.getBusinessException("新的密码和确认密码不一致", null);
-        }else if((passwordEditVO.getCode()).equals(map.get(Constant.CODE))){
+        }else if((passwordEditVO.getCode()).equals(redis.get(mem.getTelephone()))){
             member.setPassword(passwordEditVO.getNewpassword());
             memberService.updateMember(member);
             re = Result.getSuccessResult("成功");
