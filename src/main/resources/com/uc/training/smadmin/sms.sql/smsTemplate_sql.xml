@@ -46,7 +46,7 @@
 
 	<!-- 查找短信模s板并替换内容 -->
 	<select id="generateSms" parameterClass="com.uc.training.smadmin.sms.vo.GenerateSmsVO" resultClass="String">
-		select replace(replace(content, 'tel', #telephone#),'msg',  #message#)  concent
+		select replace(replace,'msg',  #message#)  concent
 		from t_sys_sms_template
 		where `type` = #type#
   	</select>
