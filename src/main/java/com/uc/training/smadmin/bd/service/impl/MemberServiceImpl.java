@@ -122,7 +122,7 @@ public class MemberServiceImpl implements MemberService {
             ordOrderVo.setOrderNum(orderPayInfoNow.get(0).getOrderName());
             ordOrderVo.setStatus(OrderEnum.WAITSHIP.getKey().longValue());
             orderConfirmRE.setShowStatus("成功购买商品");
-            if (orderService.updateOrder(ordOrderVo) < 0) {
+            if (orderService.updateOrder(ordOrderVo) > 0) {
                 list.add(orderConfirmRE);
             }
             //发送短信
@@ -131,7 +131,7 @@ public class MemberServiceImpl implements MemberService {
             generateSmsVO.setCode(SmsTypeEnum.ORDER_INFO.getCode());
             generateSmsVO.setMessage(ordOrderVo.getOrderNum());
             //生成短信模板，并发送
-            smsTemplateService.generateSms(generateSmsVO);
+            //smsTemplateService.generateSms(generateSmsVO);
             return list;
         } else {
             orderConfirmRE.setShowStatus("余额不足，请充值或者返回购物车重新选取商品");
