@@ -65,7 +65,7 @@ public class SysRoleDaoImpl extends CarIsIbatisDaoImpl implements SysRoleDao {
 
     @Override
     public Long batchInsertAuth(Long rid, List<Long> mid, Long createEmp) {
-        Map map = new HashMap();
+        Map map = new HashMap(3);
         map.put("rid", rid);
         map.put("mid", mid);
         map.put("createEmp", createEmp);
@@ -89,7 +89,7 @@ public class SysRoleDaoImpl extends CarIsIbatisDaoImpl implements SysRoleDao {
 
     @Override
     public Long batchInsertRole(Long uid, List<Long> rid, Long createEmp) {
-        Map map = new HashMap();
+        Map map = new HashMap(3);
         map.put("rid", rid);
         map.put("uid", uid);
         map.put("createEmp", createEmp);
