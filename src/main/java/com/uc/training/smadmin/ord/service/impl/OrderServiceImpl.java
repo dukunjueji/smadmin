@@ -352,6 +352,7 @@ public class OrderServiceImpl implements OrderService {
         }
         OrdOrderVo ordOrderVo = new OrdOrderVo();
         ordOrderVo.setMemberId(ordMemberVO.getMemberId());
+        ordOrderVo.setStatus(ordMemberVO.getStatus());
         orderInfoRE = new OrderInfoRE();
         orderInfoRE.setTotalOrderNum(orderDao.getOrderTotal(ordOrderVo).longValue());
         orderInfoREList.add(orderInfoRE);
