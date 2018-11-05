@@ -7,6 +7,7 @@ import com.uc.training.smadmin.bd.model.IntegralDetaill;
 import com.uc.training.smadmin.bd.service.IntegralDetailService;
 import com.uc.training.smadmin.bd.vo.IntegralVO;
 import com.uc.training.smadmin.bd.vo.MemberIntegralVO;
+import com.uc.training.smadmin.utils.InjectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +32,8 @@ public class IntegralDetailServiceImpl implements IntegralDetailService {
 
     @Override
     public Long saveIntegralDetail(IntegralVO integralVO){
+        this.integralDetailDao = InjectionUtils.getInjectionInstance(IntegralDetailDao.class);
+        this.memberDao = InjectionUtils.getInjectionInstance(MemberDao.class);
         IntegralDetaill integralDetaill = new IntegralDetaill();
         // 积分值
         Long integralValue = 0L;

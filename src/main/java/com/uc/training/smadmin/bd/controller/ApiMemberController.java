@@ -2,8 +2,6 @@ package com.uc.training.smadmin.bd.controller;
 
 import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
-import com.uc.training.common.constant.Constant;
-import com.uc.training.common.enums.ConsumerTypeEnum;
 import com.uc.training.common.enums.GrowthEnum;
 import com.uc.training.common.enums.SmsStatusEnum;
 import com.uc.training.common.enums.SmsTypeEnum;
@@ -19,7 +17,6 @@ import com.uc.training.smadmin.redis.RedisConfigEnum;
 import com.uc.training.smadmin.sms.service.SmsTemplateService;
 import com.uc.training.smadmin.sms.vo.GenerateSmsVO;
 import com.uc.training.smadmin.utils.EncryptUtil;
-import com.uc.training.smadmin.utils.TelCodeUtil;
 import com.uc.training.smadmin.utils.TokenUtil;
 import com.ycc.base.common.Result;
 import com.ycc.tools.middleware.redis.RedisCacheUtils;
@@ -149,7 +146,6 @@ public class ApiMemberController extends BaseController {
                 MqVO mqVO = new MqVO();
                 mqVO.setMemberId(member.getId());
                 mqVO.setGrowthType(GrowthEnum.LOGININ.getGrowthType());
-                mqVO.setConsumerType(ConsumerTypeEnum.GROWTHTYPE.getConsumerType());
 
                 memberService.memberLogin(loginLog, mqVO);
                 result = Result.getSuccessResult(memberLoginRE);
@@ -237,7 +233,6 @@ public class ApiMemberController extends BaseController {
             MqVO mqVO = new MqVO();
             mqVO.setMemberId(getUid());
             mqVO.setRechargeValue(chargeBalanceVO.getBalance());
-            mqVO.setConsumerType(ConsumerTypeEnum.RECHARGEMESSAGETYPE.getConsumerType());
 
             memberService.memberRecharge(member, mqVO);
             re = Result.getSuccessResult("成功");
