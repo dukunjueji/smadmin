@@ -34,7 +34,7 @@ public interface CartGoodsDao{
 	 * @param ordCartGoodsVo (参数对象)
 	 * @return 更改条数
 	 */
-	 int insertCartGoods(OrdCartGoodsVo ordCartGoodsVo);
+	 void insertCartGoods(OrdCartGoodsVo ordCartGoodsVo);
 
 	/**
 	 * 更新

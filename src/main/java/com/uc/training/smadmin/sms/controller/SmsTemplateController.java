@@ -106,18 +106,13 @@ public class SmsTemplateController extends BaseController {
     @AccessLogin
     @ResponseBody
     @RequestMapping(value = "batchDeleteTemplate.do_", method = RequestMethod.POST)
-    public Result<Integer> batchDeleteTemplate(String ids){
+    public Result<Integer> batchDeleteTemplate(String[] ids){
         // 判空
-        if (StringUtils.isEmpty(ids)) {
-            return Result.getBusinessException("删除失败", null);
-        }
-        // 获取ID列表
-        String[] sp = StringUtils.split(ids.substring(1, ids.length()-1), ',');
-        if (sp == null || sp.length==0){
+        if (ids == null) {
             return Result.getBusinessException("删除失败", null);
         }
         List<Long> list = new ArrayList<>();
-        for (String s : sp) {
+        for (String s : ids) {
             list.add(Long.parseLong(s));
         }
         return Result.getSuccessResult(smsTemplateService.batchDeleteById(list));

@@ -39,11 +39,6 @@ public class MqVO implements Serializable {
      */
     private BigDecimal rechargeValue;
 
-    /**
-     * 消费类型
-     */
-    private Integer consumerType;
-
     public Long getMemberId() {
         return memberId;
     }
@@ -76,14 +71,6 @@ public class MqVO implements Serializable {
         this.rechargeValue = rechargeValue;
     }
 
-    public Integer getConsumerType() {
-        return consumerType;
-    }
-
-    public void setConsumerType(Integer consumerType) {
-        this.consumerType = consumerType;
-    }
-
     public Integer getIntegralType() {
         return integralType;
     }
@@ -100,7 +87,6 @@ public class MqVO implements Serializable {
                 ", integralType=" + integralType +
                 ", purchaseValue=" + purchaseValue +
                 ", rechargeValue=" + rechargeValue +
-                ", consumerType=" + consumerType +
                 '}';
     }
 }

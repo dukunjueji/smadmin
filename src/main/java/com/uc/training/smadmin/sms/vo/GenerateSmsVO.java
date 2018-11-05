@@ -16,21 +16,28 @@ public class GenerateSmsVO implements Serializable {
      * 手机号
      */
     private String telephone;
-    /**
-     * 类型（短信类型：1注册，2，登录，3充值，4订单信息，5会员等级），枚举SmsTypeEnum
-     */
-    private Integer type;
+
     /**
      * 信息
      */
     private String message;
 
+    /**
+     * 模板编号
+     */
+    private String code;
+    /**
+     * 消息类型
+     */
+    private Integer Type;
+
     @Override
     public String toString() {
         return "GenerateSmsVO{" +
                 "telephone='" + telephone + '\'' +
-                ", type=" + type +
                 ", message='" + message + '\'' +
+                ", code='" + code + '\'' +
+                ", Type=" + Type +
                 '}';
     }
 
@@ -42,12 +49,12 @@ public class GenerateSmsVO implements Serializable {
         this.telephone = telephone;
     }
 
-    public Integer getType() {
-        return type;
+    public String getCode() {
+        return code;
     }
 
-    public void setType(Integer type) {
-        this.type = type;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getMessage() {
@@ -56,5 +63,13 @@ public class GenerateSmsVO implements Serializable {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public Integer getType() {
+        return Type;
+    }
+
+    public void setType(Integer type) {
+        Type = type;
     }
 }

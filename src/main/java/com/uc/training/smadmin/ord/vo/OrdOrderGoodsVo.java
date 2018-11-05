@@ -4,11 +4,12 @@ import java.io.Serializable;
 
 
 /**
- *订单商品信息VO
+ * 订单商品信息VO
+ *
  * @author DK
  * @date 2018/10/15
  */
-public class OrdOrderGoodsVo implements Serializable{
+public class OrdOrderGoodsVo implements Serializable {
     /**
      * id
      */
@@ -31,7 +32,7 @@ public class OrdOrderGoodsVo implements Serializable{
     /**
      * 商品图片
      */
-    private String  gdsUrl;
+    private String gdsUrl;
 
     /**
      * 商品名称
@@ -77,6 +78,10 @@ public class OrdOrderGoodsVo implements Serializable{
     private long status;
 
     /**
+     * 地址id
+     */
+    private Long addressId;
+    /**
      * 收货人姓名
      */
     private String receiptName;
@@ -95,6 +100,14 @@ public class OrdOrderGoodsVo implements Serializable{
      * 收货人地址
      */
     private String receiptAddress;
+
+    public Long getAddressId() {
+        return addressId;
+    }
+
+    public void setAddressId(Long addressId) {
+        this.addressId = addressId;
+    }
 
     public Long getId() {
         return id;
@@ -167,6 +180,7 @@ public class OrdOrderGoodsVo implements Serializable{
     public void setSalePrice(double salePrice) {
         this.salePrice = salePrice;
     }
+
     public Long getPropertyId() {
         return propertyId;
     }
@@ -238,7 +252,6 @@ public class OrdOrderGoodsVo implements Serializable{
     public void setReceiptAddress(String receiptAddress) {
         this.receiptAddress = receiptAddress;
     }
-
 
 
 }

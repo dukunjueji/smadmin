@@ -44,8 +44,6 @@ public class AdminPropertyListRE implements Serializable{
      */
     private Integer isDiscount;
 
-    private List<AdminGoodsPicRE> adminGoodsPicRE;
-
     @Override
     public String toString() {
         return "AdminPropertyListRE{" +
@@ -57,14 +55,6 @@ public class AdminPropertyListRE implements Serializable{
                 ", property='" + property + '\'' +
                 ", isDiscount=" + isDiscount +
                 '}';
-    }
-
-    public List<AdminGoodsPicRE> getAdminGoodsPicRE() {
-        return adminGoodsPicRE;
-    }
-
-    public void setAdminGoodsPicRE(List<AdminGoodsPicRE> adminGoodsPicRE) {
-        this.adminGoodsPicRE = adminGoodsPicRE;
     }
 
     public Long getId() {

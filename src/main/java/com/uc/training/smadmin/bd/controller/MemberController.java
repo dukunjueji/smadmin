@@ -19,7 +19,7 @@ import java.util.List;
  * @Date: 2018/10/29 16:44
  * @Description:
  */
-@RequestMapping("/admin/member")
+@RequestMapping("/admin/bd/member")
 @Controller
 public class MemberController extends BaseController {
     @Autowired

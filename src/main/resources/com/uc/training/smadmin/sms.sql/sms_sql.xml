@@ -32,6 +32,7 @@
     FROM t_bd_sms s
     WHERE 1 = 1
     <include refid="where_query"/>
+    ORDER BY s.create_time DESC
     <isNotEmpty property="offset">
       limit #offset#, #pageSize#
     </isNotEmpty>

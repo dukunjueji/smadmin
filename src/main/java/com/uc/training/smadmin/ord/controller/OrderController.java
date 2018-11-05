@@ -2,6 +2,8 @@ package com.uc.training.smadmin.ord.controller;
 
 import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
+import com.uc.training.common.enums.OrderEnum;
+import com.uc.training.common.enums.SmsTypeEnum;
 import com.uc.training.smadmin.bd.service.MemberService;
 import com.uc.training.smadmin.bd.vo.MemberInfoVO;
 import com.uc.training.smadmin.gds.re.GoodsDetailRE;
@@ -13,6 +15,7 @@ import com.uc.training.smadmin.ord.re.*;
 import com.uc.training.smadmin.ord.re.OrderGoodsDetailRe;
 import com.uc.training.smadmin.ord.re.OrderRe;
 import com.uc.training.smadmin.ord.vo.*;
+import com.uc.training.smadmin.sms.vo.GenerateSmsVO;
 import com.ycc.base.common.Result;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.smadmin.gds.service.GoodsService;
@@ -44,8 +47,8 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "/api/order/")
 public class OrderController extends BaseController {
-  @Autowired
-  OrderService orderService;
+    @Autowired
+    OrderService orderService;
 
     @Autowired
     GoodsService goodsService;
@@ -73,20 +76,26 @@ public class OrderController extends BaseController {
     GoodsDetailRE gdDTO;
     for (CartGoods cartGoods : cartList) {
       ordCartgoodsVo = new OrdCartGoodsVo();
-      gdDTO = goodsService.getGoodsDetailByPropertyId(2L);
-      ordCartgoodsVo.setCartId(cartGoods.getId());
-      ordCartgoodsVo.setGoodsId(cartGoods.getGoodsId());
-      ordCartgoodsVo.setGdsName(gdDTO.getName());
-      ordCartgoodsVo.setGdsUrl(gdDTO.getPicUrl().get(0).getPicUrl());
-      ordCartgoodsVo.setPropertyId(cartGoods.getGoodsPropertyId());
-      ordCartgoodsVo.setProperty(gdDTO.getProperty());
-      ordCartgoodsVo.setSalePrice(gdDTO.getSalePrice());
-      ordCartgoodsVo.setDiscountPrice(gdDTO.getDiscountPrice());
-      ordCartgoodsVo.setStatus(gdDTO.getStatus());
-      ordCartgoodsVo.setIsDiscount(gdDTO.getIsDiscount());
-      ordCartgoodsVo.setNum(cartGoods.getGoodsNum());
-      ordCartgoodsVo.setStock(gdDTO.getStock());
-      list.add(ordCartgoodsVo);
+      gdDTO = goodsService.getGoodsDetailByPropertyId(cartGoods.getGoodsPropertyId());
+      if (gdDTO != null) {
+        ordCartgoodsVo.setCartId(cartGoods.getId());
+        ordCartgoodsVo.setGoodsId(cartGoods.getGoodsId());
+        ordCartgoodsVo.setGdsName(gdDTO.getName());
+        if (!CollectionUtils.isEmpty(gdDTO.getPicUrl())) {
+          ordCartgoodsVo.setGdsUrl(gdDTO.getPicUrl().get(0).getPicUrl());
+        }
+        ordCartgoodsVo.setPropertyId(cartGoods.getGoodsPropertyId());
+        ordCartgoodsVo.setProperty(gdDTO.getProperty());
+        ordCartgoodsVo.setSalePrice(gdDTO.getSalePrice());
+        ordCartgoodsVo.setDiscountPrice(gdDTO.getDiscountPrice());
+        ordCartgoodsVo.setStatus(gdDTO.getStatus());
+        ordCartgoodsVo.setIsDiscount(gdDTO.getIsDiscount());
+        ordCartgoodsVo.setNum(cartGoods.getGoodsNum());
+        ordCartgoodsVo.setStock(gdDTO.getStock());
+        list.add(ordCartgoodsVo);
+      } else {
+        return Result.getBusinessException("获取异常",null);
+      }
     }
     return Result.getSuccessResult(list);
   }
@@ -104,13 +113,18 @@ public class OrderController extends BaseController {
   public Result updataCartgds(HttpServletRequest request, OrdCartGoodsVo ordCartGoodsVo) {
     ordCartGoodsVo.setMemberId(getUid());
     GoodsDetailRE gdDTO = goodsService.getGoodsDetailByPropertyId(ordCartGoodsVo.getPropertyId());
+    //判空
+    if(gdDTO == null){
+      return Result.getBusinessException("获取异常",null);
+    }
+    // 更改数据判断库存如果库存不足更新为当前库存量并返回当前库存数据
     if(gdDTO.getStock() <= ordCartGoodsVo.getNum()){
       ordCartGoodsVo.setNum(gdDTO.getStock());
       orderService.updataCarGoodsNum(ordCartGoodsVo);
-      return Result.getBusinessException("库存不足",null);
+      return Result.getSuccessResult(gdDTO.getStock());
     }
     orderService.updataCarGoodsNum(ordCartGoodsVo);
-    return Result.getSuccessResult(null);
+    return Result.getSuccessResult(gdDTO.getStock());
   }
 
     /**
@@ -145,6 +159,9 @@ public class OrderController extends BaseController {
   @AccessLogin
   @RequestMapping("addCartgoods.do_")
   public Result addCartgds(HttpServletRequest request, OrdCartGoodsVo ordCartGoodsVo) {
+    if(ordCartGoodsVo == null){
+      return Result.getBusinessException("选择后再添加",null);
+    }
     List<CartGoods> list;
     list = orderService.getCarGoodsById(getUid());
     GoodsDetailRE gdDTO = goodsService.getGoodsDetailByPropertyId(ordCartGoodsVo.getPropertyId());
@@ -298,6 +315,25 @@ public class OrderController extends BaseController {
     public Result getOrderInfoList(OrdMemberVO ordMemberVO) {
         ordMemberVO.setMemberId(getUid());
         List<OrderInfoRE> orderInfoREList = orderService.getOrderInfoListByMemberId(ordMemberVO);
+        if (CollectionUtils.isEmpty(orderInfoREList)) {
+            return Result.getBusinessException("获取用户订单信息失败", null);
+        }
         return Result.getSuccessResult(orderInfoREList);
+    }
+
+    /**
+     * 取消订单
+     *
+     * @param ordOrderVo
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "cancelOrder.do_", method = RequestMethod.POST)
+    public Result cancelOrder(OrdOrderVo ordOrderVo) {
+        ordOrderVo.setStatus(OrderEnum.CANCEL.getKey().longValue());
+        if (orderService.updateOrder(ordOrderVo) > 0) {
+            return Result.getSuccessResult(null);
+        }
+        return Result.getBusinessException("取消失败", null);
     }
 }

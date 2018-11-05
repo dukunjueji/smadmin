@@ -13,17 +13,17 @@ import java.util.Map;
  */
 public enum SmsTypeEnum {
     //注册
-    REGISTER("注册", 1),
+    REGISTER("注册", 1, "6671"),
     //忘记密码
-    FORGET_PASSWORD("忘记密码", 2),
+    FORGET_PASSWORD("忘记密码", 2, "6672"),
     //修改密码
-    CHANGE_PASSWORD("修改密码", 3),
+    CHANGE_PASSWORD("修改密码", 3, "6673"),
     //充值
-    RECHARGE("充值", 4),
+    RECHARGE("充值", 4, "6674"),
     //订单信息
-    ORDER_INFO("订单信息", 5),
+    ORDER_INFO("订单信息", 5, "6675"),
     //会员等级
-    MEMBER_GRADE("会员等级", 6);
+    MEMBER_GRADE("会员等级", 6, "6676");
     /**
      * 描述
      */
@@ -34,9 +34,15 @@ public enum SmsTypeEnum {
      */
     private Integer type;
 
-    SmsTypeEnum(String describe, Integer type) {
+    /**
+     * 模板编号
+     */
+    private String code;
+
+    SmsTypeEnum(String describe, Integer type, String code) {
         this.describe = describe;
         this.type = type;
+        this.code = code;
     }
 
     public String getDescribe() {
@@ -53,6 +59,14 @@ public enum SmsTypeEnum {
 
     public void setType(Integer type) {
         this.type = type;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public static Map<Integer, String> getMap() {

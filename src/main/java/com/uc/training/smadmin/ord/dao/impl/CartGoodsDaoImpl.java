@@ -29,8 +29,8 @@ public class CartGoodsDaoImpl extends CarIsIbatisDaoImpl implements CartGoodsDao
 	 }
 
 	 @Override
-	public int insertCartGoods( OrdCartGoodsVo ordCartGoodsVo ){
-		  return  (int)this.insert("com.uc.training.smadmin.ord.dao.CartGoodsDao.insertCartGoods", ordCartGoodsVo);
+	public void insertCartGoods( OrdCartGoodsVo ordCartGoodsVo ){
+		  this.insert("com.uc.training.smadmin.ord.dao.CartGoodsDao.insertCartGoods", ordCartGoodsVo);
 	 }
 
 	 @Override

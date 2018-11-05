@@ -2,14 +2,14 @@ package com.uc.training.smadmin.bd.controller;
 
 import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
-import com.uc.training.common.constant.Constant;
-import com.uc.training.common.enums.ConsumerTypeEnum;
 import com.uc.training.common.enums.GrowthEnum;
+import com.uc.training.common.enums.IntegralEnum;
 import com.uc.training.common.enums.SmsStatusEnum;
 import com.uc.training.common.enums.SmsTypeEnum;
 import com.uc.training.smadmin.bd.model.LoginLog;
 import com.uc.training.smadmin.bd.model.Member;
 import com.uc.training.smadmin.bd.model.Message;
+import com.uc.training.smadmin.bd.mq.MqProducer;
 import com.uc.training.smadmin.bd.re.*;
 import com.uc.training.smadmin.bd.service.MemberService;
 import com.uc.training.smadmin.bd.service.MessageService;
@@ -19,9 +19,9 @@ import com.uc.training.smadmin.redis.RedisConfigEnum;
 import com.uc.training.smadmin.sms.service.SmsTemplateService;
 import com.uc.training.smadmin.sms.vo.GenerateSmsVO;
 import com.uc.training.smadmin.utils.EncryptUtil;
-import com.uc.training.smadmin.utils.TelCodeUtil;
 import com.uc.training.smadmin.utils.TokenUtil;
 import com.ycc.base.common.Result;
+import com.ycc.tools.middleware.metaq.MetaQUtils;
 import com.ycc.tools.middleware.redis.RedisCacheUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -82,6 +82,7 @@ public class ApiMemberController extends BaseController {
         }
         GenerateSmsVO generateSmsVO = new GenerateSmsVO();
         generateSmsVO.setTelephone(createCodeVO.getTelephone());
+        generateSmsVO.setCode(SmsTypeEnum.REGISTER.getCode());
         generateSmsVO.setType(SmsTypeEnum.REGISTER.getType());
 
         if (SmsStatusEnum.SUCCESS.getKey() == smsTemplateService.generateSms(generateSmsVO)) {
@@ -149,7 +150,6 @@ public class ApiMemberController extends BaseController {
                 MqVO mqVO = new MqVO();
                 mqVO.setMemberId(member.getId());
                 mqVO.setGrowthType(GrowthEnum.LOGININ.getGrowthType());
-                mqVO.setConsumerType(ConsumerTypeEnum.GROWTHTYPE.getConsumerType());
 
                 memberService.memberLogin(loginLog, mqVO);
                 result = Result.getSuccessResult(memberLoginRE);
@@ -178,6 +178,7 @@ public class ApiMemberController extends BaseController {
         }
         GenerateSmsVO generateSmsVO = new GenerateSmsVO();
         generateSmsVO.setTelephone(createCodeVO.getTelephone());
+        generateSmsVO.setCode(SmsTypeEnum.FORGET_PASSWORD.getCode());
         generateSmsVO.setType(SmsTypeEnum.FORGET_PASSWORD.getType());
 
         if (SmsStatusEnum.SUCCESS.getKey() == smsTemplateService.generateSms(generateSmsVO)) {
@@ -237,9 +238,9 @@ public class ApiMemberController extends BaseController {
             MqVO mqVO = new MqVO();
             mqVO.setMemberId(getUid());
             mqVO.setRechargeValue(chargeBalanceVO.getBalance());
-            mqVO.setConsumerType(ConsumerTypeEnum.RECHARGEMESSAGETYPE.getConsumerType());
 
             memberService.memberRecharge(member, mqVO);
+
             re = Result.getSuccessResult("成功");
         }
         return re;
@@ -313,6 +314,7 @@ public class ApiMemberController extends BaseController {
         if ((sendCodeVO.getNewpassword()).equals(sendCodeVO.getConfirmpassword())){
             GenerateSmsVO generateSmsVO = new GenerateSmsVO();
             generateSmsVO.setTelephone(member.getTelephone());
+            generateSmsVO.setCode(SmsTypeEnum.CHANGE_PASSWORD.getCode());
             generateSmsVO.setType(SmsTypeEnum.CHANGE_PASSWORD.getType());
 
             if (SmsStatusEnum.SUCCESS.getKey() == smsTemplateService.generateSms(generateSmsVO)) {

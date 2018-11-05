@@ -5,15 +5,14 @@ package com.uc.training.common.enums;
  * @author DK
  */
 public enum GoodsStatusEnum {
-    //商品状态：未删除
-    GoodsIsDelete("未删除", 1),
-    //商品状态：删除
-    GoodsDelete("删除", 0),
-    //商品状态：上架
-    GoodsShelves ("上架", 1),
-    //商品状态：下架
-    GoodsIsShelves ("下架", 0);
-
+    //未删除
+    GOODSISDELETE("未删除", 1),
+    //删除
+    GOODSDELETE("删除", 0),
+    //上架
+    GOODSSHELVES ("上架", 1),
+    //下架
+    GOODSISSHELVES ("下架", 0);
     /**
      * 描述
      */

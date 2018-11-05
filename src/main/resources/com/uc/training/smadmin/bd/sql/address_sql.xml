@@ -7,7 +7,7 @@
         SELECT
         s.id AS id,
         s.receiver AS receiver,
-        CONCAT(LEFT(s.telephone,3), '****' ,RIGHT(s.telephone,4)) AS telephone,
+        telephone AS telephone,
         s.area_code AS areaCode,
         s.addr_detail AS addrDetail,
         s.is_default AS isDefault
@@ -26,7 +26,7 @@
         s.is_default AS isDefault
         FROM t_bd_address s
         WHERE s.member_id = #memberId#
-        ORDER BY s.modify_time DESC
+        ORDER BY s.id ASC
     </select>
 
     <!-- 通过会员id查询默认地址 -->
@@ -45,7 +45,7 @@
     <insert id="insertAddress"  parameterClass="com.uc.training.smadmin.bd.model.Address">
         insert into t_bd_address
         (member_id, receiver, telephone, province, city, district, area_code, addr_detail, is_default, create_emp, modify_emp)
-        values(#memberId#,#receiver#,#telephone#,#province#,#city#,#district#,#areaCode#,#addrDetail#,#isDefault#,#createEmp#)
+        values(#memberId#,#receiver#,#telephone#,#province#,#city#,#district#,#areaCode#,#addrDetail#,#isDefault#,#createEmp#,modify_emp)
         <selectKey resultClass="long" keyProperty="id">
             SELECT LAST_INSERT_ID() as id;
         </selectKey>

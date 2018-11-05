@@ -123,9 +123,9 @@ public class SmsTemplateServiceImpl implements SmsTemplateService {
         // redis
         RedisCacheUtils redis = RedisCacheUtils.getInstance(RedisConfigEnum.SYS_CODE);
 
-        if (SmsTypeEnum.CHANGE_PASSWORD.getType().equals(generateSmsVO.getType()) ||
-                SmsTypeEnum.FORGET_PASSWORD.getType().equals(generateSmsVO.getType()) ||
-                SmsTypeEnum.REGISTER.getType().equals(generateSmsVO.getType())) {
+        if (SmsTypeEnum.CHANGE_PASSWORD.getCode().equals(generateSmsVO.getCode()) ||
+                SmsTypeEnum.FORGET_PASSWORD.getCode().equals(generateSmsVO.getCode()) ||
+                SmsTypeEnum.REGISTER.getCode().equals(generateSmsVO.getCode())) {
 
             generateSmsVO.setMessage(TelCodeUtil.createCode());
             //手机号 验证码

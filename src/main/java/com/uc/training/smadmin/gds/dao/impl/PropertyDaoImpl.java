@@ -40,7 +40,7 @@ public class PropertyDaoImpl extends CarIsIbatisDaoImpl implements PropertyDao{
     }
 
     /**
-     * 通过商品id获取商品属性数量
+     * 通过商品id获取商品属性
      *
      * @param goodsId
      * @return

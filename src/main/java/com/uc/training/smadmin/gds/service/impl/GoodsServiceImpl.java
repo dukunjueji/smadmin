@@ -70,7 +70,6 @@ public class GoodsServiceImpl implements GoodsService {
         for (int i = 0;i < list.size();i++){
             System.out.println("------------");
             System.out.println(list.get(i).toString());
-            //goodsDetailRE.get(i).setPicUrl((List<PropertyUrlRE>)list.get(i));
         }
         return goodsDetailRE;
     }
