@@ -122,18 +122,13 @@ public class RoleController extends BaseController {
      */
     @RequestMapping(value = "addAuth.do_", method = RequestMethod.POST)
     @ResponseBody
-    public Result<Long> addAuth(Long rid, String ids){
+    public Result<Long> addAuth(Long rid, String[] ids){
         // 判空
-        if (StringUtils.isEmpty(ids)) {
-            return Result.getBusinessException("删除失败", null);
-        }
-        // 获取ID列表
-        String[] sp = StringUtils.split(ids.substring(1, ids.length()-1), ',');
-        if (sp == null || sp.length==0){
+        if (ids == null) {
             return Result.getBusinessException("删除失败", null);
         }
         List<Long> list = new ArrayList<>();
-        for (String s : sp) {
+        for (String s : ids) {
             list.add(Long.parseLong(s));
         }
         return Result.getSuccessResult(sysRoleService.addRoleAuth(rid, list, getUid()));
@@ -162,18 +157,13 @@ public class RoleController extends BaseController {
      */
     @RequestMapping(value = "addUserRole.do_", method = RequestMethod.POST)
     @ResponseBody
-    public Result<Long> addUserRole(Long uid, String ids){
+    public Result<Long> addUserRole(Long uid, String[] ids){
         // 判空
-        if (StringUtils.isEmpty(ids)) {
-            return Result.getBusinessException("角色添加失败", null);
-        }
-        // 获取ID列表
-        String[] sp = StringUtils.split(ids.substring(1, ids.length()-1), ',');
-        if (sp == null || sp.length==0){
+        if (ids == null) {
             return Result.getBusinessException("角色添加失败", null);
         }
         List<Long> list = new ArrayList<>();
-        for (String s : sp) {
+        for (String s : ids) {
             list.add(Long.parseLong(s));
         }
         return Result.getSuccessResult(sysRoleService.addUserRole(uid, list, getUid()));

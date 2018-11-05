@@ -6,6 +6,7 @@ import com.uc.training.smadmin.sys.service.SysRoleService;
 import com.uc.training.smadmin.sys.vo.RoleListVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
@@ -56,6 +57,9 @@ public class SysRoleServiceImpl implements SysRoleService {
     @Override
     public Long addRoleAuth(Long rid, List<Long> mid, Long createEmp) {
         roleDao.deleteAuthByRid(rid);
+        if (CollectionUtils.isEmpty(mid)) {
+            return null;
+        }
         return roleDao.batchInsertAuth(rid, mid, createEmp);
     }
 
@@ -77,6 +81,9 @@ public class SysRoleServiceImpl implements SysRoleService {
     @Override
     public Long addUserRole(Long uid, List<Long> rid, Long createEmp) {
         roleDao.deleteRoleByUid(uid);
+        if (CollectionUtils.isEmpty(rid)){
+            return null;
+        }
         return roleDao.batchInsertRole(uid, rid, createEmp);
     }
 }
