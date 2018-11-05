@@ -47,7 +47,7 @@
                   )
     </select>
     <!--通过商品属性id获取商品的商品属性数量-->
-    <select id="getGoodsIdCountById" parameterClass="id">
+    <select id="getGoodsIdCountById" parameterClass="long" resultClass="Integer">
       select count(1)
       from t_gds_property
       where goods_id = (
