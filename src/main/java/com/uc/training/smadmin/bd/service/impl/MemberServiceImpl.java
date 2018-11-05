@@ -58,8 +58,6 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void insertMember(Member member) {
-        String encryptPaswd = EncryptUtil.md5(member.getPassword());
-        member.setPassword(encryptPaswd);
         memberDao.insertMember(member);
     }
 

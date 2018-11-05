@@ -41,7 +41,6 @@ public class AddressController extends BaseController {
     public Result<AddressRE> getAddressById(Long id) {
 
         Result<AddressRE> address = Result.getSuccessResult(addressService.getAddressById(id));
-
         return address;
     }
 
