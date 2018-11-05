@@ -5,8 +5,8 @@
     <insert id="insertProperty" parameterClass="com.uc.training.smadmin.gds.model.Property">
         INSERT INTO t_gds_property
         (goods_id, stock, discount_price, sale_price, property, is_discount, create_emp, modify_emp)
-        VALUES (#goodsId#,#stock#,#discountPrice#,salePrice,#property#,#isDiscount#,#createEmp#,#modifyEmp#)
-        <selectKey resultClass="long" keyProperty="id">
+        VALUES (#goodsId#,#stock#,#discountPrice#,#salePrice#,#property#,#isDiscount#,#createEmp#,#modifyEmp#)
+        <selectKey resultClass="java.lang.Long" keyProperty="id">
             SELECT LAST_INSERT_ID() as id;
         </selectKey>
     </insert>
@@ -16,10 +16,10 @@
         UPDATE t_gds_property
         SET   stock=#stock#,
               discount_price=#discountPrice#,
-              sale_price=#sale_price#,
+              sale_price=#salePrice#,
               property=#property#,
               is_discount=#isDiscount#,
               modify_emp=#modifyEmp#
-        WHERE goods_id = #goods_id#
+        WHERE goods_id = #goodsId#
     </update>
 </sqlMap>
