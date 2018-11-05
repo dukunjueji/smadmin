@@ -101,20 +101,10 @@
 	</select>
 
 	<!-- 查找指定会员订单总记录数 -->
-	<select id="OrderCount" resultClass="java.lang.Integer" parameterClass="com.uc.training.smadmin.ord.vo.OrdOrderVo">
-		SELECT count(1)
-		FROM t_ord_order s
-		WHERE
-		s.`is_delete` = 0
-		<isNotEmpty property="orderNum" prepend="and">
-			s.order_num = #orderNum#
-		</isNotEmpty>
-		<isNotEmpty property="status" prepend="and">
-			s.status = #status#
-		</isNotEmpty>
-		<isNotEmpty property="memberId" prepend="and">
-			s.member_id = #memberId#
-		</isNotEmpty>
+	<select id="queryOrderCount" resultClass="java.lang.Integer" parameterClass="java.lang.Long">
+		 SELECT count(1)
+		 FROM t_ord_order s
+		 WHERE s.member_id = #memberId#
 	</select>
 
 	<!--查询订单表的总记录数-->
