@@ -26,6 +26,10 @@ public class GenerateSmsVO implements Serializable {
      * 模板编号
      */
     private String code;
+    /**
+     * 消息类型
+     */
+    private Integer Type;
 
     @Override
     public String toString() {
@@ -33,6 +37,7 @@ public class GenerateSmsVO implements Serializable {
                 "telephone='" + telephone + '\'' +
                 ", message='" + message + '\'' +
                 ", code='" + code + '\'' +
+                ", Type=" + Type +
                 '}';
     }
 
@@ -58,5 +63,13 @@ public class GenerateSmsVO implements Serializable {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public Integer getType() {
+        return Type;
+    }
+
+    public void setType(Integer type) {
+        Type = type;
     }
 }

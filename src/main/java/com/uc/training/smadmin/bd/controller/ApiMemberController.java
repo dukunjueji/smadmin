@@ -83,6 +83,7 @@ public class ApiMemberController extends BaseController {
         GenerateSmsVO generateSmsVO = new GenerateSmsVO();
         generateSmsVO.setTelephone(createCodeVO.getTelephone());
         generateSmsVO.setCode(SmsTypeEnum.REGISTER.getCode());
+        generateSmsVO.setType(SmsTypeEnum.REGISTER.getType());
 
         if (SmsStatusEnum.SUCCESS.getKey() == smsTemplateService.generateSms(generateSmsVO)) {
             return Result.getSuccessResult(SmsStatusEnum.SUCCESS.getValue());
@@ -178,6 +179,7 @@ public class ApiMemberController extends BaseController {
         GenerateSmsVO generateSmsVO = new GenerateSmsVO();
         generateSmsVO.setTelephone(createCodeVO.getTelephone());
         generateSmsVO.setCode(SmsTypeEnum.FORGET_PASSWORD.getCode());
+        generateSmsVO.setType(SmsTypeEnum.FORGET_PASSWORD.getType());
 
         if (SmsStatusEnum.SUCCESS.getKey() == smsTemplateService.generateSms(generateSmsVO)) {
             return Result.getSuccessResult(SmsStatusEnum.SUCCESS.getValue());
@@ -313,6 +315,7 @@ public class ApiMemberController extends BaseController {
             GenerateSmsVO generateSmsVO = new GenerateSmsVO();
             generateSmsVO.setTelephone(member.getTelephone());
             generateSmsVO.setCode(SmsTypeEnum.CHANGE_PASSWORD.getCode());
+            generateSmsVO.setType(SmsTypeEnum.CHANGE_PASSWORD.getType());
 
             if (SmsStatusEnum.SUCCESS.getKey() == smsTemplateService.generateSms(generateSmsVO)) {
                 return Result.getSuccessResult(SmsStatusEnum.SUCCESS.getValue());
