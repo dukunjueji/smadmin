@@ -83,7 +83,8 @@
 		values (
 		#propertyId#,
 		#num#,
-		#memberId#)
+		#memberId#
+		)
 	</insert>
 
 	<delete id="delCartGoods" parameterClass="com.uc.training.smadmin.ord.vo.OrdCartGoodsVo">
@@ -96,7 +97,7 @@
 		<isNotEmpty property="memberId" prepend="and">
 			member_id = #memberId#
 		</isNotEmpty>
-		<isNotEmpty property="cartId" prepend="or">
+		<isNotEmpty property="cartId" prepend="and">
 			id = #cartId#
 		</isNotEmpty>
 	</delete>

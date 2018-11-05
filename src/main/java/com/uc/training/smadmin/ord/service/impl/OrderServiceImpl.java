@@ -58,11 +58,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<CartGoods> getCarGoodsById(Long memberId) {
-        List<CartGoods> cartList = cartGoodsDao.getCartGoodsById(memberId);
-        if (cartList.size() <= 0) {
-            return null;
-        }
-        return cartList;
+        return cartGoodsDao.getCartGoodsById(memberId);
     }
 
     /**
@@ -83,8 +79,10 @@ public class OrderServiceImpl implements OrderService {
             }
             ordOrderGoodsVo.setGoodsId(orderGodsList.get(i).getGoodsId());
             ordOrderGoodsVo.setGdsName(gdDTO.getName());
+          if (!CollectionUtils.isEmpty(gdDTO.getPicUrl())) {
             ordOrderGoodsVo.setGdsUrl(gdDTO.getPicUrl().get(0).getPicUrl());
-            ordOrderGoodsVo.setPropertyId(orderGodsList.get(i).getPropertyId());
+          }
+          ordOrderGoodsVo.setPropertyId(orderGodsList.get(i).getPropertyId());
             ordOrderGoodsVo.setProperty(gdDTO.getProperty());
             ordOrderGoodsVo.setSalePrice(gdDTO.getSalePrice());
             ordOrderGoodsVo.setDiscountPrice(gdDTO.getDiscountPrice());

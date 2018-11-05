@@ -24,7 +24,7 @@ public class OrdGoodsVO implements Serializable {
   /**
    * 商品数量
    */
-  private long goodsNum;
+  private Long goodsNum;
 
   public Long getGoodsId() {
     return goodsId;
@@ -42,11 +42,11 @@ public class OrdGoodsVO implements Serializable {
     this.propertyId = propertyId;
   }
 
-  public long getGoodsNum() {
+  public Long getGoodsNum() {
     return goodsNum;
   }
 
-  public void setGoodsNum(long goodsNum) {
+  public void setGoodsNum(Long goodsNum) {
     this.goodsNum = goodsNum;
   }
 }
