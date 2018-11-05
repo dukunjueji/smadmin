@@ -11,6 +11,52 @@
         </selectKey>
     </insert>
 
+    <!--通过商品id获取商品属性数量-->
+    <select id="getPropertyIdListByGoodsId" parameterClass="Long" resultClass="Long">
+        select id
+        from t_gds_property
+        where goods_id = #goodsId#
+    </select>
+
+    <!--通过商品id获取商品属性-->
+    <select id="getPropertyListByGoodsId" parameterClass="Long" resultClass="com.uc.training.smadmin.gds.re.AdminPropertyListRE">
+        select
+          id,
+          goods_id AS goodsId,
+          stock,
+          discount_price AS discountPrice,
+          sale_price AS salePrice,
+          property,
+          is_discount AS isDiscount
+        from t_gds_property
+        where goods_id = #goodsId#
+    </select>
+    <!--通过主键id删除商品属性-->
+    <delete id="deletePropertyById" parameterClass="Long">
+        delete from t_gds_property
+        where id = #id#
+    </delete>
+    <!--通过商品属性id获取商品的状态（上架，下架）-->
+    <select id="getGoodsStatusById" parameterClass="Long">
+      select status
+      from t_gds_goods
+      where id = (
+                    select  goodsId
+                    from   t_gds_property
+                    where id = #id#
+                  )
+    </select>
+    <!--通过商品属性id获取商品的商品属性数量-->
+    <select id="getGoodsIdCountById" parameterClass="id">
+      select count(1)
+      from t_gds_property
+      where goods_id = (
+                        select goods_id
+                        from t_gds_property
+                        where id = #id#
+                        )
+    </select>
+
     <!--更新商品属性-->
     <update id="updateProperty" parameterClass="com.uc.training.smadmin.gds.model.Property">
         UPDATE t_gds_property
