@@ -21,10 +21,7 @@ import com.uc.training.smadmin.ord.model.Order;
 import com.uc.training.smadmin.ord.model.OrderGoods;
 import com.uc.training.smadmin.ord.re.*;
 import com.uc.training.smadmin.ord.service.OrderService;
-import com.uc.training.smadmin.ord.vo.OrdCartGoodsVo;
-import com.uc.training.smadmin.ord.vo.OrdMemberVO;
-import com.uc.training.smadmin.ord.vo.OrdOrderGoodsVo;
-import com.uc.training.smadmin.ord.vo.OrdOrderVo;
+import com.uc.training.smadmin.ord.vo.*;
 import com.uc.training.smadmin.utils.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,6 +56,11 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<CartGoods> getCarGoodsById(Long memberId) {
         return cartGoodsDao.getCartGoodsById(memberId);
+    }
+
+    @Override
+    public List<CartGoods> getCarGoodsByIds(OrdGoodsVO ordGoodsVO) {
+        return cartGoodsDao.getCarGoodsByIds(ordGoodsVO);
     }
 
     /**

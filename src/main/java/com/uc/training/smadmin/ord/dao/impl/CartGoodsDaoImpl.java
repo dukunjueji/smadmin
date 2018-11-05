@@ -2,6 +2,7 @@ package com.uc.training.smadmin.ord.dao.impl;
 import com.uc.training.smadmin.ord.model.CartGoods;
 import com.uc.training.smadmin.ord.dao.CartGoodsDao;
 import com.uc.training.smadmin.ord.vo.OrdCartGoodsVo;
+import com.uc.training.smadmin.ord.vo.OrdGoodsVO;
 import com.zuche.framework.dao.CarIsIbatisDaoImpl;
 import org.springframework.stereotype.Repository;
 import java.util.List;
@@ -46,5 +47,10 @@ public class CartGoodsDaoImpl extends CarIsIbatisDaoImpl implements CartGoodsDao
 	@Override
 	public int updataCartGoodsNum(OrdCartGoodsVo ordCartGoodsVo) {
 		return this.update("com.uc.training.smadmin.ord.dao.CartGoodsDao.upCartGoodsNum",ordCartGoodsVo);
+	}
+
+	@Override
+	public List<CartGoods> getCarGoodsByIds(OrdGoodsVO ordGoodsVO) {
+		return this.queryForList("com.uc.training.smadmin.ord.dao.CartGoodsDao.checkCartGoodsList",ordGoodsVO );
 	}
 }

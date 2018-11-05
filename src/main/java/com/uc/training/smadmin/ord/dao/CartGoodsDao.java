@@ -1,6 +1,7 @@
 package com.uc.training.smadmin.ord.dao;
 import com.uc.training.smadmin.ord.model.CartGoods;
 import com.uc.training.smadmin.ord.vo.OrdCartGoodsVo;
+import com.uc.training.smadmin.ord.vo.OrdGoodsVO;
 
 import java.util.List;
 /**
@@ -16,6 +17,13 @@ public interface CartGoodsDao{
 	 * @return 购物车商品列表
 	 */
 	  List<CartGoods>  getCartGoodsById(Long id);
+
+	/**
+	 * 根据用户ID和购物车商品表ID获取购物车商品信息
+	 * @param  ordGoodsVO
+	 * @return
+	 */
+	 List<CartGoods> getCarGoodsByIds(OrdGoodsVO ordGoodsVO);
 
 	/**
 	 * 查询列表

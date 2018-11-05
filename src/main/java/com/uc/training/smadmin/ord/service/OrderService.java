@@ -6,11 +6,8 @@ import com.uc.training.smadmin.ord.re.OrderGoodsDetailRe;
 import com.uc.training.smadmin.ord.re.OrderRe;
 import com.uc.training.smadmin.ord.re.OrderStatusRe;
 import com.uc.training.smadmin.ord.re.*;
-import com.uc.training.smadmin.ord.vo.OrdCartGoodsVo;
-import com.uc.training.smadmin.ord.vo.OrdMemberVO;
-import com.uc.training.smadmin.ord.vo.OrdOrderGoodsVo;
+import com.uc.training.smadmin.ord.vo.*;
 import com.ycc.base.common.Result;
-import com.uc.training.smadmin.ord.vo.OrdOrderVo;
 
 import java.util.List;
 import java.util.Map;
@@ -27,6 +24,13 @@ public interface OrderService {
    * @return
    */
   List<CartGoods> getCarGoodsById(Long memberId);
+
+  /**
+   * 根据用户ID和购物车商品表ID获取购物车商品信息
+   * @param  ordGoodsVO
+   * @return
+   */
+  List<CartGoods> getCarGoodsByIds(OrdGoodsVO ordGoodsVO);
 
   /**
    * 根据用户id获取订单商品信息

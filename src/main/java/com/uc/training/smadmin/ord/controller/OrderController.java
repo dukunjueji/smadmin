@@ -286,19 +286,31 @@ public class OrderController extends BaseController {
     @ResponseBody
     @AccessLogin
     @RequestMapping(value = "checkStock.do_", method = RequestMethod.POST)
-    public Result checkStock(String goodsList) {
-      List<OrdGoodsVO> list = (List<OrdGoodsVO>) JSONArray.toList(JSONArray.fromObject(goodsList), new OrdGoodsVO(), new JsonConfig());
+    public Result checkStock(String[] goodsList) {
+      OrdGoodsVO ordGoodsVO = new OrdGoodsVO();
+      List<Long> listId = new ArrayList<>();
+      List<OrdGoodsVO> list1 = new ArrayList<OrdGoodsVO>();
+      if (goodsList != null) {
+        for (String s : goodsList) {
+          listId.add(Long.parseLong(s));
+        }
+      } else {
+        return Result.getBusinessException("请选择商品再提交",null);
+      }
+      ordGoodsVO.setMemberId(getUid());
+      ordGoodsVO.setList(listId);
+      List<CartGoods> cartList = orderService.getCarGoodsByIds(ordGoodsVO);
       GoodsDetailRE gdDTO;
-      if (CollectionUtils.isEmpty(list)) {
+      if (CollectionUtils.isEmpty(cartList)) {
         return Result.getBusinessException("请选择商品再提交",null);
       } else {
-        for (OrdGoodsVO cargd:list ) {
-          gdDTO = goodsService.getGoodsDetailByPropertyId(cargd.getPropertyId());
+        for (CartGoods cargd:cartList ) {
+          gdDTO = goodsService.getGoodsDetailByPropertyId(cargd.getGoodsPropertyId());
           if(gdDTO == null){
             return Result.getBusinessException("选择的商品中出现不存在请刷新",null);
           }
           if(gdDTO.getStock()<cargd.getGoodsNum() || gdDTO.getStatus() ==0 ){
-            return Result.getBusinessException("选择的商品中存在库存不足问题",null);
+            return Result.getBusinessException("选择的商品"+gdDTO.getName() +"存在库存不足问题",null);
           }
         }
       }

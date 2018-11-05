@@ -172,7 +172,7 @@
 			s.status = #status#
 		</isNotEmpty>
 		AND
-		s.`is_delete` = 0
+		s.is_delete = 0
 	</select>
 
 	<update id="logicDelOrder" parameterClass="list">

@@ -54,7 +54,7 @@ public class AdminOrderController extends BaseController {
   @RequestMapping(value = "getOrderPage.do_", method = RequestMethod.POST)
   public Result getOrderPage(OrdOrderVo orderVo) {
     List<OrderRe> list;
-    Map map = new HashMap(10);
+    Map<String , Object> map = new HashMap<String , Object>(5);
     list = orderService.getOrderPage(orderVo);
     if(CollectionUtils.isEmpty(list)){
       return Result.getBusinessException("获取订单列表失败",null);
@@ -74,17 +74,11 @@ public class AdminOrderController extends BaseController {
   @ResponseBody
   @AccessLogin
   @RequestMapping(value = "admDelOrder.do_", method = RequestMethod.POST)
-  public Result delOrderPage(String delId) {
+  public Result delOrderPage(String[] delId) {
     Result result = new Result();
-    if (StringUtils.isEmpty(delId)) {
-      return Result.getBusinessException("删除失败",null);
-    }
-    //截取字符串
-    String[] deleteId = StringUtils.split(delId.substring(1, delId.length()-1), ',');
     List<Long> list = new ArrayList<>();
-    //判空
-    if (deleteId.length > 1) {
-      for (String s : deleteId) {
+    if (delId != null) {
+      for (String s : delId) {
         list.add(Long.parseLong(s));
       }
     } else {
@@ -115,7 +109,6 @@ public class AdminOrderController extends BaseController {
     }
     return Result.getSuccessResult(list);
   }
-
 
   /**
    * 根据订单号更新状态

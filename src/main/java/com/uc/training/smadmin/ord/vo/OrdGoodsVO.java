@@ -1,6 +1,7 @@
 package com.uc.training.smadmin.ord.vo;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * description: TODO
@@ -14,39 +15,26 @@ public class OrdGoodsVO implements Serializable {
   /**
    * 商品id
    */
-  private Long goodsId;
+  private Long memberId;
 
   /**
-   * 属性
+   * 购物车商品表ID list
    */
-  private Long propertyId;
+  private List<Long> list;
 
-  /**
-   * 商品数量
-   */
-  private Long goodsNum;
-
-  public Long getGoodsId() {
-    return goodsId;
+  public Long getMemberId() {
+    return memberId;
   }
 
-  public void setGoodsId(Long goodsId) {
-    this.goodsId = goodsId;
+  public void setMemberId(Long memberId) {
+    this.memberId = memberId;
   }
 
-  public Long getPropertyId() {
-    return propertyId;
+  public List<Long> getList() {
+    return list;
   }
 
-  public void setPropertyId(Long propertyId) {
-    this.propertyId = propertyId;
-  }
-
-  public Long getGoodsNum() {
-    return goodsNum;
-  }
-
-  public void setGoodsNum(Long goodsNum) {
-    this.goodsNum = goodsNum;
+  public void setList(List<Long> list) {
+    this.list = list;
   }
 }

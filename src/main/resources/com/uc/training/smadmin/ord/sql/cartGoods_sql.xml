@@ -66,6 +66,19 @@
 		 <!--  <isNotEmpty property="rows" prepend=" "> limit #start#,#rows#</isNotEmpty>/>  -->
 	</select>
 
+	<select id="checkCartGoodsList" resultClass="com.uc.training.smadmin.ord.model.CartGoods" parameterClass="com.uc.training.smadmin.ord.vo.OrdGoodsVO">
+		SELECT
+		s.goods_property_id AS goodsPropertyId,
+		s.goods_num AS goodsNum
+		FROM t_ord_cart_goods s
+		WHERE
+		s.member_id = #memberId#
+		and
+		s.id IN
+		<iterate open="(" close=")" conjunction="," property="list">
+			#list[]#
+		</iterate>
+	</select>
 	<!-- 查找数据总记录数 -->
 	<select id="queryCartGoodsCount" resultClass="java.lang.Integer" parameterClass="com.uc.training.smadmin.ord.model.CartGoods">
 		 SELECT count(1)
