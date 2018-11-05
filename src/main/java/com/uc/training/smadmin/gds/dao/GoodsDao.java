@@ -20,10 +20,9 @@ import java.util.List;
 public interface GoodsDao {
     /**
      * 获取热门推荐
-     * @param pageVO
      * @return
      */
-    public List<GoodsRE> getHotRecommend(PageVO pageVO);
+    public List<GoodsRE> getHotRecommend();
 
     /**
      * 获取热门推荐总数量
@@ -36,14 +35,14 @@ public interface GoodsDao {
      * @param goodsListVO
      * @return
      */
-    public Long getGoodsListCount(GoodsListVO goodsListVO);
+    public List<Long> getGoodsListCount(GoodsListVO goodsListVO);
 
     /**
      * 通过分类来获取商品
-     * @param goodsListVO
+     * @param propertyIds
      * @return
      */
-    public List<GoodsRE> getGoodsList(GoodsListVO goodsListVO);
+    public List<GoodsRE> getGoodsList(List<Long> propertyIds);
 
     /**
      * 通过属性id商品详情
@@ -89,11 +88,18 @@ public interface GoodsDao {
     public int updateAndDeductStoke(GoodsStokeVO goodsStokeVO);
 
     /**
-     * 模糊查询商品列表
-     * @param goodsName
+     * 模糊查询商品列表总数量
+     * @param goodsListVO
      * @return
      */
-    public List<Long> searchByGoodsName(String goodsName);
+    public Integer searchCountByGoodsName(GoodsListVO goodsListVO);
+
+    /**
+     * 模糊查询商品列表
+     * @param goodsListVO
+     * @return
+     */
+    public List<Long> searchByGoodsName(GoodsListVO goodsListVO);
 
     /**
      * 通过属性查询商品列表

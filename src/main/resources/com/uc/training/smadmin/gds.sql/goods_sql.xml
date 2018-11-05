@@ -14,6 +14,7 @@
 		FROM t_gds_property gds_property join t_gds_goods goods on goods.id=gds_property.goods_id
 		join t_gds_goods_pic gds_pic on gds_property.id=gds_pic.property_id
 		 order by goods.sales desc
+		 limit 1,8
 	</select>
 
     <select id="getHotRecommendCount" resultClass="java.lang.Integer">
@@ -23,32 +24,38 @@
 	</select>
 
     <!-- 查询分页列表 -->
-    <select id="getGoodsList" parameterClass="com.uc.training.smadmin.gds.vo.GoodsListVO"
+    <select id="getGoodsList" parameterClass="java.util.List"
             resultClass="com.uc.training.smadmin.gds.re.GoodsRE">
         SELECT
-        DISTINCT goods.category_id as categoryId,
+        goods.category_id as categoryId,
         goods.name,
         goods.sales,
+        goods.id as goodsId,
         gds_property.id as propertyId,
         gds_property.sale_price as salePrice,
         gds_pic.pic_url as picUrl
         FROM t_gds_property gds_property join t_gds_goods goods on goods.id=gds_property.goods_id
         join t_gds_goods_pic gds_pic on gds_property.id=gds_pic.property_id
-        where goods.category_id=#categoryId#
+        where gds_property.id
+        IN
+        <iterate open="(" close=")" conjunction=",">
+            #propertyIds[]#
+        </iterate>
         order by goods.sales desc
-        <isNotEmpty property="offset">
-            limit #offset#, #pageSize#
-        </isNotEmpty>
     </select>
 
     <!-- 查询分页列表总记录数 -->
-    <select id="getGoodsListCount" resultClass="java.lang.Long"
+    <select id="getGoodsListCount" resultClass="long"
             parameterClass="com.uc.training.smadmin.gds.vo.GoodsListVO">
 		SELECT
-		count(1)
-		FROM t_gds_property gds_property join t_gds_goods goods on goods.id=gds_property.goods_id
-		join t_gds_goods_pic gds_pic on gds_property.id=gds_pic.property_id
-		where goods.category_id=#categoryId#
+	        MAX(gds_property.id) AS propertyId
+        FROM
+	    t_gds_property gds_property
+        LEFT JOIN t_gds_goods goods ON goods.id = gds_property.goods_id
+        WHERE
+	    goods.category_id = #categoryId#
+        GROUP BY
+	    goods.id
 	</select>
 
     <select id="getGoodsDetailByGoodsId" resultClass="com.uc.training.smadmin.gds.re.GoodsDetailRE"
@@ -131,15 +138,25 @@
 		update t_gds_goods set sales=#stoke#+sales where id=#goodsId#
 	</update>
 
-    <select id="searchByGoodsName" resultClass="long" parameterClass="String">
+    <select id="searchCountByGoodsName" resultClass="java.lang.Integer" parameterClass="com.uc.training.smadmin.gds.vo.GoodsListVO">
+		SELECT
+		count(1)
+		FROM
+		t_gds_goods goods
+        where goods.name like concat("%",#name#,"%")
+	</select>
+
+    <select id="searchByGoodsName" resultClass="long" parameterClass="com.uc.training.smadmin.gds.vo.GoodsListVO">
         SELECT
 		max(gds_property.id) AS propertyId
 		FROM
 		t_gds_property gds_property
 		left JOIN t_gds_goods goods ON goods.id = gds_property.goods_id
-        where goods.name like concat("%",#goodsName#,"%")
+        where goods.name like concat("%",#name#,"%")
         GROUP BY goods.id
-        limit 0, 10
+        <isNotEmpty property="offset">
+            limit #offset#, #pageSize#
+        </isNotEmpty>
     </select>
 
     <select id="searchByPropertyId" resultClass="com.uc.training.smadmin.gds.re.GoodsRE"
@@ -191,7 +208,6 @@
         t_gds_goods_pic pic,
         t_gds_property gp,
         t_gds_category gc
-
         WHERE
         gg.id = gp.goods_id AND
         gg.category_id = gc.id AND
