@@ -16,7 +16,7 @@ public enum SmsStatusEnum {
     /**
      * 短信发送成功
      */
-    SUCCESS(1, "短信发送失败");
+    SUCCESS(1, "短信发送成功");
 
     private int key;
     private String value;
