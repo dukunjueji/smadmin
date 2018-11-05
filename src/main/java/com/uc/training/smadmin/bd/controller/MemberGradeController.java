@@ -19,7 +19,7 @@ import java.util.List;
  * @Description:
  */
 @Controller
-@RequestMapping("/admin/memberGrade")
+@RequestMapping("/admin/bd/memberGrade")
 public class MemberGradeController extends BaseController {
 
     @Autowired
