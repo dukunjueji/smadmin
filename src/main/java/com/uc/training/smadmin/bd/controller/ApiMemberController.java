@@ -3,11 +3,13 @@ package com.uc.training.smadmin.bd.controller;
 import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.common.enums.GrowthEnum;
+import com.uc.training.common.enums.IntegralEnum;
 import com.uc.training.common.enums.SmsStatusEnum;
 import com.uc.training.common.enums.SmsTypeEnum;
 import com.uc.training.smadmin.bd.model.LoginLog;
 import com.uc.training.smadmin.bd.model.Member;
 import com.uc.training.smadmin.bd.model.Message;
+import com.uc.training.smadmin.bd.mq.MqProducer;
 import com.uc.training.smadmin.bd.re.*;
 import com.uc.training.smadmin.bd.service.MemberService;
 import com.uc.training.smadmin.bd.service.MessageService;
@@ -19,6 +21,7 @@ import com.uc.training.smadmin.sms.vo.GenerateSmsVO;
 import com.uc.training.smadmin.utils.EncryptUtil;
 import com.uc.training.smadmin.utils.TokenUtil;
 import com.ycc.base.common.Result;
+import com.ycc.tools.middleware.metaq.MetaQUtils;
 import com.ycc.tools.middleware.redis.RedisCacheUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -235,6 +238,13 @@ public class ApiMemberController extends BaseController {
             mqVO.setRechargeValue(chargeBalanceVO.getBalance());
 
             memberService.memberRecharge(member, mqVO);
+
+//            MqVO mqVO1 = new MqVO();
+//            mqVO1.setMemberId(getUid());
+//            mqVO1.setGrowthType(GrowthEnum.PURCHASE.getGrowthType());
+//            mqVO1.setIntegralType(IntegralEnum.PURCHASE.getIntegralType());
+//            mqVO1.setPurchaseValue(BigDecimal.valueOf(100));
+//            MetaQUtils.sendMsgNoException(new MqProducer(mqVO1));
             re = Result.getSuccessResult("成功");
         }
         return re;
