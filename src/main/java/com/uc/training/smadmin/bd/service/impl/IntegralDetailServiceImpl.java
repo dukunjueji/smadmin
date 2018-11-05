@@ -34,7 +34,7 @@ public class IntegralDetailServiceImpl implements IntegralDetailService {
     public Long saveIntegralDetail(IntegralVO integralVO){
         this.integralDetailDao = InjectionUtils.getInjectionInstance(IntegralDetailDao.class);
         this.memberDao = InjectionUtils.getInjectionInstance(MemberDao.class);
-        IntegralDetaill integralDetaill = new IntegralDetaill();
+        IntegralDetaill integralDetail = new IntegralDetaill();
         // 积分值
         Long integralValue = 0L;
 
@@ -51,7 +51,6 @@ public class IntegralDetailServiceImpl implements IntegralDetailService {
         }
 
         //封装积分详情
-        IntegralDetaill integralDetail = new IntegralDetaill();
         integralDetail.setIntegral(integralValue);
         integralDetail.setMemberId(integralVO.getMemberId());
         integralDetail.setType(integralVO.getIntegralType());
