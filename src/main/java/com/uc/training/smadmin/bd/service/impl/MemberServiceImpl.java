@@ -130,7 +130,7 @@ public class MemberServiceImpl implements MemberService {
             //发送短信
             GenerateSmsVO generateSmsVO = new GenerateSmsVO();
             generateSmsVO.setTelephone("123");
-            generateSmsVO.setType(SmsTypeEnum.ORDER_INFO.getType());
+            generateSmsVO.setCode(SmsTypeEnum.ORDER_INFO.getCode());
             generateSmsVO.setMessage(ordOrderVo.getOrderNum());
             //生成短信模板，并发送
             smsTemplateService.generateSms(generateSmsVO);

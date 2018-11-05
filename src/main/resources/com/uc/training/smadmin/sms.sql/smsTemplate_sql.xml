@@ -48,7 +48,7 @@
 	<select id="generateSms" parameterClass="com.uc.training.smadmin.sms.vo.GenerateSmsVO" resultClass="String">
 		select replace(content,'msg',  #message#)  content
 		from t_sys_sms_template
-		where `type` = #type#
+		where `code` = #code#
   	</select>
 
 	<!-- 查找数据总记录数 -->
