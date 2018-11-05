@@ -33,6 +33,28 @@
 			 </isNotEmpty>
 		 </dynamic>
 	</select>
+	<!-- 通过会员id查会员手机号-->
+	<select id="queryMemberTel" resultClass="com.uc.training.smadmin.bd.model.Member" parameterClass="java.lang.Long">
+		SELECT
+		s.id AS id,
+		s.password AS password,
+		s.membername AS memberName,
+		s.email AS email,
+		s.telephone AS telephone,
+		s.sex AS sex,
+		s.growth AS growth,
+		s.integral AS integral,
+		s.nickname AS nickname,
+		s.balance AS balance,
+		s.image_url AS imageUrl,
+		s.create_time AS createTime,
+		s.modify_time AS modifyTime,
+		s.create_emp AS createEmp,
+		s.modify_emp AS modifyEmp
+		FROM t_bd_member s
+		WHERE
+		s.id = #memberId#
+	</select>
 	<!-- 根据会员的id作为条件进行查找 -->
 	<select id="queryOneMemberById" resultClass="com.uc.training.smadmin.bd.re.MemberInfoRE" parameterClass="java.lang.Long">
 		SELECT
@@ -143,9 +165,9 @@
 	<!-- 注册会员信息 -->
 	<insert id="insertMember" parameterClass="com.uc.training.smadmin.bd.model.Member">
 		 insert into t_bd_member
-		  (password, telephone, create_time)
+		  (password, telephone, growth, integral, balance)
 		 values
-		 (#password#,#telephone#, now())
+		 (#password#,#telephone#, 0, 0, 0)
 	<selectKey keyProperty="id">
 		select LAST_INSERT_ID() AS id
 	</selectKey>

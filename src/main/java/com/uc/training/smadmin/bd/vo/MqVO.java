@@ -25,6 +25,11 @@ public class MqVO implements Serializable {
     private Integer growthType;
 
     /**
+     * 积分类型
+     */
+    private Integer integralType;
+
+    /**
      * 购买商品的金额
      */
     private BigDecimal purchaseValue;
@@ -79,11 +84,20 @@ public class MqVO implements Serializable {
         this.consumerType = consumerType;
     }
 
+    public Integer getIntegralType() {
+        return integralType;
+    }
+
+    public void setIntegralType(Integer integralType) {
+        this.integralType = integralType;
+    }
+
     @Override
     public String toString() {
         return "MqVO{" +
                 "memberId=" + memberId +
                 ", growthType=" + growthType +
+                ", integralType=" + integralType +
                 ", purchaseValue=" + purchaseValue +
                 ", rechargeValue=" + rechargeValue +
                 ", consumerType=" + consumerType +

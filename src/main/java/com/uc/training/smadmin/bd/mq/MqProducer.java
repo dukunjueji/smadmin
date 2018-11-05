@@ -33,6 +33,6 @@ public class MqProducer extends MQHelperAdapter {
 
     @Override
     public MQHelperEncodeType getEncodeType() {
-        return MQHelperEncodeType.HESSIAN;
+        return MQHelperEncodeType.JSON;
     }
 }

@@ -6,6 +6,8 @@ import com.uc.training.smadmin.bd.re.MessageRE;
 import com.uc.training.smadmin.bd.service.MessageService;
 import com.uc.training.smadmin.bd.vo.MessageDetailVO;
 import com.uc.training.smadmin.bd.vo.MessageListVO;
+import com.uc.training.smadmin.utils.InjectionUtils;
+import com.zuche.framework.common.SpringApplicationContext;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 版权说明：Copyright (c) 2018 ucarinc. All Rights Reserved.
@@ -63,6 +66,7 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public Long insertMessage(Message record) {
+        this.messageDao = InjectionUtils.getInjectionInstance(MessageDao.class);
         return this.messageDao.insertMessage(record);
     }
 

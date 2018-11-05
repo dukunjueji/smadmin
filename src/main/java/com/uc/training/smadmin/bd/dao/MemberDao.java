@@ -129,4 +129,11 @@ public interface MemberDao {
     *@throws：
     */
     void updateBalance(MemberBalanceVO memberBalanceVO);
+    /**
+    *说明：通过会员id查询会员的手机号
+    *@param memberId
+    *@return：void
+    *@throws：
+    */
+    Member queryMemberTel(Long memberId);
 }
