@@ -73,20 +73,26 @@ public class OrderController extends BaseController {
     GoodsDetailRE gdDTO;
     for (CartGoods cartGoods : cartList) {
       ordCartgoodsVo = new OrdCartGoodsVo();
-      gdDTO = goodsService.getGoodsDetailByPropertyId(2L);
-      ordCartgoodsVo.setCartId(cartGoods.getId());
-      ordCartgoodsVo.setGoodsId(cartGoods.getGoodsId());
-      ordCartgoodsVo.setGdsName(gdDTO.getName());
-      ordCartgoodsVo.setGdsUrl(gdDTO.getPicUrl().get(0).getPicUrl());
-      ordCartgoodsVo.setPropertyId(cartGoods.getGoodsPropertyId());
-      ordCartgoodsVo.setProperty(gdDTO.getProperty());
-      ordCartgoodsVo.setSalePrice(gdDTO.getSalePrice());
-      ordCartgoodsVo.setDiscountPrice(gdDTO.getDiscountPrice());
-      ordCartgoodsVo.setStatus(gdDTO.getStatus());
-      ordCartgoodsVo.setIsDiscount(gdDTO.getIsDiscount());
-      ordCartgoodsVo.setNum(cartGoods.getGoodsNum());
-      ordCartgoodsVo.setStock(gdDTO.getStock());
-      list.add(ordCartgoodsVo);
+      gdDTO = goodsService.getGoodsDetailByPropertyId(cartGoods.getGoodsPropertyId());
+      if (gdDTO != null) {
+        ordCartgoodsVo.setCartId(cartGoods.getId());
+        ordCartgoodsVo.setGoodsId(cartGoods.getGoodsId());
+        ordCartgoodsVo.setGdsName(gdDTO.getName());
+        if (!CollectionUtils.isEmpty(gdDTO.getPicUrl())) {
+          ordCartgoodsVo.setGdsUrl(gdDTO.getPicUrl().get(0).getPicUrl());
+        }
+        ordCartgoodsVo.setPropertyId(cartGoods.getGoodsPropertyId());
+        ordCartgoodsVo.setProperty(gdDTO.getProperty());
+        ordCartgoodsVo.setSalePrice(gdDTO.getSalePrice());
+        ordCartgoodsVo.setDiscountPrice(gdDTO.getDiscountPrice());
+        ordCartgoodsVo.setStatus(gdDTO.getStatus());
+        ordCartgoodsVo.setIsDiscount(gdDTO.getIsDiscount());
+        ordCartgoodsVo.setNum(cartGoods.getGoodsNum());
+        ordCartgoodsVo.setStock(gdDTO.getStock());
+        list.add(ordCartgoodsVo);
+      } else {
+        return Result.getBusinessException("获取异常",null);
+      }
     }
     return Result.getSuccessResult(list);
   }
@@ -104,13 +110,18 @@ public class OrderController extends BaseController {
   public Result updataCartgds(HttpServletRequest request, OrdCartGoodsVo ordCartGoodsVo) {
     ordCartGoodsVo.setMemberId(getUid());
     GoodsDetailRE gdDTO = goodsService.getGoodsDetailByPropertyId(ordCartGoodsVo.getPropertyId());
+    //判空
+    if(gdDTO == null){
+      return Result.getBusinessException("获取异常",null);
+    }
+    // 更改数据是判断库存如果库存不足更新为当前库存量并返回当前库存数据
     if(gdDTO.getStock() <= ordCartGoodsVo.getNum()){
       ordCartGoodsVo.setNum(gdDTO.getStock());
       orderService.updataCarGoodsNum(ordCartGoodsVo);
-      return Result.getBusinessException("库存不足",null);
+      return Result.getSuccessResult(gdDTO.getStock());
     }
     orderService.updataCarGoodsNum(ordCartGoodsVo);
-    return Result.getSuccessResult(null);
+    return Result.getSuccessResult(gdDTO.getStock());
   }
 
     /**
