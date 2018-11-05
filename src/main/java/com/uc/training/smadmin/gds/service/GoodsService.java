@@ -1,14 +1,11 @@
 package com.uc.training.smadmin.gds.service;
 
-import com.kenai.jaffl.annotations.In;
-import com.uc.training.smadmin.gds.vo.PageVO;
+import com.uc.training.common.vo.PageVO;
 import com.uc.training.smadmin.gds.model.Goods;
-import com.uc.training.smadmin.gds.model.GoodsPic;
-import com.uc.training.smadmin.gds.model.Property;
-import com.uc.training.smadmin.gds.re.AdminGoodsRE;
-import com.uc.training.smadmin.gds.re.GoodsRE;
-import com.uc.training.smadmin.gds.re.GoodsDetailRE;
 import com.uc.training.smadmin.gds.model.HotTag;
+import com.uc.training.smadmin.gds.re.AdminGoodsRE;
+import com.uc.training.smadmin.gds.re.GoodsDetailRE;
+import com.uc.training.smadmin.gds.re.GoodsRE;
 import com.uc.training.smadmin.gds.re.GoodsStokeRE;
 import com.uc.training.smadmin.gds.vo.*;
 
@@ -23,10 +20,9 @@ import java.util.List;
 public interface GoodsService {
     /**
      * 获取热门推荐
-     * @param pageVO
      * @return
      */
-    public List<GoodsRE> getHotRecommend(PageVO pageVO);
+    public List<GoodsRE> getHotRecommend();
 
     /**
      * 获取热门推荐总数量
@@ -46,14 +42,14 @@ public interface GoodsService {
      * @param goodsListVO
      * @return
      */
-    public Long getGoodsListCount(GoodsListVO goodsListVO);
+    public List<Long> getGoodsListCount(GoodsListVO goodsListVO);
 
     /**
      * 通过分类来获取商品
-     * @param goodsListVO
+     * @param propertyIds
      * @return
      */
-    public List<GoodsRE> getGoodsList(GoodsListVO goodsListVO);
+    public List<GoodsRE> getGoodsList(List<Long> propertyIds);
 
     /**
      * 通过属性id商品详情
@@ -70,11 +66,18 @@ public interface GoodsService {
     public List<GoodsDetailRE> getGoodsDetailByGoodsId(Long goodsId);
 
     /**
-     * 模糊查询商品列表
-     * @param goodsName
+     * 模糊查询商品列表总数量
+     * @param goodsListVO
      * @return
      */
-    public List<GoodsRE> searchByGoodsName(String goodsName);
+    public Integer searchCountByGoodsName(GoodsListVO goodsListVO);
+
+    /**
+     * 模糊查询商品列表
+     * @param goodsListVO
+     * @return
+     */
+    public List<GoodsRE> searchByGoodsName(GoodsListVO goodsListVO);
 
     /**
      * 获取热门标签
@@ -92,9 +95,8 @@ public interface GoodsService {
     /**
      * 测试高并发下的减库存安全
      * @param goodsStokeVO
-     * @return
      */
-    Integer updateAndDeductStoke(GoodsStokeVO goodsStokeVO);
+    public Integer updateAndDeductStoke(GoodsStokeVO goodsStokeVO);
 
     /**
      * 减库存之前，查看商品是否下架、删除、检查库存是否足够
@@ -120,8 +122,6 @@ public interface GoodsService {
     /**
      * 后台新增商品
      * @param goods
-     * @param property
-     * @param goodsPic
      * @return
      */
     Long adminInsertGoods(Goods goods);

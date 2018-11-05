@@ -1,5 +1,6 @@
 package com.uc.training.smadmin.gds.dao.impl;
 
+import com.kenai.jaffl.annotations.In;
 import com.uc.training.smadmin.gds.dao.GoodsDao;
 import com.uc.training.smadmin.gds.model.Goods;
 import com.uc.training.smadmin.gds.re.*;
@@ -23,8 +24,8 @@ import java.util.List;
 @Repository
 public class GoodsDaoImpl  extends CarIsIbatisDaoImpl implements GoodsDao {
     @Override
-    public List<GoodsRE> getHotRecommend(PageVO pageVO) {
-        return this.queryForList("com.uc.training.smadmin.gds.dao.GoodsDao.getHotRecommend",pageVO,pageVO.getStartIndex(),pageVO.getEndIndex());
+    public List<GoodsRE> getHotRecommend() {
+        return this.queryForList("com.uc.training.smadmin.gds.dao.GoodsDao.getHotRecommend");
     }
 
     @Override
@@ -33,13 +34,13 @@ public class GoodsDaoImpl  extends CarIsIbatisDaoImpl implements GoodsDao {
     }
 
     @Override
-    public Long getGoodsListCount(GoodsListVO goodsListVO) {
-        return (Long)this.queryForObject("com.uc.training.smadmin.gds.dao.GoodsDao.getGoodsListCount",goodsListVO);
+    public List<Long> getGoodsListCount(GoodsListVO goodsListVO) {
+        return this.queryForList("com.uc.training.smadmin.gds.dao.GoodsDao.getGoodsListCount",goodsListVO,goodsListVO.getOffset(),goodsListVO.getPageSize());
     }
 
     @Override
-    public List<GoodsRE> getGoodsList(GoodsListVO goodsListVO) {
-        return this.queryForList("com.uc.training.smadmin.gds.dao.GoodsDao.getGoodsList",goodsListVO);
+    public List<GoodsRE> getGoodsList(List<Long> propertyIds) {
+        return this.queryForList("com.uc.training.smadmin.gds.dao.GoodsDao.getGoodsList",propertyIds);
     }
 
     @Override
@@ -79,8 +80,13 @@ public class GoodsDaoImpl  extends CarIsIbatisDaoImpl implements GoodsDao {
     }
 
     @Override
-    public List<Long> searchByGoodsName(String goodsName) {
-        return this.queryForList("com.uc.training.smadmin.gds.dao.GoodsDao.searchByGoodsName",goodsName);
+    public Integer searchCountByGoodsName(GoodsListVO goodsListVO){
+        return (Integer)this.queryForObject("com.uc.training.smadmin.gds.dao.GoodsDao.searchCountByGoodsName",goodsListVO);
+    }
+
+    @Override
+    public List<Long> searchByGoodsName(GoodsListVO goodsListVO) {
+        return this.queryForList("com.uc.training.smadmin.gds.dao.GoodsDao.searchByGoodsName",goodsListVO);
     }
 
     @Override

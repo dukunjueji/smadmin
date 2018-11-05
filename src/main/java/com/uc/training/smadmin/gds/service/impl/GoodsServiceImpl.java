@@ -1,13 +1,12 @@
 package com.uc.training.smadmin.gds.service.impl;
 
-import com.kenai.jaffl.annotations.Synchronized;
 import com.uc.training.common.enums.StokeStatusEnum;
-import com.uc.training.smadmin.gds.vo.PageVO;
+import com.uc.training.common.vo.PageVO;
 import com.uc.training.smadmin.bd.service.MemberGradeService;
 import com.uc.training.smadmin.gds.dao.GoodsDao;
 import com.uc.training.smadmin.gds.model.Goods;
-import com.uc.training.smadmin.gds.re.*;
 import com.uc.training.smadmin.gds.model.HotTag;
+import com.uc.training.smadmin.gds.re.*;
 import com.uc.training.smadmin.gds.service.CategoryService;
 import com.uc.training.smadmin.gds.service.GoodsPicService;
 import com.uc.training.smadmin.gds.service.GoodsService;
@@ -20,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -47,11 +45,11 @@ public class GoodsServiceImpl implements GoodsService {
     /**
      * 锁标志
      */
-    private static Object lock;
+    private static Object lock = new Object();
 
     @Override
-    public List<GoodsRE> getHotRecommend(PageVO pageVO) {
-        return goodsDao.getHotRecommend(pageVO);
+    public List<GoodsRE> getHotRecommend() {
+        return goodsDao.getHotRecommend();
     }
 
     @Override
@@ -77,13 +75,13 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    public Long getGoodsListCount(GoodsListVO goodsListVO) {
+    public List<Long> getGoodsListCount(GoodsListVO goodsListVO) {
         return goodsDao.getGoodsListCount(goodsListVO);
     }
 
     @Override
-    public List<GoodsRE> getGoodsList(GoodsListVO goodsListVO) {
-        return goodsDao.getGoodsList(goodsListVO);
+    public List<GoodsRE> getGoodsList(List<Long> propertyIds) {
+        return goodsDao.getGoodsList(propertyIds);
     }
 
     @Override
@@ -111,8 +109,13 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    public List<GoodsRE> searchByGoodsName(String goodsName) {
-        List<Long> propertyIds = goodsDao.searchByGoodsName(goodsName);
+    public Integer searchCountByGoodsName(GoodsListVO goodsListVO) {
+        return goodsDao.searchCountByGoodsName(goodsListVO);
+    }
+
+    @Override
+    public List<GoodsRE> searchByGoodsName(GoodsListVO goodsListVO) {
+        List<Long> propertyIds = goodsDao.searchByGoodsName(goodsListVO);
         List<GoodsRE> list = new ArrayList<GoodsRE>();
         if(propertyIds.size()>0){
             list = goodsDao.searchByPropertyId(propertyIds);
@@ -130,7 +133,6 @@ public class GoodsServiceImpl implements GoodsService {
         return memberGradeService.getDiscountByUId(uid);
     }
 
-    private static int count=0;
     @Override
     public Integer updateAndDeductStoke(GoodsStokeVO goodsStokeVO) {
 
@@ -138,11 +140,11 @@ public class GoodsServiceImpl implements GoodsService {
             GoodsStokeRE goodsStokeRE=goodsDao.selectGoodsStatus(goodsStokeVO);
             if(goodsStokeRE == null){
                 return StokeStatusEnum.BLANK_STATUS.getStatus();
-            }else if(goodsStokeRE.getStatus()==1){
+            }else if(goodsStokeRE.getStatus()==0){
                 return StokeStatusEnum.SHELVED_STATUS.getStatus();
             }else if(goodsStokeRE.getIsDelete()==0){
                 return StokeStatusEnum.DELETE_STATUS.getStatus();
-            }else if(goodsStokeRE.getStoke()>=goodsStokeVO.getStoke()){
+            }else if(goodsStokeRE.getStoke()<goodsStokeVO.getStoke()){
                 return StokeStatusEnum.NOT_ENOUGH_STATUS.getStatus();
             }else{
                 goodsDao.updateAndDeductStoke(goodsStokeVO);
