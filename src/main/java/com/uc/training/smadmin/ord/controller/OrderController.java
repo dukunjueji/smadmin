@@ -117,7 +117,7 @@ public class OrderController extends BaseController {
     if(gdDTO == null){
       return Result.getBusinessException("获取异常",null);
     }
-    // 更改数据是判断库存如果库存不足更新为当前库存量并返回当前库存数据
+    // 更改数据判断库存如果库存不足更新为当前库存量并返回当前库存数据
     if(gdDTO.getStock() <= ordCartGoodsVo.getNum()){
       ordCartGoodsVo.setNum(gdDTO.getStock());
       orderService.updataCarGoodsNum(ordCartGoodsVo);
@@ -159,6 +159,9 @@ public class OrderController extends BaseController {
   @AccessLogin
   @RequestMapping("addCartgoods.do_")
   public Result addCartgds(HttpServletRequest request, OrdCartGoodsVo ordCartGoodsVo) {
+    if(ordCartGoodsVo == null){
+      return Result.getBusinessException("选择后再添加",null);
+    }
     List<CartGoods> list;
     list = orderService.getCarGoodsById(getUid());
     GoodsDetailRE gdDTO = goodsService.getGoodsDetailByPropertyId(ordCartGoodsVo.getPropertyId());
