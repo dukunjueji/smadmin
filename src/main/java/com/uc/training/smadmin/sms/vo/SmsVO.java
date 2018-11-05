@@ -32,6 +32,11 @@ public class SmsVO {
     private Integer status;
 
     /**
+     * 短信内容
+     */
+    private String content;
+
+    /**
      * 创建时间
      */
     private Date createTime;
@@ -39,6 +44,14 @@ public class SmsVO {
     private String typeDes;
 
     private String statusDes;
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 
     public Long getId() {
         return id;

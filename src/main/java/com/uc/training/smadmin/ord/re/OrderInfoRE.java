@@ -1,5 +1,7 @@
 package com.uc.training.smadmin.ord.re;
 
+import org.stringtemplate.v4.ST;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -29,6 +31,10 @@ public class OrderInfoRE implements Serializable {
     private Long status;
 
     /**
+     * 订单状态说明
+     */
+    private String statusDes;
+    /**
      * 订单金额
      */
 
@@ -40,11 +46,75 @@ public class OrderInfoRE implements Serializable {
 
     private Double payPrice;
 
+    /**
+     * 收货人姓名
+     */
+    private String receiptName;
+
+    /**
+     * 收货人电话
+     */
+    private String receiptTel;
+
+    /**
+     * 收货人地址
+     */
+    private String receiptAddress;
+
 
     /**
      * 订单商品信息列表
      */
     private List<OrderGoodsDetailRe> orderGoodsDetailRe;
+
+    public String getReceiptName() {
+        return receiptName;
+    }
+
+    public void setReceiptName(String receiptName) {
+        this.receiptName = receiptName;
+    }
+
+    public String getReceiptTel() {
+        return receiptTel;
+    }
+
+    public void setReceiptTel(String receiptTel) {
+        this.receiptTel = receiptTel;
+    }
+
+    public String getReceiptAddress() {
+        return receiptAddress;
+    }
+
+    public void setReceiptAddress(String receiptAddress) {
+        this.receiptAddress = receiptAddress;
+    }
+
+    /**
+     * 订单总数
+     *
+     * @return
+     */
+
+
+    private Long totalOrderNum;
+
+    public String getStatusDes() {
+        return statusDes;
+    }
+
+    public void setStatusDes(String statusDes) {
+        this.statusDes = statusDes;
+    }
+
+    public Long getTotalOrderNum() {
+        return totalOrderNum;
+    }
+
+    public void setTotalOrderNum(Long totalOrderNum) {
+        this.totalOrderNum = totalOrderNum;
+    }
 
     public Integer getOrderId() {
         return orderId;

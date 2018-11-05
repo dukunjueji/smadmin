@@ -1,6 +1,9 @@
 package com.uc.training.smadmin.bd.service.impl;
 
+import com.uc.training.common.enums.GrowthEnum;
+import com.uc.training.common.enums.IntegralEnum;
 import com.uc.training.common.enums.OrderEnum;
+import com.uc.training.common.enums.SmsTypeEnum;
 import com.uc.training.smadmin.bd.dao.MemberDao;
 import com.uc.training.smadmin.bd.model.LoginLog;
 import com.uc.training.smadmin.bd.model.Member;
@@ -15,11 +18,15 @@ import com.uc.training.smadmin.gds.vo.GoodsStokeVO;
 import com.uc.training.smadmin.ord.re.OrderConfirmRE;
 import com.uc.training.smadmin.ord.service.OrderService;
 import com.uc.training.smadmin.ord.vo.OrdOrderVo;
+import com.uc.training.smadmin.sms.service.SmsTemplateService;
+import com.uc.training.smadmin.sms.vo.GenerateSmsVO;
 import com.uc.training.smadmin.utils.EncryptUtil;
 import com.ycc.tools.middleware.metaq.MetaQUtils;
+import com.ycc.base.common.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,6 +52,9 @@ public class MemberServiceImpl implements MemberService {
 
     @Autowired
     private LoginLogService loginLogService;
+
+    @Autowired
+    private SmsTemplateService smsTemplateService;
 
     @Override
     public void insertMember(Member member) {
@@ -75,7 +85,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     /**
-     * 查询余额
+     * 查询余额/确认支付
      *
      * @param orderPayInfoNow
      */
@@ -102,15 +112,28 @@ public class MemberServiceImpl implements MemberService {
             memberBalanceVO.setTotalMoney(memberInfoVO.getTotalPrice());
             memberDao.updateBalance(memberBalanceVO);
             //加成长值，积分
-
+            MqVO mqVO1 = new MqVO();
+            mqVO1.setMemberId(memberInfoVO.getMemberId());
+            mqVO1.setGrowthType(GrowthEnum.PURCHASE.getGrowthType());
+            mqVO1.setIntegralType(IntegralEnum.PURCHASE.getIntegralType());
+            mqVO1.setPurchaseValue(BigDecimal.valueOf(memberInfoVO.getTotalPrice()));
+            MetaQUtils.sendMsgNoException(new MqProducer(mqVO1));
             //更新订单状态
             orderConfirmRE.setStatus(OrderEnum.WAITSHIP.getKey());
             OrdOrderVo ordOrderVo = new OrdOrderVo();
             ordOrderVo.setOrderNum(orderPayInfoNow.get(0).getOrderName());
             ordOrderVo.setStatus(OrderEnum.WAITSHIP.getKey().longValue());
             orderConfirmRE.setShowStatus("成功购买商品");
-            orderService.updateOrder(ordOrderVo);
-            list.add(orderConfirmRE);
+            if (orderService.updateOrder(ordOrderVo) < 0) {
+                list.add(orderConfirmRE);
+            }
+            //发送短信
+            GenerateSmsVO generateSmsVO = new GenerateSmsVO();
+            generateSmsVO.setTelephone("123");
+            generateSmsVO.setType(SmsTypeEnum.ORDER_INFO.getType());
+            generateSmsVO.setMessage(ordOrderVo.getOrderNum());
+            //生成短信模板，并发送
+            smsTemplateService.generateSms(generateSmsVO);
             return list;
         } else {
             orderConfirmRE.setShowStatus("余额不足，请充值或者返回购物车重新选取商品");
@@ -161,7 +184,7 @@ public class MemberServiceImpl implements MemberService {
         loginLogService.insertLog(loginLog);
         //判断是否第一次登陆
         Integer loginNum = loginLogService.queryLoginCount(loginLog);
-        if (loginNum == 1){
+        if (loginNum == 1) {
             MetaQUtils.sendMsgNoException(new MqProducer(mqVO));
         }
     }
@@ -173,8 +196,8 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void memberRecharge(Member member, MqVO mqVO) {
-          this.updateMemberBalance(member);
-          MetaQUtils.sendMsgNoException(new MqProducer(mqVO));
+        this.updateMemberBalance(member);
+        MetaQUtils.sendMsgNoException(new MqProducer(mqVO));
     }
 
 }
