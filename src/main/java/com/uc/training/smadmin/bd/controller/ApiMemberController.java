@@ -239,12 +239,6 @@ public class ApiMemberController extends BaseController {
 
             memberService.memberRecharge(member, mqVO);
 
-//            MqVO mqVO1 = new MqVO();
-//            mqVO1.setMemberId(getUid());
-//            mqVO1.setGrowthType(GrowthEnum.PURCHASE.getGrowthType());
-//            mqVO1.setIntegralType(IntegralEnum.PURCHASE.getIntegralType());
-//            mqVO1.setPurchaseValue(BigDecimal.valueOf(100));
-//            MetaQUtils.sendMsgNoException(new MqProducer(mqVO1));
             re = Result.getSuccessResult("成功");
         }
         return re;
