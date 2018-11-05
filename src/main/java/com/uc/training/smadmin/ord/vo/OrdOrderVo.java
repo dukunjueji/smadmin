@@ -38,7 +38,7 @@ public class OrdOrderVo extends BaseDomain implements Serializable {
     private String orderNum;
 
     /**
-     *删除的订单信息
+     * 删除的订单信息
      */
     private String orderListStr;
 
@@ -47,29 +47,45 @@ public class OrdOrderVo extends BaseDomain implements Serializable {
      */
     private Integer orderId;
 
-  public String getReceiptName() {
-    return receiptName;
-  }
+    /**
+     * 会员id
+     *
+     * @return
+     */
 
-  public void setReceiptName(String receiptName) {
-    this.receiptName = receiptName;
-  }
+    private Long memberId;
 
-  public String getReceiptTel() {
-    return receiptTel;
-  }
+    public Long getMemberId() {
+        return memberId;
+    }
 
-  public void setReceiptTel(String receiptTel) {
-    this.receiptTel = receiptTel;
-  }
+    public void setMemberId(Long memberId) {
+        this.memberId = memberId;
+    }
 
-  public String getReceiptAddress() {
-    return receiptAddress;
-  }
+    public String getReceiptName() {
+        return receiptName;
+    }
 
-  public void setReceiptAddress(String receiptAddress) {
-    this.receiptAddress = receiptAddress;
-  }
+    public void setReceiptName(String receiptName) {
+        this.receiptName = receiptName;
+    }
+
+    public String getReceiptTel() {
+        return receiptTel;
+    }
+
+    public void setReceiptTel(String receiptTel) {
+        this.receiptTel = receiptTel;
+    }
+
+    public String getReceiptAddress() {
+        return receiptAddress;
+    }
+
+    public void setReceiptAddress(String receiptAddress) {
+        this.receiptAddress = receiptAddress;
+    }
 
     public Long getStatus() {
         return status;
@@ -95,12 +111,12 @@ public class OrdOrderVo extends BaseDomain implements Serializable {
         this.orderListStr = orderListStr;
     }
 
-  public Integer getOrderId() {
-    return orderId;
-  }
+    public Integer getOrderId() {
+        return orderId;
+    }
 
-  public void setOrderId(Integer orderId) {
-    this.orderId = orderId;
-  }
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
+    }
 
 }

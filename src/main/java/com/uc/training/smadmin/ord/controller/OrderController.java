@@ -2,6 +2,8 @@ package com.uc.training.smadmin.ord.controller;
 
 import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
+import com.uc.training.common.enums.OrderEnum;
+import com.uc.training.common.enums.SmsTypeEnum;
 import com.uc.training.smadmin.bd.service.MemberService;
 import com.uc.training.smadmin.bd.vo.MemberInfoVO;
 import com.uc.training.smadmin.gds.re.GoodsDetailRE;
@@ -13,6 +15,7 @@ import com.uc.training.smadmin.ord.re.*;
 import com.uc.training.smadmin.ord.re.OrderGoodsDetailRe;
 import com.uc.training.smadmin.ord.re.OrderRe;
 import com.uc.training.smadmin.ord.vo.*;
+import com.uc.training.smadmin.sms.vo.GenerateSmsVO;
 import com.ycc.base.common.Result;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.smadmin.gds.service.GoodsService;
@@ -44,8 +47,8 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "/api/order/")
 public class OrderController extends BaseController {
-  @Autowired
-  OrderService orderService;
+    @Autowired
+    OrderService orderService;
 
     @Autowired
     GoodsService goodsService;
@@ -298,6 +301,25 @@ public class OrderController extends BaseController {
     public Result getOrderInfoList(OrdMemberVO ordMemberVO) {
         ordMemberVO.setMemberId(getUid());
         List<OrderInfoRE> orderInfoREList = orderService.getOrderInfoListByMemberId(ordMemberVO);
+        if (CollectionUtils.isEmpty(orderInfoREList)) {
+            return Result.getBusinessException("获取用户订单信息失败", null);
+        }
         return Result.getSuccessResult(orderInfoREList);
+    }
+
+    /**
+     * 取消订单
+     *
+     * @param ordOrderVo
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "cancelOrder.do_", method = RequestMethod.POST)
+    public Result cancelOrder(OrdOrderVo ordOrderVo) {
+        ordOrderVo.setStatus(OrderEnum.CANCEL.getKey().longValue());
+        if (orderService.updateOrder(ordOrderVo) > 0) {
+            return Result.getSuccessResult(null);
+        }
+        return Result.getBusinessException("取消失败", null);
     }
 }

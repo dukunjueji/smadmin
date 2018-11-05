@@ -17,7 +17,7 @@ public class OrderDaoImpl extends CarIsIbatisDaoImpl implements OrderDao {
 
 	 @Override
 	 public List<Order> getOrderById(OrdMemberVO ordMemberVO){
-		  return this.queryForList("com.uc.training.smadmin.ord.dao.OrderDao.getOrderById", ordMemberVO,ordMemberVO.getStartIndex(),ordMemberVO.getEndIndex());
+		  return this.queryForList("com.uc.training.smadmin.ord.dao.OrderDao.getOrderById", ordMemberVO);
 	 }
 
 	 @Override
