@@ -23,6 +23,7 @@ public interface BannerService {
 
     /**
      * 获取所有轮播图(后台)
+     * @param adminBannerListVO
      * @return
      */
     List<AdminBannerListRE> getAllBannerList(AdminBannerListVO adminBannerListVO);
@@ -51,6 +52,7 @@ public interface BannerService {
     /**
      * 增加点击量
      * @param id
+     * @return
      */
     Integer insertClick(Long id);
 }
