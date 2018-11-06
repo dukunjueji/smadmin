@@ -74,7 +74,7 @@ public class AdminBannerController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/deleteBannerById.do_", method = RequestMethod.POST)
-    public Result updateBanner(Long id) {
+    public Result deleteBannerById(Long id) {
         return Result.getSuccessResult(bannerService.deleteBannerById(id));
     }
 
