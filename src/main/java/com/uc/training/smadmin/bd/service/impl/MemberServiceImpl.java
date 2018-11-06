@@ -22,7 +22,6 @@ import com.uc.training.smadmin.sms.service.SmsTemplateService;
 import com.uc.training.smadmin.sms.vo.GenerateSmsVO;
 import com.uc.training.smadmin.utils.EncryptUtil;
 import com.ycc.tools.middleware.metaq.MetaQUtils;
-import com.ycc.base.common.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -196,6 +195,11 @@ public class MemberServiceImpl implements MemberService {
     public void memberRecharge(Member member, MqVO mqVO) {
         this.updateMemberBalance(member);
         MetaQUtils.sendMsgNoException(new MqProducer(mqVO));
+    }
+
+    @Override
+    public Member queryMemberByTel(String telephone) {
+        return this.memberDao.queryMemberByTel(telephone);
     }
 
 }

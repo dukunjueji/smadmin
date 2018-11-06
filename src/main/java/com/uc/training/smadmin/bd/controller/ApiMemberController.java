@@ -3,13 +3,11 @@ package com.uc.training.smadmin.bd.controller;
 import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.common.enums.GrowthEnum;
-import com.uc.training.common.enums.IntegralEnum;
 import com.uc.training.common.enums.SmsStatusEnum;
 import com.uc.training.common.enums.SmsTypeEnum;
 import com.uc.training.smadmin.bd.model.LoginLog;
 import com.uc.training.smadmin.bd.model.Member;
 import com.uc.training.smadmin.bd.model.Message;
-import com.uc.training.smadmin.bd.mq.MqProducer;
 import com.uc.training.smadmin.bd.re.*;
 import com.uc.training.smadmin.bd.service.MemberService;
 import com.uc.training.smadmin.bd.service.MessageService;
@@ -21,7 +19,6 @@ import com.uc.training.smadmin.sms.vo.GenerateSmsVO;
 import com.uc.training.smadmin.utils.EncryptUtil;
 import com.uc.training.smadmin.utils.TokenUtil;
 import com.ycc.base.common.Result;
-import com.ycc.tools.middleware.metaq.MetaQUtils;
 import com.ycc.tools.middleware.redis.RedisCacheUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -102,22 +99,25 @@ public class ApiMemberController extends BaseController {
     @ResponseBody
     @AccessLogin(required = false)
     public Result memberRegister(@Validated MemberRegisterVO memberRegisterVO){
-        Result re;
         Member member = new Member();
         member.setTelephone(memberRegisterVO.getTelephone());
         member.setPassword(memberRegisterVO.getPassword());
         Member mem = memberService.queryOneMember(member);
+        if(mem != null){
+            return Result.getBusinessException("手机号码已被注册",null);
+        }
         //redis
         RedisCacheUtils redis = RedisCacheUtils.getInstance(RedisConfigEnum.SYS_CODE);
-        if(mem != null){
-            re = Result.getBusinessException("手机号码已被注册",null);
-        } else if(memberRegisterVO.getTelCode().equals(redis.get(memberRegisterVO.getTelephone()))){
-            memberService.insertMember(member);
-            re = Result.getSuccessResult("成功");
-        }else {
-            re = Result.getBusinessException("验证码不正确", null);
+        String msg = redis.get(memberRegisterVO.getTelephone());
+        if (msg == null) {
+            return Result.getBusinessException("验证码已过期，请重新获取", null);
         }
-        return re;
+        if(memberRegisterVO.getTelCode().equals(msg)){
+            memberService.insertMember(member);
+            return Result.getSuccessResult("成功");
+        }else {
+            return Result.getBusinessException("验证码不正确", null);
+        }
     }
 
     /**
@@ -130,33 +130,32 @@ public class ApiMemberController extends BaseController {
     @AccessLogin(required = false)
     public Result<MemberLoginRE> memberLogin(@Validated MemberLoginVO memberLoginVO){
         Result<MemberLoginRE> result;
-        try {
-            memberLoginVO.setPassword(EncryptUtil.md5(memberLoginVO.getPassword()));
-            Member member = memberService.getMemberLogin(memberLoginVO);
-            if (member == null) {
-                result = Result.getBusinessException("手机号或密码错误", null);
-                return result;
-            }else {
-                String token = TokenUtil.sign(member.getId());
-                MemberLoginRE memberLoginRE = new MemberLoginRE();
-                memberLoginRE.setToken(token);
+        Member mem = memberService.queryMemberByTel(memberLoginVO.getTelephone());
+        if (mem == null) {
+            result = Result.getBusinessException("该账号不存在,请先注册", null);
+            return result;
+        }
+        memberLoginVO.setPassword(EncryptUtil.md5(memberLoginVO.getPassword()));
+        Member member = memberService.getMemberLogin(memberLoginVO);
+        if (member == null) {
+            result = Result.getBusinessException("您的密码错误", null);
+        }else {
+            String token = TokenUtil.sign(member.getId());
+            MemberLoginRE memberLoginRE = new MemberLoginRE();
+            memberLoginRE.setToken(token);
 
-                //生成登陆日志
-                LoginLog loginLog = new LoginLog();
-                loginLog.setMemberId(member.getId());
-                loginLog.setIp(getLocalhostIp());
+            //生成登陆日志
+            LoginLog loginLog = new LoginLog();
+            loginLog.setMemberId(member.getId());
+            loginLog.setIp(getLocalhostIp());
 
-                //生成消息体
-                MqVO mqVO = new MqVO();
-                mqVO.setMemberId(member.getId());
-                mqVO.setGrowthType(GrowthEnum.LOGININ.getGrowthType());
+            //生成消息体
+            MqVO mqVO = new MqVO();
+            mqVO.setMemberId(member.getId());
+            mqVO.setGrowthType(GrowthEnum.LOGININ.getGrowthType());
 
-                memberService.memberLogin(loginLog, mqVO);
-                result = Result.getSuccessResult(memberLoginRE);
-            }
-        } catch (Exception e) {
-            logger.error("登录失败！", e);
-            result = Result.getBusinessException("登录失败", null);
+            memberService.memberLogin(loginLog, mqVO);
+            result = Result.getSuccessResult(memberLoginRE);
         }
         return result;
     }
@@ -198,22 +197,25 @@ public class ApiMemberController extends BaseController {
     @ResponseBody
     @AccessLogin(required = false)
     public Result memberPassword(@Validated MemberRegisterVO memberRegisterVO){
-        Result re;
         Member mem = new Member();
         mem.setTelephone(memberRegisterVO.getTelephone());
         Member member = memberService.queryOneMember(mem);
+        if(member == null){
+            return Result.getBusinessException("手机号还没被注册", null);
+        }
         //redis
         RedisCacheUtils redis = RedisCacheUtils.getInstance(RedisConfigEnum.SYS_CODE);
-        if(member == null){
-            re = Result.getBusinessException("手机号还没被注册", null);
-        } else if(memberRegisterVO.getTelCode().equals(redis.get(memberRegisterVO.getTelephone()))){
+        String msg = redis.get(memberRegisterVO.getTelephone());
+        if (msg == null) {
+            return Result.getBusinessException("验证码已过期，请重新获取", null);
+        }
+        if(memberRegisterVO.getTelCode().equals(msg)){
             mem.setPassword(memberRegisterVO.getPassword());
             memberService.updateMember(mem);
-            re = Result.getSuccessResult("成功");
+            return Result.getSuccessResult("成功");
         }else {
-            re = Result.getBusinessException("验证码不正确", null);
+            return Result.getBusinessException("验证码不正确", null);
         }
-        return re;
     }
 
     /**
@@ -241,7 +243,18 @@ public class ApiMemberController extends BaseController {
 
             memberService.memberRecharge(member, mqVO);
 
-            re = Result.getSuccessResult("成功");
+            Member mem = memberService.queryMemberTel(getUid());
+            GenerateSmsVO generateSmsVO = new GenerateSmsVO();
+            generateSmsVO.setTelephone(mem.getTelephone());
+            generateSmsVO.setMessage(chargeBalanceVO.getBalance().toString());
+            generateSmsVO.setCode(SmsTypeEnum.RECHARGE.getCode());
+            generateSmsVO.setType(SmsTypeEnum.RECHARGE.getType());
+
+            if (SmsStatusEnum.SUCCESS.getKey() == smsTemplateService.generateSms(generateSmsVO)) {
+                return Result.getSuccessResult(SmsStatusEnum.SUCCESS.getValue());
+            } else {
+                return Result.getBusinessException(SmsStatusEnum.FAIL.getValue(), null);
+            }
         }
         return re;
     }
@@ -338,26 +351,29 @@ public class ApiMemberController extends BaseController {
     @RequestMapping(value = "/editMemberPassword.do_", method = RequestMethod.POST)
     @AccessLogin
     public Result editMemberPassword(@Validated PasswordEditVO passwordEditVO){
-        Result re;
         Member member = new Member();
         member.setId(getUid());
         Member mem = memberService.queryMemberTel(getUid());
         // 判断旧密码是否和库里的一致
         String oldpassword = EncryptUtil.md5(passwordEditVO.getOldpassword());
+        if(!((mem.getPassword()).equals(oldpassword))){
+            return Result.getBusinessException("原来的密码输入有误", null);
+        }else if(!((passwordEditVO.getNewpassword()).equals(passwordEditVO.getConfirmpassword()))){
+            return Result.getBusinessException("新的密码和确认密码不一致", null);
+        }
         //redis
         RedisCacheUtils redis = RedisCacheUtils.getInstance(RedisConfigEnum.SYS_CODE);
-        if(!((mem.getPassword()).equals(oldpassword))){
-            re = Result.getBusinessException("原来的密码输入有误", null);
-        }else if(!((passwordEditVO.getNewpassword()).equals(passwordEditVO.getConfirmpassword()))){
-            re = Result.getBusinessException("新的密码和确认密码不一致", null);
-        }else if((passwordEditVO.getCode()).equals(redis.get(mem.getTelephone()))){
+        String msg = redis.get(mem.getTelephone());
+        if (msg == null) {
+            return Result.getBusinessException("验证码已过期，请重新获取", null);
+        }
+        if((passwordEditVO.getCode()).equals(msg)){
             member.setPassword(passwordEditVO.getNewpassword());
             memberService.updateMember(member);
-            re = Result.getSuccessResult("成功");
+            return Result.getSuccessResult("成功");
         }else {
-            re = Result.getBusinessException("输入的验证码有误", null);
+            return Result.getBusinessException("输入的验证码有误", null);
         }
-        return re;
     }
 
     /**

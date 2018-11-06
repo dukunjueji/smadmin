@@ -136,4 +136,12 @@ public interface MemberDao {
     *@throws：
     */
     Member queryMemberTel(Long memberId);
+
+    /**
+    *说明：通过手机号查询会员信息
+    *@param telephone
+    *@return：com.uc.training.smadmin.bd.model.Member
+    *@throws：
+    */
+    Member queryMemberByTel(String telephone);
 }

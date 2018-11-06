@@ -1,8 +1,8 @@
 package com.uc.training.smadmin.bd.vo;
 
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -20,24 +20,28 @@ public class PasswordEditVO implements Serializable {
      * 旧密码
      */
     @NotBlank(message = "原来的密码不能为空")
+    @Length(min = 6, max = 10, message = "密码长度须在6-10位之间")
     private String oldpassword;
 
     /**
      * 新密码
      */
     @NotBlank(message = "新密码不能为空")
+    @Length(min = 6, max = 10, message = "密码长度须在6-10位之间")
     private String newpassword;
 
     /**
      *确认密码
      */
     @NotBlank(message = "确认密码不能为空")
+    @Length(min = 6, max = 10, message = "密码长度须在6-10位之间")
     private String confirmpassword;
 
     /**
      * 验证码
      */
     @NotBlank(message = "验证码不能为空")
+    @Length(min = 6, max = 10, message = "密码长度须在6-10位之间")
     private String code;
 
     public String getOldpassword() {
