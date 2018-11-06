@@ -164,15 +164,13 @@
 			s.create_time AS createTime
 		FROM  t_ord_order s
 		WHERE
-		1 = 1
+		s.is_delete = 0
 		<isNotEmpty property="orderNum" prepend="and">
 			s.order_num = #orderNum#
 		</isNotEmpty>
 		<isNotEmpty property="status" prepend="and">
 			s.status = #status#
 		</isNotEmpty>
-		AND
-		s.is_delete = 0
 	</select>
 
 	<update id="logicDelOrder" parameterClass="list">

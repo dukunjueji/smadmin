@@ -56,11 +56,8 @@ public class AdminOrderController extends BaseController {
     List<OrderRe> list;
     Map<String , Object> map = new HashMap<String , Object>(5);
     list = orderService.getOrderPage(orderVo);
-    if(CollectionUtils.isEmpty(list)){
-      return Result.getBusinessException("获取订单列表失败",null);
-    }
-    map.put("orderList", list);
     Integer totalSize = orderService.getOrderTotal(orderVo);
+    map.put("orderList", list);
     map.put("totalSize", totalSize);
     return Result.getSuccessResult(map);
   }

@@ -216,9 +216,6 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderRe> getOrderPage(OrdOrderVo orderVo) {
         List<OrderRe> list = orderDao.getOrderPage(orderVo);
-        if (list.size() <= 0) {
-            return null;
-        }
         return list;
     }
 
