@@ -193,6 +193,10 @@ public class UserController extends BaseController {
             return Result.getBusinessException("用户名长度不能超过32位", null);
         }
         String pwd = EncryptUtil.md5(Constant.DEFAULT_PASSWORD);
+        Integer count = userService.queryCountByName(user.getUserName());
+        if (count > 0) {
+            return Result.getBusinessException("该用户已存在", null);
+        }
         user.setCreateEmp(getUid());
         user.setPassword(pwd);
         Long id = userService.addUser(user);
@@ -226,6 +230,10 @@ public class UserController extends BaseController {
         }
         if (user.getUserName().length() > Constant.LONGEST_USER_NAME) {
             return Result.getBusinessException("用户名长度不能超过32位", null);
+        }
+        String oldName = userService.getById(user.getId()).getUserName();
+        if (userService.queryCountByName(user.getUserName()) >0 && !user.getUserName().equals(oldName)){
+            return Result.getBusinessException("该用户已存在", null);
         }
         user.setModifyEmp(getUid());
         return Result.getSuccessResult(userService.updateUser(user));

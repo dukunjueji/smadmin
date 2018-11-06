@@ -86,4 +86,14 @@ public class SysRoleServiceImpl implements SysRoleService {
         }
         return roleDao.batchInsertRole(uid, rid, createEmp);
     }
+
+    @Override
+    public Integer queryCountByName(String name) {
+        return roleDao.queryCountByName(name);
+    }
+
+    @Override
+    public SysRole getById(Long id) {
+        return roleDao.getById(id);
+    }
 }

@@ -66,6 +66,9 @@ public class MenuController extends BaseController {
         if (menu.getType() != MenuEnum.CATALOG.getNumber() && menu.getType() != MenuEnum.BUTTON.getNumber()){
             return Result.getBusinessException("菜单类型不合法", null);
         }
+        if (sysMenuService.queryCountByName(menu.getName()) > 0) {
+            return Result.getBusinessException("该菜单名已存在", null);
+        }
         return Result.getSuccessResult(sysMenuService.addMenu(menu));
     }
 
@@ -85,6 +88,10 @@ public class MenuController extends BaseController {
         }
         if (menu.getUrl().length() > MenuConstant.LONGEST_URL_LENGTH) {
             return Result.getBusinessException("菜单长度不能超过32位", null);
+        }
+        String oldName = sysMenuService.getById(menu.getId()).getName();
+        if (sysMenuService.queryCountByName(menu.getName()) >0 && !menu.getName().equals(oldName)){
+            return Result.getBusinessException("该菜单名已存在", null);
         }
         return Result.getSuccessResult(sysMenuService.updateMenu(menu));
     }

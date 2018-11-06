@@ -68,4 +68,9 @@ public class SysUserServiceImpl implements SysUserService {
     public List<SysMenu> getMenuListByUserId(Long uid) {
         return userDao.getMenuListByUserId(uid);
     }
+
+    @Override
+    public Integer queryCountByName(String username) {
+        return userDao.queryCountByName(username);
+    }
 }

@@ -128,4 +128,11 @@
       rm.menu_id = m.id AND
       m.type = 1
   </select>
+
+  <!-- 通过用户名查找用户数量 -->
+  <select id="queryCountByName" resultClass="java.lang.Integer" parameterClass="String">
+    SELECT count(1)
+    FROM t_sys_user s
+    WHERE s.username = #username#
+  </select>
 </sqlMap>

@@ -59,4 +59,9 @@ public class SysMenuDaoImpl extends CarIsIbatisDaoImpl implements SysMenuDao {
     public Integer deleteRoleMenuByMenuList(List<Long> mid) {
         return this.deleteObject(NAMESPACE + "deleteRoleMenuByMenuList", mid);
     }
+
+    @Override
+    public Integer queryCountByName(String name) {
+        return (Integer) this.queryForObject(NAMESPACE + "queryCountByName", name);
+    }
 }

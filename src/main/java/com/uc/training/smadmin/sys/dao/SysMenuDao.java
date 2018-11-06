@@ -69,4 +69,11 @@ public interface SysMenuDao {
      * @return
      */
     Integer deleteRoleMenuByMenuList(List<Long> mid);
+
+    /**
+     * 通过菜单名查找用户数量
+     * @param name
+     * @return
+     */
+    Integer queryCountByName(String name);
 }

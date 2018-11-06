@@ -101,4 +101,14 @@ public class SysRoleDaoImpl extends CarIsIbatisDaoImpl implements SysRoleDao {
         return this.deleteObject(NAMESPACE + "deleteUserRoleByRid", rid);
     }
 
+    @Override
+    public Integer queryCountByName(String name) {
+        return (Integer) this.queryForObject(NAMESPACE + "queryCountByName", name);
+    }
+
+    @Override
+    public SysRole getById(Long id) {
+        return (SysRole) this.queryForObject(NAMESPACE + "getById", id);
+    }
+
 }

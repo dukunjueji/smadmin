@@ -129,4 +129,21 @@
 		DELETE FROM t_sys_user_role
 		WHERE role_id = #rid#
 	</delete>
+
+	<!-- 通过角色名查找用户数量 -->
+	<select id="queryCountByName" resultClass="java.lang.Integer" parameterClass="String">
+    SELECT count(1)
+    FROM t_sys_role s
+    WHERE s.name = #name#
+  </select>
+
+	<select id="getById" parameterClass="java.lang.Long" resultClass="com.uc.training.smadmin.sys.model.SysRole">
+        SELECT
+        	s.name AS name,
+        	s.id AS id
+        FROM
+          t_sys_role s
+        WHERE
+          id = #id#
+    </select>
 </sqlMap>

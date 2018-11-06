@@ -62,4 +62,11 @@ public interface SysMenuService {
      * @return
      */
     Integer batchDelete(List<Long> ids);
+
+    /**
+     * 通过菜单名查找用户数量
+     * @param name
+     * @return
+     */
+    Integer queryCountByName(String name);
 }

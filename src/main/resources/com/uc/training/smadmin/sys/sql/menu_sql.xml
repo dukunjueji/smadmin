@@ -91,4 +91,11 @@
 		#mid[]#
 	  </iterate>
   </delete>
+
+	<!-- 通过角色名查找用户数量 -->
+	<select id="queryCountByName" resultClass="java.lang.Integer" parameterClass="String">
+    SELECT count(1)
+    FROM t_sys_menu s
+    WHERE s.name = #name#
+  </select>
 </sqlMap>
