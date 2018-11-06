@@ -74,7 +74,7 @@ public class AdminBannerController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/deleteBannerById.do_", method = RequestMethod.POST)
-    public Result updateBanner(Long id) {
+    public Result deleteBannerById(Long id) {
         return Result.getSuccessResult(bannerService.deleteBannerById(id));
     }
 
@@ -85,7 +85,7 @@ public class AdminBannerController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/insertBanner.do_", method = RequestMethod.POST)
-    public Result insertBannerById(@Validated AdminInsertBannerVO adminInsertBannerVO) {
+    public Result insertBanner(@Validated AdminInsertBannerVO adminInsertBannerVO) {
 
         Banner banner = new Banner();
         BeanUtils.copyProperties(adminInsertBannerVO, banner);

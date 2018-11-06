@@ -43,43 +43,33 @@ public class SmsListVO extends PageQuery {
      */
     private Date endDate;
 
-    private String startTime;
+    private String time;
 
-    private String endTime;
-
-    public String getStartTime() {
-        return startTime;
+    public String getTime() {
+        return time;
     }
 
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
-        if (!StringUtils.isEmpty(startTime)) {
+    public void setTime(String time) {
+        this.time = time;
+        int minLength = 2;
+        time = time.replace("\"", "");
+        time = time.replace("[", "");
+        time = time.replace("]", "");
+        if (!StringUtils.isEmpty(time)){
+            String[] times = StringUtils.split(time, ',');
+            times[1] = times[1].replace("00:00:00", "23:59:59");
             DateFormat ds = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            try {
-                this.startDate = ds.parse(startTime);
-            } catch (ParseException e) {
-                e.printStackTrace();
+            if (times.length == minLength) {
+                try {
+                    this.startDate = ds.parse(times[0]);
+                    this.endDate = ds.parse(times[1]);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
         }
+
     }
-
-    public String getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
-        if (!StringUtils.isEmpty(endTime)) {
-            DateFormat ds = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            try {
-                this.endDate = ds.parse(endTime);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-
     public String getTelephone() {
         return telephone;
     }
@@ -129,8 +119,6 @@ public class SmsListVO extends PageQuery {
                 ", status=" + status +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
-                ", startTime='" + startTime + '\'' +
-                ", endTime='" + endTime + '\'' +
                 '}';
     }
 }
