@@ -111,7 +111,7 @@
 
 	<sql id="where_query">
 		 <isNotEmpty property="memberName" prepend="and">
-			 s.membername LIKE '%$memberName$%'
+			 s.membername = #memberName#
 		 </isNotEmpty>
 		 <isNotEmpty property="telephone" prepend="and">
 			 s.telephone = #telephone#
@@ -238,6 +238,25 @@
 				s.telephone = #telephone#
 			</isNotEmpty>
 		</dynamic>
+	</select>
+	<!-- 会员登录-根据对象的手机号或密码作为条件进行查找 -->
+	<select id="queryMemberByTel" resultClass="com.uc.training.smadmin.bd.model.Member" parameterClass="java.lang.String">
+		SELECT
+		s.id AS id,
+		s.membername AS memberName,
+		CONCAT(LEFT(s.telephone,3), '****' ,RIGHT(s.telephone,4)) AS telephone,
+		s.sex AS sex,
+		s.growth AS growth,
+		s.integral AS integral,
+		s.nickname AS nickname,
+		s.balance AS balance,
+		s.image_url AS imageUrl,
+		s.create_time AS createTime,
+		s.modify_time AS modifyTime,
+		s.create_emp AS createEmp,
+		s.modify_emp AS modifyEmp
+		FROM t_bd_member s
+		WHERE s.telephone = #telephone#
 	</select>
 	<!-- 更新会员积分 -->
 	<update id="updateIntegralById" parameterClass="com.uc.training.smadmin.bd.vo.MemberIntegralVO">
