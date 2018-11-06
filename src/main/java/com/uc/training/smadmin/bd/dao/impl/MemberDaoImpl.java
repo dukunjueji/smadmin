@@ -99,4 +99,9 @@ public class MemberDaoImpl extends CarIsIbatisDaoImpl implements MemberDao {
         return (Member) this.queryForObject("com.uc.training.smadmin.bd.dao.MemberDao.queryMemberTel", memberId);
     }
 
+    @Override
+    public Member queryMemberByTel(String telephone) {
+        return (Member) this.queryForObject("com.uc.training.smadmin.bd.dao.MemberDao.queryMemberByTel", telephone);
+    }
+
 }

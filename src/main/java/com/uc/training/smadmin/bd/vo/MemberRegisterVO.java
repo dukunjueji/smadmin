@@ -1,6 +1,6 @@
 package com.uc.training.smadmin.bd.vo;
 
-import com.kenai.jaffl.annotations.SaveError;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.Pattern;
@@ -21,12 +21,14 @@ public class MemberRegisterVO implements Serializable {
      * 手机号
      */
     @NotBlank(message = "手机号不能为空")
+    @Pattern(regexp = "^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])[0-9]{8}$", message = "手机号格式不正确")
     private String telephone;
 
     /**
      * 密码
      */
     @NotBlank(message = "密码不能为空")
+    @Length(min = 6, max = 10, message = "密码长度须在6-10位之间")
     private String password;
 
     /**

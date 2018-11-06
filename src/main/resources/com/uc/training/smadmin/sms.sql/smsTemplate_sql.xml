@@ -23,7 +23,7 @@
 			 s.type = #type#
 		 </isNotEmpty>
 		 <isNotEmpty property="code" prepend="and">
-			 s.code = #code#
+			 s.code LIKE '%$code$%'
 		 </isNotEmpty>
 	</sql>
 

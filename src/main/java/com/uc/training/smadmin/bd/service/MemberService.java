@@ -6,9 +6,7 @@ import com.uc.training.smadmin.bd.re.MemberDetailRE;
 import com.uc.training.smadmin.bd.re.MemberInfoRE;
 import com.uc.training.smadmin.bd.vo.*;
 import com.uc.training.smadmin.ord.re.OrderConfirmRE;
-import com.uc.training.smadmin.ord.re.OrderRe;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -141,4 +139,12 @@ public interface MemberService {
     *@throws：
     */
     void memberRecharge(Member member, MqVO mqVO);
+
+    /**
+     *说明：通过手机号查询会员信息
+     *@param telephone
+     *@return：com.uc.training.smadmin.bd.model.Member
+     *@throws：
+     */
+    Member queryMemberByTel(String telephone);
 }
