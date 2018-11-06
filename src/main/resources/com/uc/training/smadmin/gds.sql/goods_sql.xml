@@ -187,9 +187,29 @@
         limit 0, 10
     </select>
 
-    <!-- 后台查询所有商品信息 -->
-    <select id="getAdminGoodsList" parameterClass="com.uc.training.smadmin.gds.vo.GoodsListVO"
-            resultClass="com.uc.training.smadmin.gds.re.AdminGoodsRE">
+    <!-- 获取商品数量 -->
+    <select id="getAdminGoodsListCount" resultClass="java.lang.Long" parameterClass="com.uc.training.smadmin.gds.vo.GoodsListVO">
+        SELECT
+        count(1)
+        FROM t_gds_goods gg
+        <dynamic prepend="where">
+            <isNotEmpty prepend="and">
+                gg.is_delete = 0
+            </isNotEmpty>
+            <isNotEmpty property="code" prepend="and">
+                gg.code LIKE concat("%",#code#,"%")
+            </isNotEmpty>
+            <isNotEmpty property="name" prepend="and">
+                gg.name LIKE concat("%",#name#,"%")
+            </isNotEmpty>
+            <isNotEmpty property="categoryId" prepend="and">
+                gg.category_id = #categoryId#
+            </isNotEmpty>
+        </dynamic>
+    </select>
+
+    <!-- 后台分页查询商品信息 -->
+    <select id="getAdminGoodsList" parameterClass="com.uc.training.smadmin.gds.vo.GoodsListVO" resultClass="com.uc.training.smadmin.gds.re.AdminGoodsRE">
         SELECT
         gg.id AS id,
         gg.code AS code,
