@@ -111,7 +111,7 @@
 
 	<sql id="where_query">
 		 <isNotEmpty property="memberName" prepend="and">
-			 s.membername = #memberName#
+			 s.membername LIKE '%$memberName$%'
 		 </isNotEmpty>
 		 <isNotEmpty property="telephone" prepend="and">
 			 s.telephone = #telephone#

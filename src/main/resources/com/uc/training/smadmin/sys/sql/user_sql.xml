@@ -52,7 +52,7 @@
       s.id = #id#
     </isNotEmpty>
     <isNotEmpty property="name" prepend="and">
-      s.username = #name#
+      s.username LIKE '%$name$%'
     </isNotEmpty>
     <isNotEmpty property="startDate" prepend="and">
       unix_timestamp(s.create_time) &gt;= unix_timestamp(#startDate#)
