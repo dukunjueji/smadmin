@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @Author: 余旭东
@@ -40,6 +42,14 @@ public class SmsController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "getSmsPage.do_", method = RequestMethod.POST)
     public Result<PageVO<SmsVO>> getDemoPage(@Validated SmsListVO smsListVO) {
+        if (!StringUtils.isEmpty(smsListVO.getTelephone())) {
+            String regex = "^1[3456789]\\d{9}$";
+            Pattern pattern = Pattern.compile(regex);
+            Matcher m = pattern.matcher(smsListVO.getTelephone());
+            if (!m.matches()) {
+                return Result.getBusinessException("请输入正确的手机号", null);
+            }
+        }
         Result<PageVO<SmsVO>> res;
         try {
             PageVO<SmsVO> pageVO = new PageVO<>();

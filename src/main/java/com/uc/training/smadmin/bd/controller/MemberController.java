@@ -1,10 +1,12 @@
 package com.uc.training.smadmin.bd.controller;
 
 import com.uc.training.common.base.controller.BaseController;
+import com.uc.training.common.constant.Constant;
 import com.uc.training.common.vo.PageVO;
 import com.uc.training.smadmin.bd.model.Member;
 import com.uc.training.smadmin.bd.service.MemberService;
 import com.uc.training.smadmin.bd.vo.MemberListVO;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @Author: 余旭东
@@ -28,6 +32,18 @@ public class MemberController extends BaseController {
     @RequestMapping(value = "/getMemberList.do_", method = RequestMethod.POST)
     @ResponseBody
     public Result<PageVO<Member>> getMemberList(MemberListVO memberListVO){
+        if (!StringUtils.isEmpty(memberListVO.getTelephone())) {
+            String regex = "^1[3456789]\\d{9}$";
+            Pattern pattern = Pattern.compile(regex);
+            Matcher m = pattern.matcher(memberListVO.getTelephone());
+            if (!m.matches()) {
+                return Result.getBusinessException("手机号格式不正确", null);
+            }
+        }
+        if (!StringUtils.isEmpty(memberListVO.getMemberName())
+                && memberListVO.getMemberName().length() > Constant.LONGEST_USER_NAME) {
+            return Result.getBusinessException("用户名长度不能超过32位", null);
+        }
         Result<PageVO<Member>> res;
         try {
             PageVO<Member> pageVO = new PageVO<Member>();

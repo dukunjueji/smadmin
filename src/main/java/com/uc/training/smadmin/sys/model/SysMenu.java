@@ -3,6 +3,8 @@ package com.uc.training.smadmin.sys.model;
 import com.uc.training.common.base.model.BaseModel;
 import org.hibernate.validator.constraints.NotBlank;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
@@ -44,6 +46,8 @@ public class SysMenu extends BaseModel implements Serializable {
      * 排序
      */
     @NotNull
+    @Max(1000)
+    @Min(0)
     private Long sortNum;
 
     /**

@@ -1,6 +1,7 @@
 package com.uc.training.smadmin.sys.controller;
 
 import com.uc.training.common.base.controller.BaseController;
+import com.uc.training.common.constant.Constant;
 import com.uc.training.common.vo.PageVO;
 import com.uc.training.smadmin.sys.model.SysRole;
 import com.uc.training.smadmin.sys.service.SysRoleService;
@@ -32,6 +33,9 @@ public class RoleController extends BaseController {
     @RequestMapping(value = "getRolePage.do_", method = RequestMethod.POST)
     @ResponseBody
     public Result<PageVO<SysRole>> getRolePage(RoleListVO roleListVO) {
+        if (roleListVO.getName().length() > Constant.LONGEST_ROLE_NAME) {
+            return Result.getBusinessException("角色名长度不能超过32位", null);
+        }
         Result<PageVO<SysRole>> res;
         try {
             PageVO<SysRole> pageVO = new PageVO<SysRole>();
@@ -82,6 +86,9 @@ public class RoleController extends BaseController {
         if (sysRole == null || StringUtils.isEmpty(sysRole.getName())){
             return Result.getBusinessException("角色名为空", null);
         }
+        if (sysRole.getName().length() > Constant.LONGEST_ROLE_NAME) {
+            return Result.getBusinessException("角色名长度不能超过32位", null);
+        }
         sysRole.setCreateEmp(getUid());
         return Result.getSuccessResult(sysRoleService.addRole(sysRole));
     }
@@ -96,6 +103,9 @@ public class RoleController extends BaseController {
     public Result<Integer> updateRole(SysRole sysRole){
         if (sysRole == null || StringUtils.isEmpty(sysRole.getName())){
             return Result.getBusinessException("角色名为空", null);
+        }
+        if (sysRole.getName().length() > Constant.LONGEST_ROLE_NAME) {
+            return Result.getBusinessException("角色名长度不能超过32位", null);
         }
         return Result.getSuccessResult(sysRoleService.updateRole(sysRole));
     }
