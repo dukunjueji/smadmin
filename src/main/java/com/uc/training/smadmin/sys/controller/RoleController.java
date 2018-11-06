@@ -89,6 +89,9 @@ public class RoleController extends BaseController {
         if (sysRole.getName().length() > Constant.LONGEST_ROLE_NAME) {
             return Result.getBusinessException("角色名长度不能超过32位", null);
         }
+        if (sysRoleService.queryCountByName(sysRole.getName()) > 0) {
+            return Result.getBusinessException("该角色已存在", null);
+        }
         sysRole.setCreateEmp(getUid());
         return Result.getSuccessResult(sysRoleService.addRole(sysRole));
     }
@@ -106,6 +109,10 @@ public class RoleController extends BaseController {
         }
         if (sysRole.getName().length() > Constant.LONGEST_ROLE_NAME) {
             return Result.getBusinessException("角色名长度不能超过32位", null);
+        }
+        String oldName = sysRoleService.getById(sysRole.getId()).getName();
+        if (sysRoleService.queryCountByName(sysRole.getName()) >0 && !sysRole.getName().equals(oldName)){
+            return Result.getBusinessException("该角色已存在", null);
         }
         return Result.getSuccessResult(sysRoleService.updateRole(sysRole));
     }

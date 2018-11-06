@@ -84,4 +84,11 @@ public interface SysUserService {
      * @return
      */
     List<SysMenu> getMenuListByUserId(Long uid);
+
+    /**
+     * 通过用户名查找用户数量
+     * @param username
+     * @return
+     */
+    Integer queryCountByName(String username);
 }

@@ -68,4 +68,9 @@ public class SysUserDaoImpl extends CarIsIbatisDaoImpl implements SysUserDao {
     public List<SysMenu> getMenuListByUserId(Long uid) {
         return this.queryForList(NAMESPACE + "getMenuByUserId", uid);
     }
+
+    @Override
+    public Integer queryCountByName(String username) {
+        return (Integer) this.queryForObject(NAMESPACE + "queryCountByName", username);
+    }
 }

@@ -95,4 +95,18 @@ public interface SysRoleService {
      * @return
      */
     Long addUserRole(Long uid, List<Long> rid, Long createEmp);
+
+    /**
+     * 通过角色名查找用户数量
+     * @param name
+     * @return
+     */
+    Integer queryCountByName(String name);
+
+    /**
+     * 通过id查找
+     * @param id
+     * @return
+     */
+    SysRole getById(Long id);
 }

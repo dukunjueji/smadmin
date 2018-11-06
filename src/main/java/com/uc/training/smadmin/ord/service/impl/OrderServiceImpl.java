@@ -215,8 +215,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderRe> getOrderPage(OrdOrderVo orderVo) {
-        List<OrderRe> list = orderDao.getOrderPage(orderVo);
-        return list;
+        return orderDao.getOrderPage(orderVo);
     }
 
     @Override
