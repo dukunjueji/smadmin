@@ -15,7 +15,7 @@
     <select id="getAdminHotTagCount" resultClass="java.lang.Long" parameterClass="com.uc.training.smadmin.gds.vo.AdminHotTagListVO">
         SELECT
         count(1)
-        FROM t_gds_hot_tag
+        FROM t_gds_hot_tag s
         <dynamic prepend="where">
             <isNotEmpty property="tag" prepend="and">
                 s.tag LIKE concat("%",#tag#,"%")
