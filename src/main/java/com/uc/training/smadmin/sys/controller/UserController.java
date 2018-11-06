@@ -158,6 +158,9 @@ public class UserController extends BaseController {
     @RequestMapping(value = "/getUserPage.do_", method = RequestMethod.POST)
     @ResponseBody
     public Result<PageVO<SysUser>> getUserList(UserListVO userListVO){
+        if (userListVO.getName().length() > Constant.LONGEST_USER_NAME) {
+            return Result.getBusinessException("用户名长度不能超过32位", null);
+        }
         Result<PageVO<SysUser>> res;
         try {
             PageVO<SysUser> pageVO = new PageVO<SysUser>();
@@ -184,7 +187,10 @@ public class UserController extends BaseController {
     public Result<Long> addUser(SysUser user){
         // 判空
         if (user == null || StringUtils.isEmpty(user.getUserName())){
-            return Result.getBusinessException("用户添加失败", null);
+            return Result.getBusinessException("输入用户不能为空", null);
+        }
+        if (user.getUserName().length() > Constant.LONGEST_USER_NAME) {
+            return Result.getBusinessException("用户名长度不能超过32位", null);
         }
         String pwd = EncryptUtil.md5(Constant.DEFAULT_PASSWORD);
         user.setCreateEmp(getUid());
@@ -217,6 +223,9 @@ public class UserController extends BaseController {
         // 判空
         if (user == null || StringUtils.isEmpty(user.getUserName())|| user.getId() == null){
             return Result.getBusinessException("用户更新失败", null);
+        }
+        if (user.getUserName().length() > Constant.LONGEST_USER_NAME) {
+            return Result.getBusinessException("用户名长度不能超过32位", null);
         }
         user.setModifyEmp(getUid());
         return Result.getSuccessResult(userService.updateUser(user));

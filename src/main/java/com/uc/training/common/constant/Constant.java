@@ -56,4 +56,19 @@ public class Constant {
      * 手机验证码
      */
     public static String CODE = "telCode";
+
+    /**
+     * 最长用户名长度
+     */
+    public static int LONGEST_USER_NAME = 32;
+
+    /**
+     * 最长用户名长度
+     */
+    public static int LONGEST_ROLE_NAME = 32;
+
+    /**
+     * 最长菜单名长度
+     */
+    public static int LONGEST_MENU_NAME = 32;
 }

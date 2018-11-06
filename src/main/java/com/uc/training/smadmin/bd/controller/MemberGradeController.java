@@ -49,6 +49,10 @@ public class MemberGradeController extends BaseController {
         if (grade.getId() == null) {
             return Result.getBusinessException("会员ID不能为空", null);
         }
+        int max = 1, min = 0;
+        if (grade.getDiscount() > max || grade.getDiscount() < min) {
+            return Result.getBusinessException("折扣输入错误", null);
+        }
         grade.setModifyEmp(getUid());
         return Result.getSuccessResult(memberGradeService.modifyMemberGrade(grade));
     }
