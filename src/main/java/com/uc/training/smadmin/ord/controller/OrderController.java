@@ -165,7 +165,7 @@ public class OrderController extends BaseController {
     List<CartGoods> list;
     list = orderService.getCarGoodsById(getUid());
     GoodsDetailRE gdDTO = goodsService.getGoodsDetailByPropertyId(ordCartGoodsVo.getPropertyId());
-    if(gdDTO.getStatus() == 0) {
+    if( gdDTO.getStatus() == 0) {
       return Result.getBusinessException("商品已经下架不可加入！！",null);
     }
     if(gdDTO.getStock() < ordCartGoodsVo.getNum()){
@@ -305,15 +305,15 @@ public class OrderController extends BaseController {
       List<CartGoods> cartList = orderService.getCarGoodsByIds(ordGoodsVO);
       GoodsDetailRE gdDTO;
       if (CollectionUtils.isEmpty(cartList)) {
-        return Result.getBusinessException("请选择商品再提交2",null);
+        return Result.getBusinessException("您选择的商品已丢失，请重新到商品页面添加！！",null);
       } else {
         for (CartGoods cargd:cartList ) {
           gdDTO = goodsService.getGoodsDetailByPropertyId(cargd.getGoodsPropertyId());
           if(gdDTO == null){
-            return Result.getBusinessException("选择的商品中出现不存在请刷新3",null);
+            return Result.getBusinessException("选择的商品已找不到信息请刷新，请重新到商品页面添加",null);
           }
           if(gdDTO.getStock()<cargd.getGoodsNum() || gdDTO.getStatus() ==0 ){
-            return Result.getBusinessException("选择的商品"+gdDTO.getName() +"存在库存不足问题",null);
+            return Result.getBusinessException("选择的商品：“ "+gdDTO.getName() +" ” 库存不足或已下架无法购买，请取消选择",null);
           }
         }
       }
