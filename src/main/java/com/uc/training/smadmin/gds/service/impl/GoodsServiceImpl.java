@@ -1,7 +1,7 @@
 package com.uc.training.smadmin.gds.service.impl;
 
+import com.uc.training.common.enums.GoodsStatusEnum;
 import com.uc.training.common.enums.StokeStatusEnum;
-import com.uc.training.common.vo.PageVO;
 import com.uc.training.smadmin.bd.service.MemberGradeService;
 import com.uc.training.smadmin.gds.dao.GoodsDao;
 import com.uc.training.smadmin.gds.model.Goods;
@@ -140,9 +140,9 @@ public class GoodsServiceImpl implements GoodsService {
             GoodsStokeRE goodsStokeRE=goodsDao.selectGoodsStatus(goodsStokeVO);
             if(goodsStokeRE == null){
                 return StokeStatusEnum.BLANK_STATUS.getStatus();
-            }else if(goodsStokeRE.getStatus()==0){
+            }else if(goodsStokeRE.getStatus()==GoodsStatusEnum.GOODS_IS_SHELVES.getType()){
                 return StokeStatusEnum.SHELVED_STATUS.getStatus();
-            }else if(goodsStokeRE.getIsDelete()==0){
+            }else if(goodsStokeRE.getIsDelete()==GoodsStatusEnum.GOODS_DELETE.getType()){
                 return StokeStatusEnum.DELETE_STATUS.getStatus();
             }else if(goodsStokeRE.getStoke()<goodsStokeVO.getStoke()){
                 return StokeStatusEnum.NOT_ENOUGH_STATUS.getStatus();

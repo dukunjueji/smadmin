@@ -6,13 +6,13 @@ package com.uc.training.common.enums;
  */
 public enum GoodsStatusEnum {
     //未删除
-    GOODSISDELETE("未删除", 1),
+    GOODS_IS_DELETE("未删除", 0),
     //删除
-    GOODSDELETE("删除", 0),
+    GOODS_DELETE("删除", 1),
     //上架
-    GOODSSHELVES ("上架", 1),
+    GOODS_SHELVES("上架", 1),
     //下架
-    GOODSISSHELVES ("下架", 0);
+    GOODS_IS_SHELVES("下架", 0);
     /**
      * 描述
      */

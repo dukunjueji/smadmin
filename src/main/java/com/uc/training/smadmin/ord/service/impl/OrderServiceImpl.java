@@ -3,20 +3,16 @@ package com.uc.training.smadmin.ord.service.impl;
 import com.uc.training.common.enums.GoodsStatusEnum;
 import com.uc.training.common.enums.OrderEnum;
 import com.uc.training.common.enums.UUIDTypeEnum;
-import com.uc.training.smadmin.bd.model.Address;
 import com.uc.training.smadmin.bd.re.AddressRE;
 import com.uc.training.smadmin.bd.service.AddressService;
-import com.uc.training.smadmin.gds.dao.GoodsDao;
 import com.uc.training.smadmin.gds.re.GoodsDetailRE;
 import com.uc.training.smadmin.gds.re.GoodsStokeRE;
-import com.uc.training.smadmin.gds.re.PropertyUrlRE;
 import com.uc.training.smadmin.gds.service.GoodsService;
 import com.uc.training.smadmin.gds.vo.GoodsStokeVO;
 import com.uc.training.smadmin.ord.dao.CartGoodsDao;
 import com.uc.training.smadmin.ord.dao.OrderDao;
 import com.uc.training.smadmin.ord.dao.OrderGoodsDao;
 import com.uc.training.smadmin.ord.model.CartGoods;
-import com.uc.training.smadmin.ord.model.OrdOrder;
 import com.uc.training.smadmin.ord.model.Order;
 import com.uc.training.smadmin.ord.model.OrderGoods;
 import com.uc.training.smadmin.ord.re.*;
@@ -133,7 +129,7 @@ public class OrderServiceImpl implements OrderService {
             goodsStokeVO.setPropertyId(orderInfoListNow.get(i).getPropertyId());
             goodsStokeVO.setStoke((long) orderInfoListNow.get(i).getNum());
             GoodsStokeRE goodsStokeRE = goodsService.selectGoodsStatus(goodsStokeVO);
-            if (goodsStokeRE.getIsDelete() == GoodsStatusEnum.GOODSISDELETE.getType()) {
+            if (goodsStokeRE.getIsDelete() == GoodsStatusEnum.GOODS_DELETE.getType()) {
                 StringBuilder temp = new StringBuilder();
                 temp.append("您的商品：" + goodsStokeRE.getGoodsName() + "\n" + "规格:");
                 temp.append(goodsStokeRE.getGoodsProperty() + "已经被删除了，点击返回购物车，再重新选择");
@@ -142,7 +138,7 @@ public class OrderServiceImpl implements OrderService {
                 list.add(orderConfirmRE);
                 return list;
             }
-            if (goodsStokeRE.getStatus() == GoodsStatusEnum.GOODSISSHELVES.getType()) {
+            if (goodsStokeRE.getStatus() == GoodsStatusEnum.GOODS_IS_SHELVES.getType()) {
                 StringBuilder temp = new StringBuilder();
                 temp.append("您的商品：" + goodsStokeRE.getGoodsName() + "\n" + "规格:");
                 temp.append(goodsStokeRE.getGoodsProperty() + "已经被下架了，点击返回购物车，再重新选择");
