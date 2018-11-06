@@ -1,6 +1,7 @@
 package com.uc.training.smadmin.bd.controller;
 
 import com.uc.training.common.base.controller.BaseController;
+import com.uc.training.common.vo.PageVO;
 import com.uc.training.smadmin.bd.model.Banner;
 import com.uc.training.smadmin.bd.re.AdminBannerListRE;
 import com.uc.training.smadmin.bd.service.BannerService;
@@ -39,8 +40,15 @@ public class AdminBannerController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/getAllBannerList.do_", method = RequestMethod.POST)
-    public Result<List<AdminBannerListRE>> getAllBannerList(AdminBannerListVO adminBannerListVO) {
-        return Result.getSuccessResult(bannerService.getAllBannerList(adminBannerListVO));
+    public Result<PageVO<AdminBannerListRE>> getAllBannerList(AdminBannerListVO adminBannerListVO) {
+
+        PageVO<AdminBannerListRE> pageVO = new PageVO<>();
+        pageVO.setPageIndex(adminBannerListVO.getPageIndex());
+        pageVO.setPageSize(adminBannerListVO.getPageSize());
+        pageVO.setTotal(bannerService.getAdminBannerCount(adminBannerListVO));
+        pageVO.setDataList(bannerService.getAllBannerList(adminBannerListVO));
+
+        return Result.getSuccessResult(pageVO);
     }
 
     /**

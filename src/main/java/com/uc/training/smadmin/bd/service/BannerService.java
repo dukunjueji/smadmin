@@ -55,4 +55,11 @@ public interface BannerService {
      * @return
      */
     Integer insertClick(Long id);
+
+    /**
+     * 获取商品总数量
+     * @param adminBannerListVO
+     * @return
+     */
+    Long getAdminBannerCount(AdminBannerListVO adminBannerListVO);
 }

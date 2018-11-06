@@ -83,4 +83,15 @@ public class BannerServiceImpl implements BannerService {
     public Integer insertClick(Long id) {
         return bannerDao.insertClick(id);
     }
+
+    /**
+     * 获取商品总数量
+     *
+     * @param adminBannerListVO
+     * @return
+     */
+    @Override
+    public Long getAdminBannerCount(AdminBannerListVO adminBannerListVO) {
+        return bannerDao.getAdminBannerCount(adminBannerListVO);
+    }
 }

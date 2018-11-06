@@ -51,4 +51,11 @@ public interface BannerDao{
 	 * @return
 	 */
 	 Integer insertClick(Long id);
+
+	/**
+	 * 后台分页获取banner数量
+	 * @param adminBannerListVO
+	 * @return
+	 */
+    Long getAdminBannerCount(AdminBannerListVO adminBannerListVO);
 }

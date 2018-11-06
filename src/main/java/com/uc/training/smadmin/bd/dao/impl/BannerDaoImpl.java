@@ -76,4 +76,15 @@ public class BannerDaoImpl extends CarIsIbatisDaoImpl implements BannerDao {
 		return this.update("com.uc.training.smadmin.bd.dao.BannerDao.insertClick", id);
 	}
 
+	/**
+	 * 后台分页获取banner数量
+	 *
+	 * @param adminBannerListVO
+	 * @return
+	 */
+	@Override
+	public Long getAdminBannerCount(AdminBannerListVO adminBannerListVO) {
+		return (Long) this.queryForObject("com.uc.training.smadmin.bd.dao.BannerDao.getAdminBannerCount", adminBannerListVO);
+	}
+
 }

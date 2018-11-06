@@ -13,6 +13,21 @@
         ORDER BY s.sort_num ASC
 	</select>
 
+	<!-- 获取banner数量 -->
+	<select id="getAdminBannerCount" resultClass="java.lang.Long" parameterClass="com.uc.training.smadmin.bd.vo.AdminBannerListVO">
+		SELECT
+		count(1)
+		FROM t_bd_banner
+		<dynamic prepend="where">
+			<isNotEmpty property="name" prepend="and">
+				s.name LIKE concat("%",#name#,"%")
+			</isNotEmpty>
+			<isNotEmpty property="isShow" prepend="and">
+				s.is_show = #isShow#
+			</isNotEmpty>
+		</dynamic>
+	</select>
+
 	<!-- 后台获取广告图片 -->
 	<select id="getAllBannerList" resultClass="com.uc.training.smadmin.bd.re.AdminBannerListRE" parameterClass="com.uc.training.smadmin.bd.vo.AdminBannerListVO">
 		 SELECT
@@ -40,6 +55,9 @@
 			</isNotEmpty>
 		</dynamic>
 		ORDER BY s.id ASC
+		<isNotNull property="offset">
+			limit #offset#, #pageSize#
+		</isNotNull>
 	</select>
 
 	<!-- 插入 -->
