@@ -13,6 +13,7 @@ import com.uc.training.smadmin.demo.vo.DemoTestVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -38,6 +39,16 @@ import java.util.Map;
 public class DemoController extends BaseController {
     @Autowired
     private DemoService demoService;
+
+    @ResponseBody
+    @AccessLogin(required = false)
+    @RequestMapping("requestTest.do_")
+    public Result<String> getDemoPage(@RequestBody List<DemoListVO> list) {
+        for (DemoListVO demoListVO : list) {
+            System.out.println(demoListVO.getName() + demoListVO.getSex());
+        }
+        return Result.getSuccessResult("success");
+    }
 
     /**
      * 分页查询

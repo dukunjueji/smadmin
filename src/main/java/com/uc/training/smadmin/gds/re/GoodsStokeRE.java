@@ -15,11 +15,11 @@ public class GoodsStokeRE {
     /**
      * 是否删除 0表示未删除，1表示删除
      */
-    private int isDelete;
+    private Integer isDelete;
     /**
      * 是否下架，0表示下架，1表示上架
      */
-    private int status;
+    private Integer status;
     /**
      * 商品名称
      */
@@ -62,19 +62,19 @@ public class GoodsStokeRE {
         this.stoke = stoke;
     }
 
-    public int getIsDelete() {
+    public Integer getIsDelete() {
         return isDelete;
     }
 
-    public void setIsDelete(int isDelete) {
+    public void setIsDelete(Integer isDelete) {
         this.isDelete = isDelete;
     }
 
-    public int getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 }
