@@ -414,7 +414,7 @@ public class ApiMemberController extends BaseController {
     }
 
     /**
-    *说明：查询一个会员信息
+    *说明：查询一个消息详情
     *@param messageId
     *@return：com.ycc.base.common.Result<com.uc.training.smadmin.bd.vo.MessageDetailVO>
     *@throws：

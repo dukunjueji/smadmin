@@ -14,7 +14,7 @@
 		FROM t_gds_property gds_property join t_gds_goods goods on goods.id=gds_property.goods_id
 		join t_gds_goods_pic gds_pic on gds_property.id=gds_pic.property_id
 		 order by goods.sales desc
-		 limit 1,8
+		 limit 0,8
 	</select>
 
     <select id="getHotRecommendCount" resultClass="java.lang.Integer">
@@ -103,6 +103,7 @@
             parameterClass="long">
 		select
 		 goods.name,
+		 goods.id as goodsId,
 		goods.sales,
 		goods.code,
 		goods.detail,
