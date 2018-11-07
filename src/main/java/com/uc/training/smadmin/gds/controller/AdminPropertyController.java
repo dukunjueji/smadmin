@@ -72,7 +72,7 @@ public class AdminPropertyController extends BaseController{
     public Result updateProperty(@Validated  AdminPropertyVO adminPropertyVO) {
 
         //获取同商品下同名称的数量
-        if (propertyService.getCountByGoodsIdAndName(adminPropertyVO) >= 1) {
+        if (propertyService.getCountByGoodsIdAndName(adminPropertyVO) > 1) {
             return Result.getBusinessException("该规格已存在，请不要重复添加！", null);
         }
 
