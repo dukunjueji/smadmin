@@ -12,11 +12,11 @@ public class GoodsDetailRE {
     /**
      * 商品id
      */
-    private long goodsId;
+    private Long goodsId;
     /**
      * 商品属性id
      */
-    private long propertyId;
+    private Long propertyId;
     /**
      * 商品编号
      */
@@ -32,7 +32,7 @@ public class GoodsDetailRE {
     /**
      * 销量
      */
-    private long sales;
+    private Long sales;
     /**
      * 详情
      */
@@ -40,23 +40,23 @@ public class GoodsDetailRE {
     /**
      * 商品状态(是否下架)
      */
-    private long status;
+    private Long status;
     /**
      * 商品状态(是否删除)
      */
-    private long isDelete;
+    private Long isDelete;
     /**
      * 库存
      */
-    private long stock;
+    private Long stock;
     /**
      * 打折价格
      */
-    private double discountPrice;
+    private Double discountPrice;
     /**
      * 出售价格
      */
-    private double salePrice;
+    private Double salePrice;
     /**
      * 规格
      */
@@ -64,13 +64,21 @@ public class GoodsDetailRE {
     /**
      * 是否打折
      */
-    private long isDiscount;
+    private Long isDiscount;
 
-    public long getPropertyId() {
+    public Long getGoodsId() {
+        return goodsId;
+    }
+
+    public void setGoodsId(Long goodsId) {
+        this.goodsId = goodsId;
+    }
+
+    public Long getPropertyId() {
         return propertyId;
     }
 
-    public void setPropertyId(long propertyId) {
+    public void setPropertyId(Long propertyId) {
         this.propertyId = propertyId;
     }
 
@@ -82,6 +90,14 @@ public class GoodsDetailRE {
         this.code = code;
     }
 
+    public List<PropertyUrlRE> getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(List<PropertyUrlRE> picUrl) {
+        this.picUrl = picUrl;
+    }
+
     public String getName() {
         return name;
     }
@@ -90,11 +106,11 @@ public class GoodsDetailRE {
         this.name = name;
     }
 
-    public long getSales() {
+    public Long getSales() {
         return sales;
     }
 
-    public void setSales(long sales) {
+    public void setSales(Long sales) {
         this.sales = sales;
     }
 
@@ -106,43 +122,43 @@ public class GoodsDetailRE {
         this.detail = detail;
     }
 
-    public long getStatus() {
+    public Long getStatus() {
         return status;
     }
 
-    public void setStatus(long status) {
+    public void setStatus(Long status) {
         this.status = status;
     }
 
-    public long getStock() {
+    public Long getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(Long isDelete) {
+        this.isDelete = isDelete;
+    }
+
+    public Long getStock() {
         return stock;
     }
 
-    public void setStock(long stock) {
+    public void setStock(Long stock) {
         this.stock = stock;
     }
 
-    public double getDiscountPrice() {
+    public Double getDiscountPrice() {
         return discountPrice;
     }
 
-    public List<PropertyUrlRE> getPicUrl() {
-        return picUrl;
-    }
-
-    public void setPicUrl(List<PropertyUrlRE> picUrl) {
-        this.picUrl = picUrl;
-    }
-
-    public void setDiscountPrice(double discountPrice) {
+    public void setDiscountPrice(Double discountPrice) {
         this.discountPrice = discountPrice;
     }
 
-    public double getSalePrice() {
+    public Double getSalePrice() {
         return salePrice;
     }
 
-    public void setSalePrice(double salePrice) {
+    public void setSalePrice(Double salePrice) {
         this.salePrice = salePrice;
     }
 
@@ -154,27 +170,11 @@ public class GoodsDetailRE {
         this.property = property;
     }
 
-    public long getIsDiscount() {
+    public Long getIsDiscount() {
         return isDiscount;
     }
 
-    public void setIsDiscount(long isDiscount) {
+    public void setIsDiscount(Long isDiscount) {
         this.isDiscount = isDiscount;
-    }
-
-    public long getGoodsId() {
-        return goodsId;
-    }
-
-    public void setGoodsId(long goodsId) {
-        this.goodsId = goodsId;
-    }
-
-    public long getIsDelete() {
-        return isDelete;
-    }
-
-    public void setIsDelete(long isDelete) {
-        this.isDelete = isDelete;
     }
 }
