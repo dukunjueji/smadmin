@@ -37,11 +37,11 @@
         where id = #id#
     </delete>
     <!--通过商品属性id获取商品的状态（上架，下架）-->
-    <select id="getGoodsStatusById" parameterClass="Long">
+    <select id="getGoodsStatusById" parameterClass="Long" resultClass="Integer">
       select status
       from t_gds_goods
       where id = (
-                    select  goodsId
+                    select  goods_id
                     from   t_gds_property
                     where id = #id#
                   )
