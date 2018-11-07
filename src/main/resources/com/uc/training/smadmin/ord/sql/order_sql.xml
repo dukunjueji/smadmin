@@ -142,8 +142,12 @@
 
 	<!-- 通过订单编号更新 -->
 	<update id="updateOrder" parameterClass="com.uc.training.smadmin.ord.vo.OrdOrderVo">
-		 update t_ord_order s set
+		 update t_ord_order s
+		 set
 		s.status = #status#
+		<isNotEmpty property="modifyEmp" prepend=",">
+			s.modify_emp = #modifyEmp#
+		</isNotEmpty>
 		where
 			s.order_num = #orderNum#
 		</update>

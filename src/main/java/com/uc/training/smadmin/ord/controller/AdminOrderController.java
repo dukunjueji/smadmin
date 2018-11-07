@@ -6,17 +6,11 @@ import com.uc.training.smadmin.bd.service.MemberService;
 import com.uc.training.smadmin.gds.service.GoodsService;
 import com.uc.training.smadmin.ord.re.OrderGoodsDetailRe;
 import com.uc.training.smadmin.ord.re.OrderRe;
-import com.uc.training.smadmin.ord.re.OrderStatusRe;
 import com.uc.training.smadmin.ord.service.OrderService;
-import com.uc.training.smadmin.ord.vo.OrdOrderGoodsVo;
-import org.apache.commons.lang.StringUtils;
 import com.uc.training.smadmin.ord.vo.OrdOrderVo;
 import com.ycc.base.common.Result;
-import net.sf.json.JSONArray;
-import net.sf.json.JsonConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -43,18 +37,20 @@ public class AdminOrderController extends BaseController {
 
   @Autowired
   MemberService memberService;
+
   /**
    * 获取订单分页
-   *@author hhj
+   *
    * @param orderVo
    * @return
+   * @author hhj
    */
   @ResponseBody
   @AccessLogin
   @RequestMapping(value = "getOrderPage.do_", method = RequestMethod.POST)
   public Result getOrderPage(OrdOrderVo orderVo) {
     List<OrderRe> list;
-    Map<String , Object> map = new HashMap<String , Object>(5);
+    Map<String, Object> map = new HashMap<String, Object>(5);
     list = orderService.getOrderPage(orderVo);
     Integer totalSize = orderService.getOrderTotal(orderVo);
     map.put("orderList", list);
@@ -64,9 +60,10 @@ public class AdminOrderController extends BaseController {
 
   /**
    * 批量删除订单（更改删除/进度状态）
-   *@author hhj
+   *
    * @param delId（orderVo.getOrderListStr()）
    * @return
+   * @author hhj
    */
   @ResponseBody
   @AccessLogin
@@ -79,20 +76,21 @@ public class AdminOrderController extends BaseController {
         list.add(Long.parseLong(s));
       }
     } else {
-      return Result.getBusinessException("删除失败",null);
+      return Result.getBusinessException("删除失败", null);
     }
     int num = orderService.logicDelOrder(list);
     if (num > 0) {
       return Result.getSuccessResult(null);
     }
-    return Result.getBusinessException("删除失败",null);
+    return Result.getBusinessException("删除失败", null);
   }
 
   /**
    * 获取订单商品详情
-   *@author hhj
+   *
    * @param id(订单id)
    * @return
+   * @author hhj
    */
   @ResponseBody
   @AccessLogin
@@ -102,25 +100,27 @@ public class AdminOrderController extends BaseController {
     try {
       list = orderService.getOrderGdsById(id);
     } catch (Exception e) {
-      return Result.getBusinessException("获取异常",null);
+      return Result.getBusinessException("获取异常", null);
     }
     return Result.getSuccessResult(list);
   }
 
   /**
    * 根据订单号更新状态
-   *@author hhj
+   *
    * @param ordOrderVo
    * @return
+   * @author hhj
    */
   @ResponseBody
   @AccessLogin
   @RequestMapping(value = "upOrderStatus.do_", method = RequestMethod.POST)
   public Result upOrderStatus(OrdOrderVo ordOrderVo) {
-    Result result = new Result();
+    ordOrderVo.setModifyEmp(getUid());
+    //取消订单回退库存
     if (orderService.updateOrder(ordOrderVo) > 0) {
       return Result.getSuccessResult(null);
     }
-    return Result.getBusinessException("更新失败",null);
+    return Result.getBusinessException("更新失败", null);
   }
 }
