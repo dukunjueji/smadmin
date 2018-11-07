@@ -50,10 +50,9 @@ public class OrdOrderVo extends BaseDomain implements Serializable {
     /**
      * 会员id
      *
-     * @return
      */
-
     private Long memberId;
+
 
     public Long getMemberId() {
         return memberId;

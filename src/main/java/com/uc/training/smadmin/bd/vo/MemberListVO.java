@@ -1,6 +1,7 @@
 package com.uc.training.smadmin.bd.vo;
 
 import com.uc.training.common.vo.PageVO;
+import org.hibernate.validator.constraints.Length;
 
 /**
  * @Author: 余旭东
@@ -15,6 +16,7 @@ public class MemberListVO extends PageVO {
     /**
      * 用户名
      */
+    @Length(max = 32, message = "用户名长度不能超过32位")
     private String memberName;
     /**
      * 性别

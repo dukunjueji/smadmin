@@ -1,6 +1,7 @@
 package com.uc.training.smadmin.sys.model;
 
 import com.uc.training.common.base.model.BaseModel;
+import org.hibernate.validator.constraints.Length;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -23,6 +24,7 @@ public class SysUser extends BaseModel implements Serializable {
     /**
      * 用户名
      */
+    @Length(max = 32, message = "用户名长度不能超过32位")
     private String userName;
 
     /**

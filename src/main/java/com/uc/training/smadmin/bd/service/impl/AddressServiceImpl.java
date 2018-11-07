@@ -92,4 +92,15 @@ public class AddressServiceImpl implements AddressService {
     public AddressRE getDefaultAddress(Long memberId) {
         return addressDao.getDefaultAddress(memberId);
     }
+
+    /**
+     * 根据主键id获取会员id
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public Long getMemberIdById(Long id) {
+        return addressDao.getMemberIdById(id);
+    }
 }

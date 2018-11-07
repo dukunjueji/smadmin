@@ -7,6 +7,7 @@ import com.uc.training.smadmin.bd.model.MemberGrade;
 import com.uc.training.smadmin.bd.service.MemberGradeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -45,13 +46,9 @@ public class MemberGradeController extends BaseController {
     @AccessLogin
     @RequestMapping(value = "/modifyGrade.do_", method = RequestMethod.POST)
     @ResponseBody
-    public Result<Integer> modifyGrade(MemberGrade grade){
+    public Result<Integer> modifyGrade(@Validated MemberGrade grade){
         if (grade.getId() == null) {
             return Result.getBusinessException("会员ID不能为空", null);
-        }
-        int max = 1, min = 0;
-        if (grade.getDiscount() > max || grade.getDiscount() < min) {
-            return Result.getBusinessException("折扣输入错误", null);
         }
         grade.setModifyEmp(getUid());
         return Result.getSuccessResult(memberGradeService.modifyMemberGrade(grade));

@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -49,7 +50,10 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Override
     public List<GoodsRE> getHotRecommend() {
-        return goodsDao.getHotRecommend();
+        List<Long> propertyIds = goodsDao.getHotRecommend();
+        List<GoodsRE> list = new ArrayList<GoodsRE>();
+        list = getPicUrlByPropertyId(propertyIds);
+        return list;
     }
 
     @Override
@@ -66,11 +70,6 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     public List<GoodsDetailRE> getGoodsDetailByPropertyIds(List<Long> propertyIds) {
         List<GoodsDetailRE> goodsDetailRE =  goodsDao.getGoodsDetailByPropertyIds(propertyIds);
-        List<List<PropertyUrlRE>> list=(List<List<PropertyUrlRE>>)goodsDao.getPicUrlByPropertyIds(propertyIds);
-        for (int i = 0;i < list.size();i++){
-            System.out.println("------------");
-            System.out.println(list.get(i).toString());
-        }
         return goodsDetailRE;
     }
 
@@ -81,7 +80,7 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Override
     public List<GoodsRE> getGoodsList(List<Long> propertyIds) {
-        return goodsDao.getGoodsList(propertyIds);
+        return getPicUrlByPropertyId(propertyIds);
     }
 
     @Override
@@ -117,9 +116,7 @@ public class GoodsServiceImpl implements GoodsService {
     public List<GoodsRE> searchByGoodsName(GoodsListVO goodsListVO) {
         List<Long> propertyIds = goodsDao.searchByGoodsName(goodsListVO);
         List<GoodsRE> list = new ArrayList<GoodsRE>();
-        if(propertyIds.size()>0){
-            list = goodsDao.searchByPropertyId(propertyIds);
-        }
+        list = getPicUrlByPropertyId(propertyIds);
         return list;
     }
 
@@ -243,5 +240,19 @@ public class GoodsServiceImpl implements GoodsService {
         return goodsDao.pullOffGoods(adminPullGoodsVO);
     }
 
-
+    private List<GoodsRE> getPicUrlByPropertyId(List<Long> propertyIds){
+        List<GoodsRE> list = new ArrayList<GoodsRE>();
+        List<PropertyUrlRE> picList;
+        if(propertyIds.size() > 0) {
+            list = goodsDao.searchByPropertyId(propertyIds);
+            for(int i = 0; i < list.size(); i++) {
+                picList = new ArrayList<>();
+                picList = goodsDao.getPicUrlByPropertyId(list.get(i).getPropertyId());
+                if(picList.size() > 0) {
+                    list.get(i).setPicUrl(picList.get(0).getPicUrl());
+                }
+            }
+        }
+        return list;
+    }
 }

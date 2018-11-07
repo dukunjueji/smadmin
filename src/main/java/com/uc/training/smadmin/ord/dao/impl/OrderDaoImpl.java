@@ -60,4 +60,25 @@ public class OrderDaoImpl extends CarIsIbatisDaoImpl implements OrderDao {
 	public int updateOrder(OrdOrderVo ordOrderVo) {
 		return this.update("com.uc.training.smadmin.ord.dao.OrderDao.updateOrder",ordOrderVo);
 	}
+
+	/**
+	 * 用户删除订单
+	 *
+	 * @param ordOrderVo
+	 * @return
+	 */
+	@Override
+	public int memberDelOrder(OrdOrderVo ordOrderVo) {
+		return this.update("com.uc.training.smadmin.ord.dao.OrderDao.memberDelOrder",ordOrderVo);
+	}
+
+	/**
+	 * 根据订单编号获取订单手机号
+	 * @param orderNum
+	 * @return
+	 */
+	@Override
+	public String getTelephoneByOrderNum(String orderNum) {
+		return (String) this.queryForObject("com.uc.training.smadmin.ord.dao.OrderDao.getTelephoneByOrderNum",orderNum);
+	}
 }

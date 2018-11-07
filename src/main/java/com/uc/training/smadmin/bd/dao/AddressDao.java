@@ -60,4 +60,10 @@ public interface AddressDao{
      */
     AddressRE getDefaultAddress(Long memberId);
 
+	/**
+	 * 根据主键id获取会员id
+	 * @param id
+	 * @return
+	 */
+	Long getMemberIdById(Long id);
 }

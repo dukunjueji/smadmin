@@ -1,6 +1,7 @@
 package com.uc.training.smadmin.sys.vo;
 
 import com.uc.training.common.bean.PageQuery;
+import org.hibernate.validator.constraints.Length;
 
 import java.util.Date;
 
@@ -18,6 +19,7 @@ public class UserListVO extends PageQuery {
     /**
      * 用户名
      */
+    @Length(max = 32, message = "用户名长度不能超过32位")
     private String name;
 
     /**

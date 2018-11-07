@@ -15,6 +15,14 @@
         WHERE s.id=#id#
     </select>
 
+    <!-- 通过主键id获取地址 -->
+    <select id="getMemberIdById" resultClass="Long" parameterClass="long">
+        SELECT
+          s.member_id
+        FROM t_bd_address s
+        WHERE s.id=#id#
+    </select>
+
     <!-- 通过会员id查询地址 -->
     <select id="getAddressByMemberId" resultClass="com.uc.training.smadmin.bd.re.AddressRE" parameterClass="long">
         SELECT

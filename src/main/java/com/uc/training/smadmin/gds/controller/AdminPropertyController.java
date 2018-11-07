@@ -4,6 +4,7 @@ import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.smadmin.gds.model.Property;
 import com.uc.training.smadmin.gds.re.AdminPropertyListRE;
 import com.uc.training.smadmin.gds.service.PropertyService;
+import com.uc.training.smadmin.gds.vo.AdminPropertyUpdateVO;
 import com.uc.training.smadmin.gds.vo.AdminPropertyVO;
 import com.ycc.base.common.Result;
 import org.springframework.beans.BeanUtils;
@@ -49,13 +50,13 @@ public class AdminPropertyController extends BaseController{
     @RequestMapping(value = "insertProperty.do_", method = RequestMethod.POST)
     public Result insertProperty(@Validated  AdminPropertyVO adminPropertyVO) {
 
-        //获取同商品下同名称的数量
-        if (propertyService.getCountByGoodsIdAndName(adminPropertyVO) >= 1) {
-            return Result.getBusinessException("该规格已存在，请不要重复添加！", null);
-        }
-
         Property property = new Property();
         BeanUtils.copyProperties(adminPropertyVO, property);
+
+        //获取同商品下同名称的数量
+        if (propertyService.getCountByGoodsIdAndName(property) >= 1) {
+            return Result.getBusinessException("该规格已存在，请不要重复添加！", null);
+        }
 
         property.setCreateEmp(getUid());
         property.setModifyEmp(getUid());
@@ -64,20 +65,20 @@ public class AdminPropertyController extends BaseController{
     }
     /**
      * 后台更新商品属性
-     * @param adminPropertyVO
+     * @param adminPropertyUpdateVO
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "updateProperty.do_", method = RequestMethod.POST)
-    public Result updateProperty(@Validated  AdminPropertyVO adminPropertyVO) {
-
-        //获取同商品下同名称的数量
-        if (propertyService.getCountByGoodsIdAndName(adminPropertyVO) > 1) {
-            return Result.getBusinessException("该规格已存在，请不要重复添加！", null);
-        }
+    public Result updateProperty(@Validated AdminPropertyUpdateVO adminPropertyUpdateVO) {
 
         Property property = new Property();
-        BeanUtils.copyProperties(adminPropertyVO, property);
+        BeanUtils.copyProperties(adminPropertyUpdateVO, property);
+
+        //获取同商品下同名称的数量
+        if (propertyService.getCountByGoodsIdAndName(property) > 1) {
+            return Result.getBusinessException("该规格已存在，请不要重复添加！", null);
+        }
 
         property.setModifyEmp(getUid());
 

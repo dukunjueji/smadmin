@@ -1,7 +1,7 @@
 package com.uc.training.smadmin.bd.vo;
-import com.sun.istack.NotNull;
 import org.hibernate.validator.constraints.NotBlank;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Date;
@@ -12,11 +12,9 @@ import java.util.Date;
  * @date 2018-10-17 03:40
  * @description:
  */
-public class AddressVO implements Serializable {
+public class AddressInsertVO implements Serializable {
 
 	private static final long serialVersionUID = -8075078973485898339L;
-
-    private Long id;
 
 	/**收货人**/
 	@NotBlank(message = "收货人不能为空")
@@ -48,16 +46,8 @@ public class AddressVO implements Serializable {
 	private String addrDetail;
 
 	/**是否默认地址**/
-	@javax.validation.constraints.NotNull(message = "默认地址不能为空")
+	@NotNull(message = "默认地址不能为空")
 	private Integer isDefault;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getReceiver() {
 		return receiver;
@@ -125,8 +115,7 @@ public class AddressVO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "AddressVO{" +
-				"id=" + id +
+		return "AddressInsertVO{" +
 				", receiver='" + receiver + '\'' +
 				", telephone='" + telephone + '\'' +
 				", province='" + province + '\'' +

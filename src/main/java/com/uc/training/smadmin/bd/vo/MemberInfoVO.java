@@ -20,7 +20,7 @@ public class MemberInfoVO implements Serializable {
     /**
      * 会员昵称
      */
-    @Length(max = 5, message = "昵称长度不能超过5")
+    @Length(max = 5, message = "昵称长度不能超过18")
     private String nickname;
 
     /**
@@ -31,6 +31,7 @@ public class MemberInfoVO implements Serializable {
      * 邮箱
      */
     @NotBlank(message = "邮箱不能为空")
+    @Length(max = 30, message = "邮箱长度过长")
     @Email(message = "请输入正确格式的邮箱")
     private String email;
 
