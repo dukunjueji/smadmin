@@ -290,7 +290,7 @@ public class ApiMemberController extends BaseController {
     @RequestMapping(value = "/editMemberInfo.do_", method = RequestMethod.POST)
     @ResponseBody
     @AccessLogin
-    public Result<MemberInfoRE> editMemberInfo(MemberInfoVO memberInfoVO){
+    public Result<MemberInfoRE> editMemberInfo(@Validated MemberInfoVO memberInfoVO){
         Member member = new Member();
         member.setNickname(memberInfoVO.getNickname());
         member.setEmail(memberInfoVO.getEmail());
