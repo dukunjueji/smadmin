@@ -75,12 +75,6 @@ public class SmsTemplateController extends BaseController {
     @RequestMapping(value = "/modifyTemplate", method = RequestMethod.POST)
     @ResponseBody
     public Result<Integer> modifyTemplate(@Validated SmsTemplateVO template){
-        if (template.getTitle().length() > SmsConstant.LONGEST_TITLE_LENGTH) {
-            return Result.getBusinessException("标题长度不能超过255位", null);
-        }
-        if (template.getContent().length() > SmsConstant.LONGEST_CONTENT_LENGTH) {
-            return Result.getBusinessException("内容长度不能超过255位", null);
-        }
         SmsTemplate t1 = smsTemplateService.getTemplateById(template.getId());
         template.setModifyEmp(getUid());
         return Result.getSuccessResult(smsTemplateService.modifyTemplate(template));
@@ -94,10 +88,7 @@ public class SmsTemplateController extends BaseController {
     @AccessLogin
     @ResponseBody
     @RequestMapping(value = "getSmsTemplatePage.do_", method = RequestMethod.POST)
-    public Result<PageVO<SmsTemplate>> getDemoPage(SmsTemplateListVO smsTemplateListVO) {
-        if (smsTemplateListVO.getCode().length() > SmsConstant.LONGEST_CODE_LENGTH) {
-            return Result.getBusinessException("编号长度不能超过10位", null);
-        }
+    public Result<PageVO<SmsTemplate>> getDemoPage(@Validated SmsTemplateListVO smsTemplateListVO) {
         Result<PageVO<SmsTemplate>> res;
         PageVO<SmsTemplate> pageVO = new PageVO<SmsTemplate>();
         pageVO.setPageIndex(smsTemplateListVO.getPageIndex());

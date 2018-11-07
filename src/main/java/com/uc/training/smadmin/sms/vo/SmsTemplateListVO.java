@@ -1,6 +1,8 @@
 package com.uc.training.smadmin.sms.vo;
 
 import com.uc.training.common.bean.PageQuery;
+import org.hibernate.validator.constraints.Length;
+import org.springframework.validation.annotation.Validated;
 
 /**
  * @Author: 余旭东
@@ -17,6 +19,7 @@ public class SmsTemplateListVO extends PageQuery {
     /**
      * 短信编码
      */
+    @Length(max = 10, message = "编号长度不能超过10位")
     private String code;
 
     public Integer getType() {

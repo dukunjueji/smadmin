@@ -9,6 +9,7 @@ import com.uc.training.smadmin.bd.vo.MemberListVO;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.ycc.base.common.Result;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,7 +32,7 @@ public class MemberController extends BaseController {
 
     @RequestMapping(value = "/getMemberList.do_", method = RequestMethod.POST)
     @ResponseBody
-    public Result<PageVO<Member>> getMemberList(MemberListVO memberListVO){
+    public Result<PageVO<Member>> getMemberList(@Validated MemberListVO memberListVO){
         if (!StringUtils.isEmpty(memberListVO.getTelephone())) {
             String regex = "^1[3456789]\\d{9}$";
             Pattern pattern = Pattern.compile(regex);
@@ -39,10 +40,6 @@ public class MemberController extends BaseController {
             if (!m.matches()) {
                 return Result.getBusinessException("手机号格式不正确", null);
             }
-        }
-        if (!StringUtils.isEmpty(memberListVO.getMemberName())
-                && memberListVO.getMemberName().length() > Constant.LONGEST_USER_NAME) {
-            return Result.getBusinessException("用户名长度不能超过32位", null);
         }
         Result<PageVO<Member>> res;
         try {

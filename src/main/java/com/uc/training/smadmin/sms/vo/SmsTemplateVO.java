@@ -1,5 +1,6 @@
 package com.uc.training.smadmin.sms.vo;
 
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -12,9 +13,12 @@ public class SmsTemplateVO {
     @NotBlank
     private String type;
     @NotBlank
+    @Length(max = 255, message = "标题长度不能超过255位")
     private String title;
     @NotBlank
+    @Length(max = 255, message = "内容长度不能超过255位")
     private String content;
+    @Length(max = 10, message = "编号长度不能超过10位")
     private String code;
     private Long createEmp;
     private Long modifyEmp;

@@ -1,6 +1,7 @@
 package com.uc.training.smadmin.sys.model;
 
 import com.uc.training.common.base.model.BaseModel;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.Max;
@@ -27,27 +28,30 @@ public class SysMenu extends BaseModel implements Serializable {
     /**
      * 菜单名字
      */
-    @NotBlank
+    @NotBlank(message = "菜单名不能位空")
+    @Length(max = 32, message = "菜单名长度不能超过32位")
     private String name;
 
     /**
      * 菜单路径
      */
-    @NotBlank
+    @NotBlank(message = "url不能为空")
+    @Length(max = 32, message = "路径长度不能超过32位")
     private String url;
 
     /**
      * 标识
      */
-    @NotBlank
+    @NotBlank(message = "权限标识不能为空")
+    @Length(max = 32, message = "权限标识长度不能超过32位")
     private String rel;
 
     /**
      * 排序
      */
     @NotNull
-    @Max(1000)
-    @Min(0)
+    @Max(value = 1000, message = "序号不能大于1000")
+    @Min(value = 0, message = "序号不能小于0")
     private Long sortNum;
 
     /**

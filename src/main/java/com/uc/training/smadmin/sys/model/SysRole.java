@@ -1,6 +1,7 @@
 package com.uc.training.smadmin.sys.model;
 
 import com.uc.training.common.base.model.BaseModel;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
 import java.io.Serializable;
@@ -24,7 +25,8 @@ public class SysRole extends BaseModel implements Serializable {
     /**
      *角色名字
      */
-    @NotBlank
+    @NotBlank(message = "角色名不能为空")
+    @Length(max = 32, message = "角色名不能超过32位")
     private String name;
 
     public Long getId() {
