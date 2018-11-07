@@ -67,6 +67,7 @@
     SELECT
       s.id AS id,
       s.username AS userName,
+      s.is_admin AS isAdmin,
       s.create_time AS createTime
     FROM t_sys_user s
     WHERE 1=1
