@@ -70,17 +70,25 @@ public interface OrderDao {
 	 */
   int logicDelOrder(List<Long> list);
 
-	/**
-	 * 更新订单状态
-	 * @param ordOrderVo
-	 * @return
-	 */
-  int updateOrder(OrdOrderVo ordOrderVo);
+    /**
+     * 更新订单状态
+     *
+     * @param ordOrderVo
+     * @return
+     */
+    int updateOrder(OrdOrderVo ordOrderVo);
+
+    /**
+     * 用户删除订单
+     * @param ordOrderVo
+     * @return
+     */
+    int memberDelOrder(OrdOrderVo ordOrderVo);
 
     /**
      *  根据订单编号获取订单手机号
      * @param orderNum
      * @return
      */
-  String getTelephoneByOrderNum(String orderNum);
+    String getTelephoneByOrderNum(String orderNum);
 }

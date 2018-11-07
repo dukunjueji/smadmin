@@ -103,8 +103,7 @@ public interface OrderService {
   List<OrderStatusRe> getOrderEnum();
 
   /**
-   * 逻辑删除订单
-   *
+   * 批量逻辑删除订单
    * @param list
    * @return
    */

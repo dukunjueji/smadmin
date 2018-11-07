@@ -62,6 +62,17 @@ public class OrderDaoImpl extends CarIsIbatisDaoImpl implements OrderDao {
 	}
 
 	/**
+	 * 用户删除订单
+	 *
+	 * @param ordOrderVo
+	 * @return
+	 */
+	@Override
+	public int memberDelOrder(OrdOrderVo ordOrderVo) {
+		return this.update("com.uc.training.smadmin.ord.dao.OrderDao.memberDelOrder",ordOrderVo);
+	}
+
+	/**
 	 * 根据订单编号获取订单手机号
 	 * @param orderNum
 	 * @return

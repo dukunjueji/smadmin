@@ -122,6 +122,7 @@ public class MemberServiceImpl implements MemberService {
             OrdOrderVo ordOrderVo = new OrdOrderVo();
             ordOrderVo.setOrderNum(orderPayInfoNow.get(0).getOrderName());
             ordOrderVo.setStatus(OrderEnum.WAITSHIP.getKey().longValue());
+            ordOrderVo.setMemberId(memberInfoVO.getMemberId());
             orderConfirmRE.setShowStatus("成功购买商品");
             if (orderService.updateOrder(ordOrderVo) > 0) {
                 list.add(orderConfirmRE);

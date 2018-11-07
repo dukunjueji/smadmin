@@ -161,6 +161,9 @@
 		</isNotEmpty>
 		where
 			s.order_num = #orderNum#
+		<isNotEmpty property="memberId" prepend="and">
+			s.member_id = #memberId#
+		</isNotEmpty>
 		</update>
 
 	<!--查询分页-->
@@ -196,12 +199,21 @@
 			s.is_delete = 1
 			WHERE
 			s.id IN
-		   <iterate open="(" close=")" conjunction=",">
+		   <iterate open="(" close=")"  conjunction=",">
 			   #list[]#
 		   </iterate>
 
 		<!--</iterate>-->
 
+	</update>
+
+	<update id="memberDelOrder" parameterClass="com.uc.training.smadmin.ord.vo.OrdOrderVo">
+		UPDATE t_ord_order s
+		SET
+		s.is_delete = 1
+		WHERE
+		s.id =#orderId# AND
+		s.member_id=#memberId#
 	</update>
 
 </sqlMap>

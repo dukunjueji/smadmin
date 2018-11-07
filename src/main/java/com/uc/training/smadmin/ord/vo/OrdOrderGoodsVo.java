@@ -1,6 +1,10 @@
 package com.uc.training.smadmin.ord.vo;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JsonConfig;
+
 import java.io.Serializable;
+import java.util.List;
 
 
 /**
@@ -100,6 +104,28 @@ public class OrdOrderGoodsVo implements Serializable {
      * 收货人地址
      */
     private String receiptAddress;
+    /**
+     * 订单信息串
+     */
+    private String orderInfoList;
+
+    private List<OrdOrderGoodsVo> list;
+
+    public List<OrdOrderGoodsVo> getList() {
+        return (List<OrdOrderGoodsVo>) JSONArray.toList(JSONArray.fromObject(this.orderInfoList), new OrdOrderGoodsVo(), new JsonConfig());
+    }
+
+    public void setList(List<OrdOrderGoodsVo> list) {
+        this.list = list;
+    }
+
+    public String getOrderInfoList() {
+        return orderInfoList;
+    }
+
+    public void setOrderInfoList(String orderInfoList) {
+        this.orderInfoList = orderInfoList;
+    }
 
     public Long getAddressId() {
         return addressId;
