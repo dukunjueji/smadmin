@@ -12,7 +12,7 @@ public class GoodsRE {
     private Long propertyId;
     private String name;
     private Long sales;
-    private double salePrice;
+    private Double salePrice;
     private String picUrl;
 
     public String getPicUrl() {
@@ -47,11 +47,11 @@ public class GoodsRE {
         this.sales = sales;
     }
 
-    public double getSalePrice() {
+    public Double getSalePrice() {
         return salePrice;
     }
 
-    public void setSalePrice(double salePrice) {
+    public void setSalePrice(Double salePrice) {
         this.salePrice = salePrice;
     }
 

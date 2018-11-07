@@ -49,6 +49,11 @@ public class AdminPropertyController extends BaseController{
     @RequestMapping(value = "insertProperty.do_", method = RequestMethod.POST)
     public Result insertProperty(@Validated  AdminPropertyVO adminPropertyVO) {
 
+        //获取同商品下同名称的数量
+        if (propertyService.getCountByGoodsIdAndName(adminPropertyVO) >= 1) {
+            return Result.getBusinessException("该规格已存在，请不要重复添加！", null);
+        }
+
         Property property = new Property();
         BeanUtils.copyProperties(adminPropertyVO, property);
 
@@ -65,6 +70,11 @@ public class AdminPropertyController extends BaseController{
     @ResponseBody
     @RequestMapping(value = "updateProperty.do_", method = RequestMethod.POST)
     public Result updateProperty(@Validated  AdminPropertyVO adminPropertyVO) {
+
+        //获取同商品下同名称的数量
+        if (propertyService.getCountByGoodsIdAndName(adminPropertyVO) > 1) {
+            return Result.getBusinessException("该规格已存在，请不要重复添加！", null);
+        }
 
         Property property = new Property();
         BeanUtils.copyProperties(adminPropertyVO, property);

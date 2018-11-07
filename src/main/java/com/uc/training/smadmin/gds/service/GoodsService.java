@@ -95,6 +95,7 @@ public interface GoodsService {
     /**
      * 测试高并发下的减库存安全
      * @param goodsStokeVO
+     * @return
      */
     public Integer updateAndDeductStoke(GoodsStokeVO goodsStokeVO);
 

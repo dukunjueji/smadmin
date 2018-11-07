@@ -49,10 +49,6 @@ public class GoodsController extends BaseController {
     @RequestMapping(value = "getHotRecommend.do_", method = RequestMethod.GET)
     public Result<List<GoodsRE>> getHotRecommend() {
         List<GoodsRE> list = goodsService.getHotRecommend();
-            /*Integer totalNum = goodsService.getHotRecommendCount();
-            PageRE<List<GoodsRE>> pageRE = new PageRE<>();
-            pageRE.setData(list);
-            pageRE.setTotalNum(totalNum);*/
         return Result.getSuccessResult(list);
 
     }

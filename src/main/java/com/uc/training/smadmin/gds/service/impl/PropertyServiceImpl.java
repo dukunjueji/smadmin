@@ -6,6 +6,7 @@ import com.uc.training.smadmin.gds.model.Property;
 import com.uc.training.smadmin.gds.re.AdminPropertyListRE;
 import com.uc.training.smadmin.gds.service.GoodsPicService;
 import com.uc.training.smadmin.gds.service.PropertyService;
+import com.uc.training.smadmin.gds.vo.AdminPropertyVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -103,5 +104,16 @@ public class PropertyServiceImpl implements PropertyService{
     @Override
     public Integer getGoodsIdCountById(Long id) {
         return propertyDao.getGoodsIdCountById(id);
+    }
+
+    /**
+     * 获取商品该名称规格的数量
+     *
+     * @param adminPropertyVO
+     * @return
+     */
+    @Override
+    public Integer getCountByGoodsIdAndName(AdminPropertyVO adminPropertyVO) {
+        return propertyDao.getCountByGoodsIdAndName(adminPropertyVO);
     }
 }

@@ -64,7 +64,7 @@
 	<insert id="insertBanner" parameterClass="com.uc.training.smadmin.bd.model.Banner">
 		 insert into t_bd_banner
 			 (name, type, sort_num, image_url, url,is_show, clicks, description, create_emp,modify_emp)
-		  values (#name#,#type#,#sortNum#,#imageUrl#,#url#,#isShow#,#clicks#,#description#,#createEmp#,#modifyEmp#)
+		  values (#name#,#type#,#sortNum#,#imageUrl#,#url#,#isShow#,0,#description#,#createEmp#,#modifyEmp#)
 	<selectKey keyProperty="id">
 		select LAST_INSERT_ID() AS id
 	</selectKey>

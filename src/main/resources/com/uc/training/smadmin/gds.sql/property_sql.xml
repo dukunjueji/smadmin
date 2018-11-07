@@ -37,11 +37,11 @@
         where id = #id#
     </delete>
     <!--通过商品属性id获取商品的状态（上架，下架）-->
-    <select id="getGoodsStatusById" parameterClass="Long">
+    <select id="getGoodsStatusById" parameterClass="Long" resultClass="Integer">
       select status
       from t_gds_goods
       where id = (
-                    select  goodsId
+                    select  goods_id
                     from   t_gds_property
                     where id = #id#
                   )
@@ -57,6 +57,13 @@
                         )
     </select>
 
+    <!--获取商品该名称规格的数量-->
+    <select id="getCountByGoodsIdAndName" parameterClass="com.uc.training.smadmin.gds.vo.AdminPropertyVO" resultClass="Integer">
+      select count(1)
+      from t_gds_property
+      where `property` = #property# AND goods_id = #goodsId#
+    </select>
+
     <!--更新商品属性-->
     <update id="updateProperty" parameterClass="com.uc.training.smadmin.gds.model.Property">
         UPDATE t_gds_property
@@ -66,6 +73,6 @@
               property=#property#,
               is_discount=#isDiscount#,
               modify_emp=#modifyEmp#
-        WHERE goods_id = #goodsId#
+        WHERE id = #id#
     </update>
 </sqlMap>
