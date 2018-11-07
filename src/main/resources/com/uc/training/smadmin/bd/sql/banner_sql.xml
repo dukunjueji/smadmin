@@ -17,7 +17,7 @@
 	<select id="getAdminBannerCount" resultClass="java.lang.Long" parameterClass="com.uc.training.smadmin.bd.vo.AdminBannerListVO">
 		SELECT
 		count(1)
-		FROM t_bd_banner
+		FROM t_bd_banner s
 		<dynamic prepend="where">
 			<isNotEmpty property="name" prepend="and">
 				s.name LIKE concat("%",#name#,"%")
