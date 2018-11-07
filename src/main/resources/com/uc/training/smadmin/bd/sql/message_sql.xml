@@ -86,7 +86,7 @@
 	<!-- 通过主键更新 -->
 	<update id="updateMessageStatus" parameterClass="com.uc.training.smadmin.bd.model.Message">
 		 update t_bd_message set
-		is_read = 1,  modify_time = now()
+		is_read = 1,  modify_emp = #memberId#
 		where id=#id# and member_id=#memberId#
 		</update>
 
