@@ -1,4 +1,6 @@
 package com.uc.training.smadmin.bd.model;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.io.Serializable;
 
 /**
@@ -23,6 +25,8 @@ public class MemberGrade implements Serializable {
 	private Long maxGrowth;
 
 	/**折扣(以 x.xx 的形式使用，直接与原价相乘)**/
+	@Min(value = 0, message = "折扣不能小于0")
+	@Max(value = 1, message = "折扣不能大于1")
 	private Double discount;
 
 	/**创建时间**/

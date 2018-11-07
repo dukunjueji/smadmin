@@ -10,6 +10,7 @@ import com.ycc.base.common.Result;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -32,9 +33,9 @@ public class RoleController extends BaseController {
 
     @RequestMapping(value = "getRolePage.do_", method = RequestMethod.POST)
     @ResponseBody
-    public Result<PageVO<SysRole>> getRolePage(RoleListVO roleListVO) {
+    public Result<PageVO<SysRole>> getRolePage(@Validated RoleListVO roleListVO) {
         if (roleListVO.getName().length() > Constant.LONGEST_ROLE_NAME) {
-            return Result.getBusinessException("角色名长度不能超过32位", null);
+            return Result.getBusinessException("", null);
         }
         Result<PageVO<SysRole>> res;
         try {
@@ -82,13 +83,7 @@ public class RoleController extends BaseController {
      */
     @RequestMapping(value = "addRole.do_", method = RequestMethod.POST)
     @ResponseBody
-    public Result<Long> addRole(SysRole sysRole){
-        if (sysRole == null || StringUtils.isEmpty(sysRole.getName())){
-            return Result.getBusinessException("角色名为空", null);
-        }
-        if (sysRole.getName().length() > Constant.LONGEST_ROLE_NAME) {
-            return Result.getBusinessException("角色名长度不能超过32位", null);
-        }
+    public Result<Long> addRole(@Validated SysRole sysRole){
         if (sysRoleService.queryCountByName(sysRole.getName()) > 0) {
             return Result.getBusinessException("该角色已存在", null);
         }
@@ -103,13 +98,7 @@ public class RoleController extends BaseController {
      */
     @RequestMapping(value = "updateRole.do_", method = RequestMethod.POST)
     @ResponseBody
-    public Result<Integer> updateRole(SysRole sysRole){
-        if (sysRole == null || StringUtils.isEmpty(sysRole.getName())){
-            return Result.getBusinessException("角色名为空", null);
-        }
-        if (sysRole.getName().length() > Constant.LONGEST_ROLE_NAME) {
-            return Result.getBusinessException("角色名长度不能超过32位", null);
-        }
+    public Result<Integer> updateRole(@Validated SysRole sysRole){
         String oldName = sysRoleService.getById(sysRole.getId()).getName();
         if (sysRoleService.queryCountByName(sysRole.getName()) >0 && !sysRole.getName().equals(oldName)){
             return Result.getBusinessException("该角色已存在", null);

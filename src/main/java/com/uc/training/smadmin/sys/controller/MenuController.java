@@ -53,15 +53,6 @@ public class MenuController extends BaseController {
         if (verify) {
             return Result.getBusinessException("条件不完整", null);
         }
-        if (menu.getName().length() > MenuConstant.LONGEST_NAME_LENGTH) {
-            return Result.getBusinessException("菜单名长度不能超过32位", null);
-        }
-        if (menu.getRel().length() > MenuConstant.LONGEST_REL_LENGTH) {
-            return Result.getBusinessException("权限标识长度不能超过32位", null);
-        }
-        if (menu.getUrl().length() > MenuConstant.LONGEST_URL_LENGTH) {
-            return Result.getBusinessException("菜单长度不能超过32位", null);
-        }
         // 判断菜单类型是否合法
         if (menu.getType() != MenuEnum.CATALOG.getNumber() && menu.getType() != MenuEnum.BUTTON.getNumber()){
             return Result.getBusinessException("菜单类型不合法", null);
@@ -80,15 +71,6 @@ public class MenuController extends BaseController {
     @RequestMapping(value = "updateMenu.do_", method = RequestMethod.POST)
     @ResponseBody
     public Result<Integer> updateMenu(@Validated SysMenu menu) {
-        if (menu.getName().length() > Constant.LONGEST_MENU_NAME) {
-            return Result.getBusinessException("菜单名长度不能超过32位", null);
-        }
-        if (menu.getRel().length() > MenuConstant.LONGEST_REL_LENGTH) {
-            return Result.getBusinessException("权限标识长度不能超过32位", null);
-        }
-        if (menu.getUrl().length() > MenuConstant.LONGEST_URL_LENGTH) {
-            return Result.getBusinessException("菜单长度不能超过32位", null);
-        }
         String oldName = sysMenuService.getById(menu.getId()).getName();
         if (sysMenuService.queryCountByName(menu.getName()) >0 && !menu.getName().equals(oldName)){
             return Result.getBusinessException("该菜单名已存在", null);
