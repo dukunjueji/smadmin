@@ -58,7 +58,7 @@
     </select>
 
     <!--获取商品该名称规格的数量-->
-    <select id="getCountByGoodsIdAndName" parameterClass="com.uc.training.smadmin.gds.vo.AdminPropertyVO" resultClass="Integer">
+    <select id="getCountByGoodsIdAndName" parameterClass="com.uc.training.smadmin.gds.model.Property" resultClass="Integer">
       select count(1)
       from t_gds_property
       where `property` = #property# AND goods_id = #goodsId#
