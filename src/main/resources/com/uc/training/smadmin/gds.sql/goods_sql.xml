@@ -103,6 +103,7 @@
             parameterClass="long">
 		select
 		 goods.name,
+		 goods.id as goodsId,
 		goods.sales,
 		goods.code,
 		goods.detail,
