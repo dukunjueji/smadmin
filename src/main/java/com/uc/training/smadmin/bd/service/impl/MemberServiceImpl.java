@@ -15,6 +15,8 @@ import com.uc.training.smadmin.bd.service.MemberService;
 import com.uc.training.smadmin.bd.vo.*;
 import com.uc.training.smadmin.gds.service.GoodsService;
 import com.uc.training.smadmin.gds.vo.GoodsStokeVO;
+import com.uc.training.smadmin.ord.dao.OrderDao;
+import com.uc.training.smadmin.ord.model.Order;
 import com.uc.training.smadmin.ord.re.OrderConfirmRE;
 import com.uc.training.smadmin.ord.service.OrderService;
 import com.uc.training.smadmin.ord.vo.OrdOrderVo;
@@ -124,13 +126,10 @@ public class MemberServiceImpl implements MemberService {
             if (orderService.updateOrder(ordOrderVo) > 0) {
                 list.add(orderConfirmRE);
             }
+
             //发送短信
-            GenerateSmsVO generateSmsVO = new GenerateSmsVO();
-            generateSmsVO.setTelephone("123");
-            generateSmsVO.setCode(SmsTypeEnum.ORDER_INFO.getCode());
-            generateSmsVO.setMessage(ordOrderVo.getOrderNum());
-            //生成短信模板，并发送
-            //smsTemplateService.generateSms(generateSmsVO);
+            orderSuccessSendSms(orderPayInfoNow.get(0).getOrderName());
+
             return list;
         } else {
             orderConfirmRE.setShowStatus("余额不足，请充值或者返回购物车重新选取商品");
@@ -138,6 +137,23 @@ public class MemberServiceImpl implements MemberService {
             orderConfirmRE.setStatus(OrderEnum.WAITPAY.getKey());
             return list;
         }
+    }
+
+    /**
+     * 订单成功发送短信
+     * @param orderNum
+     */
+    private void orderSuccessSendSms(String orderNum) {
+
+        GenerateSmsVO generateSmsVO = new GenerateSmsVO();
+
+        generateSmsVO.setTelephone(orderService.getTelephoneByOrderNum(orderNum));
+        generateSmsVO.setCode(SmsTypeEnum.ORDER_INFO.getCode());
+        generateSmsVO.setMessage(orderNum);
+        generateSmsVO.setType(SmsTypeEnum.ORDER_INFO.getType());
+
+        //生成短信模板，并发送
+        smsTemplateService.generateSms(generateSmsVO);
     }
 
 

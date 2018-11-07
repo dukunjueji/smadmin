@@ -249,7 +249,6 @@ public class OrderServiceImpl implements OrderService {
   @Override
   public int updateOrder(OrdOrderVo ordOrderVo) {
     //如果是取消订单回退库存
-    System.out.println("fdsfsd");
     if (ordOrderVo.getStatus().equals(OrderEnum.CANCEL.getKey().longValue())) {
       List<OrderGoodsDetailRe> list = getOrderGdsById(ordOrderVo.getOrderId());
       if (!CollectionUtils.isEmpty(list)) {
@@ -293,6 +292,17 @@ public class OrderServiceImpl implements OrderService {
       }
     }
     return list;
+  }
+
+  /**
+   * 根据订单号获取手机号
+   *
+   * @param orderNum
+   * @return
+   */
+  @Override
+  public String getTelephoneByOrderNum(String orderNum) {
+    return orderDao.getTelephoneByOrderNum(orderNum);
   }
 
   /**

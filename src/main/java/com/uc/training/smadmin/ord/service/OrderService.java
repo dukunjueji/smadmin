@@ -126,6 +126,13 @@ public interface OrderService {
    */
   List<OrderGoodsDetailRe> getOrderGdsById(Integer id);
 
+    /**
+     * 根据订单号获取手机号
+     * @param orderNum
+     * @return
+     */
+  String getTelephoneByOrderNum(String orderNum);
+
   /**
    * 获取订单信息列表
    *

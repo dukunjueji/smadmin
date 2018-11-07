@@ -32,6 +32,17 @@
 	</select>
 
 
+	<!-- 根据对象的不为null的值作为条件进行查找 -->
+	<select id="getTelephoneByOrderNum" resultClass="String" parameterClass="String">
+		SELECT
+          s.receipt_tel
+		FROM
+          t_ord_order s
+        WHERE
+          s.order_num=#orderNum#
+	</select>
+
+
 	<sql id="where_query">
 
 		 <isNotEmpty property="id" prepend="and">

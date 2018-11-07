@@ -76,4 +76,11 @@ public interface OrderDao {
 	 * @return
 	 */
   int updateOrder(OrdOrderVo ordOrderVo);
+
+    /**
+     *  根据订单编号获取订单手机号
+     * @param orderNum
+     * @return
+     */
+  String getTelephoneByOrderNum(String orderNum);
 }
