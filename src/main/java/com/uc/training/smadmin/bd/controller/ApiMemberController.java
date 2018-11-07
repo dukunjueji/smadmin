@@ -211,6 +211,7 @@ public class ApiMemberController extends BaseController {
         }
         if(memberRegisterVO.getTelCode().equals(msg)){
             mem.setPassword(memberRegisterVO.getPassword());
+            mem.setId(member.getId());
             memberService.updateMember(mem);
             return Result.getSuccessResult("成功");
         }else {
