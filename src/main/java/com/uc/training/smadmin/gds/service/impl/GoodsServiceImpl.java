@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -244,9 +245,9 @@ public class GoodsServiceImpl implements GoodsService {
         List<PropertyUrlRE> picList;
         if(propertyIds.size() > 0) {
             list = goodsDao.searchByPropertyId(propertyIds);
-            for(int i = 0; i < propertyIds.size(); i++) {
+            for(int i = 0; i < list.size(); i++) {
                 picList = new ArrayList<>();
-                picList = goodsDao.getPicUrlByPropertyId(propertyIds.get(i));
+                picList = goodsDao.getPicUrlByPropertyId(list.get(i).getPropertyId());
                 if(picList.size() > 0) {
                     list.get(i).setPicUrl(picList.get(0).getPicUrl());
                 }
