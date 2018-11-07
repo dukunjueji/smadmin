@@ -1,12 +1,12 @@
 package com.uc.training.smadmin.bd.controller;
 
+import com.uc.training.smadmin.bd.vo.AddressUpdateVO;
 import com.ycc.base.common.Result;
-import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.smadmin.bd.model.Address;
 import com.uc.training.smadmin.bd.re.AddressRE;
 import com.uc.training.smadmin.bd.service.AddressService;
-import com.uc.training.smadmin.bd.vo.AddressVO;
+import com.uc.training.smadmin.bd.vo.AddressInsertVO;
 import com.uc.training.smadmin.utils.TelCodeUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,8 +40,12 @@ public class AddressController extends BaseController {
     @RequestMapping("/getAddressById.do_")
     public Result<AddressRE> getAddressById(Long id) {
 
-        Result<AddressRE> address = Result.getSuccessResult(addressService.getAddressById(id));
-        return address;
+        //判断该地址是否本人拥有
+        if (!getUid().equals(addressService.getMemberIdById(id))) {
+            return Result.getBusinessException("您没有该地址！请不要查询！", null);
+        }
+
+        return Result.getSuccessResult(addressService.getAddressById(id));
     }
 
     /**
@@ -51,10 +55,7 @@ public class AddressController extends BaseController {
     @ResponseBody
     @RequestMapping("/getDefaultAddress.do_")
     public Result<AddressRE> getDefaultAddress() {
-
-        Result<AddressRE> address = Result.getSuccessResult(addressService.getDefaultAddress(getUid()));
-
-        return address;
+        return Result.getSuccessResult(addressService.getDefaultAddress(getUid()));
     }
 
     /**
@@ -72,15 +73,15 @@ public class AddressController extends BaseController {
 
     /**
      * 新增地址
-     * @param addressVO
+     * @param addressInsertVO
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "/addAddress.do_", method = RequestMethod.POST)
-    public Result addAddress(@Validated AddressVO addressVO) {
+    public Result addAddress(@Validated AddressInsertVO addressInsertVO) {
 
         Address address = new Address();
-        BeanUtils.copyProperties(addressVO, address);
+        BeanUtils.copyProperties(addressInsertVO, address);
 
         address.setMemberId(getUid());
         address.setCreateEmp(getUid());
@@ -91,24 +92,20 @@ public class AddressController extends BaseController {
 
     /**
      * 编辑地址
-     * @param addressVO
+     * @param addressUpdateVO
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "/editAddress.do_", method = RequestMethod.POST)
-    public Result editAddress(@Validated AddressVO addressVO) {
+    public Result editAddress(@Validated AddressUpdateVO addressUpdateVO) {
 
-        //判断收件人
-        if (addressVO.getReceiver() == null || addressVO.getReceiver().length() <= 0) {
-            return Result.getBusinessException("收件人不能为空", null);
-        }
-        //判断手机号
-        if (!TelCodeUtil.validateTel(addressVO.getTelephone())) {
-            return Result.getBusinessException("请输入正确手机号", null);
+        //判断该地址是否本人拥有
+        if (!getUid().equals(addressService.getMemberIdById(addressUpdateVO.getId()))) {
+            return Result.getBusinessException("您没有该地址！请不要查询！", null);
         }
 
         Address address = new Address();
-        BeanUtils.copyProperties(addressVO, address);
+        BeanUtils.copyProperties(addressUpdateVO, address);
 
         address.setMemberId(getUid());
         address.setModifyEmp(getUid());
@@ -124,6 +121,11 @@ public class AddressController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/deleteAddress.do_", method = RequestMethod.POST)
     public Result deleteAddress(Long id) {
+
+        //判断该地址是否本人拥有
+        if (!getUid().equals(addressService.getMemberIdById(id))) {
+            return Result.getBusinessException("您没有该地址！请不要删除！", null);
+        }
 
         // 判断是否为默认地址
         if (addressService.getAddressById(id).getIsDefault() == 1) {

@@ -83,4 +83,15 @@ public class AddressDaoImpl extends CarIsIbatisDaoImpl implements AddressDao {
     public AddressRE getDefaultAddress(Long memberId) {
         return (AddressRE) this.queryForObject("com.uc.training.smadmin.bd.dao.AddressDao.getDefaultAddress", memberId);
     }
+
+    /**
+     * 根据主键id获取会员id
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public Long getMemberIdById(Long id) {
+        return (Long) this.queryForObject("com.uc.training.smadmin.bd.dao.AddressDao.getMemberIdById", id);
+    }
 }
