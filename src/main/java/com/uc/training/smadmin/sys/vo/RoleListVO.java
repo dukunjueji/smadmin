@@ -2,6 +2,7 @@ package com.uc.training.smadmin.sys.vo;
 
 import com.uc.training.common.bean.PageQuery;
 import com.uc.training.common.vo.PageVO;
+import org.hibernate.validator.constraints.Length;
 
 /**
  * @Author: 余旭东
@@ -16,6 +17,7 @@ public class RoleListVO extends PageQuery {
     /**
      * 角色名称
      */
+    @Length(max = 32, message = "角色名长度不能超过32位")
     private String name;
 
     public Long getId() {
