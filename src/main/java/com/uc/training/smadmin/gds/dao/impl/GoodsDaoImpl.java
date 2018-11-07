@@ -24,7 +24,7 @@ import java.util.List;
 @Repository
 public class GoodsDaoImpl  extends CarIsIbatisDaoImpl implements GoodsDao {
     @Override
-    public List<GoodsRE> getHotRecommend() {
+    public List<Long> getHotRecommend() {
         return this.queryForList("com.uc.training.smadmin.gds.dao.GoodsDao.getHotRecommend");
     }
 

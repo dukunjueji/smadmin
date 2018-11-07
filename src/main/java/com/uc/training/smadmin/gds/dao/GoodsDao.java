@@ -22,7 +22,7 @@ public interface GoodsDao {
      * 获取热门推荐
      * @return
      */
-    public List<GoodsRE> getHotRecommend();
+    public List<Long> getHotRecommend();
 
     /**
      * 获取热门推荐总数量
