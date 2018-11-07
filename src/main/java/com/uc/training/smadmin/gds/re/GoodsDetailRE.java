@@ -42,6 +42,10 @@ public class GoodsDetailRE {
      */
     private long status;
     /**
+     * 商品状态(是否删除)
+     */
+    private long isDelete;
+    /**
      * 库存
      */
     private long stock;
@@ -164,5 +168,13 @@ public class GoodsDetailRE {
 
     public void setGoodsId(long goodsId) {
         this.goodsId = goodsId;
+    }
+
+    public long getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(long isDelete) {
+        this.isDelete = isDelete;
     }
 }
