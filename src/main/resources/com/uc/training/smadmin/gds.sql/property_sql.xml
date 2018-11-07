@@ -66,6 +66,6 @@
               property=#property#,
               is_discount=#isDiscount#,
               modify_emp=#modifyEmp#
-        WHERE goods_id = #goodsId#
+        WHERE id = #id#
     </update>
 </sqlMap>
