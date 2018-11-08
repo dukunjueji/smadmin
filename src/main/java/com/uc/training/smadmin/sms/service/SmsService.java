@@ -36,10 +36,11 @@ public interface SmsService {
 
     /**
      * 发送短信
+     * @param telephone
      * @param content
      * @return
      */
-    Integer sendSys(String content);
+    Integer sendSys(String telephone, String content);
 
     /**
      * 新增短信

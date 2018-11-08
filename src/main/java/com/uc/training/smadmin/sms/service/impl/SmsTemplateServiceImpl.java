@@ -134,7 +134,7 @@ public class SmsTemplateServiceImpl implements SmsTemplateService {
         //获取短信内容
         String content = smsTemplateDao.generateSms(generateSmsVO);
         // 发送短信
-        Integer status = smsService.sendSys(content);
+        Integer status = smsService.sendSys(generateSmsVO.getTelephone(), content);
 
         Sms sms = new Sms();
         BeanUtils.copyProperties(generateSmsVO, sms);
