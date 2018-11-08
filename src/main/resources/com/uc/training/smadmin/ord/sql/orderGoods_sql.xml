@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
 <sqlMap namespace="com.uc.training.smadmin.ord.dao.OrderGoodsDao">
+    <!--通过商品属性id获取待支付的商品属性数量-->
+	<select id="getUnPayGoodsPropertyCountByPropertyId" parameterClass="Long" resultClass="Integer">
+		select
+		COUNT(1)
+		from t_ord_order o,t_ord_order_goods g
+		where o.id = g.order_id AND o.`status` = 1 AND g.goods_property_id = #propertyId#
+	</select>
 
 	<!-- 根据对象的不为null的值作为条件进行查找 -->
 	<select id="getOrderGoodsById" resultClass="com.uc.training.smadmin.ord.model.OrderGoods" parameterClass="Integer">

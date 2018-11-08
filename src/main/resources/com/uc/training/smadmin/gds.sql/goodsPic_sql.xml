@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
 <sqlMap namespace="com.uc.training.smadmin.gds.dao.GoodsPicDao">
+
+    <select id="getPropertyIdById" parameterClass="Long" resultClass="Long">
+      select property_id
+      from t_gds_goods_pic
+      where id = #id#
+    </select>
+
     <!--新增商品属性-->
     <insert id="insertGoodsPic" parameterClass="com.uc.training.smadmin.gds.model.GoodsPic">
         INSERT INTO t_gds_goods_pic

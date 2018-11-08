@@ -6,6 +6,7 @@ import com.uc.training.smadmin.gds.re.AdminGoodsPicRE;
 import com.uc.training.smadmin.gds.service.GoodsPicService;
 import com.uc.training.smadmin.gds.vo.AdminInsertGoodsPicVO;
 import com.uc.training.smadmin.gds.vo.AdminUpdateGoodsPicVO;
+import com.uc.training.smadmin.ord.service.OrderGoodsService;
 import com.ycc.base.common.Result;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,9 @@ public class AdminGoodsPicController extends BaseController{
 
     @Autowired
     private GoodsPicService goodsPicService;
+
+    @Autowired
+    private OrderGoodsService orderGoodsService;
 
     /**
      * 后台通过商品属性id获取图片
@@ -83,10 +87,19 @@ public class AdminGoodsPicController extends BaseController{
     @RequestMapping(value = "deleteGoodsPicById.do_", method = RequestMethod.POST)
     public Result deleteGoodsPicById(Long id) {
 
-        //判断商品是否上架和该商品属性的图片数量
-        if (goodsPicService.getGoodsStatusById(id) == 1 && goodsPicService.getPropertyIdCountById(id) == 1) {
-            return Result.getBusinessException("商品处于上架状态，商品属性中至少有一张图片！", null);
+        //判断该商品属性的图片数量
+        if (goodsPicService.getPropertyIdCountById(id) == 1) {
+            //判断商品是否上架
+            if (goodsPicService.getGoodsStatusById(id) == 1) {
+                return Result.getBusinessException("商品处于上架状态，商品属性中至少有一张图片！", null);
+            }
+            //判断商品属性是否存在订单
+            if (orderGoodsService.getUnPayGoodsPropertyCountByPropertyId(goodsPicService.getPropertyIdById(id)) >= 1L) {
+                return Result.getBusinessException("该商品属性存在待付款的订单，至少有一张图片！", null);
+            }
         }
+
+
         return Result.getSuccessResult(goodsPicService.deleteGoodsPicById(id));
     }
 }

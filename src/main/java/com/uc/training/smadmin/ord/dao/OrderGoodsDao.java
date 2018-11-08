@@ -40,5 +40,11 @@ public interface OrderGoodsDao{
 	 */
 	 int updateOrderGoodsById(OrderGoods record);
 
+	/**
+	 * 通过商品属性id获取待支付的商品属性数量
+	 * @param propertyId
+	 * @return
+	 */
+    Integer getUnPayGoodsPropertyCountByPropertyId(Long propertyId);
 
 }
