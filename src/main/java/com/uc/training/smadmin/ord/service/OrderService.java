@@ -22,6 +22,23 @@ public interface OrderService {
      */
     List<CartGoods> getCarGoodsById(Long memberId);
 
+  /**
+   * 根据用户ID和购物车商品表ID获取购物车商品信息
+   *
+   * @param ordGoodsVO
+   * @return
+   */
+  List<CartGoods> getCarGoodsByIds(OrdGoodsVO ordGoodsVO);
+
+  /**
+   * 根据用户id获取订单商品信息
+   *
+   * @param orderGodsList
+   * @return
+   */
+
+    List<OrdOrderGoodsVo> getOrderGoodsById(List<OrdOrderGoodsVo> orderGodsList);
+
     /**
      * 通过会员id来查找
      *
@@ -29,23 +46,6 @@ public interface OrderService {
      * @return
      */
     List<Order> getOrderById(OrdMemberVO ordMemberVO);
-
-    /**
-     * 根据用户ID和购物车商品表ID获取购物车商品信息
-     *
-     * @param ordGoodsVO
-     * @return
-     */
-    List<CartGoods> getCarGoodsByIds(OrdGoodsVO ordGoodsVO);
-
-    /**
-     * 根据用户id获取订单商品信息
-     *
-     * @param orderGodsList
-     * @return
-     */
-
-    List<OrdOrderGoodsVo> getOrderGoodsById(List<OrdOrderGoodsVo> orderGodsList);
 
 
     /**
