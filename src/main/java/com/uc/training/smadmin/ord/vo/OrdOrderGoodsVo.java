@@ -64,12 +64,12 @@ public class OrdOrderGoodsVo implements Serializable {
     /**
      * 商品原价
      */
-    private double salePrice;
+    private Double salePrice;
 
     /**
      * 商品优惠价
      */
-    private double discountPrice;
+    private Double discountPrice;
 
     /**
      * 是否打折
@@ -96,10 +96,13 @@ public class OrdOrderGoodsVo implements Serializable {
     private String receiptTel;
 
     /**
-     * 订单总额
+     * 订单实际支付总额
      */
-    private double totalPrice;
-
+    private Double totalPrice;
+    /**
+     * 订单实际总额
+     */
+    private Double orderPrice;
     /**
      * 收货人地址
      */
@@ -110,6 +113,14 @@ public class OrdOrderGoodsVo implements Serializable {
     private String orderInfoList;
 
     private List<OrdOrderGoodsVo> list;
+
+    public Double getOrderPrice() {
+        return orderPrice;
+    }
+
+    public void setOrderPrice(Double orderPrice) {
+        this.orderPrice = orderPrice;
+    }
 
     public List<OrdOrderGoodsVo> getList() {
         return (List<OrdOrderGoodsVo>) JSONArray.toList(JSONArray.fromObject(this.orderInfoList), new OrdOrderGoodsVo(), new JsonConfig());
@@ -143,11 +154,11 @@ public class OrdOrderGoodsVo implements Serializable {
         this.id = id;
     }
 
-    public double getTotalPrice() {
+    public Double getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(double totalPrice) {
+    public void setTotalPrice(Double totalPrice) {
         this.totalPrice = totalPrice;
     }
 
@@ -199,11 +210,11 @@ public class OrdOrderGoodsVo implements Serializable {
         this.property = property;
     }
 
-    public double getSalePrice() {
+    public Double getSalePrice() {
         return salePrice;
     }
 
-    public void setSalePrice(double salePrice) {
+    public void setSalePrice(Double salePrice) {
         this.salePrice = salePrice;
     }
 
@@ -223,11 +234,11 @@ public class OrdOrderGoodsVo implements Serializable {
         this.cartId = cartId;
     }
 
-    public double getDiscountPrice() {
+    public Double getDiscountPrice() {
         return discountPrice;
     }
 
-    public void setDiscountPrice(double discountPrice) {
+    public void setDiscountPrice(Double discountPrice) {
         this.discountPrice = discountPrice;
     }
 

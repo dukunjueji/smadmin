@@ -54,7 +54,18 @@ public class OrderServiceImpl implements OrderService {
     return cartGoodsDao.getCartGoodsById(memberId);
   }
 
-  @Override
+    /**
+     * 通过会员id来查找
+     *
+     * @param ordMemberVO （订单表id）
+     * @return
+     */
+    @Override
+    public List<Order> getOrderById(OrdMemberVO ordMemberVO) {
+        return orderDao.getOrderById(ordMemberVO);
+    }
+
+    @Override
   public List<CartGoods> getCarGoodsByIds(OrdGoodsVO ordGoodsVO) {
     return cartGoodsDao.getCarGoodsByIds(ordGoodsVO);
   }
@@ -129,7 +140,7 @@ public class OrderServiceImpl implements OrderService {
             goodsStokeVO.setPropertyId(orderInfoListNow.get(i).getPropertyId());
             goodsStokeVO.setStoke((long) orderInfoListNow.get(i).getNum());
             GoodsStokeRE goodsStokeRE = goodsService.selectGoodsStatus(goodsStokeVO);
-            if (goodsStokeRE.getIsDelete() == GoodsStatusEnum.GOODS_DELETE.getType()) {
+            if (goodsStokeRE.getIsDelete().equals(GoodsStatusEnum.GOODS_DELETE.getType())) {
                 StringBuilder temp = new StringBuilder();
                 temp.append("您的商品：" + goodsStokeRE.getGoodsName() + "\n" + "规格:");
                 temp.append(goodsStokeRE.getGoodsProperty() + "已经被删除了，点击返回购物车，再重新选择");
@@ -138,7 +149,7 @@ public class OrderServiceImpl implements OrderService {
                 list.add(orderConfirmRE);
                 return list;
             }
-            if (goodsStokeRE.getStatus() == GoodsStatusEnum.GOODS_IS_SHELVES.getType()) {
+            if (goodsStokeRE.getStatus().equals(GoodsStatusEnum.GOODS_IS_SHELVES.getType())) {
                 StringBuilder temp = new StringBuilder();
                 temp.append("您的商品：" + goodsStokeRE.getGoodsName() + "\n" + "规格:");
                 temp.append(goodsStokeRE.getGoodsProperty() + "已经被下架了，点击返回购物车，再重新选择");
@@ -160,7 +171,7 @@ public class OrderServiceImpl implements OrderService {
         //插入用户订单表
         Order order = new Order();
         order.setMemberId(orderInfoListNow.get(orderInfoListNow.size() - 2).getMemberId());
-        order.setOrderPrice(orderInfoListNow.get(orderInfoListNow.size() - 1).getTotalPrice());
+        order.setOrderPrice(orderInfoListNow.get(orderInfoListNow.size() - 1).getOrderPrice());
         order.setPayPrice(orderInfoListNow.get(orderInfoListNow.size() - 1).getTotalPrice());
         //插入地址信息
         AddressRE addressRE = addressService.getAddressById(orderInfoListNow.get(orderInfoListNow.size() - 2).getAddressId());
