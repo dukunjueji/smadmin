@@ -2,8 +2,6 @@ package com.uc.training.smadmin.gds.model;
 
 import com.uc.training.common.base.model.BaseModel;
 
-import java.math.BigDecimal;
-
 /**
  * 商品
  *

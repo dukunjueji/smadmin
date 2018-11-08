@@ -7,10 +7,7 @@ import com.uc.training.smadmin.gds.dao.GoodsDao;
 import com.uc.training.smadmin.gds.model.Goods;
 import com.uc.training.smadmin.gds.model.HotTag;
 import com.uc.training.smadmin.gds.re.*;
-import com.uc.training.smadmin.gds.service.CategoryService;
-import com.uc.training.smadmin.gds.service.GoodsPicService;
 import com.uc.training.smadmin.gds.service.GoodsService;
-import com.uc.training.smadmin.gds.service.PropertyService;
 import com.uc.training.smadmin.gds.vo.AdminPullGoodsVO;
 import com.uc.training.smadmin.gds.vo.AdminUpdateGoodsVO;
 import com.uc.training.smadmin.gds.vo.GoodsListVO;
@@ -34,14 +31,6 @@ public class GoodsServiceImpl implements GoodsService {
     @Autowired
     MemberGradeService memberGradeService;
 
-    @Autowired
-    private CategoryService categoryService;
-
-    @Autowired
-    private PropertyService propertyService;
-
-    @Autowired
-    private GoodsPicService goodsPicService;
     /**
      * 锁标志
      */
