@@ -29,6 +29,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
@@ -140,6 +141,27 @@ public class OrderController extends BaseController {
             return Result.getBusinessException("获取订单列表失败", "");
         }
         List<OrdOrderGoodsVo> orderList = orderService.getOrderGoodsById(orderGodsList);
+        if (CollectionUtils.isEmpty(orderList)) {
+            return Result.getBusinessException("获取订单列表失败", "");
+        }
+        return Result.getSuccessResult(orderList);
+    }
+
+    /**
+     * 获取订单列表
+     *
+     * @param goodsList
+     * @return
+     * @author DK
+     */
+    @ResponseBody
+    @RequestMapping(value = "getOrderGoodsList.do_", method = RequestMethod.POST)
+    public Result<List<OrdOrderGoodsVo>> getOrderGdsList(String goodsList, Long orderId) {
+        List<OrdOrderGoodsVo> orderGodsList = (List<OrdOrderGoodsVo>) JSONArray.toList(JSONArray.fromObject(goodsList), new OrdOrderGoodsVo(), new JsonConfig());
+        if (CollectionUtils.isEmpty(orderGodsList)) {
+            return Result.getBusinessException("获取订单列表失败", "");
+        }
+        List<OrdOrderGoodsVo> orderList = orderService.getOrderGoods(orderGodsList, orderId);
         if (CollectionUtils.isEmpty(orderList)) {
             return Result.getBusinessException("获取订单列表失败", "");
         }
@@ -275,7 +297,7 @@ public class OrderController extends BaseController {
         // 支付订单前判断该用户订单状态是否为待付款状态
         OrdMemberVO ordMemberVO = new OrdMemberVO();
         ordMemberVO.setMemberId(orderPayInfoNow.get(0).getMemberId());
-        ordMemberVO.setOrderNum(orderPayInfoNow.get(0).getOrderName());
+        ordMemberVO.setOrderId(orderPayInfoNow.get(0).getOrderId());
         List<Order> order = orderService.getOrderById(ordMemberVO);
         if (!CollectionUtils.isEmpty(order)) {
             if (order.get(0).getStatus() != 1 || !order.get(0).getMemberId().equals(getUid())) {

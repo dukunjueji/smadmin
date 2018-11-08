@@ -19,8 +19,10 @@ import com.uc.training.smadmin.bd.vo.MemberLoginVO;
 import com.uc.training.smadmin.bd.vo.MqVO;
 import com.uc.training.smadmin.gds.service.GoodsService;
 import com.uc.training.smadmin.gds.vo.GoodsStokeVO;
+import com.uc.training.smadmin.ord.model.Order;
 import com.uc.training.smadmin.ord.re.OrderConfirmRE;
 import com.uc.training.smadmin.ord.service.OrderService;
+import com.uc.training.smadmin.ord.vo.OrdMemberVO;
 import com.uc.training.smadmin.ord.vo.OrdOrderVo;
 import com.uc.training.smadmin.sms.service.SmsTemplateService;
 import com.uc.training.smadmin.sms.vo.GenerateSmsVO;
@@ -95,11 +97,17 @@ public class MemberServiceImpl implements MemberService {
         List<OrderConfirmRE> list = new ArrayList<>();
         OrderConfirmRE orderConfirmRE = new OrderConfirmRE();
         MemberInfoVO memberInfoVO = new MemberInfoVO();
-        memberInfoVO.setTotalPrice(orderPayInfoNow.get(0).getTotalPrice());
-        memberInfoVO.setOrderName(orderPayInfoNow.get(0).getOrderName());
+        memberInfoVO.setOrderId(orderPayInfoNow.get(0).getOrderId());
         memberInfoVO.setMemberId(orderPayInfoNow.get(0).getMemberId());
+        OrdMemberVO ordMemberVO = new OrdMemberVO();
+        ordMemberVO.setOrderId(orderPayInfoNow.get(0).getOrderId());
+        ordMemberVO.setMemberId(orderPayInfoNow.get(0).getMemberId());
+        List<Order> orderList = orderService.getOrderById(ordMemberVO);
+        if (orderList.size() <= 0) {
+            return list;
+        }
         Double accountBalances = memberDao.queryBalances(memberInfoVO.getMemberId());
-        if (accountBalances > memberInfoVO.getTotalPrice()) {
+        if (accountBalances > orderList.get(0).getPayPrice()) {
             // 加上对应的商品销量
             for (int i = 1, j = orderPayInfoNow.size(); i < j; i++) {
                 GoodsStokeVO goodsStokeVO = new GoodsStokeVO();
@@ -110,11 +118,12 @@ public class MemberServiceImpl implements MemberService {
             //减去用户余额
             MemberBalanceVO memberBalanceVO = new MemberBalanceVO();
             memberBalanceVO.setMemberId(memberInfoVO.getMemberId());
-            memberBalanceVO.setTotalMoney(memberInfoVO.getTotalPrice());
+            memberBalanceVO.setTotalMoney(orderList.get(0).getPayPrice());
             memberDao.updateBalance(memberBalanceVO);
             //加成长值，积分
             MqVO mqVO1 = new MqVO();
             mqVO1.setMemberId(memberInfoVO.getMemberId());
+            memberInfoVO.setTotalPrice(orderList.get(0).getPayPrice());
             mqVO1.setGrowthType(GrowthEnum.PURCHASE.getGrowthType());
             mqVO1.setIntegralType(IntegralEnum.PURCHASE.getIntegralType());
             mqVO1.setPurchaseValue(BigDecimal.valueOf(memberInfoVO.getTotalPrice()));
@@ -122,7 +131,7 @@ public class MemberServiceImpl implements MemberService {
             //更新订单状态
             orderConfirmRE.setStatus(OrderEnum.WAITSHIP.getKey());
             OrdOrderVo ordOrderVo = new OrdOrderVo();
-            ordOrderVo.setOrderNum(orderPayInfoNow.get(0).getOrderName());
+            ordOrderVo.setOrderNum(orderList.get(0).getOrderNum());
             ordOrderVo.setStatus(OrderEnum.WAITSHIP.getKey().longValue());
             ordOrderVo.setMemberId(memberInfoVO.getMemberId());
             orderConfirmRE.setShowStatus("成功购买商品");
@@ -131,7 +140,7 @@ public class MemberServiceImpl implements MemberService {
             }
 
             //发送短信
-            orderSuccessSendSms(orderPayInfoNow.get(0).getOrderName());
+            orderSuccessSendSms(orderList.get(0).getOrderNum());
 
             return list;
         } else {

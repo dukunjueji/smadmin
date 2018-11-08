@@ -26,6 +26,9 @@
         <isNotEmpty property="orderNum" prepend="and">
             s.order_num = #orderNum#
         </isNotEmpty>
+		<isNotEmpty property="orderId" prepend="and">
+			s.id = #orderId#
+		</isNotEmpty>
 		ORDER BY
 		  s.modify_time DESC
         <isNotNull property="offset">

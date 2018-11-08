@@ -26,7 +26,7 @@ public class MemberInfoVO implements Serializable {
     /**
      * 会员id
      */
-     private Long memberId;
+    private Long memberId;
     /**
      * 邮箱
      */
@@ -46,19 +46,21 @@ public class MemberInfoVO implements Serializable {
     private String imageUrl;
 
     /**
-     *用户余额
+     * 用户余额
      */
     private Double balances;
 
     /**
-     * 用户订单号
+     * 用户订单id
+     *
      * @return
      */
 
-    private String orderName;
+    private String orderId;
 
     /**
      * 用户订单商品id
+     *
      * @return
      */
     private Long goodsId;
@@ -70,6 +72,7 @@ public class MemberInfoVO implements Serializable {
 
     /**
      * 用户订单商品对应的商品数目
+     *
      * @return
      */
     private Long goodsNum;
@@ -98,12 +101,12 @@ public class MemberInfoVO implements Serializable {
         this.goodsNum = goodsNum;
     }
 
-    public String getOrderName() {
-        return orderName;
+    public String getOrderId() {
+        return orderId;
     }
 
-    public void setOrderName(String orderName) {
-        this.orderName = orderName;
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
     }
 
     public Double getBalances() {
@@ -163,7 +166,7 @@ public class MemberInfoVO implements Serializable {
                 ", sex=" + sex +
                 ", imageUrl='" + imageUrl + '\'' +
                 ", balances=" + balances +
-                ", orderName='" + orderName + '\'' +
+                ", orderName='" + orderId + '\'' +
                 ", goodsId=" + goodsId +
                 ", totalPrice=" + totalPrice +
                 ", goodsNum=" + goodsNum +
