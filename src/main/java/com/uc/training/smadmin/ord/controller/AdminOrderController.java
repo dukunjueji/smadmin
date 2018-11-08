@@ -50,7 +50,8 @@ public class AdminOrderController extends BaseController {
   @RequestMapping(value = "getOrderPage.do_", method = RequestMethod.POST)
   public Result getOrderPage(OrdOrderVo orderVo) {
     List<OrderRe> list;
-    Map<String, Object> map = new HashMap<String, Object>(5);
+    int size = 5;
+    Map<String, Object> map = new HashMap<String, Object>(size);
     list = orderService.getOrderPage(orderVo);
     Integer totalSize = orderService.getOrderTotal(orderVo);
     map.put("orderList", list);
