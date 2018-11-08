@@ -142,9 +142,6 @@ class UUIDData {
     public UUIDData(int d){
         data = d;
     }
-    public UUIDData(String d){
-        data = Integer.valueOf(d);
-    }
     public int getData(){
         return data;
     }

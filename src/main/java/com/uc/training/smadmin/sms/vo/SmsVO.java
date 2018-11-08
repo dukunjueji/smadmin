@@ -109,6 +109,7 @@ public class SmsVO {
                 ", telephone='" + telephone + '\'' +
                 ", type=" + type +
                 ", status=" + status +
+                ", content='" + content + '\'' +
                 ", createTime=" + createTime +
                 ", typeDes='" + typeDes + '\'' +
                 ", statusDes='" + statusDes + '\'' +
