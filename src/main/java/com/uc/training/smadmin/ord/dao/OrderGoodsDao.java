@@ -12,33 +12,33 @@ public interface OrderGoodsDao{
 	 * @param id
 	 * @return
 	 */
-	 public List<OrderGoods>  getOrderGoodsByOrderId(Integer id);
+	  List<OrderGoods>  getOrderGoodsByOrderId(Integer id);
 
 	/**
 	 * 查询列表
 	 * @return
 	 */
-	 public List<OrderGoods>  queryOrderGoodsList();
+	  List<OrderGoods>  queryOrderGoodsList();
 
 	/**
 	 * 查找数据总记录数
 	 * @return
 	 */
-	public Integer queryOrderGoodsCount();
+	 Integer queryOrderGoodsCount();
 
 	/**
 	 * 保存
 	 * @param record
 	 * @return
 	 */
-	public Long insertOrderGoods(OrderGoods record);
+	 Long insertOrderGoods(OrderGoods record);
 
 	/**
 	 * 更新
 	 * @param record
 	 * @return
 	 */
-	public int updateOrderGoodsById(OrderGoods record);
+	 int updateOrderGoodsById(OrderGoods record);
 
 
 }

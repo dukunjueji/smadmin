@@ -15,9 +15,17 @@ import com.uc.training.smadmin.ord.dao.OrderGoodsDao;
 import com.uc.training.smadmin.ord.model.CartGoods;
 import com.uc.training.smadmin.ord.model.Order;
 import com.uc.training.smadmin.ord.model.OrderGoods;
-import com.uc.training.smadmin.ord.re.*;
+import com.uc.training.smadmin.ord.re.OrderConfirmRE;
+import com.uc.training.smadmin.ord.re.OrderGoodsDetailRe;
+import com.uc.training.smadmin.ord.re.OrderInfoRE;
+import com.uc.training.smadmin.ord.re.OrderRe;
+import com.uc.training.smadmin.ord.re.OrderStatusRe;
 import com.uc.training.smadmin.ord.service.OrderService;
-import com.uc.training.smadmin.ord.vo.*;
+import com.uc.training.smadmin.ord.vo.OrdCartGoodsVo;
+import com.uc.training.smadmin.ord.vo.OrdGoodsVO;
+import com.uc.training.smadmin.ord.vo.OrdMemberVO;
+import com.uc.training.smadmin.ord.vo.OrdOrderGoodsVo;
+import com.uc.training.smadmin.ord.vo.OrdOrderVo;
 import com.uc.training.smadmin.utils.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -345,7 +353,6 @@ public class OrderServiceImpl implements OrderService {
     }
     OrderGoodsDetailRe orderGoodsDetailRe;
     GoodsDetailRE gdDTO;
-    Long time1 = System.currentTimeMillis() / 1000;
     List<Long> propertyIds = new ArrayList<>();
     for (int i = 0; i < orderGdslist.size(); i++) {
       propertyIds.add(orderGdslist.get(i).getGoodsPropertyId());
@@ -360,8 +367,6 @@ public class OrderServiceImpl implements OrderService {
       orderGoodsDetailRe.setGoodsUrl(goodsDetailRES.get(i).getPicUrl().get(0).getPicUrl());
       list.add(orderGoodsDetailRe);
     }
-    Long time2 = System.currentTimeMillis() / 1000;
-    System.out.println("------time1-----" + (time2 - time1));
     return list;
   }
 

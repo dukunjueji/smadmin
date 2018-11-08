@@ -25,7 +25,6 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +57,6 @@ public class OrderController extends BaseController {
      * @author hhj
      */
     @ResponseBody
-    @AccessLogin
     @RequestMapping(value = "getCartList.do_", method = RequestMethod.GET)
     public Result getCartgds() {
         List<OrdCartGoodsVo> list = new ArrayList<>();
@@ -205,7 +203,6 @@ public class OrderController extends BaseController {
      * @author hhj
      */
     @ResponseBody
-    @AccessLogin
     @RequestMapping(value = "deleteCartgoods.do_", method = RequestMethod.POST)
     public Result deleteCartgds(HttpServletRequest request, OrdCartGoodsVo ordCartGoodsVo) {
         try {
@@ -225,6 +222,7 @@ public class OrderController extends BaseController {
      * @return
      */
     @ResponseBody
+    @AccessLogin
     @RequestMapping(value = "confirmOrderInfo.do_", method = RequestMethod.POST)
     public Result confirmOrderInfo(OrdOrderGoodsVo ordOrderGoodsVo) {
         List<OrdOrderGoodsVo> orderInfoListNow = ordOrderGoodsVo.getList();
@@ -247,7 +245,6 @@ public class OrderController extends BaseController {
      * @return
      */
     @ResponseBody
-    @AccessLogin
     @RequestMapping(value = "getOrderGoods.do_", method = RequestMethod.POST)
     public Result getOrderGoods(Integer id) {
         Result result = new Result();
@@ -296,7 +293,6 @@ public class OrderController extends BaseController {
      * @author hhj
      */
     @ResponseBody
-    @AccessLogin
     @RequestMapping(value = "checkStock.do_", method = RequestMethod.POST)
     public Result checkStock(String[] goodsList) {
         OrdGoodsVO ordGoodsVO = new OrdGoodsVO();
