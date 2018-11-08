@@ -1,7 +1,6 @@
 package com.uc.training.smadmin.bd.dao;
 
 import com.uc.training.smadmin.bd.model.IntegralDetaill;
-import com.uc.training.smadmin.bd.vo.IntegralVO;
 
 /**
  * 版权说明：Copyright (c) 2018 ucarinc. All Rights Reserved.
@@ -19,5 +18,5 @@ public interface IntegralDetailDao {
     *@return：void
     *@throws：
     */
-    public void addIntegralDetail(IntegralDetaill integralDetaill);
+    void addIntegralDetail(IntegralDetaill integralDetaill);
 }

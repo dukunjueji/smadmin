@@ -3,19 +3,15 @@ package com.uc.training.smadmin.bd.service.impl;
 import com.uc.training.common.enums.GrowthEnum;
 import com.uc.training.smadmin.bd.dao.GrowthDetailDao;
 import com.uc.training.smadmin.bd.dao.MemberDao;
-import com.uc.training.smadmin.bd.dao.impl.GrowthDetailDaoImpl;
-import com.uc.training.smadmin.bd.dao.impl.MemberDaoImpl;
 import com.uc.training.smadmin.bd.model.GrowthDetail;
 import com.uc.training.smadmin.bd.service.GrowthDetailService;
 import com.uc.training.smadmin.bd.vo.GrowthVO;
 import com.uc.training.smadmin.bd.vo.MemberGrowthVO;
 import com.uc.training.smadmin.utils.InjectionUtils;
-import com.zuche.framework.common.SpringApplicationContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.Map;
 
 /**
  * 版权说明：Copyright (c) 2018 ucarinc. All Rights Reserved.
@@ -33,6 +29,7 @@ public class GrowthDetailServiceImpl implements GrowthDetailService {
     @Autowired
     private MemberDao memberDao;
 
+    private static final Integer NUM = 100;
     @Override
     public Long saveGrowthDetail(GrowthVO growthVO){
         this.growthDetailDao = InjectionUtils.getInjectionInstance(GrowthDetailDao.class);
@@ -73,7 +70,7 @@ public class GrowthDetailServiceImpl implements GrowthDetailService {
                 BigDecimal purchaseGrowth = growthVO.getPurchaseValue();
                 growthVaule = BigDecimal.valueOf(purchaseValue)
                         .multiply(purchaseGrowth)
-                        .divide(BigDecimal.valueOf(100)).longValue();
+                        .divide(BigDecimal.valueOf(NUM)).longValue();
             }else {
                 if(growthType.equals(growthEnum.getGrowthType())){
                     growthVaule = growthEnum.getValue();

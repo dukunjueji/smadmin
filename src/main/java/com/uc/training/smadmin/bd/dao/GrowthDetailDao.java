@@ -1,7 +1,6 @@
 package com.uc.training.smadmin.bd.dao;
 
 import com.uc.training.smadmin.bd.model.GrowthDetail;
-import com.uc.training.smadmin.bd.vo.ContinueSignDaysVO;
 
 /**
  * 版权说明：Copyright (c) 2018 ucarinc. All Rights Reserved.

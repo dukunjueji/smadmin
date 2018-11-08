@@ -17,5 +17,5 @@ public interface GrowthDetailService {
     *@return：java.lang.Long
     *@throws：
     */
-    public Long saveGrowthDetail(GrowthVO growthVO);
+    Long saveGrowthDetail(GrowthVO growthVO);
 }

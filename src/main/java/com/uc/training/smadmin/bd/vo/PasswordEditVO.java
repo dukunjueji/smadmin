@@ -41,7 +41,6 @@ public class PasswordEditVO implements Serializable {
      * 验证码
      */
     @NotBlank(message = "验证码不能为空")
-    @Length(min = 6, max = 10, message = "密码长度须在6-10位之间")
     private String code;
 
     public String getOldpassword() {

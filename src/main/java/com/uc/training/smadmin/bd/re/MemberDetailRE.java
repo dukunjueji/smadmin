@@ -1,8 +1,6 @@
 package com.uc.training.smadmin.bd.re;
 
 import com.uc.training.smadmin.bd.model.Member;
-import org.yecht.Data;
-
 import java.io.Serializable;
 import java.util.Date;
 

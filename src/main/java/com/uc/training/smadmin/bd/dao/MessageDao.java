@@ -19,7 +19,7 @@ public interface MessageDao{
 	*@return：java.lang.Integer
 	*@throws：
 	*/
-	public Integer queryMessageCount(Long memberId);
+	Integer queryMessageCount(Long memberId);
 
 	/**
 	 *说明：查找指定会员未读消息总记录数
@@ -27,7 +27,7 @@ public interface MessageDao{
 	 *@return：java.lang.Integer
 	 *@throws：
 	 */
-	public Integer queryAllMessageCount(Long memberId);
+	Integer queryAllMessageCount(Long memberId);
 
 	/**
 	*说明：保存消息
@@ -35,7 +35,7 @@ public interface MessageDao{
 	*@return：java.lang.Long
 	*@throws：
 	*/
-	public Long insertMessage(Message record);
+	Long insertMessage(Message record);
 
 	/**
 	*说明：更新消息
@@ -43,14 +43,14 @@ public interface MessageDao{
 	*@return：int
 	*@throws：
 	*/
-	public int updateMessageById(Message record);
+	int updateMessageById(Message record);
 
 	/**
 	 * 查询所有消息
 	 * @param messageListVO
 	 * @return
 	 */
-	public List<Message> queryMessageList(MessageListVO messageListVO);
+	List<Message> queryMessageList(MessageListVO messageListVO);
 
 	/**
 	*说明：更新消息状态

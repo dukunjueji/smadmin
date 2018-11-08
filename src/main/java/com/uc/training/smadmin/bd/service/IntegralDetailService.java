@@ -18,6 +18,6 @@ public interface IntegralDetailService {
      *@return：java.lang.Long
      *@throws：
      */
-    public Long saveIntegralDetail(IntegralVO integralVO);
+    Long saveIntegralDetail(IntegralVO integralVO);
 
 }

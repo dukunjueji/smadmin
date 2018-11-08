@@ -4,7 +4,11 @@ import com.uc.training.smadmin.bd.dao.MemberDao;
 import com.uc.training.smadmin.bd.model.Member;
 import com.uc.training.smadmin.bd.re.MemberDetailRE;
 import com.uc.training.smadmin.bd.re.MemberInfoRE;
-import com.uc.training.smadmin.bd.vo.*;
+import com.uc.training.smadmin.bd.vo.MemberBalanceVO;
+import com.uc.training.smadmin.bd.vo.MemberGrowthVO;
+import com.uc.training.smadmin.bd.vo.MemberIntegralVO;
+import com.uc.training.smadmin.bd.vo.MemberListVO;
+import com.uc.training.smadmin.bd.vo.MemberLoginVO;
 import com.zuche.framework.dao.CarIsIbatisDaoImpl;
 import org.springframework.stereotype.Repository;
 

@@ -22,7 +22,7 @@ public interface MessageService {
     *@return：java.lang.Integer 消息的数目
     *@throws：
     */
-    public Integer queryMessageCount(Long memberId);
+    Integer queryMessageCount(Long memberId);
 
     /**
      *说明：查找指定会员消息总记录数
@@ -30,14 +30,14 @@ public interface MessageService {
      *@return：java.lang.Integer 消息的数目
      *@throws：
      */
-    public Integer queryAllMessageCount(Long memberId);
+    Integer queryAllMessageCount(Long memberId);
 
     /**
      * 查询指定会员的所有消息
      * @param messageListVO
      * @return 会员列表
      */
-    public List<MessageRE> queryMessageList(MessageListVO messageListVO);
+    List<MessageRE> queryMessageList(MessageListVO messageListVO);
 
     /**
     *说明：更新消息状态
@@ -53,7 +53,7 @@ public interface MessageService {
     *@return：java.lang.Long 影响数目
     *@throws：
     */
-    public Long insertMessage(Message record);
+    Long insertMessage(Message record);
 
     /**
     *说明：通过消息id获取消息的详情

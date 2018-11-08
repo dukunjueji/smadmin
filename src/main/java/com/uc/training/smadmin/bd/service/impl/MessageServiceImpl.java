@@ -7,7 +7,6 @@ import com.uc.training.smadmin.bd.service.MessageService;
 import com.uc.training.smadmin.bd.vo.MessageDetailVO;
 import com.uc.training.smadmin.bd.vo.MessageListVO;
 import com.uc.training.smadmin.utils.InjectionUtils;
-import com.zuche.framework.common.SpringApplicationContext;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Service;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 版权说明：Copyright (c) 2018 ucarinc. All Rights Reserved.
@@ -30,6 +28,10 @@ public class MessageServiceImpl implements MessageService {
 
     @Autowired
     private MessageDao messageDao;
+
+    private static final Integer STARTNUM = 0;
+
+    private static final Integer ENDNUM = 5;
 
     @Override
     public Integer queryMessageCount(Long memberId) {
@@ -53,7 +55,7 @@ public class MessageServiceImpl implements MessageService {
             String createdate = sdf.format(message.getCreateTime());
             messageRE.setCreateTime(createdate);
             messageRE.setIsRead(message.getIsRead());
-            messageRE.setTitle(StringUtils.substring(message.getContent(), 0, 5) + "....");
+            messageRE.setTitle(StringUtils.substring(message.getContent(), STARTNUM, ENDNUM) + "....");
             messageListRE.add(messageRE);
         }
         return messageListRE;
