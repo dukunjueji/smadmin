@@ -14,8 +14,14 @@ import java.util.regex.Pattern;
  * @date: 2018/10/16
  * 说明：随机生成六位数字作为手机验证码
  */
-public class TelCodeUtil {
+public final class TelCodeUtil {
 
+    private TelCodeUtil() {
+    }
+
+    private static final Integer START = 3;
+
+    private static final Integer END = 9;
     /**
      * 随机生成六位数短信验证码
      * @return
@@ -30,7 +36,7 @@ public class TelCodeUtil {
         for (int i = 0; i < list.size(); i++) {
             sb.append(list.get(i));
         }
-        String telCode = sb.toString().substring(3, 9);
+        String telCode = sb.toString().substring(START, END);
         return telCode;
     }
 

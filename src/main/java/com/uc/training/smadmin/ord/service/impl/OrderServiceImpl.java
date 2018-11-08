@@ -284,9 +284,9 @@ public class OrderServiceImpl implements OrderService {
       List<OrderGoodsDetailRe> list = getOrderGdsById(ordOrderVo.getOrderId());
       if (!CollectionUtils.isEmpty(list)) {
         GoodsStokeVO goodsStokeVO = new GoodsStokeVO();
-        for (OrderGoodsDetailRe ODRe : list) {
-          goodsStokeVO.setStoke(-(ODRe.getGoodsNum().longValue()));
-          goodsStokeVO.setPropertyId(ODRe.getGoodsPropertyId());
+        for (OrderGoodsDetailRe orderGoodsDetailRe : list) {
+          goodsStokeVO.setStoke(-(orderGoodsDetailRe.getGoodsNum().longValue()));
+          goodsStokeVO.setPropertyId(orderGoodsDetailRe.getGoodsPropertyId());
           goodsService.updateAndDeductStoke(goodsStokeVO);
         }
       } else {

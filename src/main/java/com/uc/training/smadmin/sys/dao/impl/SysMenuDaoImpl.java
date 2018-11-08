@@ -2,7 +2,6 @@ package com.uc.training.smadmin.sys.dao.impl;
 
 import com.uc.training.smadmin.sys.dao.SysMenuDao;
 import com.uc.training.smadmin.sys.model.SysMenu;
-import com.uc.training.smadmin.sys.model.SysUser;
 import com.zuche.framework.dao.CarIsIbatisDaoImpl;
 import org.springframework.stereotype.Repository;
 

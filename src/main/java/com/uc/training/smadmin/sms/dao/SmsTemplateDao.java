@@ -12,63 +12,63 @@ import java.util.List;
  * @Date: 2018/10/19 9:11
  * @Description: 短信模板DAO类
  */
-public interface SmsTemplateDao {
+interface SmsTemplateDao {
 
     /**
      * 添加短信模板
      * @param template
      * @return
      */
-    public Long addTemplate(SmsTemplateVO template);
+    Long addTemplate(SmsTemplateVO template);
 
     /**
      * 修改短信模板
      * @param template
      * @return
      */
-    public Integer modifyTemplate(SmsTemplateVO template);
+    Integer modifyTemplate(SmsTemplateVO template);
 
     /**
      * 通过ID删除短信模板
      * @param id
      * @return
      */
-    public Integer deleteTemplate(Long id);
+    Integer deleteTemplate(Long id);
 
     /**
      * 通过ID获取模板
      * @param id
      * @return
      */
-    public SmsTemplate getTemplateById(Long id);
+    SmsTemplate getTemplateById(Long id);
 
     /**
      * 获取短信模板列表
      * @param smsTemplateListVO
      * @return
      */
-    public List<SmsTemplate> getList(SmsTemplateListVO smsTemplateListVO);
+    List<SmsTemplate> getList(SmsTemplateListVO smsTemplateListVO);
 
     /**
      * 查询列表总记录数
      * @param smsTemplateListVO
      * @return
      */
-    public Long getTemplateListCount(SmsTemplateListVO smsTemplateListVO);
+    Long getTemplateListCount(SmsTemplateListVO smsTemplateListVO);
 
     /**
      * 通过编码获取短信模板
      * @param code
      * @return
      */
-    public SmsTemplate getByCode(String code);
+    SmsTemplate getByCode(String code);
 
     /**
      * 根据ID列表批量删除
      * @param ids
      * @return
      */
-    public Integer batchDeleteById(List<Long> ids);
+    Integer batchDeleteById(List<Long> ids);
 
     /**
      * 生成短信

@@ -26,6 +26,7 @@ import java.math.BigDecimal;
 public class MessageMqConsumer extends DefaultExecutorMessageListener {
     @Autowired
     private MessageService messageService;
+    private static final Integer NUM = 100;
 
     @Override
     public void handlerMessage(MessageVO message) {
@@ -36,10 +37,10 @@ public class MessageMqConsumer extends DefaultExecutorMessageListener {
             BigDecimal purchaseValue = mqVO.getPurchaseValue();
             Long growthValue = purchaseValue.multiply(BigDecimal
                     .valueOf(GrowthEnum.PURCHASE.getValue()))
-                    .divide(BigDecimal.valueOf(100)).longValue();
+                    .divide(BigDecimal.valueOf(NUM)).longValue();
             Long integralValue = purchaseValue.multiply(BigDecimal
                     .valueOf(IntegralEnum.PURCHASE.getValue()))
-                    .divide(BigDecimal.valueOf(100)).longValue();
+                    .divide(BigDecimal.valueOf(NUM)).longValue();
             String content = "您共支付了" + purchaseValue + "元,成长值增加了"+
                     growthValue + ",积分增加了" + integralValue;
             Message mes = new Message();

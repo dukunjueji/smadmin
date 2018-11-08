@@ -1,6 +1,5 @@
 package com.uc.training.smadmin.bd.mq;
 
-import com.uc.training.smadmin.bd.vo.LoginMqVO;
 import com.uc.training.smadmin.bd.vo.MqVO;
 import com.ycc.tools.middleware.metaq.MQHelperAdapter;
 import com.ycc.tools.middleware.metaq.MetaQTopic;

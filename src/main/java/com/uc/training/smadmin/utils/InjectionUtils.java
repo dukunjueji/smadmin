@@ -12,7 +12,17 @@ import java.util.Map;
  * @date: 2018/11/3
  * 说明：注入工具类
  */
-public class InjectionUtils {
+public final class InjectionUtils {
+
+    private InjectionUtils() {
+    }
+
+    /**
+    *说明：获取实例化类
+    *@param type
+    *@return：T
+    *@throws：
+    */
     public static <T>T getInjectionInstance(Class<T> type){
         Map<String, T> tMap = SpringApplicationContext.getBeansByType(type);
         return tMap.values().iterator().next();

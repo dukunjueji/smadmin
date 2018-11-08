@@ -13,33 +13,33 @@ public interface MemberGradeDao{
 	 * 查询会员等级列表
 	 * @return 会员等级列表
 	 */
-	public List<MemberGrade>  queryMemberGradeList();
+	List<MemberGrade>  queryMemberGradeList();
 
 	/**
 	 * 查询会员等级数量
 	 * @return
 	 */
-	public Long queryMemberGradeCount();
+	Long queryMemberGradeCount();
 
 	/**
 	 * 新增会员等级
 	 * @param record 会员等级信息
 	 * @return
 	 */
-	public Long insertMemberGrade(MemberGrade record);
+	Long insertMemberGrade(MemberGrade record);
 
 	/**
 	 * 更新会员等级
 	 * @param record 会员等级信息
 	 * @return
 	 */
-	public Integer updateMemberGradeById(MemberGrade record);
+	Integer updateMemberGradeById(MemberGrade record);
 
 	/**
 	 * 通过用户ID获取对应的等级信息
 	 * @param id
 	 * @return
 	 */
-	public MemberGrade getByUId(Long id);
+	MemberGrade getByUId(Long id);
 
 }

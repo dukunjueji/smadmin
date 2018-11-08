@@ -3,14 +3,15 @@ package com.uc.training.smadmin.sys.pojo;
 import com.uc.training.common.enums.MenuEnum;
 import com.uc.training.smadmin.sys.model.SysMenu;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Author: 余旭东
  * @Date: 2018/10/30 9:38
  * @Description: 菜单树
  */
-public class MenuTree {
+public final class MenuTree {
 
     /**
      * 生成树

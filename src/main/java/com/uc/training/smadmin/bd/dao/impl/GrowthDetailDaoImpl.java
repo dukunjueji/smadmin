@@ -2,7 +2,6 @@ package com.uc.training.smadmin.bd.dao.impl;
 
 import com.uc.training.smadmin.bd.dao.GrowthDetailDao;
 import com.uc.training.smadmin.bd.model.GrowthDetail;
-import com.uc.training.smadmin.bd.vo.ContinueSignDaysVO;
 import com.zuche.framework.dao.CarIsIbatisDaoImpl;
 import org.springframework.stereotype.Repository;
 

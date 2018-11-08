@@ -2,8 +2,6 @@ package com.uc.training.smadmin.bd.model;
 
 import com.uc.training.common.base.model.BaseModel;
 
-import java.io.Serializable;
-import java.util.Date;
 
 /**
  * @author 余旭东

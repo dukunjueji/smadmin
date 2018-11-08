@@ -1,9 +1,6 @@
 package com.uc.training.smadmin.demo.vo;
 
 import com.uc.training.common.bean.PageQuery;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-
-import javax.validation.constraints.NotNull;
 /**
  * 请求列表vo
  *

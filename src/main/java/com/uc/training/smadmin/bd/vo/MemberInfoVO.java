@@ -20,7 +20,7 @@ public class MemberInfoVO implements Serializable {
     /**
      * 会员昵称
      */
-    @Length(max = 5, message = "昵称长度不能超过18")
+    @Length(max = 18, message = "昵称长度不能超过18")
     private String nickname;
 
     /**

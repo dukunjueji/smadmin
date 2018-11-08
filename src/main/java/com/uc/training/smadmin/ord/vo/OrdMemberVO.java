@@ -1,7 +1,6 @@
 package com.uc.training.smadmin.ord.vo;
 
 import com.uc.training.common.bean.PageQuery;
-import com.ycc.base.common.BaseDomain;
 
 import java.io.Serializable;
 

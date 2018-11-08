@@ -30,6 +30,7 @@ public class IntegralDetailServiceImpl implements IntegralDetailService {
     @Autowired
     private MemberDao memberDao;
 
+    private static final Integer  NUM = 100;
     @Override
     public Long saveIntegralDetail(IntegralVO integralVO){
         this.integralDetailDao = InjectionUtils.getInjectionInstance(IntegralDetailDao.class);
@@ -44,7 +45,7 @@ public class IntegralDetailServiceImpl implements IntegralDetailService {
             integralValue = IntegralEnum.ASSESS.getValue();
         }else if (integralVO.getIntegralType().equals(IntegralEnum.PURCHASE.getIntegralType())){
             BigDecimal bigDecimal = new BigDecimal(IntegralEnum.PURCHASE.getValue());
-            BigDecimal purchaseValue = bigDecimal.multiply(integralVO.getPurchaseValue()).divide(BigDecimal.valueOf(100));
+            BigDecimal purchaseValue = bigDecimal.multiply(integralVO.getPurchaseValue()).divide(BigDecimal.valueOf(NUM));
             integralValue = purchaseValue.longValue();
         }else if (integralVO.getIntegralType().equals(IntegralEnum.INTEGRALCONSUME.getIntegralType())){
             integralValue = integralVO.getIntegral();
