@@ -22,7 +22,10 @@ import java.util.Map;
  * @version V1.0
  * @date 2018年9月26日 上午9:53:25
  */
-public class TokenUtil {
+public final class TokenUtil {
+    private TokenUtil() {
+
+    }
     /**
      * 加密密钥
      */
@@ -235,16 +238,16 @@ public class TokenUtil {
 
 
     public static void main(String[] args) {
-        String token = sign(1L, 60 * 1000 * 24 * 365);
-        //String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJKRUVTRSIsImV4cCI6MTUyNjAxMjkyMywidXNlcklkIjoxLCJpYXQiOjE1MjYwMTI4NjN9.NKhWgl_L-TmZCOSOUzTaKQFYFfM7OrjG6O55BQ2Ts9M";
-        System.out.println(token);
-        AccessToken result = verify(token);
-        System.out.println(result.isVerify());
-        System.out.println(result.isExpire());
-        System.out.println(result.getSignDate());
-        System.out.println(result.getExpireDate());
-        System.out.println(result.getId());
-        System.out.println(verify(token, 1L));
-        System.out.println(getId(token));
+//        String token = sign(1L, 60 * 1000 * 24 * 365);
+//        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJKRUVTRSIsImV4cCI6MTUyNjAxMjkyMywidXNlcklkIjoxLCJpYXQiOjE1MjYwMTI4NjN9.NKhWgl_L-TmZCOSOUzTaKQFYFfM7OrjG6O55BQ2Ts9M";
+//        System.out.println(token);
+//        AccessToken result = verify(token);
+//        System.out.println(result.isVerify());
+//        System.out.println(result.isExpire());
+//        System.out.println(result.getSignDate());
+//        System.out.println(result.getExpireDate());
+//        System.out.println(result.getId());
+//        System.out.println(verify(token, 1L));
+//        System.out.println(getId(token));
     }
 }
