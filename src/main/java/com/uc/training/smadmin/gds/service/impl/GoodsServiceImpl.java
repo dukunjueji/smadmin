@@ -11,8 +11,6 @@ import com.uc.training.smadmin.gds.re.GoodsDetailRE;
 import com.uc.training.smadmin.gds.re.GoodsRE;
 import com.uc.training.smadmin.gds.re.GoodsStokeRE;
 import com.uc.training.smadmin.gds.re.PropertyUrlRE;
-import com.uc.training.smadmin.gds.service.CategoryService;
-import com.uc.training.smadmin.gds.service.GoodsPicService;
 import com.uc.training.smadmin.gds.service.GoodsService;
 import com.uc.training.smadmin.gds.vo.AdminPullGoodsVO;
 import com.uc.training.smadmin.gds.vo.AdminUpdateGoodsVO;

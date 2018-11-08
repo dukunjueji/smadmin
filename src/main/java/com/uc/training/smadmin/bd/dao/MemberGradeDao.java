@@ -19,7 +19,7 @@ public interface MemberGradeDao{
 	 * 查询会员等级数量
 	 * @return
 	 */
-	public Long queryMemberGradeCount();
+	Long queryMemberGradeCount();
 
 	/**
 	 * 新增会员等级

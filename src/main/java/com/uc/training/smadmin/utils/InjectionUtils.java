@@ -12,7 +12,7 @@ import java.util.Map;
  * @date: 2018/11/3
  * 说明：注入工具类
  */
-public class InjectionUtils {
+public final class InjectionUtils {
 
     private InjectionUtils() {
     }

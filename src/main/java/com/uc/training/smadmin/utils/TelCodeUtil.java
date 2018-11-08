@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
  * @date: 2018/10/16
  * 说明：随机生成六位数字作为手机验证码
  */
-public class TelCodeUtil {
+public final class TelCodeUtil {
 
     private TelCodeUtil() {
     }

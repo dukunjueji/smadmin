@@ -1,10 +1,7 @@
 package com.uc.training.smadmin.sms.vo;
 
 import com.uc.training.common.bean.PageQuery;
-import org.apache.commons.lang.StringUtils;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+
 import java.util.Date;
 
 /**
@@ -40,33 +37,6 @@ public class SmsListVO extends PageQuery {
      */
     private Date endDate;
 
-    private String time;
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-        int minLength = 2;
-        time = time.replace("\"", "");
-        time = time.replace("[", "");
-        time = time.replace("]", "");
-        if (!StringUtils.isEmpty(time)){
-            String[] times = StringUtils.split(time, ',');
-            times[1] = times[1].replace("00:00:00", "23:59:59");
-            DateFormat ds = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            if (times.length == minLength) {
-                try {
-                    this.startDate = ds.parse(times[0]);
-                    this.endDate = ds.parse(times[1]);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-    }
     public String getTelephone() {
         return telephone;
     }

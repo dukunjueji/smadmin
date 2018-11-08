@@ -5,7 +5,6 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 版权说明：Copyright (c) 2018 ucarinc. All Rights Reserved.

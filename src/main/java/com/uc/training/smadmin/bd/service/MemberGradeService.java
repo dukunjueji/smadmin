@@ -12,25 +12,25 @@ public interface MemberGradeService {
      * 获取会员等级列表
      * @return
      */
-    public List<MemberGrade> getList();
+    List<MemberGrade> getList();
 
     /**
      * 修改会员等级
      * @param grade 会员等级信息
      * @return 被修改的行数
      */
-    public Integer modifyMemberGrade(MemberGrade grade);
+    Integer modifyMemberGrade(MemberGrade grade);
 
     /**
      * 查找数据总记录数
      * @return
      */
-    public Long queryMemberGradeCount();
+    Long queryMemberGradeCount();
 
     /**
      * 通过用户ID获取折扣
      * @param id
      * @return
      */
-    public Double getDiscountByUId(Long id);
+    Double getDiscountByUId(Long id);
 }

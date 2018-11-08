@@ -12,62 +12,62 @@ import java.util.List;
  * @Date: 2018/10/22 8:57
  * @Description:
  */
-public interface SmsTemplateService {
+interface SmsTemplateService {
     /**
      * 新增短信模板
      * @param smsTemplate
      * @return
      */
-    public Long addTemplate(SmsTemplateVO smsTemplate);
+    Long addTemplate(SmsTemplateVO smsTemplate);
 
     /**
      * 通过ID删除短信模板
      * @param id
      * @return
      */
-    public Integer deleteTemplateById(Long id);
+    Integer deleteTemplateById(Long id);
 
     /**
      * 修改短信模板
      * @param smsTemplate
      * @return
      */
-    public Integer modifyTemplate(SmsTemplateVO smsTemplate);
+    Integer modifyTemplate(SmsTemplateVO smsTemplate);
 
     /**
      * 通过ID获取指定的短信模板
      * @param id
      * @return
      */
-    public SmsTemplate getTemplateById(Long id);
+    SmsTemplate getTemplateById(Long id);
 
     /**
      * 获取短信模板列表
      * @param smsTemplateListVO
      * @return
      */
-    public List<SmsTemplate> getTemplateList(SmsTemplateListVO smsTemplateListVO);
+    List<SmsTemplate> getTemplateList(SmsTemplateListVO smsTemplateListVO);
 
     /**
      * 查询列表总记录数
      * @param smsTemplateListVO
      * @return
      */
-    public Long getTemplateListCount(SmsTemplateListVO smsTemplateListVO);
+    Long getTemplateListCount(SmsTemplateListVO smsTemplateListVO);
 
     /**
      * 通过编码获取短信模板
      * @param code
      * @return
      */
-    public SmsTemplate getByCode(String code);
+    SmsTemplate getByCode(String code);
 
     /**
      * 根据ID列表批量删除
      * @param ids
      * @return
      */
-    public Integer batchDeleteById(List<Long> ids);
+    Integer batchDeleteById(List<Long> ids);
 
     /**
      * 生成短信

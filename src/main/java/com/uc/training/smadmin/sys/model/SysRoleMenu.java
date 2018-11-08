@@ -3,7 +3,6 @@ package com.uc.training.smadmin.sys.model;
 import com.uc.training.common.base.model.BaseModel;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 版权说明：Copyright (c) 2018 ucarinc. All Rights Reserved.

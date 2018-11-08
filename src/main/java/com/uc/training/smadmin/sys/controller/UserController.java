@@ -1,24 +1,23 @@
 package com.uc.training.smadmin.sys.controller;
 
+import com.uc.training.common.annotation.AccessLogin;
+import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.common.constant.Constant;
 import com.uc.training.common.vo.PageVO;
 import com.uc.training.smadmin.sys.model.SysMenu;
-import com.uc.training.smadmin.sys.pojo.MenuTree;
-import com.uc.training.smadmin.sys.vo.UserEditPasswordVo;
-import com.uc.training.smadmin.sys.vo.UserListVO;
-import com.ycc.base.common.Result;
-import com.uc.training.common.annotation.AccessLogin;
-import com.uc.training.common.base.controller.BaseController;
-import com.uc.training.common.bean.AccessToken;
 import com.uc.training.smadmin.sys.model.SysUser;
+import com.uc.training.smadmin.sys.pojo.MenuTree;
 import com.uc.training.smadmin.sys.re.UserInfoRE;
 import com.uc.training.smadmin.sys.re.UserLoginRE;
 import com.uc.training.smadmin.sys.service.SysMenuService;
 import com.uc.training.smadmin.sys.service.SysRoleService;
 import com.uc.training.smadmin.sys.service.SysUserService;
+import com.uc.training.smadmin.sys.vo.UserEditPasswordVo;
+import com.uc.training.smadmin.sys.vo.UserListVO;
 import com.uc.training.smadmin.sys.vo.UserLoginVO;
 import com.uc.training.smadmin.utils.EncryptUtil;
 import com.uc.training.smadmin.utils.TokenUtil;
+import com.ycc.base.common.Result;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,7 +27,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author 吴佰川（baichuan.wu@ucarinc.com）

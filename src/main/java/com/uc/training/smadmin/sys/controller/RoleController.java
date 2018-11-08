@@ -1,13 +1,11 @@
 package com.uc.training.smadmin.sys.controller;
 
 import com.uc.training.common.base.controller.BaseController;
-import com.uc.training.common.constant.Constant;
 import com.uc.training.common.vo.PageVO;
 import com.uc.training.smadmin.sys.model.SysRole;
 import com.uc.training.smadmin.sys.service.SysRoleService;
 import com.uc.training.smadmin.sys.vo.RoleListVO;
 import com.ycc.base.common.Result;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;

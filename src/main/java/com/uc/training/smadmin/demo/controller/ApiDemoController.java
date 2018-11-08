@@ -9,7 +9,6 @@ import com.uc.training.smadmin.demo.service.DemoService;
 import com.uc.training.smadmin.demo.vo.DemoListVO;
 import com.uc.training.smadmin.demo.vo.DemoTestVO;
 import com.ycc.base.common.Result;
-import com.ycc.base.framework.exception.BusinessRuntimeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -22,7 +21,7 @@ import java.util.List;
  * 示例Controller.
  * 说明：
  * <li>返回值会自动封装上{@link Result}</li>
- * <li>抛出{@link BusinessRuntimeException}异常时,封装Result.status=-1对象,包含异常的code和msg,不会log日志.</li>
+ * <li>抛出{BusinessRuntimeException}异常时,封装Result.status=-1对象,包含异常的code和msg,不会log日志.</li>
  * <li>抛出其他异常时,封装Result.status=-2对象,包含异常的msg,自动log异常日志.</li>
  * <p>
  * @author 吴佰川（baichuan.wu@ucarinc.com）创建

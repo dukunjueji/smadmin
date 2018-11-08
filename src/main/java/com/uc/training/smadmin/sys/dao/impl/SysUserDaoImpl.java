@@ -3,7 +3,6 @@ package com.uc.training.smadmin.sys.dao.impl;
 import com.uc.training.smadmin.sys.dao.SysUserDao;
 import com.uc.training.smadmin.sys.model.SysMenu;
 import com.uc.training.smadmin.sys.model.SysUser;
-import com.uc.training.smadmin.sys.service.SysUserService;
 import com.uc.training.smadmin.sys.vo.UserListVO;
 import com.uc.training.smadmin.sys.vo.UserLoginVO;
 import com.zuche.framework.dao.CarIsIbatisDaoImpl;

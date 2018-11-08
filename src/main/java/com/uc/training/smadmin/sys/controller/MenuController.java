@@ -1,8 +1,6 @@
 package com.uc.training.smadmin.sys.controller;
 
 import com.uc.training.common.base.controller.BaseController;
-import com.uc.training.common.constant.Constant;
-import com.uc.training.common.constant.MenuConstant;
 import com.uc.training.common.enums.MenuEnum;
 import com.uc.training.smadmin.sys.model.SysMenu;
 import com.uc.training.smadmin.sys.pojo.MenuTree;

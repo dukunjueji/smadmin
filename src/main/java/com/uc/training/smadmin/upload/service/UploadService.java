@@ -8,12 +8,12 @@ import com.zuche.framework.udfs.client.UDFSClient;
 import com.zuche.framework.udfs.client.UDFSPermissionEnum;
 import com.zuche.framework.udfs.client.upload.UDFSUploadResultVO;
 import com.zuche.framework.udfs.client.upload.UDFSUploadVO;
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import sun.misc.BASE64Decoder;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -95,8 +95,7 @@ public class UploadService {
         UploadRE uploadRE = new UploadRE();
         try {
             // 如果是FileInputStream类型，进行转换
-            BASE64Decoder decoder = new BASE64Decoder();
-            byte[] bytes = decoder.decodeBuffer(imageText);
+            byte[] bytes = Base64.decodeBase64(imageText);
             UDFSUploadVO vo = new UDFSUploadVO();
 
             //如果客户端没有传名字，则自动设置文件名
@@ -118,7 +117,7 @@ public class UploadService {
                 uploadRE.setOriginalName(resultVO.getOriginalName());
             }
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             logger.error("读取源文件失败", e);
         }
         return uploadRE;
@@ -127,8 +126,7 @@ public class UploadService {
     public static InputStream base64ToInputStream(String base64string){
         ByteArrayInputStream stream = null;
         try {
-            BASE64Decoder decoder = new BASE64Decoder();
-            byte[] bytes = decoder.decodeBuffer(base64string);
+            byte[] bytes = Base64.decodeBase64(base64string);
             stream = new ByteArrayInputStream(bytes);
         } catch (Exception e) {
             e.printStackTrace();

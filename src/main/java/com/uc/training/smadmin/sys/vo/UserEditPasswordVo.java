@@ -2,10 +2,8 @@ package com.uc.training.smadmin.sys.vo;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * 用户信息返回结果
