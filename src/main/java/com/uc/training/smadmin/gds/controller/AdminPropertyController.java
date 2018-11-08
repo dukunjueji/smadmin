@@ -50,6 +50,10 @@ public class AdminPropertyController extends BaseController{
     @RequestMapping(value = "insertProperty.do_", method = RequestMethod.POST)
     public Result insertProperty(@Validated  AdminPropertyVO adminPropertyVO) {
 
+        if (adminPropertyVO.getIsDiscount() == 1 && adminPropertyVO.getDiscountPrice() == null) {
+            return Result.getBusinessException("请填写打折价格", null);
+        }
+
         Property property = new Property();
         BeanUtils.copyProperties(adminPropertyVO, property);
 
@@ -71,6 +75,10 @@ public class AdminPropertyController extends BaseController{
     @ResponseBody
     @RequestMapping(value = "updateProperty.do_", method = RequestMethod.POST)
     public Result updateProperty(@Validated AdminPropertyUpdateVO adminPropertyUpdateVO) {
+
+        if (adminPropertyUpdateVO.getIsDiscount() == 1 && adminPropertyUpdateVO.getDiscountPrice() == null) {
+            return Result.getBusinessException("请填写打折价格", null);
+        }
 
         Property property = new Property();
         BeanUtils.copyProperties(adminPropertyUpdateVO, property);
