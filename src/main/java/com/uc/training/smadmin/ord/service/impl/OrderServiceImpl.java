@@ -291,6 +291,7 @@ public class OrderServiceImpl implements OrderService {
 
   @Override
   public List<OrderGoodsDetailRe> getOrderGdsById(Integer id) {
+    // 扩展MemberId
     List<OrderGoods> orderGdsList = orderGoodsDao.getOrderGoodsByOrderId(id);
     if (CollectionUtils.isEmpty(orderGdsList)) {
       return null;
