@@ -55,13 +55,14 @@ public class SmsServiceImpl implements SmsService {
     /**
      * 发送短信
      *
+     * @param telephone
      * @param content
      * @return
      */
     @Override
-    public Integer sendSys(String content) {
+    public Integer sendSys(String telephone, String content) {
 
-        System.out.println(content);
+        System.out.println(telephone + ": " +content);
 
         return SmsStatusEnum.SUCCESS.getKey();
     }

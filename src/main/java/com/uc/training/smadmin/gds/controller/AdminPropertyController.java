@@ -6,6 +6,7 @@ import com.uc.training.smadmin.gds.re.AdminPropertyListRE;
 import com.uc.training.smadmin.gds.service.PropertyService;
 import com.uc.training.smadmin.gds.vo.AdminPropertyUpdateVO;
 import com.uc.training.smadmin.gds.vo.AdminPropertyVO;
+import com.uc.training.smadmin.ord.service.OrderGoodsService;
 import com.ycc.base.common.Result;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,9 @@ public class AdminPropertyController extends BaseController{
 
     @Autowired
     private PropertyService propertyService;
+
+    @Autowired
+    private OrderGoodsService orderGoodsService;
 
     /**
      * 后台通过商品id获取商品属性列表
@@ -100,6 +104,11 @@ public class AdminPropertyController extends BaseController{
     @ResponseBody
     @RequestMapping(value = "deletePropertyAndGoodsPicById.do_", method = RequestMethod.POST)
     public Result deletePropertyById(Long id) {
+
+        //判断该属性是否存在待付款订单
+        if (orderGoodsService.getUnPayGoodsPropertyCountByPropertyId(id) >= 1) {
+            return Result.getBusinessException("该属性存在待付款的订单，不可以直接删除!", null);
+        }
 
         //判断商品是否上架和该商品的商品属性数量
         if (propertyService.getGoodsStatusById(id) == 1 && propertyService.getGoodsIdCountById(id) == 1) {

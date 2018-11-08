@@ -109,4 +109,15 @@ public class GoodsPicServiceImpl implements GoodsPicService{
     public Integer getGoodsPicCountByPropertyId(Long propertyId) {
         return goodsPicDao.getGoodsPicCountByPropertyId(propertyId);
     }
+
+    /**
+     * 通过主键id获取商品属性id
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public Long getPropertyIdById(Long id) {
+        return goodsPicDao.getPropertyIdById(id);
+    }
 }

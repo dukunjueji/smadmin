@@ -68,4 +68,11 @@ public interface GoodsPicService {
      * @return
      */
     Integer getGoodsPicCountByPropertyId(Long propertyId);
+
+    /**
+     *  通过主键id获取商品属性id
+     * @param id
+     * @return
+     */
+    Long getPropertyIdById(Long id);
 }

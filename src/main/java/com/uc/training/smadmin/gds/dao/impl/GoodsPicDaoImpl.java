@@ -105,4 +105,15 @@ public class GoodsPicDaoImpl extends CarIsIbatisDaoImpl implements GoodsPicDao {
     public Integer getGoodsPicCountByPropertyId(Long propertyId) {
         return (Integer) this.queryForObject("com.uc.training.smadmin.gds.dao.GoodsPicDao.getGoodsPicCountByPropertyId", propertyId);
     }
+
+    /**
+     * 通过主键id获取商品属性id
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public Long getPropertyIdById(Long id) {
+        return (Long) this.queryForObject("com.uc.training.smadmin.gds.dao.GoodsPicDao.getPropertyIdById", id);
+    }
 }

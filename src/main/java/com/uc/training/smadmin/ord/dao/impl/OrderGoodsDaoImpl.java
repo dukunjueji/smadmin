@@ -37,4 +37,15 @@ public class OrderGoodsDaoImpl extends CarIsIbatisDaoImpl implements OrderGoodsD
 		  return this.update("com.uc.training.smadmin.ord.dao.OrderGoodsDao.updateOrderGoodsById", record);
 	 }
 
+	/**
+	 * 通过商品属性id获取待支付的商品属性数量
+	 *
+	 * @param propertyId
+	 * @return
+	 */
+	@Override
+	public Integer getUnPayGoodsPropertyCountByPropertyId(Long propertyId) {
+		return (Integer) this.queryForObject("com.uc.training.smadmin.ord.dao.OrderGoodsDao.getUnPayGoodsPropertyCountByPropertyId", propertyId);
+	}
+
 }
