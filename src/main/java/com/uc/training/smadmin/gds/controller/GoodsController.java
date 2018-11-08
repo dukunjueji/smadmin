@@ -40,7 +40,7 @@ public class GoodsController extends BaseController {
      * 功能描述: 获取热门推荐
      *
      * @param: []
-     * @return: com.ycc.base.common.Result<java.util.List   <   com.uc.training.smadmin.gds.re.GoodsRE>>
+     * @return: com.ycc.base.common.Result<java.util.List<com.uc.training.smadmin.gds.re.GoodsRE>>
      * @auther: ling
      * @date: 2018/10/17 17:17
      */
@@ -50,14 +50,13 @@ public class GoodsController extends BaseController {
     public Result<List<GoodsRE>> getHotRecommend() {
         List<GoodsRE> list = goodsService.getHotRecommend();
         return Result.getSuccessResult(list);
-
     }
 
     /**
      * 功能描述: 通过分类来获取商品
      *
      * @param: [demoListVO]
-     * @return: com.ycc.base.common.Result<com.uc.training.common.vo.PageVO   <   com.uc.training.smadmin.gds.re.GoodsRE>>
+     * @return: com.ycc.base.common.Result<com.uc.training.common.vo.PageVO<com.uc.training.smadmin.gds.re.GoodsRE>>
      * @auther: ling
      * @date: 2018/10/19 9:02
      */
@@ -69,7 +68,7 @@ public class GoodsController extends BaseController {
         pageVO.setPageIndex(goodsListVO.getPageIndex());
         pageVO.setPageSize(goodsListVO.getPageSize());
         List<Long> listPropertyId = goodsService.getGoodsListCount(goodsListVO);
-        if(listPropertyId.size() > 0){
+        if(listPropertyId.size() > 0) {
             pageVO.setTotal(new Long(listPropertyId.size()));
             pageVO.setDataList(goodsService.getGoodsList(listPropertyId));
         }

@@ -169,6 +169,7 @@
         <iterate open="(" close=")" conjunction=",">
             #propertyIds[]#
         </iterate>
+        order by goods.sales desc
     </select>
 
     <select id="selectHotTag" resultClass="com.uc.training.smadmin.gds.model.HotTag">
