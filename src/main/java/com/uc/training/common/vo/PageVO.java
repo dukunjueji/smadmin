@@ -1,7 +1,5 @@
 package com.uc.training.common.vo;
 
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-
 import java.util.List;
 
 /**
@@ -80,6 +78,11 @@ public class PageVO<T> {
 
     @Override
     public String toString() {
-        return ReflectionToStringBuilder.toString(this);
+        return "PageVO{" +
+                "pageIndex=" + pageIndex +
+                ", pageSize=" + pageSize +
+                ", dataList=" + dataList +
+                ", total=" + total +
+                '}';
     }
 }

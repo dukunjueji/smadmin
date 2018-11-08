@@ -1,5 +1,5 @@
 package com.uc.training.smadmin.utils;
-import java.math.BigDecimal;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 /**
@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
  * @version 1.0
  * @date 2018/10/26 14:55
  */
-public class ValidateUtil {
+public final class ValidateUtil {
 
     /** 整数 */
     private static final String V_INTEGER = "^-?[1-9]\\d*$";
@@ -80,12 +80,6 @@ public class ValidateUtil {
     /** 压缩文件 */
     private static final String V_RAR = "(.*)\\.(rar|zip|7zip|tgz)$";
 
-    /** 日期 */
-    private static final String V_DATE = "^((([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]{1}|[0-9]{1}[1-9][0-9]{2}|[1-9][0-9]{3})-(((0[13578]|1[02])-(0[1-9]|[12][0-9]|3[01]))|((0[469]|11)-(0[1-9]|[12][0-9]|30))|(02-(0[1-9]|[1][0-9]|2[0-8]))))|((([0-9]{2})(0[48]|[2468][048]|[13579][26])|((0[48]|[2468][048]|[13579][26])00))-02-29)) ([01]\\d|2[0-3]):[0-5][0-9]:[0-5][0-9]$";
-
-    /** 短格式日期 */
-    private static final String V_SHOT_DATE = "^(([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]{1}|[0-9]{1}[1-9][0-9]{2}|[1-9][0-9]{3})-(((0[13578]|1[02])-(0[1-9]|[12][0-9]|3[01]))|((0[469]|11)-(0[1-9]|[12][0-9]|30))|(02-(0[1-9]|[1][0-9]|2[0-8]))))|((([0-9]{2})(0[48]|[2468][048]|[13579][26])|((0[48]|[2468][048]|[13579][26])00))-02-29)$";
-
     /** 年月日期 */
     private static final String V_YEAR_MONTH = "^(([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]{1}|[0-9]{1}[1-9][0-9]{2}|[1-9][0-9]{3})-(0[1234567879]|1[012]))$";
     /** QQ号码 */
@@ -114,9 +108,6 @@ public class ValidateUtil {
 
     /** 验证密码长度(6-18位) */
     private static final String V_PASSWORD_LENGTH = "^\\d{6,18}$";
-
-    /** 验证两位数 */
-    private static final String V_TWO＿POINT = "^[0-9]+(.[0-9]{2})?$";
 
     /** 验证一个月的31天 */
     private static final String V_31DAYS = "^((0?[1-9])|((1|2)[0-9])|30|31)$";
@@ -225,26 +216,6 @@ public class ValidateUtil {
      */
     public static boolean isColor(String value){
         return match(V_COLOR,value);
-    }
-
-
-
-    /**
-     * 验证是不是日期 2017-07-25 17:39:38
-     * @param value 要验证的字符串
-     * @return 如果是符合格式的字符串,返回 <b>true </b>,否则为 <b>false </b>
-     */
-    public static boolean isDate(String value){
-        return match(V_DATE,value);
-    }
-
-    /**
-     * 验证短日期格式2017-07-25
-     * @param value
-     * @return
-     */
-    public static boolean isShotDate(String value){
-        return match(V_SHOT_DATE,value);
     }
 
     /**
@@ -418,15 +389,6 @@ public class ValidateUtil {
      */
     public static boolean isTel(String value){
         return match(V_TEL,value);
-    }
-
-    /**
-     * 验证两位小数
-     * @param value 要验证的字符串
-     * @return 如果是符合格式的字符串,返回 <b>true </b>,否则为 <b>false </b>
-     */
-    public static boolean isTwoPoint(String value){
-        return match(V_TWO＿POINT,value);
     }
 
     /**

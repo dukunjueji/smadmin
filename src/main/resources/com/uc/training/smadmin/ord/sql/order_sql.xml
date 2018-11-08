@@ -192,6 +192,9 @@
 		<isNotEmpty property="status" prepend="and">
 			s.status = #status#
 		</isNotEmpty>
+        ORDER BY
+        s.create_time
+        DESC
 	</select>
 
 	<update id="logicDelOrder" parameterClass="list">

@@ -2,8 +2,8 @@ package com.uc.training.smadmin.gds.dao.impl;
 
 import com.uc.training.smadmin.gds.dao.GoodsDao;
 import com.uc.training.smadmin.gds.model.Goods;
-import com.uc.training.smadmin.gds.re.*;
 import com.uc.training.smadmin.gds.model.HotTag;
+import com.uc.training.smadmin.gds.re.*;
 import com.uc.training.smadmin.gds.vo.AdminPullGoodsVO;
 import com.uc.training.smadmin.gds.vo.AdminUpdateGoodsVO;
 import com.uc.training.smadmin.gds.vo.GoodsListVO;

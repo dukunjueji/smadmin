@@ -26,6 +26,7 @@ import java.io.PrintWriter;
  */
 public class TokenInterceptor implements HandlerInterceptor {
     private static final Logger LOGGER = LoggerFactory.getLogger(TokenInterceptor.class);
+    public static final int LOGIN_ERROR_STATUS = -3;
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         if(handler instanceof HandlerMethod){
@@ -81,7 +82,7 @@ public class TokenInterceptor implements HandlerInterceptor {
      */
     private void responseMsg(HttpServletResponse response, String msg) throws IOException {
         Result result = new Result();
-        result.setStatus(-3);
+        result.setStatus(LOGIN_ERROR_STATUS);
         result.setMsg(msg);
         response.setCharacterEncoding("utf-8");
         response.setContentType("application/json; charset=utf-8");

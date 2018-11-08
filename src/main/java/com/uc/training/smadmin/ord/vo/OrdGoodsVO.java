@@ -37,4 +37,12 @@ public class OrdGoodsVO implements Serializable {
   public void setList(List<Long> list) {
     this.list = list;
   }
+
+  @Override
+  public String toString() {
+    return "OrdGoodsVO{" +
+            "memberId=" + memberId +
+            ", list=" + list +
+            '}';
+  }
 }

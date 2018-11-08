@@ -46,7 +46,7 @@ public class OrdOrderGoodsVo implements Serializable {
     /**
      * 商品数量
      */
-    private int num;
+    private Integer num;
 
     /**
      * 商品规格
@@ -60,7 +60,7 @@ public class OrdOrderGoodsVo implements Serializable {
     /**
      * 库存
      */
-    private long stock;
+    private Long stock;
     /**
      * 商品原价
      */
@@ -74,12 +74,12 @@ public class OrdOrderGoodsVo implements Serializable {
     /**
      * 是否打折
      */
-    private long isDiscount;
+    private Long isDiscount;
 
     /**
      * 商品状态(是否下架)
      */
-    private long status;
+    private Long status;
 
     /**
      * 地址id
@@ -194,11 +194,11 @@ public class OrdOrderGoodsVo implements Serializable {
         this.gdsName = gdsName;
     }
 
-    public int getNum() {
+    public Integer getNum() {
         return num;
     }
 
-    public void setNum(int num) {
+    public void setNum(Integer num) {
         this.num = num;
     }
 
@@ -242,27 +242,27 @@ public class OrdOrderGoodsVo implements Serializable {
         this.discountPrice = discountPrice;
     }
 
-    public long getIsDiscount() {
+    public Long getIsDiscount() {
         return isDiscount;
     }
 
-    public void setIsDiscount(long isDiscount) {
+    public void setIsDiscount(Long isDiscount) {
         this.isDiscount = isDiscount;
     }
 
-    public long getStatus() {
+    public Long getStatus() {
         return status;
     }
 
-    public void setStatus(long status) {
+    public void setStatus(Long status) {
         this.status = status;
     }
 
-    public long getStock() {
+    public Long getStock() {
         return stock;
     }
 
-    public void setStock(long stock) {
+    public void setStock(Long stock) {
         this.stock = stock;
     }
 

@@ -11,6 +11,9 @@ import org.apache.commons.codec.digest.DigestUtils;
  * 说明：加密工具类
  */
 public class EncryptUtil {
+    public EncryptUtil() {
+
+    }
     /**
      * MD5加密
      *

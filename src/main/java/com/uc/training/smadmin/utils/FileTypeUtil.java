@@ -4,7 +4,11 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -15,8 +19,9 @@ import java.util.Map;
  * @description: 通过读取文件流判断文件格式
  * @date 2018/9/19 16:23
  */
-public class FileTypeUtil {
-
+public final class FileTypeUtil {
+    private static final int BTYE_SIZE = 50;
+    private static final int DECIMAL = 0xFF;
     public final static Map<String, String> FILE_TYPE_MAP = new HashMap<String, String>();
 
     private FileTypeUtil() {
@@ -97,7 +102,7 @@ public class FileTypeUtil {
      * @discription: 获取图片文件实际类型, 若不是图片则返回null
      * @author: yiqiang.du@ucarinc.com
      */
-    public final static String getImageFileType(File f) {
+    public static String getImageFileType(File f) {
         if (isImage(f)) {
             try {
                 ImageInputStream iis = ImageIO.createImageInputStream(f);
@@ -123,9 +128,9 @@ public class FileTypeUtil {
      * @discription: 获取文件类型, 包括图片, 若格式不是已配置的, 则返回null
      * @author: yiqiang.du@ucarinc.com
      */
-    public final static String getFileByFile(File file) {
+    public static String getFileByFile(File file) {
         String filetype = null;
-        byte[] b = new byte[50];
+        byte[] b = new byte[BTYE_SIZE];
         try {
             InputStream is = new FileInputStream(file);
             is.read(b);
@@ -145,7 +150,7 @@ public class FileTypeUtil {
      * @discription: 获取文件类型, 包括图片, 若格式不是已配置的, 则返回null
      * @author: yiqiang.du@ucarinc.com
      */
-    public final static String getFileTypeByStream(byte[] b) {
+    public static String getFileTypeByStream(byte[] b) {
         String filetypeHex = String.valueOf(getFileHexString(b));
         Iterator<Map.Entry<String, String>> entryiterator = FILE_TYPE_MAP.entrySet().iterator();
         while (entryiterator.hasNext()) {
@@ -164,7 +169,7 @@ public class FileTypeUtil {
      * @discription: 判断文件是否为图片
      * @author: yiqiang.du@ucarinc.com
      */
-    public static final boolean isImage(File file) {
+    public static boolean isImage(File file) {
         boolean flag = false;
         try {
             BufferedImage bufreader = ImageIO.read(file);
@@ -189,13 +194,13 @@ public class FileTypeUtil {
      * @discription: getFileHexString
      * @author: yiqiang.du@ucarinc.com
      */
-    public final static String getFileHexString(byte[] b) {
+    public static String getFileHexString(byte[] b) {
         StringBuilder stringBuilder = new StringBuilder();
         if (b == null || b.length <= 0) {
             return null;
         }
         for (int i = 0; i < b.length; i++) {
-            int v = b[i] & 0xFF;
+            int v = b[i] & DECIMAL;
             String hv = Integer.toHexString(v);
             if (hv.length() < 2) {
                 stringBuilder.append(0);

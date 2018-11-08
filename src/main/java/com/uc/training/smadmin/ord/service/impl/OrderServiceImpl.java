@@ -123,12 +123,11 @@ public class OrderServiceImpl implements OrderService {
   }
 
     /**
-     * 提交订单验证信息
+     * 判断该商品是否下架、删除、无库存
      */
-    @Override
-    public List<OrderConfirmRE> confirmOrderInfo(List<OrdOrderGoodsVo> orderInfoListNow) {
-        OrderConfirmRE orderConfirmRE = new OrderConfirmRE();
+    private List<OrderConfirmRE> validationGoods(List<OrdOrderGoodsVo> orderInfoListNow){
         List<OrderConfirmRE> list = new ArrayList<>();
+        OrderConfirmRE  orderConfirmRE = new OrderConfirmRE();
         int a = 2;
         GoodsStokeVO goodsStokeVO;
         if (orderInfoListNow.size()<= a){
@@ -168,6 +167,18 @@ public class OrderServiceImpl implements OrderService {
                 return list;
             }
         }
+        return list;
+    }
+    /**
+     * 提交订单验证信息
+     */
+    @Override
+    public List<OrderConfirmRE> confirmOrderInfo(List<OrdOrderGoodsVo> orderInfoListNow) {
+        OrderConfirmRE orderConfirmRE = new OrderConfirmRE();
+        List<OrderConfirmRE> list = new ArrayList<>();
+        GoodsStokeVO goodsStokeVO;
+        // 判断该商品是否下架、删除、无库存
+        validationGoods(orderInfoListNow);
         //插入用户订单表
         Order order = new Order();
         order.setMemberId(orderInfoListNow.get(orderInfoListNow.size() - 2).getMemberId());
@@ -188,6 +199,7 @@ public class OrderServiceImpl implements OrderService {
         //遍历orderInfoListNow
         OrderGoods orderGoods;
         OrdCartGoodsVo ordCartGoodsVo;
+        int a = 2;
         for (int i = 0; i < orderInfoListNow.size() - a; i++) {
             //插入订单商品信息表
             orderGoods = new OrderGoods();
@@ -279,6 +291,7 @@ public class OrderServiceImpl implements OrderService {
 
   @Override
   public List<OrderGoodsDetailRe> getOrderGdsById(Integer id) {
+    // 扩展MemberId
     List<OrderGoods> orderGdsList = orderGoodsDao.getOrderGoodsByOrderId(id);
     if (CollectionUtils.isEmpty(orderGdsList)) {
       return null;

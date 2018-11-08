@@ -15,8 +15,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 /**
  * 异常拦截器
@@ -27,12 +31,12 @@ import java.util.Map.Entry;
  */
 public class YccHandlerExceptionResolver implements HandlerExceptionResolver {
 
-    private static final Logger staticLogger = LoggerFactory.getLogger(com.ycc.base.framework.web.spring.YccHandlerExceptionResolver.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(com.ycc.base.framework.web.spring.YccHandlerExceptionResolver.class);
 
     @Override
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
 
-        Logger logger = staticLogger;
+        Logger logger = LOGGER;
         if (handler instanceof HandlerMethod) {
             HandlerMethod handlerMethod = (HandlerMethod) handler;
             logger = LoggerFactory.getLogger(handlerMethod.getBean().getClass());
