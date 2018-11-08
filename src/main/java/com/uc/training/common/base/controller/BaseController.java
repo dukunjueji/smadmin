@@ -1,7 +1,7 @@
 package com.uc.training.common.base.controller;
 
-import com.ycc.base.common.Result;
 import com.uc.training.common.constant.Constant;
+import com.ycc.base.common.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -14,7 +14,11 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.net.*;
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.InterfaceAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +33,6 @@ import java.util.TreeMap;
  */
 public class BaseController {
     protected Logger logger = LoggerFactory.getLogger(this.getClass());
-    private static final String LOGIN_SESSION_KEY = "YCC_LOGIN_USER";
     private static final String DEFAULT_SPLIT = ",";
     private static final String DEFAULT_UNKNOWN = "unknown";
     private static final String DEFAULT_LOCALHOST = "127.0.0.1";
@@ -162,15 +165,6 @@ public class BaseController {
         return getRequest().getParameter(paramName);
     }
 
-    /**
-     * 重定向跳转
-     *
-     * @param
-     * @return
-     */
-    public String redirect(String url) {
-        return new StringBuilder("redirect:").append(getWebRoot()).append(url).toString();
-    }
 
     /**
      * 获取基于应用程序的url绝对路径
@@ -182,25 +176,6 @@ public class BaseController {
         Assert.hasLength(url, "url不能为空");
         Assert.isTrue(url.startsWith("/"), "必须以/打头");
         return getRequest().getContextPath() + url;
-    }
-
-    /**
-     * 获取web项目根路径
-     *
-     * @return
-     */
-    protected String getWebRoot() {
-        HttpServletRequest request = this.getRequest();
-        // 得到协议如：http
-        String scheme = request.getScheme();
-        // 得到服务器名称如：127.0.0.1
-        String serverName = request.getServerName();
-        // 得到端口号如8080
-        String serverPort = request.getServerPort() == 80 ? "" : (":" + request.getServerPort());
-        // 得到当前上下文路径，也就是安装后的文件夹位置。
-        String contextPath = ("/").equals(request.getContextPath()) ? "" : request.getContextPath();
-        // 连起来拼成完整的url
-        return scheme + "://" + serverName + serverPort + contextPath + "/";
     }
 
     /**

@@ -1,8 +1,6 @@
 package com.uc.training.common.bean;
 
 
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-
 import java.io.Serializable;
 
 /**
@@ -13,6 +11,14 @@ import java.io.Serializable;
  * @date 2018/10/25 18:04
  */
 public class PageQuery implements Serializable {
+    /**
+     * 默认首页
+     */
+    private static final int PAGE_INDEX = 1;
+    /**
+     * 默认页数
+     */
+    private static final int PAGE_SIZE = 15;
 
     /**
      * 初始位置
@@ -22,12 +28,12 @@ public class PageQuery implements Serializable {
     /**
      * 当前页数
      */
-    public Integer pageIndex = 1;
+    public Integer pageIndex = PAGE_INDEX;
 
     /**
      * 页长
      */
-    public Integer pageSize = 12;
+    public Integer pageSize = PAGE_SIZE;
 
     public Integer getOffset() {
         if (offset != null) {

@@ -85,7 +85,7 @@ public class OrderController extends BaseController {
                 ordCartgoodsVo.setDiscountPrice(gdDTO.getDiscountPrice());
                 ordCartgoodsVo.setStatus(gdDTO.getStatus());
                 ordCartgoodsVo.setIsDiscount(gdDTO.getIsDiscount());
-                ordCartgoodsVo.setNum(cartGoods.getGoodsNum());
+                ordCartgoodsVo.setNum(cartGoods.getGoodsNum().longValue());
                 ordCartgoodsVo.setStock(gdDTO.getStock());
                 list.add(ordCartgoodsVo);
             } else {
