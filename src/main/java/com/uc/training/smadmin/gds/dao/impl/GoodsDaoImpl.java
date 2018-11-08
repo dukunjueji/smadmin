@@ -1,17 +1,15 @@
 package com.uc.training.smadmin.gds.dao.impl;
 
-import com.kenai.jaffl.annotations.In;
 import com.uc.training.smadmin.gds.dao.GoodsDao;
 import com.uc.training.smadmin.gds.model.Goods;
-import com.uc.training.smadmin.gds.re.*;
 import com.uc.training.smadmin.gds.model.HotTag;
+import com.uc.training.smadmin.gds.re.*;
 import com.uc.training.smadmin.gds.vo.AdminPullGoodsVO;
 import com.uc.training.smadmin.gds.vo.AdminUpdateGoodsVO;
 import com.uc.training.smadmin.gds.vo.GoodsListVO;
 import com.uc.training.smadmin.gds.vo.GoodsStokeVO;
 import com.zuche.framework.dao.CarIsIbatisDaoImpl;
 import org.springframework.stereotype.Repository;
-import com.uc.training.smadmin.gds.vo.PageVO;
 
 import java.util.List;
 
