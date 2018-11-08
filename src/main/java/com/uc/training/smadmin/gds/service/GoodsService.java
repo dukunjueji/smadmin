@@ -30,7 +30,7 @@ public interface GoodsService {
      * 获取热门推荐总数量
      * @return
      */
-    public Integer getHotRecommendCount();
+    Integer getHotRecommendCount();
 
     /**
      * 通过属性id商品详情
