@@ -29,7 +29,7 @@ public class GenerateSmsVO implements Serializable {
     /**
      * 消息类型
      */
-    private Integer Type;
+    private Integer type;
 
     @Override
     public String toString() {
@@ -37,7 +37,7 @@ public class GenerateSmsVO implements Serializable {
                 "telephone='" + telephone + '\'' +
                 ", message='" + message + '\'' +
                 ", code='" + code + '\'' +
-                ", Type=" + Type +
+                ", type=" + type +
                 '}';
     }
 
@@ -66,10 +66,10 @@ public class GenerateSmsVO implements Serializable {
     }
 
     public Integer getType() {
-        return Type;
+        return type;
     }
 
     public void setType(Integer type) {
-        Type = type;
+        this.type = type;
     }
 }

@@ -129,7 +129,7 @@ public class OrderServiceImpl implements OrderService {
             goodsStokeVO.setPropertyId(orderInfoListNow.get(i).getPropertyId());
             goodsStokeVO.setStoke((long) orderInfoListNow.get(i).getNum());
             GoodsStokeRE goodsStokeRE = goodsService.selectGoodsStatus(goodsStokeVO);
-            if (goodsStokeRE.getIsDelete() == GoodsStatusEnum.GOODS_DELETE.getType()) {
+            if (goodsStokeRE.getIsDelete().equals(GoodsStatusEnum.GOODS_DELETE.getType())) {
                 StringBuilder temp = new StringBuilder();
                 temp.append("您的商品：" + goodsStokeRE.getGoodsName() + "\n" + "规格:");
                 temp.append(goodsStokeRE.getGoodsProperty() + "已经被删除了，点击返回购物车，再重新选择");
@@ -138,7 +138,7 @@ public class OrderServiceImpl implements OrderService {
                 list.add(orderConfirmRE);
                 return list;
             }
-            if (goodsStokeRE.getStatus() == GoodsStatusEnum.GOODS_IS_SHELVES.getType()) {
+            if (goodsStokeRE.getStatus().equals(GoodsStatusEnum.GOODS_IS_SHELVES.getType())) {
                 StringBuilder temp = new StringBuilder();
                 temp.append("您的商品：" + goodsStokeRE.getGoodsName() + "\n" + "规格:");
                 temp.append(goodsStokeRE.getGoodsProperty() + "已经被下架了，点击返回购物车，再重新选择");

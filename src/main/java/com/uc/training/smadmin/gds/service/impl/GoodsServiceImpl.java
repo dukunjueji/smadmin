@@ -137,9 +137,9 @@ public class GoodsServiceImpl implements GoodsService {
             GoodsStokeRE goodsStokeRE=goodsDao.selectGoodsStatus(goodsStokeVO);
             if(goodsStokeRE == null){
                 return StokeStatusEnum.BLANK_STATUS.getStatus();
-            }else if(goodsStokeRE.getStatus()==GoodsStatusEnum.GOODS_IS_SHELVES.getType()){
+            }else if(goodsStokeRE.getStatus().equals(GoodsStatusEnum.GOODS_IS_SHELVES.getType())){
                 return StokeStatusEnum.SHELVED_STATUS.getStatus();
-            }else if(goodsStokeRE.getIsDelete()==GoodsStatusEnum.GOODS_DELETE.getType()){
+            }else if(goodsStokeRE.getIsDelete().equals(GoodsStatusEnum.GOODS_DELETE.getType())){
                 return StokeStatusEnum.DELETE_STATUS.getStatus();
             }else if(goodsStokeRE.getStoke()<goodsStokeVO.getStoke()){
                 return StokeStatusEnum.NOT_ENOUGH_STATUS.getStatus();
