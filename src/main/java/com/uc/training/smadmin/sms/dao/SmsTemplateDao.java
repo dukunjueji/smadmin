@@ -12,7 +12,7 @@ import java.util.List;
  * @Date: 2018/10/19 9:11
  * @Description: 短信模板DAO类
  */
-interface SmsTemplateDao {
+public interface SmsTemplateDao {
 
     /**
      * 添加短信模板

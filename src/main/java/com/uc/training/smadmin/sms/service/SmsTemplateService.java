@@ -12,7 +12,7 @@ import java.util.List;
  * @Date: 2018/10/22 8:57
  * @Description:
  */
-interface SmsTemplateService {
+public interface SmsTemplateService {
     /**
      * 新增短信模板
      * @param smsTemplate

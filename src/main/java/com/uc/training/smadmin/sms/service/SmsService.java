@@ -11,7 +11,7 @@ import java.util.List;
  * @Date: 2018/10/22 13:48
  * @Description:
  */
-interface SmsService {
+public interface SmsService {
 
     /**
      * 查询短信列表
