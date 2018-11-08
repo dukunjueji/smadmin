@@ -234,7 +234,7 @@ public class ApiMemberController extends BaseController {
         member.setBalance(chargeBalanceVO.getBalance());
         BigDecimal bigDecimal = new BigDecimal(0);
         int i = chargeBalanceVO.getBalance().compareTo(bigDecimal);
-        if (chargeBalanceVO.getBalance() == null || i == -1) {
+        if (chargeBalanceVO.getBalance() == null || i == 0 ) {
             re = Result.getBusinessException("充值余额必须大于0", null);
         }else {
             //生成消息体
