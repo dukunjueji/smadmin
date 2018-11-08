@@ -3,10 +3,7 @@ package com.uc.training.smadmin.gds.dao.impl;
 import com.uc.training.smadmin.gds.dao.PropertyDao;
 import com.uc.training.smadmin.gds.model.Property;
 import com.uc.training.smadmin.gds.re.AdminPropertyListRE;
-import com.uc.training.smadmin.gds.vo.AdminPropertyUpdateVO;
-import com.uc.training.smadmin.gds.vo.AdminPropertyVO;
 import com.zuche.framework.dao.CarIsIbatisDaoImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

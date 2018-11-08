@@ -24,6 +24,20 @@ public class PageVO<T> extends BaseDomain{
 
     @Override
     public String toString() {
-        return "PageVO{" + "data=" + data + ", createTime=" + createTime + ", modifyTime=" + modifyTime + ", createEmp=" + createEmp + ", modifyEmp=" + modifyEmp + ", createEmpName='" + createEmpName + '\'' + ", modifyEmpName='" + modifyEmpName + '\'' + ", createType=" + createType + ", modifyType=" + modifyType + ", currentPage=" + currentPage + ", pageSize=" + pageSize + ", startIndex=" + startIndex + ", endIndex=" + endIndex + ", orderByColumn='" + orderByColumn + '\'' + '}';
+        return "PageVO{" +
+                "createTime=" + createTime +
+                ", modifyTime=" + modifyTime +
+                ", createEmp=" + createEmp +
+                ", modifyEmp=" + modifyEmp +
+                ", createEmpName='" + createEmpName + '\'' +
+                ", modifyEmpName='" + modifyEmpName + '\'' +
+                ", createType=" + createType +
+                ", modifyType=" + modifyType +
+                ", currentPage=" + currentPage +
+                ", pageSize=" + pageSize +
+                ", startIndex=" + startIndex +
+                ", endIndex=" + endIndex +
+                ", orderByColumn='" + orderByColumn + '\'' +
+                '}';
     }
 }

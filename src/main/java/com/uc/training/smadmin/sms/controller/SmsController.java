@@ -3,7 +3,6 @@ package com.uc.training.smadmin.sms.controller;
 import com.uc.training.common.enums.SmsStatusEnum;
 import com.uc.training.common.enums.SmsTypeEnum;
 import com.uc.training.smadmin.sms.vo.SmsVO;
-import com.uc.training.smadmin.utils.TelCodeUtil;
 import com.ycc.base.common.Result;
 import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;

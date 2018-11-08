@@ -1,7 +1,6 @@
 package com.uc.training.smadmin.gds.dao;
 
 import com.uc.training.smadmin.gds.model.GoodsPic;
-import com.uc.training.smadmin.gds.model.Property;
 import com.uc.training.smadmin.gds.re.AdminGoodsPicRE;
 
 import java.util.List;

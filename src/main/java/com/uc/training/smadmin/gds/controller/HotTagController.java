@@ -2,7 +2,6 @@ package com.uc.training.smadmin.gds.controller;
 
 import com.uc.training.common.annotation.AccessLogin;
 import com.ycc.base.common.Result;
-import com.uc.training.smadmin.gds.model.HotTag;
 import com.uc.training.smadmin.gds.re.HotTagRE;
 import com.uc.training.smadmin.gds.service.HotTagService;
 import org.springframework.beans.factory.annotation.Autowired;

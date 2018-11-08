@@ -1,5 +1,4 @@
 package com.uc.training.smadmin.bd.model;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;

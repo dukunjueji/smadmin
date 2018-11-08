@@ -6,7 +6,11 @@ import com.uc.training.smadmin.bd.service.MemberGradeService;
 import com.uc.training.smadmin.gds.dao.GoodsDao;
 import com.uc.training.smadmin.gds.model.Goods;
 import com.uc.training.smadmin.gds.model.HotTag;
-import com.uc.training.smadmin.gds.re.*;
+import com.uc.training.smadmin.gds.re.AdminGoodsRE;
+import com.uc.training.smadmin.gds.re.GoodsDetailRE;
+import com.uc.training.smadmin.gds.re.GoodsRE;
+import com.uc.training.smadmin.gds.re.GoodsStokeRE;
+import com.uc.training.smadmin.gds.re.PropertyUrlRE;
 import com.uc.training.smadmin.gds.service.CategoryService;
 import com.uc.training.smadmin.gds.service.GoodsPicService;
 import com.uc.training.smadmin.gds.service.GoodsService;
@@ -19,7 +23,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**

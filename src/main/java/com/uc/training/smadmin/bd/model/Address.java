@@ -2,12 +2,6 @@ package com.uc.training.smadmin.bd.model;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * 版权声明： Copyright (c) 2008 ucarinc. All Rights Reserved.
- * @author qi.he@ucarinc.com
- * @date 2018-10-17 03:40
- * @description:
- */
 public class Address implements Serializable {
 
 	private static final long serialVersionUID =  9197347895992467587L;

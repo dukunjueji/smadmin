@@ -1,7 +1,6 @@
 package com.uc.training.smadmin.demo.re;
 
 import java.io.Serializable;
-import java.util.Date;
 /**
  * 返回列表vo
  *

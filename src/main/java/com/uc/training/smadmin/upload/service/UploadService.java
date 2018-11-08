@@ -30,7 +30,7 @@ import java.io.InputStream;
 @Service
 public class UploadService {
 
-    private static final Logger logger = LoggerFactory.getLogger(UploadService.class);
+    private final Logger logger = LoggerFactory.getLogger(UploadService.class);
 
     /**
      * 上传图片文件

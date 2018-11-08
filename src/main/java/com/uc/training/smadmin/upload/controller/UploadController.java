@@ -1,6 +1,5 @@
 package com.uc.training.smadmin.upload.controller;
 
-import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.common.enums.UploadEnum;
 import com.uc.training.smadmin.upload.service.UploadService;

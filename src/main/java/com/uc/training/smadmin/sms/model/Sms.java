@@ -3,8 +3,6 @@ package com.uc.training.smadmin.sms.model;
 import com.uc.training.common.base.model.BaseModel;
 
 import java.io.Serializable;
-import java.util.Date;
-
 /**
  * @author 余旭东
  * @date Tue Oct 16 14:07:25 CST 2018

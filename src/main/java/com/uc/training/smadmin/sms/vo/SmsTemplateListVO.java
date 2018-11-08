@@ -2,7 +2,6 @@ package com.uc.training.smadmin.sms.vo;
 
 import com.uc.training.common.bean.PageQuery;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.validation.annotation.Validated;
 
 /**
  * @Author: 余旭东

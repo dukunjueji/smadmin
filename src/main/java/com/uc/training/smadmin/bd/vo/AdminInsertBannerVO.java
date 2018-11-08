@@ -4,7 +4,6 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 版权声明： Copyright (c) 2008 ucarinc. All Rights Reserved.
