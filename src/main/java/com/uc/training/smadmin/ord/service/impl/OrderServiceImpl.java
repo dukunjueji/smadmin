@@ -54,7 +54,18 @@ public class OrderServiceImpl implements OrderService {
     return cartGoodsDao.getCartGoodsById(memberId);
   }
 
-  @Override
+    /**
+     * 通过会员id来查找
+     *
+     * @param ordMemberVO （订单表id）
+     * @return
+     */
+    @Override
+    public List<Order> getOrderById(OrdMemberVO ordMemberVO) {
+        return orderDao.getOrderById(ordMemberVO);
+    }
+
+    @Override
   public List<CartGoods> getCarGoodsByIds(OrdGoodsVO ordGoodsVO) {
     return cartGoodsDao.getCarGoodsByIds(ordGoodsVO);
   }
@@ -160,7 +171,7 @@ public class OrderServiceImpl implements OrderService {
         //插入用户订单表
         Order order = new Order();
         order.setMemberId(orderInfoListNow.get(orderInfoListNow.size() - 2).getMemberId());
-        order.setOrderPrice(orderInfoListNow.get(orderInfoListNow.size() - 1).getTotalPrice());
+        order.setOrderPrice(orderInfoListNow.get(orderInfoListNow.size() - 1).getOrderPrice());
         order.setPayPrice(orderInfoListNow.get(orderInfoListNow.size() - 1).getTotalPrice());
         //插入地址信息
         AddressRE addressRE = addressService.getAddressById(orderInfoListNow.get(orderInfoListNow.size() - 2).getAddressId());

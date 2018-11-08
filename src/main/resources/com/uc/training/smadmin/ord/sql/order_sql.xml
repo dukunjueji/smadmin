@@ -23,8 +23,11 @@
 		<isNotEmpty property="status" prepend="and">
 			s.status = #status#
 		</isNotEmpty>
+        <isNotEmpty property="orderNum" prepend="and">
+            s.order_num = #orderNum#
+        </isNotEmpty>
 		ORDER BY
-		  s.id DESC
+		  s.modify_time DESC
         <isNotNull property="offset">
             LIMIT #offset#, #pageSize#
         </isNotNull>

@@ -23,6 +23,21 @@ public class OrdMemberVO extends PageQuery implements Serializable {
      */
     private Long status;
 
+    /**
+     * 订单编号
+     *
+     * @return
+     */
+    private String orderNum;
+
+    public String getOrderNum() {
+        return orderNum;
+    }
+
+    public void setOrderNum(String orderNum) {
+        this.orderNum = orderNum;
+    }
+
     public Long getStatus() {
         return status;
     }
@@ -43,6 +58,8 @@ public class OrdMemberVO extends PageQuery implements Serializable {
     public String toString() {
         return "OrdMemberVO{" +
                 "memberId=" + memberId +
+                ", status=" + status +
+                ", orderNum='" + orderNum + '\'' +
                 '}';
     }
 }

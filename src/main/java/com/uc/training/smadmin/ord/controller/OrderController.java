@@ -10,6 +10,7 @@ import com.uc.training.smadmin.gds.re.GoodsDetailRE;
 import com.uc.training.smadmin.gds.service.GoodsService;
 import com.uc.training.smadmin.ord.dao.OrderDao;
 import com.uc.training.smadmin.ord.model.CartGoods;
+import com.uc.training.smadmin.ord.model.Order;
 import com.uc.training.smadmin.ord.re.OrderConfirmRE;
 import com.uc.training.smadmin.ord.re.OrderGoodsDetailRe;
 import com.uc.training.smadmin.ord.re.OrderInfoRE;
@@ -270,6 +271,16 @@ public class OrderController extends BaseController {
             return Result.getBusinessException("支付失败", null);
         }
         orderPayInfoNow.get(0).setMemberId(getUid());
+        // 支付订单前判断该用户订单状态是否为待付款状态
+        OrdMemberVO ordMemberVO = new OrdMemberVO();
+        ordMemberVO.setMemberId(orderPayInfoNow.get(0).getMemberId());
+        ordMemberVO.setOrderNum(orderPayInfoNow.get(0).getOrderName());
+        List<Order> order = orderService.getOrderById(ordMemberVO);
+        if (!CollectionUtils.isEmpty(order)) {
+            if (order.get(0).getStatus() != 1 || !order.get(0).getMemberId().equals(getUid())) {
+                return Result.getBusinessException("支付失败", null);
+            }
+        }
         List<OrderConfirmRE> list = memberService.queryBalances(orderPayInfoNow);
         if (CollectionUtils.isEmpty(list)) {
             return Result.getBusinessException("支付失败", null);

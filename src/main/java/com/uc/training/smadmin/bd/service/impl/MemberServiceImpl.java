@@ -19,6 +19,7 @@ import com.uc.training.smadmin.ord.dao.OrderDao;
 import com.uc.training.smadmin.ord.model.Order;
 import com.uc.training.smadmin.ord.re.OrderConfirmRE;
 import com.uc.training.smadmin.ord.service.OrderService;
+import com.uc.training.smadmin.ord.vo.OrdMemberVO;
 import com.uc.training.smadmin.ord.vo.OrdOrderVo;
 import com.uc.training.smadmin.sms.service.SmsTemplateService;
 import com.uc.training.smadmin.sms.vo.GenerateSmsVO;
@@ -142,6 +143,7 @@ public class MemberServiceImpl implements MemberService {
 
     /**
      * 订单成功发送短信
+     *
      * @param orderNum
      */
     private void orderSuccessSendSms(String orderNum) {
