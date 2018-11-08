@@ -1,14 +1,13 @@
 package com.uc.training.smadmin.sms.controller;
 
-import com.uc.training.common.constant.SmsConstant;
-import com.uc.training.smadmin.sms.vo.SmsTemplateVO;
-import com.ycc.base.common.Result;
 import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.common.vo.PageVO;
 import com.uc.training.smadmin.sms.model.SmsTemplate;
 import com.uc.training.smadmin.sms.service.SmsTemplateService;
 import com.uc.training.smadmin.sms.vo.SmsTemplateListVO;
+import com.uc.training.smadmin.sms.vo.SmsTemplateVO;
+import com.ycc.base.common.Result;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Author: 余旭东

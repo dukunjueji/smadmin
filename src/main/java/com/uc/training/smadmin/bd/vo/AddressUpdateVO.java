@@ -1,5 +1,7 @@
 package com.uc.training.smadmin.bd.vo;
 
+import java.io.Serializable;
+
 /**
  * 版权声明： Copyright (c) 2008 ucarinc. All Rights Reserved.
  *
@@ -7,7 +9,10 @@ package com.uc.training.smadmin.bd.vo;
  * @Version 1.0
  * @date 2018/11/7
  */
-public class AddressUpdateVO extends AddressInsertVO{
+public class AddressUpdateVO extends AddressInsertVO implements Serializable {
+
+    private static final long serialVersionUID = 96617062094222426L;
+    
     /**
      * 主键id
      */

@@ -3,7 +3,6 @@ package com.uc.training.smadmin.gds.re;
 import com.uc.training.smadmin.gds.vo.AdminGoodsVO;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 /**
  * 版权声明： Copyright (c) 2008 ucarinc. All Rights Reserved.

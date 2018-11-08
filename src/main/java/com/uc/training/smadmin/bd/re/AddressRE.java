@@ -1,6 +1,5 @@
 package com.uc.training.smadmin.bd.re;
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 版权声明： Copyright (c) 2008 ucarinc. All Rights Reserved.

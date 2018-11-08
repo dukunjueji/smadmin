@@ -7,7 +7,6 @@ import com.uc.training.smadmin.sms.vo.SmsVO;
 import com.zuche.framework.dao.CarIsIbatisDaoImpl;
 import org.springframework.stereotype.Repository;
 
-import javax.xml.stream.events.Namespace;
 import java.util.List;
 
 /**

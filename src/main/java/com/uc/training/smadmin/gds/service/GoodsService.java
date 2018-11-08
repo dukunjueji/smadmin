@@ -24,7 +24,7 @@ public interface GoodsService {
      * 获取热门推荐
      * @return
      */
-    public List<GoodsRE> getHotRecommend();
+    List<GoodsRE> getHotRecommend();
 
     /**
      * 获取热门推荐总数量
@@ -37,76 +37,76 @@ public interface GoodsService {
      * @param propertyIds
      * @return
      */
-    public List<GoodsDetailRE> getGoodsDetailByPropertyIds(List<Long> propertyIds);
+    List<GoodsDetailRE> getGoodsDetailByPropertyIds(List<Long> propertyIds);
 
     /**
      * 通过分类来获取商品数量
      * @param goodsListVO
      * @return
      */
-    public List<Long> getGoodsListCount(GoodsListVO goodsListVO);
+    List<Long> getGoodsListCount(GoodsListVO goodsListVO);
 
     /**
      * 通过分类来获取商品
      * @param propertyIds
      * @return
      */
-    public List<GoodsRE> getGoodsList(List<Long> propertyIds);
+    List<GoodsRE> getGoodsList(List<Long> propertyIds);
 
     /**
      * 通过属性id商品详情
      * @param propertyId
      * @return
      */
-    public GoodsDetailRE getGoodsDetailByPropertyId(Long propertyId);
+    GoodsDetailRE getGoodsDetailByPropertyId(Long propertyId);
 
     /**
      * 通过商品id获取所有规格的商品详情
      * @param goodsId
      * @return
      */
-    public List<GoodsDetailRE> getGoodsDetailByGoodsId(Long goodsId);
+    List<GoodsDetailRE> getGoodsDetailByGoodsId(Long goodsId);
 
     /**
      * 模糊查询商品列表总数量
      * @param goodsListVO
      * @return
      */
-    public Integer searchCountByGoodsName(GoodsListVO goodsListVO);
+    Integer searchCountByGoodsName(GoodsListVO goodsListVO);
 
     /**
      * 模糊查询商品列表
      * @param goodsListVO
      * @return
      */
-    public List<GoodsRE> searchByGoodsName(GoodsListVO goodsListVO);
+    List<GoodsRE> searchByGoodsName(GoodsListVO goodsListVO);
 
     /**
      * 获取热门标签
      * @return
      */
-    public List<HotTag> selectHotTag();
+    List<HotTag> selectHotTag();
 
     /**
      * 获取会员的折扣点
      * @param uid
      * @return
      */
-    public double getMemberDiscountPoint(Long uid);
+    double getMemberDiscountPoint(Long uid);
 
     /**
      * 测试高并发下的减库存安全
      * @param goodsStokeVO
      * @return
      */
-    public Integer updateAndDeductStoke(GoodsStokeVO goodsStokeVO);
+    Integer updateAndDeductStoke(GoodsStokeVO goodsStokeVO);
 
     /**
      * 减库存之前，查看商品是否下架、删除、检查库存是否足够
      * @param goodsStokeVO
      * @return
      */
-    public GoodsStokeRE selectGoodsStatus(GoodsStokeVO goodsStokeVO);
+    GoodsStokeRE selectGoodsStatus(GoodsStokeVO goodsStokeVO);
 
     /**
      * 后台获取所有商品
@@ -141,7 +141,7 @@ public interface GoodsService {
      * @param goodsStokeVO
      * @return
      */
-    public int updateSales(GoodsStokeVO goodsStokeVO);
+    int updateSales(GoodsStokeVO goodsStokeVO);
 
     /**
      * 后台获取商品数量

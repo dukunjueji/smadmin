@@ -1,5 +1,7 @@
 package com.uc.training.smadmin.bd.re;
 
+import java.io.Serializable;
+
 /**
  * 版权声明： Copyright (c) 2008 ucarinc. All Rights Reserved.
  *
@@ -7,8 +9,9 @@ package com.uc.training.smadmin.bd.re;
  * @Version 1.0
  * @date 2018/10/26
  */
-public class BannerRE {
+public class BannerRE implements Serializable {
 
+    private static final long serialVersionUID = 7553625072522394694L;
     /**
      * 主键id
      */
