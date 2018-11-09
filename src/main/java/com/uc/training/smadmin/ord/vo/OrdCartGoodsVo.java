@@ -1,6 +1,7 @@
 package com.uc.training.smadmin.ord.vo;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * 购物车商品信息VO
@@ -56,12 +57,12 @@ public class OrdCartGoodsVo implements Serializable {
   /**
    * 商品原价
    */
-  private Double salePrice;
+  private BigDecimal salePrice;
 
   /**
    * 商品优惠价
    */
-  private Double discountPrice;
+  private BigDecimal discountPrice;
 
   /**
    * 是否打折
@@ -121,11 +122,11 @@ public class OrdCartGoodsVo implements Serializable {
     this.property = property;
   }
 
-  public Double getSalePrice() {
+  public BigDecimal getSalePrice() {
     return salePrice;
   }
 
-  public void setSalePrice(Double salePrice) {
+  public void setSalePrice(BigDecimal salePrice) {
     this.salePrice = salePrice;
   }
 
@@ -145,11 +146,11 @@ public class OrdCartGoodsVo implements Serializable {
     this.cartId = cartId;
   }
 
-  public Double getDiscountPrice() {
+  public BigDecimal getDiscountPrice() {
     return discountPrice;
   }
 
-  public void setDiscountPrice(Double discountPrice) {
+  public void setDiscountPrice(BigDecimal discountPrice) {
     this.discountPrice = discountPrice;
   }
 

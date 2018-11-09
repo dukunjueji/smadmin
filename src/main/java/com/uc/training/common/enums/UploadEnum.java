@@ -29,15 +29,9 @@ public enum UploadEnum {
         return describe;
     }
 
-    public void setDescribe(String describe) {
-        this.describe = describe;
-    }
 
     public Integer getSize() {
         return size;
     }
 
-    public void setSize(Integer size) {
-        this.size = size;
-    }
 }

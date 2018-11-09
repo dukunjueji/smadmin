@@ -22,7 +22,7 @@ public class SmsVO {
     private String telephone;
 
     /**
-     * 短信类型：1注册，2，登录，3充值，4订单信息，5会员等级
+     * 短信类型：1注册，2，忘记密码，3修改密码，4充值，5订单信息，6会员等级
      */
     private Integer type;
 
@@ -40,10 +40,6 @@ public class SmsVO {
      * 创建时间
      */
     private Date createTime;
-
-    private String typeDes;
-
-    private String statusDes;
 
     public String getContent() {
         return content;
@@ -93,14 +89,6 @@ public class SmsVO {
         this.createTime = createTime;
     }
 
-    public String getTypeDes() {
-        return SmsTypeEnum.getMap().get(type);
-    }
-
-
-    public String getStatusDes() {
-        return SmsStatusEnum.getMap().get(status);
-    }
 
     @Override
     public String toString() {
@@ -111,8 +99,6 @@ public class SmsVO {
                 ", status=" + status +
                 ", content='" + content + '\'' +
                 ", createTime=" + createTime +
-                ", typeDes='" + typeDes + '\'' +
-                ", statusDes='" + statusDes + '\'' +
                 '}';
     }
 }

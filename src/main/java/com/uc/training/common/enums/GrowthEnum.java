@@ -30,24 +30,12 @@ public enum GrowthEnum {
         return describe;
     }
 
-    public void setDescribe(String describe) {
-        this.describe = describe;
-    }
-
     public Integer getGrowthType() {
         return growthType;
     }
 
-    public void setGrowthType(Integer growthType) {
-        this.growthType = growthType;
-    }
-
     public Long getValue() {
         return value;
-    }
-
-    public void setValue(Long value) {
-        this.value = value;
     }
 
     private String describe;

@@ -42,11 +42,6 @@ public class SmsTemplate extends BaseModel {
 	@NotBlank
 	private String content;
 
-	/**
-	 * 类型描述
-	 */
-	private String typeDes;
-
 	public Long getId() {
 		return this.id;
 	}
@@ -85,10 +80,6 @@ public class SmsTemplate extends BaseModel {
 
 	public void setContent(String content) {
 		this.content = content;
-	}
-
-	public String getTypeDes() {
-		return SmsTypeEnum.getMap().get(type);
 	}
 
 }

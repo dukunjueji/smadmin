@@ -1,5 +1,7 @@
 package com.uc.training.smadmin.gds.re;
 
+import java.math.BigDecimal;
+
 /**
  * 请填写类注释
  *
@@ -12,7 +14,7 @@ public class GoodsRE {
     private Long propertyId;
     private String name;
     private Long sales;
-    private Double salePrice;
+    private BigDecimal salePrice;
     private String picUrl;
 
     public String getPicUrl() {
@@ -47,11 +49,11 @@ public class GoodsRE {
         this.sales = sales;
     }
 
-    public Double getSalePrice() {
+    public BigDecimal getSalePrice() {
         return salePrice;
     }
 
-    public void setSalePrice(Double salePrice) {
+    public void setSalePrice(BigDecimal salePrice) {
         this.salePrice = salePrice;
     }
 

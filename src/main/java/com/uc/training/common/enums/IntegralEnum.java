@@ -43,23 +43,13 @@ public enum IntegralEnum {
         return describe;
     }
 
-    public void setDescribe(String describe) {
-        this.describe = describe;
-    }
-
     public Integer getIntegralType() {
         return integralType;
     }
 
-    public void setIntegralType(Integer integralType) {
-        this.integralType = integralType;
-    }
 
     public Long getValue() {
         return value;
     }
 
-    public void setValue(Long value) {
-        this.value = value;
-    }
 }

@@ -156,7 +156,7 @@
 	</select>
 
 	<!-- 查询用户余额 -->
-	<select id="queryBalances" resultClass="java.lang.Double" parameterClass="java.lang.Long">
+	<select id="queryBalances" resultClass="java.math.BigDecimal" parameterClass="java.lang.Long">
 		 SELECT balance
 		 FROM t_bd_member s
 		 WHERE s.id=#memberid#

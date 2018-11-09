@@ -1,6 +1,7 @@
 package com.uc.training.smadmin.ord.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -21,10 +22,10 @@ public class OrdOrder implements Serializable{
   private String orderNum;
 
   /**订单价格**/
-  private Double orderPrice;
+  private BigDecimal orderPrice;
 
   /**支付价格**/
-  private Double payPrice;
+  private BigDecimal payPrice;
 
   /**删除状态**/
   private Long isDelete;
@@ -80,20 +81,20 @@ public class OrdOrder implements Serializable{
   }
 
 
-  public Double getOrderPrice() {
+  public BigDecimal getOrderPrice() {
     return orderPrice;
   }
 
-  public void setOrderPrice(Double orderPrice) {
+  public void setOrderPrice(BigDecimal orderPrice) {
     this.orderPrice = orderPrice;
   }
 
 
-  public Double getPayPrice() {
+  public BigDecimal getPayPrice() {
     return payPrice;
   }
 
-  public void setPayPrice(Double payPrice) {
+  public void setPayPrice(BigDecimal payPrice) {
     this.payPrice = payPrice;
   }
 

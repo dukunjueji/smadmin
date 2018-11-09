@@ -76,4 +76,10 @@ public interface SysMenuDao {
      * @return
      */
     Integer queryCountByName(String name);
+
+    /**
+     * 获取ID列表
+     * @return
+     */
+    List<Long> getIdList();
 }

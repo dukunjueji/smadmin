@@ -1,7 +1,5 @@
 package com.uc.training.common.constant;
 
-import org.apache.xmlbeans.impl.xb.xsdschema.Public;
-
 /**
  * 系统级静态变量
  *

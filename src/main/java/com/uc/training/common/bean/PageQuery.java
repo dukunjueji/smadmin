@@ -21,7 +21,6 @@ public class PageQuery implements Serializable {
      */
     private static final int PAGE_SIZE = 15;
 
-
     /**
      * 初始位置
      */

@@ -9,6 +9,7 @@ import com.uc.training.smadmin.bd.vo.MemberIntegralVO;
 import com.uc.training.smadmin.bd.vo.MemberListVO;
 import com.uc.training.smadmin.bd.vo.MemberLoginVO;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -60,7 +61,7 @@ public interface MemberDao {
      * @param memberId
      * @return
      */
-    Double queryBalances(Long memberId);
+    BigDecimal queryBalances(Long memberId);
 
     /**
      * 说明：通过会员id得到会员的详细信息(包括会员等级)

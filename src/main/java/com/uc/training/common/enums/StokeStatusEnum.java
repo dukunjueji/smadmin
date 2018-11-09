@@ -46,15 +46,8 @@ public enum StokeStatusEnum {
         return status;
     }
 
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
     public String getDescribe() {
         return describe;
     }
 
-    public void setDescribe(String describe) {
-        this.describe = describe;
-    }
 }

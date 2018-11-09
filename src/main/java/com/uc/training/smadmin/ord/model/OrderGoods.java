@@ -1,5 +1,6 @@
 package com.uc.training.smadmin.ord.model;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * @author kun.du01@ucarinc.com
@@ -26,13 +27,13 @@ public class OrderGoods implements Serializable {
 	private Integer goodsNum;
 
 	/**商品的原价**/
-	private Double salePrice;
+	private BigDecimal salePrice;
 
 	/**商品的优惠单价**/
-	private Double discountPrice;
+	private BigDecimal discountPrice;
 
 	/**商品的实际支付价格**/
-	private Double payPrice;
+	private BigDecimal payPrice;
 
 	/**创建人**/
 	private Long createEmp;
@@ -88,27 +89,27 @@ public class OrderGoods implements Serializable {
 		return this.goodsNum;
 	}
 
-	public void setSalePrice(Double salePrice){
+	public void setSalePrice(BigDecimal salePrice){
 		this.salePrice = salePrice;
 	}
 
-	public Double getSalePrice(){
+	public BigDecimal getSalePrice(){
 		return this.salePrice;
 	}
 
-	public void setDiscountPrice(Double discountPrice){
+	public void setDiscountPrice(BigDecimal discountPrice){
 		this.discountPrice = discountPrice;
 	}
 
-	public Double getDiscountPrice(){
+	public BigDecimal getDiscountPrice(){
 		return this.discountPrice;
 	}
 
-	public void setPayPrice(Double payPrice){
+	public void setPayPrice(BigDecimal payPrice){
 		this.payPrice = payPrice;
 	}
 
-	public Double getPayPrice(){
+	public BigDecimal getPayPrice(){
 		return this.payPrice;
 	}
 

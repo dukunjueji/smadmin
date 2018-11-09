@@ -79,7 +79,6 @@ public class SmsListVO extends PageQuery {
 
     @Override
     public String toString() {
-        super.toString();
         return "SmsListVO{" +
                 "telephone='" + telephone + '\'' +
                 ", type=" + type +

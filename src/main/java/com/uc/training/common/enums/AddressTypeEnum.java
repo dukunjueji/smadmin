@@ -27,15 +27,7 @@ public enum AddressTypeEnum {
         return describe;
     }
 
-    public void setDescribe(String describe) {
-        this.describe = describe;
-    }
-
     public Integer getType() {
         return type;
-    }
-
-    public void setType(Integer type) {
-        this.type = type;
     }
 }

@@ -106,8 +106,8 @@ public class MemberServiceImpl implements MemberService {
         if (orderList.size() <= 0) {
             return list;
         }
-        Double accountBalances = memberDao.queryBalances(memberInfoVO.getMemberId());
-        if (accountBalances > orderList.get(0).getPayPrice()) {
+        BigDecimal accountBalances = memberDao.queryBalances(memberInfoVO.getMemberId());
+        if (accountBalances.compareTo(orderList.get(0).getPayPrice()) > 0) {
             // 加上对应的商品销量
             for (int i = 1, j = orderPayInfoNow.size(); i < j; i++) {
                 GoodsStokeVO goodsStokeVO = new GoodsStokeVO();
@@ -126,7 +126,7 @@ public class MemberServiceImpl implements MemberService {
             memberInfoVO.setTotalPrice(orderList.get(0).getPayPrice());
             mqVO1.setGrowthType(GrowthEnum.PURCHASE.getGrowthType());
             mqVO1.setIntegralType(IntegralEnum.PURCHASE.getIntegralType());
-            mqVO1.setPurchaseValue(BigDecimal.valueOf(memberInfoVO.getTotalPrice()));
+            mqVO1.setPurchaseValue(memberInfoVO.getTotalPrice());
             MetaQUtils.sendMsgNoException(new MqProducer(mqVO1));
             //更新订单状态
             orderConfirmRE.setStatus(OrderEnum.WAITSHIP.getKey());
