@@ -137,7 +137,7 @@ public class OrderController extends BaseController {
     public Result<List<OrdOrderGoodsVo>> getOrderGds(String goodsList) {
         List<OrdOrderGoodsVo> orderGodsList = (List<OrdOrderGoodsVo>) JSONArray.toList(JSONArray.fromObject(goodsList), new OrdOrderGoodsVo(), new JsonConfig());
         if (CollectionUtils.isEmpty(orderGodsList)) {
-            return Result.getBusinessException("获取订单列表失败", "");
+            return Result.getSuccessResult(null);
         }
         List<OrdOrderGoodsVo> orderList = orderService.getOrderGoodsById(orderGodsList);
         if (CollectionUtils.isEmpty(orderList)) {
@@ -158,7 +158,7 @@ public class OrderController extends BaseController {
     public Result<List<OrdOrderGoodsVo>> getOrderGdsList(String goodsList, Long orderId) {
         List<OrdOrderGoodsVo> orderGodsList = (List<OrdOrderGoodsVo>) JSONArray.toList(JSONArray.fromObject(goodsList), new OrdOrderGoodsVo(), new JsonConfig());
         if (CollectionUtils.isEmpty(orderGodsList)) {
-            return Result.getBusinessException("获取订单列表失败", "");
+            return Result.getSuccessResult(null);
         }
         List<OrdOrderGoodsVo> orderList = orderService.getOrderGoods(orderGodsList, orderId);
         if (CollectionUtils.isEmpty(orderList)) {
@@ -252,7 +252,7 @@ public class OrderController extends BaseController {
     public Result confirmOrderInfo(OrdOrderGoodsVo ordOrderGoodsVo) {
         List<OrdOrderGoodsVo> orderInfoListNow = ordOrderGoodsVo.getList();
         if (CollectionUtils.isEmpty(orderInfoListNow)) {
-            return Result.getBusinessException("提交订单失败", null);
+            return Result.getSuccessResult("提交订单失败");
         }
         int a = 2;
         orderInfoListNow.get(orderInfoListNow.size() - a).setMemberId(getUid());
@@ -300,7 +300,7 @@ public class OrderController extends BaseController {
         List<Order> order = orderService.getOrderById(ordMemberVO);
         if (!CollectionUtils.isEmpty(order)) {
             if (order.get(0).getStatus() != 1 || !order.get(0).getMemberId().equals(getUid())) {
-                return Result.getBusinessException("支付失败", null);
+                return Result.getSuccessResult("支付失败");
             }
         }
         List<OrderConfirmRE> list = memberService.queryBalances(orderPayInfoNow);
@@ -362,7 +362,7 @@ public class OrderController extends BaseController {
         ordMemberVO.setMemberId(getUid());
         List<OrderInfoRE> orderInfoREList = orderService.getOrderInfoListByMemberId(ordMemberVO);
         if (CollectionUtils.isEmpty(orderInfoREList)) {
-            return Result.getBusinessException("获取用户订单信息失败", null);
+            return Result.getSuccessResult(null);
         }
         return Result.getSuccessResult(orderInfoREList);
     }
