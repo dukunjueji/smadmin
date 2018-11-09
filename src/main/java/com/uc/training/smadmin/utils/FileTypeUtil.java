@@ -22,7 +22,7 @@ import java.util.Map;
 public final class FileTypeUtil {
     private static final int BTYE_SIZE = 50;
     private static final int DECIMAL = 0xFF;
-    public final static Map<String, String> FILE_TYPE_MAP = new HashMap<String, String>();
+    private final static Map<String, String> FILE_TYPE_MAP = new HashMap<String, String>();
 
     private FileTypeUtil() {
     }
