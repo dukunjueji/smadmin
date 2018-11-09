@@ -1,5 +1,7 @@
 package com.uc.training.common.constant;
 
+import org.apache.xmlbeans.impl.xb.xsdschema.Public;
+
 /**
  * 系统级静态变量
  *
@@ -30,4 +32,6 @@ public final class Constant {
      * 请求id
      */
     public static final String REQUEST_ID = "id";
+
+    public static final Integer LONGEST_ROLE_NAME = 22;
 }

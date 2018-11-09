@@ -26,13 +26,13 @@ public class OrderGoods implements Serializable {
 	private Integer goodsNum;
 
 	/**商品的原价**/
-	private double salePrice;
+	private Double salePrice;
 
 	/**商品的优惠单价**/
-	private double discountPrice;
+	private Double discountPrice;
 
 	/**商品的实际支付价格**/
-	private double payPrice;
+	private Double payPrice;
 
 	/**创建人**/
 	private Long createEmp;
@@ -88,27 +88,27 @@ public class OrderGoods implements Serializable {
 		return this.goodsNum;
 	}
 
-	public void setSalePrice(double salePrice){
+	public void setSalePrice(Double salePrice){
 		this.salePrice = salePrice;
 	}
 
-	public double getSalePrice(){
+	public Double getSalePrice(){
 		return this.salePrice;
 	}
 
-	public void setDiscountPrice(double discountPrice){
+	public void setDiscountPrice(Double discountPrice){
 		this.discountPrice = discountPrice;
 	}
 
-	public double getDiscountPrice(){
+	public Double getDiscountPrice(){
 		return this.discountPrice;
 	}
 
-	public void setPayPrice(double payPrice){
+	public void setPayPrice(Double payPrice){
 		this.payPrice = payPrice;
 	}
 
-	public double getPayPrice(){
+	public Double getPayPrice(){
 		return this.payPrice;
 	}
 

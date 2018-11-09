@@ -39,6 +39,52 @@ public class OrderGoodsDetailRe implements Serializable {
      */
     private Long goodsPropertyId;
 
+    /**
+     * 商品id
+     *
+     * @return
+     */
+    private Long goodsId;
+    /**
+     * 商品应付价格
+     *
+     * @return
+     */
+
+    private Double payPrice;
+    /**
+     * 是否打折
+     */
+    private Long isDiscount;
+    /**
+     * 打折价格
+     */
+    private Double discountPrice;
+
+    public Long getIsDiscount() {
+        return isDiscount;
+    }
+
+    public void setIsDiscount(Long isDiscount) {
+        this.isDiscount = isDiscount;
+    }
+
+    public Double getDiscountPrice() {
+        return discountPrice;
+    }
+
+    public void setDiscountPrice(Double discountPrice) {
+        this.discountPrice = discountPrice;
+    }
+
+    public Double getPayPrice() {
+        return payPrice;
+    }
+
+    public void setPayPrice(Double payPrice) {
+        this.payPrice = payPrice;
+    }
+
     public Long getGoodsPropertyId() {
         return goodsPropertyId;
     }
@@ -85,5 +131,13 @@ public class OrderGoodsDetailRe implements Serializable {
 
     public void setGoodsProperty(String goodsProperty) {
         this.goodsProperty = goodsProperty;
+    }
+
+    public Long getGoodsId() {
+        return goodsId;
+    }
+
+    public void setGoodsId(Long goodsId) {
+        this.goodsId = goodsId;
     }
 }

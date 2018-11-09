@@ -30,20 +30,20 @@ public interface OrderService {
      */
     List<CartGoods> getCarGoodsById(Long memberId);
 
-  /**
-   * 根据用户ID和购物车商品表ID获取购物车商品信息
-   *
-   * @param ordGoodsVO
-   * @return
-   */
-  List<CartGoods> getCarGoodsByIds(OrdGoodsVO ordGoodsVO);
+    /**
+     * 根据用户ID和购物车商品表ID获取购物车商品信息
+     *
+     * @param ordGoodsVO
+     * @return
+     */
+    List<CartGoods> getCarGoodsByIds(OrdGoodsVO ordGoodsVO);
 
-  /**
-   * 根据用户id获取订单商品信息
-   *
-   * @param orderGodsList
-   * @return
-   */
+    /**
+     * 根据用户id获取订单商品信息
+     *
+     * @param orderGodsList
+     * @return
+     */
 
     List<OrdOrderGoodsVo> getOrderGoodsById(List<OrdOrderGoodsVo> orderGodsList);
 
@@ -159,4 +159,12 @@ public interface OrderService {
      */
 
     List<OrderInfoRE> getOrderInfoListByMemberId(OrdMemberVO ordMemberVO);
+
+    /**
+     * 获取订单商品列表(已生成订单)
+     *
+     * @param orderGodsList
+     * @return
+     */
+    public List<OrdOrderGoodsVo> getOrderGoods(List<OrdOrderGoodsVo> orderGodsList, Long orderId);
 }

@@ -2,6 +2,7 @@ package com.uc.training.smadmin.ord.service.impl;
 
 import com.uc.training.smadmin.ord.dao.OrderGoodsDao;
 import com.uc.training.smadmin.ord.service.OrderGoodsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class OrderGoodsServiceImpl implements OrderGoodsService {
-
+    @Autowired
     private OrderGoodsDao orderGoodsDao;
 
 

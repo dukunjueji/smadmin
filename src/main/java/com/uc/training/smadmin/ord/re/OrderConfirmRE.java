@@ -24,10 +24,23 @@ public class OrderConfirmRE implements Serializable {
      */
     private String orderNum;
 
+    /**
+     * 订单id
+     */
+    private Long orderId;
+
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
+    }
 
     /**
      * 订单状态
-     *0-未生成1-待付款 2-取消订单 3-待发货 4-待收货 5-已完成
+     * 0-未生成1-待付款 2-取消订单 3-待发货 4-待收货 5-已完成
+     *
      * @return
      */
 
