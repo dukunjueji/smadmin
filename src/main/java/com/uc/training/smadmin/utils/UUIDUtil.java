@@ -24,11 +24,11 @@ public class UUIDUtil {
     /**
      * 堵塞队列，使用FIFO策略存储获取流水线号
      */
-    protected static BlockingQueue<UUIDData> queue = new ArrayBlockingQueue<UUIDData>(UUIDTypeEnum.QUEUESIZE, true);
+    static BlockingQueue<UUIDData> queue = new ArrayBlockingQueue<UUIDData>(UUIDTypeEnum.QUEUESIZE, true);
     /**
      * 流水线号 原子操作
      */
-    protected static AtomicInteger count = new AtomicInteger(0);
+    static AtomicInteger count = new AtomicInteger(0);
 
     /**
      * 通过编号类型获取uuid：uuid=编号类型+时间戳+流水线号
@@ -60,6 +60,7 @@ public class UUIDUtil {
             queue = new ArrayBlockingQueue<UUIDData>(UUIDTypeEnum.QUEUESIZE, true);
             // 流水线号 初始化从1开始
             count = new AtomicInteger(0);
+
             lastSecond = System.currentTimeMillis() / 1000;
         }
         int sort = GetAndProductUUID.consumer();
@@ -71,7 +72,6 @@ public class UUIDUtil {
         String uuid = UUIDUtil.getUuidByType(UUIDTypeEnum.GOODSID.getType());
         System.out.println("------------------------" + uuid + "------------------------------------------------");
     }
-
 }
 
 class GetAndProductUUID {
