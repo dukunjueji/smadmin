@@ -41,11 +41,9 @@ public enum  UUIDTypeEnum {
         this.value = value;
         this.desc = desc;
     }
-
     public String getType() {
         return type;
     }
-
 
     public String getValue() {
         return value;
@@ -54,5 +52,4 @@ public enum  UUIDTypeEnum {
     public String getDesc() {
         return desc;
     }
-
 }

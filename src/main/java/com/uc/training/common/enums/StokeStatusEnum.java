@@ -46,7 +46,6 @@ public enum StokeStatusEnum {
         return status;
     }
 
-
     public String getDescribe() {
         return describe;
     }
