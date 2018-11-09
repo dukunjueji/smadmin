@@ -58,18 +58,18 @@ public class AccessToken implements Serializable {
 	}
 
 	public Date getSignDate() {
-		return signDate;
+		return signDate == null ? null : (Date) signDate.clone();
 	}
 
 	public void setSignDate(Date signDate) {
-		this.signDate = signDate;
+		this.signDate = signDate == null ? null : (Date) signDate.clone();
 	}
 
 	public Date getExpireDate() {
-		return expireDate;
+		return expireDate == null ? null : (Date) expireDate.clone();
 	}
 
 	public void setExpireDate(Date expireDate) {
-		this.expireDate = expireDate;
+		this.expireDate = expireDate == null ? null : (Date) expireDate.clone();
 	}
 }

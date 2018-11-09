@@ -129,19 +129,19 @@ public class AdminBannerListRE implements Serializable{
     }
 
     public Date getCreateTime() {
-        return createTime;
+        return createTime == null ? null : (Date) createTime.clone();
     }
 
     public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+        this.createTime = createTime == null ? null : (Date) createTime.clone();
     }
 
     public Date getModifyTime() {
-        return modifyTime;
+        return modifyTime == null ? null : (Date) modifyTime.clone();
     }
 
     public void setModifyTime(Date modifyTime) {
-        this.modifyTime = modifyTime;
+        this.modifyTime = modifyTime == null ? null : (Date) modifyTime.clone();
     }
 
     public String getDescription() {

@@ -53,30 +53,6 @@ public class OrderRe implements Serializable {
    */
   private Integer goodsStatus;
 
-  public Integer getGoodsStatus() {
-    return goodsStatus;
-  }
-
-  public void setGoodsStatus(Integer goodsStatus) {
-    this.goodsStatus = goodsStatus;
-  }
-
-  public String getTeag() {
-    return teag;
-  }
-
-  public void setTeag(String teag) {
-    this.teag = teag;
-  }
-
-  public Date getCreateTime() {
-    return createTime;
-  }
-
-  public void setCreateTime(Date createTime) {
-    this.createTime = createTime;
-  }
-
   public Long getId() {
     return id;
   }
@@ -157,4 +133,27 @@ public class OrderRe implements Serializable {
     this.receiptAddress = receiptAddress;
   }
 
+  public Date getCreateTime() {
+    return createTime == null ? null : (Date) createTime.clone();
+  }
+
+  public void setCreateTime(Date createTime) {
+    this.createTime = createTime == null ? null : (Date) createTime.clone();
+  }
+
+  public String getTeag() {
+    return teag;
+  }
+
+  public void setTeag(String teag) {
+    this.teag = teag;
+  }
+
+  public Integer getGoodsStatus() {
+    return goodsStatus;
+  }
+
+  public void setGoodsStatus(Integer goodsStatus) {
+    this.goodsStatus = goodsStatus;
+  }
 }

@@ -1,6 +1,7 @@
 package com.uc.training.smadmin.bd.model;
 
 import com.uc.training.common.base.model.BaseModel;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 

@@ -45,11 +45,11 @@ public class ContinueSignDaysVO implements Serializable {
     }
 
     public Date getLastDate() {
-        return lastDate;
+        return lastDate == null ? null : (Date) lastDate.clone();
     }
 
     public void setLastDate(Date lastDate) {
-        this.lastDate = lastDate;
+        this.lastDate = lastDate == null ? null : (Date) lastDate.clone();
     }
 
     @Override
