@@ -130,6 +130,7 @@ public class OrderServiceImpl implements OrderService {
                 if (orderGdsList.get(j).getGoodsPropertyId().equals(orderGodsList.get(i).getPropertyId())) {
                     ordOrderGoodsVo.setSalePrice(orderGdsList.get(j).getSalePrice());
                     ordOrderGoodsVo.setDiscountPrice(orderGdsList.get(j).getDiscountPrice());
+                    ordOrderGoodsVo.setPayPrice(orderGdsList.get(j).getPayPrice());
                 }
             }
             GoodsDetailRE gdDTO = goodsService.getGoodsDetailByPropertyId(orderGodsList.get(i).getPropertyId());
@@ -265,7 +266,7 @@ public class OrderServiceImpl implements OrderService {
                 orderGoods.setOrderId(oderId);
             }
             orderGoods.setGoodsId(orderInfoListNow.get(i).getGoodsId());
-            orderGoods.setPayPrice(orderInfoListNow.get(i).getSalePrice());
+            orderGoods.setPayPrice(orderInfoListNow.get(i).getPayPrice());
             orderGoods.setGoodsPropertyId(orderInfoListNow.get(i).getPropertyId());
             orderGoods.setGoodsNum(orderInfoListNow.get(i).getNum());
             orderGoods.setSalePrice(orderInfoListNow.get(i).getSalePrice());

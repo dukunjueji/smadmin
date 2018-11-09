@@ -33,11 +33,5 @@ public enum SmsStatusEnum {
     public String getValue() {
         return value;
     }
-    public static Map<Integer, String> getMap() {
-        Map<Integer, String> map = new HashMap<>();
-        for (SmsStatusEnum s : SmsStatusEnum.values()) {
-            map.put(s.key, s.value);
-        }
-        return map;
-    }
+
 }

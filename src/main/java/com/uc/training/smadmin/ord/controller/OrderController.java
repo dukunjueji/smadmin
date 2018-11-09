@@ -29,7 +29,6 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
@@ -323,7 +322,6 @@ public class OrderController extends BaseController {
     public Result checkStock(String[] goodsList) {
         OrdGoodsVO ordGoodsVO = new OrdGoodsVO();
         List<Long> listId = new ArrayList<>();
-        List<OrdGoodsVO> list1 = new ArrayList<OrdGoodsVO>();
         if (goodsList != null) {
             for (String s : goodsList) {
                 listId.add(Long.parseLong(s));

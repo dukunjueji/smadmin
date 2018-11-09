@@ -65,18 +65,4 @@ public class SmsController extends BaseController {
         return res;
     }
 
-    @AccessLogin
-    @ResponseBody
-    @RequestMapping(value = "getStatus.do_", method = RequestMethod.GET)
-    public Result<Map<Integer, String>> getStatus(){
-        return Result.getSuccessResult(SmsStatusEnum.getMap());
-    }
-
-    @AccessLogin
-    @ResponseBody
-    @RequestMapping(value = "getType.do_", method = RequestMethod.GET)
-    public Result<Map<Integer, String>> getType(){
-        return Result.getSuccessResult(SmsTypeEnum.getMap());
-    }
-
 }

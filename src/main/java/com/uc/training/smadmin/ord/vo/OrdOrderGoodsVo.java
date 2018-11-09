@@ -73,6 +73,10 @@ public class OrdOrderGoodsVo implements Serializable {
     private BigDecimal discountPrice;
 
     /**
+     * 商品实际支付价格
+     */
+    private BigDecimal payPrice;
+    /**
      * 是否打折
      */
     private Long isDiscount;
@@ -114,6 +118,14 @@ public class OrdOrderGoodsVo implements Serializable {
     private String orderInfoList;
 
     private List<OrdOrderGoodsVo> list;
+
+    public BigDecimal getPayPrice() {
+        return payPrice;
+    }
+
+    public void setPayPrice(BigDecimal payPrice) {
+        this.payPrice = payPrice;
+    }
 
     public List<OrdOrderGoodsVo> getList() {
         return (List<OrdOrderGoodsVo>) JSONArray.toList(JSONArray.fromObject(this.orderInfoList), new OrdOrderGoodsVo(), new JsonConfig());

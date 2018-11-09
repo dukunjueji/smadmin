@@ -74,7 +74,6 @@ public class SmsTemplateController extends BaseController {
     @RequestMapping(value = "/modifyTemplate", method = RequestMethod.POST)
     @ResponseBody
     public Result<Integer> modifyTemplate(@Validated SmsTemplateVO template){
-        SmsTemplate t1 = smsTemplateService.getTemplateById(template.getId());
         template.setModifyEmp(getUid());
         return Result.getSuccessResult(smsTemplateService.modifyTemplate(template));
     }

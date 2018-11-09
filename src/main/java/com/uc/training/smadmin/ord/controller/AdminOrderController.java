@@ -29,99 +29,99 @@ import java.util.Map;
 @Controller
 @RequestMapping(value = "admin/order/")
 public class AdminOrderController extends BaseController {
-  @Autowired
-  OrderService orderService;
+	@Autowired
+	OrderService orderService;
 
-  @Autowired
-  GoodsService goodsService;
+	@Autowired
+	GoodsService goodsService;
 
-  @Autowired
-  MemberService memberService;
+	@Autowired
+	MemberService memberService;
 
-  /**
-   * 获取订单分页
-   *
-   * @param orderVo
-   * @return
-   * @author hhj
-   */
-  @ResponseBody
-  @AccessLogin
-  @RequestMapping(value = "getOrderPage.do_", method = RequestMethod.POST)
-  public Result getOrderPage(OrdOrderVo orderVo) {
-    List<OrderRe> list;
-    int size = 5;
-    Map<String, Object> map = new HashMap<String, Object>(size);
-    list = orderService.getOrderPage(orderVo);
-    Integer totalSize = orderService.getOrderTotal(orderVo);
-    map.put("orderList", list);
-    map.put("totalSize", totalSize);
-    return Result.getSuccessResult(map);
-  }
+	/**
+	 * 获取订单分页
+	 *
+	 * @param orderVo
+	 * @return
+	 * @author hhj
+	 */
+	@ResponseBody
+	@AccessLogin
+	@RequestMapping(value = "getOrderPage.do_", method = RequestMethod.POST)
+	public Result getOrderPage(OrdOrderVo orderVo) {
+		List<OrderRe> list;
+		int size = 5;
+		Map<String, Object> map = new HashMap<String, Object>(size);
+		list = orderService.getOrderPage(orderVo);
+		Integer totalSize = orderService.getOrderTotal(orderVo);
+		map.put("orderList", list);
+		map.put("totalSize", totalSize);
+		return Result.getSuccessResult(map);
+	}
 
-  /**
-   * 批量删除订单（更改删除/进度状态）
-   *
-   * @param delId（orderVo.getOrderListStr()）
-   * @return
-   * @author hhj
-   */
-  @ResponseBody
-  @AccessLogin
-  @RequestMapping(value = "admDelOrder.do_", method = RequestMethod.POST)
-  public Result delOrderPage(String[] delId) {
-    Result result = new Result();
-    List<Long> list = new ArrayList<>();
-    if (delId != null) {
-      for (String s : delId) {
-        list.add(Long.parseLong(s));
-      }
-    } else {
-      return Result.getBusinessException("删除失败", null);
-    }
-    int num = orderService.logicDelOrder(list);
-    if (num > 0) {
-      return Result.getSuccessResult(null);
-    }
-    return Result.getBusinessException("删除失败", null);
-  }
+	/**
+	 * 批量删除订单（更改删除/进度状态）
+	 *
+	 * @param delId（orderVo.getOrderListStr()）
+	 * @return
+	 * @author hhj
+	 */
+	@ResponseBody
+	@AccessLogin
+	@RequestMapping(value = "admDelOrder.do_", method = RequestMethod.POST)
+	public Result delOrderPage(String[] delId) {
+		List<Long> list = new ArrayList<Long>();
+		if (delId != null) {
+			for (String s : delId) {
+				list.add(Long.parseLong(s));
+			}
+		} else {
+			return Result.getBusinessException("删除失败", null);
+		}
+		int num = orderService.logicDelOrder(list);
 
-  /**
-   * 获取订单商品详情
-   *
-   * @param id(订单id)
-   * @return
-   * @author hhj
-   */
-  @ResponseBody
-  @AccessLogin
-  @RequestMapping(value = "getOrderGoods.do_", method = RequestMethod.POST)
-  public Result getOrderGoods(Integer id) {
-    List<OrderGoodsDetailRe> list;
-    try {
-      list = orderService.getOrderGdsById(id);
-    } catch (Exception e) {
-      return Result.getBusinessException("获取异常", null);
-    }
-    return Result.getSuccessResult(list);
-  }
+		if (num > 0) {
+			return Result.getSuccessResult(null);
+		}
+		return Result.getBusinessException("删除失败", null);
+	}
 
-  /**
-   * 根据订单号更新状态
-   *
-   * @param ordOrderVo
-   * @return
-   * @author hhj
-   */
-  @ResponseBody
-  @AccessLogin
-  @RequestMapping(value = "upOrderStatus.do_", method = RequestMethod.POST)
-  public Result upOrderStatus(OrdOrderVo ordOrderVo) {
-    ordOrderVo.setModifyEmp(getUid());
-    //取消订单回退库存
-    if (orderService.updateOrder(ordOrderVo) > 0) {
-      return Result.getSuccessResult(null);
-    }
-    return Result.getBusinessException("更新失败", null);
-  }
+	/**
+	 * 获取订单商品详情
+	 *
+	 * @param id(订单id)
+	 * @return
+	 * @author hhj
+	 */
+	@ResponseBody
+	@AccessLogin
+	@RequestMapping(value = "getOrderGoods.do_", method = RequestMethod.POST)
+	public Result getOrderGoods(Integer id) {
+		List<OrderGoodsDetailRe> list;
+		try {
+			list = orderService.getOrderGdsById(id);
+		} catch (Exception e) {
+			return Result.getBusinessException("获取异常", null);
+		}
+		return Result.getSuccessResult(list);
+	}
+
+	/**
+	 * 根据订单号更新状态
+	 *
+	 * @param ordOrderVo
+	 * @return
+	 * @author hhj
+	 */
+	@ResponseBody
+	@AccessLogin
+	@RequestMapping(value = "upOrderStatus.do_", method = RequestMethod.POST)
+	public Result upOrderStatus(OrdOrderVo ordOrderVo) {
+		ordOrderVo.setModifyEmp(getUid());
+		//取消订单回退库存
+		if (orderService.updateOrder(ordOrderVo) > 0) {
+			return Result.getSuccessResult(null);
+		}
+		return Result.getBusinessException("更新失败", null);
+	}
 }

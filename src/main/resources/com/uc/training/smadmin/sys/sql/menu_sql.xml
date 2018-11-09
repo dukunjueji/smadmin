@@ -98,4 +98,9 @@
     FROM t_sys_menu s
     WHERE s.name = #name#
   </select>
+
+  <select id="getIdList" resultClass="Long">
+	  SELECT s.id
+	  FROM t_sys_menu s
+  </select>
 </sqlMap>

@@ -1,8 +1,9 @@
 package com.uc.training.smadmin.bd.model;
-import java.io.Serializable;
-import java.util.Date;
+import com.uc.training.common.base.model.BaseModel;
 
-public class Address implements Serializable {
+import java.io.Serializable;
+
+public class Address extends BaseModel implements Serializable {
 
 	private static final long serialVersionUID =  9197347895992467587L;
 
@@ -35,18 +36,6 @@ public class Address implements Serializable {
 
 	/**是否默认地址**/
 	private Integer isDefault;
-
-	/**创建时间**/
-	private Date createTime;
-
-	/**创建时间**/
-	private Long createEmp;
-
-	/**修改时间**/
-	private Date modifyTime;
-
-	/**修改人**/
-	private Long modifyEmp;
 
 	public String getAreaCode() {
 		return areaCode;
@@ -126,38 +115,6 @@ public class Address implements Serializable {
 
 	public Integer getIsDefault(){
 		return this.isDefault;
-	}
-
-	public void setCreateTime(Date createTime){
-		this.createTime = createTime;
-	}
-
-	public Date getCreateTime(){
-		return this.createTime;
-	}
-
-	public void setCreateEmp(Long createEmp){
-		this.createEmp = createEmp;
-	}
-
-	public Long getCreateEmp(){
-		return this.createEmp;
-	}
-
-	public void setModifyTime(Date modifyTime){
-		this.modifyTime = modifyTime;
-	}
-
-	public Date getModifyTime(){
-		return this.modifyTime;
-	}
-
-	public void setModifyEmp(Long modifyEmp){
-		this.modifyEmp = modifyEmp;
-	}
-
-	public Long getModifyEmp(){
-		return this.modifyEmp;
 	}
 
 }

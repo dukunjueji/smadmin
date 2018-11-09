@@ -63,4 +63,9 @@ public class SysMenuDaoImpl extends CarIsIbatisDaoImpl implements SysMenuDao {
     public Integer queryCountByName(String name) {
         return (Integer) this.queryForObject(NAMESPACE + "queryCountByName", name);
     }
+
+    @Override
+    public List<Long> getIdList() {
+        return this.queryForList(NAMESPACE + "getIdList");
+    }
 }

@@ -53,16 +53,7 @@ public enum SmsTypeEnum {
         return type;
     }
 
-
     public String getCode() {
         return code;
-    }
-
-    public static Map<Integer, String> getMap() {
-        Map<Integer, String> map = new HashMap<>();
-        for (SmsTypeEnum s : SmsTypeEnum.values()) {
-            map.put(s.type, s.describe);
-        }
-        return map;
     }
 }

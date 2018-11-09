@@ -62,5 +62,10 @@ public class SysMenuServiceImpl implements SysMenuService {
         return menuDao.queryCountByName(name);
     }
 
+    @Override
+    public List<Long> getIdList() {
+        return menuDao.getIdList();
+    }
+
 
 }

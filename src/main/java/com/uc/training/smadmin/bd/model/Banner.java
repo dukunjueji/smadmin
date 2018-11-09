@@ -1,14 +1,15 @@
 package com.uc.training.smadmin.bd.model;
 
+import com.uc.training.common.base.model.BaseModel;
+
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * @author qi.he@ucarinc.com
  * @date 2018-10-17 03:40
  * @description:广告表
  */
-public class Banner implements Serializable {
+public class Banner extends BaseModel implements Serializable {
 
 	private static final long serialVersionUID =  4444735858979083691L;
 
@@ -37,18 +38,6 @@ public class Banner implements Serializable {
 
 	/**描述**/
 	private String description;
-
-	/**创建人**/
-	private Long createEmp;
-
-	/**创建时间**/
-	private Date createTime;
-
-	/**修改人**/
-	private Long modifyEmp;
-
-	/**修改时间**/
-	private Date modifyTime;
 
 	public Integer getIsShow() {
 		return isShow;
@@ -120,38 +109,6 @@ public class Banner implements Serializable {
 
 	public String getDescription(){
 		return this.description;
-	}
-
-	public void setCreateEmp(Long createEmp){
-		this.createEmp = createEmp;
-	}
-
-	public Long getCreateEmp(){
-		return this.createEmp;
-	}
-
-	public void setCreateTime(java.util.Date createTime){
-		this.createTime = createTime;
-	}
-
-	public java.util.Date getCreateTime(){
-		return this.createTime;
-	}
-
-	public void setModifyEmp(Long modifyEmp){
-		this.modifyEmp = modifyEmp;
-	}
-
-	public Long getModifyEmp(){
-		return this.modifyEmp;
-	}
-
-	public void setModifyTime(java.util.Date modifyTime){
-		this.modifyTime = modifyTime;
-	}
-
-	public java.util.Date getModifyTime(){
-		return this.modifyTime;
 	}
 
 }

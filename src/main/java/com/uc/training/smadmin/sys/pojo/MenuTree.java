@@ -76,12 +76,12 @@ public final class MenuTree {
             // 父节点ID匹配
             if (allMenu.get(i).getParentId().equals(pid)) {
                 childList.add(allMenu.get(i).getId());
+                allMenu.remove(i--);
             }
         }
         if (childList.size() == 0) {
             return;
         }
-        allMenu.removeAll(childList);
         deleteList.addAll(childList);
         for (int i=0;i<childList.size();i++) {
             deleteChildren(childList.get(i), deleteList, allMenu);
