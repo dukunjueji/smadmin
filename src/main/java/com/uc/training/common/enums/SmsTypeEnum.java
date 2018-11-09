@@ -49,24 +49,13 @@ public enum SmsTypeEnum {
         return describe;
     }
 
-    public void setDescribe(String describe) {
-        this.describe = describe;
-    }
-
     public Integer getType() {
         return type;
     }
 
-    public void setType(Integer type) {
-        this.type = type;
-    }
 
     public String getCode() {
         return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
     }
 
     public static Map<Integer, String> getMap() {

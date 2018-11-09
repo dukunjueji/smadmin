@@ -32,15 +32,8 @@ public enum GoodsStatusEnum {
         return desc;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
-
     public Integer getType() {
         return type;
     }
 
-    public void setType(Integer type) {
-        this.type = type;
-    }
 }

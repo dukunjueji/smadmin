@@ -30,18 +30,9 @@ public enum SmsStatusEnum {
         return key;
     }
 
-    public void setKey(int key) {
-        this.key = key;
-    }
-
     public String getValue() {
         return value;
     }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
-
     public static Map<Integer, String> getMap() {
         Map<Integer, String> map = new HashMap<>();
         for (SmsStatusEnum s : SmsStatusEnum.values()) {
