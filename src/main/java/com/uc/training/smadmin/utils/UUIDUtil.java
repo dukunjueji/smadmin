@@ -1,5 +1,6 @@
 package com.uc.training.smadmin.utils;
 
+import com.kenai.jaffl.annotations.In;
 import com.uc.training.common.enums.UUIDTypeEnum;
 
 import java.util.concurrent.ArrayBlockingQueue;
@@ -23,11 +24,11 @@ public class UUIDUtil {
     /**
      *堵塞队列，使用FIFO策略存储获取流水线号
      */
-    public static BlockingQueue<UUIDData> queue;
+    protected static BlockingQueue<UUIDData> queue;
     /**
      *流水线号 原子操作
      */
-    public static AtomicInteger count;
+    protected static AtomicInteger count;
 
     /**
      * 通过编号类型获取uuid：uuid=编号类型+时间戳+流水线号
@@ -51,7 +52,7 @@ public class UUIDUtil {
         Long timestamp=System.currentTimeMillis()/1000;
         uuid.append(timestamp);
 
-        //TODO:消费数据，低于 UUIDTypeEnum.MINQUEUESIZE，开始生成数据
+        //消费数据，低于 UUIDTypeEnum.MINQUEUESIZE，开始生成数据
         if(queue==null){
             queue=new ArrayBlockingQueue<UUIDData>(UUIDTypeEnum.QUEUESIZE,true);
             // 流水线号 初始化从1开始
@@ -94,7 +95,6 @@ class GetAndProductUUID {
             if(UUIDUtil.queue.size() < UUIDTypeEnum.MINQUEUESIZE) {
                 Thread thread=new Producer();
                 thread.start();
-//                producerNumInQueue();
             }
             LOCK.lock();
             UUIDData data = UUIDUtil.queue.take();
@@ -124,7 +124,6 @@ class GetAndProductUUID {
                         break;
                     }
                     data = new UUIDData(UUIDUtil.count.incrementAndGet());
-                    System.out.println("生产了数据"+data.getData());
                     UUIDUtil.queue.offer(data,1,TimeUnit.SECONDS);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -138,12 +137,9 @@ class UUIDData {
     /**
      *存储水流线号
      */
-    private final int data;
+    private final Integer data;
     public UUIDData(int d){
         data = d;
-    }
-    public UUIDData(String d){
-        data = Integer.valueOf(d);
     }
     public int getData(){
         return data;
