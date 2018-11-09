@@ -47,6 +47,8 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 版权说明：Copyright (c) 2018 ucarinc. All Rights Reserved.
@@ -243,6 +245,12 @@ public class ApiMemberController extends BaseController {
     @ResponseBody
     public Result chargeBalance(@Validated ChargeBalanceVO chargeBalanceVO){
         Result re;
+        String regExp = "/^([1-9]\\d*|0)(\\.\\d{1,2})?$/";
+        Pattern p = Pattern.compile(regExp);
+        Matcher m = p.matcher(chargeBalanceVO.getBalance().toString());
+        if(!m.matches()){
+            return Result.getBusinessException("充值金额有误", null);
+        }
         Member member = new Member();
         member.setId(getUid());
         member.setBalance(chargeBalanceVO.getBalance());
