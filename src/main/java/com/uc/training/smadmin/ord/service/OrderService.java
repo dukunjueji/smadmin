@@ -164,7 +164,8 @@ public interface OrderService {
      * 获取订单商品列表(已生成订单)
      *
      * @param orderGodsList
+     * @param orderId
      * @return
      */
-    public List<OrdOrderGoodsVo> getOrderGoods(List<OrdOrderGoodsVo> orderGodsList, Long orderId);
+    List<OrdOrderGoodsVo> getOrderGoods(List<OrdOrderGoodsVo> orderGodsList, Long orderId);
 }
