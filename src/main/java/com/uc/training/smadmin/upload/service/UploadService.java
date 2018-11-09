@@ -30,7 +30,7 @@ import java.io.InputStream;
 @Service
 public class UploadService {
 
-    private final Logger logger = LoggerFactory.getLogger(UploadService.class);
+    private static final Logger logger = LoggerFactory.getLogger(UploadService.class);
 
     /**
      * 上传图片文件
@@ -129,7 +129,7 @@ public class UploadService {
             byte[] bytes = Base64.decodeBase64(base64string);
             stream = new ByteArrayInputStream(bytes);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         return stream;
     }
