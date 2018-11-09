@@ -68,7 +68,7 @@ public class GoodsController extends BaseController {
         pageVO.setPageSize(goodsListVO.getPageSize());
         List<Long> listPropertyId = goodsService.getGoodsListCount(goodsListVO);
         if(listPropertyId.size() > 0) {
-            pageVO.setTotal(new Long(listPropertyId.size()));
+            pageVO.setTotal(Long.valueOf(listPropertyId.size()));
             pageVO.setDataList(goodsService.getGoodsList(listPropertyId));
         }
         return Result.getSuccessResult(pageVO);
@@ -107,7 +107,7 @@ public class GoodsController extends BaseController {
         PageVO<GoodsRE> pageVO = new PageVO<GoodsRE>();
         pageVO.setPageIndex(goodsListVO.getPageIndex());
         pageVO.setPageSize(goodsListVO.getPageSize());
-        pageVO.setTotal(new Long(goodsService.searchCountByGoodsName(goodsListVO)));
+        pageVO.setTotal(Long.valueOf(goodsService.searchCountByGoodsName(goodsListVO)));
         pageVO.setDataList(goodsService.searchByGoodsName(goodsListVO));
         return Result.getSuccessResult(pageVO);
     }

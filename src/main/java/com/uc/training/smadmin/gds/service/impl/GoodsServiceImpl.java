@@ -43,8 +43,7 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     public List<GoodsRE> getHotRecommend() {
         List<Long> propertyIds = goodsDao.getHotRecommend();
-        List<GoodsRE> list = new ArrayList<GoodsRE>();
-        list = getPicUrlByPropertyId(propertyIds);
+        List<GoodsRE> list = getPicUrlByPropertyId(propertyIds);
         return list;
     }
 
@@ -107,8 +106,7 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     public List<GoodsRE> searchByGoodsName(GoodsListVO goodsListVO) {
         List<Long> propertyIds = goodsDao.searchByGoodsName(goodsListVO);
-        List<GoodsRE> list = new ArrayList<GoodsRE>();
-        list = getPicUrlByPropertyId(propertyIds);
+        List<GoodsRE> list = getPicUrlByPropertyId(propertyIds);
         return list;
     }
 
@@ -238,7 +236,6 @@ public class GoodsServiceImpl implements GoodsService {
         if(propertyIds.size() > 0) {
             list = goodsDao.searchByPropertyId(propertyIds);
             for(int i = 0; i < list.size(); i++) {
-                picList = new ArrayList<>();
                 picList = goodsDao.getPicUrlByPropertyId(list.get(i).getPropertyId());
                 if(picList.size() > 0) {
                     list.get(i).setPicUrl(picList.get(0).getPicUrl());
