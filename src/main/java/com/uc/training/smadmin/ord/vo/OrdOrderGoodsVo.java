@@ -4,6 +4,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JsonConfig;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 
@@ -64,12 +65,12 @@ public class OrdOrderGoodsVo implements Serializable {
     /**
      * 商品原价
      */
-    private Double salePrice;
+    private BigDecimal salePrice;
 
     /**
      * 商品优惠价
      */
-    private Double discountPrice;
+    private BigDecimal discountPrice;
 
     /**
      * 是否打折
@@ -98,11 +99,11 @@ public class OrdOrderGoodsVo implements Serializable {
     /**
      * 订单实际支付总额
      */
-    private Double totalPrice;
+    private BigDecimal totalPrice;
     /**
      * 订单实际总额
      */
-    private Double orderPrice;
+    private BigDecimal orderPrice;
     /**
      * 收货人地址
      */
@@ -113,14 +114,6 @@ public class OrdOrderGoodsVo implements Serializable {
     private String orderInfoList;
 
     private List<OrdOrderGoodsVo> list;
-
-    public Double getOrderPrice() {
-        return orderPrice;
-    }
-
-    public void setOrderPrice(Double orderPrice) {
-        this.orderPrice = orderPrice;
-    }
 
     public List<OrdOrderGoodsVo> getList() {
         return (List<OrdOrderGoodsVo>) JSONArray.toList(JSONArray.fromObject(this.orderInfoList), new OrdOrderGoodsVo(), new JsonConfig());
@@ -154,12 +147,20 @@ public class OrdOrderGoodsVo implements Serializable {
         this.id = id;
     }
 
-    public Double getTotalPrice() {
+    public BigDecimal getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(Double totalPrice) {
+    public void setTotalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public BigDecimal getOrderPrice() {
+        return orderPrice;
+    }
+
+    public void setOrderPrice(BigDecimal orderPrice) {
+        this.orderPrice = orderPrice;
     }
 
     public Long getMemberId() {
@@ -210,11 +211,11 @@ public class OrdOrderGoodsVo implements Serializable {
         this.property = property;
     }
 
-    public Double getSalePrice() {
+    public BigDecimal getSalePrice() {
         return salePrice;
     }
 
-    public void setSalePrice(Double salePrice) {
+    public void setSalePrice(BigDecimal salePrice) {
         this.salePrice = salePrice;
     }
 
@@ -234,11 +235,11 @@ public class OrdOrderGoodsVo implements Serializable {
         this.cartId = cartId;
     }
 
-    public Double getDiscountPrice() {
+    public BigDecimal getDiscountPrice() {
         return discountPrice;
     }
 
-    public void setDiscountPrice(Double discountPrice) {
+    public void setDiscountPrice(BigDecimal discountPrice) {
         this.discountPrice = discountPrice;
     }
 

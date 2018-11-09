@@ -1,5 +1,6 @@
 package com.uc.training.smadmin.gds.re;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -52,11 +53,11 @@ public class GoodsDetailRE {
     /**
      * 打折价格
      */
-    private Double discountPrice;
+    private BigDecimal discountPrice;
     /**
      * 出售价格
      */
-    private Double salePrice;
+    private BigDecimal salePrice;
     /**
      * 规格
      */
@@ -146,19 +147,19 @@ public class GoodsDetailRE {
         this.stock = stock;
     }
 
-    public Double getDiscountPrice() {
+    public BigDecimal getDiscountPrice() {
         return discountPrice;
     }
 
-    public void setDiscountPrice(Double discountPrice) {
+    public void setDiscountPrice(BigDecimal discountPrice) {
         this.discountPrice = discountPrice;
     }
 
-    public Double getSalePrice() {
+    public BigDecimal getSalePrice() {
         return salePrice;
     }
 
-    public void setSalePrice(Double salePrice) {
+    public void setSalePrice(BigDecimal salePrice) {
         this.salePrice = salePrice;
     }
 

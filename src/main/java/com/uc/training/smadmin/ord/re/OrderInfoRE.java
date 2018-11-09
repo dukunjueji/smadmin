@@ -1,6 +1,7 @@
 package com.uc.training.smadmin.ord.re;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -36,13 +37,13 @@ public class OrderInfoRE implements Serializable {
      * 订单金额
      */
 
-    private Double orderPrice;
+    private BigDecimal orderPrice;
 
     /**
      * 订单实际支付金额
      */
 
-    private Double payPrice;
+    private BigDecimal payPrice;
 
     /**
      * 收货人姓名
@@ -138,19 +139,19 @@ public class OrderInfoRE implements Serializable {
         this.status = status;
     }
 
-    public Double getOrderPrice() {
+    public BigDecimal getOrderPrice() {
         return orderPrice;
     }
 
-    public void setOrderPrice(Double orderPrice) {
+    public void setOrderPrice(BigDecimal orderPrice) {
         this.orderPrice = orderPrice;
     }
 
-    public Double getPayPrice() {
+    public BigDecimal getPayPrice() {
         return payPrice;
     }
 
-    public void setPayPrice(Double payPrice) {
+    public void setPayPrice(BigDecimal payPrice) {
         this.payPrice = payPrice;
     }
 

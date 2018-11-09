@@ -1,6 +1,7 @@
 package com.uc.training.smadmin.ord.re;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * description: TODO
@@ -26,7 +27,7 @@ public class OrderGoodsDetailRe implements Serializable {
     /**
      * 商品价格
      */
-    private Double goodsPrice = 0.0;
+    private BigDecimal goodsPrice;
     /**
      * 商品规格
      */
@@ -51,7 +52,7 @@ public class OrderGoodsDetailRe implements Serializable {
      * @return
      */
 
-    private Double payPrice;
+    private BigDecimal payPrice;
     /**
      * 是否打折
      */
@@ -59,7 +60,7 @@ public class OrderGoodsDetailRe implements Serializable {
     /**
      * 打折价格
      */
-    private Double discountPrice;
+    private BigDecimal discountPrice;
 
     public Long getIsDiscount() {
         return isDiscount;
@@ -69,19 +70,19 @@ public class OrderGoodsDetailRe implements Serializable {
         this.isDiscount = isDiscount;
     }
 
-    public Double getDiscountPrice() {
+    public BigDecimal getDiscountPrice() {
         return discountPrice;
     }
 
-    public void setDiscountPrice(Double discountPrice) {
+    public void setDiscountPrice(BigDecimal discountPrice) {
         this.discountPrice = discountPrice;
     }
 
-    public Double getPayPrice() {
+    public BigDecimal getPayPrice() {
         return payPrice;
     }
 
-    public void setPayPrice(Double payPrice) {
+    public void setPayPrice(BigDecimal payPrice) {
         this.payPrice = payPrice;
     }
 
@@ -117,11 +118,11 @@ public class OrderGoodsDetailRe implements Serializable {
         this.goodsNum = goodsNum;
     }
 
-    public Double getGoodsPrice() {
+    public BigDecimal getGoodsPrice() {
         return goodsPrice;
     }
 
-    public void setGoodsPrice(Double goodsPrice) {
+    public void setGoodsPrice(BigDecimal goodsPrice) {
         this.goodsPrice = goodsPrice;
     }
 

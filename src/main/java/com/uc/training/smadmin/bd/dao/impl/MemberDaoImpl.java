@@ -12,6 +12,7 @@ import com.uc.training.smadmin.bd.vo.MemberLoginVO;
 import com.zuche.framework.dao.CarIsIbatisDaoImpl;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -49,8 +50,8 @@ public class MemberDaoImpl extends CarIsIbatisDaoImpl implements MemberDao {
      * @param memberId
      */
     @Override
-    public Double queryBalances(Long memberId) {
-         return (Double)this.queryForObject("com.uc.training.smadmin.bd.dao.MemberDao.queryBalances",memberId);
+    public BigDecimal queryBalances(Long memberId) {
+         return (BigDecimal)this.queryForObject("com.uc.training.smadmin.bd.dao.MemberDao.queryBalances",memberId);
     }
 
     @Override

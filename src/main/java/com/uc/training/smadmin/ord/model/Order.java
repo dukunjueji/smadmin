@@ -1,5 +1,6 @@
 package com.uc.training.smadmin.ord.model;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * @author kun.du01@ucarinc.com
@@ -20,10 +21,10 @@ public class Order implements Serializable {
 	private String orderNum;
 
 	/**订单总额**/
-	private double orderPrice;
+	private BigDecimal orderPrice;
 
 	/**整个订单的实际支付金额**/
-	private double payPrice;
+	private BigDecimal payPrice;
 
 	/**是否删除:1表示删除，0表示未删除**/
 	private Integer isDelete;
@@ -78,20 +79,20 @@ public class Order implements Serializable {
 		return this.orderNum;
 	}
 
-	public void setOrderPrice(double orderPrice){
+	public BigDecimal getOrderPrice() {
+		return orderPrice;
+	}
+
+	public void setOrderPrice(BigDecimal orderPrice) {
 		this.orderPrice = orderPrice;
 	}
 
-	public double getOrderPrice(){
-		return this.orderPrice;
+	public BigDecimal getPayPrice() {
+		return payPrice;
 	}
 
-	public void setPayPrice(double payPrice){
+	public void setPayPrice(BigDecimal payPrice) {
 		this.payPrice = payPrice;
-	}
-
-	public double getPayPrice(){
-		return this.payPrice;
 	}
 
 	public void setIsDelete(Integer isDelete){

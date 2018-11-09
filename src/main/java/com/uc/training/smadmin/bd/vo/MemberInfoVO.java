@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * 版权说明：Copyright (c) 2018 ucarinc. All Rights Reserved.
@@ -48,7 +49,7 @@ public class MemberInfoVO implements Serializable {
     /**
      * 用户余额
      */
-    private Double balances;
+    private BigDecimal balances;
 
     /**
      * 用户订单id
@@ -68,7 +69,7 @@ public class MemberInfoVO implements Serializable {
     /**
      * 用户订单总价
      */
-    private Double totalPrice;
+    private BigDecimal totalPrice;
 
     /**
      * 用户订单商品对应的商品数目
@@ -77,11 +78,11 @@ public class MemberInfoVO implements Serializable {
      */
     private Long goodsNum;
 
-    public Double getTotalPrice() {
+    public BigDecimal getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(Double totalPrice) {
+    public void setTotalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
     }
 
@@ -109,11 +110,11 @@ public class MemberInfoVO implements Serializable {
         this.orderId = orderId;
     }
 
-    public Double getBalances() {
+    public BigDecimal getBalances() {
         return balances;
     }
 
-    public void setBalances(Double balances) {
+    public void setBalances(BigDecimal balances) {
         this.balances = balances;
     }
 
