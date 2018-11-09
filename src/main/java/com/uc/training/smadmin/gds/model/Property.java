@@ -12,35 +12,35 @@ import java.math.BigDecimal;
  * @author zhongling(ling.zhong @ ucarinc.com)
  * @since 2018年10月15日 15:04
  */
-public class Property extends BaseModel implements Serializable{
+public class Property extends BaseModel implements Serializable {
 
-  private static final long serialVersionUID = 4467616407682429649L;
+    private static final long serialVersionUID = 4467616407682429649L;
 
-  private Long id;
-  /**
-   * 商品id
-   */
-  private Long goodsId;
-  /**
-   * 库存
-   */
-  private Integer stock;
-  /**
-   * 打折价格
-   */
-  private BigDecimal discountPrice;
-  /**
-   * 出售价格
-   */
-  private BigDecimal salePrice;
-  /**
-   * 规格
-   */
-  private String property;
-  /**
-   * 是否打折
-   */
-  private Integer isDiscount;
+    private Long id;
+    /**
+     * 商品id
+     */
+    private Long goodsId;
+    /**
+     * 库存
+     */
+    private Integer stock;
+    /**
+     * 打折价格
+     */
+    private BigDecimal discountPrice;
+    /**
+     * 出售价格
+     */
+    private BigDecimal salePrice;
+    /**
+     * 规格
+     */
+    private String property;
+    /**
+     * 是否打折
+     */
+    private Integer isDiscount;
 
     public Long getId() {
         return id;

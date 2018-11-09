@@ -22,7 +22,7 @@ public class LoginLog extends BaseModel implements Serializable {
     private Long id;
 
     /**
-     *会员Id
+     * 会员Id
      */
     private Long memberId;
 

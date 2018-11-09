@@ -1,6 +1,7 @@
 package com.uc.training.smadmin.bd.re;
 
 import com.uc.training.smadmin.bd.model.Member;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -15,19 +16,29 @@ import java.util.Date;
 public class MemberDetailRE extends Member implements Serializable {
     private static final long serialVersionUID = -2658615585315875022L;
 
-    /**主键id**/
+    /**
+     * 主键id
+     **/
     private Long memberGradeId;
 
-    /**等级名称**/
+    /**
+     * 等级名称
+     **/
     private String name;
 
-    /**等级下限**/
+    /**
+     * 等级下限
+     **/
     private Long minGrowth;
 
-    /**等级上限**/
+    /**
+     * 等级上限
+     **/
     private Long maxGrowth;
 
-    /**折扣(以 x.xx 的形式使用，直接与原价相乘)**/
+    /**
+     * 折扣(以 x.xx 的形式使用，直接与原价相乘)
+     **/
     private Float discount;
 
     /**
@@ -37,16 +48,24 @@ public class MemberDetailRE extends Member implements Serializable {
 
     private Integer messageSum;
 
-    /**创建时间**/
+    /**
+     * 创建时间
+     **/
     private Date memberGradeCreateTime;
 
-    /**修改时间**/
+    /**
+     * 修改时间
+     **/
     private Date memberGradeModifyTime;
 
-    /**创建人**/
+    /**
+     * 创建人
+     **/
     private Long memberGradeCreateEmp;
 
-    /**修改人**/
+    /**
+     * 修改人
+     **/
     private Long memberGradeModifyEmp;
 
     public Long getMemberGradeId() {
@@ -106,19 +125,19 @@ public class MemberDetailRE extends Member implements Serializable {
     }
 
     public Date getMemberGradeCreateTime() {
-        return memberGradeCreateTime;
+        return memberGradeCreateTime == null ? null : (Date) memberGradeCreateTime.clone();
     }
 
     public void setMemberGradeCreateTime(Date memberGradeCreateTime) {
-        this.memberGradeCreateTime = memberGradeCreateTime;
+        this.memberGradeCreateTime = memberGradeCreateTime == null ? null : (Date) memberGradeCreateTime.clone();
     }
 
     public Date getMemberGradeModifyTime() {
-        return memberGradeModifyTime;
+        return memberGradeModifyTime == null ? null : (Date) memberGradeModifyTime.clone();
     }
 
     public void setMemberGradeModifyTime(Date memberGradeModifyTime) {
-        this.memberGradeModifyTime = memberGradeModifyTime;
+        this.memberGradeModifyTime = memberGradeModifyTime == null ? null : (Date) memberGradeModifyTime.clone();
     }
 
     public Long getMemberGradeCreateEmp() {

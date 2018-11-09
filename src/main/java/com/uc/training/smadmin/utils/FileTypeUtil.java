@@ -131,15 +131,27 @@ public final class FileTypeUtil {
     public static String getFileByFile(File file) {
         String filetype = null;
         byte[] b = new byte[BTYE_SIZE];
+        InputStream is = null;
         try {
-            InputStream is = new FileInputStream(file);
-            is.read(b);
-            filetype = getFileTypeByStream(b);
-            is.close();
+            is = new FileInputStream(file);
+            // 可读取多少字节内容
+            int available = is.available();
+            // 没有可读取内容则退出
+            if (available > 0) {
+                is.read(b, 0, available);
+                filetype = getFileTypeByStream(b);
+            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            if (is !=null){
+                try {
+                    is.close();
+                } catch (IOException e1) {
+                }
+            }
         }
         return filetype;
     }

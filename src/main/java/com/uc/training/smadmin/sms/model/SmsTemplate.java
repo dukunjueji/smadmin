@@ -4,12 +4,14 @@ import com.uc.training.common.base.model.BaseModel;
 import com.uc.training.common.enums.SmsTypeEnum;
 import org.hibernate.validator.constraints.NotBlank;
 
+import java.io.Serializable;
+
 /**
  * @author 余旭东
  * @date Tue Oct 16 14:29:57 CST 2018
  * @description:
  */
-public class SmsTemplate extends BaseModel {
+public class SmsTemplate extends BaseModel implements Serializable {
 
 
 	private static final long serialVersionUID =  6439980034838734393L;
