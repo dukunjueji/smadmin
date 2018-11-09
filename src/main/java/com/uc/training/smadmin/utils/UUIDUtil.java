@@ -1,7 +1,8 @@
 package com.uc.training.smadmin.utils;
 
-import com.kenai.jaffl.annotations.In;
 import com.uc.training.common.enums.UUIDTypeEnum;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
@@ -17,6 +18,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * @since 2018年10月15日 15:04
  */
 public class UUIDUtil {
+    protected final static Logger LOGGER = LoggerFactory.getLogger(UUIDUtil.class);
     /**
      * 记录上一秒的时间戳
      */
@@ -97,7 +99,7 @@ class GetAndProductUUID {
             UUIDData data = UUIDUtil.queue.take();
             return data.getData();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            UUIDUtil.LOGGER.error("获取队列中的流水线号失败:"+e.getMessage());
         } finally {
             LOCK.unlock();
         }
@@ -127,7 +129,7 @@ class GetAndProductUUID {
                         status = UUIDUtil.queue.offer(data, 1, TimeUnit.SECONDS);
                     }
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    UUIDUtil.LOGGER.error("生产者线程生产流水线号失败："+e.getMessage());
                 }
             }
             isRunning = true;
