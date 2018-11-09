@@ -39,7 +39,6 @@ public class SmsTemplateListVO extends PageQuery {
 
     @Override
     public String toString() {
-        super.toString();
         return "SmsTemplateListVO{" +
                 "type=" + type +
                 ", code='" + code + '\'' +

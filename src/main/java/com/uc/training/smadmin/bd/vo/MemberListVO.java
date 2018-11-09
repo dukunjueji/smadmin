@@ -88,7 +88,13 @@ public class MemberListVO extends PageVO {
 
     @Override
     public String toString() {
-        super.toString();
-        return "电话：" + telephone + ", 用户名：" + memberName;
+        return "MemberListVO{" +
+                "telephone='" + telephone + '\'' +
+                ", memberName='" + memberName + '\'' +
+                ", sex=" + sex +
+                ", growth=" + growth +
+                ", integral=" + integral +
+                ", nickname='" + nickname + '\'' +
+                '}';
     }
 }

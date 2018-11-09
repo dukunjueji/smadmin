@@ -11,6 +11,9 @@ import java.io.Serializable;
  * @date 2018/10/25 18:04
  */
 public class PageQuery implements Serializable {
+
+    private static final long serialVersionUID = -7566819271440512306L;
+
     /**
      * 默认首页
      */
