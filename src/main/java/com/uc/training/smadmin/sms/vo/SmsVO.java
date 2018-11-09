@@ -82,11 +82,11 @@ public class SmsVO {
     }
 
     public Date getCreateTime() {
-        return createTime;
+        return createTime == null ? null : (Date) createTime.clone();
     }
 
     public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+        this.createTime = createTime == null ? null : (Date) createTime.clone();
     }
 
 

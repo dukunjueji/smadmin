@@ -1,182 +1,155 @@
 package com.uc.training.smadmin.ord.model;
 
+import com.uc.training.common.base.model.BaseModel;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
 
 /**
- *用户订单信息
+ * 用户订单信息
+ *
  * @author DK
  * @date 2018/10/15
  */
 
-public class OrdOrder implements Serializable{
+public class OrdOrder extends BaseModel implements Serializable {
 
-  /**自增主键id **/
-  private Long id;
+    /**
+     * 自增主键id
+     **/
+    private Long id;
 
-  /**会员id**/
-  private Long memberId;
+    /**
+     * 会员id
+     **/
+    private Long memberId;
 
-  /**商品数量**/
-  private String orderNum;
+    /**
+     * 商品数量
+     **/
+    private String orderNum;
 
-  /**订单价格**/
-  private BigDecimal orderPrice;
+    /**
+     * 订单价格
+     **/
+    private BigDecimal orderPrice;
 
-  /**支付价格**/
-  private BigDecimal payPrice;
+    /**
+     * 支付价格
+     **/
+    private BigDecimal payPrice;
 
-  /**删除状态**/
-  private Long isDelete;
+    /**
+     * 删除状态
+     **/
+    private Long isDelete;
 
-  /**状态:1待付款2取消订单3待发货4待收货5已完成**/
-  private Long status;
+    /**
+     * 状态:1待付款2取消订单3待发货4待收货5已完成
+     **/
+    private Long status;
 
-  /**下单用户名**/
-  private String receiptName;
+    /**
+     * 下单用户名
+     **/
+    private String receiptName;
 
-  /**下单电话**/
-  private String receiptTel;
+    /**
+     * 下单电话
+     **/
+    private String receiptTel;
 
-  /**下单地址**/
-  private String receiptAddress;
+    /**
+     * 下单地址
+     **/
+    private String receiptAddress;
 
-  /**创建人**/
-  private Long createEmp;
+    public Long getId() {
+        return id;
+    }
 
-  /**创建时间**/
-  private Date createTime;
-
-  /**修改人**/
-  private Long modifyEmp;
-
-  /**修改时间**/
-  private Date modifyTime;
-
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-
-  public Long getMemberId() {
-    return memberId;
-  }
-
-  public void setMemberId(Long memberId) {
-    this.memberId = memberId;
-  }
-
-  public String getOrderNum() {
-    return orderNum;
-  }
-
-  public void setOrderNum(String orderNum) {
-    this.orderNum = orderNum;
-  }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
 
-  public BigDecimal getOrderPrice() {
-    return orderPrice;
-  }
+    public Long getMemberId() {
+        return memberId;
+    }
 
-  public void setOrderPrice(BigDecimal orderPrice) {
-    this.orderPrice = orderPrice;
-  }
+    public void setMemberId(Long memberId) {
+        this.memberId = memberId;
+    }
 
+    public String getOrderNum() {
+        return orderNum;
+    }
 
-  public BigDecimal getPayPrice() {
-    return payPrice;
-  }
-
-  public void setPayPrice(BigDecimal payPrice) {
-    this.payPrice = payPrice;
-  }
-
-
-  public Long getIsDelete() {
-    return isDelete;
-  }
-
-  public void setIsDelete(Long isDelete) {
-    this.isDelete = isDelete;
-  }
+    public void setOrderNum(String orderNum) {
+        this.orderNum = orderNum;
+    }
 
 
-  public Long getStatus() {
-    return status;
-  }
+    public BigDecimal getOrderPrice() {
+        return orderPrice;
+    }
 
-  public void setStatus(Long status) {
-    this.status = status;
-  }
-
-
-  public String getReceiptName() {
-    return receiptName;
-  }
-
-  public void setReceiptName(String receiptName) {
-    this.receiptName = receiptName;
-  }
+    public void setOrderPrice(BigDecimal orderPrice) {
+        this.orderPrice = orderPrice;
+    }
 
 
-  public String getReceiptTel() {
-    return receiptTel;
-  }
+    public BigDecimal getPayPrice() {
+        return payPrice;
+    }
 
-  public void setReceiptTel(String receiptTel) {
-    this.receiptTel = receiptTel;
-  }
-
-
-  public String getReceiptAddress() {
-    return receiptAddress;
-  }
-
-  public void setReceiptAddress(String receiptAddress) {
-    this.receiptAddress = receiptAddress;
-  }
+    public void setPayPrice(BigDecimal payPrice) {
+        this.payPrice = payPrice;
+    }
 
 
-  public Long getCreateEmp() {
-    return createEmp;
-  }
+    public Long getIsDelete() {
+        return isDelete;
+    }
 
-  public void setCreateEmp(Long createEmp) {
-    this.createEmp = createEmp;
-  }
-
-
-  public Date getCreateTime() {
-    return createTime;
-  }
-
-  public void setCreateTime(Date createTime) {
-    this.createTime = createTime;
-  }
+    public void setIsDelete(Long isDelete) {
+        this.isDelete = isDelete;
+    }
 
 
-  public Long getModifyEmp() {
-    return modifyEmp;
-  }
+    public Long getStatus() {
+        return status;
+    }
 
-  public void setModifyEmp(Long modifyEmp) {
-    this.modifyEmp = modifyEmp;
-  }
+    public void setStatus(Long status) {
+        this.status = status;
+    }
 
 
-  public Date getModifyTime() {
-    return modifyTime;
-  }
+    public String getReceiptName() {
+        return receiptName;
+    }
 
-  public void setModifyTime(Date modifyTime) {
-    this.modifyTime = modifyTime;
-  }
+    public void setReceiptName(String receiptName) {
+        this.receiptName = receiptName;
+    }
+
+
+    public String getReceiptTel() {
+        return receiptTel;
+    }
+
+    public void setReceiptTel(String receiptTel) {
+        this.receiptTel = receiptTel;
+    }
+
+
+    public String getReceiptAddress() {
+        return receiptAddress;
+    }
+
+    public void setReceiptAddress(String receiptAddress) {
+        this.receiptAddress = receiptAddress;
+    }
 
 }

@@ -245,7 +245,7 @@ public class ApiMemberController extends BaseController {
     @ResponseBody
     public Result chargeBalance(@Validated ChargeBalanceVO chargeBalanceVO){
         Result re;
-        String regExp = "/^([1-9]\\d*|0)(\\.\\d{1,2})?$/";
+        String regExp = "^([1-9]\\d*|0)(\\.\\d{1,2})?$";
         Pattern p = Pattern.compile(regExp);
         Matcher m = p.matcher(chargeBalanceVO.getBalance().toString());
         if(!m.matches()){
