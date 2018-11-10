@@ -148,7 +148,7 @@ public final class FileTypeUtil {
         } catch (FileNotFoundException e) {
             logger.error(e.getMessage());
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         } finally {
             if (is !=null){
                 try {
