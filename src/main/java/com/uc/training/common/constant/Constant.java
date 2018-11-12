@@ -36,5 +36,5 @@ public final class Constant {
     /**
      * 允许跨域访问的白名单规则
      */
-    public static final String CORS_REG = "http://10.104.114.36";
+    public static final String CORS_REG = "http://10.104.114.36，http://10.104.114.38";
 }
