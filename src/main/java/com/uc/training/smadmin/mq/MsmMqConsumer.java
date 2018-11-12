@@ -30,7 +30,8 @@ public class MsmMqConsumer extends DefaultExecutorMessageListener {
         GenerateSmsVO generateSmsVO = mqVO.getGenerateSmsVO();
         //判断消息实体是否为空
         if (generateSmsVO != null){
-            smsTemplateService.generateSms(generateSmsVO);
+            System.out.println(234);
+            this.smsTemplateService.generateSms(generateSmsVO);
         }
     }
 }
