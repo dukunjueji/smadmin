@@ -29,8 +29,6 @@ public class TokenInterceptor implements HandlerInterceptor {
     public static final int LOGIN_ERROR_STATUS = -3;
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        //设置允许CORS
-        setOriginAllow(response);
         if(handler instanceof HandlerMethod){
             //检查是否有AccessLogin注释，有则跳过认证
             AccessLogin accessLogin = ((HandlerMethod) handler).getMethodAnnotation(AccessLogin.class);
@@ -93,16 +91,5 @@ public class TokenInterceptor implements HandlerInterceptor {
         out.print(json);
         out.flush();
         out.close();
-    }
-
-    /**
-     * 设置允许指定跨域访问
-     * @param response
-     */
-    private void setOriginAllow(HttpServletResponse response) {
-        //前端请求设置了withCredentials=true，则需制定具体域名，不可采用通配符形式
-        // 详见：https://developer.mozilla.org/zh-CN/docs/Web/HTTP/CORS/Errors/CORSNotSupportingCredentials
-        response.addHeader("Access-Control-Allow-Origin", Constant.CORS_REG);
-        response.addHeader("Access-Control-Allow-Credentials", "true");
     }
 }
