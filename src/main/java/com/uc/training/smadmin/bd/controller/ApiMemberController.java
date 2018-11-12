@@ -23,6 +23,7 @@ import com.uc.training.smadmin.bd.vo.MemberRegisterVO;
 import com.uc.training.smadmin.bd.vo.MessageDetailVO;
 import com.uc.training.smadmin.bd.vo.MessageListVO;
 import com.uc.training.smadmin.bd.vo.MessageVO;
+import com.uc.training.smadmin.mq.MqProducer;
 import com.uc.training.smadmin.mq.vo.MqVO;
 import com.uc.training.smadmin.bd.vo.PasswordEditVO;
 import com.uc.training.smadmin.bd.vo.SendCodeVO;
@@ -33,6 +34,7 @@ import com.uc.training.smadmin.sms.vo.GenerateSmsVO;
 import com.uc.training.smadmin.utils.EncryptUtil;
 import com.uc.training.smadmin.utils.TokenUtil;
 import com.ycc.base.common.Result;
+import com.ycc.tools.middleware.metaq.MetaQUtils;
 import com.ycc.tools.middleware.redis.RedisCacheUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -93,16 +95,15 @@ public class ApiMemberController extends BaseController {
         if(member != null){
             return Result.getBusinessException("手机号码已被注册", null);
         }
+        //生成消息体
+        MqVO mqVO = new MqVO();
         GenerateSmsVO generateSmsVO = new GenerateSmsVO();
         generateSmsVO.setTelephone(createCodeVO.getTelephone());
         generateSmsVO.setCode(SmsTypeEnum.REGISTER.getCode());
         generateSmsVO.setType(SmsTypeEnum.REGISTER.getType());
-
-        if (SmsStatusEnum.SUCCESS.getKey() == smsTemplateService.generateSms(generateSmsVO)) {
-            return Result.getSuccessResult(SmsStatusEnum.SUCCESS.getValue());
-        } else {
-            return Result.getBusinessException(SmsStatusEnum.FAIL.getValue(), null);
-        }
+        mqVO.setGenerateSmsVO(generateSmsVO);
+        MetaQUtils.sendMsgNoException(new MqProducer(mqVO));
+        return Result.getSuccessResult("验证码已发送");
     }
 
     /***
@@ -191,16 +192,16 @@ public class ApiMemberController extends BaseController {
         if(member == null){
             return Result.getBusinessException("手机号还没被注册", null);
         }
+        //生成消息体
+        MqVO mqVO = new MqVO();
         GenerateSmsVO generateSmsVO = new GenerateSmsVO();
         generateSmsVO.setTelephone(createCodeVO.getTelephone());
         generateSmsVO.setCode(SmsTypeEnum.FORGET_PASSWORD.getCode());
         generateSmsVO.setType(SmsTypeEnum.FORGET_PASSWORD.getType());
+        mqVO.setGenerateSmsVO(generateSmsVO);
 
-        if (SmsStatusEnum.SUCCESS.getKey() == smsTemplateService.generateSms(generateSmsVO)) {
-            return Result.getSuccessResult(SmsStatusEnum.SUCCESS.getValue());
-        } else {
-            return Result.getBusinessException(SmsStatusEnum.FAIL.getValue(), null);
-        }
+        MetaQUtils.sendMsgNoException(new MqProducer(mqVO));
+        return Result.getSuccessResult("验证码已发送");
     }
 
     /***
@@ -229,7 +230,7 @@ public class ApiMemberController extends BaseController {
             mem.setPassword(memberRegisterVO.getPassword());
             mem.setId(member.getId());
             memberService.updateMember(mem);
-            return Result.getSuccessResult("成功");
+            return Result.getSuccessResult("重置密码成功");
         }else {
             return Result.getBusinessException("验证码不正确", null);
         }
@@ -335,30 +336,26 @@ public class ApiMemberController extends BaseController {
     @RequestMapping(value = "/sendCode.do_", method = RequestMethod.GET)
     @AccessLogin
     public Result sendCode(@Validated SendCodeVO sendCodeVO){
-        Result re;
         Member member = memberService.queryMemberTel(getUid());
         // 判断旧密码是否和库里的一致
         String oldpassword = EncryptUtil.md5(sendCodeVO.getOldpassword());
         if(!((member.getPassword()).equals(oldpassword))){
-            re = Result.getBusinessException("原来的密码输入有误", null);
-            return re;
+            return Result.getBusinessException("原来的密码输入有误", null);
         }
         // 判断新密码和确认密码是否一致
         if ((sendCodeVO.getNewpassword()).equals(sendCodeVO.getConfirmpassword())){
+            //生成消息体
+            MqVO mqVO = new MqVO();
             GenerateSmsVO generateSmsVO = new GenerateSmsVO();
             generateSmsVO.setTelephone(member.getTelephone());
             generateSmsVO.setCode(SmsTypeEnum.CHANGE_PASSWORD.getCode());
             generateSmsVO.setType(SmsTypeEnum.CHANGE_PASSWORD.getType());
-
-            if (SmsStatusEnum.SUCCESS.getKey() == smsTemplateService.generateSms(generateSmsVO)) {
-                return Result.getSuccessResult(SmsStatusEnum.SUCCESS.getValue());
-            } else {
-                return Result.getBusinessException(SmsStatusEnum.FAIL.getValue(), null);
-            }
+            mqVO.setGenerateSmsVO(generateSmsVO);
+            MetaQUtils.sendMsgNoException(new MqProducer(mqVO));
+            return Result.getSuccessResult("验证码已发送");
         }else {
-            re = Result.getBusinessException("新的密码和确认密码不一致", null);
+            return Result.getBusinessException("新的密码和确认密码不一致", null);
         }
-        return re;
     }
 
     /**
@@ -390,7 +387,7 @@ public class ApiMemberController extends BaseController {
         if((passwordEditVO.getCode()).equals(msg)){
             member.setPassword(passwordEditVO.getNewpassword());
             memberService.updateMember(member);
-            return Result.getSuccessResult("成功");
+            return Result.getSuccessResult("修改密码成功");
         }else {
             return Result.getBusinessException("输入的验证码有误", null);
         }
