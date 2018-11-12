@@ -12,6 +12,7 @@ import com.uc.training.smadmin.ord.vo.OrdGoodsVO;
 import com.uc.training.smadmin.ord.vo.OrdMemberVO;
 import com.uc.training.smadmin.ord.vo.OrdOrderGoodsVo;
 import com.uc.training.smadmin.ord.vo.OrdOrderVo;
+import com.uc.training.smadmin.sys.re.OrderSaleRE;
 
 import java.util.List;
 
@@ -164,7 +165,17 @@ public interface OrderService {
      * 获取订单商品列表(已生成订单)
      *
      * @param orderGodsList
+     * @param orderId
      * @return
      */
-    public List<OrdOrderGoodsVo> getOrderGoods(List<OrdOrderGoodsVo> orderGodsList, Long orderId);
+    List<OrdOrderGoodsVo> getOrderGoods(List<OrdOrderGoodsVo> orderGodsList, Long orderId);
+
+    /**
+     * 当年每个月销售额
+     *
+     * @version 1.0 2018/11/12 11:31 by 吴佰川（baichuan.wu@ucarinc.com）创建
+     * @param
+     * @return java.util.List<java.math.BigDecimal>
+     */
+    OrderSaleRE getOrderSaleData();
 }

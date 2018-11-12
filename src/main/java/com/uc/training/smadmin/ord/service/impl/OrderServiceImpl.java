@@ -26,11 +26,13 @@ import com.uc.training.smadmin.ord.vo.OrdGoodsVO;
 import com.uc.training.smadmin.ord.vo.OrdMemberVO;
 import com.uc.training.smadmin.ord.vo.OrdOrderGoodsVo;
 import com.uc.training.smadmin.ord.vo.OrdOrderVo;
+import com.uc.training.smadmin.sys.re.OrderSaleRE;
 import com.uc.training.smadmin.utils.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -459,6 +461,12 @@ public class OrderServiceImpl implements OrderService {
         orderInfoRE.setTotalOrderNum(orderDao.getOrderTotal(ordOrderVo).longValue());
         orderInfoREList.add(orderInfoRE);
         return orderInfoREList;
+    }
+
+
+    @Override
+    public OrderSaleRE getOrderSaleData() {
+        return orderDao.getOrderSaleData();
     }
 }
 

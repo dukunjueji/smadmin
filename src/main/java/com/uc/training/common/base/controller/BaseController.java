@@ -198,7 +198,7 @@ public class BaseController {
                 }
             }
         } catch (SocketException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         return ip;
     }

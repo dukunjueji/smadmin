@@ -2,7 +2,13 @@ package com.uc.training.smadmin.bd.model;
 import com.uc.training.common.base.model.BaseModel;
 
 import java.io.Serializable;
-
+/**
+ *
+ *
+ * @author
+ * @version 1.0
+ * @date 2018/11/9 17:56
+ */
 public class Address extends BaseModel implements Serializable {
 
 	private static final long serialVersionUID =  9197347895992467587L;

@@ -5,6 +5,7 @@ import com.uc.training.smadmin.ord.model.Order;
 import com.uc.training.smadmin.ord.re.OrderRe;
 import com.uc.training.smadmin.ord.vo.OrdMemberVO;
 import com.uc.training.smadmin.ord.vo.OrdOrderVo;
+import com.uc.training.smadmin.sys.re.OrderSaleRE;
 import com.zuche.framework.dao.CarIsIbatisDaoImpl;
 import org.springframework.stereotype.Repository;
 
@@ -82,5 +83,10 @@ public class OrderDaoImpl extends CarIsIbatisDaoImpl implements OrderDao {
 	@Override
 	public String getTelephoneByOrderNum(String orderNum) {
 		return (String) this.queryForObject("com.uc.training.smadmin.ord.dao.OrderDao.getTelephoneByOrderNum",orderNum);
+	}
+
+	@Override
+	public OrderSaleRE getOrderSaleData() {
+		return (OrderSaleRE)this.queryForObject("com.uc.training.smadmin.ord.dao.OrderDao.getOrderSaleData");
 	}
 }

@@ -1,5 +1,8 @@
 package com.uc.training.smadmin.utils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
@@ -23,6 +26,7 @@ public final class FileTypeUtil {
     private static final int BTYE_SIZE = 50;
     private static final int DECIMAL = 0xFF;
     private final static Map<String, String> FILE_TYPE_MAP = new HashMap<String, String>();
+    private static final Logger logger = LoggerFactory.getLogger(FileTypeUtil.class);
 
     private FileTypeUtil() {
     }
@@ -142,9 +146,9 @@ public final class FileTypeUtil {
                 filetype = getFileTypeByStream(b);
             }
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         } finally {
             if (is !=null){
                 try {
