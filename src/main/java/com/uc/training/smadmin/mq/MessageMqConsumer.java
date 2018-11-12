@@ -50,7 +50,6 @@ public class MessageMqConsumer extends DefaultExecutorMessageListener {
         }
         //判断消费类型是否为充值消息
         if (mqVO.getRechargeValue() != null){
-            System.out.println(123);
             BigDecimal balance = mqVO.getRechargeValue();
             String content = balance + "元充值成功";
             Message mes = new Message();
