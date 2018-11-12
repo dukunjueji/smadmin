@@ -10,6 +10,7 @@ import com.uc.training.smadmin.sms.service.SmsTemplateService;
 import com.uc.training.smadmin.sms.vo.GenerateSmsVO;
 import com.uc.training.smadmin.sms.vo.SmsTemplateListVO;
 import com.uc.training.smadmin.sms.vo.SmsTemplateVO;
+import com.uc.training.smadmin.utils.InjectionUtils;
 import com.uc.training.smadmin.utils.TelCodeUtil;
 import com.ycc.tools.middleware.redis.RedisCacheUtils;
 import org.springframework.beans.BeanUtils;
@@ -120,6 +121,9 @@ public class SmsTemplateServiceImpl implements SmsTemplateService {
     @Override
     public Integer generateSms(GenerateSmsVO generateSmsVO) {
 
+        this.smsTemplateDao = InjectionUtils.getInjectionInstance(SmsTemplateDao.class);
+        this.smsService = InjectionUtils.getInjectionInstance(SmsService.class);
+
         // redis
         RedisCacheUtils redis = RedisCacheUtils.getInstance(RedisConfigEnum.SYS_CODE);
 
@@ -132,9 +136,9 @@ public class SmsTemplateServiceImpl implements SmsTemplateService {
             redis.set(generateSmsVO.getTelephone(), generateSmsVO.getMessage());
         }
         //获取短信内容
-        String content = smsTemplateDao.generateSms(generateSmsVO);
+        String content = this.smsTemplateDao.generateSms(generateSmsVO);
         // 发送短信
-        Integer status = smsService.sendSys(generateSmsVO.getTelephone(), content);
+        Integer status = this.smsService.sendSys(generateSmsVO.getTelephone(), content);
 
         Sms sms = new Sms();
         BeanUtils.copyProperties(generateSmsVO, sms);
@@ -142,7 +146,7 @@ public class SmsTemplateServiceImpl implements SmsTemplateService {
         sms.setContent(content);
         sms.setStatus(status);
 
-        smsService.insertSms(sms);
+        this.smsService.insertSms(sms);
 
         return status;
     }

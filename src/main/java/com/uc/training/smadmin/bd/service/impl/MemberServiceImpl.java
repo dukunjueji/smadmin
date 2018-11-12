@@ -16,7 +16,7 @@ import com.uc.training.smadmin.bd.vo.MemberBalanceVO;
 import com.uc.training.smadmin.bd.vo.MemberInfoVO;
 import com.uc.training.smadmin.bd.vo.MemberListVO;
 import com.uc.training.smadmin.bd.vo.MemberLoginVO;
-import com.uc.training.smadmin.bd.vo.MqVO;
+import com.uc.training.smadmin.mq.vo.MqVO;
 import com.uc.training.smadmin.gds.service.GoodsService;
 import com.uc.training.smadmin.gds.vo.GoodsStokeVO;
 import com.uc.training.smadmin.ord.model.Order;

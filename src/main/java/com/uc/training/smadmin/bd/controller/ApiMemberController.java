@@ -23,7 +23,7 @@ import com.uc.training.smadmin.bd.vo.MemberRegisterVO;
 import com.uc.training.smadmin.bd.vo.MessageDetailVO;
 import com.uc.training.smadmin.bd.vo.MessageListVO;
 import com.uc.training.smadmin.bd.vo.MessageVO;
-import com.uc.training.smadmin.bd.vo.MqVO;
+import com.uc.training.smadmin.mq.vo.MqVO;
 import com.uc.training.smadmin.bd.vo.PasswordEditVO;
 import com.uc.training.smadmin.bd.vo.SendCodeVO;
 import com.uc.training.smadmin.ord.service.OrderService;
@@ -244,7 +244,6 @@ public class ApiMemberController extends BaseController {
     @RequestMapping(value = "/chargeBalance.do_", method = RequestMethod.POST)
     @ResponseBody
     public Result chargeBalance(@Validated ChargeBalanceVO chargeBalanceVO){
-        Result re;
         String regExp = "^([1-9]\\d*|0)(\\.\\d{1,2})?$";
         Pattern p = Pattern.compile(regExp);
         Matcher m = p.matcher(chargeBalanceVO.getBalance().toString());
@@ -257,15 +256,14 @@ public class ApiMemberController extends BaseController {
         BigDecimal bigDecimal = new BigDecimal(0);
         int i = chargeBalanceVO.getBalance().compareTo(bigDecimal);
         if (chargeBalanceVO.getBalance() == null || i == 0 ) {
-            re = Result.getBusinessException("充值余额必须大于0", null);
+            return Result.getBusinessException("充值余额必须大于0", null);
         }else {
             //生成消息体
             MqVO mqVO = new MqVO();
             mqVO.setMemberId(getUid());
             mqVO.setRechargeValue(chargeBalanceVO.getBalance());
 
-            memberService.memberRecharge(member, mqVO);
-
+            //生成短信
             Member mem = memberService.queryMemberTel(getUid());
             GenerateSmsVO generateSmsVO = new GenerateSmsVO();
             generateSmsVO.setTelephone(mem.getTelephone());
@@ -273,13 +271,12 @@ public class ApiMemberController extends BaseController {
             generateSmsVO.setCode(SmsTypeEnum.RECHARGE.getCode());
             generateSmsVO.setType(SmsTypeEnum.RECHARGE.getType());
 
-            if (SmsStatusEnum.SUCCESS.getKey() == smsTemplateService.generateSms(generateSmsVO)) {
-                return Result.getSuccessResult(SmsStatusEnum.SUCCESS.getValue());
-            } else {
-                return Result.getBusinessException(SmsStatusEnum.FAIL.getValue(), null);
-            }
+            mqVO.setGenerateSmsVO(generateSmsVO);
+
+            memberService.memberRecharge(member, mqVO);
+
+            return Result.getSuccessResult("充值成功");
         }
-        return re;
     }
 
     /**
