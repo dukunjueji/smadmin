@@ -30,7 +30,7 @@ public class TokenInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         // 设定指定的CORS白名单
-        response.addHeader("Access-Control-Allow-Origin", Constant.CORS_REG);
+        response.setHeader("Access-Control-Allow-Origin", Constant.CORS_REG);
         if(handler instanceof HandlerMethod){
             //检查是否有AccessLogin注释，有则跳过认证
             AccessLogin accessLogin = ((HandlerMethod) handler).getMethodAnnotation(AccessLogin.class);
