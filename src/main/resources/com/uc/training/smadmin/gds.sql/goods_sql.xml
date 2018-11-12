@@ -7,6 +7,7 @@
 		 SELECT
 		 MAX(gds_property.id) AS propertyId
 		 FROM t_gds_property gds_property join t_gds_goods goods on goods.id=gds_property.goods_id
+		 where goods.status=1 and goods.is_delete=0
 		 GROUP BY goods.id
 		 order by goods.sales desc
 		 limit 0,8
@@ -139,7 +140,7 @@
 		count(1)
 		FROM
 		t_gds_goods goods
-        where goods.is_delete=0 and goods.status=0 and goods.name like concat("%",#name#,"%")
+        where goods.is_delete=0 and goods.status=1 and goods.name like concat("%",#name#,"%")
 	</select>
 
     <select id="searchByGoodsName" resultClass="long" parameterClass="com.uc.training.smadmin.gds.vo.GoodsListVO">
@@ -148,7 +149,7 @@
 		FROM
 		t_gds_property gds_property
 		left JOIN t_gds_goods goods ON goods.id = gds_property.goods_id
-        where goods.is_delete=0 and goods.status=0 and goods.name like concat("%",#name#,"%")
+        where goods.is_delete=0 and goods.status=1 and goods.name like concat("%",#name#,"%")
         GROUP BY goods.id
         <isNotEmpty property="offset">
             limit #offset#, #pageSize#
