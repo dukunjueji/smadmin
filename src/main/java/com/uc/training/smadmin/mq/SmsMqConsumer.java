@@ -11,22 +11,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 /**
- * 版权说明：Copyright (c) 2018 ucarinc. All Rights Reserved.
+ * 版权声明： Copyright (c) 2008 ucarinc. All Rights Reserved.
  *
- * @author：shixian.zhang@ucarinc.com
- * @version：v1.0
- * @date: 2018/11/3
- * 说明：消息消费者
+ * @author 何麒（qi.he@ucarinc.com）
+ * @Version 1.0
+ * @date 2018/11/12
  */
 @Controller
-public class MsmMqConsumer extends DefaultExecutorMessageListener {
+public class SmsMqConsumer  extends DefaultExecutorMessageListener {
+
     @Autowired
     private SmsTemplateService smsTemplateService;
 
     @Override
-    public void handlerMessage(MessageVO message) {
+    public void handlerMessage(MessageVO messageVO) {
         this.smsTemplateService = InjectionUtils.getInjectionInstance(SmsTemplateService.class);
-        MqVO mqVO = JSON.parseObject(message.getData(), MqVO.class);
+        MqVO mqVO = JSON.parseObject(messageVO.getData(), MqVO.class);
         GenerateSmsVO generateSmsVO = mqVO.getGenerateSmsVO();
         //判断消息实体是否为空
         if (generateSmsVO != null){
