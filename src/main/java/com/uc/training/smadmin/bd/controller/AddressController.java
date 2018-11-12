@@ -64,10 +64,7 @@ public class AddressController extends BaseController {
     @ResponseBody
     @RequestMapping("/getAddressList.do_")
     public Result<List<AddressRE>> getAddressListBy() {
-
-        Result<List<AddressRE>> addressList = Result.getSuccessResult(addressService.getAddressByMemberId(getUid()));
-
-        return addressList;
+        return Result.getSuccessResult(addressService.getAddressByMemberId(getUid()));
     }
 
     /**
