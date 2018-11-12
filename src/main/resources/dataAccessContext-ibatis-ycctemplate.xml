@@ -7,7 +7,7 @@
 
     <!-- datasource define -->
     <bean id="dataSourceCarIs" class="com.zuche.framework.extend.spring.JndiObjectFactoryBeanExtend">
-        <property name="jndiName" value="java:comp/env/jdbc/sm_db,sm_db.read"/>
+        <property name="jndiName" value="java:comp/env/jdbc/yccmall,yccmall.read"/>
     </bean>
 
 
