@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="com.uc.training.smadmin.bd.dao.MemberDao">
+
+	<!-- 根据对象的手机号或密码作为条件进行查找 -->
+	<select id="queryOneMember" resultClass="com.uc.training.smadmin.bd.model.Member" parameterClass="com.uc.training.smadmin.bd.model.Member">
+		 SELECT
+		 s.id AS id,
+		 s.password AS password,
+		 s.membername AS memberName,
+		 s.email AS email,
+		 CONCAT(LEFT(s.telephone,3), '****' ,RIGHT(s.telephone,4)) AS telephone,
+		 s.sex AS sex,
+		 s.growth AS growth,
+		 s.integral AS integral,
+		 s.nickname AS nickname,
+		 s.balance AS balance,
+		 s.image_url AS imageUrl,
+		 s.create_time AS createTime,
+		 s.modify_time AS modifyTime,
+		 s.create_emp AS createEmp,
+		 s.modify_emp AS modifyEmp
+		 FROM t_bd_member s
+		 <dynamic prepend="WHERE">
+			 <isNotEmpty property="password" prepend="and">
+				 s.password = #password#
+			 </isNotEmpty>
+			 <isNotEmpty property="telephone" prepend="and">
+				 s.telephone = #telephone#
+			 </isNotEmpty>
+			 <isNotEmpty property="id" prepend="and">
+				 s.id = #id#
+			 </isNotEmpty>
+		 </dynamic>
+	</select>
+	<!-- 通过会员id查会员手机号-->
+	<select id="queryMemberTel" resultClass="com.uc.training.smadmin.bd.model.Member" parameterClass="java.lang.Long">
+		SELECT
+		s.id AS id,
+		s.password AS password,
+		s.membername AS memberName,
+		s.email AS email,
+		s.telephone AS telephone,
+		s.sex AS sex,
+		s.growth AS growth,
+		s.integral AS integral,
+		s.nickname AS nickname,
+		s.balance AS balance,
+		s.image_url AS imageUrl,
+		s.create_time AS createTime,
+		s.modify_time AS modifyTime,
+		s.create_emp AS createEmp,
+		s.modify_emp AS modifyEmp
+		FROM t_bd_member s
+		WHERE
+		s.id = #memberId#
+	</select>
+	<!-- 根据会员的id作为条件进行查找 -->
+	<select id="queryOneMemberById" resultClass="com.uc.training.smadmin.bd.re.MemberInfoRE" parameterClass="java.lang.Long">
+		SELECT
+		s.id AS id,
+		s.membername AS memberName,
+		s.email AS email,
+		CONCAT(LEFT(s.telephone,3), '****' ,RIGHT(s.telephone,4)) AS telephone,
+		s.sex AS sex,
+		s.growth AS growth,
+		s.integral AS integral,
+		s.nickname AS nickname,
+		s.balance AS balance,
+		s.image_url AS imageUrl,
+		s.create_time AS createTime,
+		s.modify_time AS modifyTime,
+		s.create_emp AS createEmp,
+		s.modify_emp AS modifyEmp
+		FROM t_bd_member s
+		WHERE
+		s.id = #uid#
+	</select>
+	<!-- 根据对象的id作为条件进行查找 -->
+	<select id="getMemberDetailById" resultClass="com.uc.training.smadmin.bd.re.MemberDetailRE" parameterClass="java.lang.Long">
+		SELECT
+		s.id AS id,
+		s.membername AS memberName,
+		s.email AS email,
+		CONCAT(LEFT(s.telephone,3), '****' ,RIGHT(s.telephone,4)) AS telephone,
+		s.sex AS sex,
+		s.growth AS growth,
+		s.integral AS integral,
+		s.nickname AS nickname,
+		s.balance AS balance,
+		s.image_url AS imageUrl,
+		s.create_time AS createTime,
+		s.modify_time AS modifyTime,
+		s.create_emp AS createEmp,
+		s.modify_emp AS modifyEmp,
+
+		g.id AS memberGradeId,
+		g.name AS name,
+		g.min_growth AS minGrowth,
+		g.max_growth AS maxGrowth,
+		g.discount AS discount,
+		s.create_time AS memberGradeCreateTime,
+		s.modify_time AS memberGradeModifyTime,
+		s.create_emp AS memberGradeCreateEmp,
+		s.modify_emp AS memberGradeModifyEmp
+		FROM t_bd_member s
+		LEFT JOIN t_bd_member_grade g
+		ON g.min_growth &lt;= s.growth AND g.max_growth &gt; s.growth
+		WHERE s.id = #id#
+	</select>
+
+	<sql id="where_query">
+		 <isNotEmpty property="memberName" prepend="and">
+			 s.membername = #memberName#
+		 </isNotEmpty>
+		 <isNotEmpty property="telephone" prepend="and">
+			 s.telephone = #telephone#
+		 </isNotEmpty>
+		 <isNotEmpty property="sex" prepend="and">
+			 s.sex = #sex#
+		 </isNotEmpty>
+		 <isNotEmpty property="growth" prepend="and">
+			 s.growth = #growth#
+		 </isNotEmpty>
+		 <isNotEmpty property="integral" prepend="and">
+			 s.integral = #integral#
+		 </isNotEmpty>
+		 <isNotEmpty property="nickname" prepend="and">
+			 s.nickname = #nickname#
+		 </isNotEmpty>
+	</sql>
+
+	<!-- 列表查询 -->
+	<select id="queryMemberList" parameterClass="com.uc.training.smadmin.bd.vo.MemberListVO" resultClass="com.uc.training.smadmin.bd.model.Member">
+		 SELECT
+		 s.id AS id,
+		 s.membername AS memberName,
+		 s.telephone AS telephone,
+		 s.sex AS sex,
+		 s.growth AS growth,
+		 s.integral AS integral,
+		 s.nickname AS nickname,
+		 s.balance AS balance,
+		 s.image_url AS imageUrl
+		 FROM t_bd_member s
+		 WHERE 1=1
+		<include refid="where_query"/>
+	</select>
+
+	<!-- 查找数据总记录数 -->
+	<select id="queryMemberCount" resultClass="java.lang.Long" parameterClass="com.uc.training.smadmin.bd.vo.MemberListVO">
+		 SELECT count(1)
+		 FROM t_bd_member s
+		 WHERE 1=1
+		<include refid="where_query"/>
+	</select>
+
+	<!-- 查询用户余额 -->
+	<select id="queryBalances" resultClass="java.math.BigDecimal" parameterClass="java.lang.Long">
+		 SELECT balance
+		 FROM t_bd_member s
+		 WHERE s.id=#memberid#
+	</select>
+
+	<!-- 注册会员信息 -->
+	<insert id="insertMember" parameterClass="com.uc.training.smadmin.bd.model.Member">
+		 insert into t_bd_member
+		  (password, telephone, growth, integral, balance)
+		 values
+		 (#password#,#telephone#, 0, 0, 0)
+	<selectKey keyProperty="id">
+		select LAST_INSERT_ID() AS id
+	</selectKey>
+	</insert>
+
+	<!-- 通过手机号码或会员id更新会员密码 -->
+	<update id="updateMember" parameterClass="com.uc.training.smadmin.bd.model.Member">
+		 update t_bd_member set
+		password = #password#,
+		modify_emp = #id#
+		<dynamic prepend="WHERE">
+			<isNotNull property="id" prepend="and">
+				id = #id#
+			</isNotNull>
+			<isNotEmpty property="telephone" prepend="and">
+				telephone=#telephone#
+			</isNotEmpty>
+		</dynamic>
+		</update>
+
+	<!-- 通过手机号码更新会员余额 -->
+	<update id="updateMemberBalance" parameterClass="com.uc.training.smadmin.bd.model.Member">
+		 update t_bd_member set
+		balance = balance + #balance#,
+		modify_emp = #id#
+		where id=#id#
+	</update>
+
+	<!-- 通过会员id更新支付余额 -->
+	<update id="updateBalance" parameterClass="com.uc.training.smadmin.bd.vo.MemberBalanceVO">
+		 update t_bd_member set
+		balance = balance - #totalMoney#,
+		modify_time = now()
+		where id=#memberId#
+	</update>
+	<!-- 通过会员id更新会员信息 -->
+	<update id="updateMemberInfo"  parameterClass="com.uc.training.smadmin.bd.model.Member" >
+		 update t_bd_member set
+		nickname = #nickname#,
+		email = #email#,
+		sex = #sex#,
+		image_url = #imageUrl#,
+		modify_emp = #id#
+		where id = #id#
+	</update>
+	<!-- 会员登录-根据对象的手机号或密码作为条件进行查找 -->
+	<select id="getMemberLogin" resultClass="com.uc.training.smadmin.bd.model.Member" parameterClass="com.uc.training.smadmin.bd.vo.MemberLoginVO">
+		SELECT
+		s.id AS id,
+		s.membername AS memberName,
+		CONCAT(LEFT(s.telephone,3), '****' ,RIGHT(s.telephone,4)) AS telephone,
+		s.sex AS sex,
+		s.growth AS growth,
+		s.integral AS integral,
+		s.nickname AS nickname,
+		s.balance AS balance,
+		s.image_url AS imageUrl,
+		s.create_time AS createTime,
+		s.modify_time AS modifyTime,
+		s.create_emp AS createEmp,
+		s.modify_emp AS modifyEmp
+		FROM t_bd_member s
+		<dynamic prepend="WHERE">
+			<isNotEmpty property="password" prepend="and">
+				s.password = #password#
+			</isNotEmpty>
+			<isNotEmpty property="telephone" prepend="and">
+				s.telephone = #telephone#
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	<!-- 会员登录-根据对象的手机号或密码作为条件进行查找 -->
+	<select id="queryMemberByTel" resultClass="com.uc.training.smadmin.bd.model.Member" parameterClass="java.lang.String">
+		SELECT
+		s.id AS id,
+		s.membername AS memberName,
+		CONCAT(LEFT(s.telephone,3), '****' ,RIGHT(s.telephone,4)) AS telephone,
+		s.sex AS sex,
+		s.growth AS growth,
+		s.integral AS integral,
+		s.nickname AS nickname,
+		s.balance AS balance,
+		s.image_url AS imageUrl,
+		s.create_time AS createTime,
+		s.modify_time AS modifyTime,
+		s.create_emp AS createEmp,
+		s.modify_emp AS modifyEmp
+		FROM t_bd_member s
+		WHERE s.telephone = #telephone#
+	</select>
+	<!-- 更新会员积分 -->
+	<update id="updateIntegralById" parameterClass="com.uc.training.smadmin.bd.vo.MemberIntegralVO">
+		UPDATE
+		t_bd_member
+		SET
+		integral = integral + #integral#,
+		modify_time = now()
+		WHERE id = #memberId#
+	</update>
+
+	<!-- 更新会员成长值 -->
+	<update id="updateGrowthById" parameterClass="com.uc.training.smadmin.bd.vo.MemberGrowthVO">
+		UPDATE
+		t_bd_member
+		SET
+		growth = growth + #growth#,
+		modify_time = now()
+		WHERE id = #memberId#
+	</update>
+</sqlMap>

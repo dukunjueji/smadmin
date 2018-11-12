@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="com.uc.training.smadmin.sys.dao.SysUserDao">
+
+    <!-- 根据用户账号密码查询登录用户 -->
+    <select id="getUserLogin" parameterClass="com.uc.training.smadmin.sys.vo.UserLoginVO" resultClass="com.uc.training.smadmin.sys.model.SysUser">
+        SELECT
+           u.id AS	id,
+           u.username AS username,
+           u.password AS password,
+           u.create_time AS	createTime,
+           u.modify_time AS	modifyTime
+        FROM
+          t_sys_user u
+        <dynamic prepend="where">
+            <isNotNull property="username" prepend="and">
+                username = #username#
+            </isNotNull>
+            <isNotNull property="password" prepend="and">
+                password = #password#
+            </isNotNull>
+        </dynamic>
+    </select>
+
+    <select id="getById" parameterClass="java.lang.Long" resultClass="com.uc.training.smadmin.sys.model.SysUser">
+        SELECT
+            u.id AS	id,
+            u.username AS username,
+            u.password AS password,
+            u.is_admin AS isAdmin,
+            u.create_time AS createTime,
+            u.modify_time AS modifyTime
+        FROM
+          t_sys_user u
+        WHERE
+          id = #id#
+    </select>
+
+    <update id="updatePassword" parameterClass="com.uc.training.smadmin.sys.model.SysUser">
+        UPDATE
+          t_sys_user
+        SET
+          password = #password#,
+          modify_time = NOW(),
+          modify_emp = #modifyEmp#
+        WHERE
+          id = #id#
+    </update>
+
+  <sql id="where_query">
+    <isNotEmpty property="id" prepend="and">
+      s.id = #id#
+    </isNotEmpty>
+    <isNotEmpty property="name" prepend="and">
+      s.username LIKE '%$name$%'
+    </isNotEmpty>
+    <isNotEmpty property="startDate" prepend="and">
+      unix_timestamp(s.create_time) &gt;= unix_timestamp(#startDate#)
+    </isNotEmpty>
+    <isNotEmpty property="endDate" prepend="and">
+      unix_timestamp(s.create_time) &lt; unix_timestamp(#endDate#)
+    </isNotEmpty>
+  </sql>
+
+  <!-- 获取用户列表 -->
+  <select id="getUserList" parameterClass="com.uc.training.smadmin.sys.vo.UserListVO" resultClass="com.uc.training.smadmin.sys.model.SysUser">
+    SELECT
+      s.id AS id,
+      s.username AS userName,
+      s.is_admin AS isAdmin,
+      s.create_time AS createTime
+    FROM t_sys_user s
+    WHERE 1=1
+    <include refid="where_query"/>
+    <isNotEmpty property="offset">
+      limit #offset#, #pageSize#
+    </isNotEmpty>
+  </select>
+
+  <!-- 查找数据总记录数 -->
+  <select id="queryUserCount" resultClass="java.lang.Long" parameterClass="com.uc.training.smadmin.sys.vo.UserListVO">
+    SELECT count(1)
+    FROM t_sys_user s
+    WHERE 1=1
+    <include refid="where_query"/>
+  </select>
+
+  <!-- 新增用户 -->
+  <insert id="addUser" parameterClass="com.uc.training.smadmin.sys.model.SysUser">
+    INSERT INTO t_sys_user
+    (username, password, create_emp)
+    VALUES
+    (#userName#, #password#, #createTime#)
+    <selectKey resultClass="Long" keyProperty="id">
+      SELECT LAST_INSERT_ID() AS id
+    </selectKey>
+  </insert>
+
+  <!-- 删除用户 -->
+  <delete id="deleteById" parameterClass="Long">
+    DELETE FROM t_sys_user
+    WHERE id = #id#
+  </delete>
+
+  <!-- 修改用户 -->
+  <update id="updateUser" parameterClass="com.uc.training.smadmin.sys.model.SysUser">
+    UPDATE t_sys_user SET
+    username = #userName#, modify_emp = #modifyEmp#
+    WHERE id = #id#
+  </update>
+
+  <!-- 通过用户ID获取所有的菜单权限 -->
+  <select id="getMenuByUserId" parameterClass="Long" resultClass="com.uc.training.smadmin.sys.model.SysMenu">
+    SELECT
+      m.id,
+      m.name,
+      m.parent_id,
+      m.url,
+      m.level,
+      m.rel,
+      m.sort_num
+    FROM
+      t_sys_user_role ur,
+      t_sys_role_menu rm,
+      t_sys_menu m
+    WHERE
+      ur.user_id = #uid# AND
+      ur.role_id = rm.role_id AND
+      rm.menu_id = m.id AND
+      m.type = 1
+  </select>
+
+  <!-- 通过用户名查找用户数量 -->
+  <select id="queryCountByName" resultClass="java.lang.Integer" parameterClass="String">
+    SELECT count(1)
+    FROM t_sys_user s
+    WHERE s.username = #username#
+  </select>
+</sqlMap>

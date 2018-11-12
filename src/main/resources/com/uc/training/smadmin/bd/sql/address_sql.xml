@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="com.uc.training.smadmin.bd.dao.AddressDao">
+
+    <!-- 通过主键id获取地址 -->
+    <select id="getAddressById" resultClass="com.uc.training.smadmin.bd.re.AddressRE" parameterClass="long">
+        SELECT
+        s.id AS id,
+        s.receiver AS receiver,
+        telephone AS telephone,
+        s.area_code AS areaCode,
+        s.addr_detail AS addrDetail,
+        s.is_default AS isDefault
+        FROM t_bd_address s
+        WHERE s.id=#id#
+    </select>
+
+    <!-- 通过主键id获取地址 -->
+    <select id="getMemberIdById" resultClass="Long" parameterClass="long">
+        SELECT
+          s.member_id
+        FROM t_bd_address s
+        WHERE s.id=#id#
+    </select>
+
+    <!-- 通过会员id查询地址 -->
+    <select id="getAddressByMemberId" resultClass="com.uc.training.smadmin.bd.re.AddressRE" parameterClass="long">
+        SELECT
+        s.id AS id,
+        s.receiver AS receiver,
+        CONCAT(LEFT(s.telephone,3), '****' ,RIGHT(s.telephone,4)) AS telephone,
+        s.area_code AS areaCode,
+        s.addr_detail AS addrDetail,
+        s.is_default AS isDefault
+        FROM t_bd_address s
+        WHERE s.member_id = #memberId#
+        ORDER BY s.id ASC
+    </select>
+
+    <!-- 通过会员id查询默认地址 -->
+    <select id="getDefaultAddress" resultClass="com.uc.training.smadmin.bd.re.AddressRE" parameterClass="long">
+        SELECT
+        s.id AS id,
+        s.receiver AS receiver,
+        CONCAT(LEFT(s.telephone,3), '****' ,RIGHT(s.telephone,4)) AS telephone,
+        s.addr_detail AS addrDetail,
+        s.is_default AS isDefault
+        FROM t_bd_address s
+        WHERE s.member_id = #memberId# AND s.is_default = 1
+    </select>
+
+    <!-- 插入地址 -->
+    <insert id="insertAddress"  parameterClass="com.uc.training.smadmin.bd.model.Address">
+        insert into t_bd_address
+        (member_id, receiver, telephone, province, city, district, area_code, addr_detail, is_default, create_emp, modify_emp)
+        values(#memberId#,#receiver#,#telephone#,#province#,#city#,#district#,#areaCode#,#addrDetail#,#isDefault#,#createEmp#,modify_emp)
+        <selectKey resultClass="long" keyProperty="id">
+            SELECT LAST_INSERT_ID() as id;
+        </selectKey>
+    </insert>
+
+    <!-- 通过主键id更新地址 -->
+    <update id="updateAddressById" parameterClass="com.uc.training.smadmin.bd.model.Address">
+        update t_bd_address set receiver = #receiver#, telephone = #telephone#, province = #province#, city = #city#,
+        district= #district#, area_code=#areaCode#, addr_detail = #addrDetail#, is_default = #isDefault#,
+        create_emp = #createEmp#, modify_time = now(), modify_emp = #modifyEmp#
+        where id=#id#
+    </update>
+
+    <!-- 修改会员默认地址状态 -->
+    <update id="cancelIsDefault" parameterClass="com.uc.training.smadmin.bd.model.Address">
+        update t_bd_address set
+        is_default = 0, modify_time = now(), modify_emp = #modifyEmp#
+        where is_default = 1 AND member_id = #memberId#
+    </update>
+
+    <!--删除地址-->
+    <delete id="deleteAddress" parameterClass="long">
+        delete from t_bd_address where id = #id#
+    </delete>
+</sqlMap>

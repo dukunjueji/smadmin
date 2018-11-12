@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="com.uc.training.smadmin.sms.dao.SmsTemplateDao">
+
+	<!-- 根据对象的不为null的值作为条件进行查找 -->
+	<select id="getSmsTemplateById" resultClass="com.uc.training.smadmin.sms.model.SmsTemplate" parameterClass="Long">
+		 SELECT
+		 s.id AS id,
+		 s.type AS type,
+		 s.code AS code,
+		 s.title AS title,
+		 s.content AS content,
+		 s.create_time AS createTime,
+		 s.create_emp AS createEmp,
+		 s.modify_time AS modifyTime,
+		 s.modify_emp AS modifyEmp
+		 FROM t_sys_sms_template s		 WHERE s.id=#id#
+	</select>
+
+
+	<sql id="where_query">
+		 <isNotEmpty property="type" prepend="and">
+			 s.type = #type#
+		 </isNotEmpty>
+		 <isNotEmpty property="code" prepend="and">
+			 s.code LIKE '%$code$%'
+		 </isNotEmpty>
+	</sql>
+
+	<!-- 列表查询 -->
+	<select id="querySmsTemplateList" parameterClass="com.uc.training.smadmin.sms.vo.SmsTemplateListVO" resultClass="com.uc.training.smadmin.sms.model.SmsTemplate">
+		 SELECT
+		     s.id AS id,
+			 s.type AS type,
+			 s.code AS code,
+			 s.title AS title,
+			 s.content AS content,
+			 s.create_time AS createTime
+		 FROM t_sys_sms_template s
+		 WHERE 1=1
+		<include refid="where_query"/>
+		<isNotEmpty property="offset">
+			limit #offset#, #pageSize#
+		</isNotEmpty>
+	</select>
+
+	<!-- 查找短信模s板并替换内容 -->
+	<select id="generateSms" parameterClass="com.uc.training.smadmin.sms.vo.GenerateSmsVO" resultClass="String">
+		select replace(content,'msg',  #message#)  content
+		from t_sys_sms_template
+		where `code` = #code#
+  	</select>
+
+	<!-- 查找数据总记录数 -->
+	<select id="querySmsTemplateCount" resultClass="java.lang.Long" parameterClass="com.uc.training.smadmin.sms.vo.SmsTemplateListVO">
+		 SELECT count(1)
+		 FROM t_sys_sms_template s
+		 WHERE 1=1
+		<include refid="where_query"/>
+	</select>
+
+	<!-- 通过code获取短信模板 -->
+	<select id="getByCode" parameterClass="String" resultClass="com.uc.training.smadmin.sms.model.SmsTemplate">
+		SELECT
+			s.id,
+			s.code,
+			s.type,
+			s.content
+		FROM t_sys_sms_template s
+		WHERE code = #code#
+	</select>
+
+	<!-- 插入 -->
+	<insert id="insertSmsTemplate" parameterClass="com.uc.training.smadmin.sms.vo.SmsTemplateVO">
+		insert into t_sys_sms_template
+			 (type, code, title, content, create_emp)
+		values (#type#,#code#,#title#,#content#,#createEmp#)
+		<selectKey resultClass="Long" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS id
+		</selectKey>
+	</insert>
+
+	<!-- 通过主键更新 -->
+	<update id="updateSmsTemplateById" parameterClass="com.uc.training.smadmin.sms.vo.SmsTemplateVO">
+		 update t_sys_sms_template set
+		type = #type#, title = #title#, content = #content#, modify_emp = #modifyEmp#
+		where id=#id#
+	</update>
+
+
+	<!-- 通过ID删除短信模板 -->
+	<delete id="deleteById" parameterClass="java.lang.Long">
+		DELETE FROM t_sys_sms_template
+		WHERE id = #id#
+	</delete>
+
+	<!-- 通过ID批量删除 -->
+	<delete id="batchDeleteById" parameterClass="java.util.List">
+		DELETE FROM t_sys_sms_template
+		WHERE id IN
+		<iterate open="(" close=")" conjunction=",">
+			#ids[]#
+		</iterate>
+	</delete>
+</sqlMap>

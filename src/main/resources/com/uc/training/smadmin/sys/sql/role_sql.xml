@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="com.uc.training.smadmin.sys.dao.SysRoleDao">
+
+    <!-- 根据用户id获取用户角色 -->
+    <select id="getUserRoles" resultClass="java.lang.String" parameterClass="java.lang.Long">
+        SELECT
+			r.name
+		FROM
+			t_sys_user_role ur
+		LEFT JOIN
+			t_sys_role r
+		ON
+			ur.role_id = r.id
+		LEFT JOIN
+			t_sys_user u
+		ON
+			ur.user_id = u.id
+		WHERE
+			u.id = #userId#
+    </select>
+
+	<sql id="where_query">
+		<isNotEmpty property="id" prepend="and">
+			s.id = #id#
+		</isNotEmpty>
+		<isNotEmpty property="name" prepend="and">
+			s.name LIKE '%$name$%'
+		</isNotEmpty>
+	</sql>
+
+	<!-- 获取角色页面列表 -->
+	<select id="getRolePage" parameterClass="com.uc.training.smadmin.sys.vo.RoleListVO" resultClass="com.uc.training.smadmin.sys.model.SysRole">
+		SELECT
+		s.id AS id,
+		s.name AS name
+		FROM t_sys_role s
+		WHERE 1=1
+		<include refid="where_query"/>
+		<isNotEmpty property="offset">
+			limit #offset#, #pageSize#
+		</isNotEmpty>
+	</select>
+
+	<!-- 查找数据总记录数 -->
+	<select id="queryCount" resultClass="java.lang.Long" parameterClass="com.uc.training.smadmin.sys.vo.RoleListVO">
+		SELECT count(1)
+		FROM t_sys_role s
+		WHERE 1=1
+		<include refid="where_query"/>
+	</select>
+
+	<!-- 更新角色信息 -->
+	<update id="updateRole" parameterClass="com.uc.training.smadmin.sys.model.SysRole">
+		UPDATE t_sys_role
+		SET name = #name#
+		WHERE id = #id#
+	</update>
+
+	<!-- 删除角色 -->
+	<delete id="deleteById" parameterClass="Long">
+		DELETE FROM t_sys_role
+		WHERE id = #id#
+	</delete>
+
+	<!-- 新增角色 -->
+	<insert id="addRole" parameterClass="com.uc.training.smadmin.sys.model.SysRole">
+		INSERT INTO t_sys_role (name)
+		VALUE (#name#)
+		<selectKey resultClass="Long" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS id
+		</selectKey>
+	</insert>
+
+	<!-- 通过角色ID获取角色菜单权限ID列表 -->
+	<select id="queryMenuAuthByRid" parameterClass="Long" resultClass="Long">
+		SELECT menu_id
+		FROM t_sys_role_menu
+		WHERE role_id = #rid#
+	</select>
+
+	<!-- 通过角色ID删除角色权限 -->
+	<delete id="deleteAuthByRid" parameterClass="Long">
+		DELETE FROM t_sys_role_menu
+		WHERE role_id = #rid#
+	</delete>
+
+	<!-- 批量新增角色权限 -->
+	<insert id="batchInsertAuth" parameterClass="java.util.Map">
+		INSERT INTO t_sys_role_menu
+		(role_id, menu_id, create_emp)
+		VALUES
+		<iterate property="mid" conjunction=",">
+			(#rid#, #mid[]#, #createEmp#)
+		</iterate>
+	</insert>
+
+	<!-- 获取所有角色 -->
+	<select id="getRoleList" resultClass="com.uc.training.smadmin.sys.model.SysRole">
+		SELECT s.id, s.name
+		FROM t_sys_role s
+	</select>
+
+	<!-- 通过用户ID获取角色ID -->
+	<select id="getRoleListByUid" parameterClass="Long" resultClass="Long">
+		SELECT role_id
+		FROM t_sys_user_role
+		WHERE user_id = #uid#
+	</select>
+
+	<!-- 通过角色ID删除角色权限 -->
+	<delete id="deleteRoleByUid" parameterClass="Long">
+		DELETE FROM t_sys_user_role
+		WHERE user_id = #uid#
+	</delete>
+
+	<!-- 批量新增角色权限 -->
+	<insert id="batchInsertRole" parameterClass="java.util.Map">
+		INSERT INTO t_sys_user_role
+		(user_id, role_id, create_emp)
+		VALUES
+		<iterate property="rid" conjunction=",">
+			(#uid#, #rid[]#, #createEmp#)
+		</iterate>
+	</insert>
+
+	<!-- 通过角色ID删除用户角色 -->
+	<delete id="deleteUserRoleByRid" parameterClass="Long">
+		DELETE FROM t_sys_user_role
+		WHERE role_id = #rid#
+	</delete>
+
+	<!-- 通过角色名查找用户数量 -->
+	<select id="queryCountByName" resultClass="java.lang.Integer" parameterClass="String">
+    SELECT count(1)
+    FROM t_sys_role s
+    WHERE s.name = #name#
+  </select>
+
+	<select id="getById" parameterClass="java.lang.Long" resultClass="com.uc.training.smadmin.sys.model.SysRole">
+        SELECT
+        	s.name AS name,
+        	s.id AS id
+        FROM
+          t_sys_role s
+        WHERE
+          id = #id#
+    </select>
+</sqlMap>
