@@ -126,7 +126,7 @@ public class RoleController extends BaseController {
     public Result<Long> addAuth(Long rid, String[] ids){
         // 判空
         if (ids == null) {
-            return Result.getBusinessException("删除失败", null);
+            return Result.getBusinessException("添加失败", null);
         }
         List<Long> list = new ArrayList<>();
         for (String s : ids) {

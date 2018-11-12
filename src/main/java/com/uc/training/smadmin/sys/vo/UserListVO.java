@@ -28,9 +28,22 @@ public class UserListVO extends PageQuery {
     private Date startDate;
 
     /**
+     * 创建人
+     */
+    private Long createEmp;
+
+    /**
      * 结束时间
      */
     private Date endDate;
+
+    public Long getCreateEmp() {
+        return createEmp;
+    }
+
+    public void setCreateEmp(Long createEmp) {
+        this.createEmp = createEmp;
+    }
 
     public Date getStartDate() {
         return startDate == null ? null : (Date) startDate.clone();
