@@ -34,4 +34,12 @@ public class RoleListVO extends PageQuery {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return "RoleListVO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

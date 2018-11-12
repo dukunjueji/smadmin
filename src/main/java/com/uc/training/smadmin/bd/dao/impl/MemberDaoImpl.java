@@ -86,7 +86,7 @@ public class MemberDaoImpl extends CarIsIbatisDaoImpl implements MemberDao {
 
     @Override
     public List<Member> getMemberList(MemberListVO memberListVO) {
-        return this.queryForList("com.uc.training.smadmin.bd.dao.MemberDao.queryMemberList", memberListVO);
+        return (List<Member>) this.queryForList("com.uc.training.smadmin.bd.dao.MemberDao.queryMemberList", memberListVO);
     }
 
     @Override

@@ -32,9 +32,6 @@ public class RoleController extends BaseController {
     @RequestMapping(value = "getRolePage.do_", method = RequestMethod.POST)
     @ResponseBody
     public Result<PageVO<SysRole>> getRolePage(@Validated RoleListVO roleListVO) {
-      /*  if (roleListVO.getName().length() > Constant.LONGEST_ROLE_NAME) {
-            return Result.getBusinessException("", null);
-        }*/
         Result<PageVO<SysRole>> res;
         try {
             PageVO<SysRole> pageVO = new PageVO<SysRole>();

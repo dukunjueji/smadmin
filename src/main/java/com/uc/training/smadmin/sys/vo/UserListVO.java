@@ -64,4 +64,13 @@ public class UserListVO extends PageQuery {
         this.name = name;
     }
 
+    @Override
+    public String toString() {
+        return "UserListVO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                '}';
+    }
 }
