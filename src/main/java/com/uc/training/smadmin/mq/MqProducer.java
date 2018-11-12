@@ -1,4 +1,4 @@
-package com.uc.training.smadmin.bd.mq;
+package com.uc.training.smadmin.mq;
 
 import com.uc.training.smadmin.bd.vo.MqVO;
 import com.ycc.tools.middleware.metaq.MQHelperAdapter;

@@ -7,7 +7,7 @@ import com.uc.training.common.enums.SmsTypeEnum;
 import com.uc.training.smadmin.bd.dao.MemberDao;
 import com.uc.training.smadmin.bd.model.LoginLog;
 import com.uc.training.smadmin.bd.model.Member;
-import com.uc.training.smadmin.bd.mq.MqProducer;
+import com.uc.training.smadmin.mq.MqProducer;
 import com.uc.training.smadmin.bd.re.MemberDetailRE;
 import com.uc.training.smadmin.bd.re.MemberInfoRE;
 import com.uc.training.smadmin.bd.service.LoginLogService;

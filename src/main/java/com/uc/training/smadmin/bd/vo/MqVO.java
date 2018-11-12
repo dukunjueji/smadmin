@@ -1,5 +1,7 @@
 package com.uc.training.smadmin.bd.vo;
 
+import com.uc.training.smadmin.sms.vo.SmsVO;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -20,6 +22,11 @@ public class MqVO implements Serializable {
     private Long memberId;
 
     /**
+     * 消息
+     */
+    private SmsVO smsVO;
+
+    /**
      * 成长值类型
      */
     private Integer growthType;
@@ -38,6 +45,14 @@ public class MqVO implements Serializable {
      * 充值金额
      */
     private BigDecimal rechargeValue;
+
+    public SmsVO getSmsVO() {
+        return smsVO;
+    }
+
+    public void setSmsVO(SmsVO smsVO) {
+        this.smsVO = smsVO;
+    }
 
     public Long getMemberId() {
         return memberId;
