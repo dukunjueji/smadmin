@@ -245,7 +245,8 @@ public class OrderServiceImpl implements OrderService {
         //插入地址信息
         AddressRE addressRE = addressService.getAddressById(orderInfoListNow.get(orderInfoListNow.size() - 2).getAddressId());
         if (addressRE != null) {
-            order.setReceiptAddress(addressRE.getAddrDetail());
+            order.setReceiptAddress(addressRE.getProvince() + " " + addressRE.getCity()+ " " +
+                    addressRE.getDistrict() + " " + addressRE.getAddrDetail());
             order.setReceiptName(addressRE.getReceiver());
             order.setReceiptTel(addressRE.getTelephone());
         }
