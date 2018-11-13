@@ -34,13 +34,13 @@ public class OrdMemberVO extends PageQuery implements Serializable {
      *
      * @return
      */
-    private String orderId;
+    private Long orderId;
 
-    public String getOrderId() {
+    public Long getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(String orderId) {
+    public void setOrderId(Long orderId) {
         this.orderId = orderId;
     }
 
@@ -71,10 +71,10 @@ public class OrdMemberVO extends PageQuery implements Serializable {
     @Override
     public String toString() {
         return "OrdMemberVO{" +
-                "memberId=" + memberId +
+                ", memberId=" + memberId +
                 ", status=" + status +
                 ", orderNum='" + orderNum + '\'' +
-                ", orderId='" + orderId + '\'' +
+                ", orderId=" + orderId +
                 '}';
     }
 }

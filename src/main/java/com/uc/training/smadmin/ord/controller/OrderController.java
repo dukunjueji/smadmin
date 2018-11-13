@@ -4,10 +4,12 @@ import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.common.enums.GoodsStatusEnum;
 import com.uc.training.common.enums.OrderEnum;
+import com.uc.training.common.enums.SmsTypeEnum;
 import com.uc.training.smadmin.bd.service.MemberService;
 import com.uc.training.smadmin.bd.vo.MemberInfoVO;
 import com.uc.training.smadmin.gds.re.GoodsDetailRE;
 import com.uc.training.smadmin.gds.service.GoodsService;
+import com.uc.training.smadmin.mq.vo.MqVO;
 import com.uc.training.smadmin.ord.dao.OrderDao;
 import com.uc.training.smadmin.ord.model.CartGoods;
 import com.uc.training.smadmin.ord.model.Order;
@@ -20,6 +22,7 @@ import com.uc.training.smadmin.ord.vo.OrdGoodsVO;
 import com.uc.training.smadmin.ord.vo.OrdMemberVO;
 import com.uc.training.smadmin.ord.vo.OrdOrderGoodsVo;
 import com.uc.training.smadmin.ord.vo.OrdOrderVo;
+import com.uc.training.smadmin.sms.vo.GenerateSmsVO;
 import com.ycc.base.common.Result;
 import net.sf.json.JSONArray;
 import net.sf.json.JsonConfig;
@@ -29,6 +32,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
@@ -297,13 +301,31 @@ public class OrderController extends BaseController {
         OrdMemberVO ordMemberVO = new OrdMemberVO();
         ordMemberVO.setMemberId(orderPayInfoNow.get(0).getMemberId());
         ordMemberVO.setOrderId(orderPayInfoNow.get(0).getOrderId());
-        List<Order> order = orderService.getOrderById(ordMemberVO);
+        List<Order> order = orderService.getOrderByMemberVO(ordMemberVO);
         if (!CollectionUtils.isEmpty(order)) {
             if (order.get(0).getStatus() != 1 || !order.get(0).getMemberId().equals(getUid())) {
                 return Result.getSuccessResult("支付失败");
             }
         }
-        List<OrderConfirmRE> list = memberService.queryBalances(orderPayInfoNow);
+
+        //生成消息体
+        MqVO mqVO = new MqVO();
+        GenerateSmsVO generateSmsVO = new GenerateSmsVO();
+        ordMemberVO = new OrdMemberVO();
+        ordMemberVO.setOrderId(orderPayInfoNow.get(0).getOrderId());
+        ordMemberVO.setMemberId(getUid());
+        List<Order> ord = orderService.getOrderByMemberVO(ordMemberVO);
+        if (ord.size() != 1) {
+            return Result.getBusinessException("该订单不存在！", null);
+        }
+        //根据订单号获取手机号
+        generateSmsVO.setTelephone(ord.get(0).getReceiptTel());
+        generateSmsVO.setMessage(ord.get(0).getOrderNum());
+        generateSmsVO.setCode(SmsTypeEnum.ORDER_INFO.getCode());
+        generateSmsVO.setType(SmsTypeEnum.ORDER_INFO.getType());
+        mqVO.setGenerateSmsVO(generateSmsVO);
+
+        List<OrderConfirmRE> list = memberService.queryBalances(orderPayInfoNow, mqVO);
         if (CollectionUtils.isEmpty(list)) {
             return Result.getBusinessException("支付失败", null);
         }

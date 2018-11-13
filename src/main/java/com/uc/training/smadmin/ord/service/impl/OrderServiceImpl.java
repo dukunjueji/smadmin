@@ -32,7 +32,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,8 +70,8 @@ public class OrderServiceImpl implements OrderService {
      * @return
      */
     @Override
-    public List<Order> getOrderById(OrdMemberVO ordMemberVO) {
-        return orderDao.getOrderById(ordMemberVO);
+    public List<Order> getOrderByMemberVO(OrdMemberVO ordMemberVO) {
+        return orderDao.getOrderByMemberVO(ordMemberVO);
     }
 
     @Override
@@ -379,14 +378,14 @@ public class OrderServiceImpl implements OrderService {
     }
 
     /**
-     * 根据订单号获取手机号
+     * 根据主键id获取手机号
      *
-     * @param orderNum
+     * @param id
      * @return
      */
     @Override
-    public String getTelephoneByOrderNum(String orderNum) {
-        return orderDao.getTelephoneByOrderNum(orderNum);
+    public String getTelephoneById(Long id) {
+        return orderDao.getTelephoneById(id);
     }
 
     /**
@@ -435,7 +434,7 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderInfoRE> getOrderInfoListByMemberId(OrdMemberVO ordMemberVO) {
         //先获该用户的取订单id，然后查询每条订单的状态，订单的金额 以及获取订单的商品信息
         List<OrderInfoRE> orderInfoREList = new ArrayList<>();
-        List<Order> orderList = orderDao.getOrderById(ordMemberVO);
+        List<Order> orderList = orderDao.getOrderByMemberVO(ordMemberVO);
         if (CollectionUtils.isEmpty(orderList)) {
             return orderInfoREList;
         }

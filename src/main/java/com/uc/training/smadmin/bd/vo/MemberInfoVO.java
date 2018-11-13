@@ -57,7 +57,7 @@ public class MemberInfoVO implements Serializable {
      * @return
      */
 
-    private String orderId;
+    private Long orderId;
 
     /**
      * 用户订单商品id
@@ -102,11 +102,11 @@ public class MemberInfoVO implements Serializable {
         this.goodsNum = goodsNum;
     }
 
-    public String getOrderId() {
+    public Long getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(String orderId) {
+    public void setOrderId(Long orderId) {
         this.orderId = orderId;
     }
 
