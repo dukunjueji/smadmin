@@ -108,4 +108,15 @@ public class SmsTemplateDaoImpl extends CarIsIbatisDaoImpl implements SmsTemplat
         return (String) this.queryForObject(NAMESPACE + "generateSms", generateSmsVO);
     }
 
+    /**
+     * 通过code查找短信模板数量
+     *
+     * @param code
+     * @return
+     */
+    @Override
+    public Integer getTemplateCountByCode(String code) {
+        return (Integer) this.queryForObject(NAMESPACE + "getTemplateCountByCode", code);
+    }
+
 }

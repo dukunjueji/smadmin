@@ -76,4 +76,11 @@ public interface SmsTemplateDao {
      * @return
      */
     String generateSms(GenerateSmsVO generateSmsVO);
+
+    /**
+     * 通过code查找短信模板数量
+     * @param code
+     * @return
+     */
+    Integer getTemplateCountByCode(String code);
 }
