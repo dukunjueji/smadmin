@@ -121,7 +121,7 @@
 	<select id="queryOrderCount" resultClass="java.lang.Integer" parameterClass="java.lang.Long">
 		 SELECT count(1)
 		 FROM t_ord_order s
-		 WHERE s.member_id = #memberId#
+		 WHERE s.member_id = #memberId# AND s.is_delete = 0
 	</select>
 
 	<!--查询订单表的总记录数-->
