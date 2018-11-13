@@ -186,6 +186,9 @@ public class OrderController extends BaseController {
         if (ordCartGoodsVo == null) {
             return Result.getBusinessException("选择后再添加", null);
         }
+        if (ordCartGoodsVo.getNum()<= 0) {
+            return Result.getBusinessException("商品数量不可以少于1个", null);
+        }
         List<CartGoods> list;
         list = orderService.getCarGoodsById(getUid());
         GoodsDetailRE gdDTO = goodsService.getGoodsDetailByPropertyId(ordCartGoodsVo.getPropertyId());
@@ -359,6 +362,9 @@ public class OrderController extends BaseController {
             return Result.getBusinessException("您选择的商品已丢失，请重新到商品页面添加！！", null);
         } else {
             for (CartGoods cargd : cartList) {
+                if (cargd.getGoodsNum()<=0) {
+                    return Result.getBusinessException("所选商品不可以小于1一个!", null);
+                }
                 gdDTO = goodsService.getGoodsDetailByPropertyId(cargd.getGoodsPropertyId());
                 if (gdDTO == null) {
                     return Result.getBusinessException("选择的商品已找不到信息请刷新，请重新到商品页面添加", null);
