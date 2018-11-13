@@ -125,6 +125,10 @@ public class MemberServiceImpl implements MemberService {
             mqVO1.setGrowthType(GrowthEnum.PURCHASE.getGrowthType());
             mqVO1.setIntegralType(IntegralEnum.PURCHASE.getIntegralType());
             mqVO1.setPurchaseValue(memberInfoVO.getTotalPrice());
+
+            //订单短信
+            mqVO1.setGenerateSmsVO(mqVO.getGenerateSmsVO());
+
             MetaQUtils.sendMsgNoException(new MqProducer(mqVO1));
             //更新订单状态
             orderConfirmRE.setStatus(OrderEnum.WAITSHIP.getKey());
@@ -136,9 +140,6 @@ public class MemberServiceImpl implements MemberService {
             if (orderService.updateOrder(ordOrderVo) > 0) {
                 list.add(orderConfirmRE);
             }
-
-            //MQ发送短信
-            MetaQUtils.sendMsgNoException(new MqProducer(mqVO));
 
             return list;
         } else {
