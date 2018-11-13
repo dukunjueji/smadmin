@@ -46,6 +46,9 @@
         s.id AS id,
         s.receiver AS receiver,
         CONCAT(LEFT(s.telephone,3), '****' ,RIGHT(s.telephone,4)) AS telephone,
+        s.province AS province,
+        s.city AS city,
+        s.district AS district,
         s.addr_detail AS addrDetail,
         s.is_default AS isDefault
         FROM t_bd_address s
