@@ -3,6 +3,8 @@ import com.uc.training.smadmin.ord.model.Order;
 import com.uc.training.smadmin.ord.re.OrderRe;
 import com.uc.training.smadmin.ord.vo.OrdMemberVO;
 import com.uc.training.smadmin.ord.vo.OrdOrderVo;
+import com.uc.training.smadmin.sys.re.OrderSaleRE;
+
 import java.util.List;
 
 /**
@@ -91,4 +93,13 @@ public interface OrderDao {
      * @return
      */
     String getTelephoneByOrderNum(String orderNum);
+
+    /**
+     * 当年每个月销售额统计
+     *
+     * @version 1.0 2018/11/12 11:32 by 吴佰川（baichuan.wu@ucarinc.com）创建
+     * @param
+     * @return java.util.List<java.math.BigDecimal>
+     */
+	OrderSaleRE getOrderSaleData();
 }

@@ -1,9 +1,9 @@
-package com.uc.training.smadmin.bd.mq;
+package com.uc.training.smadmin.mq;
 
 import com.alibaba.fastjson.JSON;
 import com.uc.training.smadmin.bd.service.IntegralDetailService;
 import com.uc.training.smadmin.bd.vo.IntegralVO;
-import com.uc.training.smadmin.bd.vo.MqVO;
+import com.uc.training.smadmin.mq.vo.MqVO;
 import com.uc.training.smadmin.utils.InjectionUtils;
 import com.zuche.framework.metaq.handler.DefaultExecutorMessageListener;
 import com.zuche.framework.metaq.vo.MessageVO;

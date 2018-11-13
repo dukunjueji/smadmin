@@ -157,6 +157,7 @@ public class UserController extends BaseController {
     @ResponseBody
     public Result<PageVO<SysUser>> getUserList(@Validated UserListVO userListVO){
         Result<PageVO<SysUser>> res;
+        userListVO.setCreateEmp(getUid());
         try {
             PageVO<SysUser> pageVO = new PageVO<SysUser>();
             pageVO.setPageIndex(userListVO.getPageIndex());

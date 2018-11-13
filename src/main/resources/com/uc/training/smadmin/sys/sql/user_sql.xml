@@ -60,6 +60,9 @@
     <isNotEmpty property="endDate" prepend="and">
       unix_timestamp(s.create_time) &lt; unix_timestamp(#endDate#)
     </isNotEmpty>
+    <isNotEmpty property="createEmp" prepend="and">
+      s.create_emp = #createEmp#
+    </isNotEmpty>
   </sql>
 
   <!-- 获取用户列表 -->
@@ -90,7 +93,7 @@
     INSERT INTO t_sys_user
     (username, password, create_emp)
     VALUES
-    (#userName#, #password#, #createTime#)
+    (#userName#, #password#, #createEmp#)
     <selectKey resultClass="Long" keyProperty="id">
       SELECT LAST_INSERT_ID() AS id
     </selectKey>

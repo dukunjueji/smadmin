@@ -121,7 +121,7 @@
 	<select id="queryOrderCount" resultClass="java.lang.Integer" parameterClass="java.lang.Long">
 		 SELECT count(1)
 		 FROM t_ord_order s
-		 WHERE s.member_id = #memberId#
+		 WHERE s.member_id = #memberId# AND s.is_delete = 0
 	</select>
 
 	<!--查询订单表的总记录数-->
@@ -225,5 +225,25 @@
 		s.member_id=#memberId#
 	</update>
 
+	<select id="getOrderSaleData" resultClass="com.uc.training.smadmin.sys.re.OrderSaleRE">
+		SELECT
+		    IFNULL(sum(case month(create_time) when '1' then pay_price else 0 end), 0) as january,
+			IFNULL(sum(case month(create_time) when '2' then pay_price else 0 end), 0) as february,
+			IFNULL(sum(case month(create_time) when '3' then pay_price else 0 end), 0) as march,
+			IFNULL(sum(case month(create_time) when '4' then pay_price else 0 end), 0) as april,
+			IFNULL(sum(case month(create_time) when '5' then pay_price else 0 end), 0) as may,
+			IFNULL(sum(case month(create_time) when '6' then pay_price else 0 end), 0) as june,
+			IFNULL(sum(case month(create_time) when '7' then pay_price else 0 end), 0) as july,
+			IFNULL(sum(case month(create_time) when '8' then pay_price else 0 end), 0) as aguest,
+			IFNULL(sum(case month(create_time) when '9' then pay_price else 0 end), 0) as september,
+			IFNULL(sum(case month(create_time) when '10' then pay_price else 0 end), 0) as october,
+			IFNULL(sum(case month(create_time) when '11' then pay_price else 0 end), 0) as november,
+			IFNULL(sum(case month(create_time) when '12' then pay_price else 0 end), 0) as december
+		FROM
+			t_ord_order
+		WHERE
+			year(create_time) = YEAR(NOW())
+			AND status > 2;
+	</select>
 </sqlMap>
 
