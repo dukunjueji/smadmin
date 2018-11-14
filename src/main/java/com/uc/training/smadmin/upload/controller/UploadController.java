@@ -37,10 +37,10 @@ public class UploadController extends BaseController{
     public Result<UploadRE> imageUpload(MultipartFile file) {
 
         if (file.isEmpty()) {
-            Result.getBusinessException("上传文件不能为空" , null);
+            return Result.getBusinessException("上传文件不能为空" , null);
         }
         if (file.getSize() >= UploadEnum.MAX_IMAGE_SIZE.getSize()) {
-            Result.getBusinessException("上传文件不能超过4M", null);
+            return Result.getBusinessException("上传文件不能超过4M", null);
         }
 
         return Result.getSuccessResult(uploadService.imageUpload(file));
