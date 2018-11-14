@@ -467,5 +467,10 @@ public class OrderServiceImpl implements OrderService {
     public OrderSaleRE getOrderSaleData() {
         return orderDao.getOrderSaleData();
     }
+
+    @Override
+    public Integer queryCartGoodsCount(Long memberId) {
+        return cartGoodsDao.queryCartGoodsCount(memberId);
+    }
 }
 

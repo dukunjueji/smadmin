@@ -186,7 +186,7 @@ public class OrderController extends BaseController {
         if (ordCartGoodsVo == null) {
             return Result.getBusinessException("选择后再添加", null);
         }
-        if (ordCartGoodsVo.getNum()<= 0) {
+        if (ordCartGoodsVo.getNum() <= 0) {
             return Result.getBusinessException("商品数量不可以少于1个", null);
         }
         List<CartGoods> list;
@@ -362,7 +362,7 @@ public class OrderController extends BaseController {
             return Result.getBusinessException("您选择的商品已丢失，请重新到商品页面添加！！", null);
         } else {
             for (CartGoods cargd : cartList) {
-                if (cargd.getGoodsNum()<=0) {
+                if (cargd.getGoodsNum() <= 0) {
                     return Result.getBusinessException("所选商品不可以小于1一个!", null);
                 }
                 gdDTO = goodsService.getGoodsDetailByPropertyId(cargd.getGoodsPropertyId());
@@ -370,8 +370,8 @@ public class OrderController extends BaseController {
                     return Result.getBusinessException("选择的商品已找不到信息请刷新，请重新到商品页面添加", null);
                 }
                 if (gdDTO.getStock() < cargd.getGoodsNum()
-                        || gdDTO.getStatus().equals(GoodsStatusEnum.GOODS_IS_SHELVES.getType().longValue())
-                        || gdDTO.getIsDelete().equals(GoodsStatusEnum.GOODS_DELETE.getType().longValue())) {
+                    || gdDTO.getStatus().equals(GoodsStatusEnum.GOODS_IS_SHELVES.getType().longValue())
+                    || gdDTO.getIsDelete().equals(GoodsStatusEnum.GOODS_DELETE.getType().longValue())) {
                     return Result.getBusinessException("选择的商品：“ " + gdDTO.getName() + " ” 库存不足或已下架或被删除无法购买，请取消选择", null);
                 }
             }
@@ -427,5 +427,16 @@ public class OrderController extends BaseController {
             return Result.getSuccessResult(null);
         }
         return Result.getBusinessException("删除失败", null);
+    }
+
+    /**
+     * 查询购物车商品数量
+     *
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "getCartgoodscount.do_", method = RequestMethod.POST)
+    public Result getCartgoodscount() {
+        return Result.getSuccessResult(orderService.queryCartGoodsCount(getUid()));
     }
 }
