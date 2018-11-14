@@ -130,7 +130,7 @@ public class OrderController extends BaseController {
     }
 
     /**
-     * 获取订单列表
+     * 获取订单列表(从购物车接口进入)
      *
      * @param goodsList
      * @return
@@ -143,6 +143,7 @@ public class OrderController extends BaseController {
         if (CollectionUtils.isEmpty(orderGodsList)) {
             return Result.getSuccessResult(null);
         }
+        orderGodsList.get(0).setMemberId(getUid());
         List<OrdOrderGoodsVo> orderList = orderService.getOrderGoodsById(orderGodsList);
         if (CollectionUtils.isEmpty(orderList)) {
             return Result.getBusinessException("获取订单列表失败", "");
@@ -151,7 +152,7 @@ public class OrderController extends BaseController {
     }
 
     /**
-     * 获取订单列表
+     * 获取订单列表(从我的订单接口进入)
      *
      * @param goodsList
      * @return

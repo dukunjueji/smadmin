@@ -74,10 +74,10 @@
 		WHERE
 		s.member_id = #memberId#
 		<isNotEmpty property="list" prepend="and">
-		s.id IN
-		<iterate open="(" close=")" conjunction="," property="list">
-			#list[]#
-		</iterate>
+			s.id IN
+			<iterate open="(" close=")" conjunction="," property="list">
+				#list[]#
+			</iterate>
 		</isNotEmpty>
 		<isNotEmpty property="goodsPropertyIdList" prepend="and">
 			s.goods_property_id IN

@@ -59,6 +59,13 @@
 		<include refid="where_query"/>
 	</select>
 
+	<!-- 查找数据总记录数 -->
+	<select id="getTemplateCountByCode" resultClass="Integer" parameterClass="String">
+		 SELECT count(1)
+		 FROM t_sys_sms_template s
+		 WHERE s.code = #code#
+	</select>
+
 	<!-- 通过code获取短信模板 -->
 	<select id="getByCode" parameterClass="String" resultClass="com.uc.training.smadmin.sms.model.SmsTemplate">
 		SELECT

@@ -1,5 +1,6 @@
 package com.uc.training.smadmin.sms.service.impl;
 
+import com.uc.training.common.enums.SmsStatusEnum;
 import com.uc.training.common.enums.SmsTypeEnum;
 import com.uc.training.smadmin.redis.RedisConfigEnum;
 import com.uc.training.smadmin.sms.dao.SmsTemplateDao;
@@ -135,6 +136,12 @@ public class SmsTemplateServiceImpl implements SmsTemplateService {
             //手机号 验证码
             redis.set(generateSmsVO.getTelephone(), generateSmsVO.getMessage());
         }
+
+        //查找短信模板存在
+        if (smsTemplateDao.getTemplateCountByCode(generateSmsVO.getCode()) != 1) {
+            return SmsStatusEnum.FAIL.getKey();
+        }
+
         //获取短信内容
         String content = this.smsTemplateDao.generateSms(generateSmsVO);
         // 发送短信
