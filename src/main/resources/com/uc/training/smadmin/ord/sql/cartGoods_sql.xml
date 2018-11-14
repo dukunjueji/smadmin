@@ -73,11 +73,18 @@
 		FROM t_ord_cart_goods s
 		WHERE
 		s.member_id = #memberId#
-		and
-		s.id IN
-		<iterate open="(" close=")" conjunction="," property="list">
-			#list[]#
-		</iterate>
+		<isNotEmpty property="list" prepend="and">
+			s.id IN
+			<iterate open="(" close=")" conjunction="," property="list">
+				#list[]#
+			</iterate>
+		</isNotEmpty>
+		<isNotEmpty property="goodsPropertyIdList" prepend="and">
+			s.goods_property_id IN
+			<iterate open="(" close=")" conjunction="," property="goodsPropertyIdList">
+				#goodsPropertyIdList[]#
+			</iterate>
+		</isNotEmpty>
 	</select>
 	<!-- 查找数据总记录数 -->
 	<select id="queryCartGoodsCount" resultClass="java.lang.Integer" parameterClass="com.uc.training.smadmin.ord.model.CartGoods">

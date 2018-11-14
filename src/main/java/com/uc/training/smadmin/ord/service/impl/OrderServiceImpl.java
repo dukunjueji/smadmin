@@ -80,7 +80,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     /**
-     * 获取订单商品列表
+     * 获取订单商品列表(提交订单页)
      *
      * @param orderGodsList
      * @return
@@ -88,6 +88,18 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrdOrderGoodsVo> getOrderGoodsById(List<OrdOrderGoodsVo> orderGodsList) {
         List<OrdOrderGoodsVo> list = new ArrayList<>();
+        OrdGoodsVO ordGoodsVO = new OrdGoodsVO();
+        if (CollectionUtils.isEmpty(orderGodsList)) {
+            ordGoodsVO.setMemberId(orderGodsList.get(0).getMemberId());
+            List<Long> propertyIds = new ArrayList<>();
+            for (int i = 0; i < orderGodsList.size(); i++) {
+                propertyIds.add(orderGodsList.get(i).getPropertyId());
+            }
+            ordGoodsVO.setGoodsPropertyIdList(propertyIds);
+        } else {
+            return list;
+        }
+        List<CartGoods> goodsNumList = cartGoodsDao.getCarGoodsByIds(ordGoodsVO);
         OrdOrderGoodsVo ordOrderGoodsVo;
         for (int i = 0; i < orderGodsList.size(); i++) {
             ordOrderGoodsVo = new OrdOrderGoodsVo();
@@ -99,6 +111,13 @@ public class OrderServiceImpl implements OrderService {
             ordOrderGoodsVo.setGdsName(gdDTO.getName());
             if (!CollectionUtils.isEmpty(gdDTO.getPicUrl())) {
                 ordOrderGoodsVo.setGdsUrl(gdDTO.getPicUrl().get(0).getPicUrl());
+            }
+            if (CollectionUtils.isEmpty(goodsNumList)) {
+                for (i = 0; i < goodsNumList.size(); i++) {
+                    if (goodsNumList.get(i).getGoodsPropertyId().equals(orderGodsList.get(i).getPropertyId())) {
+                        ordOrderGoodsVo.setNum(goodsNumList.get(i).getGoodsNum());
+                    }
+                }
             }
             ordOrderGoodsVo.setPropertyId(orderGodsList.get(i).getPropertyId());
             ordOrderGoodsVo.setProperty(gdDTO.getProperty());
@@ -245,8 +264,7 @@ public class OrderServiceImpl implements OrderService {
         //插入地址信息
         AddressRE addressRE = addressService.getAddressById(orderInfoListNow.get(orderInfoListNow.size() - 2).getAddressId());
         if (addressRE != null) {
-            order.setReceiptAddress(addressRE.getProvince() + " " + addressRE.getCity()+ " " +
-                    addressRE.getDistrict() + " " + addressRE.getAddrDetail());
+            order.setReceiptAddress(addressRE.getAddrDetail());
             order.setReceiptName(addressRE.getReceiver());
             order.setReceiptTel(addressRE.getTelephone());
         }
