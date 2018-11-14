@@ -139,7 +139,7 @@ public class SmsTemplateServiceImpl implements SmsTemplateService {
 
         //查找短信模板存在
         if (smsTemplateDao.getTemplateCountByCode(generateSmsVO.getCode()) != 1) {
-            return SmsStatusEnum.FAIL.getKey();
+            return SmsStatusEnum.TEMPLATE_NOT_EXIST.getKey();
         }
 
         //获取短信内容

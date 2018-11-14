@@ -1,6 +1,7 @@
 package com.uc.training.smadmin.mq;
 
 import com.alibaba.fastjson.JSON;
+import com.uc.training.common.enums.SmsStatusEnum;
 import com.uc.training.smadmin.mq.vo.MqVO;
 import com.uc.training.smadmin.sms.service.SmsTemplateService;
 import com.uc.training.smadmin.sms.vo.GenerateSmsVO;
@@ -30,7 +31,12 @@ public class SmsMqConsumer  extends DefaultExecutorMessageListener {
         GenerateSmsVO generateSmsVO = mqVO.getGenerateSmsVO();
         //判断消息实体是否为空
         if (generateSmsVO != null){
-            this.smsTemplateService.generateSms(generateSmsVO);
+            Integer status = this.smsTemplateService.generateSms(generateSmsVO);
+            if (status == SmsStatusEnum.FAIL.getKey()) {
+                System.out.println(SmsStatusEnum.FAIL.getValue());
+            } else if (status == SmsStatusEnum.TEMPLATE_NOT_EXIST.getKey()) {
+                System.out.println(SmsStatusEnum.TEMPLATE_NOT_EXIST.getValue());
+            }
         }
     }
 }
