@@ -178,4 +178,12 @@ public interface OrderService {
      * @return java.util.List<java.math.BigDecimal>
      */
     OrderSaleRE getOrderSaleData();
+
+    /**
+     * hhj
+     * 根据用户id 获取购物车商品表数据数量
+     * @param memberId
+     * @return
+     */
+    Integer queryCartGoodsCount(Long memberId);
 }

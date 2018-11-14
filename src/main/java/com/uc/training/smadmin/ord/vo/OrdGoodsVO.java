@@ -23,7 +23,7 @@ public class OrdGoodsVO implements Serializable {
   private List<Long> list;
 
   /*
-   *购物车商品属性id lis
+   *购物车商品属性id list
    */
   private List<Long> goodsPropertyIdList;
 
