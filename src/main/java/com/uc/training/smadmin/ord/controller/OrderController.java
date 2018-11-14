@@ -34,6 +34,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -257,7 +258,7 @@ public class OrderController extends BaseController {
     @ResponseBody
     @AccessLogin
     @RequestMapping(value = "confirmOrderInfo.do_", method = RequestMethod.POST)
-    public Result confirmOrderInfo(OrdOrderGoodsVo ordOrderGoodsVo) {
+    public Result confirmOrderInfo(OrdOrderGoodsVo ordOrderGoodsVo, BigDecimal totalPrice) {
         List<OrdOrderGoodsVo> orderInfoListNow = ordOrderGoodsVo.getList();
         if (CollectionUtils.isEmpty(orderInfoListNow)) {
             return Result.getSuccessResult("提交订单失败");
@@ -265,6 +266,7 @@ public class OrderController extends BaseController {
         int a = 2;
         orderInfoListNow.get(orderInfoListNow.size() - a).setMemberId(getUid());
         List<OrderConfirmRE> orderConfirmInfo = orderService.confirmOrderInfo(orderInfoListNow);
+
         if (CollectionUtils.isEmpty(orderConfirmInfo)) {
             return Result.getBusinessException("提交订单失败", null);
         }
@@ -298,7 +300,7 @@ public class OrderController extends BaseController {
     public Result queryBalances(String orderPayInfo) {
         List<MemberInfoVO> orderPayInfoNow = (List<MemberInfoVO>) JSONArray.toList(JSONArray.fromObject(orderPayInfo), new MemberInfoVO(), new JsonConfig());
         if (CollectionUtils.isEmpty(orderPayInfoNow)) {
-            return Result.getBusinessException("支付失败", null);
+            return Result.getSuccessResult(null);
         }
         orderPayInfoNow.get(0).setMemberId(getUid());
         // 支付订单前判断该用户订单状态是否为待付款状态
@@ -311,27 +313,18 @@ public class OrderController extends BaseController {
                 return Result.getSuccessResult("支付失败");
             }
         }
-
         //生成消息体
         MqVO mqVO = new MqVO();
         GenerateSmsVO generateSmsVO = new GenerateSmsVO();
-        ordMemberVO = new OrdMemberVO();
-        ordMemberVO.setOrderId(orderPayInfoNow.get(0).getOrderId());
-        ordMemberVO.setMemberId(getUid());
-        List<Order> ord = orderService.getOrderByMemberVO(ordMemberVO);
-        if (ord.size() != 1) {
-            return Result.getBusinessException("该订单不存在！", null);
-        }
         //根据订单号获取手机号
-        generateSmsVO.setTelephone(ord.get(0).getReceiptTel());
-        generateSmsVO.setMessage(ord.get(0).getOrderNum());
+        generateSmsVO.setTelephone(order.get(0).getReceiptTel());
+        generateSmsVO.setMessage(order.get(0).getOrderNum());
         generateSmsVO.setCode(SmsTypeEnum.ORDER_INFO.getCode());
         generateSmsVO.setType(SmsTypeEnum.ORDER_INFO.getType());
         mqVO.setGenerateSmsVO(generateSmsVO);
-
         List<OrderConfirmRE> list = memberService.queryBalances(orderPayInfoNow, mqVO);
         if (CollectionUtils.isEmpty(list)) {
-            return Result.getBusinessException("支付失败", null);
+            return Result.getSuccessResult(null);
         }
         return Result.getSuccessResult(list);
     }
@@ -371,8 +364,8 @@ public class OrderController extends BaseController {
                     return Result.getBusinessException("选择的商品已找不到信息请刷新，请重新到商品页面添加", null);
                 }
                 if (gdDTO.getStock() < cargd.getGoodsNum()
-                    || gdDTO.getStatus().equals(GoodsStatusEnum.GOODS_IS_SHELVES.getType().longValue())
-                    || gdDTO.getIsDelete().equals(GoodsStatusEnum.GOODS_DELETE.getType().longValue())) {
+                        || gdDTO.getStatus().equals(GoodsStatusEnum.GOODS_IS_SHELVES.getType().longValue())
+                        || gdDTO.getIsDelete().equals(GoodsStatusEnum.GOODS_DELETE.getType().longValue())) {
                     return Result.getBusinessException("选择的商品：“ " + gdDTO.getName() + " ” 库存不足或已下架或被删除无法购买，请取消选择", null);
                 }
             }
@@ -412,6 +405,23 @@ public class OrderController extends BaseController {
             return Result.getSuccessResult(null);
         }
         return Result.getBusinessException("取消失败", null);
+    }
+
+    /**
+     * 确认收货
+     *
+     * @param ordOrderVo
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "confirmGoods.do_", method = RequestMethod.POST)
+    public Result confirmGoods(OrdOrderVo ordOrderVo) {
+        ordOrderVo.setStatus(OrderEnum.COMPLETED.getKey().longValue());
+        ordOrderVo.setMemberId(getUid());
+        if (orderService.updateOrder(ordOrderVo) > 0) {
+            return Result.getSuccessResult(null);
+        }
+        return Result.getBusinessException("确认收货失败", null);
     }
 
     /**
