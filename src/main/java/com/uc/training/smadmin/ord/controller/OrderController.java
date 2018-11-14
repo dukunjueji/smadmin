@@ -436,8 +436,8 @@ public class OrderController extends BaseController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "getCartgoodscount.do_", method = RequestMethod.POST)
-    public Result getCartgoodscount() {
+    @RequestMapping(value = "getCartgoodscount.do_", method = RequestMethod.GET)
+    public Result getCartgoodsCount() {
         return Result.getSuccessResult(orderService.queryCartGoodsCount(getUid()));
     }
 }
