@@ -36,6 +36,9 @@ public class UploadController extends BaseController{
     @RequestMapping(value = "/file.do_", method = RequestMethod.POST)
     public Result<UploadRE> imageUpload(MultipartFile file) {
 
+        if (file == null) {
+            return Result.getBusinessException("请选择图片" , null);
+        }
         if (file.isEmpty()) {
             return Result.getBusinessException("上传文件不能为空" , null);
         }
