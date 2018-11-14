@@ -1,8 +1,5 @@
 package com.uc.training.common.enums;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * @Author: 余旭东
  * @Date: 2018/10/24 16:52
@@ -16,7 +13,11 @@ public enum SmsStatusEnum {
     /**
      * 短信发送成功
      */
-    SUCCESS(1, "短信发送成功");
+    SUCCESS(1, "短信发送成功"),
+    /**
+     * 短信发送成功
+     */
+    TEMPLATE_NOT_EXIST(2, "短信模板不存在");
 
     private int key;
     private String value;
