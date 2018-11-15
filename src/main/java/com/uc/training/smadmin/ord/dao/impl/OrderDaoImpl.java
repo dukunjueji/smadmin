@@ -19,8 +19,8 @@ import java.util.List;
 public class OrderDaoImpl extends CarIsIbatisDaoImpl implements OrderDao {
 
 	 @Override
-	 public List<Order> getOrderById(OrdMemberVO ordMemberVO){
-		  return this.queryForList("com.uc.training.smadmin.ord.dao.OrderDao.getOrderById", ordMemberVO);
+	 public List<Order> getOrderByMemberVO(OrdMemberVO ordMemberVO){
+		  return this.queryForList("com.uc.training.smadmin.ord.dao.OrderDao.getOrderByMemberVO", ordMemberVO);
 	 }
 
 	 @Override
@@ -76,13 +76,13 @@ public class OrderDaoImpl extends CarIsIbatisDaoImpl implements OrderDao {
 	}
 
 	/**
-	 * 根据订单编号获取订单手机号
-	 * @param orderNum
+	 * 根据主键id获取订单手机号
+	 * @param id
 	 * @return
 	 */
 	@Override
-	public String getTelephoneByOrderNum(String orderNum) {
-		return (String) this.queryForObject("com.uc.training.smadmin.ord.dao.OrderDao.getTelephoneByOrderNum",orderNum);
+	public String getTelephoneById(Long id) {
+		return (String) this.queryForObject("com.uc.training.smadmin.ord.dao.OrderDao.getTelephoneByOrderId",id);
 	}
 
 	@Override

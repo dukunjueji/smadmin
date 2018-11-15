@@ -22,6 +22,19 @@ public class OrdGoodsVO implements Serializable {
    */
   private List<Long> list;
 
+  /*
+   *购物车商品属性id list
+   */
+  private List<Long> goodsPropertyIdList;
+
+  public List<Long> getGoodsPropertyIdList() {
+    return goodsPropertyIdList;
+  }
+
+  public void setGoodsPropertyIdList(List<Long> goodsPropertyIdList) {
+    this.goodsPropertyIdList = goodsPropertyIdList;
+  }
+
   public Long getMemberId() {
     return memberId;
   }

@@ -4,10 +4,12 @@ import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.common.enums.GoodsStatusEnum;
 import com.uc.training.common.enums.OrderEnum;
+import com.uc.training.common.enums.SmsTypeEnum;
 import com.uc.training.smadmin.bd.service.MemberService;
 import com.uc.training.smadmin.bd.vo.MemberInfoVO;
 import com.uc.training.smadmin.gds.re.GoodsDetailRE;
 import com.uc.training.smadmin.gds.service.GoodsService;
+import com.uc.training.smadmin.mq.vo.MqVO;
 import com.uc.training.smadmin.ord.dao.OrderDao;
 import com.uc.training.smadmin.ord.model.CartGoods;
 import com.uc.training.smadmin.ord.model.Order;
@@ -20,6 +22,7 @@ import com.uc.training.smadmin.ord.vo.OrdGoodsVO;
 import com.uc.training.smadmin.ord.vo.OrdMemberVO;
 import com.uc.training.smadmin.ord.vo.OrdOrderGoodsVo;
 import com.uc.training.smadmin.ord.vo.OrdOrderVo;
+import com.uc.training.smadmin.sms.vo.GenerateSmsVO;
 import com.ycc.base.common.Result;
 import net.sf.json.JSONArray;
 import net.sf.json.JsonConfig;
@@ -29,7 +32,9 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -126,7 +131,7 @@ public class OrderController extends BaseController {
     }
 
     /**
-     * 获取订单列表
+     * 获取订单列表(从购物车接口进入)
      *
      * @param goodsList
      * @return
@@ -139,6 +144,7 @@ public class OrderController extends BaseController {
         if (CollectionUtils.isEmpty(orderGodsList)) {
             return Result.getSuccessResult(null);
         }
+        orderGodsList.get(0).setMemberId(getUid());
         List<OrdOrderGoodsVo> orderList = orderService.getOrderGoodsById(orderGodsList);
         if (CollectionUtils.isEmpty(orderList)) {
             return Result.getBusinessException("获取订单列表失败", "");
@@ -147,7 +153,7 @@ public class OrderController extends BaseController {
     }
 
     /**
-     * 获取订单列表
+     * 获取订单列表(从我的订单接口进入)
      *
      * @param goodsList
      * @return
@@ -181,6 +187,9 @@ public class OrderController extends BaseController {
     public Result addCartgds(HttpServletRequest request, OrdCartGoodsVo ordCartGoodsVo) {
         if (ordCartGoodsVo == null) {
             return Result.getBusinessException("选择后再添加", null);
+        }
+        if (ordCartGoodsVo.getNum() <= 0) {
+            return Result.getBusinessException("商品数量不可以少于1个", null);
         }
         List<CartGoods> list;
         list = orderService.getCarGoodsById(getUid());
@@ -249,7 +258,7 @@ public class OrderController extends BaseController {
     @ResponseBody
     @AccessLogin
     @RequestMapping(value = "confirmOrderInfo.do_", method = RequestMethod.POST)
-    public Result confirmOrderInfo(OrdOrderGoodsVo ordOrderGoodsVo) {
+    public Result confirmOrderInfo(OrdOrderGoodsVo ordOrderGoodsVo, BigDecimal totalPrice) {
         List<OrdOrderGoodsVo> orderInfoListNow = ordOrderGoodsVo.getList();
         if (CollectionUtils.isEmpty(orderInfoListNow)) {
             return Result.getSuccessResult("提交订单失败");
@@ -257,6 +266,7 @@ public class OrderController extends BaseController {
         int a = 2;
         orderInfoListNow.get(orderInfoListNow.size() - a).setMemberId(getUid());
         List<OrderConfirmRE> orderConfirmInfo = orderService.confirmOrderInfo(orderInfoListNow);
+
         if (CollectionUtils.isEmpty(orderConfirmInfo)) {
             return Result.getBusinessException("提交订单失败", null);
         }
@@ -290,22 +300,31 @@ public class OrderController extends BaseController {
     public Result queryBalances(String orderPayInfo) {
         List<MemberInfoVO> orderPayInfoNow = (List<MemberInfoVO>) JSONArray.toList(JSONArray.fromObject(orderPayInfo), new MemberInfoVO(), new JsonConfig());
         if (CollectionUtils.isEmpty(orderPayInfoNow)) {
-            return Result.getBusinessException("支付失败", null);
+            return Result.getSuccessResult(null);
         }
         orderPayInfoNow.get(0).setMemberId(getUid());
         // 支付订单前判断该用户订单状态是否为待付款状态
         OrdMemberVO ordMemberVO = new OrdMemberVO();
         ordMemberVO.setMemberId(orderPayInfoNow.get(0).getMemberId());
         ordMemberVO.setOrderId(orderPayInfoNow.get(0).getOrderId());
-        List<Order> order = orderService.getOrderById(ordMemberVO);
+        List<Order> order = orderService.getOrderByMemberVO(ordMemberVO);
         if (!CollectionUtils.isEmpty(order)) {
             if (order.get(0).getStatus() != 1 || !order.get(0).getMemberId().equals(getUid())) {
                 return Result.getSuccessResult("支付失败");
             }
         }
-        List<OrderConfirmRE> list = memberService.queryBalances(orderPayInfoNow);
+        //生成消息体
+        MqVO mqVO = new MqVO();
+        GenerateSmsVO generateSmsVO = new GenerateSmsVO();
+        //根据订单号获取手机号
+        generateSmsVO.setTelephone(order.get(0).getReceiptTel());
+        generateSmsVO.setMessage(order.get(0).getOrderNum());
+        generateSmsVO.setCode(SmsTypeEnum.ORDER_INFO.getCode());
+        generateSmsVO.setType(SmsTypeEnum.ORDER_INFO.getType());
+        mqVO.setGenerateSmsVO(generateSmsVO);
+        List<OrderConfirmRE> list = memberService.queryBalances(orderPayInfoNow, mqVO);
         if (CollectionUtils.isEmpty(list)) {
-            return Result.getBusinessException("支付失败", null);
+            return Result.getSuccessResult(null);
         }
         return Result.getSuccessResult(list);
     }
@@ -337,6 +356,9 @@ public class OrderController extends BaseController {
             return Result.getBusinessException("您选择的商品已丢失，请重新到商品页面添加！！", null);
         } else {
             for (CartGoods cargd : cartList) {
+                if (cargd.getGoodsNum() <= 0) {
+                    return Result.getBusinessException("所选商品不可以小于1一个!", null);
+                }
                 gdDTO = goodsService.getGoodsDetailByPropertyId(cargd.getGoodsPropertyId());
                 if (gdDTO == null) {
                     return Result.getBusinessException("选择的商品已找不到信息请刷新，请重新到商品页面添加", null);
@@ -386,6 +408,23 @@ public class OrderController extends BaseController {
     }
 
     /**
+     * 确认收货
+     *
+     * @param ordOrderVo
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "confirmGoods.do_", method = RequestMethod.POST)
+    public Result confirmGoods(OrdOrderVo ordOrderVo) {
+        ordOrderVo.setStatus(OrderEnum.COMPLETED.getKey().longValue());
+        ordOrderVo.setMemberId(getUid());
+        if (orderService.updateOrder(ordOrderVo) > 0) {
+            return Result.getSuccessResult(null);
+        }
+        return Result.getBusinessException("确认收货失败", null);
+    }
+
+    /**
      * 删除订单
      *
      * @param ordOrderVo
@@ -399,5 +438,16 @@ public class OrderController extends BaseController {
             return Result.getSuccessResult(null);
         }
         return Result.getBusinessException("删除失败", null);
+    }
+
+    /**
+     * 查询购物车商品数量
+     *
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "getCartgoodscount.do_", method = RequestMethod.GET)
+    public Result getCartgoodsCount() {
+        return Result.getSuccessResult(orderService.queryCartGoodsCount(getUid()));
     }
 }

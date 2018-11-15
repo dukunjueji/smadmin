@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
@@ -30,7 +31,7 @@ public class UUIDUtil {
     /**
      * 流水线号 原子操作
      */
-    static AtomicInteger count = new AtomicInteger(0);
+    static volatile AtomicInteger count = new AtomicInteger(0);
 
     /**
      * 通过编号类型获取uuid：uuid=编号类型+时间戳+流水线号
@@ -53,7 +54,7 @@ public class UUIDUtil {
         }
         uuid.append(typeValue);
         Long timestamp = System.currentTimeMillis() / 1000;
-        uuid.append(timestamp);
+        uuid.append("-").append(timestamp).append("-");
 
         //消费数据，低于 UUIDTypeEnum.MINQUEUESIZE，开始生成数据
         long currentTime = System.currentTimeMillis() / 1000;
@@ -63,7 +64,7 @@ public class UUIDUtil {
             // 流水线号 初始化从1开始
             count = new AtomicInteger(0);
 
-            lastSecond = System.currentTimeMillis() / 1000;
+            lastSecond = currentTime;
         }
         int sort = GetAndProductUUID.consumer();
         uuid.append(sort);
@@ -72,18 +73,13 @@ public class UUIDUtil {
 
     public static void main(String[] args) {
         String uuid = UUIDUtil.getUuidByType(UUIDTypeEnum.GOODSID.getType());
-        System.out.println("------------------------" + uuid + "------------------------------------------------");
+//        System.out.println("------------------------" + uuid + "------------------------------------------------");
     }
 }
 
 class GetAndProductUUID {
 
     private static final Lock LOCK = new ReentrantLock();
-    /**
-     * 控制生产者线程是否退出
-     */
-    private static boolean isRunning = true;
-
     /**
      * 消费者，获取队列中的流水线号
      *
@@ -114,6 +110,10 @@ class GetAndProductUUID {
         public void run() {
             producer();
         }
+        /**
+         * 控制生产者线程是否退出
+         */
+        private boolean isRunning = true;
 
         private void producer() {
             UUIDData data = null;
@@ -125,7 +125,7 @@ class GetAndProductUUID {
                     }
                     data = new UUIDData(UUIDUtil.count.incrementAndGet());
                     boolean status = UUIDUtil.queue.offer(data, 1, TimeUnit.SECONDS);
-                    while(status) {
+                    while(!status) {
                         status = UUIDUtil.queue.offer(data, 1, TimeUnit.SECONDS);
                     }
                 } catch (InterruptedException e) {

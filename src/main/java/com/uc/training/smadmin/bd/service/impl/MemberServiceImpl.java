@@ -3,11 +3,9 @@ package com.uc.training.smadmin.bd.service.impl;
 import com.uc.training.common.enums.GrowthEnum;
 import com.uc.training.common.enums.IntegralEnum;
 import com.uc.training.common.enums.OrderEnum;
-import com.uc.training.common.enums.SmsTypeEnum;
 import com.uc.training.smadmin.bd.dao.MemberDao;
 import com.uc.training.smadmin.bd.model.LoginLog;
 import com.uc.training.smadmin.bd.model.Member;
-import com.uc.training.smadmin.mq.MqProducer;
 import com.uc.training.smadmin.bd.re.MemberDetailRE;
 import com.uc.training.smadmin.bd.re.MemberInfoRE;
 import com.uc.training.smadmin.bd.service.LoginLogService;
@@ -16,16 +14,16 @@ import com.uc.training.smadmin.bd.vo.MemberBalanceVO;
 import com.uc.training.smadmin.bd.vo.MemberInfoVO;
 import com.uc.training.smadmin.bd.vo.MemberListVO;
 import com.uc.training.smadmin.bd.vo.MemberLoginVO;
-import com.uc.training.smadmin.mq.vo.MqVO;
 import com.uc.training.smadmin.gds.service.GoodsService;
 import com.uc.training.smadmin.gds.vo.GoodsStokeVO;
+import com.uc.training.smadmin.mq.MqProducer;
+import com.uc.training.smadmin.mq.vo.MqVO;
 import com.uc.training.smadmin.ord.model.Order;
 import com.uc.training.smadmin.ord.re.OrderConfirmRE;
 import com.uc.training.smadmin.ord.service.OrderService;
 import com.uc.training.smadmin.ord.vo.OrdMemberVO;
 import com.uc.training.smadmin.ord.vo.OrdOrderVo;
 import com.uc.training.smadmin.sms.service.SmsTemplateService;
-import com.uc.training.smadmin.sms.vo.GenerateSmsVO;
 import com.uc.training.smadmin.utils.EncryptUtil;
 import com.ycc.tools.middleware.metaq.MetaQUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,7 +91,7 @@ public class MemberServiceImpl implements MemberService {
      * @param orderPayInfoNow
      */
     @Override
-    public List<OrderConfirmRE> queryBalances(List<MemberInfoVO> orderPayInfoNow) {
+    public List<OrderConfirmRE> queryBalances(List<MemberInfoVO> orderPayInfoNow, MqVO mqVO) {
         List<OrderConfirmRE> list = new ArrayList<>();
         OrderConfirmRE orderConfirmRE = new OrderConfirmRE();
         MemberInfoVO memberInfoVO = new MemberInfoVO();
@@ -102,7 +100,7 @@ public class MemberServiceImpl implements MemberService {
         OrdMemberVO ordMemberVO = new OrdMemberVO();
         ordMemberVO.setOrderId(orderPayInfoNow.get(0).getOrderId());
         ordMemberVO.setMemberId(orderPayInfoNow.get(0).getMemberId());
-        List<Order> orderList = orderService.getOrderById(ordMemberVO);
+        List<Order> orderList = orderService.getOrderByMemberVO(ordMemberVO);
         if (orderList.size() <= 0) {
             return list;
         }
@@ -127,6 +125,10 @@ public class MemberServiceImpl implements MemberService {
             mqVO1.setGrowthType(GrowthEnum.PURCHASE.getGrowthType());
             mqVO1.setIntegralType(IntegralEnum.PURCHASE.getIntegralType());
             mqVO1.setPurchaseValue(memberInfoVO.getTotalPrice());
+
+            //订单短信
+            mqVO1.setGenerateSmsVO(mqVO.getGenerateSmsVO());
+
             MetaQUtils.sendMsgNoException(new MqProducer(mqVO1));
             //更新订单状态
             orderConfirmRE.setStatus(OrderEnum.WAITSHIP.getKey());
@@ -139,9 +141,6 @@ public class MemberServiceImpl implements MemberService {
                 list.add(orderConfirmRE);
             }
 
-            //发送短信
-            orderSuccessSendSms(orderList.get(0).getOrderNum());
-
             return list;
         } else {
             orderConfirmRE.setShowStatus("余额不足，请充值或者返回购物车重新选取商品");
@@ -150,25 +149,6 @@ public class MemberServiceImpl implements MemberService {
             return list;
         }
     }
-
-    /**
-     * 订单成功发送短信
-     *
-     * @param orderNum
-     */
-    private void orderSuccessSendSms(String orderNum) {
-
-        GenerateSmsVO generateSmsVO = new GenerateSmsVO();
-
-        generateSmsVO.setTelephone(orderService.getTelephoneByOrderNum(orderNum));
-        generateSmsVO.setCode(SmsTypeEnum.ORDER_INFO.getCode());
-        generateSmsVO.setMessage(orderNum);
-        generateSmsVO.setType(SmsTypeEnum.ORDER_INFO.getType());
-
-        //生成短信模板，并发送
-        smsTemplateService.generateSms(generateSmsVO);
-    }
-
 
     @Override
     public MemberDetailRE getMemberDetailById(Long memberId) {

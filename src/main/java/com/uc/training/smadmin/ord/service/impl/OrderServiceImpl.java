@@ -71,8 +71,8 @@ public class OrderServiceImpl implements OrderService {
      * @return
      */
     @Override
-    public List<Order> getOrderById(OrdMemberVO ordMemberVO) {
-        return orderDao.getOrderById(ordMemberVO);
+    public List<Order> getOrderByMemberVO(OrdMemberVO ordMemberVO) {
+        return orderDao.getOrderByMemberVO(ordMemberVO);
     }
 
     @Override
@@ -81,7 +81,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     /**
-     * 获取订单商品列表
+     * 获取订单商品列表(提交订单页)
      *
      * @param orderGodsList
      * @return
@@ -89,6 +89,18 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrdOrderGoodsVo> getOrderGoodsById(List<OrdOrderGoodsVo> orderGodsList) {
         List<OrdOrderGoodsVo> list = new ArrayList<>();
+        OrdGoodsVO ordGoodsVO = new OrdGoodsVO();
+        if (!CollectionUtils.isEmpty(orderGodsList)) {
+            ordGoodsVO.setMemberId(orderGodsList.get(0).getMemberId());
+            List<Long> propertyIds = new ArrayList<>();
+            for (int i = 0; i < orderGodsList.size(); i++) {
+                propertyIds.add(orderGodsList.get(i).getPropertyId());
+            }
+            ordGoodsVO.setGoodsPropertyIdList(propertyIds);
+        } else {
+            return list;
+        }
+        List<CartGoods> goodsNumList = cartGoodsDao.getCarGoodsByIds(ordGoodsVO);
         OrdOrderGoodsVo ordOrderGoodsVo;
         for (int i = 0; i < orderGodsList.size(); i++) {
             ordOrderGoodsVo = new OrdOrderGoodsVo();
@@ -100,6 +112,14 @@ public class OrderServiceImpl implements OrderService {
             ordOrderGoodsVo.setGdsName(gdDTO.getName());
             if (!CollectionUtils.isEmpty(gdDTO.getPicUrl())) {
                 ordOrderGoodsVo.setGdsUrl(gdDTO.getPicUrl().get(0).getPicUrl());
+            }
+            if (!CollectionUtils.isEmpty(goodsNumList)) {
+                for (int j = 0; j < goodsNumList.size(); j++) {
+                    if (goodsNumList.get(j).getGoodsPropertyId().equals(orderGodsList.get(i).getPropertyId())) {
+                        ordOrderGoodsVo.setNum(goodsNumList.get(j).getGoodsNum());
+                        break;
+                    }
+                }
             }
             ordOrderGoodsVo.setPropertyId(orderGodsList.get(i).getPropertyId());
             ordOrderGoodsVo.setProperty(gdDTO.getProperty());
@@ -133,6 +153,7 @@ public class OrderServiceImpl implements OrderService {
                     ordOrderGoodsVo.setSalePrice(orderGdsList.get(j).getSalePrice());
                     ordOrderGoodsVo.setDiscountPrice(orderGdsList.get(j).getDiscountPrice());
                     ordOrderGoodsVo.setPayPrice(orderGdsList.get(j).getPayPrice());
+                    ordOrderGoodsVo.setNum(orderGdsList.get(j).getGoodsNum());
                 }
             }
             GoodsDetailRE gdDTO = goodsService.getGoodsDetailByPropertyId(orderGodsList.get(i).getPropertyId());
@@ -238,9 +259,48 @@ public class OrderServiceImpl implements OrderService {
         } else if (goodsStatusList.get(0).getGoodsStatus() != (int) OrderEnum.WAITPAY.getKey().longValue()) {
             return goodsStatusList;
         }
+        // 判断前台传来的价格信息是否与购物车一致
+        OrdGoodsVO ordGoodsVO = new OrdGoodsVO();
+        ordGoodsVO.setMemberId(orderInfoListNow.get(orderInfoListNow.size() - 2).getMemberId());
+        List<Long> propertyIds = new ArrayList<>();
+        int a = 2;
+        for (int i = 0; i < orderInfoListNow.size() - a; i++) {
+            propertyIds.add(orderInfoListNow.get(i).getPropertyId());
+        }
+        ordGoodsVO.setGoodsPropertyIdList(propertyIds);
+        List<CartGoods> goodsNumList = cartGoodsDao.getCarGoodsByIds(ordGoodsVO);
+        OrdOrderGoodsVo ordOrderGoodsVo;
+        Double memberDiscountPoint = goodsService.getMemberDiscountPoint(orderInfoListNow.get(orderInfoListNow.size() - 2).getMemberId());
+        if (memberDiscountPoint == null) {
+            return list;
+        }
+        BigDecimal payPrice = new BigDecimal(0);
+        for (int i = 0; i < orderInfoListNow.size() - a; i++) {
+            ordOrderGoodsVo = new OrdOrderGoodsVo();
+            GoodsDetailRE gdDTO = goodsService.getGoodsDetailByPropertyId(orderInfoListNow.get(i).getPropertyId());
+            if (gdDTO == null) {
+                return list;
+            }
+            if (!CollectionUtils.isEmpty(goodsNumList)) {
+                for (int j = 0; j < goodsNumList.size(); j++) {
+                    if (goodsNumList.get(j).getGoodsPropertyId().equals(orderInfoListNow.get(i).getPropertyId())) {
+                        ordOrderGoodsVo.setNum(goodsNumList.get(j).getGoodsNum());
+                        if (gdDTO.getIsDiscount() == 1) {
+                            payPrice = gdDTO.getDiscountPrice().multiply(BigDecimal.valueOf(goodsNumList.get(j).getGoodsNum() * memberDiscountPoint)).add(payPrice);
+                        } else {
+                            payPrice = gdDTO.getSalePrice().multiply(BigDecimal.valueOf(goodsNumList.get(j).getGoodsNum() * memberDiscountPoint)).add(payPrice);
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+        if (payPrice.compareTo(orderInfoListNow.get(orderInfoListNow.size() - 1).getTotalPrice()) != 0) {
+            return list;
+        }
         //插入用户订单表
         Order order = new Order();
-        order.setMemberId(orderInfoListNow.get(orderInfoListNow.size() - 2).getMemberId());
+        order.setMemberId(orderInfoListNow.get(orderInfoListNow.size() - a).getMemberId());
         order.setOrderPrice(orderInfoListNow.get(orderInfoListNow.size() - 1).getOrderPrice());
         order.setPayPrice(orderInfoListNow.get(orderInfoListNow.size() - 1).getTotalPrice());
         //插入地址信息
@@ -259,7 +319,6 @@ public class OrderServiceImpl implements OrderService {
         //遍历orderInfoListNow
         OrderGoods orderGoods;
         OrdCartGoodsVo ordCartGoodsVo;
-        int a = 2;
         for (int i = 0; i < orderInfoListNow.size() - a; i++) {
             //插入订单商品信息表
             orderGoods = new OrderGoods();
@@ -282,7 +341,7 @@ public class OrderServiceImpl implements OrderService {
             //删除购物车信息表
             ordCartGoodsVo = new OrdCartGoodsVo();
             ordCartGoodsVo.setPropertyId(orderInfoListNow.get(i).getPropertyId());
-            ordCartGoodsVo.setMemberId(orderInfoListNow.get(orderInfoListNow.size() - 2).getMemberId());
+            ordCartGoodsVo.setMemberId(orderInfoListNow.get(orderInfoListNow.size() - a).getMemberId());
             cartGoodsDao.deleteCartGoods(ordCartGoodsVo);
         }
         orderConfirmRE.setShowStatus("已成功生成订单");
@@ -379,14 +438,14 @@ public class OrderServiceImpl implements OrderService {
     }
 
     /**
-     * 根据订单号获取手机号
+     * 根据主键id获取手机号
      *
-     * @param orderNum
+     * @param id
      * @return
      */
     @Override
-    public String getTelephoneByOrderNum(String orderNum) {
-        return orderDao.getTelephoneByOrderNum(orderNum);
+    public String getTelephoneById(Long id) {
+        return orderDao.getTelephoneById(id);
     }
 
     /**
@@ -435,7 +494,7 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderInfoRE> getOrderInfoListByMemberId(OrdMemberVO ordMemberVO) {
         //先获该用户的取订单id，然后查询每条订单的状态，订单的金额 以及获取订单的商品信息
         List<OrderInfoRE> orderInfoREList = new ArrayList<>();
-        List<Order> orderList = orderDao.getOrderById(ordMemberVO);
+        List<Order> orderList = orderDao.getOrderByMemberVO(ordMemberVO);
         if (CollectionUtils.isEmpty(orderList)) {
             return orderInfoREList;
         }
@@ -467,6 +526,11 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderSaleRE getOrderSaleData() {
         return orderDao.getOrderSaleData();
+    }
+
+    @Override
+    public Integer queryCartGoodsCount(Long memberId) {
+        return cartGoodsDao.queryCartGoodsCount(memberId);
     }
 }
 

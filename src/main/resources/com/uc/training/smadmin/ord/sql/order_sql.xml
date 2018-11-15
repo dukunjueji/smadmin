@@ -3,7 +3,7 @@
 <sqlMap namespace="com.uc.training.smadmin.ord.dao.OrderDao">
 
 	<!-- 根据对象的不为null的值作为条件进行查找 -->
-	<select id="getOrderById" resultClass="com.uc.training.smadmin.ord.model.Order" parameterClass="com.uc.training.smadmin.ord.vo.OrdMemberVO">
+	<select id="getOrderByMemberVO" resultClass="com.uc.training.smadmin.ord.model.Order" parameterClass="com.uc.training.smadmin.ord.vo.OrdMemberVO">
 		 SELECT
              s.id AS id,
              s.member_id AS memberId,
@@ -39,13 +39,13 @@
 
 
 	<!-- 根据对象的不为null的值作为条件进行查找 -->
-	<select id="getTelephoneByOrderNum" resultClass="String" parameterClass="String">
+	<select id="getTelephoneByOrderId" resultClass="String" parameterClass="String">
 		SELECT
           s.receipt_tel
 		FROM
           t_ord_order s
         WHERE
-          s.order_num=#orderNum#
+          s.id=#id#
 	</select>
 
 

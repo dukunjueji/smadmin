@@ -36,11 +36,14 @@ public class UploadController extends BaseController{
     @RequestMapping(value = "/file.do_", method = RequestMethod.POST)
     public Result<UploadRE> imageUpload(MultipartFile file) {
 
+        if (file == null) {
+            return Result.getBusinessException("请选择图片" , null);
+        }
         if (file.isEmpty()) {
-            Result.getBusinessException("上传文件不能为空" , null);
+            return Result.getBusinessException("上传文件不能为空" , null);
         }
         if (file.getSize() >= UploadEnum.MAX_IMAGE_SIZE.getSize()) {
-            Result.getBusinessException("上传文件不能超过4M", null);
+            return Result.getBusinessException("上传文件不能超过4M", null);
         }
 
         return Result.getSuccessResult(uploadService.imageUpload(file));

@@ -54,7 +54,7 @@ public interface OrderService {
      * @param ordMemberVO （订单表id）
      * @return
      */
-    List<Order> getOrderById(OrdMemberVO ordMemberVO);
+    List<Order> getOrderByMemberVO(OrdMemberVO ordMemberVO);
 
 
     /**
@@ -145,12 +145,12 @@ public interface OrderService {
     List<OrderGoodsDetailRe> getOrderGdsById(Integer id);
 
     /**
-     * 根据订单号获取手机号
+     * 根据主键id获取手机号
      *
-     * @param orderNum
+     * @param id
      * @return
      */
-    String getTelephoneByOrderNum(String orderNum);
+    String getTelephoneById(Long id);
 
     /**
      * 获取订单信息列表
@@ -178,4 +178,12 @@ public interface OrderService {
      * @return java.util.List<java.math.BigDecimal>
      */
     OrderSaleRE getOrderSaleData();
+
+    /**
+     * hhj
+     * 根据用户id 获取购物车商品表数据数量
+     * @param memberId
+     * @return
+     */
+    Integer queryCartGoodsCount(Long memberId);
 }

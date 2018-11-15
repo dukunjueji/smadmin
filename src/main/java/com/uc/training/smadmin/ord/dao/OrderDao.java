@@ -19,7 +19,7 @@ public interface OrderDao {
 	 * @param ordMemberVO （订单表id）
 	 * @return
 	 */
-  List<Order> getOrderById(OrdMemberVO ordMemberVO);
+  List<Order> getOrderByMemberVO(OrdMemberVO ordMemberVO);
 
 	/**
 	 * 查询列表
@@ -88,11 +88,11 @@ public interface OrderDao {
     int memberDelOrder(OrdOrderVo ordOrderVo);
 
     /**
-     *  根据订单编号获取订单手机号
-     * @param orderNum
+     *  根据主键id获取订单手机号
+     * @param id
      * @return
      */
-    String getTelephoneByOrderNum(String orderNum);
+    String getTelephoneById(Long id);
 
     /**
      * 当年每个月销售额统计

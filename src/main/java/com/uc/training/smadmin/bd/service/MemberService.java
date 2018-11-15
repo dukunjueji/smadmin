@@ -58,10 +58,11 @@ public interface MemberService {
     /**
      * 查询用户订单金额
      * @param memberInfoVO
+     * @param mqVO
      * @return 返回订单状态码和提示信息
      */
 
-    List<OrderConfirmRE> queryBalances(List<MemberInfoVO> memberInfoVO);
+    List<OrderConfirmRE> queryBalances(List<MemberInfoVO> memberInfoVO, MqVO mqVO);
 
     /**
     *说明：通过会员id得到会员的详细信息(包括会员等级)
