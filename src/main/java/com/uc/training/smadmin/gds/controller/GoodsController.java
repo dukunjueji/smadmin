@@ -174,7 +174,7 @@ public class GoodsController extends BaseController {
     public Result<String> testRdis() {
         RedisCacheUtils redis = RedisCacheUtils.getInstance(RedisConfigEnum.GOODS_DETAIL);
         redis.set("helloTesst", "world");
-        System.out.println(redis.get("helloTesst"));
+        System.out.println(redis.get("helloTesst").toString());
         return Result.getSuccessResult("成功");
     }
 
