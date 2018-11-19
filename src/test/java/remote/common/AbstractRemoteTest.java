@@ -2,8 +2,14 @@ package remote.common;
 
 import com.zuche.framework.common.GlobalMessage;
 import com.zuche.framework.common.SpringApplicationContext;
+import com.zuche.framework.remote.RemoteClient;
+import com.zuche.framework.remote.RemoteClientFactory;
+import com.zuche.framework.remote.RemoteType;
+import org.junit.Before;
+import org.junit.runner.RunWith;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.BeforeClass;
 
@@ -17,12 +23,15 @@ import org.testng.annotations.BeforeClass;
  * @since 2017/12/24
  */
 @ActiveProfiles("test")
+@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={"classpath:frameworkContext.xml"})
 public class AbstractRemoteTest extends AbstractTestNGSpringContextTests {
 
-    @BeforeClass
+    protected RemoteClient client;
+
+    @Before
     public final void beforeClass(){
         SpringApplicationContext.initApplicationContext(applicationContext);
-        GlobalMessage.setProjectPath("/ycctemplate/");
+        client = RemoteClientFactory.getInstance(RemoteType.TCP);
     }
 }

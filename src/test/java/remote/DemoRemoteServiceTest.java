@@ -1,7 +1,32 @@
 package remote;
 
+import com.uc.training.base.dto.BaseDemoDTO;
+import com.uc.training.base.re.BaseDemoRE;
+import com.ycc.base.common.Result;
+import com.zuche.framework.common.SpringApplicationContext;
+import com.zuche.framework.dao.util.DictModel;
+import com.zuche.framework.remote.RemoteClientFactory;
+import com.zuche.framework.remote.RemoteType;
+import com.zuche.framework.remote.serializer.JavaSerialzerProxy;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import remote.common.AbstractRemoteTest;
+import remote.vo.MemberVO;
+import remote.vo.MessageDTO;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.FutureTask;
 
 /**
  * Created with IntelliJ IDEA.
@@ -16,12 +41,45 @@ import remote.common.AbstractRemoteTest;
  * @author zhangjun (zhangjun01@zuche.com)
  * @since 2017/12/24
  */
-public class DemoRemoteServiceTest extends AbstractRemoteTest{
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = "classpath:frameworkContext.xml")
+public class DemoRemoteServiceTest{
 
-    @Test
-    public void getDemoTest(){
+    private static final String API_QUERY_MEMBER = "smbase.api.queryOneMember";
 
+    private static final String DEMO = "fiveplus.api.demo.DemoRemoteService";
+
+    private static final String ADMIN_PROVINCE = "ucadmin.department.getAllProvcList";
+
+    private static final String LIST_MESSAGE = "smorder.api.listMessages";
+
+    @Autowired
+    private ApplicationContext applicationContext;
+
+    @Before
+    public void init() {
+        SpringApplicationContext.initApplicationContext(applicationContext);
     }
 
 
+    @Test
+    public void getDemoTest(){
+        BaseDemoDTO dto = new BaseDemoDTO();
+        dto.setId(10L);
+        JavaSerialzerProxy re = (JavaSerialzerProxy) RemoteClientFactory.getInstance()
+                .executeToObject(API_QUERY_MEMBER, dto);
+        Object obj = null;
+        try {
+            ByteArrayInputStream bis = new ByteArrayInputStream (re.getBytes());
+            ObjectInputStream ois = new ObjectInputStream (bis);
+            obj = ois.readObject();
+            ois.close();
+            bis.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        System.out.println(obj);
+    }
 }
