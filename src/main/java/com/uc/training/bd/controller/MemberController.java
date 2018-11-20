@@ -1,4 +1,4 @@
-package com.uc.training.smadmin.bd.controller;
+package com.uc.training.bd.controller;
 
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.common.vo.PageVO;
@@ -22,8 +22,8 @@ import java.util.regex.Pattern;
  * @Date: 2018/10/29 16:44
  * @Description:
  */
-//@RequestMapping("/admin/bd/member")
-//@Controller
+@RequestMapping("/admin/bd/member")
+@Controller
 public class MemberController extends BaseController {
     @Autowired
     private MemberService memberService;

@@ -1,4 +1,4 @@
-package com.uc.training.smadmin.bd.controller;
+package com.uc.training.bd.controller;
 
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.common.vo.PageVO;
@@ -24,8 +24,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @Version 1.0
  * @date 2018/10/29
  */
-//@Controller
-//@RequestMapping("/admin/banner")
+@Controller
+@RequestMapping("/admin/banner")
 public class AdminBannerController extends BaseController {
 
     @Autowired

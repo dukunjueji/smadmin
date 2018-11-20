@@ -1,4 +1,4 @@
-package com.uc.training.smadmin.sms.controller;
+package com.uc.training.bd.controller;
 
 import com.uc.training.common.enums.SmsStatusEnum;
 import com.uc.training.common.enums.SmsTypeEnum;
@@ -26,8 +26,8 @@ import java.util.regex.Pattern;
  * @Date: 2018/10/22 13:52
  * @Description:
  */
-//@Controller
-//@RequestMapping("admin/sms")
+@Controller
+@RequestMapping("admin/sms")
 public class SmsController extends BaseController {
     @Autowired
     private SmsService smsService;

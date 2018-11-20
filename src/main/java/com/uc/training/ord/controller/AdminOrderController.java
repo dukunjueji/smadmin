@@ -1,4 +1,4 @@
-package com.uc.training.smadmin.ord.controller;
+package com.uc.training.ord.controller;
 
 import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
@@ -26,8 +26,8 @@ import java.util.Map;
  * @author hhj
  * @date 20181021
  */
-//@Controller
-//@RequestMapping(value = "admin/order/")
+@Controller
+@RequestMapping(value = "admin/order/")
 public class AdminOrderController extends BaseController {
 	@Autowired
 	OrderService orderService;

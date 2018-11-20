@@ -1,4 +1,4 @@
-package com.uc.training.smadmin.sys.controller;
+package com.uc.training.bd.controller;
 
 import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
@@ -33,8 +33,8 @@ import java.util.List;
  * @version 1.0 2018/10/18 15:13 by 吴佰川（baichuan.wu@ucarinc.com）创建
  * @copyright All Rights Reserved.
  */
-//@Controller
-//@RequestMapping(value = "admin/sys/user/")
+@Controller
+@RequestMapping(value = "admin/sys/user/")
 public class UserController extends BaseController {
     @Autowired
     private SysUserService userService;

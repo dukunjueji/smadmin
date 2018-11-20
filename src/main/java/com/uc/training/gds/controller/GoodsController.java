@@ -1,4 +1,4 @@
-package com.uc.training.smadmin.gds.controller;
+package com.uc.training.gds.controller;
 
 import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
@@ -29,8 +29,8 @@ import java.util.List;
  * @author zhongling(ling.zhong @ ucarinc.com)
  * @since 2018年10月16日 11:17
  */
-//@Controller
-//@RequestMapping("api/gds/goods")
+@Controller
+@RequestMapping("api/gds/goods")
 public class GoodsController extends BaseController {
     @Autowired
     GoodsService goodsService;

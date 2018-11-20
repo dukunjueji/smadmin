@@ -1,10 +1,10 @@
-package com.uc.training.smadmin.bd.controller;
+package com.uc.training.bd.controller;
 
-import com.ycc.base.common.Result;
 import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.smadmin.bd.model.MemberGrade;
 import com.uc.training.smadmin.bd.service.MemberGradeService;
+import com.ycc.base.common.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -19,8 +19,8 @@ import java.util.List;
  * @Date: 2018/10/17 13:50
  * @Description:
  */
-//@Controller
-//@RequestMapping("/admin/bd/memberGrade")
+@Controller
+@RequestMapping("/admin/bd/memberGrade")
 public class MemberGradeController extends BaseController {
 
     @Autowired

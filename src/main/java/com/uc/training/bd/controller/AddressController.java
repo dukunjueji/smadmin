@@ -1,12 +1,12 @@
-package com.uc.training.smadmin.bd.controller;
+package com.uc.training.bd.controller;
 
-import com.uc.training.smadmin.bd.vo.AddressUpdateVO;
-import com.ycc.base.common.Result;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.smadmin.bd.model.Address;
 import com.uc.training.smadmin.bd.re.AddressRE;
 import com.uc.training.smadmin.bd.service.AddressService;
 import com.uc.training.smadmin.bd.vo.AddressInsertVO;
+import com.uc.training.smadmin.bd.vo.AddressUpdateVO;
+import com.ycc.base.common.Result;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,8 +23,8 @@ import java.util.List;
  * @Version 1.0
  * @date 2018/10/16 13:14
  */
-//@Controller
-//@RequestMapping("/api/address")
+@Controller
+@RequestMapping("/api/address")
 public class AddressController extends BaseController {
 
     @Autowired

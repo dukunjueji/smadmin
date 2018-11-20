@@ -1,4 +1,4 @@
-package com.uc.training.smadmin.sys.controller;
+package com.uc.training.bd.controller;
 
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.common.vo.PageVO;
@@ -22,8 +22,8 @@ import java.util.List;
  * @Date: 2018/10/30 18:03
  * @Description:
  */
-//@Controller
-//@RequestMapping("/admin/sys/role")
+@Controller
+@RequestMapping("/admin/sys/role")
 public class RoleController extends BaseController {
 
     @Autowired

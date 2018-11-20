@@ -4,10 +4,7 @@ import com.uc.training.common.enums.UUIDTypeEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -72,8 +69,10 @@ public class UUIDUtil {
     }
 
     public static void main(String[] args) {
-        String uuid = UUIDUtil.getUuidByType(UUIDTypeEnum.GOODSID.getType());
-//        System.out.println("------------------------" + uuid + "------------------------------------------------");
+        ExecutorService exec = Executors.newCachedThreadPool();
+        int maxThread = 200;
+        for (int i=0; i < maxThread; i++){
+        }
     }
 }
 

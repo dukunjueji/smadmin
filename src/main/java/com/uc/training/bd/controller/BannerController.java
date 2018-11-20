@@ -1,10 +1,10 @@
-package com.uc.training.smadmin.bd.controller;
+package com.uc.training.bd.controller;
 
+import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.smadmin.bd.re.BannerRE;
-import com.ycc.base.common.Result;
-import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.smadmin.bd.service.BannerService;
+import com.ycc.base.common.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,8 +19,8 @@ import java.util.List;
  * @Version 1.0
  * @date 2018/10/22
  */
-//@Controller
-//@RequestMapping("/api/banner")
+@Controller
+@RequestMapping("/api/banner")
 public class BannerController extends BaseController{
 
     @Autowired

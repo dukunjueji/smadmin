@@ -1,4 +1,4 @@
-package com.uc.training.smadmin.gds.controller;
+package com.uc.training.gds.controller;
 
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.smadmin.gds.model.Property;
@@ -25,8 +25,8 @@ import java.util.List;
  * @Version 1.0
  * @date 2018/10/31
  */
-//@Controller
-//@RequestMapping("admin/gds/property")
+@Controller
+@RequestMapping("admin/gds/property")
 public class AdminPropertyController extends BaseController{
 
     @Autowired

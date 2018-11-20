@@ -1,4 +1,4 @@
-package com.uc.training.smadmin.gds.controller;
+package com.uc.training.gds.controller;
 
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.common.enums.UUIDTypeEnum;
@@ -33,8 +33,8 @@ import java.util.List;
  * @Version 1.0
  * @date 2018/10/29
  */
-//@Controller
-//@RequestMapping("admin/gds/goods")
+@Controller
+@RequestMapping("admin/gds/goods")
 public class AdminGoodsController extends BaseController {
 
     @Autowired

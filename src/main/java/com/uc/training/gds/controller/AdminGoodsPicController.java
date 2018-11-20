@@ -1,4 +1,4 @@
-package com.uc.training.smadmin.gds.controller;
+package com.uc.training.gds.controller;
 
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.smadmin.gds.model.GoodsPic;
@@ -25,8 +25,8 @@ import java.util.List;
  * @Version 1.0
  * @date 2018/10/31
  */
-//@Controller
-//@RequestMapping("admin/gds/goodsPic")
+@Controller
+@RequestMapping("admin/gds/goodsPic")
 public class AdminGoodsPicController extends BaseController{
 
     @Autowired

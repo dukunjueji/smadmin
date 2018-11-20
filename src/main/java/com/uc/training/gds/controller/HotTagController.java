@@ -1,9 +1,9 @@
-package com.uc.training.smadmin.gds.controller;
+package com.uc.training.gds.controller;
 
 import com.uc.training.common.annotation.AccessLogin;
-import com.ycc.base.common.Result;
 import com.uc.training.smadmin.gds.re.HotTagRE;
 import com.uc.training.smadmin.gds.service.HotTagService;
+import com.ycc.base.common.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,8 +19,8 @@ import java.util.List;
  * @Version 1.0
  * @date 2018/10/24
  */
-//@Controller
-//@RequestMapping("/api/gds/hotTag")
+@Controller
+@RequestMapping("/api/gds/hotTag")
 public class HotTagController {
     @Autowired
     private HotTagService hotTagService;

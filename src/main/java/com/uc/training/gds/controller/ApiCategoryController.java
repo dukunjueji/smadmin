@@ -1,10 +1,10 @@
-package com.uc.training.smadmin.gds.controller;
+package com.uc.training.gds.controller;
 
 import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
-import com.ycc.base.common.Result;
 import com.uc.training.smadmin.gds.re.CategoryRE;
 import com.uc.training.smadmin.gds.service.CategoryService;
+import com.ycc.base.common.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
@@ -23,8 +23,8 @@ import java.util.List;
  * @Version 1.0
  * @date 2018/10/23
  */
-//@Controller
-//@RequestMapping("api/gds/category")
+@Controller
+@RequestMapping("api/gds/category")
 public class ApiCategoryController extends BaseController {
 
     @Autowired

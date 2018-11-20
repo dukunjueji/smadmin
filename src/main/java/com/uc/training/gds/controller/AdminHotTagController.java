@@ -1,12 +1,12 @@
-package com.uc.training.smadmin.gds.controller;
+package com.uc.training.gds.controller;
 
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.common.vo.PageVO;
 import com.uc.training.smadmin.gds.model.HotTag;
 import com.uc.training.smadmin.gds.re.AdminHotTagListRE;
 import com.uc.training.smadmin.gds.service.HotTagService;
-import com.uc.training.smadmin.gds.vo.AdminHotTagListVO;
 import com.uc.training.smadmin.gds.vo.AdminHotTagInsertVO;
+import com.uc.training.smadmin.gds.vo.AdminHotTagListVO;
 import com.uc.training.smadmin.gds.vo.AdminHotTagUpdateVO;
 import com.ycc.base.common.Result;
 import org.springframework.beans.BeanUtils;
@@ -24,8 +24,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @Version 1.0
  * @date 2018/11/6
  */
-//@Controller
-//@RequestMapping("admin/gds/hotTag")
+@Controller
+@RequestMapping("admin/gds/hotTag")
 public class AdminHotTagController extends BaseController {
 
     @Autowired

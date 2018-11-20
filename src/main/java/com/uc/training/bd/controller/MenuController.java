@@ -1,4 +1,4 @@
-package com.uc.training.smadmin.sys.controller;
+package com.uc.training.bd.controller;
 
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.common.enums.MenuEnum;
@@ -20,8 +20,8 @@ import java.util.List;
  * @Date: 2018/10/30 10:33
  * @Description:
  */
-//@Controller
-//@RequestMapping("/admin/sys/menu")
+@Controller
+@RequestMapping("/admin/sys/menu")
 public class MenuController extends BaseController {
     @Autowired
     private SysMenuService sysMenuService;

@@ -1,12 +1,8 @@
 package remote;
 
 import com.uc.training.base.dto.BaseDemoDTO;
-import com.uc.training.base.re.BaseDemoRE;
-import com.ycc.base.common.Result;
 import com.zuche.framework.common.SpringApplicationContext;
-import com.zuche.framework.dao.util.DictModel;
 import com.zuche.framework.remote.RemoteClientFactory;
-import com.zuche.framework.remote.RemoteType;
 import com.zuche.framework.remote.serializer.JavaSerialzerProxy;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,18 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import remote.common.AbstractRemoteTest;
-import remote.vo.MemberVO;
-import remote.vo.MessageDTO;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Callable;
-import java.util.concurrent.FutureTask;
 
 /**
  * Created with IntelliJ IDEA.
@@ -66,9 +56,9 @@ public class DemoRemoteServiceTest{
     public void getDemoTest(){
         BaseDemoDTO dto = new BaseDemoDTO();
         dto.setId(10L);
-        JavaSerialzerProxy re = (JavaSerialzerProxy) RemoteClientFactory.getInstance()
+        Map<String, String> map = (HashMap<String, String>) RemoteClientFactory.getInstance()
                 .executeToObject(API_QUERY_MEMBER, dto);
-        Object obj = null;
+        /*Object obj = null;
         try {
             ByteArrayInputStream bis = new ByteArrayInputStream (re.getBytes());
             ObjectInputStream ois = new ObjectInputStream (bis);
@@ -79,7 +69,14 @@ public class DemoRemoteServiceTest{
             ex.printStackTrace();
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
-        }
+        }*/
+        System.out.println(map);
+    }
+
+    @Test
+    public void provinceTest() {
+        Object obj = RemoteClientFactory.getInstance()
+                .executeToObject(ADMIN_PROVINCE);
         System.out.println(obj);
     }
 }

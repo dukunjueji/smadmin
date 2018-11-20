@@ -1,32 +1,18 @@
-package com.uc.training.smadmin.bd.controller;
+package com.uc.training.bd.controller;
 
 import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.common.enums.GrowthEnum;
-import com.uc.training.common.enums.SmsStatusEnum;
 import com.uc.training.common.enums.SmsTypeEnum;
 import com.uc.training.smadmin.bd.model.LoginLog;
 import com.uc.training.smadmin.bd.model.Member;
 import com.uc.training.smadmin.bd.model.Message;
-import com.uc.training.smadmin.bd.re.AllMessageRE;
-import com.uc.training.smadmin.bd.re.MemberDetailRE;
-import com.uc.training.smadmin.bd.re.MemberInfoRE;
-import com.uc.training.smadmin.bd.re.MemberLoginRE;
-import com.uc.training.smadmin.bd.re.MessageRE;
+import com.uc.training.smadmin.bd.re.*;
 import com.uc.training.smadmin.bd.service.MemberService;
 import com.uc.training.smadmin.bd.service.MessageService;
-import com.uc.training.smadmin.bd.vo.ChargeBalanceVO;
-import com.uc.training.smadmin.bd.vo.CreateCodeVO;
-import com.uc.training.smadmin.bd.vo.MemberInfoVO;
-import com.uc.training.smadmin.bd.vo.MemberLoginVO;
-import com.uc.training.smadmin.bd.vo.MemberRegisterVO;
-import com.uc.training.smadmin.bd.vo.MessageDetailVO;
-import com.uc.training.smadmin.bd.vo.MessageListVO;
-import com.uc.training.smadmin.bd.vo.MessageVO;
+import com.uc.training.smadmin.bd.vo.*;
 import com.uc.training.smadmin.mq.MqProducer;
 import com.uc.training.smadmin.mq.vo.MqVO;
-import com.uc.training.smadmin.bd.vo.PasswordEditVO;
-import com.uc.training.smadmin.bd.vo.SendCodeVO;
 import com.uc.training.smadmin.ord.service.OrderService;
 import com.uc.training.smadmin.redis.RedisConfigEnum;
 import com.uc.training.smadmin.sms.service.SmsTemplateService;
@@ -60,8 +46,8 @@ import java.util.regex.Pattern;
  * @date: 2018/10/16
  * 说明：用户请求处理
  */
-//@Controller
-//@RequestMapping("api/member")
+@Controller
+@RequestMapping("api/member")
 public class ApiMemberController extends BaseController {
 
     @Autowired
@@ -78,7 +64,7 @@ public class ApiMemberController extends BaseController {
 
     private Map<String, String> map = new HashMap<>();
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ApiMemberController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(com.uc.training.smadmin.bd.controller.ApiMemberController.class);
     /**
      *注册时，生成验证码及短信
      * @param createCodeVO 生成验证码的请求参数

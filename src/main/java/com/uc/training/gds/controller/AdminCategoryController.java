@@ -1,4 +1,4 @@
-package com.uc.training.smadmin.gds.controller;
+package com.uc.training.gds.controller;
 
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.smadmin.gds.model.Category;
@@ -26,8 +26,8 @@ import java.util.List;
  * @Version 1.0
  * @date 2018/10/29
  */
-//@Controller
-//@RequestMapping("admin/gds/category")
+@Controller
+@RequestMapping("admin/gds/category")
 public class AdminCategoryController extends BaseController {
 
     @Autowired

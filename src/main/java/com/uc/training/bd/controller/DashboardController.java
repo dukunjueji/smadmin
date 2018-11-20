@@ -1,4 +1,4 @@
-package com.uc.training.smadmin.sys.controller;
+package com.uc.training.bd.controller;
 
 import com.uc.training.smadmin.ord.service.OrderService;
 import com.uc.training.smadmin.sys.re.OrderSaleRE;
@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @version 1.0
  * @date 2018/11/12 11:28
  */
-//@Controller
-//@RequestMapping(value = "admin/sys/dashboard/")
+@Controller
+@RequestMapping(value = "admin/sys/dashboard/")
 public class DashboardController {
     @Autowired
     private OrderService orderService;
