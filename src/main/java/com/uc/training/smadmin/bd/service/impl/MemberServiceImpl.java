@@ -18,11 +18,11 @@ import com.uc.training.smadmin.gds.service.GoodsService;
 import com.uc.training.smadmin.gds.vo.GoodsStokeVO;
 import com.uc.training.smadmin.mq.MqProducer;
 import com.uc.training.smadmin.mq.vo.MqVO;
-import com.uc.training.smadmin.ord.model.Order;
 import com.uc.training.smadmin.ord.re.OrderConfirmRE;
+import com.uc.training.smadmin.ord.re.OrderRE;
 import com.uc.training.smadmin.ord.service.OrderService;
 import com.uc.training.smadmin.ord.vo.OrdMemberVO;
-import com.uc.training.smadmin.ord.vo.OrdOrderVo;
+import com.uc.training.smadmin.ord.vo.OrdOrderVO;
 import com.uc.training.smadmin.sms.service.SmsTemplateService;
 import com.uc.training.smadmin.utils.EncryptUtil;
 import com.ycc.tools.middleware.metaq.MetaQUtils;
@@ -100,7 +100,7 @@ public class MemberServiceImpl implements MemberService {
         OrdMemberVO ordMemberVO = new OrdMemberVO();
         ordMemberVO.setOrderId(orderPayInfoNow.get(0).getOrderId());
         ordMemberVO.setMemberId(orderPayInfoNow.get(0).getMemberId());
-        List<Order> orderList = orderService.getOrderByMemberVO(ordMemberVO);
+        List<OrderRE> orderList = orderService.getOrderByMemberVO(ordMemberVO);
         if (orderList.size() <= 0) {
             return list;
         }
@@ -132,12 +132,12 @@ public class MemberServiceImpl implements MemberService {
             MetaQUtils.sendMsgNoException(new MqProducer(mqVO1));
             //更新订单状态
             orderConfirmRE.setStatus(OrderEnum.WAITSHIP.getKey());
-            OrdOrderVo ordOrderVo = new OrdOrderVo();
-            ordOrderVo.setOrderNum(orderList.get(0).getOrderNum());
-            ordOrderVo.setStatus(OrderEnum.WAITSHIP.getKey().longValue());
-            ordOrderVo.setMemberId(memberInfoVO.getMemberId());
+            OrdOrderVO ordOrderVO = new OrdOrderVO();
+            ordOrderVO.setOrderNum(orderList.get(0).getOrderNum());
+            ordOrderVO.setStatus(OrderEnum.WAITSHIP.getKey().longValue());
+            ordOrderVO.setMemberId(memberInfoVO.getMemberId());
             orderConfirmRE.setShowStatus("成功购买商品");
-            if (orderService.updateOrder(ordOrderVo) > 0) {
+            if (orderService.updateOrder(ordOrderVO) > 0) {
                 list.add(orderConfirmRE);
             }
 

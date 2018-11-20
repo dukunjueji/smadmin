@@ -1,4 +1,4 @@
-package com.uc.training.smadmin.ord.model;
+package com.uc.training.smadmin.ord.re;
 
 import com.uc.training.common.base.model.BaseModel;
 
@@ -10,9 +10,9 @@ import java.math.BigDecimal;
  * @date 2018-10-17 星期三 16:28
  * @description:用户订单表
  */
-public class Order extends BaseModel implements Serializable {
+public class OrderRE extends BaseModel implements Serializable {
 
-    private static final long serialVersionUID = 4490456302239574233L;
+    private static final long serialVersionUID = 4490456302239573233L;
 
     /**
      * 主键id

@@ -3,7 +3,7 @@
 <sqlMap namespace="com.uc.training.smadmin.ord.dao.OrderDao">
 
 	<!-- 根据对象的不为null的值作为条件进行查找 -->
-	<select id="getOrderByMemberVO" resultClass="com.uc.training.smadmin.ord.model.Order" parameterClass="com.uc.training.smadmin.ord.vo.OrdMemberVO">
+	<select id="getOrderByMemberVO" resultClass="com.uc.training.smadmin.ord.re.OrderRE" parameterClass="com.uc.training.smadmin.ord.vo.OrdMemberVO">
 		 SELECT
              s.id AS id,
              s.member_id AS memberId,
@@ -96,7 +96,7 @@
 	</sql>
 
 	<!-- 列表查询 -->
-	<select id="queryOrderList" resultClass="com.uc.training.smadmin.ord.model.Order">
+	<select id="queryOrderList" resultClass="com.uc.training.smadmin.ord.re.OrderRE">
 		 SELECT
 		 s.member_id AS memberId,
 		 s.order_num AS orderNum,
@@ -125,7 +125,7 @@
 	</select>
 
 	<!--查询订单表的总记录数-->
-	<select id="OrderCount" resultClass="java.lang.Integer" parameterClass="com.uc.training.smadmin.ord.vo.OrdOrderVo">
+	<select id="OrderCount" resultClass="java.lang.Integer" parameterClass="com.uc.training.smadmin.ord.vo.OrdOrderVO">
 		 SELECT count(1)
 		 FROM t_ord_order s
 		 WHERE
@@ -141,7 +141,7 @@
 		</isNotEmpty>
 	</select>
 	<!-- 插入 -->
-	<insert id="insertOrder" parameterClass="com.uc.training.smadmin.ord.model.Order">
+	<insert id="insertOrder" parameterClass="com.uc.training.smadmin.ord.re.OrderRE">
 		 insert into t_ord_order
 			 (member_id, order_num, order_price, pay_price, is_delete, status, receipt_name, receipt_tel, receipt_address, create_time)
 		values (#memberId#,#orderNum#,#orderPrice#,#payPrice#,#isDelete#,#status#,#receiptName#,#receiptTel#,#receiptAddress#,NOW())
@@ -151,14 +151,14 @@
 	</insert>
 
 	<!-- 通过主键更新 -->
-	<update id="updateOrderById" parameterClass="com.uc.training.smadmin.ord.model.Order">
+	<update id="updateOrderById" parameterClass="com.uc.training.smadmin.ord.re.OrderRE">
 		 update t_ord_order set
 		id = #id#, member_id = #memberId#, order_num = #orderNum#, order_price = #orderPrice#, pay_price = #payPrice#, is_delete = #isDelete#, status = #status#, receipt_name = #receiptName#, receipt_tel = #receiptTel#, receipt_address = #receiptAddress#, create_emp = #createEmp#, create_time = #createTime#, modify_emp = #modifyEmp#, modify_time = #modifyTime#
 		where id=#id#
 		</update>
 
 	<!-- 通过订单编号更新 -->
-	<update id="updateOrder" parameterClass="com.uc.training.smadmin.ord.vo.OrdOrderVo">
+	<update id="updateOrder" parameterClass="com.uc.training.smadmin.ord.vo.OrdOrderVO">
 		 update t_ord_order s
 		 set
 		s.status = #status#
@@ -173,7 +173,7 @@
 		</update>
 
 	<!--查询分页-->
-	<select id="getOrderPage" parameterClass="com.uc.training.smadmin.ord.vo.OrdOrderVo" resultClass="com.uc.training.smadmin.ord.re.OrderRe">
+	<select id="getOrderPage" parameterClass="com.uc.training.smadmin.ord.vo.OrdOrderVO" resultClass="com.uc.training.smadmin.ord.re.OrderRE">
 		SELECT
 			s.id,
 			s.member_id as memberId,
@@ -216,7 +216,7 @@
 
 	</update>
 
-	<update id="memberDelOrder" parameterClass="com.uc.training.smadmin.ord.vo.OrdOrderVo">
+	<update id="memberDelOrder" parameterClass="com.uc.training.smadmin.ord.vo.OrdOrderVO">
 		UPDATE t_ord_order s
 		SET
 		s.is_delete = 1

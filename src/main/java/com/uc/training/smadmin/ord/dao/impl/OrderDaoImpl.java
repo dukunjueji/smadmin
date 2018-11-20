@@ -1,10 +1,9 @@
 package com.uc.training.smadmin.ord.dao.impl;
 
 import com.uc.training.smadmin.ord.dao.OrderDao;
-import com.uc.training.smadmin.ord.model.Order;
-import com.uc.training.smadmin.ord.re.OrderRe;
+import com.uc.training.smadmin.ord.model.OrderRE;
 import com.uc.training.smadmin.ord.vo.OrdMemberVO;
-import com.uc.training.smadmin.ord.vo.OrdOrderVo;
+import com.uc.training.smadmin.ord.vo.OrdOrderVO;
 import com.uc.training.smadmin.sys.re.OrderSaleRE;
 import com.zuche.framework.dao.CarIsIbatisDaoImpl;
 import org.springframework.stereotype.Repository;
@@ -19,12 +18,12 @@ import java.util.List;
 public class OrderDaoImpl extends CarIsIbatisDaoImpl implements OrderDao {
 
 	 @Override
-	 public List<Order> getOrderByMemberVO(OrdMemberVO ordMemberVO){
+	 public List<com.uc.training.smadmin.ord.re.OrderRE> getOrderByMemberVO(OrdMemberVO ordMemberVO){
 		  return this.queryForList("com.uc.training.smadmin.ord.dao.OrderDao.getOrderByMemberVO", ordMemberVO);
 	 }
 
 	 @Override
-	 public List<Order>  queryOrderList(){
+	 public List<OrderRE>  queryOrderList(){
 		  return this.queryForList("com.uc.training.smadmin.ord.dao.OrderDao.queryOrderList");
 	 }
 
@@ -34,22 +33,22 @@ public class OrderDaoImpl extends CarIsIbatisDaoImpl implements OrderDao {
 	 }
 
 	 @Override
-	public Long insertOrder( Order record ){
+	public Long insertOrder( com.uc.training.smadmin.ord.re.OrderRE record ){
 		  return (Long) this.insert("com.uc.training.smadmin.ord.dao.OrderDao.insertOrder", record);
 	 }
 
 	 @Override
-	public int updateOrderById( Order record ){
+	public int updateOrderById( com.uc.training.smadmin.ord.re.OrderRE record ){
 		  return this.update("com.uc.training.smadmin.ord.dao.OrderDao.updateOrderById", record);
 	 }
 
 	@Override
-	public  List<OrderRe> getOrderPage(OrdOrderVo orderVo) {
+	public  List<com.uc.training.smadmin.ord.re.OrderRE> getOrderPage(OrdOrderVO orderVo) {
 		return this.queryForList("com.uc.training.smadmin.ord.dao.OrderDao.getOrderPage",orderVo,orderVo.getStartIndex(),orderVo.getEndIndex());
 	}
 
   @Override
-  public Integer getOrderTotal(OrdOrderVo orderVo) {
+  public Integer getOrderTotal(OrdOrderVO orderVo) {
     return (Integer) this.queryForObject("com.uc.training.smadmin.ord.dao.OrderDao.OrderCount",orderVo);
   }
 
@@ -60,19 +59,19 @@ public class OrderDaoImpl extends CarIsIbatisDaoImpl implements OrderDao {
   }
 
 	@Override
-	public int updateOrder(OrdOrderVo ordOrderVo) {
-		return this.update("com.uc.training.smadmin.ord.dao.OrderDao.updateOrder",ordOrderVo);
+	public int updateOrder(OrdOrderVO ordOrderVO) {
+		return this.update("com.uc.training.smadmin.ord.dao.OrderDao.updateOrder", ordOrderVO);
 	}
 
 	/**
 	 * 用户删除订单
 	 *
-	 * @param ordOrderVo
+	 * @param ordOrderVO
 	 * @return
 	 */
 	@Override
-	public int memberDelOrder(OrdOrderVo ordOrderVo) {
-		return this.update("com.uc.training.smadmin.ord.dao.OrderDao.memberDelOrder",ordOrderVo);
+	public int memberDelOrder(OrdOrderVO ordOrderVO) {
+		return this.update("com.uc.training.smadmin.ord.dao.OrderDao.memberDelOrder", ordOrderVO);
 	}
 
 	/**

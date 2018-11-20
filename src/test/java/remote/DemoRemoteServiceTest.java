@@ -15,8 +15,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -33,7 +31,7 @@ import java.util.Map;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:frameworkContext.xml")
-public class DemoRemoteServiceTest{
+public class DemoRemoteServiceTest {
 
     private static final String API_QUERY_MEMBER = "smbase.api.queryOneMember";
 
@@ -53,15 +51,15 @@ public class DemoRemoteServiceTest{
 
 
     @Test
-    public void getDemoTest(){
+    public void getDemoTest() {
         BaseDemoDTO dto = new BaseDemoDTO();
         dto.setId(10L);
-        Map<String, String> map = (HashMap<String, String>) RemoteClientFactory.getInstance()
+        JavaSerialzerProxy re = (JavaSerialzerProxy) RemoteClientFactory.getInstance()
                 .executeToObject(API_QUERY_MEMBER, dto);
-        /*Object obj = null;
+        Object obj = null;
         try {
-            ByteArrayInputStream bis = new ByteArrayInputStream (re.getBytes());
-            ObjectInputStream ois = new ObjectInputStream (bis);
+            ByteArrayInputStream bis = new ByteArrayInputStream(re.getBytes());
+            ObjectInputStream ois = new ObjectInputStream(bis);
             obj = ois.readObject();
             ois.close();
             bis.close();
@@ -69,14 +67,7 @@ public class DemoRemoteServiceTest{
             ex.printStackTrace();
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
-        }*/
-        System.out.println(map);
-    }
-
-    @Test
-    public void provinceTest() {
-        Object obj = RemoteClientFactory.getInstance()
-                .executeToObject(ADMIN_PROVINCE);
+        }
         System.out.println(obj);
     }
 }

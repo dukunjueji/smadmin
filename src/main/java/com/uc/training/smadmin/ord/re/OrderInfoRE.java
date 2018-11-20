@@ -64,7 +64,7 @@ public class OrderInfoRE implements Serializable {
     /**
      * 订单商品信息列表
      */
-    private List<OrderGoodsDetailRe> orderGoodsDetailRe;
+    private List<OrderGoodsDetailRE> orderGoodsDetailRE;
 
     public String getReceiptName() {
         return receiptName;
@@ -155,12 +155,12 @@ public class OrderInfoRE implements Serializable {
         this.payPrice = payPrice;
     }
 
-    public List<OrderGoodsDetailRe> getOrderGoodsDetailRe() {
-        return orderGoodsDetailRe;
+    public List<OrderGoodsDetailRE> getOrderGoodsDetailRE() {
+        return orderGoodsDetailRE;
     }
 
-    public void setOrderGoodsDetailRe(List<OrderGoodsDetailRe> orderGoodsDetailRe) {
-        this.orderGoodsDetailRe = orderGoodsDetailRe;
+    public void setOrderGoodsDetailRE(List<OrderGoodsDetailRE> orderGoodsDetailRE) {
+        this.orderGoodsDetailRE = orderGoodsDetailRE;
     }
 
 }

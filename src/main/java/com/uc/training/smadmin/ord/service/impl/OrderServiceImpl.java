@@ -1,5 +1,6 @@
 package com.uc.training.smadmin.ord.service.impl;
 
+
 import com.uc.training.common.enums.GoodsStatusEnum;
 import com.uc.training.common.enums.OrderEnum;
 import com.uc.training.common.enums.UUIDTypeEnum;
@@ -12,25 +13,24 @@ import com.uc.training.smadmin.gds.vo.GoodsStokeVO;
 import com.uc.training.smadmin.ord.dao.CartGoodsDao;
 import com.uc.training.smadmin.ord.dao.OrderDao;
 import com.uc.training.smadmin.ord.dao.OrderGoodsDao;
-import com.uc.training.smadmin.ord.model.CartGoods;
-import com.uc.training.smadmin.ord.model.Order;
 import com.uc.training.smadmin.ord.model.OrderGoods;
+import com.uc.training.smadmin.ord.re.CartGoodsRE;
 import com.uc.training.smadmin.ord.re.OrderConfirmRE;
-import com.uc.training.smadmin.ord.re.OrderGoodsDetailRe;
+import com.uc.training.smadmin.ord.re.OrderGoodsDetailRE;
 import com.uc.training.smadmin.ord.re.OrderInfoRE;
-import com.uc.training.smadmin.ord.re.OrderRe;
-import com.uc.training.smadmin.ord.re.OrderStatusRe;
+import com.uc.training.smadmin.ord.re.OrderRE;
+import com.uc.training.smadmin.ord.re.OrderStatusRE;
 import com.uc.training.smadmin.ord.service.OrderService;
-import com.uc.training.smadmin.ord.vo.OrdCartGoodsVo;
+import com.uc.training.smadmin.ord.vo.OrdCartGoodsVO;
 import com.uc.training.smadmin.ord.vo.OrdGoodsVO;
 import com.uc.training.smadmin.ord.vo.OrdMemberVO;
-import com.uc.training.smadmin.ord.vo.OrdOrderGoodsVo;
-import com.uc.training.smadmin.ord.vo.OrdOrderVo;
+import com.uc.training.smadmin.ord.vo.OrdOrderGoodsVO;
+import com.uc.training.smadmin.ord.vo.OrdOrderVO;
 import com.uc.training.smadmin.sys.re.OrderSaleRE;
 import com.uc.training.smadmin.utils.UUIDUtil;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -60,7 +60,7 @@ public class OrderServiceImpl implements OrderService {
     private AddressService addressService;
 
     @Override
-    public List<CartGoods> getCarGoodsById(Long memberId) {
+    public List<CartGoodsRE> getCarGoodsById(Long memberId) {
         return cartGoodsDao.getCartGoodsById(memberId);
     }
 
@@ -71,12 +71,13 @@ public class OrderServiceImpl implements OrderService {
      * @return
      */
     @Override
-    public List<Order> getOrderByMemberVO(OrdMemberVO ordMemberVO) {
+    public List<OrderRE> getOrderByMemberVO(OrdMemberVO ordMemberVO) {
+
         return orderDao.getOrderByMemberVO(ordMemberVO);
     }
 
     @Override
-    public List<CartGoods> getCarGoodsByIds(OrdGoodsVO ordGoodsVO) {
+    public List<CartGoodsRE> getCarGoodsByIds(OrdGoodsVO ordGoodsVO) {
         return cartGoodsDao.getCarGoodsByIds(ordGoodsVO);
     }
 
@@ -87,8 +88,8 @@ public class OrderServiceImpl implements OrderService {
      * @return
      */
     @Override
-    public List<OrdOrderGoodsVo> getOrderGoodsById(List<OrdOrderGoodsVo> orderGodsList) {
-        List<OrdOrderGoodsVo> list = new ArrayList<>();
+    public List<OrdOrderGoodsVO> getOrderGoodsById(List<OrdOrderGoodsVO> orderGodsList) {
+        List<OrdOrderGoodsVO> list = new ArrayList<>();
         OrdGoodsVO ordGoodsVO = new OrdGoodsVO();
         if (!CollectionUtils.isEmpty(orderGodsList)) {
             ordGoodsVO.setMemberId(orderGodsList.get(0).getMemberId());
@@ -100,34 +101,34 @@ public class OrderServiceImpl implements OrderService {
         } else {
             return list;
         }
-        List<CartGoods> goodsNumList = cartGoodsDao.getCarGoodsByIds(ordGoodsVO);
-        OrdOrderGoodsVo ordOrderGoodsVo;
+        List<CartGoodsRE> goodsNumList = cartGoodsDao.getCarGoodsByIds(ordGoodsVO);
+        OrdOrderGoodsVO ordOrderGoodsVO;
         for (int i = 0; i < orderGodsList.size(); i++) {
-            ordOrderGoodsVo = new OrdOrderGoodsVo();
+            ordOrderGoodsVO = new OrdOrderGoodsVO();
             GoodsDetailRE gdDTO = goodsService.getGoodsDetailByPropertyId(orderGodsList.get(i).getPropertyId());
             if (gdDTO == null) {
                 return list;
             }
-            ordOrderGoodsVo.setGoodsId(orderGodsList.get(i).getGoodsId());
-            ordOrderGoodsVo.setGdsName(gdDTO.getName());
+            ordOrderGoodsVO.setGoodsId(orderGodsList.get(i).getGoodsId());
+            ordOrderGoodsVO.setGdsName(gdDTO.getName());
             if (!CollectionUtils.isEmpty(gdDTO.getPicUrl())) {
-                ordOrderGoodsVo.setGdsUrl(gdDTO.getPicUrl().get(0).getPicUrl());
+                ordOrderGoodsVO.setGdsUrl(gdDTO.getPicUrl().get(0).getPicUrl());
             }
             if (!CollectionUtils.isEmpty(goodsNumList)) {
                 for (int j = 0; j < goodsNumList.size(); j++) {
                     if (goodsNumList.get(j).getGoodsPropertyId().equals(orderGodsList.get(i).getPropertyId())) {
-                        ordOrderGoodsVo.setNum(goodsNumList.get(j).getGoodsNum());
+                        ordOrderGoodsVO.setNum(goodsNumList.get(j).getGoodsNum());
                         break;
                     }
                 }
             }
-            ordOrderGoodsVo.setPropertyId(orderGodsList.get(i).getPropertyId());
-            ordOrderGoodsVo.setProperty(gdDTO.getProperty());
-            ordOrderGoodsVo.setSalePrice(gdDTO.getSalePrice());
-            ordOrderGoodsVo.setDiscountPrice(gdDTO.getDiscountPrice());
-            ordOrderGoodsVo.setStatus(gdDTO.getStatus());
-            ordOrderGoodsVo.setIsDiscount(gdDTO.getIsDiscount());
-            list.add(ordOrderGoodsVo);
+            ordOrderGoodsVO.setPropertyId(orderGodsList.get(i).getPropertyId());
+            ordOrderGoodsVO.setProperty(gdDTO.getProperty());
+            ordOrderGoodsVO.setSalePrice(gdDTO.getSalePrice());
+            ordOrderGoodsVO.setDiscountPrice(gdDTO.getDiscountPrice());
+            ordOrderGoodsVO.setStatus(gdDTO.getStatus());
+            ordOrderGoodsVO.setIsDiscount(gdDTO.getIsDiscount());
+            list.add(ordOrderGoodsVO);
         }
         return list;
     }
@@ -139,54 +140,54 @@ public class OrderServiceImpl implements OrderService {
      * @return
      */
     @Override
-    public List<OrdOrderGoodsVo> getOrderGoods(List<OrdOrderGoodsVo> orderGodsList, Long orderId) {
-        List<OrdOrderGoodsVo> list = new ArrayList<>();
-        OrdOrderGoodsVo ordOrderGoodsVo;
+    public List<OrdOrderGoodsVO> getOrderGoods(List<OrdOrderGoodsVO> orderGodsList, Long orderId) {
+        List<OrdOrderGoodsVO> list = new ArrayList<>();
+        OrdOrderGoodsVO ordOrderGoodsVO;
         List<OrderGoods> orderGdsList = orderGoodsDao.getOrderGoodsByOrderId(orderId.intValue());
         if (CollectionUtils.isEmpty(orderGdsList)) {
             return null;
         }
         for (int i = 0; i < orderGodsList.size(); i++) {
-            ordOrderGoodsVo = new OrdOrderGoodsVo();
+            ordOrderGoodsVO = new OrdOrderGoodsVO();
             for (int j = 0; j < orderGdsList.size(); j++) {
                 if (orderGdsList.get(j).getGoodsPropertyId().equals(orderGodsList.get(i).getPropertyId())) {
-                    ordOrderGoodsVo.setSalePrice(orderGdsList.get(j).getSalePrice());
-                    ordOrderGoodsVo.setDiscountPrice(orderGdsList.get(j).getDiscountPrice());
-                    ordOrderGoodsVo.setPayPrice(orderGdsList.get(j).getPayPrice());
-                    ordOrderGoodsVo.setNum(orderGdsList.get(j).getGoodsNum());
+                    ordOrderGoodsVO.setSalePrice(orderGdsList.get(j).getSalePrice());
+                    ordOrderGoodsVO.setDiscountPrice(orderGdsList.get(j).getDiscountPrice());
+                    ordOrderGoodsVO.setPayPrice(orderGdsList.get(j).getPayPrice());
+                    ordOrderGoodsVO.setNum(orderGdsList.get(j).getGoodsNum());
                 }
             }
             GoodsDetailRE gdDTO = goodsService.getGoodsDetailByPropertyId(orderGodsList.get(i).getPropertyId());
             if (gdDTO == null) {
                 return list;
             }
-            ordOrderGoodsVo.setGoodsId(orderGodsList.get(i).getGoodsId());
-            ordOrderGoodsVo.setGdsName(gdDTO.getName());
+            ordOrderGoodsVO.setGoodsId(orderGodsList.get(i).getGoodsId());
+            ordOrderGoodsVO.setGdsName(gdDTO.getName());
             if (!CollectionUtils.isEmpty(gdDTO.getPicUrl())) {
-                ordOrderGoodsVo.setGdsUrl(gdDTO.getPicUrl().get(0).getPicUrl());
+                ordOrderGoodsVO.setGdsUrl(gdDTO.getPicUrl().get(0).getPicUrl());
             }
-            ordOrderGoodsVo.setPropertyId(orderGodsList.get(i).getPropertyId());
-            ordOrderGoodsVo.setProperty(gdDTO.getProperty());
-            ordOrderGoodsVo.setStatus(gdDTO.getStatus());
-            ordOrderGoodsVo.setIsDiscount(gdDTO.getIsDiscount());
-            list.add(ordOrderGoodsVo);
+            ordOrderGoodsVO.setPropertyId(orderGodsList.get(i).getPropertyId());
+            ordOrderGoodsVO.setProperty(gdDTO.getProperty());
+            ordOrderGoodsVO.setStatus(gdDTO.getStatus());
+            ordOrderGoodsVO.setIsDiscount(gdDTO.getIsDiscount());
+            list.add(ordOrderGoodsVO);
         }
         return list;
     }
 
     @Override
-    public void addCarGoods(OrdCartGoodsVo ordCartGoodsVo) {
-        cartGoodsDao.insertCartGoods(ordCartGoodsVo);
+    public void addCarGoods(OrdCartGoodsVO ordCartGoodsVO) {
+        cartGoodsDao.insertCartGoods(ordCartGoodsVO);
     }
 
     @Override
-    public int deleteCarGoods(OrdCartGoodsVo ordCartGoodsVo) {
-        return cartGoodsDao.deleteCartGoods(ordCartGoodsVo);
+    public int deleteCarGoods(OrdCartGoodsVO ordCartGoodsVO) {
+        return cartGoodsDao.deleteCartGoods(ordCartGoodsVO);
     }
 
     @Override
-    public int updataCarGoodsNum(OrdCartGoodsVo ordCartGoodsVo) {
-        return cartGoodsDao.updataCartGoodsNum(ordCartGoodsVo);
+    public int updataCarGoodsNum(OrdCartGoodsVO ordCartGoodsVO) {
+        return cartGoodsDao.updataCartGoodsNum(ordCartGoodsVO);
     }
 
     @Override
@@ -197,7 +198,7 @@ public class OrderServiceImpl implements OrderService {
     /**
      * 判断该商品是否下架、删除、无库存
      */
-    private List<OrderConfirmRE> validationGoods(List<OrdOrderGoodsVo> orderInfoListNow) {
+    private List<OrderConfirmRE> validationGoods(List<OrdOrderGoodsVO> orderInfoListNow) {
         List<OrderConfirmRE> list = new ArrayList<>();
         OrderConfirmRE orderConfirmRE = new OrderConfirmRE();
         int a = 2;
@@ -248,7 +249,7 @@ public class OrderServiceImpl implements OrderService {
      * 提交订单验证信息
      */
     @Override
-    public List<OrderConfirmRE> confirmOrderInfo(List<OrdOrderGoodsVo> orderInfoListNow) {
+    public List<OrderConfirmRE> confirmOrderInfo(List<OrdOrderGoodsVO> orderInfoListNow) {
         OrderConfirmRE orderConfirmRE = new OrderConfirmRE();
         List<OrderConfirmRE> list = new ArrayList<>();
         GoodsStokeVO goodsStokeVO;
@@ -268,15 +269,15 @@ public class OrderServiceImpl implements OrderService {
             propertyIds.add(orderInfoListNow.get(i).getPropertyId());
         }
         ordGoodsVO.setGoodsPropertyIdList(propertyIds);
-        List<CartGoods> goodsNumList = cartGoodsDao.getCarGoodsByIds(ordGoodsVO);
-        OrdOrderGoodsVo ordOrderGoodsVo;
+        List<CartGoodsRE> goodsNumList = cartGoodsDao.getCarGoodsByIds(ordGoodsVO);
+        OrdOrderGoodsVO ordOrderGoodsVO;
         Double memberDiscountPoint = goodsService.getMemberDiscountPoint(orderInfoListNow.get(orderInfoListNow.size() - 2).getMemberId());
         if (memberDiscountPoint == null) {
             return list;
         }
         BigDecimal payPrice = new BigDecimal(0);
         for (int i = 0; i < orderInfoListNow.size() - a; i++) {
-            ordOrderGoodsVo = new OrdOrderGoodsVo();
+            ordOrderGoodsVO = new OrdOrderGoodsVO();
             GoodsDetailRE gdDTO = goodsService.getGoodsDetailByPropertyId(orderInfoListNow.get(i).getPropertyId());
             if (gdDTO == null) {
                 return list;
@@ -284,7 +285,7 @@ public class OrderServiceImpl implements OrderService {
             if (!CollectionUtils.isEmpty(goodsNumList)) {
                 for (int j = 0; j < goodsNumList.size(); j++) {
                     if (goodsNumList.get(j).getGoodsPropertyId().equals(orderInfoListNow.get(i).getPropertyId())) {
-                        ordOrderGoodsVo.setNum(goodsNumList.get(j).getGoodsNum());
+                        ordOrderGoodsVO.setNum(goodsNumList.get(j).getGoodsNum());
                         if (gdDTO.getIsDiscount() == 1) {
                             payPrice = gdDTO.getDiscountPrice().multiply(BigDecimal.valueOf(goodsNumList.get(j).getGoodsNum() * memberDiscountPoint)).add(payPrice);
                         } else {
@@ -299,7 +300,7 @@ public class OrderServiceImpl implements OrderService {
             return list;
         }
         //插入用户订单表
-        Order order = new Order();
+        OrderRE order = new OrderRE();
         order.setMemberId(orderInfoListNow.get(orderInfoListNow.size() - a).getMemberId());
         order.setOrderPrice(orderInfoListNow.get(orderInfoListNow.size() - 1).getOrderPrice());
         order.setPayPrice(orderInfoListNow.get(orderInfoListNow.size() - 1).getTotalPrice());
@@ -318,7 +319,7 @@ public class OrderServiceImpl implements OrderService {
         order.setId(oderId);
         //遍历orderInfoListNow
         OrderGoods orderGoods;
-        OrdCartGoodsVo ordCartGoodsVo;
+        OrdCartGoodsVO ordCartGoodsVO;
         for (int i = 0; i < orderInfoListNow.size() - a; i++) {
             //插入订单商品信息表
             orderGoods = new OrderGoods();
@@ -339,10 +340,10 @@ public class OrderServiceImpl implements OrderService {
             goodsStokeVO.setPropertyId(orderGoods.getGoodsPropertyId());
             goodsService.updateAndDeductStoke(goodsStokeVO);
             //删除购物车信息表
-            ordCartGoodsVo = new OrdCartGoodsVo();
-            ordCartGoodsVo.setPropertyId(orderInfoListNow.get(i).getPropertyId());
-            ordCartGoodsVo.setMemberId(orderInfoListNow.get(orderInfoListNow.size() - a).getMemberId());
-            cartGoodsDao.deleteCartGoods(ordCartGoodsVo);
+            ordCartGoodsVO = new OrdCartGoodsVO();
+            ordCartGoodsVO.setPropertyId(orderInfoListNow.get(i).getPropertyId());
+            ordCartGoodsVO.setMemberId(orderInfoListNow.get(orderInfoListNow.size() - a).getMemberId());
+            cartGoodsDao.deleteCartGoods(ordCartGoodsVO);
         }
         orderConfirmRE.setShowStatus("已成功生成订单");
         orderConfirmRE.setGoodsStatus((int) OrderEnum.WAITPAY.getKey().longValue());
@@ -352,34 +353,34 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderRe> getOrderPage(OrdOrderVo orderVo) {
+    public List<OrderRE> getOrderPage(OrdOrderVO orderVo) {
         return orderDao.getOrderPage(orderVo);
     }
 
     @Override
-    public Integer getOrderTotal(OrdOrderVo orderVo) {
+    public Integer getOrderTotal(OrdOrderVO orderVo) {
         return orderDao.getOrderTotal(orderVo);
     }
 
     @Override
-    public List<OrderStatusRe> getOrderEnum() {
-        List<OrderStatusRe> list = new ArrayList<OrderStatusRe>();
+    public List<OrderStatusRE> getOrderEnum() {
+        List<OrderStatusRE> list = new ArrayList<OrderStatusRE>();
         OrderEnum orderEnum;
         int max = OrderEnum.getMaxKey();
         int i = 0;
         do {
-            OrderStatusRe orderStatusRe = new OrderStatusRe();
+            OrderStatusRE orderStatusRE = new OrderStatusRE();
             orderEnum = OrderEnum.getEnumByKey(i);
             if (orderEnum != null) {
-                orderStatusRe.setValue(i);
-                orderStatusRe.setLabel(orderEnum.getValue());
-                list.add(orderStatusRe);
+                orderStatusRE.setValue(i);
+                orderStatusRE.setLabel(orderEnum.getValue());
+                list.add(orderStatusRE);
             }
             i++;
         } while (max >= i);
-        OrderStatusRe orderStatusRe = new OrderStatusRe();
-        orderStatusRe.setLabel("全部");
-        list.add(orderStatusRe);
+        OrderStatusRE orderStatusRE = new OrderStatusRE();
+        orderStatusRE.setLabel("全部");
+        list.add(orderStatusRE);
         return list;
     }
 
@@ -389,49 +390,49 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public int updateOrder(OrdOrderVo ordOrderVo) {
+    public int updateOrder(OrdOrderVO ordOrderVO) {
         //如果是取消订单回退库存
-        if (ordOrderVo.getStatus().equals(OrderEnum.CANCEL.getKey().longValue())) {
-            List<OrderGoodsDetailRe> list = getOrderGdsById(ordOrderVo.getOrderId());
+        if (ordOrderVO.getStatus().equals(OrderEnum.CANCEL.getKey().longValue())) {
+            List<OrderGoodsDetailRE> list = getOrderGdsById(ordOrderVO.getOrderId());
             if (!CollectionUtils.isEmpty(list)) {
                 GoodsStokeVO goodsStokeVO = new GoodsStokeVO();
-                for (OrderGoodsDetailRe orderGoodsDetailRe : list) {
-                    goodsStokeVO.setStoke(-(orderGoodsDetailRe.getGoodsNum().longValue()));
-                    goodsStokeVO.setPropertyId(orderGoodsDetailRe.getGoodsPropertyId());
+                for (OrderGoodsDetailRE orderGoodsDetailRE : list) {
+                    goodsStokeVO.setStoke(-(orderGoodsDetailRE.getGoodsNum().longValue()));
+                    goodsStokeVO.setPropertyId(orderGoodsDetailRE.getGoodsPropertyId());
                     goodsService.updateAndDeductStoke(goodsStokeVO);
                 }
             } else {
                 return 0;
             }
         }
-        return orderDao.updateOrder(ordOrderVo);
+        return orderDao.updateOrder(ordOrderVO);
     }
 
 
     @Override
-    public List<OrderGoodsDetailRe> getOrderGdsById(Integer id) {
+    public List<OrderGoodsDetailRE> getOrderGdsById(Integer id) {
         // 扩展MemberId
         List<OrderGoods> orderGdsList = orderGoodsDao.getOrderGoodsByOrderId(id);
         if (CollectionUtils.isEmpty(orderGdsList)) {
             return null;
         }
-        OrderGoodsDetailRe orderGoodsDetailRe;
+        OrderGoodsDetailRE orderGoodsDetailRE;
         GoodsDetailRE gdDTO;
-        List<OrderGoodsDetailRe> list = new ArrayList<>();
+        List<OrderGoodsDetailRE> list = new ArrayList<>();
         for (OrderGoods orderGoods : orderGdsList) {
-            orderGoodsDetailRe = new OrderGoodsDetailRe();
+            orderGoodsDetailRE = new OrderGoodsDetailRE();
             gdDTO = goodsService.getGoodsDetailByPropertyId(orderGoods.getGoodsPropertyId());
             if (gdDTO != null) {
-                orderGoodsDetailRe.setGoodsName(gdDTO.getName());
-                orderGoodsDetailRe.setGoodsNum(orderGoods.getGoodsNum());
-                orderGoodsDetailRe.setGoodsProperty(gdDTO.getProperty());
-                orderGoodsDetailRe.setGoodsPrice(gdDTO.getSalePrice());
-                orderGoodsDetailRe.setGoodsPrice(gdDTO.getSalePrice());
-                orderGoodsDetailRe.setGoodsPropertyId(orderGoods.getGoodsPropertyId());
+                orderGoodsDetailRE.setGoodsName(gdDTO.getName());
+                orderGoodsDetailRE.setGoodsNum(orderGoods.getGoodsNum());
+                orderGoodsDetailRE.setGoodsProperty(gdDTO.getProperty());
+                orderGoodsDetailRE.setGoodsPrice(gdDTO.getSalePrice());
+                orderGoodsDetailRE.setGoodsPrice(gdDTO.getSalePrice());
+                orderGoodsDetailRE.setGoodsPropertyId(orderGoods.getGoodsPropertyId());
                 if (!CollectionUtils.isEmpty(gdDTO.getPicUrl())) {
-                    orderGoodsDetailRe.setGoodsUrl(gdDTO.getPicUrl().get(0).getPicUrl());
+                    orderGoodsDetailRE.setGoodsUrl(gdDTO.getPicUrl().get(0).getPicUrl());
                 }
-                list.add(orderGoodsDetailRe);
+                list.add(orderGoodsDetailRE);
             }
         }
         return list;
@@ -454,31 +455,31 @@ public class OrderServiceImpl implements OrderService {
      * @param id
      * @return
      */
-    public List<OrderGoodsDetailRe> getOrderGdsByIds(Integer id) {
+    public List<OrderGoodsDetailRE> getOrderGdsByIds(Integer id) {
         List<OrderGoods> orderGdsList = orderGoodsDao.getOrderGoodsByOrderId(id);
         if (CollectionUtils.isEmpty(orderGdsList)) {
             return null;
         }
         GoodsDetailRE gdDTO;
-        OrderGoodsDetailRe orderGoodsDetailRe;
-        List<OrderGoodsDetailRe> list = new ArrayList<>();
+        OrderGoodsDetailRE orderGoodsDetailRE;
+        List<OrderGoodsDetailRE> list = new ArrayList<>();
         for (OrderGoods orderGoods : orderGdsList) {
-            orderGoodsDetailRe = new OrderGoodsDetailRe();
+            orderGoodsDetailRE = new OrderGoodsDetailRE();
             gdDTO = goodsService.getGoodsDetailByPropertyId(orderGoods.getGoodsPropertyId());
             if (gdDTO != null) {
-                orderGoodsDetailRe.setGoodsPrice(orderGoods.getSalePrice());
-                orderGoodsDetailRe.setGoodsName(gdDTO.getName());
-                orderGoodsDetailRe.setDiscountPrice(orderGoods.getDiscountPrice());
-                orderGoodsDetailRe.setIsDiscount(gdDTO.getIsDiscount());
-                orderGoodsDetailRe.setGoodsNum(orderGoods.getGoodsNum());
-                orderGoodsDetailRe.setGoodsProperty(gdDTO.getProperty());
-                orderGoodsDetailRe.setPayPrice(orderGoods.getPayPrice());
-                orderGoodsDetailRe.setGoodsPropertyId(orderGoods.getGoodsPropertyId());
-                orderGoodsDetailRe.setGoodsId(gdDTO.getGoodsId());
+                orderGoodsDetailRE.setGoodsPrice(orderGoods.getSalePrice());
+                orderGoodsDetailRE.setGoodsName(gdDTO.getName());
+                orderGoodsDetailRE.setDiscountPrice(orderGoods.getDiscountPrice());
+                orderGoodsDetailRE.setIsDiscount(gdDTO.getIsDiscount());
+                orderGoodsDetailRE.setGoodsNum(orderGoods.getGoodsNum());
+                orderGoodsDetailRE.setGoodsProperty(gdDTO.getProperty());
+                orderGoodsDetailRE.setPayPrice(orderGoods.getPayPrice());
+                orderGoodsDetailRE.setGoodsPropertyId(orderGoods.getGoodsPropertyId());
+                orderGoodsDetailRE.setGoodsId(gdDTO.getGoodsId());
                 if (!CollectionUtils.isEmpty(gdDTO.getPicUrl())) {
-                    orderGoodsDetailRe.setGoodsUrl(gdDTO.getPicUrl().get(0).getPicUrl());
+                    orderGoodsDetailRE.setGoodsUrl(gdDTO.getPicUrl().get(0).getPicUrl());
                 }
-                list.add(orderGoodsDetailRe);
+                list.add(orderGoodsDetailRE);
             }
         }
         return list;
@@ -494,12 +495,12 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderInfoRE> getOrderInfoListByMemberId(OrdMemberVO ordMemberVO) {
         //先获该用户的取订单id，然后查询每条订单的状态，订单的金额 以及获取订单的商品信息
         List<OrderInfoRE> orderInfoREList = new ArrayList<>();
-        List<Order> orderList = orderDao.getOrderByMemberVO(ordMemberVO);
+        List<OrderRE> orderList = orderDao.getOrderByMemberVO(ordMemberVO);
         if (CollectionUtils.isEmpty(orderList)) {
             return orderInfoREList;
         }
         OrderInfoRE orderInfoRE;
-        for (Order order : orderList) {
+        for (OrderRE order : orderList) {
             orderInfoRE = new OrderInfoRE();
             orderInfoRE.setOrderNum(order.getOrderNum());
             orderInfoRE.setStatus(order.getStatus().longValue());
@@ -509,15 +510,15 @@ public class OrderServiceImpl implements OrderService {
             orderInfoRE.setReceiptName(order.getReceiptName());
             orderInfoRE.setReceiptTel(order.getReceiptTel());
             orderInfoRE.setReceiptAddress(order.getReceiptAddress());
-            List<OrderGoodsDetailRe> orderGodsList = getOrderGdsByIds(order.getId().intValue());
-            orderInfoRE.setOrderGoodsDetailRe(orderGodsList);
+            List<OrderGoodsDetailRE> orderGodsList = getOrderGdsByIds(order.getId().intValue());
+            orderInfoRE.setOrderGoodsDetailRE(orderGodsList);
             orderInfoREList.add(orderInfoRE);
         }
-        OrdOrderVo ordOrderVo = new OrdOrderVo();
-        ordOrderVo.setMemberId(ordMemberVO.getMemberId());
-        ordOrderVo.setStatus(ordMemberVO.getStatus());
+        OrdOrderVO ordOrderVO = new OrdOrderVO();
+        ordOrderVO.setMemberId(ordMemberVO.getMemberId());
+        ordOrderVO.setStatus(ordMemberVO.getStatus());
         orderInfoRE = new OrderInfoRE();
-        orderInfoRE.setTotalOrderNum(orderDao.getOrderTotal(ordOrderVo).longValue());
+        orderInfoRE.setTotalOrderNum(orderDao.getOrderTotal(ordOrderVO).longValue());
         orderInfoREList.add(orderInfoRE);
         return orderInfoREList;
     }
