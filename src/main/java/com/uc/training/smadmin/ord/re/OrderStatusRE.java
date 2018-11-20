@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @version 1.0
  * @date 2018/10/25  17:58
  */
-public class OrderStatusRe implements Serializable {
+public class OrderStatusRE implements Serializable {
   private static final long serialVersionUID = -6912839796213052826L;
 
   /**order枚举key**/

@@ -1,7 +1,7 @@
 package com.uc.training.smadmin.ord.dao;
 
 import com.uc.training.smadmin.ord.model.CartGoods;
-import com.uc.training.smadmin.ord.vo.OrdCartGoodsVo;
+import com.uc.training.smadmin.ord.vo.OrdCartGoodsVO;
 import com.uc.training.smadmin.ord.vo.OrdGoodsVO;
 
 import java.util.List;
@@ -46,10 +46,10 @@ public interface CartGoodsDao {
 	/**
 	 * 保存
 	 *
-	 * @param ordCartGoodsVo (参数对象)
+	 * @param ordCartGoodsVO (参数对象)
 	 * @return 更改条数
 	 */
-	void insertCartGoods(OrdCartGoodsVo ordCartGoodsVo);
+	void insertCartGoods(OrdCartGoodsVO ordCartGoodsVO);
 
 	/**
 	 * 更新
@@ -62,17 +62,17 @@ public interface CartGoodsDao {
 	/**
 	 * 删除
 	 *
-	 * @param ordCartGoodsVo
+	 * @param ordCartGoodsVO
 	 * @return 更改条数
 	 */
-	int deleteCartGoods(OrdCartGoodsVo ordCartGoodsVo);
+	int deleteCartGoods(OrdCartGoodsVO ordCartGoodsVO);
 
 	/**
 	 * 更新商品数量
 	 *
-	 * @param ordCartGoodsVo
+	 * @param ordCartGoodsVO
 	 * @return 更改条数
 	 */
-	int updataCartGoodsNum(OrdCartGoodsVo ordCartGoodsVo);
+	int updataCartGoodsNum(OrdCartGoodsVO ordCartGoodsVO);
 
 }

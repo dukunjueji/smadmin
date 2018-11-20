@@ -125,7 +125,7 @@
 	</select>
 
 	<!--查询订单表的总记录数-->
-	<select id="OrderCount" resultClass="java.lang.Integer" parameterClass="com.uc.training.smadmin.ord.vo.OrdOrderVo">
+	<select id="OrderCount" resultClass="java.lang.Integer" parameterClass="com.uc.training.smadmin.ord.vo.OrdOrderVO">
 		 SELECT count(1)
 		 FROM t_ord_order s
 		 WHERE
@@ -158,7 +158,7 @@
 		</update>
 
 	<!-- 通过订单编号更新 -->
-	<update id="updateOrder" parameterClass="com.uc.training.smadmin.ord.vo.OrdOrderVo">
+	<update id="updateOrder" parameterClass="com.uc.training.smadmin.ord.vo.OrdOrderVO">
 		 update t_ord_order s
 		 set
 		s.status = #status#
@@ -173,7 +173,7 @@
 		</update>
 
 	<!--查询分页-->
-	<select id="getOrderPage" parameterClass="com.uc.training.smadmin.ord.vo.OrdOrderVo" resultClass="com.uc.training.smadmin.ord.re.OrderRe">
+	<select id="getOrderPage" parameterClass="com.uc.training.smadmin.ord.vo.OrdOrderVO" resultClass="com.uc.training.smadmin.ord.re.OrderRE">
 		SELECT
 			s.id,
 			s.member_id as memberId,
@@ -216,7 +216,7 @@
 
 	</update>
 
-	<update id="memberDelOrder" parameterClass="com.uc.training.smadmin.ord.vo.OrdOrderVo">
+	<update id="memberDelOrder" parameterClass="com.uc.training.smadmin.ord.vo.OrdOrderVO">
 		UPDATE t_ord_order s
 		SET
 		s.is_delete = 1

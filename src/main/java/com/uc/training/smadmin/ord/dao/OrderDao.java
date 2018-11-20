@@ -1,8 +1,8 @@
 package com.uc.training.smadmin.ord.dao;
 import com.uc.training.smadmin.ord.model.Order;
-import com.uc.training.smadmin.ord.re.OrderRe;
+import com.uc.training.smadmin.ord.re.OrderRE;
 import com.uc.training.smadmin.ord.vo.OrdMemberVO;
-import com.uc.training.smadmin.ord.vo.OrdOrderVo;
+import com.uc.training.smadmin.ord.vo.OrdOrderVO;
 import com.uc.training.smadmin.sys.re.OrderSaleRE;
 
 import java.util.List;
@@ -56,14 +56,14 @@ public interface OrderDao {
 	 * @param orderVo
 	 * @return
 	 */
-  List<OrderRe> getOrderPage(OrdOrderVo orderVo);
+  List<OrderRE> getOrderPage(OrdOrderVO orderVo);
 
 	/**
 	 * 返回订单表的总记录数
 	 * @param orderVo
 	 * @return
 	 */
-  Integer getOrderTotal(OrdOrderVo orderVo);
+  Integer getOrderTotal(OrdOrderVO orderVo);
 
 	/**
 	 * 逻辑删除订单
@@ -75,17 +75,17 @@ public interface OrderDao {
     /**
      * 更新订单状态
      *
-     * @param ordOrderVo
+     * @param ordOrderVO
      * @return
      */
-    int updateOrder(OrdOrderVo ordOrderVo);
+    int updateOrder(OrdOrderVO ordOrderVO);
 
     /**
      * 用户删除订单
-     * @param ordOrderVo
+     * @param ordOrderVO
      * @return
      */
-    int memberDelOrder(OrdOrderVo ordOrderVo);
+    int memberDelOrder(OrdOrderVO ordOrderVO);
 
     /**
      *  根据主键id获取订单手机号

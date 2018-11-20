@@ -4,10 +4,10 @@ import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.smadmin.bd.service.MemberService;
 import com.uc.training.smadmin.gds.service.GoodsService;
-import com.uc.training.smadmin.ord.re.OrderGoodsDetailRe;
-import com.uc.training.smadmin.ord.re.OrderRe;
+import com.uc.training.smadmin.ord.re.OrderGoodsDetailRE;
+import com.uc.training.smadmin.ord.re.OrderRE;
 import com.uc.training.smadmin.ord.service.OrderService;
-import com.uc.training.smadmin.ord.vo.OrdOrderVo;
+import com.uc.training.smadmin.ord.vo.OrdOrderVO;
 import com.ycc.base.common.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -48,8 +48,8 @@ public class AdminOrderController extends BaseController {
 	@ResponseBody
 	@AccessLogin
 	@RequestMapping(value = "getOrderPage.do_", method = RequestMethod.POST)
-	public Result getOrderPage(OrdOrderVo orderVo) {
-		List<OrderRe> list;
+	public Result getOrderPage(OrdOrderVO orderVo) {
+		List<OrderRE> list;
 		int size = 5;
 		Map<String, Object> map = new HashMap<String, Object>(size);
 		list = orderService.getOrderPage(orderVo);
@@ -97,7 +97,7 @@ public class AdminOrderController extends BaseController {
 	@AccessLogin
 	@RequestMapping(value = "getOrderGoods.do_", method = RequestMethod.POST)
 	public Result getOrderGoods(Integer id) {
-		List<OrderGoodsDetailRe> list;
+		List<OrderGoodsDetailRE> list;
 		try {
 			list = orderService.getOrderGdsById(id);
 		} catch (Exception e) {
@@ -109,17 +109,17 @@ public class AdminOrderController extends BaseController {
 	/**
 	 * 根据订单号更新状态
 	 *
-	 * @param ordOrderVo
+	 * @param ordOrderVO
 	 * @return
 	 * @author hhj
 	 */
 	@ResponseBody
 	@AccessLogin
 	@RequestMapping(value = "upOrderStatus.do_", method = RequestMethod.POST)
-	public Result upOrderStatus(OrdOrderVo ordOrderVo) {
-		ordOrderVo.setModifyEmp(getUid());
+	public Result upOrderStatus(OrdOrderVO ordOrderVO) {
+		ordOrderVO.setModifyEmp(getUid());
 		//取消订单回退库存
-		if (orderService.updateOrder(ordOrderVo) > 0) {
+		if (orderService.updateOrder(ordOrderVO) > 0) {
 			return Result.getSuccessResult(null);
 		}
 		return Result.getBusinessException("更新失败", null);

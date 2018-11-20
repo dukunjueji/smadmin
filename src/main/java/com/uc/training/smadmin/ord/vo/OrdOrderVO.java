@@ -11,7 +11,7 @@ import java.io.Serializable;
  * @date 2018/10/15
  */
 
-public class OrdOrderVo extends BaseDomain implements Serializable {
+public class OrdOrderVO extends BaseDomain implements Serializable {
     /**
      * 收货人姓名
      */
@@ -49,7 +49,6 @@ public class OrdOrderVo extends BaseDomain implements Serializable {
 
     /**
      * 会员id
-     *
      */
     private Long memberId;
 
@@ -118,4 +117,17 @@ public class OrdOrderVo extends BaseDomain implements Serializable {
         this.orderId = orderId;
     }
 
+    @Override
+    public String toString() {
+        return "OrdOrderVO{" +
+                "receiptName='" + receiptName + '\'' +
+                ", receiptTel='" + receiptTel + '\'' +
+                ", receiptAddress='" + receiptAddress + '\'' +
+                ", status=" + status +
+                ", orderNum='" + orderNum + '\'' +
+                ", orderListStr='" + orderListStr + '\'' +
+                ", orderId=" + orderId +
+                ", memberId=" + memberId +
+                '}';
+    }
 }

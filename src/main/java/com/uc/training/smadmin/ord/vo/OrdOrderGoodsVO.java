@@ -14,7 +14,7 @@ import java.util.List;
  * @author DK
  * @date 2018/10/15
  */
-public class OrdOrderGoodsVo implements Serializable {
+public class OrdOrderGoodsVO implements Serializable {
     /**
      * id
      */
@@ -117,7 +117,7 @@ public class OrdOrderGoodsVo implements Serializable {
      */
     private String orderInfoList;
 
-    private List<OrdOrderGoodsVo> list;
+    private List<OrdOrderGoodsVO> list;
 
     public BigDecimal getPayPrice() {
         return payPrice;
@@ -127,11 +127,11 @@ public class OrdOrderGoodsVo implements Serializable {
         this.payPrice = payPrice;
     }
 
-    public List<OrdOrderGoodsVo> getList() {
-        return (List<OrdOrderGoodsVo>) JSONArray.toList(JSONArray.fromObject(this.orderInfoList), new OrdOrderGoodsVo(), new JsonConfig());
+    public List<OrdOrderGoodsVO> getList() {
+        return (List<OrdOrderGoodsVO>) JSONArray.toList(JSONArray.fromObject(this.orderInfoList), new OrdOrderGoodsVO(), new JsonConfig());
     }
 
-    public void setList(List<OrdOrderGoodsVo> list) {
+    public void setList(List<OrdOrderGoodsVO> list) {
         this.list = list;
     }
 

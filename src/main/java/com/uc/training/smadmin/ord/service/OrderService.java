@@ -3,15 +3,15 @@ package com.uc.training.smadmin.ord.service;
 import com.uc.training.smadmin.ord.model.CartGoods;
 import com.uc.training.smadmin.ord.model.Order;
 import com.uc.training.smadmin.ord.re.OrderConfirmRE;
-import com.uc.training.smadmin.ord.re.OrderGoodsDetailRe;
+import com.uc.training.smadmin.ord.re.OrderGoodsDetailRE;
 import com.uc.training.smadmin.ord.re.OrderInfoRE;
-import com.uc.training.smadmin.ord.re.OrderRe;
-import com.uc.training.smadmin.ord.re.OrderStatusRe;
-import com.uc.training.smadmin.ord.vo.OrdCartGoodsVo;
+import com.uc.training.smadmin.ord.re.OrderRE;
+import com.uc.training.smadmin.ord.re.OrderStatusRE;
+import com.uc.training.smadmin.ord.vo.OrdCartGoodsVO;
 import com.uc.training.smadmin.ord.vo.OrdGoodsVO;
 import com.uc.training.smadmin.ord.vo.OrdMemberVO;
-import com.uc.training.smadmin.ord.vo.OrdOrderGoodsVo;
-import com.uc.training.smadmin.ord.vo.OrdOrderVo;
+import com.uc.training.smadmin.ord.vo.OrdOrderGoodsVO;
+import com.uc.training.smadmin.ord.vo.OrdOrderVO;
 import com.uc.training.smadmin.sys.re.OrderSaleRE;
 
 import java.util.List;
@@ -46,7 +46,7 @@ public interface OrderService {
      * @return
      */
 
-    List<OrdOrderGoodsVo> getOrderGoodsById(List<OrdOrderGoodsVo> orderGodsList);
+    List<OrdOrderGoodsVO> getOrderGoodsById(List<OrdOrderGoodsVO> orderGodsList);
 
     /**
      * 通过会员id来查找
@@ -60,17 +60,17 @@ public interface OrderService {
     /**
      * 加入购物车
      *
-     * @param ordCartGoodsVo
+     * @param ordCartGoodsVO
      */
-    void addCarGoods(OrdCartGoodsVo ordCartGoodsVo);
+    void addCarGoods(OrdCartGoodsVO ordCartGoodsVO);
 
     /**
      * 删除购物车商品
      *
-     * @param ordCartGoodsVo
+     * @param ordCartGoodsVO
      * @return
      */
-    int deleteCarGoods(OrdCartGoodsVo ordCartGoodsVo);
+    int deleteCarGoods(OrdCartGoodsVO ordCartGoodsVO);
 
     /**
      * 提交订单信息
@@ -78,16 +78,16 @@ public interface OrderService {
      * @param orderInfoListNow
      * @return
      */
-    List<OrderConfirmRE> confirmOrderInfo(List<OrdOrderGoodsVo> orderInfoListNow);
+    List<OrderConfirmRE> confirmOrderInfo(List<OrdOrderGoodsVO> orderInfoListNow);
 
 
     /**
      * 更新购物车商品数量
      *
-     * @param ordCartGoodsVo
+     * @param ordCartGoodsVO
      * @return 返回影响条数
      */
-    int updataCarGoodsNum(OrdCartGoodsVo ordCartGoodsVo);
+    int updataCarGoodsNum(OrdCartGoodsVO ordCartGoodsVO);
 
     /**
      * 查找指定会员订单总记录数
@@ -103,7 +103,7 @@ public interface OrderService {
      * @param orderVo
      * @return
      */
-    List<OrderRe> getOrderPage(OrdOrderVo orderVo);
+    List<OrderRE> getOrderPage(OrdOrderVO orderVo);
 
     /**
      * 获取总记录数
@@ -111,14 +111,14 @@ public interface OrderService {
      * @param orderVo
      * @return
      */
-    Integer getOrderTotal(OrdOrderVo orderVo);
+    Integer getOrderTotal(OrdOrderVO orderVo);
 
     /**
      * 获取订单枚举选项
      *
      * @return
      */
-    List<OrderStatusRe> getOrderEnum();
+    List<OrderStatusRE> getOrderEnum();
 
     /**
      * 批量逻辑删除订单
@@ -131,10 +131,10 @@ public interface OrderService {
     /**
      * 更新订单状态
      *
-     * @param ordOrderVo
+     * @param ordOrderVO
      * @return int
      */
-    int updateOrder(OrdOrderVo ordOrderVo);
+    int updateOrder(OrdOrderVO ordOrderVO);
 
     /**
      * 根据订单ID获取订单商品详情
@@ -142,7 +142,7 @@ public interface OrderService {
      * @param id
      * @return
      */
-    List<OrderGoodsDetailRe> getOrderGdsById(Integer id);
+    List<OrderGoodsDetailRE> getOrderGdsById(Integer id);
 
     /**
      * 根据主键id获取手机号
@@ -168,7 +168,7 @@ public interface OrderService {
      * @param orderId
      * @return
      */
-    List<OrdOrderGoodsVo> getOrderGoods(List<OrdOrderGoodsVo> orderGodsList, Long orderId);
+    List<OrdOrderGoodsVO> getOrderGoods(List<OrdOrderGoodsVO> orderGodsList, Long orderId);
 
     /**
      * 当年每个月销售额

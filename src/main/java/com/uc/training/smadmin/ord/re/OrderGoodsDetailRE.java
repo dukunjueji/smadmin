@@ -10,7 +10,7 @@ import java.math.BigDecimal;
  * @version 1.0
  * @date 2018/10/26  18:28
  */
-public class OrderGoodsDetailRe implements Serializable {
+public class OrderGoodsDetailRE implements Serializable {
     private static final long serialVersionUID = -6912839796213052826L;
     /**
      * 图片

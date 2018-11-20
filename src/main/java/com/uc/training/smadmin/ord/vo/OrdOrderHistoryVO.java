@@ -8,6 +8,6 @@ import java.io.Serializable;
  * @date 2018/10/15
  */
 
-public class OrdOrderHistoryVo implements Serializable {
+public class OrdOrderHistoryVO implements Serializable {
 
 }

@@ -10,7 +10,7 @@ import java.util.Date;
  * @version 1.0
  * @date 2018/10/25  10:36
  */
-public class OrderRe implements Serializable {
+public class OrderRE implements Serializable {
   private static final long serialVersionUID = -6912839796213052826L;
 
   /**主键id**/

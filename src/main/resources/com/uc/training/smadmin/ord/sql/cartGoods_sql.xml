@@ -94,7 +94,7 @@
 	</select>
 
 	<!-- 插入 -->
-	<insert id="insertCartGoods" parameterClass="com.uc.training.smadmin.ord.vo.OrdCartGoodsVo">
+	<insert id="insertCartGoods" parameterClass="com.uc.training.smadmin.ord.vo.OrdCartGoodsVO">
 		 insert into t_ord_cart_goods
 	  (
 		goods_property_id,
@@ -107,7 +107,7 @@
 		)
 	</insert>
 
-	<delete id="delCartGoods" parameterClass="com.uc.training.smadmin.ord.vo.OrdCartGoodsVo">
+	<delete id="delCartGoods" parameterClass="com.uc.training.smadmin.ord.vo.OrdCartGoodsVO">
 		DELETE FROM t_ord_cart_goods
 		WHERE
 		1=1
@@ -129,7 +129,7 @@
 		where id=#id#
 		</update>
 
-	<update id="upCartGoodsNum" parameterClass="com.uc.training.smadmin.ord.vo.OrdCartGoodsVo">
+	<update id="upCartGoodsNum" parameterClass="com.uc.training.smadmin.ord.vo.OrdCartGoodsVO">
 		UPDATE t_ord_cart_goods
 		SET
 		goods_num = #num#

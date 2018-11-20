@@ -11,7 +11,7 @@ import java.math.BigDecimal;
  */
 
 
-public class OrdCartGoodsVo implements Serializable {
+public class OrdCartGoodsVO implements Serializable {
 
   /**
    * 会员id

@@ -2,7 +2,7 @@ package com.uc.training.smadmin.ord.dao.impl;
 
 import com.uc.training.smadmin.ord.dao.CartGoodsDao;
 import com.uc.training.smadmin.ord.model.CartGoods;
-import com.uc.training.smadmin.ord.vo.OrdCartGoodsVo;
+import com.uc.training.smadmin.ord.vo.OrdCartGoodsVO;
 import com.uc.training.smadmin.ord.vo.OrdGoodsVO;
 import com.zuche.framework.dao.CarIsIbatisDaoImpl;
 import org.springframework.stereotype.Repository;
@@ -33,8 +33,8 @@ public class CartGoodsDaoImpl extends CarIsIbatisDaoImpl implements CartGoodsDao
 	}
 
 	@Override
-	public void insertCartGoods(OrdCartGoodsVo ordCartGoodsVo) {
-		this.insert("com.uc.training.smadmin.ord.dao.CartGoodsDao.insertCartGoods", ordCartGoodsVo);
+	public void insertCartGoods(OrdCartGoodsVO ordCartGoodsVO) {
+		this.insert("com.uc.training.smadmin.ord.dao.CartGoodsDao.insertCartGoods", ordCartGoodsVO);
 	}
 
 	@Override
@@ -43,13 +43,13 @@ public class CartGoodsDaoImpl extends CarIsIbatisDaoImpl implements CartGoodsDao
 	}
 
 	@Override
-	public int deleteCartGoods(OrdCartGoodsVo ordCartGoodsVo) {
-		return this.deleteObject("com.uc.training.smadmin.ord.dao.CartGoodsDao.delCartGoods", ordCartGoodsVo);
+	public int deleteCartGoods(OrdCartGoodsVO ordCartGoodsVO) {
+		return this.deleteObject("com.uc.training.smadmin.ord.dao.CartGoodsDao.delCartGoods", ordCartGoodsVO);
 	}
 
 	@Override
-	public int updataCartGoodsNum(OrdCartGoodsVo ordCartGoodsVo) {
-		return this.update("com.uc.training.smadmin.ord.dao.CartGoodsDao.upCartGoodsNum", ordCartGoodsVo);
+	public int updataCartGoodsNum(OrdCartGoodsVO ordCartGoodsVO) {
+		return this.update("com.uc.training.smadmin.ord.dao.CartGoodsDao.upCartGoodsNum", ordCartGoodsVO);
 	}
 
 	@Override

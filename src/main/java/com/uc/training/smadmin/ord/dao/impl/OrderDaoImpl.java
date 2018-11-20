@@ -2,9 +2,9 @@ package com.uc.training.smadmin.ord.dao.impl;
 
 import com.uc.training.smadmin.ord.dao.OrderDao;
 import com.uc.training.smadmin.ord.model.Order;
-import com.uc.training.smadmin.ord.re.OrderRe;
+import com.uc.training.smadmin.ord.re.OrderRE;
 import com.uc.training.smadmin.ord.vo.OrdMemberVO;
-import com.uc.training.smadmin.ord.vo.OrdOrderVo;
+import com.uc.training.smadmin.ord.vo.OrdOrderVO;
 import com.uc.training.smadmin.sys.re.OrderSaleRE;
 import com.zuche.framework.dao.CarIsIbatisDaoImpl;
 import org.springframework.stereotype.Repository;
@@ -44,12 +44,12 @@ public class OrderDaoImpl extends CarIsIbatisDaoImpl implements OrderDao {
 	 }
 
 	@Override
-	public  List<OrderRe> getOrderPage(OrdOrderVo orderVo) {
+	public  List<OrderRE> getOrderPage(OrdOrderVO orderVo) {
 		return this.queryForList("com.uc.training.smadmin.ord.dao.OrderDao.getOrderPage",orderVo,orderVo.getStartIndex(),orderVo.getEndIndex());
 	}
 
   @Override
-  public Integer getOrderTotal(OrdOrderVo orderVo) {
+  public Integer getOrderTotal(OrdOrderVO orderVo) {
     return (Integer) this.queryForObject("com.uc.training.smadmin.ord.dao.OrderDao.OrderCount",orderVo);
   }
 
@@ -60,19 +60,19 @@ public class OrderDaoImpl extends CarIsIbatisDaoImpl implements OrderDao {
   }
 
 	@Override
-	public int updateOrder(OrdOrderVo ordOrderVo) {
-		return this.update("com.uc.training.smadmin.ord.dao.OrderDao.updateOrder",ordOrderVo);
+	public int updateOrder(OrdOrderVO ordOrderVO) {
+		return this.update("com.uc.training.smadmin.ord.dao.OrderDao.updateOrder", ordOrderVO);
 	}
 
 	/**
 	 * 用户删除订单
 	 *
-	 * @param ordOrderVo
+	 * @param ordOrderVO
 	 * @return
 	 */
 	@Override
-	public int memberDelOrder(OrdOrderVo ordOrderVo) {
-		return this.update("com.uc.training.smadmin.ord.dao.OrderDao.memberDelOrder",ordOrderVo);
+	public int memberDelOrder(OrdOrderVO ordOrderVO) {
+		return this.update("com.uc.training.smadmin.ord.dao.OrderDao.memberDelOrder", ordOrderVO);
 	}
 
 	/**
