@@ -18,8 +18,8 @@ import com.uc.training.smadmin.gds.service.GoodsService;
 import com.uc.training.smadmin.gds.vo.GoodsStokeVO;
 import com.uc.training.smadmin.mq.MqProducer;
 import com.uc.training.smadmin.mq.vo.MqVO;
-import com.uc.training.smadmin.ord.model.Order;
 import com.uc.training.smadmin.ord.re.OrderConfirmRE;
+import com.uc.training.smadmin.ord.re.OrderRE;
 import com.uc.training.smadmin.ord.service.OrderService;
 import com.uc.training.smadmin.ord.vo.OrdMemberVO;
 import com.uc.training.smadmin.ord.vo.OrdOrderVO;
@@ -100,7 +100,7 @@ public class MemberServiceImpl implements MemberService {
         OrdMemberVO ordMemberVO = new OrdMemberVO();
         ordMemberVO.setOrderId(orderPayInfoNow.get(0).getOrderId());
         ordMemberVO.setMemberId(orderPayInfoNow.get(0).getMemberId());
-        List<Order> orderList = orderService.getOrderByMemberVO(ordMemberVO);
+        List<OrderRE> orderList = orderService.getOrderByMemberVO(ordMemberVO);
         if (orderList.size() <= 0) {
             return list;
         }

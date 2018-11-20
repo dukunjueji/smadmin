@@ -13,9 +13,8 @@ import com.uc.training.smadmin.gds.vo.GoodsStokeVO;
 import com.uc.training.smadmin.ord.dao.CartGoodsDao;
 import com.uc.training.smadmin.ord.dao.OrderDao;
 import com.uc.training.smadmin.ord.dao.OrderGoodsDao;
-import com.uc.training.smadmin.ord.model.CartGoods;
-import com.uc.training.smadmin.ord.model.Order;
 import com.uc.training.smadmin.ord.model.OrderGoods;
+import com.uc.training.smadmin.ord.re.CartGoodsRE;
 import com.uc.training.smadmin.ord.re.OrderConfirmRE;
 import com.uc.training.smadmin.ord.re.OrderGoodsDetailRE;
 import com.uc.training.smadmin.ord.re.OrderInfoRE;
@@ -61,7 +60,7 @@ public class OrderServiceImpl implements OrderService {
     private AddressService addressService;
 
     @Override
-    public List<CartGoods> getCarGoodsById(Long memberId) {
+    public List<CartGoodsRE> getCarGoodsById(Long memberId) {
         return cartGoodsDao.getCartGoodsById(memberId);
     }
 
@@ -72,12 +71,13 @@ public class OrderServiceImpl implements OrderService {
      * @return
      */
     @Override
-    public List<Order> getOrderByMemberVO(OrdMemberVO ordMemberVO) {
+    public List<OrderRE> getOrderByMemberVO(OrdMemberVO ordMemberVO) {
+
         return orderDao.getOrderByMemberVO(ordMemberVO);
     }
 
     @Override
-    public List<CartGoods> getCarGoodsByIds(OrdGoodsVO ordGoodsVO) {
+    public List<CartGoodsRE> getCarGoodsByIds(OrdGoodsVO ordGoodsVO) {
         return cartGoodsDao.getCarGoodsByIds(ordGoodsVO);
     }
 
@@ -101,7 +101,7 @@ public class OrderServiceImpl implements OrderService {
         } else {
             return list;
         }
-        List<CartGoods> goodsNumList = cartGoodsDao.getCarGoodsByIds(ordGoodsVO);
+        List<CartGoodsRE> goodsNumList = cartGoodsDao.getCarGoodsByIds(ordGoodsVO);
         OrdOrderGoodsVO ordOrderGoodsVO;
         for (int i = 0; i < orderGodsList.size(); i++) {
             ordOrderGoodsVO = new OrdOrderGoodsVO();
@@ -269,7 +269,7 @@ public class OrderServiceImpl implements OrderService {
             propertyIds.add(orderInfoListNow.get(i).getPropertyId());
         }
         ordGoodsVO.setGoodsPropertyIdList(propertyIds);
-        List<CartGoods> goodsNumList = cartGoodsDao.getCarGoodsByIds(ordGoodsVO);
+        List<CartGoodsRE> goodsNumList = cartGoodsDao.getCarGoodsByIds(ordGoodsVO);
         OrdOrderGoodsVO ordOrderGoodsVO;
         Double memberDiscountPoint = goodsService.getMemberDiscountPoint(orderInfoListNow.get(orderInfoListNow.size() - 2).getMemberId());
         if (memberDiscountPoint == null) {
@@ -300,7 +300,7 @@ public class OrderServiceImpl implements OrderService {
             return list;
         }
         //插入用户订单表
-        Order order = new Order();
+        OrderRE order = new OrderRE();
         order.setMemberId(orderInfoListNow.get(orderInfoListNow.size() - a).getMemberId());
         order.setOrderPrice(orderInfoListNow.get(orderInfoListNow.size() - 1).getOrderPrice());
         order.setPayPrice(orderInfoListNow.get(orderInfoListNow.size() - 1).getTotalPrice());
@@ -495,12 +495,12 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderInfoRE> getOrderInfoListByMemberId(OrdMemberVO ordMemberVO) {
         //先获该用户的取订单id，然后查询每条订单的状态，订单的金额 以及获取订单的商品信息
         List<OrderInfoRE> orderInfoREList = new ArrayList<>();
-        List<Order> orderList = orderDao.getOrderByMemberVO(ordMemberVO);
+        List<OrderRE> orderList = orderDao.getOrderByMemberVO(ordMemberVO);
         if (CollectionUtils.isEmpty(orderList)) {
             return orderInfoREList;
         }
         OrderInfoRE orderInfoRE;
-        for (Order order : orderList) {
+        for (OrderRE order : orderList) {
             orderInfoRE = new OrderInfoRE();
             orderInfoRE.setOrderNum(order.getOrderNum());
             orderInfoRE.setStatus(order.getStatus().longValue());

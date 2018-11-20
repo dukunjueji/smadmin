@@ -11,11 +11,11 @@ import com.uc.training.smadmin.gds.re.GoodsDetailRE;
 import com.uc.training.smadmin.gds.service.GoodsService;
 import com.uc.training.smadmin.mq.vo.MqVO;
 import com.uc.training.smadmin.ord.dao.OrderDao;
-import com.uc.training.smadmin.ord.model.CartGoods;
-import com.uc.training.smadmin.ord.model.Order;
+import com.uc.training.smadmin.ord.re.CartGoodsRE;
 import com.uc.training.smadmin.ord.re.OrderConfirmRE;
 import com.uc.training.smadmin.ord.re.OrderGoodsDetailRE;
 import com.uc.training.smadmin.ord.re.OrderInfoRE;
+import com.uc.training.smadmin.ord.re.OrderRE;
 import com.uc.training.smadmin.ord.service.OrderService;
 import com.uc.training.smadmin.ord.vo.OrdCartGoodsVO;
 import com.uc.training.smadmin.ord.vo.OrdGoodsVO;
@@ -69,30 +69,30 @@ public class OrderController extends BaseController {
     @RequestMapping(value = "getCartList.do_", method = RequestMethod.GET)
     public Result getCartgds() {
         List<OrdCartGoodsVO> list = new ArrayList<>();
-        List<CartGoods> cartList = orderService.getCarGoodsById(getUid());
+        List<CartGoodsRE> cartList = orderService.getCarGoodsById(getUid());
         //判空
         if (CollectionUtils.isEmpty(cartList)) {
             return Result.getSuccessResult(null);
         }
         OrdCartGoodsVO ordCartgoodsVO;
         GoodsDetailRE gdDTO;
-        for (CartGoods cartGoods : cartList) {
+        for (CartGoodsRE cartGoodsRE : cartList) {
             ordCartgoodsVO = new OrdCartGoodsVO();
-            gdDTO = goodsService.getGoodsDetailByPropertyId(cartGoods.getGoodsPropertyId());
+            gdDTO = goodsService.getGoodsDetailByPropertyId(cartGoodsRE.getGoodsPropertyId());
             if (gdDTO != null) {
-                ordCartgoodsVO.setCartId(cartGoods.getId());
+                ordCartgoodsVO.setCartId(cartGoodsRE.getId());
                 ordCartgoodsVO.setGoodsId(gdDTO.getGoodsId());
                 ordCartgoodsVO.setGdsName(gdDTO.getName());
                 if (!CollectionUtils.isEmpty(gdDTO.getPicUrl())) {
                     ordCartgoodsVO.setGdsUrl(gdDTO.getPicUrl().get(0).getPicUrl());
                 }
-                ordCartgoodsVO.setPropertyId(cartGoods.getGoodsPropertyId());
+                ordCartgoodsVO.setPropertyId(cartGoodsRE.getGoodsPropertyId());
                 ordCartgoodsVO.setProperty(gdDTO.getProperty());
                 ordCartgoodsVO.setSalePrice(gdDTO.getSalePrice());
                 ordCartgoodsVO.setDiscountPrice(gdDTO.getDiscountPrice());
                 ordCartgoodsVO.setStatus(gdDTO.getStatus());
                 ordCartgoodsVO.setIsDiscount(gdDTO.getIsDiscount());
-                ordCartgoodsVO.setNum(cartGoods.getGoodsNum().longValue());
+                ordCartgoodsVO.setNum(cartGoodsRE.getGoodsNum().longValue());
                 ordCartgoodsVO.setStock(gdDTO.getStock());
                 list.add(ordCartgoodsVO);
             } else {
@@ -191,7 +191,7 @@ public class OrderController extends BaseController {
         if (ordCartGoodsVO.getNum() <= 0) {
             return Result.getBusinessException("商品数量不可以少于1个", null);
         }
-        List<CartGoods> list;
+        List<CartGoodsRE> list;
         list = orderService.getCarGoodsById(getUid());
         GoodsDetailRE gdDTO = goodsService.getGoodsDetailByPropertyId(ordCartGoodsVO.getPropertyId());
         if (gdDTO.getStatus().longValue() == GoodsStatusEnum.GOODS_IS_SHELVES.getType().longValue() || gdDTO.getIsDelete().longValue() == GoodsStatusEnum.GOODS_DELETE.getType().longValue()) {
@@ -201,7 +201,7 @@ public class OrderController extends BaseController {
             return Result.getBusinessException("添加数量超过库存量", null);
         }
         if (!CollectionUtils.isEmpty(list)) {
-            for (CartGoods cartGds : list) {
+            for (CartGoodsRE cartGds : list) {
                 //判断该商品是否存在
                 if (cartGds.getGoodsPropertyId().equals(ordCartGoodsVO.getPropertyId())) {
                     //如果存在增加数量
@@ -307,7 +307,7 @@ public class OrderController extends BaseController {
         OrdMemberVO ordMemberVO = new OrdMemberVO();
         ordMemberVO.setMemberId(orderPayInfoNow.get(0).getMemberId());
         ordMemberVO.setOrderId(orderPayInfoNow.get(0).getOrderId());
-        List<Order> order = orderService.getOrderByMemberVO(ordMemberVO);
+        List<OrderRE> order = orderService.getOrderByMemberVO(ordMemberVO);
         if (!CollectionUtils.isEmpty(order)) {
             if (order.get(0).getStatus() != 1 || !order.get(0).getMemberId().equals(getUid())) {
                 return Result.getSuccessResult("支付失败");
@@ -350,12 +350,12 @@ public class OrderController extends BaseController {
         }
         ordGoodsVO.setMemberId(getUid());
         ordGoodsVO.setList(listId);
-        List<CartGoods> cartList = orderService.getCarGoodsByIds(ordGoodsVO);
+        List<CartGoodsRE> cartList = orderService.getCarGoodsByIds(ordGoodsVO);
         GoodsDetailRE gdDTO;
         if (CollectionUtils.isEmpty(cartList)) {
             return Result.getBusinessException("您选择的商品已丢失，请重新到商品页面添加！！", null);
         } else {
-            for (CartGoods cargd : cartList) {
+            for (CartGoodsRE cargd : cartList) {
                 if (cargd.getGoodsNum() <= 0) {
                     return Result.getBusinessException("所选商品不可以小于1一个!", null);
                 }

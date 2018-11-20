@@ -1,7 +1,7 @@
 package com.uc.training.smadmin.ord.dao.impl;
 
 import com.uc.training.smadmin.ord.dao.CartGoodsDao;
-import com.uc.training.smadmin.ord.model.CartGoods;
+import com.uc.training.smadmin.ord.re.CartGoodsRE;
 import com.uc.training.smadmin.ord.vo.OrdCartGoodsVO;
 import com.uc.training.smadmin.ord.vo.OrdGoodsVO;
 import com.zuche.framework.dao.CarIsIbatisDaoImpl;
@@ -18,12 +18,12 @@ import java.util.List;
 public class CartGoodsDaoImpl extends CarIsIbatisDaoImpl implements CartGoodsDao {
 
 	@Override
-	public List<CartGoods> getCartGoodsById(Long id) {
-		return (List<CartGoods>) this.queryForList("com.uc.training.smadmin.ord.dao.CartGoodsDao.getCartGoodsById", id);
+	public List<CartGoodsRE> getCartGoodsById(Long id) {
+		return (List<CartGoodsRE>) this.queryForList("com.uc.training.smadmin.ord.dao.CartGoodsDao.getCartGoodsById", id);
 	}
 
 	@Override
-	public List<CartGoods> queryCartGoodsList() {
+	public List<com.uc.training.smadmin.ord.re.CartGoodsRE> queryCartGoodsList() {
 		return this.queryForList("com.uc.training.smadmin.ord.dao.CartGoodsDao.queryCartGoodsList");
 	}
 
@@ -38,7 +38,7 @@ public class CartGoodsDaoImpl extends CarIsIbatisDaoImpl implements CartGoodsDao
 	}
 
 	@Override
-	public int updateCartGoodsById(CartGoods record) {
+	public int updateCartGoodsById(CartGoodsRE record) {
 		return this.update("com.uc.training.smadmin.ord.dao.CartGoodsDao.updateCartGoodsById", record);
 	}
 
@@ -53,7 +53,7 @@ public class CartGoodsDaoImpl extends CarIsIbatisDaoImpl implements CartGoodsDao
 	}
 
 	@Override
-	public List<CartGoods> getCarGoodsByIds(OrdGoodsVO ordGoodsVO) {
+	public List<CartGoodsRE> getCarGoodsByIds(OrdGoodsVO ordGoodsVO) {
 		return this.queryForList("com.uc.training.smadmin.ord.dao.CartGoodsDao.checkCartGoodsList", ordGoodsVO);
 	}
 }

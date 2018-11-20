@@ -1,8 +1,7 @@
 package com.uc.training.smadmin.ord.dao.impl;
 
 import com.uc.training.smadmin.ord.dao.OrderDao;
-import com.uc.training.smadmin.ord.model.Order;
-import com.uc.training.smadmin.ord.re.OrderRE;
+import com.uc.training.smadmin.ord.model.OrderRE;
 import com.uc.training.smadmin.ord.vo.OrdMemberVO;
 import com.uc.training.smadmin.ord.vo.OrdOrderVO;
 import com.uc.training.smadmin.sys.re.OrderSaleRE;
@@ -19,12 +18,12 @@ import java.util.List;
 public class OrderDaoImpl extends CarIsIbatisDaoImpl implements OrderDao {
 
 	 @Override
-	 public List<Order> getOrderByMemberVO(OrdMemberVO ordMemberVO){
+	 public List<com.uc.training.smadmin.ord.re.OrderRE> getOrderByMemberVO(OrdMemberVO ordMemberVO){
 		  return this.queryForList("com.uc.training.smadmin.ord.dao.OrderDao.getOrderByMemberVO", ordMemberVO);
 	 }
 
 	 @Override
-	 public List<Order>  queryOrderList(){
+	 public List<OrderRE>  queryOrderList(){
 		  return this.queryForList("com.uc.training.smadmin.ord.dao.OrderDao.queryOrderList");
 	 }
 
@@ -34,17 +33,17 @@ public class OrderDaoImpl extends CarIsIbatisDaoImpl implements OrderDao {
 	 }
 
 	 @Override
-	public Long insertOrder( Order record ){
+	public Long insertOrder( com.uc.training.smadmin.ord.re.OrderRE record ){
 		  return (Long) this.insert("com.uc.training.smadmin.ord.dao.OrderDao.insertOrder", record);
 	 }
 
 	 @Override
-	public int updateOrderById( Order record ){
+	public int updateOrderById( com.uc.training.smadmin.ord.re.OrderRE record ){
 		  return this.update("com.uc.training.smadmin.ord.dao.OrderDao.updateOrderById", record);
 	 }
 
 	@Override
-	public  List<OrderRE> getOrderPage(OrdOrderVO orderVo) {
+	public  List<com.uc.training.smadmin.ord.re.OrderRE> getOrderPage(OrdOrderVO orderVo) {
 		return this.queryForList("com.uc.training.smadmin.ord.dao.OrderDao.getOrderPage",orderVo,orderVo.getStartIndex(),orderVo.getEndIndex());
 	}
 

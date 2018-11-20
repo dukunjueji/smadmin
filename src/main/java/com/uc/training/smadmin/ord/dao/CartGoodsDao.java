@@ -1,6 +1,6 @@
 package com.uc.training.smadmin.ord.dao;
 
-import com.uc.training.smadmin.ord.model.CartGoods;
+import com.uc.training.smadmin.ord.re.CartGoodsRE;
 import com.uc.training.smadmin.ord.vo.OrdCartGoodsVO;
 import com.uc.training.smadmin.ord.vo.OrdGoodsVO;
 
@@ -19,7 +19,7 @@ public interface CartGoodsDao {
 	 * @param id （商品列表id）
 	 * @return 购物车商品列表
 	 */
-	List<CartGoods> getCartGoodsById(Long id);
+	List<CartGoodsRE> getCartGoodsById(Long id);
 
 	/**
 	 * 根据用户ID和购物车商品表ID获取购物车商品信息
@@ -27,14 +27,14 @@ public interface CartGoodsDao {
 	 * @param ordGoodsVO
 	 * @return
 	 */
-	List<CartGoods> getCarGoodsByIds(OrdGoodsVO ordGoodsVO);
+	List<CartGoodsRE> getCarGoodsByIds(OrdGoodsVO ordGoodsVO);
 
 	/**
 	 * 查询列表
 	 *
-	 * @return List<CartGoods>(购物车商品列表)
+	 * @return List<CartGoodsRE>(购物车商品列表)
 	 */
-	List<CartGoods> queryCartGoodsList();
+	List<com.uc.training.smadmin.ord.re.CartGoodsRE> queryCartGoodsList();
 
 	/**
 	 * 查找数据总记录数
@@ -57,7 +57,7 @@ public interface CartGoodsDao {
 	 * @param record
 	 * @return 更改条数
 	 */
-	int updateCartGoodsById(CartGoods record);
+	int updateCartGoodsById(CartGoodsRE record);
 
 	/**
 	 * 删除

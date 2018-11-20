@@ -1,6 +1,5 @@
 package com.uc.training.smadmin.ord.dao;
-import com.uc.training.smadmin.ord.model.Order;
-import com.uc.training.smadmin.ord.re.OrderRE;
+import com.uc.training.smadmin.ord.model.OrderRE;
 import com.uc.training.smadmin.ord.vo.OrdMemberVO;
 import com.uc.training.smadmin.ord.vo.OrdOrderVO;
 import com.uc.training.smadmin.sys.re.OrderSaleRE;
@@ -19,13 +18,13 @@ public interface OrderDao {
 	 * @param ordMemberVO （订单表id）
 	 * @return
 	 */
-  List<Order> getOrderByMemberVO(OrdMemberVO ordMemberVO);
+  List<com.uc.training.smadmin.ord.re.OrderRE> getOrderByMemberVO(OrdMemberVO ordMemberVO);
 
 	/**
 	 * 查询列表
 	 * @return
 	 */
-  List<Order> queryOrderList();
+  List<OrderRE> queryOrderList();
 
   /**
    * 查找指定会员订单总记录数
@@ -41,7 +40,7 @@ public interface OrderDao {
    * @param record
    * @return
    */
-  Long insertOrder(Order record);
+  Long insertOrder(com.uc.training.smadmin.ord.re.OrderRE record);
 
   /**
    * 更新
@@ -49,14 +48,14 @@ public interface OrderDao {
    * @param record
    * @return
    */
-  int updateOrderById(Order record);
+  int updateOrderById(com.uc.training.smadmin.ord.re.OrderRE record);
 
 	/**
 	 * 获取查询分页
 	 * @param orderVo
 	 * @return
 	 */
-  List<OrderRE> getOrderPage(OrdOrderVO orderVo);
+  List<com.uc.training.smadmin.ord.re.OrderRE> getOrderPage(OrdOrderVO orderVo);
 
 	/**
 	 * 返回订单表的总记录数

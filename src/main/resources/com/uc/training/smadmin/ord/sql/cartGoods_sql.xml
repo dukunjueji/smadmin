@@ -3,7 +3,7 @@
 <sqlMap namespace="com.uc.training.smadmin.ord.dao.CartGoodsDao">
 
 	<!-- 根据对象的不为null的值作为条件进行查找 -->
-	<select id="getCartGoodsById" resultClass="com.uc.training.smadmin.ord.model.CartGoods" parameterClass="long">
+	<select id="getCartGoodsById" resultClass="com.uc.training.smadmin.ord.re.CartGoodsRE" parameterClass="long">
 		 SELECT
 		 s.id AS id,
 		 s.goods_id AS goodsId,
@@ -50,7 +50,7 @@
 	</sql>
 
 	<!-- 列表查询 -->
-	<select id="queryCartGoodsList" resultClass="com.uc.training.smadmin.ord.model.CartGoods">
+	<select id="queryCartGoodsList" resultClass="com.uc.training.smadmin.ord.re.CartGoodsRE">
 		 SELECT
 		 s.goods_id AS goodsId,
 		 s.goods_property_id AS goodsPropertyId,
@@ -66,7 +66,7 @@
 		 <!--  <isNotEmpty property="rows" prepend=" "> limit #start#,#rows#</isNotEmpty>/>  -->
 	</select>
 
-	<select id="checkCartGoodsList" resultClass="com.uc.training.smadmin.ord.model.CartGoods" parameterClass="com.uc.training.smadmin.ord.vo.OrdGoodsVO">
+	<select id="checkCartGoodsList" resultClass="com.uc.training.smadmin.ord.re.CartGoodsRE" parameterClass="com.uc.training.smadmin.ord.vo.OrdGoodsVO">
 		SELECT
 		s.goods_property_id AS goodsPropertyId,
 		s.goods_num AS goodsNum
@@ -123,7 +123,7 @@
 	</delete>
 
 	<!-- 通过主键更新 -->
-	<update id="updateCartGoodsById" parameterClass="com.uc.training.smadmin.ord.model.CartGoods">
+	<update id="updateCartGoodsById" parameterClass="com.uc.training.smadmin.ord.re.CartGoodsRE">
 		 update t_ord_cart_goods set
 		goods_id = #goodsId#, goods_property_id = #goodsPropertyId#, member_id = #memberId#, goods_num = #goodsNum#, create_emp = #createEmp#, create_time = #createTime#, modify_emp = #modifyEmp#, modify_time = #modifyTime#
 		where id=#id#
