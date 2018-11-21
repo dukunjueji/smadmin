@@ -4,11 +4,8 @@ import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.smadmin.bd.service.MemberService;
 import com.uc.training.smadmin.gds.service.GoodsService;
-import com.uc.training.smadmin.ord.re.OrderGoodsDetailRe;
-import com.uc.training.smadmin.ord.re.OrderRe;
-import com.uc.training.smadmin.ord.service.OrderService;
-import com.uc.training.smadmin.ord.vo.OrdOrderVo;
 import com.ycc.base.common.Result;
+import ord.vo.OrdOrderVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,31 +26,31 @@ import java.util.Map;
 @Controller
 @RequestMapping(value = "admin/order/")
 public class AdminOrderController extends BaseController {
-	@Autowired
+	/*@Autowired
 	OrderService orderService;
 
 	@Autowired
 	GoodsService goodsService;
 
 	@Autowired
-	MemberService memberService;
+	MemberService memberService;*/
 
 	/**
 	 * 获取订单分页
 	 *
-	 * @param orderVo
+	 * @param orderVO
 	 * @return
 	 * @author hhj
 	 */
 	@ResponseBody
 	@AccessLogin
 	@RequestMapping(value = "getOrderPage.do_", method = RequestMethod.POST)
-	public Result getOrderPage(OrdOrderVo orderVo) {
+	public Result getOrderPage(OrdOrderVO orderVO) {
 		List<OrderRe> list;
 		int size = 5;
 		Map<String, Object> map = new HashMap<String, Object>(size);
-		list = orderService.getOrderPage(orderVo);
-		Integer totalSize = orderService.getOrderTotal(orderVo);
+		list = orderService.getOrderPage(orderVO);
+		Integer totalSize = orderService.getOrderTotal(orderVO);
 		map.put("orderList", list);
 		map.put("totalSize", totalSize);
 		return Result.getSuccessResult(map);
@@ -62,7 +59,7 @@ public class AdminOrderController extends BaseController {
 	/**
 	 * 批量删除订单（更改删除/进度状态）
 	 *
-	 * @param delId（orderVo.getOrderListStr()）
+	 * @param delId（orderVO.getOrderListStr()）
 	 * @return
 	 * @author hhj
 	 */
@@ -109,17 +106,17 @@ public class AdminOrderController extends BaseController {
 	/**
 	 * 根据订单号更新状态
 	 *
-	 * @param ordOrderVo
+	 * @param ordOrderVO
 	 * @return
 	 * @author hhj
 	 */
 	@ResponseBody
 	@AccessLogin
 	@RequestMapping(value = "upOrderStatus.do_", method = RequestMethod.POST)
-	public Result upOrderStatus(OrdOrderVo ordOrderVo) {
-		ordOrderVo.setModifyEmp(getUid());
+	public Result upOrderStatus(OrdOrderVO ordOrderVO) {
+		ordOrderVO.setModifyEmp(getUid());
 		//取消订单回退库存
-		if (orderService.updateOrder(ordOrderVo) > 0) {
+		if (orderService.updateOrder(ordOrderVO) > 0) {
 			return Result.getSuccessResult(null);
 		}
 		return Result.getBusinessException("更新失败", null);

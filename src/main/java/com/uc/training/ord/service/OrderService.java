@@ -1,17 +1,18 @@
-package com.uc.training.smadmin.ord.service;
+package com.uc.training.ord.service;
 
-import com.uc.training.smadmin.ord.re.CartGoodsRE;
-import com.uc.training.smadmin.ord.re.OrderConfirmRE;
-import com.uc.training.smadmin.ord.re.OrderGoodsDetailRE;
-import com.uc.training.smadmin.ord.re.OrderInfoRE;
-import com.uc.training.smadmin.ord.re.OrderRE;
-import com.uc.training.smadmin.ord.re.OrderStatusRE;
-import com.uc.training.smadmin.ord.vo.OrdCartGoodsVO;
-import com.uc.training.smadmin.ord.vo.OrdGoodsVO;
-import com.uc.training.smadmin.ord.vo.OrdMemberVO;
-import com.uc.training.smadmin.ord.vo.OrdOrderGoodsVO;
-import com.uc.training.smadmin.ord.vo.OrdOrderVO;
-import com.uc.training.smadmin.sys.re.OrderSaleRE;
+
+import ord.re.CartGoodsRE;
+import ord.re.OrderConfirmRE;
+import ord.re.OrderGoodsDetailRE;
+import ord.re.OrderInfoRE;
+import ord.re.OrderRE;
+import ord.re.OrderSaleRE;
+import ord.re.OrderStatusRE;
+import ord.vo.OrdCartGoodsVO;
+import ord.vo.OrdGoodsVO;
+import ord.vo.OrdMemberVO;
+import ord.vo.OrdOrderGoodsVO;
+import ord.vo.OrdOrderVO;
 
 import java.util.List;
 
@@ -38,7 +39,8 @@ public interface OrderService {
      */
     List<CartGoodsRE> getCarGoodsByIds(OrdGoodsVO ordGoodsVO);
 
-    /*     * 根据用户id获取订单商品信息
+    /**
+     * 根据用户id获取订单商品信息
      *
      * @param orderGodsList
      * @return
@@ -58,17 +60,17 @@ public interface OrderService {
     /**
      * 加入购物车
      *
-     * @param ordCartGoodsVO
+     * @param ordCartGoodsVo
      */
-    void addCarGoods(OrdCartGoodsVO ordCartGoodsVO);
+    void addCarGoods(OrdCartGoodsVO ordCartGoodsVo);
 
     /**
      * 删除购物车商品
      *
-     * @param ordCartGoodsVO
+     * @param ordCartGoodsVo
      * @return
      */
-    int deleteCarGoods(OrdCartGoodsVO ordCartGoodsVO);
+    int deleteCarGoods(OrdCartGoodsVO ordCartGoodsVo);
 
     /**
      * 提交订单信息
@@ -82,10 +84,10 @@ public interface OrderService {
     /**
      * 更新购物车商品数量
      *
-     * @param ordCartGoodsVO
+     * @param ordCartGoodsVo
      * @return 返回影响条数
      */
-    int updataCarGoodsNum(OrdCartGoodsVO ordCartGoodsVO);
+    int updataCarGoodsNum(OrdCartGoodsVO ordCartGoodsVo);
 
     /**
      * 查找指定会员订单总记录数
