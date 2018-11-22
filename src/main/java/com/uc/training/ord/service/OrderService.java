@@ -1,18 +1,18 @@
 package com.uc.training.ord.service;
 
 
-import ord.re.CartGoodsRE;
-import ord.re.OrderConfirmRE;
-import ord.re.OrderGoodsDetailRE;
-import ord.re.OrderInfoRE;
-import ord.re.OrderRE;
-import ord.re.OrderSaleRE;
-import ord.re.OrderStatusRE;
-import ord.vo.OrdCartGoodsVO;
-import ord.vo.OrdGoodsVO;
-import ord.vo.OrdMemberVO;
-import ord.vo.OrdOrderGoodsVO;
-import ord.vo.OrdOrderVO;
+import com.uc.training.ord.dto.OrdCartGoodsDTO;
+import com.uc.training.ord.dto.OrdGoodsDTO;
+import com.uc.training.ord.dto.OrdMemberDTO;
+import com.uc.training.ord.dto.OrdOrderDTO;
+import com.uc.training.ord.dto.OrdOrderGoodsDTO;
+import com.uc.training.ord.re.CartGoodsRE;
+import com.uc.training.ord.re.OrderConfirmRE;
+import com.uc.training.ord.re.OrderGoodsDetailRE;
+import com.uc.training.ord.re.OrderInfoRE;
+import com.uc.training.ord.re.OrderRE;
+import com.uc.training.ord.re.OrderSaleRE;
+import com.uc.training.ord.re.OrderStatusRE;
 
 import java.util.List;
 
@@ -34,10 +34,10 @@ public interface OrderService {
     /**
      * 根据用户ID和购物车商品表ID获取购物车商品信息
      *
-     * @param ordGoodsVO
+     * @param ordGoodsDTO
      * @return
      */
-    List<CartGoodsRE> getCarGoodsByIds(OrdGoodsVO ordGoodsVO);
+    List<CartGoodsRE> getCarGoodsByIds(OrdGoodsDTO ordGoodsDTO);
 
     /**
      * 根据用户id获取订单商品信息
@@ -46,31 +46,32 @@ public interface OrderService {
      * @return
      */
 
-    List<OrdOrderGoodsVO> getOrderGoodsById(List<OrdOrderGoodsVO> orderGodsList);
+    List<OrdOrderGoodsDTO> getOrderGoodsById(List<OrdOrderGoodsDTO> orderGodsList);
 
     /**
      * 通过会员id来查找
      *
-     * @param ordMemberVO （订单表id）
+     * @param ordMemberDTO （订单表id）
      * @return
      */
-    List<OrderRE> getOrderByMemberVO(OrdMemberVO ordMemberVO);
+    List<OrderRE> getOrderByMemberDTO(OrdMemberDTO ordMemberDTO);
 
 
     /**
      * 加入购物车
      *
-     * @param ordCartGoodsVo
+     * @param ordCartGoodsDTO
+     * @return
      */
-    void addCarGoods(OrdCartGoodsVO ordCartGoodsVo);
+    Integer addCarGoods(OrdCartGoodsDTO ordCartGoodsDTO);
 
     /**
      * 删除购物车商品
      *
-     * @param ordCartGoodsVo
+     * @param ordCartGoodsDTO
      * @return
      */
-    int deleteCarGoods(OrdCartGoodsVO ordCartGoodsVo);
+    Integer deleteCarGoods(OrdCartGoodsDTO ordCartGoodsDTO);
 
     /**
      * 提交订单信息
@@ -78,16 +79,16 @@ public interface OrderService {
      * @param orderInfoListNow
      * @return
      */
-    List<OrderConfirmRE> confirmOrderInfo(List<OrdOrderGoodsVO> orderInfoListNow);
+    List<OrderConfirmRE> confirmOrderInfo(List<OrdOrderGoodsDTO> orderInfoListNow);
 
 
     /**
      * 更新购物车商品数量
      *
-     * @param ordCartGoodsVo
+     * @param ordCartGoodsDTO
      * @return 返回影响条数
      */
-    int updataCarGoodsNum(OrdCartGoodsVO ordCartGoodsVo);
+    int updateCarGoodsNum(OrdCartGoodsDTO ordCartGoodsDTO);
 
     /**
      * 查找指定会员订单总记录数
@@ -100,18 +101,18 @@ public interface OrderService {
     /**
      * 获取订单查询分页
      *
-     * @param orderVo
+     * @param orderDTO
      * @return
      */
-    List<OrderRE> getOrderPage(OrdOrderVO orderVo);
+    List<OrderRE> getOrderPage(OrdOrderDTO orderDTO);
 
     /**
      * 获取总记录数
      *
-     * @param orderVo
+     * @param orderDTO
      * @return
      */
-    Integer getOrderTotal(OrdOrderVO orderVo);
+    Integer getOrderTotal(OrdOrderDTO orderDTO);
 
     /**
      * 获取订单枚举选项
@@ -131,10 +132,10 @@ public interface OrderService {
     /**
      * 更新订单状态
      *
-     * @param ordOrderVO
+     * @param ordOrderDTO
      * @return int
      */
-    int updateOrder(OrdOrderVO ordOrderVO);
+    int updateOrder(OrdOrderDTO ordOrderDTO);
 
     /**
      * 根据订单ID获取订单商品详情
@@ -155,11 +156,11 @@ public interface OrderService {
     /**
      * 获取订单信息列表
      *
-     * @param ordMemberVO
+     * @param ordMemberDTO
      * @return List<OrderInfoRE>(订单信息列表)
      */
 
-    List<OrderInfoRE> getOrderInfoListByMemberId(OrdMemberVO ordMemberVO);
+    List<OrderInfoRE> getOrderInfoListByMemberId(OrdMemberDTO ordMemberDTO);
 
     /**
      * 获取订单商品列表(已生成订单)
@@ -168,7 +169,7 @@ public interface OrderService {
      * @param orderId
      * @return
      */
-    List<OrdOrderGoodsVO> getOrderGoods(List<OrdOrderGoodsVO> orderGodsList, Long orderId);
+    List<OrdOrderGoodsDTO> getOrderGoods(List<OrdOrderGoodsDTO> orderGodsList, Long orderId);
 
     /**
      * 当年每个月销售额

@@ -7,23 +7,22 @@ import com.uc.training.common.enums.GoodsStatusEnum;
 import com.uc.training.common.enums.OrderEnum;
 import com.uc.training.common.enums.SmsTypeEnum;
 import com.uc.training.common.mq.vo.MqVO;
+import com.uc.training.ord.re.CartGoodsRE;
+import com.uc.training.ord.re.OrderConfirmRE;
+import com.uc.training.ord.re.OrderGoodsDetailRE;
+import com.uc.training.ord.re.OrderInfoRE;
+import com.uc.training.ord.re.OrderRE;
 import com.uc.training.ord.service.OrderService;
-import com.uc.training.smadmin.bd.service.MemberService;
+import com.uc.training.ord.vo.OrdCartGoodsVO;
+import com.uc.training.ord.vo.OrdGoodsVO;
+import com.uc.training.ord.vo.OrdMemberVO;
+import com.uc.training.ord.vo.OrdOrderGoodsVO;
+import com.uc.training.ord.vo.OrdOrderVO;
 import com.uc.training.smadmin.bd.vo.MemberInfoVO;
 import com.uc.training.smadmin.gds.re.GoodsDetailRE;
-import com.uc.training.smadmin.gds.service.GoodsService;
 import com.ycc.base.common.Result;
 import net.sf.json.JSONArray;
 import net.sf.json.JsonConfig;
-import ord.re.CartGoodsRE;
-import ord.re.OrderConfirmRE;
-import ord.re.OrderGoodsDetailRE;
-import ord.re.OrderInfoRE;
-import ord.vo.OrdCartGoodsVO;
-import ord.vo.OrdGoodsVO;
-import ord.vo.OrdMemberVO;
-import ord.vo.OrdOrderGoodsVO;
-import ord.vo.OrdOrderVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
@@ -49,7 +48,7 @@ public class OrderController extends BaseController {
     OrderService orderService;
 
     /**
-     * 获取购物车用户商品列表
+     * 获取用户购物车商品列表
      *
      * @return
      * @author hhj
@@ -112,10 +111,10 @@ public class OrderController extends BaseController {
         // 更改数据判断库存如果库存不足更新为当前库存量并返回当前库存数据
         if (gdDTO.getStock() <= ordCartGoodsVO.getNum()) {
             ordCartGoodsVO.setNum(gdDTO.getStock());
-            orderService.updataCarGoodsNum(ordCartGoodsVO);
+            orderService.updateCarGoodsNum(ordCartGoodsVO);
             return Result.getSuccessResult(gdDTO.getStock());
         }
-        orderService.updataCarGoodsNum(ordCartGoodsVO);
+        orderService.updateCarGoodsNum(ordCartGoodsVO);
         return Result.getSuccessResult(gdDTO.getStock());
     }
 
@@ -155,6 +154,7 @@ public class OrderController extends BaseController {
         if (CollectionUtils.isEmpty(orderGodsList)) {
             return Result.getSuccessResult(null);
         }
+
         List<OrdOrderGoodsVO> orderList = orderService.getOrderGoods(orderGodsList, orderId);
         if (CollectionUtils.isEmpty(orderList)) {
             return Result.getBusinessException("获取订单列表失败", "");
@@ -180,7 +180,7 @@ public class OrderController extends BaseController {
         if (ordCartGoodsVO.getNum() <= 0) {
             return Result.getBusinessException("商品数量不可以少于1个", null);
         }
-        List<CartGoods> list;
+        List<CartGoodsRE> list;
         list = orderService.getCarGoodsById(getUid());
         GoodsDetailRE gdDTO = goodsService.getGoodsDetailByPropertyId(ordCartGoodsVO.getPropertyId());
         if (gdDTO.getStatus().longValue() == GoodsStatusEnum.GOODS_IS_SHELVES.getType().longValue() || gdDTO.getIsDelete().longValue() == GoodsStatusEnum.GOODS_DELETE.getType().longValue()) {
@@ -190,14 +190,14 @@ public class OrderController extends BaseController {
             return Result.getBusinessException("添加数量超过库存量", null);
         }
         if (!CollectionUtils.isEmpty(list)) {
-            for (CartGoods cartGds : list) {
+            for (CartGoodsRE cartGds : list) {
                 //判断该商品是否存在
                 if (cartGds.getGoodsPropertyId().equals(ordCartGoodsVO.getPropertyId())) {
                     //如果存在增加数量
                     ordCartGoodsVO.setNum(ordCartGoodsVO.getNum() + cartGds.getGoodsNum());
                     ordCartGoodsVO.setMemberId(getUid());
                     try {
-                        orderService.updataCarGoodsNum(ordCartGoodsVO);
+                        orderService.updateCarGoodsNum(ordCartGoodsVO);
                         return Result.getSuccessResult(null);
                     } catch (Exception e) {
                         logger.error("添加异常", e);
@@ -248,6 +248,7 @@ public class OrderController extends BaseController {
     @AccessLogin
     @RequestMapping(value = "confirmOrderInfo.do_", method = RequestMethod.POST)
     public Result confirmOrderInfo(OrdOrderGoodsVO ordOrderGoodsVO, BigDecimal totalPrice) {
+
         List<OrdOrderGoodsVO> orderInfoListNow = ordOrderGoodsVO.getList();
         if (CollectionUtils.isEmpty(orderInfoListNow)) {
             return Result.getSuccessResult("提交订单失败");
@@ -296,7 +297,8 @@ public class OrderController extends BaseController {
         OrdMemberVO ordMemberVO = new OrdMemberVO();
         ordMemberVO.setMemberId(orderPayInfoNow.get(0).getMemberId());
         ordMemberVO.setOrderId(orderPayInfoNow.get(0).getOrderId());
-        List<Order> order = orderService.getOrderByMemberVO(ordMemberVO);
+
+        List<OrderRE> order = orderService.getOrderByMemberVO(ordMemberVO);
         if (!CollectionUtils.isEmpty(order)) {
             if (order.get(0).getStatus() != 1 || !order.get(0).getMemberId().equals(getUid())) {
                 return Result.getSuccessResult("支付失败");
