@@ -1,12 +1,13 @@
 package com.uc.training.utils;
 
 import com.uc.training.common.vo.RemoteResult;
-import com.uc.training.ord.re.CartGoodsRE;
+import com.zuche.framework.exception.BusinessException;
 import com.zuche.framework.remote.RemoteClientFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.List;
+import javax.xml.transform.Result;
+
 
 /**
  * 版权声明： Copyright (c) 2008 ucarinc. All Rights Reserved.
@@ -42,12 +43,24 @@ public final class RemoteUtil {
      * @param object
      * @return
      */
-    public static RemoteResult exec(String serviceName, Object object) {
+    public static Object exec(String serviceName, Object object) {
         try {
             Object result = RemoteClientFactory.getInstance().executeToObject(serviceName, object);
-            return null;
-        } catch (Exception e) {
-            e.printStackTrace();
+            try {
+                RemoteResult remoteResult = (RemoteResult)result;
+                if (remoteResult == null) {
+                    return null;
+                }
+                if (remoteResult.getStatus() == 0 && remoteResult.getRe() != null) {
+                    return remoteResult.getRe();
+                } else {
+                    LOGGER.error(remoteResult.getMsg());
+                }
+            } catch (Exception e1) {
+                LOGGER.error("类型转换异常", e1.getMessage());
+            }
+        } catch (Exception e){
+            LOGGER.error("调用远程服务异常！",e);
         }
         return null;
     }
