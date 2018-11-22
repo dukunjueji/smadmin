@@ -1,4 +1,4 @@
-package com.uc.training.remoteClient;
+package com.uc.training.remote.client;
 
 import com.uc.training.ord.re.CartGoodsRE;
 import com.uc.training.utils.RemoteUtil;
