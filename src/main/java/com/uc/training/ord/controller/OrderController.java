@@ -7,7 +7,10 @@ import com.uc.training.common.enums.GoodsStatusEnum;
 import com.uc.training.common.enums.OrderEnum;
 import com.uc.training.common.enums.SmsTypeEnum;
 import com.uc.training.common.mq.vo.MqVO;
+import com.uc.training.ord.dto.OrdCartGoodsDTO;
+import com.uc.training.ord.dto.OrdOrderGoodsDTO;
 import com.uc.training.ord.re.CartGoodsRE;
+import com.uc.training.ord.re.OrdOrderGoodsRE;
 import com.uc.training.ord.re.OrderConfirmRE;
 import com.uc.training.ord.re.OrderGoodsDetailRE;
 import com.uc.training.ord.re.OrderInfoRE;
@@ -23,6 +26,7 @@ import com.uc.training.smadmin.gds.re.GoodsDetailRE;
 import com.ycc.base.common.Result;
 import net.sf.json.JSONArray;
 import net.sf.json.JsonConfig;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
@@ -101,20 +105,22 @@ public class OrderController extends BaseController {
     @ResponseBody
     @AccessLogin
     @RequestMapping(value = "updataCartgoods.do_", method = RequestMethod.POST)
-    public Result updataCartgds(HttpServletRequest request, OrdCartGoodsVO ordCartGoodsVO) {
-        ordCartGoodsVO.setMemberId(getUid());
-        GoodsDetailRE gdDTO = goodsService.getGoodsDetailByPropertyId(ordCartGoodsVO.getPropertyId());
+    public Result updataCartgds(HttpServletRequest request, OrdCartGoodsVO ordCartGoodsVO){
+        OrdCartGoodsDTO ordCartGoodsDTO = new OrdCartGoodsDTO();
+        BeanUtils.copyProperties(ordCartGoodsVO, ordCartGoodsDTO);
+        ordCartGoodsDTO.setMemberId(getUid());
+        GoodsDetailRE gdDTO = goodsService.getGoodsDetailByPropertyId(ordCartGoodsDTO.getPropertyId());
         //判空
         if (gdDTO == null) {
             return Result.getBusinessException("获取异常", null);
         }
         // 更改数据判断库存如果库存不足更新为当前库存量并返回当前库存数据
-        if (gdDTO.getStock() <= ordCartGoodsVO.getNum()) {
-            ordCartGoodsVO.setNum(gdDTO.getStock());
-            orderService.updateCarGoodsNum(ordCartGoodsVO);
+        if (gdDTO.getStock() <= ordCartGoodsDTO.getNum()) {
+            ordCartGoodsDTO.setNum(gdDTO.getStock());
+            orderService.updateCarGoodsNum(ordCartGoodsDTO);
             return Result.getSuccessResult(gdDTO.getStock());
         }
-        orderService.updateCarGoodsNum(ordCartGoodsVO);
+        orderService.updateCarGoodsNum(ordCartGoodsDTO);
         return Result.getSuccessResult(gdDTO.getStock());
     }
 
@@ -127,13 +133,15 @@ public class OrderController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "getOrderList.do_", method = RequestMethod.GET)
-    public Result<List<OrdOrderGoodsVO>> getOrderGds(String goodsList) {
+    public Result<List<OrdOrderGoodsRE>> getOrderGds(String goodsList) {
         List<OrdOrderGoodsVO> orderGodsList = (List<OrdOrderGoodsVO>) JSONArray.toList(JSONArray.fromObject(goodsList), new OrdOrderGoodsVO(), new JsonConfig());
         if (CollectionUtils.isEmpty(orderGodsList)) {
             return Result.getSuccessResult(null);
         }
         orderGodsList.get(0).setMemberId(getUid());
-        List<OrdOrderGoodsVO> orderList = orderService.getOrderGoodsById(orderGodsList);
+        List<OrdOrderGoodsDTO> list = new ArrayList<>();
+        BeanUtils.copyProperties(orderGodsList,list);
+        List<OrdOrderGoodsRE> orderList = orderService.getOrderGoodsById(list);
         if (CollectionUtils.isEmpty(orderList)) {
             return Result.getBusinessException("获取订单列表失败", "");
         }
@@ -149,13 +157,14 @@ public class OrderController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "getOrderGoodsList.do_", method = RequestMethod.POST)
-    public Result<List<OrdOrderGoodsVO>> getOrderGdsList(String goodsList, Long orderId) {
-        List<OrdOrderGoodsVO> orderGodsList = (List<OrdOrderGoodsVO>) JSONArray.toList(JSONArray.fromObject(goodsList), new OrdOrderGoodsVO(), new JsonConfig());
-        if (CollectionUtils.isEmpty(orderGodsList)) {
+    public Result<List<OrdOrderGoodsRE>> getOrderGdsList(String goodsList, Long orderId) {
+        List<OrdOrderGoodsVO> list = (List<OrdOrderGoodsVO>) JSONArray.toList(JSONArray.fromObject(goodsList), new OrdOrderGoodsVO(), new JsonConfig());
+        if (CollectionUtils.isEmpty(list)) {
             return Result.getSuccessResult(null);
         }
-
-        List<OrdOrderGoodsVO> orderList = orderService.getOrderGoods(orderGodsList, orderId);
+        List<OrdOrderGoodsDTO> orderGodsList = new ArrayList<>();
+        BeanUtils.copyProperties(list,orderGodsList);
+        List<OrdOrderGoodsRE> orderList = orderService.getOrderGoods(orderGodsList, orderId);
         if (CollectionUtils.isEmpty(orderList)) {
             return Result.getBusinessException("获取订单列表失败", "");
         }
