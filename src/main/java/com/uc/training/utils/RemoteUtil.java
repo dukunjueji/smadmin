@@ -24,23 +24,23 @@ public final class RemoteUtil {
      * @return
      */
     public static Object exec(String serviceName, Object object) {
+        Object result = null;
         try {
-            Object result = RemoteClientFactory.getInstance().executeToObject(serviceName, object);
-            try {
-                RemoteResult remoteResult = (RemoteResult)result;
-                if (remoteResult == null) {
-                    return null;
-                }
-                if (remoteResult.getStatus() == 0 && remoteResult.getRe() != null) {
-                    return remoteResult.getRe();
-                } else {
-                    LOGGER.error(remoteResult.getMsg());
-                }
-            } catch (Exception e1) {
-                LOGGER.error("类型转换异常", e1.getMessage());
-            }
+            result = RemoteClientFactory.getInstance().executeToObject(serviceName, object);
         } catch (Exception e){
             LOGGER.error("调用远程服务异常！",e);
+        }
+        if (result == null) {
+            LOGGER.error("远程服务返回结果为null");
+            return null;
+        }
+        if (result instanceof RemoteResult) {
+            RemoteResult remoteResult = (RemoteResult)result;
+            if (remoteResult.getStatus() == 0 && remoteResult.getRe() != null) {
+                return remoteResult.getRe();
+            } else {
+                LOGGER.error(remoteResult.getMsg());
+            }
         }
         return null;
     }

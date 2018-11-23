@@ -7,7 +7,6 @@ import com.uc.training.ord.re.OrderGoodsRE;
 import com.uc.training.utils.RemoteUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +18,6 @@ import java.util.List;
  * @Version 1.0
  * @date 2018/11/22
  */
-@Service
 public class OrderClient {
 
     private static final Logger logger = LoggerFactory.getLogger(OrderClient.class.getName());
@@ -63,15 +61,18 @@ public class OrderClient {
      * @return
      */
     public List<CartGoodsRE> getCarGoodsById(Long memberId) {
-        List<CartGoodsRE> list = new ArrayList<>();
-        try {
-            list = (List<CartGoodsRE>) RemoteUtil.exec(GET_CAR_GOODS_BY_ID, memberId);
-            return list;
-        } catch (Exception e) {
-            logger.error("类型转换异常");
-            logger.error(e.getMessage());
+
+        Object object = RemoteUtil.exec(GET_CAR_GOODS_BY_ID, memberId);
+        if (object != null) {
+            try {
+                List<CartGoodsRE> list = (List<CartGoodsRE>) RemoteUtil.exec(GET_CAR_GOODS_BY_ID, memberId);
+                return list;
+            } catch (ClassCastException e) {
+                logger.error("类型转换异常");
+                logger.error(e.getMessage());
+            }
         }
-        return list;
+        return null;
     }
 
     /**

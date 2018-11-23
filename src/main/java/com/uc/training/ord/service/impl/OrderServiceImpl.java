@@ -23,7 +23,7 @@ import com.uc.training.ord.vo.OrdOrderGoodsVO;
 import com.uc.training.ord.vo.OrdOrderVO;
 import com.uc.training.ord.vo.OrderGoodsVO;
 import com.uc.training.ord.vo.OrderVO;
-import com.uc.training.remoteClient.OrderClient;
+import com.uc.training.remote.client.OrderClient;
 import com.uc.training.smadmin.bd.re.AddressRE;
 import com.uc.training.smadmin.gds.re.GoodsDetailRE;
 import com.uc.training.smadmin.gds.re.GoodsStokeRE;
@@ -73,8 +73,9 @@ public class OrderServiceImpl implements OrderService {
      * @param memberId
      * @return
      */
-    @Autowired
-    OrderClient orderClient;
+
+    OrderClient orderClient = new OrderClient();
+
 
     @Override
     public List<CartGoodsRE> getCarGoodsById(Long memberId) {
