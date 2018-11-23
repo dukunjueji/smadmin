@@ -7,6 +7,7 @@ import com.uc.training.ord.dto.OrdMemberDTO;
 import com.uc.training.ord.dto.OrdOrderDTO;
 import com.uc.training.ord.dto.OrdOrderGoodsDTO;
 import com.uc.training.ord.re.CartGoodsRE;
+import com.uc.training.ord.re.OrdOrderGoodsRE;
 import com.uc.training.ord.re.OrderConfirmRE;
 import com.uc.training.ord.re.OrderGoodsDetailRE;
 import com.uc.training.ord.re.OrderInfoRE;
@@ -46,7 +47,7 @@ public interface OrderService {
      * @return
      */
 
-    List<OrdOrderGoodsDTO> getOrderGoodsById(List<OrdOrderGoodsDTO> orderGodsList);
+    List<OrdOrderGoodsRE> getOrderGoodsById(List<OrdOrderGoodsDTO> orderGodsList);
 
     /**
      * 通过会员id来查找
@@ -88,7 +89,7 @@ public interface OrderService {
      * @param ordCartGoodsDTO
      * @return 返回影响条数
      */
-    int updateCarGoodsNum(OrdCartGoodsDTO ordCartGoodsDTO);
+    Integer updateCarGoodsNum(OrdCartGoodsDTO ordCartGoodsDTO);
 
     /**
      * 查找指定会员订单总记录数
@@ -169,7 +170,7 @@ public interface OrderService {
      * @param orderId
      * @return
      */
-    List<OrdOrderGoodsDTO> getOrderGoods(List<OrdOrderGoodsDTO> orderGodsList, Long orderId);
+    List<OrdOrderGoodsRE> getOrderGoods(List<OrdOrderGoodsDTO> orderGodsList, Long orderId);
 
     /**
      * 当年每个月销售额
