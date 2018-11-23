@@ -19,7 +19,7 @@ public class BaseClient {
     private static final Logger logger = LoggerFactory.getLogger(BaseClient.class.getName());
 
     /** 根据id查询会员信息*/
-    private static final String GET_MEMBER_IFFO_BY_ID = "smgds.api.getGoodsInfoById";
+    private static final String GET_MEMBER_INFO_BY_ID = "smgds.api.getGoodsInfoById";
 
     /**
      * 根据商品id查询商品信息
@@ -28,7 +28,7 @@ public class BaseClient {
     public MemberRE getCarGoodsById(Long id) {
         MemberRE memberRE = new MemberRE();
         try {
-            memberRE = (MemberRE) RemoteUtil.exec(GET_MEMBER_IFFO_BY_ID, id);
+            memberRE = (MemberRE) RemoteUtil.exec(GET_MEMBER_INFO_BY_ID, id);
             return memberRE;
         }catch (Exception e){
             logger.error("类型转换异常");

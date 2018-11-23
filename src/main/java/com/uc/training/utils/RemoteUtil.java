@@ -1,12 +1,9 @@
 package com.uc.training.utils;
 
 import com.uc.training.common.vo.RemoteResult;
-import com.zuche.framework.exception.BusinessException;
 import com.zuche.framework.remote.RemoteClientFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.xml.transform.Result;
 
 
 /**
@@ -20,23 +17,6 @@ public final class RemoteUtil {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RemoteUtil.class);
 
-    /**
-     * 验证remoteResult结果
-     * @param object
-     * @return
-    public static <T> T validateResult(Object object, Class<T> t){
-        try {
-            RemoteResult<T> result = (RemoteResult<T>)object;
-
-            if(result != null && result.getMsg().equals("SUCCESS") && result.getRe() != null) {
-                return result.getRe();
-            }
-        }catch (Exception e){
-            LOGGER.error(e.getMessage());
-        }
-        return null;
-    }
-*/
     /**
      * 执行远程调用
      * @param serviceName
