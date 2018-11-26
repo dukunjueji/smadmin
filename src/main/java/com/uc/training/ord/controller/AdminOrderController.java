@@ -2,11 +2,10 @@ package com.uc.training.ord.controller;
 
 import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
-import com.uc.training.smadmin.bd.service.MemberService;
-import com.uc.training.smadmin.gds.service.GoodsService;
+import com.uc.training.ord.re.OrderGoodsDetailRE;
+import com.uc.training.ord.re.OrderRE;
+import com.uc.training.ord.vo.OrdOrderVO;
 import com.ycc.base.common.Result;
-import ord.vo.OrdOrderVO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -46,7 +45,7 @@ public class AdminOrderController extends BaseController {
 	@AccessLogin
 	@RequestMapping(value = "getOrderPage.do_", method = RequestMethod.POST)
 	public Result getOrderPage(OrdOrderVO orderVO) {
-		List<OrderRe> list;
+		List<OrderRE> list;
 		int size = 5;
 		Map<String, Object> map = new HashMap<String, Object>(size);
 		list = orderService.getOrderPage(orderVO);
@@ -94,7 +93,7 @@ public class AdminOrderController extends BaseController {
 	@AccessLogin
 	@RequestMapping(value = "getOrderGoods.do_", method = RequestMethod.POST)
 	public Result getOrderGoods(Integer id) {
-		List<OrderGoodsDetailRe> list;
+		List<OrderGoodsDetailRE> list;
 		try {
 			list = orderService.getOrderGdsById(id);
 		} catch (Exception e) {

@@ -18,7 +18,7 @@ import java.util.List;
  * @Version 1.0
  * @date 2018/11/22
  */
-public class OrderClient {
+public final class OrderClient {
 
     private static final Logger logger = LoggerFactory.getLogger(OrderClient.class.getName());
 
