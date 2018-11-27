@@ -7,6 +7,7 @@ import com.uc.training.ord.dto.OrdOrderDTO;
 import com.uc.training.ord.dto.OrderDTO;
 import com.uc.training.ord.dto.OrderGoodsDTO;
 import com.uc.training.ord.re.CartGoodsRE;
+import com.uc.training.ord.re.CommentRE;
 import com.uc.training.ord.re.OrderGoodsRE;
 import com.uc.training.ord.re.OrderRE;
 import com.uc.training.ord.re.OrderSaleRE;
@@ -101,8 +102,14 @@ public final class OrderClient {
      * 逻辑删除订单
      */
     private static final String MEMBER_DEL_ORDER = "smorder.api.memberDelOrder";
-
-
+    /**
+     * 根据用户ID 和 订单状态获取待评价商品详情
+     */
+    private static final String GET_PROPERTY_ID_LIST_BY_UID = "smorder.api.getPropertyIdListByUid";
+    /**
+     * 查找指定会员订单总记录数
+     */
+    private static final String QUERY_ORDER_COUNT = "smorder.api.queryOrderCount";
 
     /**
      * 根据用户id查询购物车信息表
@@ -359,13 +366,42 @@ public final class OrderClient {
      */
     public static Integer memberDelOrder(OrdOrderVO ordOrderVO) {
         OrdOrderDTO ordOrderDTO = new OrdOrderDTO();
-        BeanUtils.copyProperties(ordOrderVO,ordOrderDTO);
+        BeanUtils.copyProperties(ordOrderVO, ordOrderDTO);
         try {
             Integer re = (Integer) RemoteUtil.exec(MEMBER_DEL_ORDER, ordOrderDTO);
             return re;
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("参数类型转换异常");
+        }
+        return null;
+    }
+
+    /**
+     * 根据用户ID 和 订单状态获取待评价商品详情
+     */
+    public static List<CommentRE> getPropertyIdListByUid(OrdGoodsVO ordGoodsVO) {
+        OrdGoodsDTO ordGoodsDTO = new OrdGoodsDTO();
+        BeanUtils.copyProperties(ordGoodsVO, ordGoodsDTO);
+        try {
+            List<CommentRE> re = (List<CommentRE>) RemoteUtil.exec(GET_PROPERTY_ID_LIST_BY_UID, ordGoodsDTO);
+            return re;
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            LOGGER.error("参数类型转换异常");
+        }
+        return null;
+    }
+    /**
+     * 查找指定会员订单总记录数
+     */
+    public static Integer queryOrderCount(Long memberId) {
+        try {
+            Integer re = (Integer) RemoteUtil.exec(QUERY_ORDER_COUNT, memberId);
+            return re;
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            LOGGER.error("类型转换异常");
         }
         return null;
     }

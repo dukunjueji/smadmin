@@ -27,7 +27,6 @@ import com.uc.training.smadmin.gds.re.GoodsDetailRE;
 import com.ycc.base.common.Result;
 import net.sf.json.JSONArray;
 import net.sf.json.JsonConfig;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
@@ -106,7 +105,7 @@ public class OrderController extends BaseController {
     @ResponseBody
     @AccessLogin
     @RequestMapping(value = "updataCartgoods.do_", method = RequestMethod.POST)
-    public Result updataCartgds(HttpServletRequest request, OrdCartGoodsVO ordCartGoodsVO){
+    public Result updataCartgds(HttpServletRequest request, OrdCartGoodsVO ordCartGoodsVO) {
         ordCartGoodsVO.setMemberId(getUid());
         GoodsDetailRE gdDTO = goodsService.getGoodsDetailByPropertyId(ordCartGoodsVO.getPropertyId());
         //判空
@@ -138,8 +137,6 @@ public class OrderController extends BaseController {
             return Result.getSuccessResult(null);
         }
         orderGodsList.get(0).setMemberId(getUid());
-        /*List<OrdOrderGoodsDTO> list = new ArrayList<>();
-        BeanUtils.copyProperties(orderGodsList,list);*/
         List<OrdOrderGoodsRE> orderList = orderService.getOrderGoodsById(orderGodsList);
         if (CollectionUtils.isEmpty(orderList)) {
             return Result.getBusinessException("获取订单列表失败", "");
@@ -162,7 +159,6 @@ public class OrderController extends BaseController {
             return Result.getSuccessResult(null);
         }
         List<OrdOrderGoodsVO> orderGodsList = new ArrayList<>();
-        /*BeanUtils.copyProperties(list,orderGodsList);*/
         List<OrdOrderGoodsRE> orderList = orderService.getOrderGoods(orderGodsList, orderId);
         if (CollectionUtils.isEmpty(orderList)) {
             return Result.getBusinessException("获取订单列表失败", "");
@@ -449,6 +445,7 @@ public class OrderController extends BaseController {
     public Result getCartgoodsCount() {
         return Result.getSuccessResult(orderService.queryCartGoodsCount(getUid()));
     }
+
     /**
      * 查询未评价商品详情
      *
@@ -463,6 +460,7 @@ public class OrderController extends BaseController {
 
     /**
      * 查询未评价商品数量
+     *
      * @param ordGoodsVO
      * @return
      */

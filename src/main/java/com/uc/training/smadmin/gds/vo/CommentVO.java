@@ -1,23 +1,24 @@
 package com.uc.training.smadmin.gds.vo;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
- * @author hhj
- * @date Fri Nov 16 15:49:33 CST 2018
- * @description: 评论model
+ * description: TODO
+ *
+ * @author 黄宏俊
+ * @version 1.0
+ * @date 2018/11/15  10:25
  */
 public class CommentVO implements Serializable {
-
-
-	private static final long serialVersionUID =  4289686880752788753L;
-
-
 	/**
-	 *自增主键id
+	 * 订单详情表ID
 	 */
 	private Long id;
+
+	/**
+	 * 商品名称
+	 */
+	private String goodsName;
 
 	/**
 	 * 商品id
@@ -25,74 +26,32 @@ public class CommentVO implements Serializable {
 	private Long goodsId;
 
 	/**
-	 * 用户id
-	 */
-	private Long memberId;
-
-	/**
-	 * 用户昵称
-	 */
-	private String memberNickname;
-
-	/**
-	 * 用户头像地址N
-	 */
-	private String memberImageurl;
-
-	/**
-	 *商品属性ID
+	 * 商品属性id
 	 */
 	private Long goodsPropertyId;
 
 	/**
-	 *商品属性名称
+	 *商品属性
 	 */
-	private String goodsPropertyName;
+	private String GoodsProperty;
 
 	/**
-	 *商品评分
+	 * 商品图片url
 	 */
-	private Double goodsSroce;
+	private String imgUrl;
 
 	/**
-	 *回复状态（商家回复），0.未回复，1.已回复
+	 *上下架状态
 	 */
-	private Integer status;
+	private Long status;
 
-	/**
-	 *父级Id
-	 */
-	private Long parentId;
+	public Long getStatus() {
+		return status;
+	}
 
-	/**
-	 * 订单详情表id
-	 */
-	private Long orderGoodsId;
-
-	/**
-	 *评论内容
-	 */
-	private String content;
-
-	/**
-	 *创建人
-	 */
-	private Long createEmp;
-
-	/**
-	 *创建时间
-	 */
-	private Date createTime;
-
-	/**
-	 *修改人
-	 */
-	private Long modifyEmp;
-
-	/**
-	 *修改时间
-	 */
-	private Date modifyTime;
+	public void setStatus(Long status) {
+		this.status = status;
+	}
 
 	public Long getId() {
 		return id;
@@ -110,30 +69,6 @@ public class CommentVO implements Serializable {
 		this.goodsId = goodsId;
 	}
 
-	public Long getMemberId() {
-		return memberId;
-	}
-
-	public void setMemberId(Long memberId) {
-		this.memberId = memberId;
-	}
-
-	public String getMemberNickname() {
-		return memberNickname;
-	}
-
-	public void setMemberNickname(String memberNickname) {
-		this.memberNickname = memberNickname;
-	}
-
-	public String getMemberImageurl() {
-		return memberImageurl;
-	}
-
-	public void setMemberImageurl(String memberImageurl) {
-		this.memberImageurl = memberImageurl;
-	}
-
 	public Long getGoodsPropertyId() {
 		return goodsPropertyId;
 	}
@@ -142,83 +77,27 @@ public class CommentVO implements Serializable {
 		this.goodsPropertyId = goodsPropertyId;
 	}
 
-	public String getGoodsPropertyName() {
-		return goodsPropertyName;
+	public String getGoodsProperty() {
+		return GoodsProperty;
 	}
 
-	public void setGoodsPropertyName(String goodsPropertyName) {
-		this.goodsPropertyName = goodsPropertyName;
+	public void setGoodsProperty(String goodsProperty) {
+		GoodsProperty = goodsProperty;
 	}
 
-	public Double getGoodsSroce() {
-		return goodsSroce;
+	public String getImgUrl() {
+		return imgUrl;
 	}
 
-	public void setGoodsSroce(Double goodsSroce) {
-		this.goodsSroce = goodsSroce;
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
 	}
 
-	public Integer getStatus() {
-		return status;
+	public String getGoodsName() {
+		return goodsName;
 	}
 
-	public void setStatus(Integer status) {
-		this.status = status;
-	}
-
-	public Long getParentId() {
-		return parentId;
-	}
-
-	public void setParentId(Long parentId) {
-		this.parentId = parentId;
-	}
-
-	public String getContent() {
-		return content;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
-	}
-
-	public Long getCreateEmp() {
-		return createEmp;
-	}
-
-	public void setCreateEmp(Long createEmp) {
-		this.createEmp = createEmp;
-	}
-
-	public Date getCreateTime() {
-		return createTime;
-	}
-
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
-
-	public Long getModifyEmp() {
-		return modifyEmp;
-	}
-
-	public void setModifyEmp(Long modifyEmp) {
-		this.modifyEmp = modifyEmp;
-	}
-
-	public Date getModifyTime() {
-		return modifyTime;
-	}
-
-	public void setModifyTime(Date modifyTime) {
-		this.modifyTime = modifyTime;
-	}
-
-	public Long getOrderGoodsId() {
-		return orderGoodsId;
-	}
-
-	public void setOrderGoodsId(Long orderGoodsId) {
-		this.orderGoodsId = orderGoodsId;
+	public void setGoodsName(String goodsName) {
+		this.goodsName = goodsName;
 	}
 }

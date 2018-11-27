@@ -4,8 +4,8 @@ import com.uc.training.common.enums.GoodsStatusEnum;
 import com.uc.training.common.enums.OrderEnum;
 import com.uc.training.common.enums.UUIDTypeEnum;
 import com.uc.training.common.utils.UUIDUtil;
-import com.uc.training.common.vo.RemoteResult;
 import com.uc.training.ord.re.CartGoodsRE;
+import com.uc.training.ord.re.CommentRE;
 import com.uc.training.ord.re.OrdOrderGoodsRE;
 import com.uc.training.ord.re.OrderConfirmRE;
 import com.uc.training.ord.re.OrderGoodsDetailRE;
@@ -26,9 +26,7 @@ import com.uc.training.remote.client.OrderClient;
 import com.uc.training.smadmin.bd.re.AddressRE;
 import com.uc.training.smadmin.gds.re.GoodsDetailRE;
 import com.uc.training.smadmin.gds.re.GoodsStokeRE;
-import com.uc.training.smadmin.gds.vo.CommentVO;
 import com.uc.training.smadmin.gds.vo.GoodsStokeVO;
-import com.zuche.framework.remote.RemoteClientFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -241,7 +239,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Integer queryOrderCount(Long memberId) {
-        return this.orderDao.queryOrderCount(memberId);
+        return OrderClient.queryOrderCount(memberId);
     }
 
     /**
@@ -566,7 +564,8 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderInfoRE> getOrderInfoListByMemberId(OrdMemberVO ordMemberVO) {
         //先获该用户的取订单id，然后查询每条订单的状态，订单的金额 以及获取订单的商品信息
         List<OrderInfoRE> orderInfoREList = new ArrayList<>();
-        List<OrderRE> orderList = OrderClient.getOrderByMemberVO(ordMemberVO);;
+        List<OrderRE> orderList = OrderClient.getOrderByMemberVO(ordMemberVO);
+        ;
         if (CollectionUtils.isEmpty(orderList)) {
             return orderInfoREList;
         }
@@ -605,9 +604,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<CommentVO> getCommentOrderGoodsDetail(OrdGoodsVO ordGoodsVO) {
-
-        List<CommentVO> list = orderDao.getPropertyIdListByUid(ordGoodsVO);
+    public List<CommentRE> getCommentOrderGoodsDetail(OrdGoodsVO ordGoodsVO) {
+        List<CommentRE> list = OrderClient.getPropertyIdListByUid(ordGoodsVO);
         GoodsDetailRE gdDTO = new GoodsDetailRE();
         int conut = 0;
         // 判空
@@ -617,43 +615,53 @@ public class OrderServiceImpl implements OrderService {
         // 记录上一个商品属性Id 如果相同不需要再次查库
         Long recomentId = list.get(0).getGoodsPropertyId();
         // 获取未评价商品详情
-        for (CommentVO commentVO : list) {
+        for (CommentRE commentRE : list) {
             // 第一次进入
             if (conut == 0) {
-                gdDTO = goodsService.getGoodsDetailByPropertyId(commentVO.getGoodsPropertyId());
-                commentVO.setGoodsId(gdDTO.getGoodsId());
-                commentVO.setGoodsProperty(gdDTO.getProperty());
-                commentVO.setStatus(gdDTO.getStatus());
-                commentVO.setGoodsName(gdDTO.getName());
+                gdDTO = goodsService.getGoodsDetailByPropertyId(commentRE.getGoodsPropertyId());
+                commentRE.setGoodsId(gdDTO.getGoodsId());
+                commentRE.setGoodsProperty(gdDTO.getProperty());
+                commentRE.setStatus(gdDTO.getStatus());
+                commentRE.setGoodsName(gdDTO.getName());
                 if (!CollectionUtils.isEmpty(gdDTO.getPicUrl())) {
-                    commentVO.setImgUrl(gdDTO.getPicUrl().get(0).getPicUrl());
+                    commentRE.setImgUrl(gdDTO.getPicUrl().get(0).getPicUrl());
                 }
                 conut++;
-                recomentId = commentVO.getGoodsPropertyId();
+                recomentId = commentRE.getGoodsPropertyId();
                 continue;
             }
             // 查找与上一次属性id相同时
-            if (recomentId.equals(commentVO.getGoodsPropertyId())) {
-                commentVO.setGoodsId(gdDTO.getGoodsId());
-                commentVO.setStatus(gdDTO.getStatus());
-                commentVO.setGoodsName(gdDTO.getName());
-                commentVO.setGoodsProperty(gdDTO.getProperty());
+            if (recomentId.equals(commentRE.getGoodsPropertyId())) {
+                commentRE.setGoodsId(gdDTO.getGoodsId());
+                commentRE.setStatus(gdDTO.getStatus());
+                commentRE.setGoodsName(gdDTO.getName());
+                commentRE.setGoodsProperty(gdDTO.getProperty());
                 if (CollectionUtils.isEmpty(gdDTO.getPicUrl())) {
-                    commentVO.setImgUrl(gdDTO.getPicUrl().get(0).getPicUrl());
+                    commentRE.setImgUrl(gdDTO.getPicUrl().get(0).getPicUrl());
                 }
                 continue;
             }
-            gdDTO = goodsService.getGoodsDetailByPropertyId(commentVO.getGoodsPropertyId());
-            commentVO.setGoodsId(gdDTO.getGoodsId());
-            commentVO.setGoodsProperty(gdDTO.getProperty());
-            commentVO.setGoodsName(gdDTO.getName());
-            commentVO.setStatus(gdDTO.getStatus());
+            gdDTO = goodsService.getGoodsDetailByPropertyId(commentRE.getGoodsPropertyId());
+            commentRE.setGoodsId(gdDTO.getGoodsId());
+            commentRE.setGoodsProperty(gdDTO.getProperty());
+            commentRE.setGoodsName(gdDTO.getName());
+            commentRE.setStatus(gdDTO.getStatus());
             if (CollectionUtils.isEmpty(gdDTO.getPicUrl())) {
-                commentVO.setImgUrl(gdDTO.getPicUrl().get(0).getPicUrl());
+                commentRE.setImgUrl(gdDTO.getPicUrl().get(0).getPicUrl());
             }
-            recomentId = commentVO.getGoodsPropertyId();
+            recomentId = commentRE.getGoodsPropertyId();
         }
         return list;
     }
+
+    @Override
+    public int getCommentGoodsCount(OrdGoodsVO ordGoodsVO) {
+        List<CommentRE> list = OrderClient.getPropertyIdListByUid(ordGoodsVO);
+        if (CollectionUtils.isEmpty(list)) {
+            return list.size();
+        }
+        return 0;
+    }
+
 }
 

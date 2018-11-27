@@ -2,6 +2,7 @@ package com.uc.training.ord.service;
 
 
 import com.uc.training.ord.re.CartGoodsRE;
+import com.uc.training.ord.re.CommentRE;
 import com.uc.training.ord.re.OrdOrderGoodsRE;
 import com.uc.training.ord.re.OrderConfirmRE;
 import com.uc.training.ord.re.OrderGoodsDetailRE;
@@ -175,18 +176,34 @@ public interface OrderService {
     /**
      * 当年每个月销售额
      *
-     * @version 1.0 2018/11/12 11:31 by 吴佰川（baichuan.wu@ucarinc.com）创建
      * @param
      * @return java.util.List<java.math.BigDecimal>
+     * @version 1.0 2018/11/12 11:31 by 吴佰川（baichuan.wu@ucarinc.com）创建
      */
     OrderSaleRE getOrderSaleData();
 
     /**
      * hhj
      * 根据用户id 获取购物车商品表数据数量
+     *
      * @param memberId
      * @return
      */
     Integer queryCartGoodsCount(Long memberId);
-    getCommentOrderGoodsDetail
+
+    /**
+     * 根据用户ID 和 订单状态获取待评价商品详情
+     *
+     * @param ordGoodsVO
+     * @return
+     */
+    List<CommentRE> getCommentOrderGoodsDetail(OrdGoodsVO ordGoodsVO);
+
+    /**
+     * 根据用户ID 获取待评价商品数量
+     *
+     * @param ordGoodsVO
+     * @return
+     */
+    int getCommentGoodsCount(OrdGoodsVO ordGoodsVO);
 }
