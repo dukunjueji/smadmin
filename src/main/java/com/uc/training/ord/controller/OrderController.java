@@ -21,6 +21,7 @@ import com.uc.training.ord.vo.OrdGoodsVO;
 import com.uc.training.ord.vo.OrdMemberVO;
 import com.uc.training.ord.vo.OrdOrderGoodsVO;
 import com.uc.training.ord.vo.OrdOrderVO;
+import com.uc.training.remote.client.OrderClient;
 import com.uc.training.smadmin.bd.vo.MemberInfoVO;
 import com.uc.training.smadmin.gds.re.GoodsDetailRE;
 import com.ycc.base.common.Result;
@@ -106,21 +107,19 @@ public class OrderController extends BaseController {
     @AccessLogin
     @RequestMapping(value = "updataCartgoods.do_", method = RequestMethod.POST)
     public Result updataCartgds(HttpServletRequest request, OrdCartGoodsVO ordCartGoodsVO){
-        OrdCartGoodsDTO ordCartGoodsDTO = new OrdCartGoodsDTO();
-        BeanUtils.copyProperties(ordCartGoodsVO, ordCartGoodsDTO);
-        ordCartGoodsDTO.setMemberId(getUid());
-        GoodsDetailRE gdDTO = goodsService.getGoodsDetailByPropertyId(ordCartGoodsDTO.getPropertyId());
+        ordCartGoodsVO.setMemberId(getUid());
+        GoodsDetailRE gdDTO = goodsService.getGoodsDetailByPropertyId(ordCartGoodsVO.getPropertyId());
         //判空
         if (gdDTO == null) {
             return Result.getBusinessException("获取异常", null);
         }
         // 更改数据判断库存如果库存不足更新为当前库存量并返回当前库存数据
-        if (gdDTO.getStock() <= ordCartGoodsDTO.getNum()) {
-            ordCartGoodsDTO.setNum(gdDTO.getStock());
-            orderService.updateCarGoodsNum(ordCartGoodsDTO);
+        if (gdDTO.getStock() <= ordCartGoodsVO.getNum()) {
+            ordCartGoodsVO.setNum(gdDTO.getStock());
+            orderService.updateCarGoodsNum(ordCartGoodsVO);
             return Result.getSuccessResult(gdDTO.getStock());
         }
-        orderService.updateCarGoodsNum(ordCartGoodsDTO);
+        orderService.updateCarGoodsNum(ordCartGoodsVO);
         return Result.getSuccessResult(gdDTO.getStock());
     }
 
@@ -139,9 +138,9 @@ public class OrderController extends BaseController {
             return Result.getSuccessResult(null);
         }
         orderGodsList.get(0).setMemberId(getUid());
-        List<OrdOrderGoodsDTO> list = new ArrayList<>();
-        BeanUtils.copyProperties(orderGodsList,list);
-        List<OrdOrderGoodsRE> orderList = orderService.getOrderGoodsById(list);
+        /*List<OrdOrderGoodsDTO> list = new ArrayList<>();
+        BeanUtils.copyProperties(orderGodsList,list);*/
+        List<OrdOrderGoodsRE> orderList = orderService.getOrderGoodsById(orderGodsList);
         if (CollectionUtils.isEmpty(orderList)) {
             return Result.getBusinessException("获取订单列表失败", "");
         }
@@ -162,8 +161,8 @@ public class OrderController extends BaseController {
         if (CollectionUtils.isEmpty(list)) {
             return Result.getSuccessResult(null);
         }
-        List<OrdOrderGoodsDTO> orderGodsList = new ArrayList<>();
-        BeanUtils.copyProperties(list,orderGodsList);
+        List<OrdOrderGoodsVO> orderGodsList = new ArrayList<>();
+        /*BeanUtils.copyProperties(list,orderGodsList);*/
         List<OrdOrderGoodsRE> orderList = orderService.getOrderGoods(orderGodsList, orderId);
         if (CollectionUtils.isEmpty(orderList)) {
             return Result.getBusinessException("获取订单列表失败", "");
@@ -350,12 +349,12 @@ public class OrderController extends BaseController {
         }
         ordGoodsVO.setMemberId(getUid());
         ordGoodsVO.setList(listId);
-        List<CartGoods> cartList = orderService.getCarGoodsByIds(ordGoodsVO);
+        List<CartGoodsRE> cartList = orderService.getCarGoodsByIds(ordGoodsVO);
         GoodsDetailRE gdDTO;
         if (CollectionUtils.isEmpty(cartList)) {
             return Result.getBusinessException("您选择的商品已丢失，请重新到商品页面添加！！", null);
         } else {
-            for (CartGoods cargd : cartList) {
+            for (CartGoodsRE cargd : cartList) {
                 if (cargd.getGoodsNum() <= 0) {
                     return Result.getBusinessException("所选商品不可以小于1一个!", null);
                 }
@@ -434,7 +433,7 @@ public class OrderController extends BaseController {
     @RequestMapping(value = "goDelete.do_", method = RequestMethod.POST)
     public Result goDelete(OrdOrderVO ordOrderVO) {
         ordOrderVO.setMemberId(getUid());
-        if (orderDao.memberDelOrder(ordOrderVO) > 0) {
+        if (OrderClient.memberDelOrder(ordOrderVO) > 0) {
             return Result.getSuccessResult(null);
         }
         return Result.getBusinessException("删除失败", null);
@@ -450,4 +449,28 @@ public class OrderController extends BaseController {
     public Result getCartgoodsCount() {
         return Result.getSuccessResult(orderService.queryCartGoodsCount(getUid()));
     }
+    /**
+     * 查询未评价商品详情
+     *
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "getCommentGoodsDetail.do_", method = RequestMethod.GET)
+    public Result getCommentGoodsDetail(OrdGoodsVO ordGoodsVO) {
+        ordGoodsVO.setMemberId(getUid());
+        return Result.getSuccessResult(orderService.getCommentOrderGoodsDetail(ordGoodsVO));
+    }
+
+    /**
+     * 查询未评价商品数量
+     * @param ordGoodsVO
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "getCommentGoodsCount.do_", method = RequestMethod.GET)
+    public Result getCommentGoodsCount(OrdGoodsVO ordGoodsVO) {
+        ordGoodsVO.setMemberId(getUid());
+        return Result.getSuccessResult(orderService.getCommentGoodsCount(ordGoodsVO));
+    }
+
 }

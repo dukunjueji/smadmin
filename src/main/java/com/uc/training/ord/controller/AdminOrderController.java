@@ -4,8 +4,12 @@ import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.ord.re.OrderGoodsDetailRE;
 import com.uc.training.ord.re.OrderRE;
+import com.uc.training.ord.service.OrderService;
 import com.uc.training.ord.vo.OrdOrderVO;
+import com.uc.training.smadmin.bd.service.MemberService;
+import com.uc.training.smadmin.gds.service.GoodsService;
 import com.ycc.base.common.Result;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,14 +29,14 @@ import java.util.Map;
 @Controller
 @RequestMapping(value = "admin/order/")
 public class AdminOrderController extends BaseController {
-	/*@Autowired
+	@Autowired
 	OrderService orderService;
 
 	@Autowired
 	GoodsService goodsService;
 
 	@Autowired
-	MemberService memberService;*/
+	MemberService memberService;
 
 	/**
 	 * 获取订单分页
