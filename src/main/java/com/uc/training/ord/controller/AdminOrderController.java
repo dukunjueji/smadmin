@@ -30,13 +30,13 @@ import java.util.Map;
 @RequestMapping(value = "admin/order/")
 public class AdminOrderController extends BaseController {
     @Autowired
-    OrderService orderService;
+    private OrderService orderService;
 
     @Autowired
-    GoodsService goodsService;
+    private GoodsService goodsService;
 
     @Autowired
-    MemberService memberService;
+    private MemberService memberService;
 
     /**
      * 获取订单分页

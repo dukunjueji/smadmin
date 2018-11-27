@@ -49,7 +49,7 @@ import java.util.List;
 @RequestMapping(value = "/api/order/")
 public class OrderController extends BaseController {
     @Autowired
-    OrderService orderService;
+    private OrderService orderService;
 
     /**
      * 获取用户购物车商品列表
