@@ -48,36 +48,6 @@ public class OrderServiceImpl implements OrderService {
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderServiceImpl.class);
 
     /**
-     * 更新购物车商品数量
-     */
-    private static final String UPDATE_CAR_GOODS_NUM = "smorder.api.updateCarGoodsNum";
-    /**
-     * 根据用户ID和购物车商品表ID获取购物车商品信息
-     */
-    private static final String GET_CAR_GOODS_BY_IDS = "smorder.api.getCarGoodsByIds";
-    /**
-     * 根据用户id 获取购物车商品表数据数量
-     */
-    private static final String GET_ORDER_GOODS_BY_ORDER_ID = "smorder.api.getOrderGoodsByOrderId";
-    /**
-     * 加入购物车
-     */
-    private static final String ADD_CAR_GOODS = "smorder.api.addCarGoods";
-    /**
-     * 删除购物车
-     */
-    private static final String DELETE_CAR_GOODS = "smorder.api.deleteCarGoods";
-    /**
-     * 插入订单信息并返回订单id
-     */
-    private static final String INSERT_ORDER = "smorder.api.insertOrder";
-    /**
-     * 插入订单商品信息
-     */
-    private static final String INSERT_ORDER_GOODS = "smorder.api.insertOrderGoods";
-
-
-    /**
      * 根据用户id查询购物车信息表
      *
      * @param memberId
