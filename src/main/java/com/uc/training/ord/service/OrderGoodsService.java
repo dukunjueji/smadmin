@@ -1,7 +1,7 @@
 package com.uc.training.ord.service;
 
-import com.uc.training.ord.dto.OrdOrderGoodsDTO;
 import com.uc.training.ord.re.OrderRE;
+import com.uc.training.ord.vo.OrdOrderGoodsVO;
 
 /**
  * 版权声明： Copyright (c) 2008 ucarinc. All Rights Reserved.
@@ -20,10 +20,10 @@ public interface OrderGoodsService {
 
     /**
      * 根据id 更改订单商品评论状态
-     * @param ordOrderGoodsDTO
+     * @param ordOrderGoodsVO
      * @return
      */
-    Integer upOrdGoodsCommentStatus(OrdOrderGoodsDTO ordOrderGoodsDTO);
+    Integer upOrdGoodsCommentStatus(OrdOrderGoodsVO ordOrderGoodsVO);
 
     /**
      * 根据订单商品表Id获取订单表信息

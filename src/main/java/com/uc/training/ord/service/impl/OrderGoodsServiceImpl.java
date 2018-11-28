@@ -1,10 +1,10 @@
 package com.uc.training.ord.service.impl;
 
-import com.uc.training.smadmin.ord.dao.OrderGoodsDao;
-import com.uc.training.smadmin.ord.model.Order;
-import com.uc.training.smadmin.ord.service.OrderGoodsService;
-import com.uc.training.smadmin.ord.vo.OrdOrderGoodsVo;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import com.uc.training.ord.re.OrderRE;
+import com.uc.training.ord.service.OrderGoodsService;
+import com.uc.training.ord.vo.OrdOrderGoodsVO;
+import com.uc.training.remote.client.OrderClient;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,4 +17,36 @@ import org.springframework.stereotype.Service;
 @Service
 public class OrderGoodsServiceImpl implements OrderGoodsService {
 
+    /**
+     * 通过商品属性id获取待支付的商品属性数量
+     *
+     * @param propertyId
+     * @return
+     */
+    @Override
+    public Integer getUnPayGoodsPropertyCountByPropertyId(Long propertyId) {
+        return OrderClient.getUnPayGoodsPropertyCountByPropertyId(propertyId);
+    }
+
+    /**
+     * 根据id 更改订单商品评论状态
+     *
+     * @param ordOrderGoodsVO
+     * @return
+     */
+    @Override
+    public Integer upOrdGoodsCommentStatus(OrdOrderGoodsVO ordOrderGoodsVO) {
+        return OrderClient.upOrdGoodsCommentStatus(ordOrderGoodsVO);
+    }
+
+    /**
+     * 根据订单商品表Id获取订单表信息
+     *
+     * @param ordGoodsId
+     * @return
+     */
+    @Override
+    public OrderRE getOrderByOrdGoodsId(Long ordGoodsId) {
+        return OrderClient.getOrderByOrdGoodsId(ordGoodsId);
+    }
 }

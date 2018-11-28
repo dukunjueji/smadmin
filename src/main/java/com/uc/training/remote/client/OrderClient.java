@@ -4,6 +4,7 @@ import com.uc.training.ord.dto.OrdCartGoodsDTO;
 import com.uc.training.ord.dto.OrdGoodsDTO;
 import com.uc.training.ord.dto.OrdMemberDTO;
 import com.uc.training.ord.dto.OrdOrderDTO;
+import com.uc.training.ord.dto.OrdOrderGoodsDTO;
 import com.uc.training.ord.dto.OrderDTO;
 import com.uc.training.ord.dto.OrderGoodsDTO;
 import com.uc.training.ord.re.CartGoodsRE;
@@ -14,6 +15,7 @@ import com.uc.training.ord.re.OrderSaleRE;
 import com.uc.training.ord.vo.OrdCartGoodsVO;
 import com.uc.training.ord.vo.OrdGoodsVO;
 import com.uc.training.ord.vo.OrdMemberVO;
+import com.uc.training.ord.vo.OrdOrderGoodsVO;
 import com.uc.training.ord.vo.OrdOrderVO;
 import com.uc.training.ord.vo.OrderVO;
 import com.uc.training.utils.RemoteUtil;
@@ -110,6 +112,20 @@ public final class OrderClient {
      * 查找指定会员订单总记录数
      */
     private static final String QUERY_ORDER_COUNT = "smorder.api.queryOrderCount";
+    /**
+     * 通过商品属性id获取待支付的商品属性数量
+     */
+    private static final String GET_UN_PAY_GOODS_PROPERTY_COUNT_BY_PROPERTY_ID = "smorder.api.getUnPayGoodsPropertyCountByPropertyId";
+    /**
+     * 根据id 更改订单商品评论状态
+     */
+    private static final String UP_ORD_GOODS_COMMENT_STATUS = "smorder.api.upOrdGoodsCommentStatus";
+    /**
+     * 根据订单商品表Id获取订单表信息
+     */
+    private static final String GET_ORDER_BY_ORD_GOODS_ID = "smorder.api.getOrderByOrdGoodsId";
+
+
 
     /**
      * 根据用户id查询购物车信息表
@@ -382,6 +398,44 @@ public final class OrderClient {
     public static Integer queryOrderCount(Long memberId) {
         try {
             return (Integer) RemoteUtil.exec(QUERY_ORDER_COUNT, memberId);
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            LOGGER.error("类型转换异常");
+        }
+        return null;
+    }
+    /**
+     * 通过商品属性id获取待支付的商品属性数量
+     */
+    public static Integer getUnPayGoodsPropertyCountByPropertyId(Long propertyId) {
+        try {
+            return (Integer) RemoteUtil.exec(GET_UN_PAY_GOODS_PROPERTY_COUNT_BY_PROPERTY_ID, propertyId);
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            LOGGER.error("类型转换异常");
+        }
+        return null;
+    }
+    /**
+     * 根据id 更改订单商品评论状态
+     */
+    public static Integer upOrdGoodsCommentStatus(OrdOrderGoodsVO ordOrderGoodsVO) {
+        try {
+            OrdOrderGoodsDTO ordOrderGoodsDTO =new OrdOrderGoodsDTO();
+            BeanUtils.copyProperties(ordOrderGoodsVO,ordOrderGoodsDTO);
+            return (Integer) RemoteUtil.exec(UP_ORD_GOODS_COMMENT_STATUS, ordOrderGoodsDTO);
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            LOGGER.error("类型转换异常");
+        }
+        return null;
+    }
+    /**
+     * 根据订单商品表Id获取订单表信息
+     */
+    public static OrderRE getOrderByOrdGoodsId(Long ordGoodsId) {
+        try {
+            return (OrderRE) RemoteUtil.exec(GET_ORDER_BY_ORD_GOODS_ID, ordGoodsId);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
