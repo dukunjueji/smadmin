@@ -1,5 +1,6 @@
 package com.uc.training.remote.client;
 
+import com.uc.training.common.vo.RemoteResult;
 import com.uc.training.gds.dto.CommentDTO;
 import com.uc.training.gds.dto.CommentListDTO;
 import com.uc.training.gds.dto.CommentReplyDTO;
@@ -10,12 +11,15 @@ import com.uc.training.gds.re.CommentCountRE;
 import com.uc.training.gds.re.CommentDetailRE;
 import com.uc.training.gds.re.CommentPicRE;
 import com.uc.training.gds.re.CommentRE;
+import com.uc.training.remote.utils.RemoteUtil;
 import com.uc.training.smadmin.gds.model.CommentReply;
 import com.uc.training.smadmin.gds.re.GoodsRE;
 import com.uc.training.smadmin.gds.vo.CommentListVO;
 import com.uc.training.smadmin.gds.vo.CommentReplyVO;
 import com.uc.training.smadmin.gds.vo.CommentVO;
-import com.uc.training.remote.utils.RemoteUtil;
+import com.uc.training.utils.RemoteUtil;
+import com.ycc.base.framework.remote.client.annotations.RemoteMethod;
+import com.zuche.framework.remote.RemoteClientFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -30,8 +34,8 @@ import java.util.List;
  * @Version 1.0
  * @date 2018/11/22
  */
-@Service
-public class GdsClient {
+
+public  final class GdsClient {
 
     private static final Logger logger = LoggerFactory.getLogger(GdsClient.class.getName());
 
@@ -78,7 +82,7 @@ public class GdsClient {
      * 根据商品id查询商品信息
      * @return
      */
-    public GoodsRE getCarGoodsById(GoodsDTO goodsDTO) {
+    public static GoodsRE getCarGoodsById(GoodsDTO goodsDTO) {
         try {
             return (GoodsRE) RemoteUtil.exec(GET_GOODS_INFO_BY_ID, goodsDTO);
         }catch (ClassCastException e){
@@ -93,7 +97,7 @@ public class GdsClient {
      * @param commentVO
      * @return
      */
-    public Integer addComment(CommentVO commentVO) {
+    public static Integer addComment(CommentVO commentVO) {
         CommentDTO commentDTO = new CommentDTO();
         BeanUtils.copyProperties(commentVO, commentDTO);
         try {
@@ -112,7 +116,7 @@ public class GdsClient {
      * @param orderGoodsId
      * @return
      */
-    public List<CommentCountRE> getCommentCountByOrderGoodsId(Long orderGoodsId){
+    public static List<CommentCountRE> getCommentCountByOrderGoodsId(Long orderGoodsId){
         try {
             return (List<CommentCountRE>) RemoteUtil.exec(GET_COMMENTCOUNT_BY_ORDERGOODSID, orderGoodsId);
         } catch (ClassCastException e) {
@@ -128,7 +132,7 @@ public class GdsClient {
      * @param commentListVO
      * @return
      */
-    public List<CommentRE> getCommentList(CommentListVO commentListVO){
+    public static List<CommentRE> getCommentList(CommentListVO commentListVO){
         CommentListDTO commentListDTO = new CommentListDTO();
         BeanUtils.copyProperties(commentListVO, commentListDTO);
         try {
@@ -146,7 +150,7 @@ public class GdsClient {
      * @param commentListVO
      * @return
      */
-    public CommentAvgRE getCountBySroce(CommentListVO commentListVO){
+    public static CommentAvgRE getCountBySroce(CommentListVO commentListVO){
         CommentListDTO commentListDTO = new CommentListDTO();
         BeanUtils.copyProperties(commentListVO, commentListDTO);
         try {
@@ -164,7 +168,7 @@ public class GdsClient {
      * @param commentListVO
      * @return
      */
-    public CommentAvgRE getCommentCountAndAvg(CommentListVO commentListVO){
+    public static CommentAvgRE getCommentCountAndAvg(CommentListVO commentListVO){
         CommentListDTO commentListDTO = new CommentListDTO();
         BeanUtils.copyProperties(commentListVO, commentListDTO);
         try {
@@ -181,7 +185,7 @@ public class GdsClient {
      * @param commentVO
      * @return
      */
-    public Integer editCommentById(CommentVO commentVO){
+    public static Integer editCommentById(CommentVO commentVO){
         CommentDTO commentDTO = new CommentDTO();
         BeanUtils.copyProperties(commentVO, commentDTO);
         try {
@@ -199,7 +203,7 @@ public class GdsClient {
      * @param commentId
      * @return
      */
-    public List<CommentPicRE> getCommentPicByCommentId(Long commentId){
+    public static  List<CommentPicRE> getCommentPicByCommentId(Long commentId){
         try {
             return (List<CommentPicRE>) RemoteUtil.exec(GET_COMMENTPIC_BY_COMMENTID, commentId);
         } catch (ClassCastException e) {
@@ -215,7 +219,7 @@ public class GdsClient {
      * @param commentId
      * @return
      */
-    public String getAdminReplyContent(Long commentId){
+    public static String getAdminReplyContent(Long commentId){
         try {
             return (String) RemoteUtil.exec(GET_ADMINREPLYCONTENT, commentId);
         } catch (ClassCastException e) {
@@ -231,7 +235,7 @@ public class GdsClient {
      * @param commentReplyVO
      * @return
      */
-    public CommentDetailRE getCommentDetailByCommentId(CommentReplyVO commentReplyVO){
+    public static CommentDetailRE getCommentDetailByCommentId(CommentReplyVO commentReplyVO){
         CommentReplyDTO commentReplyDTO = new CommentReplyDTO();
         BeanUtils.copyProperties(commentReplyVO, commentReplyDTO);
         try {
@@ -249,7 +253,7 @@ public class GdsClient {
      * @param commentReply
      * @return
      */
-    public Long insertCommentReply(CommentReply commentReply){
+    public static Long insertCommentReply(CommentReply commentReply){
         CommentReplyModelDTO commentReplyModelDTO = new CommentReplyModelDTO();
         BeanUtils.copyProperties(commentReply, commentReplyModelDTO);
         try {
@@ -267,7 +271,7 @@ public class GdsClient {
      * @param commentReply
      * @return
      */
-    public Integer editCommentReply(CommentReply commentReply){
+    public static Integer editCommentReply(CommentReply commentReply){
         CommentReplyModelDTO commentReplyModelDTO = new CommentReplyModelDTO();
         BeanUtils.copyProperties(commentReply, commentReplyModelDTO);
         try {
@@ -285,7 +289,7 @@ public class GdsClient {
      * @param commentReplyVO
      * @return
      */
-    public Integer deleteCommentReplyById(CommentReplyVO commentReplyVO){
+    public static Integer deleteCommentReplyById(CommentReplyVO commentReplyVO){
         CommentReplyDTO commentReplyDTO = new CommentReplyDTO();
         BeanUtils.copyProperties(commentReplyVO, commentReplyDTO);
         try {
