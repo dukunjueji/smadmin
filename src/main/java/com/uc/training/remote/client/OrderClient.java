@@ -18,7 +18,7 @@ import com.uc.training.ord.vo.OrdMemberVO;
 import com.uc.training.ord.vo.OrdOrderGoodsVO;
 import com.uc.training.ord.vo.OrdOrderVO;
 import com.uc.training.ord.vo.OrderVO;
-import com.uc.training.utils.RemoteUtil;
+import com.uc.training.remote.utils.RemoteUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;

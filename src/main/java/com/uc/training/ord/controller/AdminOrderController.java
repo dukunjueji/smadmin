@@ -6,8 +6,6 @@ import com.uc.training.ord.re.OrderGoodsDetailRE;
 import com.uc.training.ord.re.OrderRE;
 import com.uc.training.ord.service.OrderService;
 import com.uc.training.ord.vo.OrdOrderVO;
-import com.uc.training.smadmin.bd.service.MemberService;
-import com.uc.training.smadmin.gds.service.GoodsService;
 import com.ycc.base.common.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,12 +29,6 @@ import java.util.Map;
 public class AdminOrderController extends BaseController {
     @Autowired
     private OrderService orderService;
-
-    @Autowired
-    private GoodsService goodsService;
-
-    @Autowired
-    private MemberService memberService;
 
     /**
      * 获取订单分页

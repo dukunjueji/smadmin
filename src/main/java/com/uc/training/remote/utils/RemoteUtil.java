@@ -1,4 +1,4 @@
-package com.uc.training.utils;
+package com.uc.training.remote.utils;
 
 import com.uc.training.common.vo.RemoteResult;
 import com.zuche.framework.remote.RemoteClientFactory;

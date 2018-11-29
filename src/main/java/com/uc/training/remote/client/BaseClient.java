@@ -1,7 +1,7 @@
 package com.uc.training.remote.client;
 
 import com.uc.training.base.re.MemberRE;
-import com.uc.training.utils.RemoteUtil;
+import com.uc.training.remote.utils.RemoteUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
