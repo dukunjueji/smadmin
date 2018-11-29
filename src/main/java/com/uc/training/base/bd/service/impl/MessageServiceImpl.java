@@ -1,6 +1,8 @@
 package com.uc.training.base.bd.service.impl;
 
+import com.uc.training.base.bd.dto.MessageDTO;
 import com.uc.training.base.bd.service.MessageService;
+import com.uc.training.remote.client.BaseClient;
 import com.uc.training.smadmin.bd.dao.MessageDao;
 import com.uc.training.smadmin.bd.model.Message;
 import com.uc.training.smadmin.bd.re.MessageRE;
@@ -31,8 +33,8 @@ public class MessageServiceImpl implements MessageService {
     private static final Integer ENDNUM = 5;
 
     @Override
-    public Integer queryMessageCount(Long memberId) {
-        return this.messageDao.queryMessageCount(memberId);
+    public Integer queryMessageCount(MessageDTO messageDTO) {
+        return BaseClient.queryMessageCount(messageDTO);
     }
 
     @Override

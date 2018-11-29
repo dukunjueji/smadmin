@@ -1,6 +1,5 @@
 package com.uc.training.remote.client;
 
-import com.uc.training.common.vo.RemoteResult;
 import com.uc.training.gds.dto.CommentDTO;
 import com.uc.training.gds.dto.CommentListDTO;
 import com.uc.training.gds.dto.CommentReplyDTO;
@@ -11,19 +10,15 @@ import com.uc.training.gds.re.CommentCountRE;
 import com.uc.training.gds.re.CommentDetailRE;
 import com.uc.training.gds.re.CommentPicRE;
 import com.uc.training.gds.re.CommentRE;
+import com.uc.training.gds.re.GoodsRE;
 import com.uc.training.remote.utils.RemoteUtil;
 import com.uc.training.smadmin.gds.model.CommentReply;
-import com.uc.training.smadmin.gds.re.GoodsRE;
 import com.uc.training.smadmin.gds.vo.CommentListVO;
 import com.uc.training.smadmin.gds.vo.CommentReplyVO;
 import com.uc.training.smadmin.gds.vo.CommentVO;
-import com.uc.training.utils.RemoteUtil;
-import com.ycc.base.framework.remote.client.annotations.RemoteMethod;
-import com.zuche.framework.remote.RemoteClientFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 

@@ -2,6 +2,9 @@ package com.uc.training.base.bd.controller;
 
 import com.uc.training.base.bd.dto.LoginLogDTO;
 import com.uc.training.base.bd.dto.MemberDTO;
+import com.uc.training.base.bd.dto.MemberRechargeHistoryDTO;
+import com.uc.training.base.bd.dto.MemberRechargeHistoryModelDTO;
+import com.uc.training.base.bd.dto.MessageDTO;
 import com.uc.training.base.bd.re.MemberDetailRE;
 import com.uc.training.base.bd.re.MemberLoginRE;
 import com.uc.training.base.bd.re.MemberRE;
@@ -173,9 +176,9 @@ public class MemberController extends BaseController {
     @ResponseBody
     @AccessLogin(required = false)
     public Result passwordCode(@Validated CreateCodeVO createCodeVO) {
-        Member member = new Member();
-        member.setTelephone(createCodeVO.getTelephone());
-        member = memberService.queryOneMember(member);
+        MemberDTO memberDTO = new MemberDTO();
+        memberDTO.setTelephone(createCodeVO.getTelephone());
+        MemberRE member = memberService.queryOneMember(memberDTO);
         if(member == null){
             return Result.getBusinessException("手机号还没被注册", null);
         }
@@ -201,9 +204,9 @@ public class MemberController extends BaseController {
     @ResponseBody
     @AccessLogin(required = false)
     public Result memberPassword(@Validated MemberRegisterVO memberRegisterVO){
-        MemberRE mem = new Member();
+        MemberDTO mem = new MemberDTO();
         mem.setTelephone(memberRegisterVO.getTelephone());
-        Member member = memberService.queryOneMember(mem);
+        MemberRE member = memberService.queryOneMember(mem);
         if(member == null){
             return Result.getBusinessException("手机号还没被注册", null);
         }
@@ -214,6 +217,7 @@ public class MemberController extends BaseController {
             return Result.getBusinessException("验证码已过期，请重新获取", null);
         }
         if(memberRegisterVO.getTelCode().equals(msg)){
+            mem = new MemberDTO();
             mem.setPassword(memberRegisterVO.getPassword());
             mem.setId(member.getId());
             memberService.updateMember(mem);
@@ -238,7 +242,7 @@ public class MemberController extends BaseController {
         if(!m.matches()){
             return Result.getBusinessException("充值金额有误", null);
         }
-        Member member = new Member();
+        MemberDTO member = new MemberDTO();
         member.setId(getUid());
         member.setBalance(chargeBalanceVO.getBalance());
         BigDecimal bigDecimal = new BigDecimal(0);
@@ -252,7 +256,7 @@ public class MemberController extends BaseController {
             mqVO.setRechargeValue(chargeBalanceVO.getBalance());
 
             //生成充值记录
-            MemberRechargeHistory memberRechargeHistory = new MemberRechargeHistory();
+            MemberRechargeHistoryModelDTO memberRechargeHistory = new MemberRechargeHistoryModelDTO();
             memberRechargeHistory.setMemberId(getUid());
             memberRechargeHistory.setCreateEmp(getUid());
             memberRechargeHistory.setModifyEmp(getUid());
@@ -260,7 +264,9 @@ public class MemberController extends BaseController {
             mqVO.setMemberRechargeHistory(memberRechargeHistory);
 
             //生成短信
-            Member mem = memberService.queryMemberTel(getUid());
+            MemberDTO md = new MemberDTO();
+            md.setId(getUid());
+            MemberRE mem = memberService.queryOneMember(md);
             GenerateSmsVO generateSmsVO = new GenerateSmsVO();
             generateSmsVO.setTelephone(mem.getTelephone());
             generateSmsVO.setMessage(chargeBalanceVO.getBalance().toString());
@@ -288,7 +294,9 @@ public class MemberController extends BaseController {
         Integer orderSum = orderService.queryOrderCount(getUid());
         memberDetailRE.setOrderSum(orderSum);
         //会员的消息数量
-        Integer messageSum = messageService.queryMessageCount(getUid());
+        MessageDTO messageDTO = new MessageDTO();
+        messageDTO.setMemberId(getUid());
+        Integer messageSum = messageService.queryMessageCount(messageDTO);
         memberDetailRE.setMessageSum(messageSum);
 
         return Result.getSuccessResult(memberDetailRE);

@@ -1,17 +1,19 @@
 package com.uc.training.base.bd.service.impl;
 
+import com.uc.training.base.bd.dto.LoginLogDTO;
 import com.uc.training.base.bd.dto.MemberDTO;
+import com.uc.training.base.bd.re.MemberDetailRE;
 import com.uc.training.base.bd.re.MemberRE;
 import com.uc.training.base.bd.service.MemberService;
 import com.uc.training.common.enums.GrowthEnum;
 import com.uc.training.common.enums.IntegralEnum;
 import com.uc.training.common.enums.OrderEnum;
+import com.uc.training.common.mq.MqProducer;
+import com.uc.training.common.mq.vo.MqVO;
 import com.uc.training.common.utils.EncryptUtil;
 import com.uc.training.remote.client.BaseClient;
 import com.uc.training.smadmin.bd.dao.MemberDao;
-import com.uc.training.smadmin.bd.model.LoginLog;
 import com.uc.training.smadmin.bd.model.Member;
-import com.uc.training.smadmin.bd.re.MemberDetailRE;
 import com.uc.training.smadmin.bd.re.MemberInfoRE;
 import com.uc.training.smadmin.bd.service.LoginLogService;
 import com.uc.training.smadmin.bd.vo.MemberBalanceVO;
@@ -20,8 +22,6 @@ import com.uc.training.smadmin.bd.vo.MemberListVO;
 import com.uc.training.smadmin.bd.vo.MemberLoginVO;
 import com.uc.training.smadmin.gds.service.GoodsService;
 import com.uc.training.smadmin.gds.vo.GoodsStokeVO;
-import com.uc.training.smadmin.mq.MqProducer;
-import com.uc.training.smadmin.mq.vo.MqVO;
 import com.uc.training.smadmin.ord.model.Order;
 import com.uc.training.smadmin.ord.re.OrderConfirmRE;
 import com.uc.training.smadmin.ord.service.OrderService;
@@ -77,10 +77,9 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Integer updateMember(Member member) {
-        String newPaswd = EncryptUtil.md5(member.getPassword());
-        member.setPassword(newPaswd);
-        return memberDao.updateMember(member);
+    public Integer updateMember(MemberDTO member) {
+        member.setPassword(EncryptUtil.md5(member.getPassword()));
+        return BaseClient.updateMember(member);
     }
 
     @Override
@@ -155,7 +154,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public MemberDetailRE getMemberDetailById(Long memberId) {
-        return memberDao.getMemberDetailById(memberId);
+        return BaseClient.getMemberDetailById(memberId);
     }
 
     @Override
@@ -189,11 +188,11 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void memberLogin(LoginLog loginLog, MqVO mqVO) {
-        loginLogService.insertLog(loginLog);
+    public void memberLogin(LoginLogDTO loginLog, MqVO mqVO) {
+        BaseClient.insertLoginLog(loginLog);
         //判断是否第一次登陆
-        Integer loginNum = loginLogService.queryLoginCount(loginLog);
-        if (loginNum == 1) {
+        Integer loginNum = BaseClient.queryLoginCount(loginLog);
+        if (loginNum != null && loginNum == 1) {
             MetaQUtils.sendMsgNoException(new MqProducer(mqVO));
         }
     }
@@ -204,8 +203,8 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Integer memberRecharge(Member member, MqVO mqVO) {
-        Integer status = this.updateMemberBalance(member);
+    public Integer memberRecharge(MemberDTO member, MqVO mqVO) {
+        Integer status = BaseClient.updateMember(member);
         mqVO.setRechargeStatus(status);
         mqVO.getMemberRechargeHistory().setStatus(status);
         mqVO.getGenerateSmsVO().setRechargeStatus(status);

@@ -1,5 +1,6 @@
 package com.uc.training.base.bd.service;
 
+import com.uc.training.base.bd.dto.MessageDTO;
 import com.uc.training.smadmin.bd.model.Message;
 import com.uc.training.smadmin.bd.re.MessageRE;
 import com.uc.training.smadmin.bd.vo.MessageDetailVO;
@@ -17,12 +18,12 @@ import java.util.List;
  */
 public interface MessageService {
     /**
-    *说明：查找指定会员未读消息总记录数
-    *@param memberId 会员id
+    *说明：查找消息数量
+    *@param messageDTO 会员id
     *@return：java.lang.Integer 消息的数目
     *@throws：
     */
-    Integer queryMessageCount(Long memberId);
+    Integer queryMessageCount(MessageDTO messageDTO);
 
     /**
      *说明：查找指定会员消息总记录数
