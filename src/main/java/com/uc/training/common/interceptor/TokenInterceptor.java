@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.bean.AccessToken;
 import com.uc.training.common.constant.Constant;
-import com.uc.training.smadmin.utils.TokenUtil;
+import com.uc.training.common.utils.TokenUtil;
 import com.ycc.base.common.Result;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
