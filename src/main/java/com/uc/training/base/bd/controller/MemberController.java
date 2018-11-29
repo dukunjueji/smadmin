@@ -1,7 +1,9 @@
 package com.uc.training.base.bd.controller;
 
+import com.uc.training.base.bd.dto.LoginLogDTO;
 import com.uc.training.base.bd.dto.MemberDTO;
 import com.uc.training.base.bd.re.MemberDetailRE;
+import com.uc.training.base.bd.re.MemberLoginRE;
 import com.uc.training.base.bd.re.MemberRE;
 import com.uc.training.base.bd.re.MessageRE;
 import com.uc.training.base.bd.service.MemberService;
@@ -11,7 +13,6 @@ import com.uc.training.base.bd.vo.CreateCodeVO;
 import com.uc.training.base.bd.vo.MemberInfoVO;
 import com.uc.training.base.bd.vo.MemberLoginVO;
 import com.uc.training.base.bd.vo.MemberRegisterVO;
-import com.uc.training.base.bd.vo.MemberVO;
 import com.uc.training.base.bd.vo.MessageDetailVO;
 import com.uc.training.base.bd.vo.MessageListVO;
 import com.uc.training.base.bd.vo.PasswordEditVO;
@@ -24,11 +25,12 @@ import com.uc.training.common.enums.SmsTypeEnum;
 import com.uc.training.common.mq.MqProducer;
 import com.uc.training.common.mq.vo.MqVO;
 import com.uc.training.common.redis.RedisConfigEnum;
+import com.uc.training.common.utils.EncryptUtil;
+import com.uc.training.common.utils.TokenUtil;
 import com.uc.training.ord.service.OrderService;
 import com.ycc.base.common.Result;
 import com.ycc.tools.middleware.metaq.MetaQUtils;
 import com.ycc.tools.middleware.redis.RedisCacheUtils;
-import org.apache.hadoop.hbase.security.token.TokenUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,16 +68,16 @@ public class MemberController extends BaseController {
 
     /**
      *注册时，生成验证码及短信
-     * @param memberVO 生成验证码的请求参数
+     * @param createCodeVO 生成验证码的请求参数
      * @return 显示页面提示信息
      */
     @RequestMapping(value = "/createCode.do_", method = RequestMethod.POST)
     @ResponseBody
     @AccessLogin(required = false)
-    public Result createCode(@Validated MemberVO memberVO) {
+    public Result createCode(@Validated CreateCodeVO createCodeVO) {
         //根据手机号查询会员信息
         MemberDTO mem = new MemberDTO();
-        mem.setTelephone(memberVO.getTelephone());
+        mem.setTelephone(createCodeVO.getTelephone());
         MemberRE member = memberService.queryOneMember(mem);
         if(member != null){
             return Result.getBusinessException("手机号码已被注册", null);
@@ -83,7 +85,7 @@ public class MemberController extends BaseController {
         //生成消息体
         MqVO mqVO = new MqVO();
         GenerateSmsVO generateSmsVO = new GenerateSmsVO();
-        generateSmsVO.setTelephone(memberVO.getTelephone());
+        generateSmsVO.setTelephone(createCodeVO.getTelephone());
         generateSmsVO.setCode(SmsTypeEnum.REGISTER.getCode());
         generateSmsVO.setType(SmsTypeEnum.REGISTER.getType());
         mqVO.setGenerateSmsVO(generateSmsVO);
@@ -94,30 +96,30 @@ public class MemberController extends BaseController {
 
     /***
     *说明：会员注册
-    *@param memberRegisterVO 会员注册的请求
+    *@param memberVO 会员注册的请求
     *@return：com.uc.training.smadmin.bd.re.MemberMegRE
     *@throws：
     */
     @RequestMapping(value = "/memberRegister.do_", method = RequestMethod.POST)
     @ResponseBody
     @AccessLogin(required = false)
-    public Result memberRegister(@Validated MemberRegisterVO memberRegisterVO){
-        Member member = new Member();
-        member.setTelephone(memberRegisterVO.getTelephone());
-        member.setPassword(memberRegisterVO.getPassword());
-        Member mem = memberService.queryOneMember(member);
+    public Result memberRegister(@Validated MemberRegisterVO memberVO){
+        MemberDTO member = new MemberDTO();
+        member.setTelephone(memberVO.getTelephone());
+        member.setPassword(memberVO.getPassword());
+        MemberRE mem = memberService.queryOneMember(member);
         if(mem != null){
             return Result.getBusinessException("手机号码已被注册",null);
         }
         //redis
         RedisCacheUtils redis = RedisCacheUtils.getInstance(RedisConfigEnum.SYS_CODE);
-        String msg = redis.get(memberRegisterVO.getTelephone());
+        String msg = redis.get(memberVO.getTelephone());
         if (msg == null) {
             return Result.getBusinessException("验证码已过期，请重新获取", null);
         }
-        if(memberRegisterVO.getTelCode().equals(msg)){
+        if(memberVO.getTelCode().equals(msg)){
             memberService.insertMember(member);
-            return Result.getSuccessResult("成功");
+            return Result.getSuccessResult("注册成功");
         }else {
             return Result.getBusinessException("验证码不正确", null);
         }
@@ -132,23 +134,23 @@ public class MemberController extends BaseController {
     @ResponseBody
     @AccessLogin(required = false)
     public Result<MemberLoginRE> memberLogin(@Validated MemberLoginVO memberLoginVO){
-        Result<MemberLoginRE> result;
-        Member mem = memberService.queryMemberByTel(memberLoginVO.getTelephone());
+        MemberDTO memberDTO = new MemberDTO();
+        memberDTO.setTelephone(memberLoginVO.getTelephone());
+        MemberRE mem = memberService.queryOneMember(memberDTO);
         if (mem == null) {
-            result = Result.getBusinessException("该账号不存在,请先注册", null);
-            return result;
+            return Result.getBusinessException("该账号不存在,请先注册", null);
         }
-        memberLoginVO.setPassword(EncryptUtil.md5(memberLoginVO.getPassword()));
-        Member member = memberService.getMemberLogin(memberLoginVO);
+        memberDTO.setPassword(EncryptUtil.md5(memberLoginVO.getPassword()));
+        MemberRE member = memberService.queryOneMember(memberDTO);
         if (member == null) {
-            result = Result.getBusinessException("您的密码错误", null);
+            return Result.getBusinessException("您的密码错误", null);
         }else {
             String token = TokenUtil.sign(member.getId());
             MemberLoginRE memberLoginRE = new MemberLoginRE();
             memberLoginRE.setToken(token);
 
             //生成登陆日志
-            LoginLog loginLog = new LoginLog();
+            LoginLogDTO loginLog = new LoginLogDTO();
             loginLog.setMemberId(member.getId());
             loginLog.setIp(getLocalhostIp());
 
@@ -158,9 +160,8 @@ public class MemberController extends BaseController {
             mqVO.setGrowthType(GrowthEnum.LOGININ.getGrowthType());
 
             memberService.memberLogin(loginLog, mqVO);
-            result = Result.getSuccessResult(memberLoginRE);
+            return Result.getSuccessResult(memberLoginRE);
         }
-        return result;
     }
 
     /**
@@ -200,7 +201,7 @@ public class MemberController extends BaseController {
     @ResponseBody
     @AccessLogin(required = false)
     public Result memberPassword(@Validated MemberRegisterVO memberRegisterVO){
-        Member mem = new Member();
+        MemberRE mem = new Member();
         mem.setTelephone(memberRegisterVO.getTelephone());
         Member member = memberService.queryOneMember(mem);
         if(member == null){

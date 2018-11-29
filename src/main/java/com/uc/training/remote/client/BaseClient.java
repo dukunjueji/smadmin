@@ -26,6 +26,9 @@ public class BaseClient {
     /** 根据会员信息进行查找*/
     private static final String QUERY_ONE_MEMBER = "smbase.api.queryOneMember";
 
+    /** 新增会员*/
+    private static final String INSERT_MEMBER = "smbase.api.insertMember";
+
     /** 查询会员信息*/
     private static final String GET_MEMBER_INFO_BY_ID = "smbase.api.getGoodsInfoById";
 
@@ -51,6 +54,19 @@ public class BaseClient {
     public static MemberRE queryOneMember(MemberDTO memberDTO) {
         try {
             return (MemberRE) RemoteUtil.exec(QUERY_ONE_MEMBER, memberDTO);
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            LOGGER.error("类型转换异常");
+        }
+        return null;
+    }
+
+    /**
+     * 根据会员信息进行查找
+     */
+    public static Long insertMember(MemberDTO memberDTO) {
+        try {
+            return (Long) RemoteUtil.exec(INSERT_MEMBER, memberDTO);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");

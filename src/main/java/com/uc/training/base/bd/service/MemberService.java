@@ -27,11 +27,11 @@ public interface MemberService {
 
     /**
     *说明：插入会员信息逻辑
-    *@param member 会员对象
+    *@param memberDTO 会员对象
     *@return：void
     *@throws：
     */
-    void insertMember(Member member);
+    Long insertMember(MemberDTO memberDTO);
 
     /**
     *说明：根据手机号或者密码查找一个会员
