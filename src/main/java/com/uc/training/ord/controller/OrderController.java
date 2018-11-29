@@ -130,6 +130,7 @@ public class OrderController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "getOrderList.do_", method = RequestMethod.GET)
     public Result<List<OrdOrderGoodsRE>> getOrderGds(String goodsList) {
+        // 接受前臺提交的購物車列表商品 包含propertyId(商品屬性id)、goodsNum(商品數量)、goodsId(商品id)、订单Id(从我的订单页面进入)
         List<OrdOrderGoodsVO> orderGodsList = (List<OrdOrderGoodsVO>) JSONArray.toList(JSONArray.fromObject(goodsList), new OrdOrderGoodsVO(), new JsonConfig());
         if (CollectionUtils.isEmpty(orderGodsList)) {
             return Result.getSuccessResult(null);
