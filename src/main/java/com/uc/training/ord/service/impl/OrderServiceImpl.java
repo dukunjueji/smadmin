@@ -1,9 +1,11 @@
 package com.uc.training.ord.service.impl;
 
+import com.uc.training.base.bd.re.AddressRE;
 import com.uc.training.common.enums.GoodsStatusEnum;
 import com.uc.training.common.enums.OrderEnum;
 import com.uc.training.common.enums.UUIDTypeEnum;
-import com.uc.training.common.utils.UUIDUtil;
+import com.uc.training.gds.re.GoodsDetailRE;
+import com.uc.training.gds.re.GoodsStokeRE;
 import com.uc.training.ord.re.CartGoodsRE;
 import com.uc.training.ord.re.CommentRE;
 import com.uc.training.ord.re.OrdOrderGoodsRE;
@@ -23,10 +25,6 @@ import com.uc.training.ord.vo.OrdOrderVO;
 import com.uc.training.ord.vo.OrderGoodsVO;
 import com.uc.training.ord.vo.OrderVO;
 import com.uc.training.remote.client.OrderClient;
-import com.uc.training.smadmin.bd.re.AddressRE;
-import com.uc.training.smadmin.gds.re.GoodsDetailRE;
-import com.uc.training.smadmin.gds.re.GoodsStokeRE;
-import com.uc.training.smadmin.gds.vo.GoodsStokeVO;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
