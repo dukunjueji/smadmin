@@ -1,6 +1,8 @@
 package com.uc.training.remote.client;
 
 import com.uc.training.common.vo.PageVO;
+import com.uc.training.gds.dto.AdminHotTagListDTO;
+import com.uc.training.gds.dto.CategoryDTO;
 import com.uc.training.gds.dto.CommentDTO;
 import com.uc.training.gds.dto.CommentListDTO;
 import com.uc.training.gds.dto.CommentReplyDTO;
@@ -21,6 +23,7 @@ import com.uc.training.gds.re.CommentPicRE;
 import com.uc.training.gds.re.CommentRE;
 import com.uc.training.gds.re.GoodsDetailRE;
 import com.uc.training.gds.re.GoodsRE;
+import com.uc.training.gds.re.GoodsStokeRE;
 import com.uc.training.gds.re.HotTagRE;
 import com.uc.training.remote.utils.RemoteUtil;
 import com.uc.training.smadmin.gds.model.CommentReply;
@@ -337,15 +340,19 @@ public  final class GdsClient {
     /**
      * 获取会员的折扣点
      */
-    private static final String GET_MEMBER_DISCOUNT_POINT = "smgoods.api.getMemberDiscountPoint";
+    private static final String GET_MEMBER_DISCOUNT_POINT = "smgoods.api.selectGoodsStatus";
+
     /**
-     * 更新减库存
+     * 获取商品上架删除库存信息
+     */
+    private static final String SELECT_GOODS_STATUS = "smgoods.api.selectGoodsStatus";
+
+    /**
+     * 扣除库存
      */
     private static final String UPDATE_AND_DEDUCT_STOKE = "smgoods.api.updateAndDeductStoke";
+
     /**
-     * 减库存之前，查看商品是否下架、删除、检查库存是否足够
-     */
-    private static final String SELECT_GOODS_STATUS = "smgoods.api.selectGoodsStatus";    /**
      * 获取商品详情
      */
     public static List<GoodsRE> getHotRecommend(){
@@ -423,6 +430,20 @@ public  final class GdsClient {
     public static List<HotTagRE> selectHotTag(){
         try {
             return (List<HotTagRE>) RemoteUtil.exec(SELECT_HOT_TAG, null);
+        } catch (ClassCastException e) {
+            logger.error("类型转换异常");
+            logger.error(e.getMessage());
+        }
+        return null;
+    }
+
+
+    /**
+     * 获取商品上架删除库存信息
+     */
+    public static GoodsStokeRE selectGoodsStatus(GoodsAndPropertyDTO goodsAndPropertyDTO){
+        try {
+            return (GoodsStokeRE) RemoteUtil.exec(SELECT_GOODS_STATUS,  goodsAndPropertyDTO);
         } catch (ClassCastException e) {
             logger.error("类型转换异常");
             logger.error(e.getMessage());
@@ -568,6 +589,10 @@ public  final class GdsClient {
      */
     private static final String GET_PROPERTY_BY_ID = "smgoods.admin.getPropertyById";
     /**
+     * 根据id获取商品信息
+     */
+    private static final String GET_COUNT_BY_PROPERTY = "smgoods.admin.getCountByProperty";
+    /**
      * 获取商品详情
      */
     public static List<AdminGoodsRE> getAdminGoodsList(GoodsListDTO goodsListDTO){
@@ -687,9 +712,9 @@ public  final class GdsClient {
     /**
      * 后台获取商品标签
      */
-    public static List<HotTagRE> getAllHotTagList(HotTagDTO hotTagDTO){
+    public static PageVO<HotTagRE> getAllHotTagList(AdminHotTagListDTO adminHotTagListDTO){
         try {
-            return (List<HotTagRE>) RemoteUtil.exec(GET_ALL_HOT_TAG_LIST,  hotTagDTO);
+            return (PageVO<HotTagRE>) RemoteUtil.exec(GET_ALL_HOT_TAG_LIST,  adminHotTagListDTO);
         } catch (ClassCastException e) {
             logger.error("类型转换异常");
             logger.error(e.getMessage());
@@ -970,4 +995,100 @@ public  final class GdsClient {
         return null;
     }
 
+    /**
+     * 获取商品分类
+     */
+    private static final String GET_CATEGORY_LIST = "smgoods.admin.getCategoryList";
+    /**
+     * 增加分类
+     */
+    private static final String  ADD_CATEGORY= "smgoods.admin.addCategory";
+    /**
+     * 删除分类
+     */
+    private static final String LOGIC_DELETE_CATEGORY = "smgoods.admin.logicDeleteCategory";
+    /**
+     * 编辑分类
+     */
+    private static final String UPDATE_CATEGORY = "smgoods.admin.updateCategory";
+    /**
+     * 根据name和parentId查找数量
+     */
+    private static final String GET_COUNT_BY_NAME_AND_PARENT_ID = "smgoods.admin.getCountByNameAndParentId";
+    /**
+     * 获取商品分类
+     */
+    public static List<CategoryRE> getCategoryList(){
+        try {
+            return (List<CategoryRE>) RemoteUtil.exec(GET_CATEGORY_LIST,null);
+        } catch (ClassCastException e) {
+            logger.error("类型转换异常");
+            logger.error(e.getMessage());
+        }
+        return null;
+    }
+
+    /**
+     * 增加分类
+     */
+    public static Long addCategory(CategoryDTO category){
+        try {
+            return (Long) RemoteUtil.exec(ADD_CATEGORY, category);
+        } catch (ClassCastException e) {
+            logger.error("类型转换异常");
+            logger.error(e.getMessage());
+        }
+        return null;
+    }
+
+    /**
+     * 删除分类
+     */
+    public static Integer logicDeleteCategory(Long id){
+        try {
+            return (Integer) RemoteUtil.exec(LOGIC_DELETE_CATEGORY,  id);
+        } catch (ClassCastException e) {
+            logger.error("类型转换异常");
+            logger.error(e.getMessage());
+        }
+        return null;
+    }
+
+    /**
+     * 编辑分类
+     */
+    public static Integer updateCategory(CategoryDTO category){
+        try {
+            return (Integer) RemoteUtil.exec(UPDATE_CATEGORY,  category);
+        } catch (ClassCastException e) {
+            logger.error("类型转换异常");
+            logger.error(e.getMessage());
+        }
+        return null;
+    }
+
+    /**
+     * 根据name和parentId查找数量
+     */
+    public static Integer getCountByNameAndParentId(CategoryDTO category){
+        try {
+            return (Integer) RemoteUtil.exec(GET_COUNT_BY_NAME_AND_PARENT_ID,  category);
+        } catch (ClassCastException e) {
+            logger.error("类型转换异常");
+            logger.error(e.getMessage());
+        }
+        return null;
+    }
+    /**
+     * 获取商品该名称规格的数量
+     */
+    public static Integer getCountByProperty(PropertyDTO property){
+        try {
+            return (Integer) RemoteUtil.exec(GET_COUNT_BY_PROPERTY,  property);
+        } catch (ClassCastException e) {
+            logger.error("类型转换异常");
+            logger.error(e.getMessage());
+        }
+        return null;
+    }
 }
