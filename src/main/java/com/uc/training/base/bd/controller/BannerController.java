@@ -1,10 +1,10 @@
 package com.uc.training.base.bd.controller;
 
-import com.uc.training.common.base.controller.BaseController;
-import com.uc.training.smadmin.bd.re.BannerRE;
-import com.ycc.base.common.Result;
+import com.uc.training.base.bd.re.BannerRE;
+import com.uc.training.base.bd.service.BannerService;
 import com.uc.training.common.annotation.AccessLogin;
-import com.uc.training.smadmin.bd.service.BannerService;
+import com.uc.training.common.base.controller.BaseController;
+import com.ycc.base.common.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

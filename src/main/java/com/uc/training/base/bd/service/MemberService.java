@@ -1,16 +1,16 @@
 package com.uc.training.base.bd.service;
 
+import com.uc.training.base.bd.dto.LoginLogDTO;
 import com.uc.training.base.bd.dto.MemberDTO;
+import com.uc.training.base.bd.re.MemberDetailRE;
 import com.uc.training.base.bd.re.MemberRE;
-import com.uc.training.smadmin.bd.model.LoginLog;
+import com.uc.training.common.mq.vo.MqVO;
 import com.uc.training.smadmin.bd.model.Member;
-import com.uc.training.smadmin.bd.re.MemberDetailRE;
 import com.uc.training.smadmin.bd.re.MemberInfoRE;
 import com.uc.training.smadmin.bd.vo.MemberBalanceVO;
 import com.uc.training.smadmin.bd.vo.MemberInfoVO;
 import com.uc.training.smadmin.bd.vo.MemberListVO;
 import com.uc.training.smadmin.bd.vo.MemberLoginVO;
-import com.uc.training.smadmin.mq.vo.MqVO;
 import com.uc.training.smadmin.ord.re.OrderConfirmRE;
 
 import java.util.List;
@@ -47,7 +47,7 @@ public interface MemberService {
     *@return：void
     *@throws：
     */
-    Integer updateMember(Member member);
+    Integer updateMember(MemberDTO member);
 
     /**
     *说明：更新余额(用于充值)
@@ -85,11 +85,11 @@ public interface MemberService {
 
     /**
     *说明：更新会员信息
-    * @param member 更新会员信息请求参数
+    * @param memberDTO 更新会员信息请求参数
     *@return：int
     *@throws：
     */
-    int updateMemberInfo(Member member);
+    Integer updateMemberInfo(MemberDTO memberDTO);
 
     /**
     *说明：查询会员信息
@@ -128,7 +128,7 @@ public interface MemberService {
     *@return：void
     *@throws：
     */
-    void memberLogin(LoginLog loginLog, MqVO mqVO);
+    void memberLogin(LoginLogDTO loginLog, MqVO mqVO);
 
     /**
      *说明：通过会员id查询会员的手机号
@@ -145,7 +145,7 @@ public interface MemberService {
     *@return：void
     *@throws：
     */
-    Integer memberRecharge(Member member, MqVO mqVO);
+    Integer memberRecharge(MemberDTO member, MqVO mqVO);
 
     /**
      *说明：通过手机号查询会员信息

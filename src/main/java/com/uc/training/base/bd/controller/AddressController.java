@@ -6,7 +6,6 @@ import com.uc.training.base.bd.service.AddressService;
 import com.uc.training.base.bd.vo.AddressVO;
 import com.uc.training.common.base.controller.BaseController;
 import com.ycc.base.common.Result;
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -53,14 +52,11 @@ public class AddressController extends BaseController {
     @ResponseBody
     @RequestMapping("/getDefaultAddress.do_")
     public Result<AddressRE> getDefaultAddress() {
-        AddressDTO addressDTO = new AddressDTO();
-        addressDTO.setMemberId(getUid());
-        addressDTO.setIsDefault(1);
-        List<AddressRE> addressList = addressService.getAddressList(addressDTO);
-        if (CollectionUtils.isEmpty(addressList)) {
+        AddressRE address = addressService.getDefaultAddress(getUid());
+        if (address == null) {
             return Result.getSuccessResult(null);
         }
-        return Result.getSuccessResult(addressList.get(0));
+        return Result.getSuccessResult(address);
     }
 
     /**
@@ -130,7 +126,7 @@ public class AddressController extends BaseController {
             return Result.getBusinessException("默认地址不能删除！",null);
         }
 
-        AddressDTO address = new AddressDTO();
+        AddressVO address = new AddressVO();
         address.setMemberId(getUid());
         address.setId(id);
 

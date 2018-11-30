@@ -1,10 +1,10 @@
 package com.uc.training.base.bd.service.impl;
 
+import com.uc.training.base.bd.service.BannerService;
 import com.uc.training.smadmin.bd.dao.BannerDao;
 import com.uc.training.smadmin.bd.model.Banner;
 import com.uc.training.smadmin.bd.re.AdminBannerListRE;
 import com.uc.training.smadmin.bd.re.BannerRE;
-import com.uc.training.smadmin.bd.service.BannerService;
 import com.uc.training.smadmin.bd.vo.AdminBannerListVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

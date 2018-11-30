@@ -3,6 +3,7 @@ package com.uc.training.base.bd.service.impl;
 import com.uc.training.base.bd.dto.AddressDTO;
 import com.uc.training.base.bd.re.AddressRE;
 import com.uc.training.base.bd.service.AddressService;
+import com.uc.training.base.bd.vo.AddressVO;
 import com.uc.training.remote.client.BaseClient;
 import org.springframework.stereotype.Service;
 
@@ -61,12 +62,25 @@ public class AddressServiceImpl implements AddressService {
 
     /**
      * 通过主键id删除地址
-     * @param addressDTO
+     * @param address
      * @return
      */
     @Override
-    public Integer deleteAddressById(AddressDTO addressDTO) {
-        return BaseClient.deleteAddressById(addressDTO);
+    public Integer deleteAddressById(AddressVO address) {
+        return BaseClient.deleteAddressById(address);
+    }
+
+    /**
+     * 获取默认地址
+     *
+     * @param uid
+     * @return
+     */
+    @Override
+    public AddressRE getDefaultAddress(Long uid) {
+
+        BaseClient.getAddressList()
+        return null;
     }
 
 }
