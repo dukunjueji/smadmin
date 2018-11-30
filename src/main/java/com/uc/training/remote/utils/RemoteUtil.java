@@ -23,7 +23,7 @@ public final class RemoteUtil {
      * @param object
      * @return
      */
-    public static Object exec(String serviceName, Object object) {
+    public static Object exec(String serviceName, Object... object) {
         Object result = null;
         try {
             result = RemoteClientFactory.getInstance().executeToObject(serviceName, object);

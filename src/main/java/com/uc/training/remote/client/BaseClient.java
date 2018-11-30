@@ -1,12 +1,39 @@
 package com.uc.training.remote.client;
 
 import com.uc.training.base.bd.dto.AddressDTO;
+import com.uc.training.base.bd.dto.BannerDTO;
+import com.uc.training.base.bd.dto.IntegralDetaillDTO;
+import com.uc.training.base.bd.dto.LoginLogDTO;
 import com.uc.training.base.bd.dto.MemberDTO;
+import com.uc.training.base.bd.dto.MemberGradeDTO;
+import com.uc.training.base.bd.dto.MemberRechargeHistoryDTO;
+import com.uc.training.base.bd.dto.MemberRechargeHistoryModelDTO;
+import com.uc.training.base.bd.dto.MessageDTO;
 import com.uc.training.base.bd.re.AddressRE;
+import com.uc.training.base.bd.re.BannerRE;
+import com.uc.training.base.bd.re.MemberDetailRE;
+import com.uc.training.base.bd.re.MemberGradeRE;
 import com.uc.training.base.bd.re.MemberRE;
+import com.uc.training.base.bd.re.MemberRechargeHistoryListRE;
+import com.uc.training.base.bd.re.MessageRE;
+import com.uc.training.base.bd.vo.AddressVO;
+import com.uc.training.base.bd.vo.MemberRechargeHistoryModelVO;
+import com.uc.training.base.bd.vo.MemberRechargeHistoryVO;
+import com.uc.training.base.sms.dto.SmsDTO;
+import com.uc.training.base.sms.dto.SmsTemplateDTO;
+import com.uc.training.base.sms.re.SmsRE;
+import com.uc.training.base.sms.re.SmsTemplateRE;
+import com.uc.training.base.sys.dto.SysMenuDTO;
+import com.uc.training.base.sys.dto.SysRoleDTO;
+import com.uc.training.base.sys.dto.SysUserDTO;
+import com.uc.training.base.sys.dto.SysUserRoleDTO;
+import com.uc.training.base.sys.re.SysMenuRE;
+import com.uc.training.base.sys.re.SysRoleRE;
+import com.uc.training.base.sys.re.SysUserRE;
 import com.uc.training.remote.utils.RemoteUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,6 +55,9 @@ public class BaseClient {
 
     /** 根据会员信息进行查找*/
     private static final String UPDATE_MEMBER = "smbase.api.updateMember";
+
+    /** 更新消息*/
+    private static final String CHECK_MEMBER_PASSWORD = "smbase.api.checkMemberPassword";
 
     /** 新增会员*/
     private static final String INSERT_MEMBER = "smbase.api.insertMember";
@@ -55,9 +85,6 @@ public class BaseClient {
 
     /** 更新消息*/
     private static final String UPDATE_MESSAGE = "smbase.api.updateMessage";
-
-    /** 更新消息*/
-    private static final String CHECK_MEMBER_PASSWORD = "smbase.api.checkMemberPassword";
 
     /** 新增消息*/
     private static final String INSERT_MESSAGE = "smbase.api.updateMessage";
@@ -91,6 +118,7 @@ public class BaseClient {
 
     /** 获取图片总数量*/
     private static final String GET_BANNER_COUNT = "smbase.api.getBannerCount";
+
 
     /** 根据id查询地址信息*/
     private static final String GET_ADDRESS_BY_ID = "smbase.api.getAddressById";
@@ -293,7 +321,7 @@ public class BaseClient {
     }
 
     /**
-     * 插入会员信息
+     * 根据会员信息进行查找
      */
     public static Long insertMember(MemberDTO memberDTO) {
         try {
@@ -477,7 +505,7 @@ public class BaseClient {
     /**
      * 获取轮播图信息(前台)
      */
-    public static List< BannerRE > getBannerList(BannerDTO bannerDTO) {
+    public static List<BannerRE> getBannerList(BannerDTO bannerDTO) {
         try {
             return (List< BannerRE >) RemoteUtil.exec(GET_BANNER_LIST, bannerDTO);
         } catch (Exception e) {
@@ -1225,6 +1253,4 @@ public class BaseClient {
         }
         return null;
     }
-}
-
 }
