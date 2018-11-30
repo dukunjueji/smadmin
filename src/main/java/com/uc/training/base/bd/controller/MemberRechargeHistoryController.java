@@ -1,10 +1,10 @@
 package com.uc.training.base.bd.controller;
 
+import com.uc.training.base.bd.re.MemberRechargeHistoryRE;
+import com.uc.training.base.bd.service.MemberRechargeHistoryService;
+import com.uc.training.base.bd.vo.MemberRechargeHistoryVO;
 import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
-import com.uc.training.smadmin.bd.re.MemberRechargeHistoryRE;
-import com.uc.training.smadmin.bd.service.MemberRechargeHistoryService;
-import com.uc.training.smadmin.bd.vo.MemberRechargeHistoryVO;
 import com.ycc.base.common.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,7 +35,6 @@ public class MemberRechargeHistoryController extends BaseController {
     @AccessLogin
     @RequestMapping(value = "/getHistoryList.do_", method = RequestMethod.POST)
     public Result<MemberRechargeHistoryRE> getHistoryListByMemberId(MemberRechargeHistoryVO memberRechargeHistoryVO) {
-
         MemberRechargeHistoryRE memberRechargeHistoryRE = new MemberRechargeHistoryRE();
         memberRechargeHistoryVO.setMemberId(getUid());
         memberRechargeHistoryRE.setMemberRechargeHistoryList(memberRechargeHistoryService.getRechargeHistoryListByMemberId(memberRechargeHistoryVO));

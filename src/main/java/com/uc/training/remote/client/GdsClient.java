@@ -17,13 +17,9 @@ import com.uc.training.smadmin.gds.re.GoodsRE;
 import com.uc.training.smadmin.gds.vo.CommentListVO;
 import com.uc.training.smadmin.gds.vo.CommentReplyVO;
 import com.uc.training.smadmin.gds.vo.CommentVO;
-import com.uc.training.utils.RemoteUtil;
-import com.ycc.base.framework.remote.client.annotations.RemoteMethod;
-import com.zuche.framework.remote.RemoteClientFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -34,7 +30,6 @@ import java.util.List;
  * @Version 1.0
  * @date 2018/11/22
  */
-
 public  final class GdsClient {
 
     private static final Logger logger = LoggerFactory.getLogger(GdsClient.class.getName());
