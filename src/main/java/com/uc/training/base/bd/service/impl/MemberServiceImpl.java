@@ -163,8 +163,8 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public int updateMemberInfo(Member member) {
-        return this.memberDao.updateMemberInfo(member);
+    public Integer updateMemberInfo(MemberDTO member) {
+        return BaseClient.updateMember(member);
     }
 
     @Override

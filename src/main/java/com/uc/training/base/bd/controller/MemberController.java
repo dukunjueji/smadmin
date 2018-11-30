@@ -43,6 +43,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.lang.reflect.Member;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -311,8 +312,8 @@ public class MemberController extends BaseController {
     @RequestMapping(value = "/editMemberInfo.do_", method = RequestMethod.POST)
     @ResponseBody
     @AccessLogin
-    public Result<MemberInfoRE> editMemberInfo(@Validated MemberInfoVO memberInfoVO){
-        Member member = new Member();
+    public Result<MemberRE> editMemberInfo(@Validated MemberInfoVO memberInfoVO){
+        MemberDTO member = new MemberDTO();
         member.setNickname(memberInfoVO.getNickname());
         member.setEmail(memberInfoVO.getEmail());
         member.setSex(memberInfoVO.getSex());
@@ -322,7 +323,9 @@ public class MemberController extends BaseController {
         //更新会员信息
         memberService.updateMemberInfo(member);
         //查询指定会员信息
-        MemberInfoRE memberInfoRE = memberService.queryOneMemberById(getUid());
+        member = new MemberDTO();
+        member.setId(getUid());
+        MemberRE memberInfoRE = memberService.queryOneMember(member);
 
         return Result.getSuccessResult(memberInfoRE);
     }
@@ -337,26 +340,28 @@ public class MemberController extends BaseController {
     @RequestMapping(value = "/sendCode.do_", method = RequestMethod.GET)
     @AccessLogin
     public Result sendCode(@Validated SendCodeVO sendCodeVO){
-        Member member = memberService.queryMemberTel(getUid());
+        // 判断新密码和确认密码是否一致
+        if (!(sendCodeVO.getNewpassword()).equals(sendCodeVO.getConfirmpassword())){
+            return Result.getBusinessException("新的密码和确认密码不一致", null);
+        }
+
+        MemberDTO memberDTO = new MemberDTO();
+        memberDTO.setId(getUid());
+        MemberRE member = memberService.queryOneMember(memberDTO);
         // 判断旧密码是否和库里的一致
         String oldpassword = EncryptUtil.md5(sendCodeVO.getOldpassword());
         if(!((member.getPassword()).equals(oldpassword))){
             return Result.getBusinessException("原来的密码输入有误", null);
         }
-        // 判断新密码和确认密码是否一致
-        if ((sendCodeVO.getNewpassword()).equals(sendCodeVO.getConfirmpassword())){
-            //生成消息体
-            MqVO mqVO = new MqVO();
-            GenerateSmsVO generateSmsVO = new GenerateSmsVO();
-            generateSmsVO.setTelephone(member.getTelephone());
-            generateSmsVO.setCode(SmsTypeEnum.CHANGE_PASSWORD.getCode());
-            generateSmsVO.setType(SmsTypeEnum.CHANGE_PASSWORD.getType());
-            mqVO.setGenerateSmsVO(generateSmsVO);
-            MetaQUtils.sendMsgNoException(new MqProducer(mqVO));
-            return Result.getSuccessResult("验证码已发送");
-        }else {
-            return Result.getBusinessException("新的密码和确认密码不一致", null);
-        }
+        //生成消息体
+        MqVO mqVO = new MqVO();
+        GenerateSmsVO generateSmsVO = new GenerateSmsVO();
+        generateSmsVO.setTelephone(member.getTelephone());
+        generateSmsVO.setCode(SmsTypeEnum.CHANGE_PASSWORD.getCode());
+        generateSmsVO.setType(SmsTypeEnum.CHANGE_PASSWORD.getType());
+        mqVO.setGenerateSmsVO(generateSmsVO);
+        MetaQUtils.sendMsgNoException(new MqProducer(mqVO));
+        return Result.getSuccessResult("验证码已发送");
     }
 
     /**

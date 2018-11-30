@@ -15,6 +15,10 @@ public class AddressVO implements Serializable {
 
 	private static final long serialVersionUID = -8075078973485898339L;
 
+	private Long id;
+
+	private Long memberId;
+
 	/**收货人**/
 	@NotBlank(message = "收货人不能为空")
 	private String receiver;
@@ -48,7 +52,39 @@ public class AddressVO implements Serializable {
 	@NotNull(message = "默认地址不能为空")
 	private Integer isDefault;
 
-    public String getReceiver() {
+	@Override
+	public String toString() {
+		return "AddressVO{" +
+				"id=" + id +
+				", memberId=" + memberId +
+				", receiver='" + receiver + '\'' +
+				", telephone='" + telephone + '\'' +
+				", province='" + province + '\'' +
+				", city='" + city + '\'' +
+				", district='" + district + '\'' +
+				", areaCode='" + areaCode + '\'' +
+				", addrDetail='" + addrDetail + '\'' +
+				", isDefault=" + isDefault +
+				'}';
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Long getMemberId() {
+		return memberId;
+	}
+
+	public void setMemberId(Long memberId) {
+		this.memberId = memberId;
+	}
+
+	public String getReceiver() {
 		return receiver;
 	}
 
@@ -112,17 +148,4 @@ public class AddressVO implements Serializable {
 		this.isDefault = isDefault;
 	}
 
-	@Override
-	public String toString() {
-		return "AddressVO{" +
-				", receiver='" + receiver + '\'' +
-				", telephone='" + telephone + '\'' +
-				", province='" + province + '\'' +
-				", city='" + city + '\'' +
-				", district='" + district + '\'' +
-				", areaCode='" + areaCode + '\'' +
-				", addrDetail='" + addrDetail + '\'' +
-				", isDefault=" + isDefault +
-				'}';
-	}
 }

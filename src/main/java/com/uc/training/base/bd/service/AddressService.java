@@ -2,6 +2,7 @@ package com.uc.training.base.bd.service;
 
 import com.uc.training.base.bd.dto.AddressDTO;
 import com.uc.training.base.bd.re.AddressRE;
+import com.uc.training.base.bd.vo.AddressVO;
 
 import java.util.List;
 
@@ -49,9 +50,15 @@ public interface AddressService {
     /**
      * 通过主键id删除地址
      *
-     * @param addressDTO
+     * @param address
      * @return
      */
-    Integer deleteAddressById(AddressDTO addressDTO);
+    Integer deleteAddressById(AddressVO address);
 
+    /**
+     * 获取默认地址
+     * @param uid
+     * @return
+     */
+    AddressRE getDefaultAddress(Long uid);
 }

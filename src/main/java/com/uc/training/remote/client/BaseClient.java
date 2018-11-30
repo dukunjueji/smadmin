@@ -13,6 +13,7 @@ import com.uc.training.base.bd.re.MemberDetailRE;
 import com.uc.training.base.bd.re.MemberGradeRE;
 import com.uc.training.base.bd.re.MemberRE;
 import com.uc.training.base.bd.re.MessageRE;
+import com.uc.training.base.bd.vo.AddressVO;
 import com.uc.training.base.sms.dto.SmsDTO;
 import com.uc.training.base.sms.dto.SmsTemplateDTO;
 import com.uc.training.base.sms.re.SmsRE;
@@ -75,6 +76,9 @@ public class BaseClient {
 
     /** 更新消息*/
     private static final String UPDATE_MESSAGE = "smbase.api.updateMessage";
+
+    /** 更新消息*/
+    private static final String CHECK_MEMBER_PASSWORD = "smbase.api.checkMemberPassword";
 
     /** 新增消息*/
     private static final String INSERT_MESSAGE = "smbase.api.updateMessage";
@@ -277,6 +281,19 @@ public class BaseClient {
     }
 
     /**
+     * 更新消息
+     */
+    public static Boolean checkMemberPassword(MessageDTO messageDTO) {
+        try {
+            return (Boolean) RemoteUtil.exec(CHECK_MEMBER_PASSWORD, messageDTO);
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            LOGGER.error("类型转换异常");
+        }
+        return null;
+    }
+
+    /**
      * 根据会员信息进行查找
      */
     public static Long insertMember(MemberDTO memberDTO) {
@@ -422,7 +439,7 @@ public class BaseClient {
     /**
      * 根据会员信息进行查找
      */
-    public static Long queryMessageList(LoginLogDTO loginLogDTO) {
+    public static Long insertLoginLog(LoginLogDTO loginLogDTO) {
         try {
             return (Long) RemoteUtil.exec(INSERT_LOGIN_LOG, loginLogDTO);
         } catch (Exception e) {
@@ -596,7 +613,10 @@ public class BaseClient {
     /**
      * 删除地址
      */
-    public static Integer deleteAddressById(AddressDTO addressDTO) {
+    public static Integer deleteAddressById(AddressVO address) {
+        AddressDTO addressDTO = new AddressDTO();
+        addressDTO.setMemberId(address.getMemberId());
+        addressDTO.setId(address.getId());
         try {
             return (Integer) RemoteUtil.exec(DELETE_ADDRESS_BY_ID, addressDTO);
         } catch (Exception e) {

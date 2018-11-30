@@ -85,11 +85,11 @@ public interface MemberService {
 
     /**
     *说明：更新会员信息
-    * @param member 更新会员信息请求参数
+    * @param memberDTO 更新会员信息请求参数
     *@return：int
     *@throws：
     */
-    int updateMemberInfo(Member member);
+    Integer updateMemberInfo(MemberDTO memberDTO);
 
     /**
     *说明：查询会员信息
