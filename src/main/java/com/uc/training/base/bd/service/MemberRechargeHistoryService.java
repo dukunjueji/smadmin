@@ -1,9 +1,8 @@
 package com.uc.training.base.bd.service;
 
-import com.uc.training.smadmin.bd.model.MemberRechargeHistory;
-import com.uc.training.smadmin.bd.re.MemberRechargeHistoryListRE;
-import com.uc.training.smadmin.bd.vo.MemberRechargeHistoryVO;
-
+import com.uc.training.base.bd.re.MemberRechargeHistoryListRE;
+import com.uc.training.base.bd.vo.MemberRechargeHistoryModelVO;
+import com.uc.training.base.bd.vo.MemberRechargeHistoryVO;
 import java.util.List;
 
 /**
@@ -16,10 +15,10 @@ import java.util.List;
 public interface MemberRechargeHistoryService {
     /**
      * 新增充值记录
-     * @param memberRechargeHistory
+     * @param memberRechargeHistoryModelVO
      * @return
      */
-    Long insertMemberRechargeHistory(MemberRechargeHistory memberRechargeHistory);
+    Long insertMemberRechargeHistory(MemberRechargeHistoryModelVO memberRechargeHistoryModelVO);
 
     /**
      * 根据会员id获取充值记录

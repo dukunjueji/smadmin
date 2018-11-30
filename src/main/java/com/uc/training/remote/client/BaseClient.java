@@ -1,30 +1,9 @@
 package com.uc.training.remote.client;
 
 import com.uc.training.base.bd.dto.AddressDTO;
-import com.uc.training.base.bd.dto.BannerDTO;
-import com.uc.training.base.bd.dto.IntegralDetaillDTO;
-import com.uc.training.base.bd.dto.LoginLogDTO;
 import com.uc.training.base.bd.dto.MemberDTO;
-import com.uc.training.base.bd.dto.MemberGradeDTO;
-import com.uc.training.base.bd.dto.MessageDTO;
 import com.uc.training.base.bd.re.AddressRE;
-import com.uc.training.base.bd.re.BannerRE;
-import com.uc.training.base.bd.re.MemberDetailRE;
-import com.uc.training.base.bd.re.MemberGradeRE;
 import com.uc.training.base.bd.re.MemberRE;
-import com.uc.training.base.bd.re.MessageRE;
-import com.uc.training.base.bd.vo.AddressVO;
-import com.uc.training.base.sms.dto.SmsDTO;
-import com.uc.training.base.sms.dto.SmsTemplateDTO;
-import com.uc.training.base.sms.re.SmsRE;
-import com.uc.training.base.sms.re.SmsTemplateRE;
-import com.uc.training.base.sys.dto.SysMenuDTO;
-import com.uc.training.base.sys.dto.SysRoleDTO;
-import com.uc.training.base.sys.dto.SysUserDTO;
-import com.uc.training.base.sys.dto.SysUserRoleDTO;
-import com.uc.training.base.sys.re.SysMenuRE;
-import com.uc.training.base.sys.re.SysRoleRE;
-import com.uc.training.base.sys.re.SysUserRE;
 import com.uc.training.remote.utils.RemoteUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -127,6 +106,26 @@ public class BaseClient {
 
     /** 删除地址*/
     private static final String DELETE_ADDRESS_BY_ID = "smbase.api.deleteAddressById";
+
+    /**
+     * 根据id查询会员信息
+     */
+    private static final String GET_MEMBER_INFO_BY_ID = "smgds.api.getGoodsInfoById";
+
+    /**
+     * 根据会员id获取充值记录
+     */
+    private static final String GET_RECHARGEHISTORYLIST_BY_MEMBERID = "base.api.getRechargeHistoryListByMemberId";
+
+    /**
+     * 根据会员id获取总记录数
+     */
+    private static final String GET_COUNT_BY_MEMBERID = "base.api.getCountByMemberId";
+
+    /**
+     * 新增充值记录
+     */
+    private static final String INSERT_MEMBERRECHARGEHISTORY = "base.api.insertMemberRechargeHistory";
 
     /** 查询短信列表*/
     private static final String GET_SMS_LIST = "smbase.api.getSmsList";
@@ -294,7 +293,7 @@ public class BaseClient {
     }
 
     /**
-     * 根据会员信息进行查找
+     * 插入会员信息
      */
     public static Long insertMember(MemberDTO memberDTO) {
         try {
@@ -624,6 +623,61 @@ public class BaseClient {
             LOGGER.error("类型转换异常");
         }
         return null;
+    }
+
+    /**
+     * hhj
+     * 根据会员id获取充值记录
+     *
+     * @param memberRechargeHistoryVO
+     * @return
+     */
+    public static List<MemberRechargeHistoryListRE> getRechargeHistoryListByMemberId(MemberRechargeHistoryVO memberRechargeHistoryVO) {
+        MemberRechargeHistoryDTO memberRechargeHistoryDTO = new MemberRechargeHistoryDTO();
+        BeanUtils.copyProperties(memberRechargeHistoryVO, memberRechargeHistoryDTO);
+        try {
+            return (List<MemberRechargeHistoryListRE>) RemoteUtil.exec(GET_RECHARGEHISTORYLIST_BY_MEMBERID, memberRechargeHistoryDTO);
+        } catch (ClassCastException e) {
+            LOGGER.error(e.getMessage());
+            LOGGER.error("类型转换异常");
+            return null;
+        }
+    }
+
+    /**
+     * hhj
+     * 根据会员id获取总记录数
+     *
+     * @param memberId
+     * @return
+     */
+    public static Integer getCountByMemberId(Long memberId) {
+        try {
+            return (Integer) RemoteUtil.exec(GET_COUNT_BY_MEMBERID, memberId);
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            LOGGER.error("类型转换异常");
+            return null;
+        }
+    }
+
+    /**
+     * hhj
+     * 新增充值记录
+     *
+     * @param memberRechargeHistoryModelVO
+     * @return
+     */
+    public static Long insertMemberRechargeHistory(MemberRechargeHistoryModelVO memberRechargeHistoryModelVO) {
+        MemberRechargeHistoryModelDTO memberRechargeHistoryModelDTO = new MemberRechargeHistoryModelDTO();
+        BeanUtils.copyProperties(memberRechargeHistoryModelVO, memberRechargeHistoryModelDTO);
+        try {
+            return (Long) RemoteUtil.exec(INSERT_MEMBERRECHARGEHISTORY, memberRechargeHistoryModelDTO);
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            LOGGER.error("类型转换异常");
+            return null;
+        }
     }
 
     /**
@@ -1171,4 +1225,6 @@ public class BaseClient {
         }
         return null;
     }
+}
+
 }

@@ -1,12 +1,10 @@
 package com.uc.training.base.bd.service.impl;
 
-import com.uc.training.smadmin.bd.dao.MemberRechargeHistoryDao;
-import com.uc.training.smadmin.bd.model.MemberRechargeHistory;
-import com.uc.training.smadmin.bd.re.MemberRechargeHistoryListRE;
-import com.uc.training.smadmin.bd.service.MemberRechargeHistoryService;
-import com.uc.training.smadmin.bd.vo.MemberRechargeHistoryVO;
-import com.uc.training.smadmin.utils.InjectionUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.uc.training.base.bd.re.MemberRechargeHistoryListRE;
+import com.uc.training.base.bd.service.MemberRechargeHistoryService;
+import com.uc.training.base.bd.vo.MemberRechargeHistoryModelVO;
+import com.uc.training.base.bd.vo.MemberRechargeHistoryVO;
+import com.uc.training.remote.client.BaseClient;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,19 +19,15 @@ import java.util.List;
 @Service
 public class MemberRechargeHistoryServiceImpl implements MemberRechargeHistoryService {
 
-    @Autowired
-    private MemberRechargeHistoryDao memberRechargeHistoryDao;
-
     /**
      * 新增充值记录
      *
-     * @param memberRechargeHistory
+     * @param memberRechargeHistoryModelVO
      * @return
      */
     @Override
-    public Long insertMemberRechargeHistory(MemberRechargeHistory memberRechargeHistory) {
-        this.memberRechargeHistoryDao = InjectionUtils.getInjectionInstance(MemberRechargeHistoryDao.class);
-        return this.memberRechargeHistoryDao.insertMemberRechargeHistory(memberRechargeHistory);
+    public Long insertMemberRechargeHistory(MemberRechargeHistoryModelVO memberRechargeHistoryModelVO) {
+       return BaseClient.insertMemberRechargeHistory(memberRechargeHistoryModelVO);
     }
 
     /**
@@ -44,7 +38,7 @@ public class MemberRechargeHistoryServiceImpl implements MemberRechargeHistorySe
      */
     @Override
     public List<MemberRechargeHistoryListRE> getRechargeHistoryListByMemberId(MemberRechargeHistoryVO memberRechargeHistoryVO) {
-        return memberRechargeHistoryDao.getRechargeHistoryListByMemberId(memberRechargeHistoryVO);
+        return BaseClient.getRechargeHistoryListByMemberId(memberRechargeHistoryVO);
     }
 
     /**
@@ -55,6 +49,6 @@ public class MemberRechargeHistoryServiceImpl implements MemberRechargeHistorySe
      */
     @Override
     public Integer getCountByMemberId(Long memberId) {
-        return memberRechargeHistoryDao.getCountByMemberId(memberId);
+        return BaseClient.getCountByMemberId(memberId);
     }
 }
