@@ -12,9 +12,13 @@ import java.io.Serializable;
  * @Version 1.0
  * @date 2018/11/1
  */
-public class AdminInsertBannerVO implements Serializable{
+public class BannerVO implements Serializable{
 
     private static final long serialVersionUID = 3933335056779025681L;
+    /**
+     * 主键id
+     */
+    private Long id;
 
     /**广告名称**/
     @NotBlank(message = "广告名称不能为空")
@@ -42,10 +46,22 @@ public class AdminInsertBannerVO implements Serializable{
     /**描述**/
     private String description;
 
+    /**
+     * 创建人
+     **/
+    private Long createEmp;
+
+    /**
+     * 修改人
+     **/
+    private Long modifyEmp;
+
+
     @Override
     public String toString() {
-        return "AdminInsertBannerVO{" +
-                "name='" + name + '\'' +
+        return "BannerVO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", type=" + type +
                 ", isShow=" + isShow +
                 ", sortNum=" + sortNum +
@@ -53,6 +69,30 @@ public class AdminInsertBannerVO implements Serializable{
                 ", url='" + url + '\'' +
                 ", description='" + description + '\'' +
                 '}';
+    }
+
+    public Long getCreateEmp() {
+        return createEmp;
+    }
+
+    public void setCreateEmp(Long createEmp) {
+        this.createEmp = createEmp;
+    }
+
+    public Long getModifyEmp() {
+        return modifyEmp;
+    }
+
+    public void setModifyEmp(Long modifyEmp) {
+        this.modifyEmp = modifyEmp;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {

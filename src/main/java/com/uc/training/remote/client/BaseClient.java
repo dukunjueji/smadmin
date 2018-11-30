@@ -17,6 +17,8 @@ import com.uc.training.base.bd.re.MemberRE;
 import com.uc.training.base.bd.re.MemberRechargeHistoryListRE;
 import com.uc.training.base.bd.re.MessageRE;
 import com.uc.training.base.bd.vo.AddressVO;
+import com.uc.training.base.bd.vo.BannerListVO;
+import com.uc.training.base.bd.vo.BannerVO;
 import com.uc.training.base.bd.vo.MemberRechargeHistoryModelVO;
 import com.uc.training.base.bd.vo.MemberRechargeHistoryVO;
 import com.uc.training.base.sms.dto.SmsDTO;
@@ -50,89 +52,145 @@ public class BaseClient {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BaseClient.class.getName());
 
-    /** 根据会员信息进行查找*/
+    /**
+     * 根据会员信息进行查找
+     */
     private static final String QUERY_ONE_MEMBER = "smbase.api.queryOneMember";
 
-    /** 根据会员信息进行查找*/
+    /**
+     * 根据会员信息进行查找
+     */
     private static final String UPDATE_MEMBER = "smbase.api.updateMember";
 
-    /** 更新消息*/
+    /**
+     * 更新消息
+     */
     private static final String CHECK_MEMBER_PASSWORD = "smbase.api.checkMemberPassword";
 
-    /** 新增会员*/
+    /**
+     * 新增会员
+     */
     private static final String INSERT_MEMBER = "smbase.api.insertMember";
 
-    /** 获取会员详细信息*/
+    /**
+     * 获取会员详细信息
+     */
     private static final String GET_MEMBER_DETAIL_BY_ID = "smbase.api.getMemberDetailById";
 
-    /** 根据会员信息进行查找*/
+    /**
+     * 根据会员信息进行查找
+     */
     private static final String QUERY_MEMBER_GRADE_LIST = "smbase.api.queryMemberGradeList";
 
-    /** 修改会员等级信息*/
+    /**
+     * 修改会员等级信息
+     */
     private static final String MODIFY_MEMBER_GRADE = "smbase.api.modifyMemberGrade";
 
-    /** 查找数据总记录数*/
+    /**
+     * 查找数据总记录数
+     */
     private static final String QUERY_MEMBER_GRADE_COUNT = "smbase.api.queryMemberGradeCount";
 
-    /** 通过用户ID获取会员信息*/
+    /**
+     * 通过用户ID获取会员信息
+     */
     private static final String GET_MEMBER_GRADE_BY_ID = "smbase.api.getMemberGradeByUId";
 
-    /** 查找消息数量*/
+    /**
+     * 查找消息数量
+     */
     private static final String QUERY_MESSAGE_COUNT = "smbase.api.queryMessageCount";
 
-    /** 查询指定会员的所有消息*/
+    /**
+     * 查询指定会员的所有消息
+     */
     private static final String QUERY_MESSAGE_LIST = "smbase.api.queryMessageList";
 
-    /** 更新消息*/
+    /**
+     * 更新消息
+     */
     private static final String UPDATE_MESSAGE = "smbase.api.updateMessage";
 
-    /** 新增消息*/
+    /**
+     * 新增消息
+     */
     private static final String INSERT_MESSAGE = "smbase.api.updateMessage";
 
-    /** 通过消息id获取消息的详情*/
+    /**
+     * 通过消息id获取消息的详情
+     */
     private static final String QUERY_ONE_MESSAGE_BY_ID = "smbase.api.queryOneMessageById";
 
-    /** 插入登陆日志*/
+    /**
+     * 插入登陆日志
+     */
     private static final String INSERT_LOGIN_LOG = "smbase.api.insertLoginLog";
 
-    /** 统计登录表数据*/
+    /**
+     * 统计登录表数据
+     */
     private static final String QUERY_LOGIN_COUNT = "smbase.api.queryLoginCount";
 
-    /** 添加积分详情*/
+    /**
+     * 添加积分详情
+     */
     private static final String ADD_INTEGRAL_DETAIL = "smbase.api.addIntegralDetail";
 
-    /** 获取轮播图信息(前台)*/
+    /**
+     * 获取轮播图信息(前台)
+     */
     private static final String GET_BANNER_LIST = "smbase.api.getBannerList";
 
-    /** 获取所有轮播图(后台)*/
+    /**
+     * 获取所有轮播图(后台)
+     */
     private static final String GET_ALL_BANNER_LIST = "smbase.api.getAllBannerList";
 
-    /** 更新图片*/
+    /**
+     * 更新图片
+     */
     private static final String UPDATE_BANNER = "smbase.api.updateBanner";
 
-    /** 删除图片*/
+    /**
+     * 删除图片
+     */
     private static final String DELETE_BANNER_BY_ID = "smbase.api.deleteBannerById";
 
-    /** 新增轮播图*/
+    /**
+     * 新增轮播图
+     */
     private static final String INSERT_BANNER = "smbase.api.insertBanner";
 
-    /** 获取图片总数量*/
+    /**
+     * 获取图片总数量
+     */
     private static final String GET_BANNER_COUNT = "smbase.api.getBannerCount";
 
 
-    /** 根据id查询地址信息*/
+    /**
+     * 根据id查询地址信息
+     */
     private static final String GET_ADDRESS_BY_ID = "smbase.api.getAddressById";
 
-    /** 获取地址列表*/
+    /**
+     * 获取地址列表
+     */
     private static final String GET_ADDRESS_LIST = "smbase.api.getAddressList";
 
-    /** 新增地址*/
+    /**
+     * 新增地址
+     */
     private static final String INSERT_ADDRESS = "smbase.api.insertAddress";
 
-    /** 更新地址*/
+    /**
+     * 更新地址
+     */
     private static final String UPDATE_ADDRESS_BY_ID = "smbase.api.updateAddressById";
 
-    /** 删除地址*/
+    /**
+     * 删除地址
+     */
     private static final String DELETE_ADDRESS_BY_ID = "smbase.api.deleteAddressById";
 
     /**
@@ -155,130 +213,214 @@ public class BaseClient {
      */
     private static final String INSERT_MEMBERRECHARGEHISTORY = "base.api.insertMemberRechargeHistory";
 
-    /** 查询短信列表*/
+    /**
+     * 查询短信列表
+     */
     private static final String GET_SMS_LIST = "smbase.api.getSmsList";
 
-    /** 查询短信记录总数*/
+    /**
+     * 查询短信记录总数
+     */
     private static final String QUERY_SMS_COUNT = "smbase.api.querySmsCount";
 
-    /** 查询单条短信记录*/
+    /**
+     * 查询单条短信记录
+     */
     private static final String GET_SMS = "smbase.api.getSms";
 
-    /** 新增短信*/
+    /**
+     * 新增短信
+     */
     private static final String INSERT_SMS = "smbase.api.insertSms";
 
-    /** 新增短信模板*/
+    /**
+     * 新增短信模板
+     */
     private static final String ADD_TEMPLATE = "smbase.api.addTemplate";
 
-    /** 通过ID删除短信模板*/
+    /**
+     * 通过ID删除短信模板
+     */
     private static final String DELETE_TEMPLATE_BY_ID = "smbase.api.deleteTemplateById";
 
-    /** 修改短信模板*/
+    /**
+     * 修改短信模板
+     */
     private static final String MODIFY_TEMPLATE = "smbase.api.modifyTemplate";
 
-    /** 通过ID获取短信模板*/
+    /**
+     * 通过ID获取短信模板
+     */
     private static final String GET_TEMPLATE_BY_ID = "smbase.api.getTemplateById";
 
-    /** 获取短信模板列表*/
+    /**
+     * 获取短信模板列表
+     */
     private static final String GET_TEMPLATE_LIST = "smbase.api.getTemplateList";
 
-    /** 查询列表总记录数*/
+    /**
+     * 查询列表总记录数
+     */
     private static final String GET_TEMPLATE_LIST_COUNT = "smbase.api.getTemplateListCount";
 
-    /** 根据ID列表批量删除短信模板*/
+    /**
+     * 根据ID列表批量删除短信模板
+     */
     private static final String BATCH_DELETE_SMS_TEMPLATE_BY_ID = "smbase.api.batchDeleteSmsTempleById";
 
-    /** 生成短信*/
+    /**
+     * 生成短信
+     */
     private static final String GENERATE_SMS = "smbase.api.generateSms";
 
-    /** 根据用户id获取用户权限列表*/
+    /**
+     * 根据用户id获取用户权限列表
+     */
     private static final String GET_USER_PERMS = "smbase.api.getUserPerms";
 
-    /** 获取菜单列表*/
+    /**
+     * 获取菜单列表
+     */
     private static final String GET_MENU_LIST = "smbase.api.getMenuList";
 
-    /** 通过ID获取菜单*/
+    /**
+     * 通过ID获取菜单
+     */
     private static final String GET_SYS_MENU_BY_ID = "smbase.api.getSysMenuById";
 
-    /** 新增菜单*/
+    /**
+     * 新增菜单
+     */
     private static final String ADD_MENU = "smbase.api.addMenu";
 
-    /** 通过ID删除菜单*/
+    /**
+     * 通过ID删除菜单
+     */
     private static final String DELETE_SYS_MENU_BY_ID = "smbase.api.deleteSysMenuById";
 
-    /** 更新菜单*/
+    /**
+     * 更新菜单
+     */
     private static final String UPDATE_MENU = "smbase.api.updateMenu";
 
-    /** 批量删除*/
+    /**
+     * 批量删除
+     */
     private static final String BATCH_DELETE_SYS_MENU = "smbase.api.batchDeleteSysMenu";
 
-    /** 查找用户数量*/
+    /**
+     * 查找用户数量
+     */
     private static final String QUERY_SYS_MENU_COUNT = "smbase.api.querySysMenuCount";
 
-    /** 获取根据用户id用户角色列表*/
+    /**
+     * 获取根据用户id用户角色列表
+     */
     private static final String GET_USER_ROLES = "smbase.api.getUserRoles";
 
-    /** 获取角色列表页面*/
+    /**
+     * 获取角色列表页面
+     */
     private static final String GET_ROLE_PAGE = "smbase.api.getRolePage";
 
-    /** 获取角色总数*/
+    /**
+     * 获取角色总数
+     */
     private static final String GET_SYS_ROLE_COUNT = "smbase.api.getSysRoleCount";
 
-    /** 更新角色信息*/
+    /**
+     * 更新角色信息
+     */
     private static final String UPDATE_ROLE = "smbase.api.updateRole";
 
-    /** 根据ID删除角色*/
+    /**
+     * 根据ID删除角色
+     */
     private static final String DELETE_SYS_ROLE_BY_ID = "smbase.api.deleteSysRoleById";
 
-    /** 新增角色*/
+    /**
+     * 新增角色
+     */
     private static final String ADD_ROLE = "smbase.api.addRole";
 
-    /** 批量新增角色权限*/
+    /**
+     * 批量新增角色权限
+     */
     private static final String BATCH_INSERT_AUTH = "smbase.api.batchInsertAuth";
 
-    /** 通过角色ID获取该ID所有的菜单权限*/
+    /**
+     * 通过角色ID获取该ID所有的菜单权限
+     */
     private static final String GET_ROLE_MENU_ID_BY_RID = "smbase.api.getRoleMenuIdByRid";
 
-    /** 获取角色列表*/
+    /**
+     * 获取角色列表
+     */
     private static final String GET_ROLE_LIST = "smbase.api.getRoleList";
 
-    /** 通过用户ID获取角色ID*/
+    /**
+     * 通过用户ID获取角色ID
+     */
     private static final String GET_ROLE_LIST_BY_UID = "smbase.api.getRoleListByUid";
 
-    /** 通过用户ID和菜单ID列表添加用户权限*/
+    /**
+     * 通过用户ID和菜单ID列表添加用户权限
+     */
     private static final String ADD_USER_ROLE = "smbase.api.addUserRole";
 
-    /** 查找用户数量*/
+    /**
+     * 查找用户数量
+     */
     private static final String QUERY_SYS_ROLE_COUNT = "smbase.api.querySysRoleCount";
 
-    /** 通过id查找*/
+    /**
+     * 通过id查找
+     */
     private static final String GET_SYS_ROLE_BY_ID = "smbase.api.getSysRoleById";
 
-    /** 用户登录获取用户*/
+    /**
+     * 用户登录获取用户
+     */
     private static final String GET_USER_LOGIN = "smbase.api.getUserLogin";
 
-    /** 根据用户id查询用户*/
+    /**
+     * 根据用户id查询用户
+     */
     private static final String GET_SYS_USER_BY_ID = "smbase.api.getSysUserById";
 
-    /** 修改密码*/
+    /**
+     * 修改密码
+     */
     private static final String UPDATE_PASSWORD = "smbase.api.updatePassword";
 
-    /** 获取用户分页列表*/
+    /**
+     * 获取用户分页列表
+     */
     private static final String GET_USER_LIST = "smbase.api.getUserList";
 
-    /** 获取用户数量*/
+    /**
+     * 获取用户数量
+     */
     private static final String GET_USER_COUNT = "smbase.api.queryUserCount";
 
-    /** 新增用户*/
+    /**
+     * 新增用户
+     */
     private static final String ADD_USER = "smbase.api.addUser";
 
-    /** 通过ID删除用户*/
+    /**
+     * 通过ID删除用户
+     */
     private static final String DELETE_SYS_USER_BY_ID = "smbase.api.deleteSysUserById";
 
-    /** 更新用户信息*/
+    /**
+     * 更新用户信息
+     */
     private static final String UPDATE_USER = "smbase.api.updateUser";
 
-    /** 通过用户ID获取用户的菜单权限*/
+    /**
+     * 通过用户ID获取用户的菜单权限
+     */
     private static final String GET_MENU_LIST_BY_USER_ID = "smbase.api.getMenuListByUserId";
 
     /**
@@ -505,9 +647,11 @@ public class BaseClient {
     /**
      * 获取轮播图信息(前台)
      */
-    public static List<BannerRE> getBannerList(BannerDTO bannerDTO) {
+    public static List<BannerRE> getBannerList(BannerVO bannerVO) {
+        BannerDTO bannerDTO = new BannerDTO();
+        BeanUtils.copyProperties(bannerVO, bannerDTO);
         try {
-            return (List< BannerRE >) RemoteUtil.exec(GET_BANNER_LIST, bannerDTO);
+            return (List<BannerRE>) RemoteUtil.exec(GET_BANNER_LIST, bannerDTO);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
@@ -518,7 +662,9 @@ public class BaseClient {
     /**
      * 获取所有轮播图(后台)
      */
-    public static List<BannerRE> getAllBannerList(BannerDTO bannerDTO) {
+    public static List<BannerRE> getAllBannerList(BannerListVO bannerListVO) {
+        BannerDTO bannerDTO = new BannerDTO();
+        BeanUtils.copyProperties(bannerListVO, bannerDTO);
         try {
             return (List<BannerRE>) RemoteUtil.exec(GET_ALL_BANNER_LIST, bannerDTO);
         } catch (Exception e) {
@@ -531,7 +677,9 @@ public class BaseClient {
     /**
      * 更新图片
      */
-    public static Integer updateBanner(BannerDTO bannerDTO) {
+    public static Integer updateBanner(BannerVO banner) {
+        BannerDTO bannerDTO = new BannerDTO();
+        BeanUtils.copyProperties(banner, bannerDTO);
         try {
             return (Integer) RemoteUtil.exec(UPDATE_BANNER, bannerDTO);
         } catch (Exception e) {
@@ -557,9 +705,11 @@ public class BaseClient {
     /**
      * 新增轮播图
      */
-    public static Long insertBanner(Long id) {
+    public static Long insertBanner(BannerVO bannerVO) {
+        BannerDTO bannerDTO = new BannerDTO();
+        BeanUtils.copyProperties(bannerVO, bannerDTO);
         try {
-            return (Long) RemoteUtil.exec(INSERT_BANNER, id);
+            return (Long) RemoteUtil.exec(INSERT_BANNER, bannerDTO);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
@@ -570,7 +720,9 @@ public class BaseClient {
     /**
      * 获取图片总数量
      */
-    public static Integer getBannerCount(BannerDTO bannerDTO) {
+    public static Integer getBannerCount(BannerListVO bannerListVO) {
+        BannerDTO bannerDTO = new BannerDTO();
+        BeanUtils.copyProperties(bannerListVO, bannerDTO);
         try {
             return (Integer) RemoteUtil.exec(GET_BANNER_COUNT, bannerDTO);
         } catch (Exception e) {
@@ -584,11 +736,11 @@ public class BaseClient {
      * 根据id查询地址信息
      */
     public static AddressRE getAddressById(Long id, Long memberId) {
-            AddressDTO addressDTO = new AddressDTO();
-            if (memberId != null) {
-                addressDTO.setMemberId(memberId);
-            }
-            addressDTO.setId(id);
+        AddressDTO addressDTO = new AddressDTO();
+        if (memberId != null) {
+            addressDTO.setMemberId(memberId);
+        }
+        addressDTO.setId(id);
         try {
             return (AddressRE) RemoteUtil.exec(GET_ADDRESS_BY_ID, addressDTO);
         } catch (Exception e) {
@@ -601,7 +753,9 @@ public class BaseClient {
     /**
      * 获取用户地址
      */
-    public static List<AddressRE> getAddressList(AddressDTO addressDTO) {
+    public static List<AddressRE> getAddressList(AddressVO addressVO) {
+        AddressDTO addressDTO = new AddressDTO();
+        BeanUtils.copyProperties(addressVO, addressDTO);
         try {
             return (List<AddressRE>) RemoteUtil.exec(GET_ADDRESS_LIST, addressDTO);
         } catch (Exception e) {
@@ -614,7 +768,9 @@ public class BaseClient {
     /**
      * 新增地址
      */
-    public static Long insertAddress(AddressDTO addressDTO) {
+    public static Long insertAddress(AddressVO address) {
+        AddressDTO addressDTO = new AddressDTO();
+        BeanUtils.copyProperties(address, addressDTO);
         try {
             return (Long) RemoteUtil.exec(INSERT_ADDRESS, addressDTO);
         } catch (Exception e) {
@@ -627,7 +783,9 @@ public class BaseClient {
     /**
      * 修改地址
      */
-    public static Integer updateAddressById(AddressDTO addressDTO) {
+    public static Integer updateAddressById(AddressVO addressVO) {
+        AddressDTO addressDTO = new AddressDTO();
+        BeanUtils.copyProperties(addressVO, addressDTO);
         try {
             return (Integer) RemoteUtil.exec(UPDATE_ADDRESS_BY_ID, addressDTO);
         } catch (Exception e) {

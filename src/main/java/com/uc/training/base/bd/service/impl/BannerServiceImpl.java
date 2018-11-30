@@ -1,11 +1,12 @@
 package com.uc.training.base.bd.service.impl;
 
+import com.uc.training.base.bd.re.BannerRE;
 import com.uc.training.base.bd.service.BannerService;
+import com.uc.training.base.bd.vo.BannerListVO;
+import com.uc.training.base.bd.vo.BannerVO;
+import com.uc.training.remote.client.BaseClient;
 import com.uc.training.smadmin.bd.dao.BannerDao;
-import com.uc.training.smadmin.bd.model.Banner;
 import com.uc.training.smadmin.bd.re.AdminBannerListRE;
-import com.uc.training.smadmin.bd.re.BannerRE;
-import com.uc.training.smadmin.bd.vo.AdminBannerListVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,16 +22,13 @@ import java.util.List;
 @Service
 public class BannerServiceImpl implements BannerService {
 
-    @Autowired
-    private BannerDao bannerDao;
-
     /**
      * 获取轮播图信息(不包含不显示的图片)
      * @return
      */
     @Override
-    public List<BannerRE> getBannerList() {
-        return bannerDao.getBannerList();
+    public List<BannerRE> getBannerList(BannerVO bannerVO) {
+        return BaseClient.getBannerList(bannerVO);
     }
 
     /**
@@ -39,8 +37,8 @@ public class BannerServiceImpl implements BannerService {
      * @return
      */
     @Override
-    public List<AdminBannerListRE> getAllBannerList(AdminBannerListVO adminBannerListVO) {
-        return bannerDao.getAllBannerList(adminBannerListVO);
+    public List<BannerRE> getAllBannerList(BannerListVO adminBannerListVO) {
+        return BaseClient.getAllBannerList(adminBannerListVO);
     }
 
     /**
@@ -50,8 +48,8 @@ public class BannerServiceImpl implements BannerService {
      * @return
      */
     @Override
-    public Integer updateBanner(Banner banner) {
-        return bannerDao.updateBanner(banner);
+    public Integer updateBanner(BannerVO banner) {
+        return BaseClient.updateBanner(banner);
     }
 
     /**
@@ -62,7 +60,7 @@ public class BannerServiceImpl implements BannerService {
      */
     @Override
     public Integer deleteBannerById(Long id) {
-        return bannerDao.deleteBannerById(id);
+        return BaseClient.deleteBannerById(id);
     }
 
     /**
@@ -72,8 +70,8 @@ public class BannerServiceImpl implements BannerService {
      * @return
      */
     @Override
-    public Long insertBanner(Banner banner) {
-        return bannerDao.insertBanner(banner);
+    public Long insertBanner(BannerVO banner) {
+        return BaseClient.insertBanner(banner);
     }
 
     /**
@@ -91,7 +89,7 @@ public class BannerServiceImpl implements BannerService {
      * @return
      */
     @Override
-    public Long getAdminBannerCount(AdminBannerListVO adminBannerListVO) {
-        return bannerDao.getAdminBannerCount(adminBannerListVO);
+    public Long getAdminBannerCount(BannerListVO adminBannerListVO) {
+        return BaseClient.getBannerCount(BannerListVO);
     }
 }
