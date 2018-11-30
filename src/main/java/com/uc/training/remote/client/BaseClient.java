@@ -28,43 +28,32 @@ import java.util.List;
  * @date 2018/11/22
  */
 @Service
-public final class BaseClient {
+public class BaseClient {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BaseClient.class.getName());
 
-    /**
-     * 根据会员信息进行查找
-     */
+    /** 根据会员信息进行查找*/
     private static final String QUERY_ONE_MEMBER = "smbase.api.queryOneMember";
 
-    /**
-     * 查询会员信息
-     */
+    /** 新增会员*/
+    private static final String INSERT_MEMBER = "smbase.api.insertMember";
+
+    /** 查询会员信息*/
     private static final String GET_MEMBER_INFO_BY_ID = "smbase.api.getGoodsInfoById";
 
-    /**
-     * 根据id查询地址信息
-     */
+    /** 根据id查询地址信息*/
     private static final String GET_ADDRESS_BY_ID = "smbase.api.getAddressById";
 
-    /**
-     * 获取地址列表
-     */
+    /** 获取地址列表*/
     private static final String GET_ADDRESS_LIST = "smbase.api.getAddressList";
 
-    /**
-     * 新增地址
-     */
+    /** 新增地址*/
     private static final String INSERT_ADDRESS = "smbase.api.insertAddress";
 
-    /**
-     * 更新地址
-     */
+    /** 更新地址*/
     private static final String UPDATE_ADDRESS_BY_ID = "smbase.api.updateAddressById";
 
-    /**
-     * 删除地址
-     */
+    /** 删除地址*/
     private static final String DELETE_ADDRESS_BY_ID = "smbase.api.deleteAddressById";
 
     /**
@@ -102,14 +91,27 @@ public final class BaseClient {
     }
 
     /**
+     * 插入会员信息
+     */
+    public static Long insertMember(MemberDTO memberDTO) {
+        try {
+            return (Long) RemoteUtil.exec(INSERT_MEMBER, memberDTO);
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            LOGGER.error("类型转换异常");
+        }
+        return null;
+    }
+
+    /**
      * 根据id查询地址信息
      */
     public static AddressRE getAddressById(Long id, Long memberId) {
-        AddressDTO addressDTO = new AddressDTO();
-        if (memberId != null) {
-            addressDTO.setMemberId(memberId);
-        }
-        addressDTO.setId(id);
+            AddressDTO addressDTO = new AddressDTO();
+            if (memberId != null) {
+                addressDTO.setMemberId(memberId);
+            }
+            addressDTO.setId(id);
         try {
             return (AddressRE) RemoteUtil.exec(GET_ADDRESS_BY_ID, addressDTO);
         } catch (Exception e) {
@@ -134,17 +136,8 @@ public final class BaseClient {
 
     /**
      * 新增地址
-     * 根据商品id查询商品信息
-     *
-     * @return
      */
     public static Long insertAddress(AddressDTO addressDTO) {
-       return null;
-
-    }
-
-    public static MemberRE getCarGoodsById(Long id) {
-        MemberRE memberRE = new MemberRE();
         try {
             return (Long) RemoteUtil.exec(INSERT_ADDRESS, addressDTO);
         } catch (Exception e) {
@@ -163,15 +156,9 @@ public final class BaseClient {
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
-            memberRE = (MemberRE) RemoteUtil.exec(GET_MEMBER_INFO_BY_ID, id);
-            return memberRE;
-        } catch (Exception e) {
-            logger.error("类型转换异常");
-            logger.error(e.getMessage());
         }
         return null;
     }
-
 
     /**
      * 删除地址

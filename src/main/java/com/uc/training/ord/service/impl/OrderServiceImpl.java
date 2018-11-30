@@ -7,7 +7,6 @@ import com.uc.training.common.enums.UUIDTypeEnum;
 import com.uc.training.gds.re.GoodsDetailRE;
 import com.uc.training.gds.re.GoodsStokeRE;
 import com.uc.training.ord.re.CartGoodsRE;
-import com.uc.training.ord.re.CommentRE;
 import com.uc.training.ord.re.OrdOrderGoodsRE;
 import com.uc.training.ord.re.OrderConfirmRE;
 import com.uc.training.ord.re.OrderGoodsDetailRE;
@@ -114,16 +113,31 @@ public class OrderServiceImpl implements OrderService {
             }
             ordOrderGoodsRE.setGoodsId(orderGodsList.get(i).getGoodsId());
             ordOrderGoodsRE.setGdsName(gdDTO.getName());
-            if (!CollectionUtils.isEmpty(gdDTO.getPicUrl())) {
-                ordOrderGoodsRE.setGdsUrl(gdDTO.getPicUrl().get(0).getPicUrl());
-            }
-            if (!CollectionUtils.isEmpty(goodsNumList)) {
+            // 对我的订单中的商品重新购买进行判断
+            if (orderGodsList.get(0).getOrderId() != null) {
+                List<OrderGoodsRE> orderGdsList = orderGoodsDao.getOrderGoodsByOrderId(orderGodsList.get(0).getOrderId().intValue());
+                if (CollectionUtils.isEmpty(orderGdsList)) {
+                    return null;
+                }
+                for (int j = 0; j < orderGdsList.size(); j++) {
+                    if (orderGdsList.get(j).getGoodsPropertyId().equals(orderGodsList.get(i).getPropertyId())
+                            && orderGdsList.get(j).getGoodsNum().equals(orderGodsList.get(i).getNum())) {
+                        ordOrderGoodsRE.setNum(orderGdsList.get(j).getGoodsNum());
+                        break;
+                    }
+                }
+            }else if (!CollectionUtils.isEmpty(goodsNumList)){
+                // 判斷前臺提交的商品数量參數是否與购物车後臺一致
                 for (int j = 0; j < goodsNumList.size(); j++) {
-                    if (goodsNumList.get(j).getGoodsPropertyId().equals(orderGodsList.get(i).getPropertyId())) {
+                    if (goodsNumList.get(j).getGoodsPropertyId().equals(orderGodsList.get(i).getPropertyId())
+                            && goodsNumList.get(j).getGoodsNum().equals(orderGodsList.get(i).getNum())) {
                         ordOrderGoodsRE.setNum(goodsNumList.get(j).getGoodsNum());
                         break;
                     }
                 }
+            }
+            if (ordOrderGoodsRE.getNum() == null){
+                return list;
             }
             ordOrderGoodsRE.setPropertyId(orderGodsList.get(i).getPropertyId());
             ordOrderGoodsRE.setProperty(gdDTO.getProperty());

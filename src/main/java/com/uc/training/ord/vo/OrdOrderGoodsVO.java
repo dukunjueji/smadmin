@@ -116,6 +116,18 @@ public class OrdOrderGoodsVO implements Serializable {
      * 订单信息串
      */
     private String orderInfoList;
+    /**
+     * 订单id
+     */
+    private Long orderId;
+
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
+    }
 
     private List<OrdOrderGoodsVO> list;
 

@@ -63,8 +63,8 @@ public class MemberServiceImpl implements MemberService {
     private SmsTemplateService smsTemplateService;
 
     @Override
-    public void insertMember(Member member) {
-        memberDao.insertMember(member);
+    public Long insertMember(MemberDTO memberDTO) {
+        return BaseClient.insertMember(memberDTO);
     }
 
     @Override
