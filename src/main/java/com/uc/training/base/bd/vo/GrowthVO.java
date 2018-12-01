@@ -15,25 +15,39 @@ public class GrowthVO implements Serializable {
     private static final long serialVersionUID = -4457901071488014842L;
 
     /**
-     * 成长值类型
+     * 成长值
      */
-    private Integer growthType;
+    private Long growth;
     /**
      * 购买商品的价格，如果成长值类型不是购买商品类型，那么这个字段不用赋值
      */
     private BigDecimal purchaseValue;
+    /**
+     * 成长值类型
+     */
+    private Integer type;
 
     /**
      * 会员ID
      */
     private Long memberId;
 
-    public Integer getGrowthType() {
-        return growthType;
+    @Override
+    public String toString() {
+        return "GrowthVO{" +
+                "growth=" + growth +
+                ", purchaseValue=" + purchaseValue +
+                ", type=" + type +
+                ", memberId=" + memberId +
+                '}';
     }
 
-    public void setGrowthType(Integer growthType) {
-        this.growthType = growthType;
+    public Long getGrowth() {
+        return growth;
+    }
+
+    public void setGrowth(Long growth) {
+        this.growth = growth;
     }
 
     public BigDecimal getPurchaseValue() {
@@ -52,12 +66,12 @@ public class GrowthVO implements Serializable {
         this.memberId = memberId;
     }
 
-    @Override
-    public String toString() {
-        return "GrowthVO{" +
-                "growthType=" + growthType +
-                ", purchaseValue=" + purchaseValue +
-                ", memberId=" + memberId +
-                '}';
+    public Integer getType() {
+        return type;
     }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
 }

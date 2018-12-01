@@ -4,19 +4,10 @@ import com.uc.training.base.bd.re.MessageRE;
 import com.uc.training.base.bd.service.MessageService;
 import com.uc.training.base.bd.vo.MessageVO;
 import com.uc.training.remote.client.BaseClient;
-import com.uc.training.smadmin.bd.dao.MessageDao;
-import com.uc.training.smadmin.bd.model.Message;
-import com.uc.training.smadmin.bd.re.MessageRE;
-import com.uc.training.smadmin.bd.vo.MessageDetailVO;
-import com.uc.training.smadmin.bd.vo.MessageListVO;
-import com.uc.training.smadmin.utils.InjectionUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
-import org.displaytag.util.CollectionUtil;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,11 +31,6 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public Integer queryAllMessageCount(MessageVO messageVO) {
-        return BaseClient.queryMemberCount(messageVO);
-    }
-
-    @Override
     public List<MessageRE> queryMessageList(MessageVO messageVO) {
         List<MessageRE> messageList = BaseClient.queryMessageList(messageVO);
         if (CollectionUtils.isEmpty(messageList)) {
@@ -63,8 +49,7 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public Long insertMessage(MessageVO record) {
-        this.messageDao = InjectionUtils.getInjectionInstance(MessageDao.class);
-        return this.messageDao.insertMessage(record);
+        return BaseClient.insertMessage(record);
     }
 
     @Override

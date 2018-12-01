@@ -1,19 +1,13 @@
 package com.uc.training.base.bd.service;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import com.uc.training.base.bd.dto.LoginLogDTO;
-import com.uc.training.base.bd.dto.MemberDTO;
 import com.uc.training.base.bd.re.MemberDetailRE;
 import com.uc.training.base.bd.re.MemberRE;
+import com.uc.training.base.bd.vo.LoginVO;
+import com.uc.training.base.bd.vo.MemberInfoVO;
 import com.uc.training.base.bd.vo.MemberListVO;
 import com.uc.training.base.bd.vo.MemberVO;
 import com.uc.training.common.mq.vo.MqVO;
-import com.uc.training.smadmin.bd.model.Member;
-import com.uc.training.smadmin.bd.re.MemberInfoRE;
-import com.uc.training.smadmin.bd.vo.MemberBalanceVO;
-import com.uc.training.smadmin.bd.vo.MemberInfoVO;
-import com.uc.training.smadmin.bd.vo.MemberLoginVO;
-import com.uc.training.smadmin.ord.re.OrderConfirmRE;
+import com.uc.training.ord.re.OrderConfirmRE;
 
 import java.util.List;
 
@@ -52,14 +46,6 @@ public interface MemberService {
     Integer updateMember(MemberVO member);
 
     /**
-    *说明：更新余额(用于充值)
-    *@param member
-    *@return：void
-    *@throws：
-    */
-    Integer updateMemberBalance(Member member);
-
-    /**
      * 查询用户订单金额
      * @param memberInfoVO
      * @param mqVO
@@ -77,29 +63,12 @@ public interface MemberService {
     MemberDetailRE getMemberDetailById(Long memberId);
 
     /**
-     * 获取登录会员信息
-     *
-     * @version 1.0 2018/10/23 14:11 by 吴佰川（baichuan.wu@ucarinc.com）创建
-     * @param memberLoginVO 登录请求参数
-     * @return com.uc.training.smadmin.bd.model.Member
-     */
-    Member getMemberLogin(MemberLoginVO memberLoginVO);
-
-    /**
     *说明：更新会员信息
     * @param memberVO 更新会员信息请求参数
     *@return：int
     *@throws：
     */
     Integer updateMemberInfo(MemberVO memberVO);
-
-    /**
-    *说明：查询会员信息
-    *@param uid 会员id
-    *@return：com.uc.training.smadmin.bd.re.MemberInfoRE
-    *@throws：
-    */
-    MemberInfoRE queryOneMemberById(Long uid);
 
     /**
      * 获取会员信息分页页面
@@ -116,29 +85,13 @@ public interface MemberService {
     Long queryMemberCount(MemberListVO memberListVO);
 
     /**
-    *说明：支付商品更新余额
-    *@param memberBalanceVO 支付商品扣余额参数
-    *@return：void
-    *@throws：
-    */
-    void updateBalance(MemberBalanceVO memberBalanceVO);
-
-    /**
     *说明：会员登陆
     *@param loginLog
     *@param mqVO
     *@return：void
     *@throws：
     */
-    void memberLogin(LoginLogDTO loginLog, MqVO mqVO);
-
-    /**
-     *说明：通过会员id查询会员的手机号
-     *@param memberId
-     *@return：void
-     *@throws：
-     */
-    Member queryMemberTel(Long memberId);
+    void memberLogin(LoginVO loginLog, MqVO mqVO);
 
     /**
     *说明：会员充值业务(包括更新余额和发送消息)
@@ -148,12 +101,4 @@ public interface MemberService {
     *@throws：
     */
     Integer memberRecharge(MemberVO member, MqVO mqVO);
-
-    /**
-     *说明：通过手机号查询会员信息
-     *@param telephone
-     *@return：com.uc.training.smadmin.bd.model.Member
-     *@throws：
-     */
-    Member queryMemberByTel(String telephone);
 }

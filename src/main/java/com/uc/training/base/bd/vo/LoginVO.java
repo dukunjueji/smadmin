@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @date: 2018/10/31
  * 说明：
  */
-public class LoginMqVO implements Serializable {
+public class LoginVO implements Serializable {
     private static final long serialVersionUID = -8801416573765709572L;
 
     /**
@@ -22,6 +22,11 @@ public class LoginMqVO implements Serializable {
      * 成长值类型
      */
     private Integer growthType;
+
+    /**
+     * 地址
+     */
+    private String ip;
 
     public Long getMemberId() {
         return memberId;
@@ -39,11 +44,20 @@ public class LoginMqVO implements Serializable {
         this.growthType = growthType;
     }
 
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
     @Override
     public String toString() {
-        return "LoginMqVO{" +
+        return "LoginVO{" +
                 "memberId=" + memberId +
                 ", growthType=" + growthType +
+                ", ip='" + ip + '\'' +
                 '}';
     }
 }

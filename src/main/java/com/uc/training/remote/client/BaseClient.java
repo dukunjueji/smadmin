@@ -2,6 +2,7 @@ package com.uc.training.remote.client;
 
 import com.uc.training.base.bd.dto.AddressDTO;
 import com.uc.training.base.bd.dto.BannerDTO;
+import com.uc.training.base.bd.dto.GrowthDetailDTO;
 import com.uc.training.base.bd.dto.IntegralDetaillDTO;
 import com.uc.training.base.bd.dto.LoginLogDTO;
 import com.uc.training.base.bd.dto.MemberDTO;
@@ -19,6 +20,9 @@ import com.uc.training.base.bd.re.MessageRE;
 import com.uc.training.base.bd.vo.AddressVO;
 import com.uc.training.base.bd.vo.BannerListVO;
 import com.uc.training.base.bd.vo.BannerVO;
+import com.uc.training.base.bd.vo.GrowthVO;
+import com.uc.training.base.bd.vo.IntegralVO;
+import com.uc.training.base.bd.vo.LoginVO;
 import com.uc.training.base.bd.vo.MemberGradeVO;
 import com.uc.training.base.bd.vo.MemberListVO;
 import com.uc.training.base.bd.vo.MemberRechargeHistoryModelVO;
@@ -29,6 +33,11 @@ import com.uc.training.base.sms.dto.SmsDTO;
 import com.uc.training.base.sms.dto.SmsTemplateDTO;
 import com.uc.training.base.sms.re.SmsRE;
 import com.uc.training.base.sms.re.SmsTemplateRE;
+import com.uc.training.base.sms.vo.GenerateSmsVO;
+import com.uc.training.base.sms.vo.SmsListVO;
+import com.uc.training.base.sms.vo.SmsTemplateListVO;
+import com.uc.training.base.sms.vo.SmsTemplateVO;
+import com.uc.training.base.sms.vo.SmsVO;
 import com.uc.training.base.sys.dto.SysMenuDTO;
 import com.uc.training.base.sys.dto.SysRoleDTO;
 import com.uc.training.base.sys.dto.SysUserDTO;
@@ -619,7 +628,10 @@ public class BaseClient {
     /**
      * 新增消息
      */
-    public static Long insertMessage(MessageDTO messageDTO) {
+    public static Long insertMessage(MessageVO messageVO) {
+        MessageDTO messageDTO = new MessageDTO();
+        messageDTO.setMemberId(messageVO.getMemberId());
+        messageDTO.setContent(messageVO.getContent());
         try {
             return (Long) RemoteUtil.exec(INSERT_MESSAGE, messageDTO);
         } catch (Exception e) {
@@ -647,7 +659,10 @@ public class BaseClient {
     /**
      * 根据会员信息进行查找
      */
-    public static Long insertLoginLog(LoginLogDTO loginLogDTO) {
+    public static Long insertLoginLog(LoginVO loginLog) {
+        LoginLogDTO loginLogDTO = new LoginLogDTO();
+        loginLogDTO.setIp(loginLog.getIp());
+        loginLogDTO.setMemberId(loginLog.getMemberId());
         try {
             return (Long) RemoteUtil.exec(INSERT_LOGIN_LOG, loginLogDTO);
         } catch (Exception e) {
@@ -660,7 +675,9 @@ public class BaseClient {
     /**
      * 查找登陆日志数据
      */
-    public static Integer queryLoginCount(LoginLogDTO loginLogDTO) {
+    public static Integer queryLoginCount(LoginVO loginVO) {
+        LoginLogDTO loginLogDTO = new LoginLogDTO();
+        loginLogDTO.setMemberId(loginVO.getMemberId());
         try {
             return (Integer) RemoteUtil.exec(QUERY_LOGIN_COUNT, loginLogDTO);
         } catch (Exception e) {
@@ -673,7 +690,11 @@ public class BaseClient {
     /**
      * 添加积分详情
      */
-    public static Long addIntegralDetail(IntegralDetaillDTO integralDetaillDTO) {
+    public static Long addIntegralDetail(IntegralVO integralVO) {
+        IntegralDetaillDTO integralDetaillDTO = new IntegralDetaillDTO();
+        integralDetaillDTO.setMemberId(integralVO.getMemberId());
+        integralDetaillDTO.setIntegral(integralVO.getIntegral());
+        integralDetaillDTO.setType(integralVO.getType());
         try {
             return (Long) RemoteUtil.exec(ADD_INTEGRAL_DETAIL, integralDetaillDTO);
         } catch (Exception e) {
@@ -764,6 +785,23 @@ public class BaseClient {
         BeanUtils.copyProperties(bannerListVO, bannerDTO);
         try {
             return (Long) RemoteUtil.exec(GET_BANNER_COUNT, bannerDTO);
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            LOGGER.error("类型转换异常");
+        }
+        return null;
+    }
+
+    /**
+     * 添加积分详情
+     */
+    public static Long saveGrowthDetail(GrowthVO growthVO) {
+        GrowthDetailDTO growthDetailDTO = new GrowthDetailDTO();
+        growthDetailDTO.setMemberId(growthVO.getMemberId());
+        growthDetailDTO.setGrowth(growthVO.getGrowth());
+        growthDetailDTO.setType(growthVO.getType());
+        try {
+            return (Long) RemoteUtil.exec(GET_BANNER_COUNT, growthDetailDTO);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
@@ -908,7 +946,9 @@ public class BaseClient {
     /**
      * 查询短信列表
      */
-    public static List<SmsRE> getSmsList(SmsDTO smsDTO) {
+    public static List<SmsRE> getSmsList(SmsListVO smsVO) {
+        SmsDTO smsDTO = new SmsDTO();
+        BeanUtils.copyProperties(smsVO, smsDTO);
         try {
             return (List<SmsRE>) RemoteUtil.exec(GET_SMS_LIST, smsDTO);
         } catch (Exception e) {
@@ -921,9 +961,11 @@ public class BaseClient {
     /**
      * 查询短信记录总数
      */
-    public static Integer querySmsCount(SmsDTO smsDTO) {
+    public static Long querySmsCount(SmsListVO smsListVO) {
+        SmsDTO smsDTO = new SmsDTO();
+
         try {
-            return (Integer) RemoteUtil.exec(QUERY_SMS_COUNT, smsDTO);
+            return (Long) RemoteUtil.exec(QUERY_SMS_COUNT, smsDTO);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
@@ -947,9 +989,11 @@ public class BaseClient {
     /**
      * 新增短信
      */
-    public static SmsRE insertSms(SmsDTO smsDTO) {
+    public static Long insertSms(SmsVO smsVO) {
+        SmsDTO smsDTO = new SmsDTO();
+        BeanUtils.copyProperties(smsVO, smsDTO);
         try {
-            return (SmsRE) RemoteUtil.exec(INSERT_SMS, smsDTO);
+            return (Long) RemoteUtil.exec(INSERT_SMS, smsDTO);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
@@ -960,7 +1004,9 @@ public class BaseClient {
     /**
      * 新增短信模板
      */
-    public static Long insertSms(SmsTemplateDTO smsTemplateDTO) {
+    public static Long addTemplate(SmsTemplateVO smsTemplate) {
+        SmsTemplateDTO smsTemplateDTO = new SmsTemplateDTO();
+        BeanUtils.copyProperties(smsTemplate, smsTemplateDTO);
         try {
             return (Long) RemoteUtil.exec(ADD_TEMPLATE, smsTemplateDTO);
         } catch (Exception e) {
@@ -986,7 +1032,9 @@ public class BaseClient {
     /**
      * 修改短信模板
      */
-    public static Integer modifyTemplate(SmsTemplateDTO smsTemplateDTO) {
+    public static Integer modifyTemplate(SmsTemplateVO smsTemplate) {
+        SmsTemplateDTO smsTemplateDTO = new SmsTemplateDTO();
+        BeanUtils.copyProperties(smsTemplate, smsTemplateDTO);
         try {
             return (Integer) RemoteUtil.exec(MODIFY_TEMPLATE, smsTemplateDTO);
         } catch (Exception e) {
@@ -1012,9 +1060,14 @@ public class BaseClient {
     /**
      * 获取短信模板列表
      */
-    public static List<SmsTemplateRE> getTemplateList(Long id) {
+    public static List<SmsTemplateRE> getTemplateList(SmsTemplateListVO smsTemplateListVO) {
+        SmsTemplateDTO smsTemplateDTO = new SmsTemplateDTO();
+        smsTemplateDTO.setCode(smsTemplateListVO.getCode());
+        smsTemplateDTO.setType(smsTemplateListVO.getType());
+        smsTemplateDTO.setOffset(smsTemplateListVO.getOffset());
+        smsTemplateDTO.setPageSize(smsTemplateListVO.getPageSize());
         try {
-            return (List<SmsTemplateRE>) RemoteUtil.exec(GET_TEMPLATE_LIST, id);
+            return (List<SmsTemplateRE>) RemoteUtil.exec(GET_TEMPLATE_LIST, smsTemplateDTO);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
@@ -1025,9 +1078,11 @@ public class BaseClient {
     /**
      * 查询列表总记录数
      */
-    public static Integer getTemplateListCount(SmsTemplateDTO smsTemplateDTO) {
+    public static Long getTemplateListCount(SmsTemplateListVO smsTemplateListVO) {
+        SmsTemplateDTO smsTemplateDTO = new SmsTemplateDTO();
+        BeanUtils.copyProperties(smsTemplateListVO, smsTemplateDTO);
         try {
-            return (Integer) RemoteUtil.exec(GET_TEMPLATE_LIST_COUNT, smsTemplateDTO);
+            return (Long) RemoteUtil.exec(GET_TEMPLATE_LIST_COUNT, smsTemplateDTO);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
@@ -1038,9 +1093,9 @@ public class BaseClient {
     /**
      * 根据ID列表批量删除短信模板
      */
-    public static Integer batchDeleteSmsTempleById(SmsTemplateDTO smsTemplateDTO) {
+    public static Integer batchDeleteSmsTempleById(List<Long> list) {
         try {
-            return (Integer) RemoteUtil.exec(BATCH_DELETE_SMS_TEMPLATE_BY_ID, smsTemplateDTO);
+            return (Integer) RemoteUtil.exec(BATCH_DELETE_SMS_TEMPLATE_BY_ID, list);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
@@ -1051,7 +1106,10 @@ public class BaseClient {
     /**
      * 生成短信
      */
-    public static String generateSms(SmsTemplateDTO smsTemplateDTO) {
+    public static String generateSms(GenerateSmsVO generateSmsVO) {
+        SmsTemplateDTO smsTemplateDTO = new SmsTemplateDTO();
+        smsTemplateDTO.setCode(generateSmsVO.getCode());
+        smsTemplateDTO.setMessage(generateSmsVO.getMessage());
         try {
             return (String) RemoteUtil.exec(GENERATE_SMS, smsTemplateDTO);
         } catch (Exception e) {

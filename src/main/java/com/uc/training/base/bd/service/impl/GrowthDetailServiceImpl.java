@@ -2,13 +2,9 @@ package com.uc.training.base.bd.service.impl;
 
 import com.uc.training.base.bd.service.GrowthDetailService;
 import com.uc.training.base.bd.vo.GrowthVO;
-import com.uc.training.base.bd.vo.MemberGrowthVO;
+import com.uc.training.base.bd.vo.MemberVO;
 import com.uc.training.common.enums.GrowthEnum;
 import com.uc.training.remote.client.BaseClient;
-import com.uc.training.smadmin.bd.dao.GrowthDetailDao;
-import com.uc.training.smadmin.bd.dao.MemberDao;
-import com.uc.training.smadmin.bd.model.GrowthDetail;
-import com.uc.training.smadmin.utils.InjectionUtils;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -27,26 +23,22 @@ public class GrowthDetailServiceImpl implements GrowthDetailService {
     private static final Integer NUM = 100;
     @Override
     public Long saveGrowthDetail(GrowthVO growthVO){
-        this.growthDetailDao = InjectionUtils.getInjectionInstance(GrowthDetailDao.class);
-        this.memberDao = InjectionUtils.getInjectionInstance(MemberDao.class);
-        GrowthDetail growthDetail = new GrowthDetail();
-        Long growthVaule = 0L;
+        GrowthVO growthDetail = new GrowthVO();
 
         growthDetail.setMemberId(growthVO.getMemberId());
-        growthDetail.setType(growthVO.getGrowthType());
+        growthDetail.setType(growthVO.getType());
         // 获取成长值
-        growthVaule= getGrowthVauleByType(growthVO);
+        Long growthVaule= getGrowthVauleByType(growthVO);
         growthDetail.setGrowth(growthVaule);
 
         // 保存积分详情
-        growthDetailDao.saveGrowthDetail(growthDetail);
+        BaseClient.saveGrowthDetail(growthDetail);
 
-        MemberGrowthVO memberGrowthVO = new MemberGrowthVO();
-        memberGrowthVO.setGrowth(growthVaule);
-        memberGrowthVO.setMemberId(growthVO.getMemberId());
-
+        MemberVO memberVO = new MemberVO();
+        memberVO.setId(growthVO.getMemberId());
+        memberVO.setGrowth(growthVaule);
         // 更新会员成长值
-        BaseClient.updateMember().updateGrowthById(memberGrowthVO);
+        BaseClient.updateMember(memberVO);
         return growthVaule;
     }
 
@@ -56,7 +48,7 @@ public class GrowthDetailServiceImpl implements GrowthDetailService {
      * @return
      */
     private Long getGrowthVauleByType(GrowthVO growthVO){
-        Integer growthType=growthVO.getGrowthType();
+        Integer growthType=growthVO.getType();
         Long growthVaule = 0L;
 
         for(GrowthEnum growthEnum: GrowthEnum.values()){

@@ -1,10 +1,10 @@
 package com.uc.training.base.bd.service.impl;
 
-import com.uc.training.base.bd.dto.LoginLogDTO;
-import com.uc.training.base.bd.dto.MemberDTO;
 import com.uc.training.base.bd.re.MemberDetailRE;
 import com.uc.training.base.bd.re.MemberRE;
 import com.uc.training.base.bd.service.MemberService;
+import com.uc.training.base.bd.vo.LoginVO;
+import com.uc.training.base.bd.vo.MemberInfoVO;
 import com.uc.training.base.bd.vo.MemberListVO;
 import com.uc.training.base.bd.vo.MemberVO;
 import com.uc.training.common.enums.GrowthEnum;
@@ -13,22 +13,12 @@ import com.uc.training.common.enums.OrderEnum;
 import com.uc.training.common.mq.MqProducer;
 import com.uc.training.common.mq.vo.MqVO;
 import com.uc.training.common.utils.EncryptUtil;
+import com.uc.training.ord.re.OrderConfirmRE;
+import com.uc.training.ord.re.OrderRE;
+import com.uc.training.ord.service.OrderService;
+import com.uc.training.ord.vo.OrdMemberVO;
+import com.uc.training.ord.vo.OrdOrderVO;
 import com.uc.training.remote.client.BaseClient;
-import com.uc.training.smadmin.bd.dao.MemberDao;
-import com.uc.training.smadmin.bd.model.Member;
-import com.uc.training.smadmin.bd.re.MemberInfoRE;
-import com.uc.training.smadmin.bd.service.LoginLogService;
-import com.uc.training.smadmin.bd.vo.MemberBalanceVO;
-import com.uc.training.smadmin.bd.vo.MemberInfoVO;
-import com.uc.training.smadmin.bd.vo.MemberLoginVO;
-import com.uc.training.smadmin.gds.service.GoodsService;
-import com.uc.training.smadmin.gds.vo.GoodsStokeVO;
-import com.uc.training.smadmin.ord.model.Order;
-import com.uc.training.smadmin.ord.re.OrderConfirmRE;
-import com.uc.training.smadmin.ord.service.OrderService;
-import com.uc.training.smadmin.ord.vo.OrdMemberVO;
-import com.uc.training.smadmin.ord.vo.OrdOrderVo;
-import com.uc.training.smadmin.sms.service.SmsTemplateService;
 import com.ycc.tools.middleware.metaq.MetaQUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,20 +38,10 @@ import java.util.List;
 @Service
 public class MemberServiceImpl implements MemberService {
 
-    @Autowired
-    private MemberDao memberDao;
+    //@Autowired    private GoodsService goodsService;
 
     @Autowired
-    GoodsService goodsService;
-
-    @Autowired
-    OrderService orderService;
-
-    @Autowired
-    private LoginLogService loginLogService;
-
-    @Autowired
-    private SmsTemplateService smsTemplateService;
+    private OrderService orderService;
 
     @Override
     public Long insertMember(MemberVO memberVO) {
@@ -83,11 +63,6 @@ public class MemberServiceImpl implements MemberService {
         return BaseClient.updateMember(member);
     }
 
-    @Override
-    public Integer updateMemberBalance(Member member) {
-        return memberDao.updateMemberBalance(member);
-    }
-
     /**
      * 查询余额/确认支付
      *
@@ -103,24 +78,30 @@ public class MemberServiceImpl implements MemberService {
         OrdMemberVO ordMemberVO = new OrdMemberVO();
         ordMemberVO.setOrderId(orderPayInfoNow.get(0).getOrderId());
         ordMemberVO.setMemberId(orderPayInfoNow.get(0).getMemberId());
-        List<Order> orderList = orderService.getOrderByMemberVO(ordMemberVO);
+        List<OrderRE> orderList = orderService.getOrderByMemberVO(ordMemberVO);
         if (orderList.size() <= 0) {
             return list;
         }
-        BigDecimal accountBalances = memberDao.queryBalances(memberInfoVO.getMemberId());
-        if (accountBalances.compareTo(orderList.get(0).getPayPrice()) > 0) {
+        MemberVO memberVO = new MemberVO();
+        memberVO.setId(memberInfoVO.getMemberId());
+        MemberRE memberRE = BaseClient.queryOneMember(memberVO);
+        if (memberRE == null) {
+            return null;
+        }
+        if (memberRE.getBalance().compareTo(orderList.get(0).getPayPrice()) > 0) {
             // 加上对应的商品销量
-            for (int i = 1, j = orderPayInfoNow.size(); i < j; i++) {
+            //TODO 商品判断
+            /*for (int i = 1, j = orderPayInfoNow.size(); i < j; i++) {
                 GoodsStokeVO goodsStokeVO = new GoodsStokeVO();
                 goodsStokeVO.setStoke(orderPayInfoNow.get(i).getGoodsNum());
                 goodsStokeVO.setGoodsId(orderPayInfoNow.get(i).getGoodsId());
                 goodsService.updateSales(goodsStokeVO);
-            }
+            }*/
             //减去用户余额
-            MemberBalanceVO memberBalanceVO = new MemberBalanceVO();
-            memberBalanceVO.setMemberId(memberInfoVO.getMemberId());
-            memberBalanceVO.setTotalMoney(orderList.get(0).getPayPrice());
-            memberDao.updateBalance(memberBalanceVO);
+            MemberVO memberBalanceVO = new MemberVO();
+            memberBalanceVO.setId(memberInfoVO.getMemberId());
+            memberBalanceVO.setBalance((orderList.get(0).getPayPrice()).multiply(new BigDecimal(-1)));
+            BaseClient.updateMember(memberBalanceVO);
             //加成长值，积分
             MqVO mqVO1 = new MqVO();
             mqVO1.setMemberId(memberInfoVO.getMemberId());
@@ -135,7 +116,7 @@ public class MemberServiceImpl implements MemberService {
             MetaQUtils.sendMsgNoException(new MqProducer(mqVO1));
             //更新订单状态
             orderConfirmRE.setStatus(OrderEnum.WAITSHIP.getKey());
-            OrdOrderVo ordOrderVo = new OrdOrderVo();
+            OrdOrderVO ordOrderVo = new OrdOrderVO();
             ordOrderVo.setOrderNum(orderList.get(0).getOrderNum());
             ordOrderVo.setStatus(OrderEnum.WAITSHIP.getKey().longValue());
             ordOrderVo.setMemberId(memberInfoVO.getMemberId());
@@ -159,18 +140,8 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Member getMemberLogin(MemberLoginVO memberLoginVO) {
-        return memberDao.getMemberLogin(memberLoginVO);
-    }
-
-    @Override
     public Integer updateMemberInfo(MemberVO member) {
         return BaseClient.updateMember(member);
-    }
-
-    @Override
-    public MemberInfoRE queryOneMemberById(Long uid) {
-        return memberDao.queryOneMemberById(uid);
     }
 
     @Override
@@ -184,23 +155,13 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void updateBalance(MemberBalanceVO memberBalanceVO) {
-        this.memberDao.updateBalance(memberBalanceVO);
-    }
-
-    @Override
-    public void memberLogin(LoginLogDTO loginLog, MqVO mqVO) {
+    public void memberLogin(LoginVO loginLog, MqVO mqVO) {
         BaseClient.insertLoginLog(loginLog);
         //判断是否第一次登陆
         Integer loginNum = BaseClient.queryLoginCount(loginLog);
         if (loginNum != null && loginNum == 1) {
             MetaQUtils.sendMsgNoException(new MqProducer(mqVO));
         }
-    }
-
-    @Override
-    public Member queryMemberTel(Long memberId) {
-        return memberDao.queryMemberTel(memberId);
     }
 
     @Override
@@ -211,11 +172,6 @@ public class MemberServiceImpl implements MemberService {
         mqVO.getGenerateSmsVO().setRechargeStatus(status);
         MetaQUtils.sendMsgNoException(new MqProducer(mqVO));
         return status;
-    }
-
-    @Override
-    public Member queryMemberByTel(String telephone) {
-        return this.memberDao.queryMemberByTel(telephone);
     }
 
 }

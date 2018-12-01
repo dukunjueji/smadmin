@@ -4,9 +4,6 @@ import com.uc.training.base.bd.re.MemberGradeRE;
 import com.uc.training.base.bd.service.MemberGradeService;
 import com.uc.training.base.bd.vo.MemberGradeVO;
 import com.uc.training.remote.client.BaseClient;
-import com.uc.training.smadmin.bd.dao.MemberGradeDao;
-import com.uc.training.smadmin.bd.model.MemberGrade;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,6 +24,27 @@ public class MemberGradeServiceImpl implements MemberGradeService {
     @Override
     public Integer modifyMemberGrade(MemberGradeVO grade) {
         return BaseClient.modifyMemberGrade(grade);
+    }
+
+    /**
+     * 查找数据总记录数
+     *
+     * @return
+     */
+    @Override
+    public Long queryMemberGradeCount() {
+        return null;
+    }
+
+    /**
+     * 通过用户ID获取折扣
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public Double getDiscountByUId(Long id) {
+        return null;
     }
 
 }

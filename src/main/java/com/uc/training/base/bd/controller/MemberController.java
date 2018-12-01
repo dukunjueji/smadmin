@@ -1,6 +1,5 @@
 package com.uc.training.base.bd.controller;
 
-import com.uc.training.base.bd.dto.LoginLogDTO;
 import com.uc.training.base.bd.re.AllMessageRE;
 import com.uc.training.base.bd.re.MemberDetailRE;
 import com.uc.training.base.bd.re.MemberLoginRE;
@@ -10,6 +9,7 @@ import com.uc.training.base.bd.service.MemberService;
 import com.uc.training.base.bd.service.MessageService;
 import com.uc.training.base.bd.vo.ChargeBalanceVO;
 import com.uc.training.base.bd.vo.CreateCodeVO;
+import com.uc.training.base.bd.vo.LoginVO;
 import com.uc.training.base.bd.vo.MemberInfoVO;
 import com.uc.training.base.bd.vo.MemberLoginVO;
 import com.uc.training.base.bd.vo.MemberRechargeHistoryModelVO;
@@ -150,7 +150,7 @@ public class MemberController extends BaseController {
             memberLoginRE.setToken(token);
 
             //生成登陆日志
-            LoginLogDTO loginLog = new LoginLogDTO();
+            LoginVO loginLog = new LoginVO();
             loginLog.setMemberId(memberRE.getId());
             loginLog.setIp(getLocalhostIp());
 
