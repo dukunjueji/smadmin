@@ -40,6 +40,7 @@ import com.uc.training.base.sms.vo.SmsTemplateVO;
 import com.uc.training.base.sms.vo.SmsVO;
 import com.uc.training.base.sys.dto.SysMenuDTO;
 import com.uc.training.base.sys.dto.SysRoleDTO;
+import com.uc.training.base.sys.dto.SysRoleMenuDTO;
 import com.uc.training.base.sys.dto.SysUserDTO;
 import com.uc.training.base.sys.dto.SysUserRoleDTO;
 import com.uc.training.base.sys.re.SysMenuRE;

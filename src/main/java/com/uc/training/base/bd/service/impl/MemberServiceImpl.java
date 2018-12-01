@@ -1,10 +1,12 @@
 package com.uc.training.base.bd.service.impl;
 
-import com.uc.training.base.bd.dto.LoginLogDTO;
-import com.uc.training.base.bd.dto.MemberDTO;
 import com.uc.training.base.bd.re.MemberDetailRE;
 import com.uc.training.base.bd.re.MemberRE;
 import com.uc.training.base.bd.service.MemberService;
+import com.uc.training.base.bd.vo.LoginVO;
+import com.uc.training.base.bd.vo.MemberInfoVO;
+import com.uc.training.base.bd.vo.MemberListVO;
+import com.uc.training.base.bd.vo.MemberVO;
 import com.uc.training.common.enums.GrowthEnum;
 import com.uc.training.common.enums.IntegralEnum;
 import com.uc.training.common.enums.OrderEnum;
@@ -16,24 +18,10 @@ import com.uc.training.ord.re.OrderRE;
 import com.uc.training.ord.service.OrderService;
 import com.uc.training.ord.vo.OrdMemberVO;
 import com.uc.training.ord.vo.OrdOrderVO;
-import com.uc.training.ord.re.OrderConfirmRE;
 import com.uc.training.remote.client.BaseClient;
-import com.uc.training.smadmin.bd.dao.MemberDao;
-import com.uc.training.smadmin.bd.model.Member;
-import com.uc.training.smadmin.bd.re.MemberInfoRE;
-import com.uc.training.smadmin.bd.service.LoginLogService;
-import com.uc.training.smadmin.bd.vo.MemberBalanceVO;
-import com.uc.training.smadmin.bd.vo.MemberInfoVO;
-import com.uc.training.smadmin.bd.vo.MemberListVO;
-import com.uc.training.smadmin.bd.vo.MemberLoginVO;
-import com.uc.training.smadmin.gds.service.GoodsService;
-import com.uc.training.smadmin.gds.vo.GoodsStokeVO;
-import com.uc.training.smadmin.ord.model.Order;
-import com.uc.training.smadmin.ord.service.OrderService;
-import com.uc.training.smadmin.ord.vo.OrdMemberVO;
-import com.uc.training.smadmin.ord.vo.OrdOrderVo;
-import com.uc.training.smadmin.sms.service.SmsTemplateService;
 import com.ycc.tools.middleware.metaq.MetaQUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,6 +39,8 @@ import java.util.List;
  */
 @Service
 public class MemberServiceImpl implements MemberService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(MemberServiceImpl.class.getName());
 
     //@Autowired    private GoodsService goodsService;
 
@@ -103,24 +93,26 @@ public class MemberServiceImpl implements MemberService {
             return null;
         }
         if (memberRE.getBalance().compareTo(orderList.get(0).getPayPrice()) > 0) {
-        BigDecimal accountBalances = memberDao.queryBalances(memberInfoVO.getMemberId());
+            MemberVO member = new MemberVO();
+            member.setId(memberInfoVO.getMemberId());
+        BigDecimal accountBalances = BaseClient.queryOneMember(member).getBalance();
         if (accountBalances.compareTo(orderList.get(0).getPayPrice()) > 0) {
             //加入同步 防止并发提交确认支付信息
             synchronized (this) {
                 //更新订单状态、减去用户余额
                 try {
                     orderConfirmRE.setStatus(OrderEnum.WAITSHIP.getKey());
-                    OrdOrderVo ordOrderVo = new OrdOrderVo();
+                    OrdOrderVO ordOrderVo = new OrdOrderVO();
                     ordOrderVo.setOrderNum(orderList.get(0).getOrderNum());
                     ordOrderVo.setStatus(OrderEnum.WAITSHIP.getKey().longValue());
                     ordOrderVo.setMemberId(memberInfoVO.getMemberId());
                     orderConfirmRE.setShowStatus("成功购买商品");
                     if (orderService.updateOrder(ordOrderVo) > 0) {
                         //减去用户余额
-                        MemberBalanceVO memberBalanceVO = new MemberBalanceVO();
-                        memberBalanceVO.setMemberId(memberInfoVO.getMemberId());
-                        memberBalanceVO.setTotalMoney(orderList.get(0).getPayPrice());
-                        if (memberDao.updateBalance(memberBalanceVO) > 0) {
+                        MemberVO memberBalanceVO = new MemberVO();
+                        memberBalanceVO.setId(memberInfoVO.getMemberId());
+                        memberBalanceVO.setBalance((orderList.get(0).getPayPrice()).multiply(new BigDecimal(-1)));
+                        if (BaseClient.updateMember(memberBalanceVO) > 0) {
                             list.add(orderConfirmRE);
                         } else {
                             return list;
@@ -129,23 +121,9 @@ public class MemberServiceImpl implements MemberService {
                         return list;
                     }
                 } catch (Exception e) {
-                    Logger logger = Logger.getLogger(OrdOrderVo.class);
-                    logger.error(e);
+                    LOGGER.error(e.getMessage());
                 }
             }
-            // 加上对应的商品销量
-            //TODO 商品判断
-            /*for (int i = 1, j = orderPayInfoNow.size(); i < j; i++) {
-                GoodsStokeVO goodsStokeVO = new GoodsStokeVO();
-                goodsStokeVO.setStoke(orderPayInfoNow.get(i).getGoodsNum());
-                goodsStokeVO.setGoodsId(orderPayInfoNow.get(i).getGoodsId());
-                goodsService.updateSales(goodsStokeVO);
-            }*/
-            //减去用户余额
-            MemberVO memberBalanceVO = new MemberVO();
-            memberBalanceVO.setId(memberInfoVO.getMemberId());
-            memberBalanceVO.setBalance((orderList.get(0).getPayPrice()).multiply(new BigDecimal(-1)));
-            BaseClient.updateMember(memberBalanceVO);
             }
             //加成长值，积分
             MqVO mqVO1 = new MqVO();
