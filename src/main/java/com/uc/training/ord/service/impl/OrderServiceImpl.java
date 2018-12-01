@@ -4,6 +4,7 @@ import com.uc.training.base.bd.re.AddressRE;
 import com.uc.training.common.enums.GoodsStatusEnum;
 import com.uc.training.common.enums.OrderEnum;
 import com.uc.training.common.enums.UUIDTypeEnum;
+import com.uc.training.common.utils.UUIDUtil;
 import com.uc.training.gds.re.GoodsDetailRE;
 import com.uc.training.gds.re.GoodsStokeRE;
 import com.uc.training.ord.re.CartGoodsRE;
@@ -291,6 +292,7 @@ public class OrderServiceImpl implements OrderService {
         }
         // 判断前台传来的价格信息是否与购物车一致
         OrdGoodsVO ordGoodsVO = new OrdGoodsVO();
+        OrdCartGoodsVO ordCartGoodsVO;
         ordGoodsVO.setMemberId(orderInfoListNow.get(orderInfoListNow.size() - 2).getMemberId());
         List<Long> propertyIds = new ArrayList<>();
         int a = 2;
@@ -325,6 +327,22 @@ public class OrderServiceImpl implements OrderService {
                         break;
                     }
                 }
+                //删除购物车信息表并且加入同步代码块
+                synchronized (this) {
+                    try {
+                        ordCartGoodsVO = new OrdCartGoodsVO();
+                        ordCartGoodsVO.setPropertyId(orderInfoListNow.get(i).getPropertyId());
+                        ordCartGoodsVO.setMemberId(orderInfoListNow.get(orderInfoListNow.size() - a).getMemberId());
+                        if (deleteCarGoods(ordCartGoodsVO) <= 0) {
+                            return list;
+                        }
+                    } catch (Exception e) {
+                        com.sun.istack.internal.logging.Logger logger = com.sun.istack.internal.logging.Logger.getLogger(OrdCartGoodsVo.class);
+                        logger.info(e.getMessage());
+                    }
+                }
+            } else {
+                return list;
             }
         }
         if (payPrice.compareTo(orderInfoListNow.get(orderInfoListNow.size() - 1).getTotalPrice()) != 0) {
@@ -354,7 +372,6 @@ public class OrderServiceImpl implements OrderService {
         }
         //遍历orderInfoListNow
         OrderGoodsVO orderGoods;
-        OrdCartGoodsVO ordCartGoodsVO;
         for (int i = 0; i < orderInfoListNow.size() - a; i++) {
             //插入订单商品信息表
             orderGoods = new OrderGoodsVO();
@@ -372,11 +389,6 @@ public class OrderServiceImpl implements OrderService {
             goodsStokeVO.setStoke(orderGoods.getGoodsNum().longValue());
             goodsStokeVO.setPropertyId(orderGoods.getGoodsPropertyId());
             goodsService.updateAndDeductStoke(goodsStokeVO);
-            //删除购物车信息表
-            ordCartGoodsVO = new OrdCartGoodsVO();
-            ordCartGoodsVO.setPropertyId(orderInfoListNow.get(i).getPropertyId());
-            ordCartGoodsVO.setMemberId(orderInfoListNow.get(orderInfoListNow.size() - a).getMemberId());
-            deleteCarGoods(ordCartGoodsVO);
         }
         orderConfirmRE.setShowStatus("已成功生成订单");
         orderConfirmRE.setGoodsStatus((int) OrderEnum.WAITPAY.getKey().longValue());
@@ -454,7 +466,10 @@ public class OrderServiceImpl implements OrderService {
                 return 0;
             }
         }
-        return OrderClient.updateOrder(ordOrderVO);
+        if (getOrdOrderVO.get(0).getStatus().equals(OrderEnum.WAITPAY.getKey().longValue())) {
+            return OrderClient.updateOrder(ordOrderVO);
+        }
+        return 0;
     }
 
 
