@@ -19,8 +19,12 @@ import com.uc.training.base.bd.re.MessageRE;
 import com.uc.training.base.bd.vo.AddressVO;
 import com.uc.training.base.bd.vo.BannerListVO;
 import com.uc.training.base.bd.vo.BannerVO;
+import com.uc.training.base.bd.vo.MemberGradeVO;
+import com.uc.training.base.bd.vo.MemberListVO;
 import com.uc.training.base.bd.vo.MemberRechargeHistoryModelVO;
 import com.uc.training.base.bd.vo.MemberRechargeHistoryVO;
+import com.uc.training.base.bd.vo.MemberVO;
+import com.uc.training.base.bd.vo.MessageVO;
 import com.uc.training.base.sms.dto.SmsDTO;
 import com.uc.training.base.sms.dto.SmsTemplateDTO;
 import com.uc.training.base.sms.re.SmsRE;
@@ -60,12 +64,17 @@ public class BaseClient {
     /**
      * 根据会员信息进行查找
      */
-    private static final String UPDATE_MEMBER = "smbase.api.updateMember";
+    private static final String QUERY_MEMBER_COUNT = "smbase.api.queryMemberCount";
 
     /**
-     * 更新消息
+     * 根据会员信息进行查找
      */
-    private static final String CHECK_MEMBER_PASSWORD = "smbase.api.checkMemberPassword";
+    private static final String QUERY_MEMBER_LIST = "smbase.api.queryMemberList";
+
+    /**
+     * 根据会员信息进行查找
+     */
+    private static final String UPDATE_MEMBER = "smbase.api.updateMember";
 
     /**
      * 新增会员
@@ -192,11 +201,6 @@ public class BaseClient {
      * 删除地址
      */
     private static final String DELETE_ADDRESS_BY_ID = "smbase.api.deleteAddressById";
-
-    /**
-     * 根据id查询会员信息
-     */
-    private static final String GET_MEMBER_INFO_BY_ID = "smgds.api.getGoodsInfoById";
 
     /**
      * 根据会员id获取充值记录
@@ -426,7 +430,9 @@ public class BaseClient {
     /**
      * 根据会员信息进行查找
      */
-    public static MemberRE queryOneMember(MemberDTO memberDTO) {
+    public static MemberRE queryOneMember(MemberVO memberVO) {
+        MemberDTO memberDTO = new MemberDTO();
+        BeanUtils.copyProperties(memberVO, memberDTO);
         try {
             return (MemberRE) RemoteUtil.exec(QUERY_ONE_MEMBER, memberDTO);
         } catch (Exception e) {
@@ -437,9 +443,41 @@ public class BaseClient {
     }
 
     /**
+     * 获取会员数量
+     */
+    public static Long queryMemberCount(MemberListVO memberListVO) {
+        MemberDTO memberDTO = new MemberDTO();
+        BeanUtils.copyProperties(memberListVO, memberDTO);
+        try {
+            return (Long) RemoteUtil.exec(QUERY_MEMBER_COUNT, memberDTO);
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            LOGGER.error("类型转换异常");
+        }
+        return null;
+    }
+
+    /**
+     * 获取会员数量
+     */
+    public static List<MemberRE> queryMemberList(MemberListVO memberListVO) {
+        MemberDTO memberDTO = new MemberDTO();
+        BeanUtils.copyProperties(memberListVO, memberDTO);
+        try {
+            return (List<MemberRE>) RemoteUtil.exec(QUERY_MEMBER_LIST, memberDTO);
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            LOGGER.error("类型转换异常");
+        }
+        return null;
+    }
+
+    /**
      * 根据会员信息进行查找
      */
-    public static Integer updateMember(MemberDTO memberDTO) {
+    public static Integer updateMember(MemberVO member) {
+        MemberDTO memberDTO = new MemberDTO();
+        BeanUtils.copyProperties(member, memberDTO);
         try {
             return (Integer) RemoteUtil.exec(UPDATE_MEMBER, memberDTO);
         } catch (Exception e) {
@@ -450,22 +488,11 @@ public class BaseClient {
     }
 
     /**
-     * 更新消息
-     */
-    public static Boolean checkMemberPassword(MessageDTO messageDTO) {
-        try {
-            return (Boolean) RemoteUtil.exec(CHECK_MEMBER_PASSWORD, messageDTO);
-        } catch (Exception e) {
-            LOGGER.error(e.getMessage());
-            LOGGER.error("类型转换异常");
-        }
-        return null;
-    }
-
-    /**
      * 根据会员信息进行查找
      */
-    public static Long insertMember(MemberDTO memberDTO) {
+    public static Long insertMember(MemberVO member) {
+        MemberDTO memberDTO = new MemberDTO();
+        BeanUtils.copyProperties(member, memberDTO);
         try {
             return (Long) RemoteUtil.exec(INSERT_MEMBER, memberDTO);
         } catch (Exception e) {
@@ -491,7 +518,9 @@ public class BaseClient {
     /**
      * 根据会员信息进行查找
      */
-    public static List<MemberGradeRE> queryMemberGradeList(MemberGradeDTO memberGradeDTO) {
+    public static List<MemberGradeRE> queryMemberGradeList(MemberGradeVO memberGradeVO) {
+        MemberGradeDTO memberGradeDTO = new MemberGradeDTO();
+        BeanUtils.copyProperties(memberGradeVO, memberGradeDTO);
         try {
             return (List<MemberGradeRE>) RemoteUtil.exec(QUERY_MEMBER_GRADE_LIST, memberGradeDTO);
         } catch (Exception e) {
@@ -504,7 +533,9 @@ public class BaseClient {
     /**
      * 修改会员等级信息
      */
-    public static Integer modifyMemberGrade(MemberGradeDTO memberGradeDTO) {
+    public static Integer modifyMemberGrade(MemberGradeVO memberGradeVO) {
+        MemberGradeDTO memberGradeDTO = new MemberGradeDTO();
+        BeanUtils.copyProperties(memberGradeVO, memberGradeDTO);
         try {
             return (Integer) RemoteUtil.exec(MODIFY_MEMBER_GRADE, memberGradeDTO);
         } catch (Exception e) {
@@ -543,7 +574,9 @@ public class BaseClient {
     /**
      * 查找消息数量
      */
-    public static Integer queryMessageCount(MessageDTO messageDTO) {
+    public static Integer queryMessageCount(MessageVO messageVO) {
+        MessageDTO messageDTO = new MessageDTO();
+        BeanUtils.copyProperties(messageVO, messageDTO);
         try {
             return (Integer) RemoteUtil.exec(QUERY_MESSAGE_COUNT, messageDTO);
         } catch (Exception e) {
@@ -556,7 +589,9 @@ public class BaseClient {
     /**
      * 查询指定会员的所有消息
      */
-    public static List<MessageRE> queryMessageList(MessageDTO messageDTO) {
+    public static List<MessageRE> queryMessageList(MessageVO messageVO) {
+        MessageDTO messageDTO = new MessageDTO();
+        BeanUtils.copyProperties(messageVO, messageDTO);
         try {
             return (List<MessageRE>) RemoteUtil.exec(QUERY_MESSAGE_LIST, messageDTO);
         } catch (Exception e) {
@@ -569,7 +604,9 @@ public class BaseClient {
     /**
      * 更新消息
      */
-    public static Integer updateMessage(MessageDTO messageDTO) {
+    public static Integer updateMessage(MessageVO message) {
+        MessageDTO messageDTO = new MessageDTO();
+        BeanUtils.copyProperties(message, messageDTO);
         try {
             return (Integer) RemoteUtil.exec(UPDATE_MESSAGE, messageDTO);
         } catch (Exception e) {
@@ -595,7 +632,9 @@ public class BaseClient {
     /**
      * 通过消息id获取消息的详情
      */
-    public static MessageRE queryOneMessageById(MessageDTO messageDTO) {
+    public static MessageRE queryOneMessageById(MessageVO messageVO) {
+        MessageDTO messageDTO = new MessageDTO();
+        BeanUtils.copyProperties(messageVO, messageDTO);
         try {
             return (MessageRE) RemoteUtil.exec(QUERY_ONE_MESSAGE_BY_ID, messageDTO);
         } catch (Exception e) {
@@ -718,13 +757,13 @@ public class BaseClient {
     }
 
     /**
-     * 获取图片总数量
+     * 获取图片数量
      */
-    public static Integer getBannerCount(BannerListVO bannerListVO) {
+    public static Long getBannerCount(BannerListVO bannerListVO) {
         BannerDTO bannerDTO = new BannerDTO();
         BeanUtils.copyProperties(bannerListVO, bannerDTO);
         try {
-            return (Integer) RemoteUtil.exec(GET_BANNER_COUNT, bannerDTO);
+            return (Long) RemoteUtil.exec(GET_BANNER_COUNT, bannerDTO);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");

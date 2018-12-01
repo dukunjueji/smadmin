@@ -1,8 +1,6 @@
 package com.uc.training.base.bd.service.impl;
 
-import com.uc.training.smadmin.bd.dao.LoginLogDao;
-import com.uc.training.smadmin.bd.model.LoginLog;
-import com.uc.training.smadmin.bd.service.LoginLogService;
+import com.uc.training.base.bd.service.LoginLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

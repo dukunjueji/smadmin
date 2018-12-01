@@ -1,10 +1,7 @@
 package com.uc.training.base.bd.controller;
 
 import com.uc.training.base.bd.dto.LoginLogDTO;
-import com.uc.training.base.bd.dto.MemberDTO;
-import com.uc.training.base.bd.dto.MemberRechargeHistoryDTO;
-import com.uc.training.base.bd.dto.MemberRechargeHistoryModelDTO;
-import com.uc.training.base.bd.dto.MessageDTO;
+import com.uc.training.base.bd.re.AllMessageRE;
 import com.uc.training.base.bd.re.MemberDetailRE;
 import com.uc.training.base.bd.re.MemberLoginRE;
 import com.uc.training.base.bd.re.MemberRE;
@@ -15,11 +12,11 @@ import com.uc.training.base.bd.vo.ChargeBalanceVO;
 import com.uc.training.base.bd.vo.CreateCodeVO;
 import com.uc.training.base.bd.vo.MemberInfoVO;
 import com.uc.training.base.bd.vo.MemberLoginVO;
+import com.uc.training.base.bd.vo.MemberRechargeHistoryModelVO;
 import com.uc.training.base.bd.vo.MemberRegisterVO;
-import com.uc.training.base.bd.vo.MessageDetailVO;
-import com.uc.training.base.bd.vo.MessageListVO;
+import com.uc.training.base.bd.vo.MemberVO;
+import com.uc.training.base.bd.vo.MessageVO;
 import com.uc.training.base.bd.vo.PasswordEditVO;
-import com.uc.training.base.bd.vo.SendCodeVO;
 import com.uc.training.base.sms.vo.GenerateSmsVO;
 import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
@@ -43,7 +40,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.lang.reflect.Member;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -80,9 +76,9 @@ public class MemberController extends BaseController {
     @AccessLogin(required = false)
     public Result createCode(@Validated CreateCodeVO createCodeVO) {
         //根据手机号查询会员信息
-        MemberDTO mem = new MemberDTO();
-        mem.setTelephone(createCodeVO.getTelephone());
-        MemberRE member = memberService.queryOneMember(mem);
+        MemberVO memberVO = new MemberVO();
+        memberVO.setTelephone(createCodeVO.getTelephone());
+        MemberRE member = memberService.queryOneMember(memberVO);
         if(member != null){
             return Result.getBusinessException("手机号码已被注册", null);
         }
@@ -100,28 +96,28 @@ public class MemberController extends BaseController {
 
     /***
     *说明：会员注册
-    *@param memberVO 会员注册的请求
+    *@param memberRegisterVO 会员注册的请求
     *@return：com.uc.training.smadmin.bd.re.MemberMegRE
     *@throws：
     */
     @RequestMapping(value = "/memberRegister.do_", method = RequestMethod.POST)
     @ResponseBody
     @AccessLogin(required = false)
-    public Result memberRegister(@Validated MemberRegisterVO memberVO){
-        MemberDTO member = new MemberDTO();
-        member.setTelephone(memberVO.getTelephone());
-        member.setPassword(memberVO.getPassword());
+    public Result memberRegister(@Validated MemberRegisterVO memberRegisterVO){
+        MemberVO member = new MemberVO();
+        member.setTelephone(memberRegisterVO.getTelephone());
+        member.setPassword(memberRegisterVO.getPassword());
         MemberRE mem = memberService.queryOneMember(member);
         if(mem != null){
             return Result.getBusinessException("手机号码已被注册",null);
         }
         //redis
         RedisCacheUtils redis = RedisCacheUtils.getInstance(RedisConfigEnum.SYS_CODE);
-        String msg = redis.get(memberVO.getTelephone());
+        String msg = redis.get(memberRegisterVO.getTelephone());
         if (msg == null) {
             return Result.getBusinessException("验证码已过期，请重新获取", null);
         }
-        if(memberVO.getTelCode().equals(msg)){
+        if(memberRegisterVO.getTelCode().equals(msg)){
             memberService.insertMember(member);
             return Result.getSuccessResult("注册成功");
         }else {
@@ -138,29 +134,29 @@ public class MemberController extends BaseController {
     @ResponseBody
     @AccessLogin(required = false)
     public Result<MemberLoginRE> memberLogin(@Validated MemberLoginVO memberLoginVO){
-        MemberDTO memberDTO = new MemberDTO();
-        memberDTO.setTelephone(memberLoginVO.getTelephone());
-        MemberRE mem = memberService.queryOneMember(memberDTO);
+        MemberVO member = new MemberVO();
+        member.setTelephone(memberLoginVO.getTelephone());
+        MemberRE mem = memberService.queryOneMember(member);
         if (mem == null) {
             return Result.getBusinessException("该账号不存在,请先注册", null);
         }
-        memberDTO.setPassword(EncryptUtil.md5(memberLoginVO.getPassword()));
-        MemberRE member = memberService.queryOneMember(memberDTO);
-        if (member == null) {
+        member.setPassword(EncryptUtil.md5(memberLoginVO.getPassword()));
+        MemberRE memberRE = memberService.queryOneMember(member);
+        if (memberRE == null) {
             return Result.getBusinessException("您的密码错误", null);
         }else {
-            String token = TokenUtil.sign(member.getId());
+            String token = TokenUtil.sign(memberRE.getId());
             MemberLoginRE memberLoginRE = new MemberLoginRE();
             memberLoginRE.setToken(token);
 
             //生成登陆日志
             LoginLogDTO loginLog = new LoginLogDTO();
-            loginLog.setMemberId(member.getId());
+            loginLog.setMemberId(memberRE.getId());
             loginLog.setIp(getLocalhostIp());
 
             //生成消息体
             MqVO mqVO = new MqVO();
-            mqVO.setMemberId(member.getId());
+            mqVO.setMemberId(memberRE.getId());
             mqVO.setGrowthType(GrowthEnum.LOGININ.getGrowthType());
 
             memberService.memberLogin(loginLog, mqVO);
@@ -177,10 +173,10 @@ public class MemberController extends BaseController {
     @ResponseBody
     @AccessLogin(required = false)
     public Result passwordCode(@Validated CreateCodeVO createCodeVO) {
-        MemberDTO memberDTO = new MemberDTO();
-        memberDTO.setTelephone(createCodeVO.getTelephone());
-        MemberRE member = memberService.queryOneMember(memberDTO);
-        if(member == null){
+        MemberVO member = new MemberVO();
+        member.setTelephone(createCodeVO.getTelephone());
+        MemberRE memberRE = memberService.queryOneMember(member);
+        if(memberRE == null){
             return Result.getBusinessException("手机号还没被注册", null);
         }
         //生成消息体
@@ -205,10 +201,10 @@ public class MemberController extends BaseController {
     @ResponseBody
     @AccessLogin(required = false)
     public Result memberPassword(@Validated MemberRegisterVO memberRegisterVO){
-        MemberDTO mem = new MemberDTO();
-        mem.setTelephone(memberRegisterVO.getTelephone());
-        MemberRE member = memberService.queryOneMember(mem);
-        if(member == null){
+        MemberVO member = new MemberVO();
+        member.setTelephone(memberRegisterVO.getTelephone());
+        MemberRE memberRE = memberService.queryOneMember(member);
+        if(memberRE == null){
             return Result.getBusinessException("手机号还没被注册", null);
         }
         //redis
@@ -218,10 +214,10 @@ public class MemberController extends BaseController {
             return Result.getBusinessException("验证码已过期，请重新获取", null);
         }
         if(memberRegisterVO.getTelCode().equals(msg)){
-            mem = new MemberDTO();
-            mem.setPassword(memberRegisterVO.getPassword());
-            mem.setId(member.getId());
-            memberService.updateMember(mem);
+            member = new MemberVO();
+            member.setPassword(memberRegisterVO.getPassword());
+            member.setId(memberRE.getId());
+            memberService.updateMember(member);
             return Result.getSuccessResult("重置密码成功");
         }else {
             return Result.getBusinessException("验证码不正确", null);
@@ -243,9 +239,9 @@ public class MemberController extends BaseController {
         if(!m.matches()){
             return Result.getBusinessException("充值金额有误", null);
         }
-        MemberDTO member = new MemberDTO();
-        member.setId(getUid());
-        member.setBalance(chargeBalanceVO.getBalance());
+        MemberVO memberVO = new MemberVO();
+        memberVO.setId(getUid());
+        memberVO.setBalance(chargeBalanceVO.getBalance());
         BigDecimal bigDecimal = new BigDecimal(0);
         int i = chargeBalanceVO.getBalance().compareTo(bigDecimal);
         if (chargeBalanceVO.getBalance() == null || i == 0 ) {
@@ -257,7 +253,7 @@ public class MemberController extends BaseController {
             mqVO.setRechargeValue(chargeBalanceVO.getBalance());
 
             //生成充值记录
-            MemberRechargeHistoryModelDTO memberRechargeHistory = new MemberRechargeHistoryModelDTO();
+            MemberRechargeHistoryModelVO memberRechargeHistory = new MemberRechargeHistoryModelVO();
             memberRechargeHistory.setMemberId(getUid());
             memberRechargeHistory.setCreateEmp(getUid());
             memberRechargeHistory.setModifyEmp(getUid());
@@ -265,7 +261,7 @@ public class MemberController extends BaseController {
             mqVO.setMemberRechargeHistory(memberRechargeHistory);
 
             //生成短信
-            MemberDTO md = new MemberDTO();
+            MemberVO md = new MemberVO();
             md.setId(getUid());
             MemberRE mem = memberService.queryOneMember(md);
             GenerateSmsVO generateSmsVO = new GenerateSmsVO();
@@ -276,7 +272,7 @@ public class MemberController extends BaseController {
 
             mqVO.setGenerateSmsVO(generateSmsVO);
 
-            return Result.getSuccessResult(memberService.memberRecharge(member, mqVO));
+            return Result.getSuccessResult(memberService.memberRecharge(memberVO, mqVO));
         }
     }
 
@@ -295,9 +291,9 @@ public class MemberController extends BaseController {
         Integer orderSum = orderService.queryOrderCount(getUid());
         memberDetailRE.setOrderSum(orderSum);
         //会员的消息数量
-        MessageDTO messageDTO = new MessageDTO();
-        messageDTO.setMemberId(getUid());
-        Integer messageSum = messageService.queryMessageCount(messageDTO);
+        MessageVO messageVO = new MessageVO();
+        messageVO.setMemberId(getUid());
+        Integer messageSum = messageService.queryMessageCount(messageVO);
         memberDetailRE.setMessageSum(messageSum);
 
         return Result.getSuccessResult(memberDetailRE);
@@ -313,7 +309,7 @@ public class MemberController extends BaseController {
     @ResponseBody
     @AccessLogin
     public Result<MemberRE> editMemberInfo(@Validated MemberInfoVO memberInfoVO){
-        MemberDTO member = new MemberDTO();
+        MemberVO member = new MemberVO();
         member.setNickname(memberInfoVO.getNickname());
         member.setEmail(memberInfoVO.getEmail());
         member.setSex(memberInfoVO.getSex());
@@ -323,7 +319,7 @@ public class MemberController extends BaseController {
         //更新会员信息
         memberService.updateMemberInfo(member);
         //查询指定会员信息
-        member = new MemberDTO();
+        member = new MemberVO();
         member.setId(getUid());
         MemberRE memberInfoRE = memberService.queryOneMember(member);
 
@@ -339,18 +335,18 @@ public class MemberController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/sendCode.do_", method = RequestMethod.GET)
     @AccessLogin
-    public Result sendCode(@Validated SendCodeVO sendCodeVO){
+    public Result sendCode(@Validated PasswordEditVO sendCodeVO){
         // 判断新密码和确认密码是否一致
         if (!(sendCodeVO.getNewpassword()).equals(sendCodeVO.getConfirmpassword())){
-            return Result.getBusinessException("新的密码和确认密码不一致", null);
+            return Result.getBusinessException("两次输入的密码不一致", null);
         }
 
-        MemberDTO memberDTO = new MemberDTO();
-        memberDTO.setId(getUid());
-        MemberRE member = memberService.queryOneMember(memberDTO);
-        // 判断旧密码是否和库里的一致
-        String oldpassword = EncryptUtil.md5(sendCodeVO.getOldpassword());
-        if(!((member.getPassword()).equals(oldpassword))){
+        MemberVO memberVO = new MemberVO();
+        memberVO.setId(getUid());
+        memberVO.setPassword(EncryptUtil.md5(sendCodeVO.getNewpassword()));
+        MemberRE member = memberService.queryOneMember(memberVO);
+        // 校验密码
+        if (member == null) {
             return Result.getBusinessException("原来的密码输入有误", null);
         }
         //生成消息体
@@ -374,15 +370,17 @@ public class MemberController extends BaseController {
     @RequestMapping(value = "/editMemberPassword.do_", method = RequestMethod.POST)
     @AccessLogin
     public Result editMemberPassword(@Validated PasswordEditVO passwordEditVO){
-        Member member = new Member();
-        member.setId(getUid());
-        Member mem = memberService.queryMemberTel(getUid());
-        // 判断旧密码是否和库里的一致
-        String oldpassword = EncryptUtil.md5(passwordEditVO.getOldpassword());
-        if(!((mem.getPassword()).equals(oldpassword))){
-            return Result.getBusinessException("原来的密码输入有误", null);
-        }else if(!((passwordEditVO.getNewpassword()).equals(passwordEditVO.getConfirmpassword()))){
+        if (!passwordEditVO.getNewpassword().equals(passwordEditVO.getConfirmpassword())) {
             return Result.getBusinessException("新的密码和确认密码不一致", null);
+        }
+
+        MemberVO member = new MemberVO();
+        member.setId(getUid());
+        member.setPassword(EncryptUtil.md5(passwordEditVO.getOldpassword()));
+        // 判断旧密码是否和库里的一致
+        MemberRE mem = memberService.queryOneMember(member);
+        if(mem == null){
+            return Result.getBusinessException("原来的密码输入有误", null);
         }
         //redis
         RedisCacheUtils redis = RedisCacheUtils.getInstance(RedisConfigEnum.SYS_CODE);
@@ -408,10 +406,10 @@ public class MemberController extends BaseController {
     @ResponseBody
     @AccessLogin()
     @RequestMapping(value = "queryMessageList.do_", method = RequestMethod.GET)
-    public Result<AllMessageRE> queryMessageList(MessageListVO messageListVO){
-        messageListVO.setMemberId(getUid());
-        List<MessageRE> messageREList = messageService.queryMessageList(messageListVO);
-        Integer totalNum = messageService.queryAllMessageCount(getUid());
+    public Result<AllMessageRE> queryMessageList(MessageVO messageVO){
+        messageVO.setMemberId(getUid());
+        List<MessageRE> messageREList = messageService.queryMessageList(messageVO);
+        Integer totalNum = messageService.queryMessageCount(messageVO);
 
         AllMessageRE allMessageRE = new AllMessageRE();
         allMessageRE.setMessageREList(messageREList);
@@ -429,11 +427,11 @@ public class MemberController extends BaseController {
     @AccessLogin
     @ResponseBody
     public Result updateMessageStatus(@Validated MessageVO messageVO){
-        Message message = new Message();
+        MessageVO message = new MessageVO();
         message.setId(messageVO.getId());
         message.setIsRead(messageVO.getIsRead());
         message.setMemberId(getUid());
-        return Result.getSuccessResult( messageService.updateMessageStatus(message));
+        return Result.getSuccessResult( messageService.updateMessage(message));
     }
 
     /**
@@ -445,8 +443,10 @@ public class MemberController extends BaseController {
     @RequestMapping(value = "/queryOneMessageById.do_", method = RequestMethod.GET)
     @AccessLogin
     @ResponseBody
-    public Result<MessageDetailVO> queryOneMessageById(Long messageId){
-        MessageDetailVO messageDetailVO = messageService.queryOneMessageById(messageId);
-        return Result.getSuccessResult( messageDetailVO);
+    public Result<MessageRE> queryOneMessageById(Long messageId){
+        MessageVO messageVO = new MessageVO();
+        messageVO.setId(messageId);
+        messageVO.setMemberId(getUid());
+        return Result.getSuccessResult(messageService.queryOneMessageById(messageVO));
     }
 }

@@ -1,10 +1,11 @@
 package com.uc.training.base.bd.controller;
 
-import com.ycc.base.common.Result;
+import com.uc.training.base.bd.re.MemberGradeRE;
+import com.uc.training.base.bd.service.MemberGradeService;
+import com.uc.training.base.bd.vo.MemberGradeVO;
 import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
-import com.uc.training.smadmin.bd.model.MemberGrade;
-import com.uc.training.smadmin.bd.service.MemberGradeService;
+import com.ycc.base.common.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -33,8 +34,9 @@ public class MemberGradeController extends BaseController {
     @AccessLogin
     @ResponseBody
     @RequestMapping(value = "getMemberGrade.do_", method = RequestMethod.GET)
-    public Result<List<MemberGrade>> getDemoPage() {
-        return Result.getSuccessResult(memberGradeService.getList());
+    public Result<List<MemberGradeRE>> getDemoPage() {
+        MemberGradeVO memberGradeVO = new MemberGradeVO();
+        return Result.getSuccessResult(memberGradeService.getList(memberGradeVO));
     }
 
 
@@ -46,7 +48,7 @@ public class MemberGradeController extends BaseController {
     @AccessLogin
     @RequestMapping(value = "/modifyGrade.do_", method = RequestMethod.POST)
     @ResponseBody
-    public Result<Integer> modifyGrade(@Validated MemberGrade grade){
+    public Result<Integer> modifyGrade(@Validated MemberGradeVO grade){
         if (grade.getId() == null) {
             return Result.getBusinessException("会员ID不能为空", null);
         }

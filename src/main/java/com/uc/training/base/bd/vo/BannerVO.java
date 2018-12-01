@@ -36,6 +36,9 @@ public class BannerVO implements Serializable{
     @NotNull(message = "请选择排序号！")
     private Integer sortNum;
 
+    /**点击**/
+    private Integer click;
+
     /**广告图片**/
     @NotBlank(message = "广告名称不能为空")
     private String imageUrl;
@@ -65,10 +68,21 @@ public class BannerVO implements Serializable{
                 ", type=" + type +
                 ", isShow=" + isShow +
                 ", sortNum=" + sortNum +
+                ", click=" + click +
                 ", imageUrl='" + imageUrl + '\'' +
                 ", url='" + url + '\'' +
                 ", description='" + description + '\'' +
+                ", createEmp=" + createEmp +
+                ", modifyEmp=" + modifyEmp +
                 '}';
+    }
+
+    public Integer getClick() {
+        return click;
+    }
+
+    public void setClick(Integer click) {
+        this.click = click;
     }
 
     public Long getCreateEmp() {

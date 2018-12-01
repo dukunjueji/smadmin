@@ -1,14 +1,14 @@
 package com.uc.training.base.bd.service.impl;
 
+import com.uc.training.base.bd.service.GrowthDetailService;
+import com.uc.training.base.bd.vo.GrowthVO;
+import com.uc.training.base.bd.vo.MemberGrowthVO;
 import com.uc.training.common.enums.GrowthEnum;
+import com.uc.training.remote.client.BaseClient;
 import com.uc.training.smadmin.bd.dao.GrowthDetailDao;
 import com.uc.training.smadmin.bd.dao.MemberDao;
 import com.uc.training.smadmin.bd.model.GrowthDetail;
-import com.uc.training.smadmin.bd.service.GrowthDetailService;
-import com.uc.training.smadmin.bd.vo.GrowthVO;
-import com.uc.training.smadmin.bd.vo.MemberGrowthVO;
 import com.uc.training.smadmin.utils.InjectionUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -23,11 +23,6 @@ import java.math.BigDecimal;
  */
 @Service
 public class GrowthDetailServiceImpl implements GrowthDetailService {
-    @Autowired
-    private GrowthDetailDao growthDetailDao;
-
-    @Autowired
-    private MemberDao memberDao;
 
     private static final Integer NUM = 100;
     @Override
@@ -51,7 +46,7 @@ public class GrowthDetailServiceImpl implements GrowthDetailService {
         memberGrowthVO.setMemberId(growthVO.getMemberId());
 
         // 更新会员成长值
-        memberDao.updateGrowthById(memberGrowthVO);
+        BaseClient.updateMember().updateGrowthById(memberGrowthVO);
         return growthVaule;
     }
 

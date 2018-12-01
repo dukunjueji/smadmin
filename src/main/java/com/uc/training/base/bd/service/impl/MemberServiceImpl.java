@@ -5,6 +5,8 @@ import com.uc.training.base.bd.dto.MemberDTO;
 import com.uc.training.base.bd.re.MemberDetailRE;
 import com.uc.training.base.bd.re.MemberRE;
 import com.uc.training.base.bd.service.MemberService;
+import com.uc.training.base.bd.vo.MemberListVO;
+import com.uc.training.base.bd.vo.MemberVO;
 import com.uc.training.common.enums.GrowthEnum;
 import com.uc.training.common.enums.IntegralEnum;
 import com.uc.training.common.enums.OrderEnum;
@@ -18,7 +20,6 @@ import com.uc.training.smadmin.bd.re.MemberInfoRE;
 import com.uc.training.smadmin.bd.service.LoginLogService;
 import com.uc.training.smadmin.bd.vo.MemberBalanceVO;
 import com.uc.training.smadmin.bd.vo.MemberInfoVO;
-import com.uc.training.smadmin.bd.vo.MemberListVO;
 import com.uc.training.smadmin.bd.vo.MemberLoginVO;
 import com.uc.training.smadmin.gds.service.GoodsService;
 import com.uc.training.smadmin.gds.vo.GoodsStokeVO;
@@ -63,12 +64,12 @@ public class MemberServiceImpl implements MemberService {
     private SmsTemplateService smsTemplateService;
 
     @Override
-    public Long insertMember(MemberDTO memberDTO) {
-        return BaseClient.insertMember(memberDTO);
+    public Long insertMember(MemberVO memberVO) {
+        return BaseClient.insertMember(memberVO);
     }
 
     @Override
-    public MemberRE queryOneMember(MemberDTO member) {
+    public MemberRE queryOneMember(MemberVO member) {
         if (member.getPassword() != null) {
             //密码加密
             member.setPassword(EncryptUtil.md5(member.getPassword()));
@@ -77,7 +78,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Integer updateMember(MemberDTO member) {
+    public Integer updateMember(MemberVO member) {
         member.setPassword(EncryptUtil.md5(member.getPassword()));
         return BaseClient.updateMember(member);
     }
@@ -163,7 +164,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Integer updateMemberInfo(MemberDTO member) {
+    public Integer updateMemberInfo(MemberVO member) {
         return BaseClient.updateMember(member);
     }
 
@@ -173,13 +174,13 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public List<Member> getMemberList(MemberListVO memberListVO) {
-        return memberDao.getMemberList(memberListVO);
+    public List<MemberRE> getMemberList(MemberListVO memberListVO) {
+        return BaseClient.queryMemberList(memberListVO);
     }
 
     @Override
     public Long queryMemberCount(MemberListVO memberListVO) {
-        return memberDao.queryMemberCount(memberListVO);
+        return BaseClient.queryMemberCount(memberListVO);
     }
 
     @Override
@@ -203,7 +204,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Integer memberRecharge(MemberDTO member, MqVO mqVO) {
+    public Integer memberRecharge(MemberVO member, MqVO mqVO) {
         Integer status = BaseClient.updateMember(member);
         mqVO.setRechargeStatus(status);
         mqVO.getMemberRechargeHistory().setStatus(status);

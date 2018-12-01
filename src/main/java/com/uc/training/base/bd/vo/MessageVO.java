@@ -1,5 +1,7 @@
 package com.uc.training.base.bd.vo;
 
+import com.ycc.base.common.BaseDomain;
+
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
@@ -11,7 +13,7 @@ import java.io.Serializable;
  * @date: 2018/10/25
  * 说明：
  */
-public class MessageVO implements Serializable {
+public class MessageVO extends BaseDomain implements Serializable {
 
     private static final long serialVersionUID = 4049801712145458173L;
 
@@ -22,10 +24,56 @@ public class MessageVO implements Serializable {
     private Long id;
 
     /**
+     * 会员id
+     */
+    private Long memberId;
+
+    /**
      * 消息状态
      */
     @NotNull(message = "消息状态不能为空")
     private Integer isRead;
+
+    /**
+     * 创建时间
+     */
+    private String createTime;
+
+    /**
+     * 消息内容
+     */
+    private String content;
+
+    @Override
+    public String toString() {
+        return "MessageVO{" +
+                "id=" + id +
+                ", memberId=" + memberId +
+                ", isRead=" + isRead +
+                ", createTime='" + createTime + '\'' +
+                ", content='" + content + '\'' +
+                '}';
+    }
+
+    public Long getMemberId() {
+        return memberId;
+    }
+
+    public void setMemberId(Long memberId) {
+        this.memberId = memberId;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 
     public Long getId() {
         return id;
@@ -43,11 +91,4 @@ public class MessageVO implements Serializable {
         this.isRead = isRead;
     }
 
-    @Override
-    public String toString() {
-        return "MessageVO{" +
-                "id=" + id +
-                ", isRead=" + isRead +
-                '}';
-    }
 }

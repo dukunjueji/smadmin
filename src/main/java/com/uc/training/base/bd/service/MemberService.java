@@ -1,15 +1,17 @@
 package com.uc.training.base.bd.service;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import com.uc.training.base.bd.dto.LoginLogDTO;
 import com.uc.training.base.bd.dto.MemberDTO;
 import com.uc.training.base.bd.re.MemberDetailRE;
 import com.uc.training.base.bd.re.MemberRE;
+import com.uc.training.base.bd.vo.MemberListVO;
+import com.uc.training.base.bd.vo.MemberVO;
 import com.uc.training.common.mq.vo.MqVO;
 import com.uc.training.smadmin.bd.model.Member;
 import com.uc.training.smadmin.bd.re.MemberInfoRE;
 import com.uc.training.smadmin.bd.vo.MemberBalanceVO;
 import com.uc.training.smadmin.bd.vo.MemberInfoVO;
-import com.uc.training.smadmin.bd.vo.MemberListVO;
 import com.uc.training.smadmin.bd.vo.MemberLoginVO;
 import com.uc.training.smadmin.ord.re.OrderConfirmRE;
 
@@ -27,19 +29,19 @@ public interface MemberService {
 
     /**
     *说明：插入会员信息逻辑
-    *@param memberDTO 会员对象
+    *@param memberVO 会员对象
     *@return：void
     *@throws：
     */
-    Long insertMember(MemberDTO memberDTO);
+    Long insertMember(MemberVO memberVO);
 
     /**
     *说明：根据手机号或者密码查找一个会员
-    *@param memberDTO 会员对象
+    *@param member 会员对象
     *@return：com.uc.training.smadmin.bd.model.Member
     *@throws：
     */
-    MemberRE queryOneMember(MemberDTO memberDTO);
+    MemberRE queryOneMember(MemberVO member);
 
     /**
     *说明：重置会员密码
@@ -47,7 +49,7 @@ public interface MemberService {
     *@return：void
     *@throws：
     */
-    Integer updateMember(MemberDTO member);
+    Integer updateMember(MemberVO member);
 
     /**
     *说明：更新余额(用于充值)
@@ -85,11 +87,11 @@ public interface MemberService {
 
     /**
     *说明：更新会员信息
-    * @param memberDTO 更新会员信息请求参数
+    * @param memberVO 更新会员信息请求参数
     *@return：int
     *@throws：
     */
-    Integer updateMemberInfo(MemberDTO memberDTO);
+    Integer updateMemberInfo(MemberVO memberVO);
 
     /**
     *说明：查询会员信息
@@ -104,7 +106,7 @@ public interface MemberService {
      * @param memberListVO
      * @return
      */
-    List<Member> getMemberList(MemberListVO memberListVO);
+    List<MemberRE> getMemberList(MemberListVO memberListVO);
 
     /**
      * 获取会员数量
@@ -145,7 +147,7 @@ public interface MemberService {
     *@return：void
     *@throws：
     */
-    Integer memberRecharge(MemberDTO member, MqVO mqVO);
+    Integer memberRecharge(MemberVO member, MqVO mqVO);
 
     /**
      *说明：通过手机号查询会员信息

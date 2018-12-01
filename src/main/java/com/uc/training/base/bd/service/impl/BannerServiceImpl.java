@@ -5,9 +5,6 @@ import com.uc.training.base.bd.service.BannerService;
 import com.uc.training.base.bd.vo.BannerListVO;
 import com.uc.training.base.bd.vo.BannerVO;
 import com.uc.training.remote.client.BaseClient;
-import com.uc.training.smadmin.bd.dao.BannerDao;
-import com.uc.training.smadmin.bd.re.AdminBannerListRE;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -75,21 +72,13 @@ public class BannerServiceImpl implements BannerService {
     }
 
     /**
-     * 增加点击量
-     */
-    @Override
-    public Integer insertClick(Long id) {
-        return bannerDao.insertClick(id);
-    }
-
-    /**
-     * 获取商品总数量
+     * 获取图片数量
      *
-     * @param adminBannerListVO
+     * @param bannerListVO
      * @return
      */
     @Override
-    public Long getAdminBannerCount(BannerListVO adminBannerListVO) {
-        return BaseClient.getBannerCount(BannerListVO);
+    public Long getAdminBannerCount(BannerListVO bannerListVO) {
+        return BaseClient.getBannerCount(bannerListVO);
     }
 }

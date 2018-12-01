@@ -57,7 +57,13 @@ public class BannerController extends BaseController{
     @AccessLogin(required = false)
     @RequestMapping(value = "/insertClick.do_", method = RequestMethod.GET)
     public Result insertClick(Long id) {
-        return Result.getSuccessResult(bannerService.insertClick(id));
+        if (id == null) {
+            return Result.getBusinessException("无法获取图片！", null);
+        }
+        BannerVO bannerVO = new BannerVO();
+        bannerVO.setId(id);
+        bannerVO.setClick(CLICK);
+        return Result.getSuccessResult(bannerService.updateBanner(bannerVO));
     }
 
 }

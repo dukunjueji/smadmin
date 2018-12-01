@@ -1,10 +1,7 @@
 package com.uc.training.base.bd.service;
 
-import com.uc.training.base.bd.dto.MessageDTO;
-import com.uc.training.smadmin.bd.model.Message;
-import com.uc.training.smadmin.bd.re.MessageRE;
-import com.uc.training.smadmin.bd.vo.MessageDetailVO;
-import com.uc.training.smadmin.bd.vo.MessageListVO;
+import com.uc.training.base.bd.re.MessageRE;
+import com.uc.training.base.bd.vo.MessageVO;
 
 import java.util.List;
 
@@ -19,26 +16,18 @@ import java.util.List;
 public interface MessageService {
     /**
     *说明：查找消息数量
-    *@param messageDTO 会员id
+    *@param messageVO 会员id
     *@return：java.lang.Integer 消息的数目
     *@throws：
     */
-    Integer queryMessageCount(MessageDTO messageDTO);
-
-    /**
-     *说明：查找指定会员消息总记录数
-     *@param memberId 会员id
-     *@return：java.lang.Integer 消息的数目
-     *@throws：
-     */
-    Integer queryAllMessageCount(Long memberId);
+    Integer queryMessageCount(MessageVO messageVO);
 
     /**
      * 查询指定会员的所有消息
-     * @param messageListVO
+     * @param messageVO
      * @return 会员列表
      */
-    List<MessageRE> queryMessageList(MessageListVO messageListVO);
+    List<MessageRE> queryMessageList(MessageVO messageVO);
 
     /**
     *说明：更新消息状态
@@ -46,7 +35,7 @@ public interface MessageService {
     *@return：int 更新返回状态
     *@throws：
     */
-    int updateMessageStatus(Message message);
+    Integer updateMessage(MessageVO message);
 
     /**
     *说明：保存消息
@@ -54,13 +43,13 @@ public interface MessageService {
     *@return：java.lang.Long 影响数目
     *@throws：
     */
-    Long insertMessage(Message record);
+    Long insertMessage(MessageVO record);
 
     /**
     *说明：通过消息id获取消息的详情
-    *@param messageId
+    *@param message
     *@return：com.uc.training.smadmin.bd.vo.MessageDetailVO
     *@throws：
     */
-    MessageDetailVO queryOneMessageById(Long messageId);
+    MessageRE queryOneMessageById(MessageVO message);
 }

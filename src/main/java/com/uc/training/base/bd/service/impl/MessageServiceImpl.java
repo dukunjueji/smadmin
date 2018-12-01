@@ -1,7 +1,8 @@
 package com.uc.training.base.bd.service.impl;
 
-import com.uc.training.base.bd.dto.MessageDTO;
+import com.uc.training.base.bd.re.MessageRE;
 import com.uc.training.base.bd.service.MessageService;
+import com.uc.training.base.bd.vo.MessageVO;
 import com.uc.training.remote.client.BaseClient;
 import com.uc.training.smadmin.bd.dao.MessageDao;
 import com.uc.training.smadmin.bd.model.Message;
@@ -9,8 +10,9 @@ import com.uc.training.smadmin.bd.re.MessageRE;
 import com.uc.training.smadmin.bd.vo.MessageDetailVO;
 import com.uc.training.smadmin.bd.vo.MessageListVO;
 import com.uc.training.smadmin.utils.InjectionUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.displaytag.util.CollectionUtil;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
@@ -33,51 +35,40 @@ public class MessageServiceImpl implements MessageService {
     private static final Integer ENDNUM = 5;
 
     @Override
-    public Integer queryMessageCount(MessageDTO messageDTO) {
-        return BaseClient.queryMessageCount(messageDTO);
+    public Integer queryMessageCount(MessageVO messageVO) {
+        return BaseClient.queryMessageCount(messageVO);
     }
 
     @Override
-    public Integer queryAllMessageCount(Long memberId) {
-        return this.messageDao.queryAllMessageCount(memberId);
+    public Integer queryAllMessageCount(MessageVO messageVO) {
+        return BaseClient.queryMemberCount(messageVO);
     }
 
     @Override
-    public List<MessageRE> queryMessageList(MessageListVO messageListVO) {
-        List<Message> messageList = this.messageDao.queryMessageList(messageListVO);
-        List<MessageRE> messageListRE = new ArrayList<>();
-        for (Message message: messageList){
-            MessageRE messageRE = new MessageRE();
-            messageRE.setId(message.getId());
-            messageRE.setContent(message.getContent());
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            String createdate = sdf.format(message.getCreateTime());
-            messageRE.setCreateTime(createdate);
-            messageRE.setIsRead(message.getIsRead());
-            messageRE.setTitle(StringUtils.substring(message.getContent(), STARTNUM, ENDNUM) + "....");
-            messageListRE.add(messageRE);
+    public List<MessageRE> queryMessageList(MessageVO messageVO) {
+        List<MessageRE> messageList = BaseClient.queryMessageList(messageVO);
+        if (CollectionUtils.isEmpty(messageList)) {
+            return null;
         }
-        return messageListRE;
+        for (MessageRE message: messageList){
+            message.setContent(StringUtils.substring(message.getContent(), STARTNUM, ENDNUM) + "....");
+        }
+        return messageList;
     }
 
     @Override
-    public int updateMessageStatus(Message message) {
-        return this.messageDao.updateMessageStatus(message);
+    public Integer updateMessage(MessageVO message) {
+        return BaseClient.updateMessage(message);
     }
 
     @Override
-    public Long insertMessage(Message record) {
+    public Long insertMessage(MessageVO record) {
         this.messageDao = InjectionUtils.getInjectionInstance(MessageDao.class);
         return this.messageDao.insertMessage(record);
     }
 
     @Override
-    public MessageDetailVO queryOneMessageById(Long messageId) {
-        Message message = this.messageDao.queryOneMessageById(messageId);
-        MessageDetailVO messageDetailVO = new MessageDetailVO();
-        messageDetailVO.setContent(message.getContent());
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        messageDetailVO.setCreateTime(simpleDateFormat.format(message.getCreateTime()));
-        return messageDetailVO;
+    public MessageRE queryOneMessageById(MessageVO messageVO) {
+        return BaseClient.queryOneMessageById(messageVO);
     }
 }
