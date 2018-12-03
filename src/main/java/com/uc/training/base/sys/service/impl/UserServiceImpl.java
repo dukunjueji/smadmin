@@ -4,6 +4,9 @@ import com.uc.training.base.sys.dto.SysUserDTO;
 import com.uc.training.base.sys.re.SysMenuRE;
 import com.uc.training.base.sys.re.SysUserRE;
 import com.uc.training.base.sys.service.UserService;
+import com.uc.training.base.sys.vo.UserListVO;
+import com.uc.training.base.sys.vo.UserLoginVO;
+import com.uc.training.base.sys.vo.UserVO;
 import com.uc.training.remote.client.BaseClient;
 
 import java.util.List;
@@ -15,8 +18,8 @@ import java.util.List;
  */
 public class UserServiceImpl implements UserService {
     @Override
-    public SysUserRE getUserLogin(SysUserDTO sysUserDTO) {
-        return BaseClient.getUserLogin(sysUserDTO);
+    public SysUserRE getUserLogin(UserLoginVO userLoginVO) {
+        return BaseClient.getUserLogin(userLoginVO);
     }
 
     @Override
@@ -30,18 +33,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<SysUserRE> getUserList(SysUserDTO sysUserDTO) {
-        return BaseClient.getUserList(sysUserDTO);
+    public List<SysUserRE> getUserList(UserListVO userListVO) {
+        return BaseClient.getUserList(userListVO);
     }
 
     @Override
-    public Long queryUserCount(SysUserDTO sysUserDTO) {
-        return BaseClient.queryUserCount(sysUserDTO);
+    public Long queryUserCount(UserListVO userListVO) {
+        return BaseClient.queryUserCount(userListVO);
     }
 
     @Override
-    public Long addUser(SysUserDTO user) {
-        return BaseClient.addUser(user);
+    public Long addUser(UserVO user, Long uid, String pwd) {
+        return BaseClient.addUser(user, uid, pwd);
     }
 
     @Override
@@ -50,8 +53,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Integer updateUser(SysUserDTO user) {
-        return BaseClient.updateUser(user);
+    public Integer updateUser(UserVO user, Long uid) {
+        return BaseClient.updateUser(user, uid);
     }
 
     @Override

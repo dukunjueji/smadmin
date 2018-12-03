@@ -3,6 +3,9 @@ package com.uc.training.base.sys.service;
 import com.uc.training.base.sys.dto.SysUserDTO;
 import com.uc.training.base.sys.re.SysMenuRE;
 import com.uc.training.base.sys.re.SysUserRE;
+import com.uc.training.base.sys.vo.UserListVO;
+import com.uc.training.base.sys.vo.UserLoginVO;
+import com.uc.training.base.sys.vo.UserVO;
 
 import java.util.List;
 
@@ -18,10 +21,10 @@ public interface UserService {
      * 用户登录获取用户
      *
      * @version 1.0 2018/10/30 15:51 by 吴佰川（baichuan.wu@ucarinc.com）创建
-     * @param SysUserDTO 用户登录请求参数
+     * @param userLoginVO 用户登录请求参数
      * @return com.uc.training.smbase.sys.model.SysUser
      */
-    SysUserRE getUserLogin(SysUserDTO SysUserDTO);
+    SysUserRE getUserLogin(UserLoginVO userLoginVO);
 
     /**
      * 根据用户id查询用户
@@ -43,24 +46,26 @@ public interface UserService {
 
     /**
      * 获取用户分页列表
-     * @param sysUserDTO
+     * @param userListVO
      * @return
      */
-    List<SysUserRE> getUserList(SysUserDTO sysUserDTO);
+    List<SysUserRE> getUserList(UserListVO userListVO);
 
     /**
      * 获取用户数量
-     * @param sysUserDTO
+     * @param userListVO
      * @return
      */
-    Long queryUserCount(SysUserDTO sysUserDTO);
+    Long queryUserCount(UserListVO userListVO);
 
     /**
      * 新增用户
      * @param user
+     * @param uid
+     * @param pwd
      * @return
      */
-    Long addUser(SysUserDTO user);
+    Long addUser(UserVO user, Long uid, String pwd);
 
     /**
      * 通过ID删除用户
@@ -74,7 +79,7 @@ public interface UserService {
      * @param user
      * @return
      */
-    Integer updateUser(SysUserDTO user);
+    Integer updateUser(UserVO user, Long uid);
 
     /**
      * 通过用户ID获取用户的菜单权限

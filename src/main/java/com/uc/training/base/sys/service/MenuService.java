@@ -2,6 +2,7 @@ package com.uc.training.base.sys.service;
 
 import com.uc.training.base.sys.dto.SysMenuDTO;
 import com.uc.training.base.sys.re.SysMenuRE;
+import com.uc.training.base.sys.vo.MenuVO;
 
 import java.util.List;
 
@@ -45,7 +46,7 @@ public interface MenuService {
      * @param menu
      * @return
      */
-    Long addMenu(SysMenuDTO menu);
+    Long addMenu(MenuVO menu);
 
     /**
      * 通过ID删除菜单
@@ -59,7 +60,7 @@ public interface MenuService {
      * @param menu
      * @return
      */
-    Integer updateMenu(SysMenuDTO menu);
+    Integer updateMenu(MenuVO menu);
 
     /**
      * 批量删除
