@@ -1,6 +1,6 @@
 package com.uc.training.common.mq.vo;
 
-import com.uc.training.base.bd.dto.MemberRechargeHistoryModelDTO;
+import com.uc.training.base.bd.vo.MemberRechargeHistoryModelVO;
 import com.uc.training.base.sms.vo.GenerateSmsVO;
 
 import java.io.Serializable;
@@ -35,7 +35,7 @@ public class MqVO implements Serializable {
     /**
      * 充值记录
      */
-    private MemberRechargeHistoryModelDTO memberRechargeHistory;
+    private MemberRechargeHistoryModelVO memberRechargeHistory;
 
     /**
      * 成长值类型
@@ -57,11 +57,11 @@ public class MqVO implements Serializable {
      */
     private BigDecimal rechargeValue;
 
-    public MemberRechargeHistoryModelDTO getMemberRechargeHistory() {
+    public MemberRechargeHistoryModelVO getMemberRechargeHistory() {
         return memberRechargeHistory;
     }
 
-    public void setMemberRechargeHistory(MemberRechargeHistoryModelDTO memberRechargeHistory) {
+    public void setMemberRechargeHistory(MemberRechargeHistoryModelVO memberRechargeHistory) {
         this.memberRechargeHistory = memberRechargeHistory;
     }
     public Integer getRechargeStatus() {

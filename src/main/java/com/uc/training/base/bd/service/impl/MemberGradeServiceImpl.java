@@ -1,9 +1,9 @@
 package com.uc.training.base.bd.service.impl;
 
-import com.uc.training.smadmin.bd.dao.MemberGradeDao;
-import com.uc.training.smadmin.bd.model.MemberGrade;
-import com.uc.training.smadmin.bd.service.MemberGradeService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.uc.training.base.bd.re.MemberGradeRE;
+import com.uc.training.base.bd.service.MemberGradeService;
+import com.uc.training.base.bd.vo.MemberGradeVO;
+import com.uc.training.remote.client.BaseClient;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,28 +16,35 @@ import java.util.List;
 @Service
 public class MemberGradeServiceImpl implements MemberGradeService {
 
-    @Autowired
-    private MemberGradeDao memberGradeDao;
-
     @Override
-    public List<MemberGrade> getList() {
-        return memberGradeDao.queryMemberGradeList();
+    public List<MemberGradeRE> getList(MemberGradeVO memberGradeVO) {
+        return BaseClient.queryMemberGradeList(memberGradeVO);
     }
 
     @Override
-    public Integer modifyMemberGrade(MemberGrade grade) {
-        return memberGradeDao.updateMemberGradeById(grade);
+    public Integer modifyMemberGrade(MemberGradeVO grade) {
+        return BaseClient.modifyMemberGrade(grade);
     }
 
+    /**
+     * 查找数据总记录数
+     *
+     * @return
+     */
     @Override
     public Long queryMemberGradeCount() {
-        return memberGradeDao.queryMemberGradeCount();
+        return null;
     }
 
+    /**
+     * 通过用户ID获取折扣
+     *
+     * @param id
+     * @return
+     */
     @Override
     public Double getDiscountByUId(Long id) {
-        return memberGradeDao.getByUId(id).getDiscount();
+        return null;
     }
-
 
 }

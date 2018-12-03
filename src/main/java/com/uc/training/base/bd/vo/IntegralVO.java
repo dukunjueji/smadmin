@@ -16,7 +16,7 @@ public class IntegralVO implements Serializable {
     /**
      *积分值类型
      */
-    private Integer integralType;
+    private Integer type;
 
     /**
      *购买商品的价格，如果积分值类型不是购买商品类型，那么这个字段不用赋值
@@ -33,12 +33,12 @@ public class IntegralVO implements Serializable {
      */
     private Long integral;
 
-    public Integer getIntegralType() {
-        return integralType;
+    public Integer getType() {
+        return type;
     }
 
-    public void setIntegralType(Integer integralType) {
-        this.integralType = integralType;
+    public void setType(Integer type) {
+        this.type = type;
     }
 
     public BigDecimal getPurchaseValue() {
@@ -68,7 +68,7 @@ public class IntegralVO implements Serializable {
     @Override
     public String toString() {
         return "IntegralVO{" +
-                "integralType=" + integralType +
+                "type=" + type +
                 ", purchaseValue=" + purchaseValue +
                 ", memberId=" + memberId +
                 ", integral=" + integral +

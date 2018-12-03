@@ -1,8 +1,5 @@
 package com.uc.training.common.enums;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * 版权说明：Copyright (c) 2018 ucarinc. All Rights Reserved.
  *
@@ -20,6 +17,8 @@ public enum SmsTypeEnum {
     CHANGE_PASSWORD("修改密码", 3, "6673"),
     //充值
     RECHARGE("充值", 4, "6674"),
+    //充值失败
+    RECHARGE_FAIL("充值失败", 4, "66741"),
     //订单信息
     ORDER_INFO("订单信息", 5, "6675"),
     //会员等级

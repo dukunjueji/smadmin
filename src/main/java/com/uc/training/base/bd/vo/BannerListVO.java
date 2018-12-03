@@ -11,7 +11,7 @@ import java.io.Serializable;
  * @Version 1.0
  * @date 2018/11/1
  */
-public class AdminBannerListVO extends PageQuery implements Serializable{
+public class BannerListVO extends PageQuery implements Serializable{
 
     private static final long serialVersionUID = 510756824374107273L;
     /**
@@ -26,7 +26,7 @@ public class AdminBannerListVO extends PageQuery implements Serializable{
 
     @Override
     public String toString() {
-        return "AdminBannerListVO{" +
+        return "BannerListVO{" +
                 "name='" + name + '\'' +
                 ", isShow=" + isShow +
                 '}';

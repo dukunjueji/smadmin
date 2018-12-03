@@ -1,15 +1,12 @@
 package com.uc.training.base.bd.controller;
 
+import com.uc.training.base.bd.re.BannerRE;
+import com.uc.training.base.bd.service.BannerService;
+import com.uc.training.base.bd.vo.BannerListVO;
+import com.uc.training.base.bd.vo.BannerVO;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.common.vo.PageVO;
-import com.uc.training.smadmin.bd.model.Banner;
-import com.uc.training.smadmin.bd.re.AdminBannerListRE;
-import com.uc.training.smadmin.bd.service.BannerService;
-import com.uc.training.smadmin.bd.vo.AdminBannerListVO;
-import com.uc.training.smadmin.bd.vo.AdminInsertBannerVO;
-import com.uc.training.smadmin.bd.vo.AdminUpdateBannerVO;
 import com.ycc.base.common.Result;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -38,13 +35,13 @@ public class AdminBannerController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/getAllBannerList.do_", method = RequestMethod.POST)
-    public Result<PageVO<AdminBannerListRE>> getAllBannerList(AdminBannerListVO adminBannerListVO) {
+    public Result<PageVO<BannerRE>> getAllBannerList(BannerListVO bannerListVO) {
 
-        PageVO<AdminBannerListRE> pageVO = new PageVO<>();
-        pageVO.setPageIndex(adminBannerListVO.getPageIndex());
-        pageVO.setPageSize(adminBannerListVO.getPageSize());
-        pageVO.setTotal(bannerService.getAdminBannerCount(adminBannerListVO));
-        pageVO.setDataList(bannerService.getAllBannerList(adminBannerListVO));
+        PageVO<BannerRE> pageVO = new PageVO<>();
+        pageVO.setPageIndex(bannerListVO.getPageIndex());
+        pageVO.setPageSize(bannerListVO.getPageSize());
+        pageVO.setTotal(bannerService.getAdminBannerCount(bannerListVO));
+        pageVO.setDataList(bannerService.getAllBannerList(bannerListVO));
 
         return Result.getSuccessResult(pageVO);
     }
@@ -55,14 +52,13 @@ public class AdminBannerController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/updateBanner.do_", method = RequestMethod.POST)
-    public Result updateBanner(@Validated AdminUpdateBannerVO adminUpdateBannerVO) {
-
-        Banner banner = new Banner();
-        BeanUtils.copyProperties(adminUpdateBannerVO, banner);
-
-        banner.setModifyEmp(getUid());
-
-        return Result.getSuccessResult(bannerService.updateBanner(banner));
+    public Result updateBanner(@Validated BannerVO bannerVO) {
+        if (bannerVO.getId() == null) {
+            return Result.getBusinessException("请重新修改图片！", null);
+        }
+        bannerVO.setModifyEmp(getUid());
+        bannerVO.setClick(null);
+        return Result.getSuccessResult(bannerService.updateBanner(bannerVO));
     }
 
     /**
@@ -73,25 +69,23 @@ public class AdminBannerController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/deleteBannerById.do_", method = RequestMethod.POST)
     public Result deleteBannerById(Long id) {
+        if (id == null) {
+            return Result.getBusinessException("请重新选择图片！", null);
+        }
         return Result.getSuccessResult(bannerService.deleteBannerById(id));
     }
 
     /**
      * 新增轮播图
-     * @param adminInsertBannerVO
+     * @param bannerVO
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "/insertBanner.do_", method = RequestMethod.POST)
-    public Result insertBanner(@Validated AdminInsertBannerVO adminInsertBannerVO) {
-
-        Banner banner = new Banner();
-        BeanUtils.copyProperties(adminInsertBannerVO, banner);
-
-        banner.setCreateEmp(getUid());
-        banner.setModifyEmp(getUid());
-
-        return Result.getSuccessResult(bannerService.insertBanner(banner));
+    public Result insertBanner(@Validated BannerVO bannerVO) {
+        bannerVO.setCreateEmp(getUid());
+        bannerVO.setModifyEmp(getUid());
+        return Result.getSuccessResult(bannerService.insertBanner(bannerVO));
     }
 
 }
