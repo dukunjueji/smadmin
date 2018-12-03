@@ -1,4 +1,4 @@
-package com.uc.training.smadmin.gds.service;
+package com.uc.training.gds.service;
 
 import com.uc.training.gds.re.CommentPicRE;
 

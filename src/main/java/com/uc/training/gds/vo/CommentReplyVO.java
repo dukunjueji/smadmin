@@ -1,5 +1,7 @@
 package com.uc.training.gds.vo;
 
+import com.uc.training.common.base.model.BaseModel;
+
 import java.io.Serializable;
 
 /**
@@ -7,11 +9,11 @@ import java.io.Serializable;
  *
  * @author 何麒（qi.he@ucarinc.com）
  * @Version 1.0
- * @date 2018/11/19
+ * @date 2018/11/17
  */
-public class CommentReplyVO implements Serializable {
+public class CommentReplyVO extends BaseModel implements Serializable {
 
-    private static final long serialVersionUID = -617066452812184837L;
+    private static final long serialVersionUID = -3550695496886085851L;
     /**
      * 主键id
      */
@@ -24,13 +26,38 @@ public class CommentReplyVO implements Serializable {
      * 会员id
      */
     private Long memberId;
+    /**
+     * 会员昵称
+     */
+    private String memberNickname;
+    /**
+     * 会员头像
+     */
+    private String memberImageUrl;
+    /**
+     * 父级id
+     */
+    private Long parentId;
+    /**
+     * 类型1.商家回复，2他人回复
+     */
+    private Integer type;
+    /**
+     * 评论内容
+     */
+    private String content;
 
     @Override
     public String toString() {
-        return "CommentReplyVO{" +
+        return "CommentReplyDao{" +
                 "id=" + id +
                 ", commentId=" + commentId +
                 ", memberId=" + memberId +
+                ", memberNickname='" + memberNickname + '\'' +
+                ", memberImageUrl='" + memberImageUrl + '\'' +
+                ", parentId=" + parentId +
+                ", type=" + type +
+                ", content='" + content + '\'' +
                 '}';
     }
 
@@ -56,5 +83,45 @@ public class CommentReplyVO implements Serializable {
 
     public void setMemberId(Long memberId) {
         this.memberId = memberId;
+    }
+
+    public String getMemberNickname() {
+        return memberNickname;
+    }
+
+    public void setMemberNickname(String memberNickname) {
+        this.memberNickname = memberNickname;
+    }
+
+    public String getMemberImageUrl() {
+        return memberImageUrl;
+    }
+
+    public void setMemberImageUrl(String memberImageUrl) {
+        this.memberImageUrl = memberImageUrl;
+    }
+
+    public Long getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 }

@@ -1,6 +1,5 @@
 package com.uc.training.ord.controller;
 
-
 import com.uc.training.base.bd.service.MemberService;
 import com.uc.training.base.bd.vo.MemberInfoVO;
 import com.uc.training.base.sms.vo.GenerateSmsVO;

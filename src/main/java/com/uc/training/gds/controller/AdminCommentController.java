@@ -1,16 +1,16 @@
-package com.uc.training.smadmin.gds.controller;
+package com.uc.training.gds.controller;
 
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.common.enums.CommentEnum;
 import com.uc.training.common.enums.CommentReplyEnum;
 import com.uc.training.gds.re.CommentAvgRE;
-import com.uc.training.smadmin.gds.model.CommentReply;
+import com.uc.training.gds.service.CommentReplyService;
+import com.uc.training.gds.service.CommentService;
+import com.uc.training.gds.vo.CommentListVO;
+import com.uc.training.gds.vo.CommentReplyInsertVO;
+import com.uc.training.gds.vo.CommentReplyVO;
+import com.uc.training.gds.vo.CommentVO;
 import com.uc.training.gds.re.CommentRE;
-import com.uc.training.smadmin.gds.service.CommentReplyService;
-import com.uc.training.smadmin.gds.service.CommentService;
-import com.uc.training.smadmin.gds.vo.CommentListVO;
-import com.uc.training.smadmin.gds.vo.CommentReplyInsertVO;
-import com.uc.training.smadmin.gds.vo.CommentVO;
 import com.ycc.base.common.Result;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,14 +68,14 @@ public class AdminCommentController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/addCommentReply.do_", method = RequestMethod.POST)
     public Result insertCommentReply(@Validated CommentReplyInsertVO commentReplyInsertVO) {
-        CommentReply commentReply = new CommentReply();
-        BeanUtils.copyProperties(commentReplyInsertVO, commentReply);
-        commentReply.setType(CommentReplyEnum.ADMIN_RELY.getKey());
-        commentReply.setMemberId(getUid());
+        CommentReplyVO commentReplyVO = new CommentReplyVO();
+        BeanUtils.copyProperties(commentReplyInsertVO, commentReplyVO);
+        commentReplyVO.setType(CommentReplyEnum.ADMIN_RELY.getKey());
+        commentReplyVO.setMemberId(getUid());
         Integer count;
         //添加
         if (commentReplyService.getAdminReplyContent(commentReplyInsertVO.getCommentId()) == null) {
-            count = commentReplyService.insertCommentReply(commentReply).intValue();
+            count = commentReplyService.insertCommentReply(commentReplyVO).intValue();
             //修改评论表状态
             CommentVO commentVO = new CommentVO();
             commentVO.setId(commentReplyInsertVO.getCommentId());
@@ -83,7 +83,7 @@ public class AdminCommentController extends BaseController {
             count = commentService.editCommentById(commentVO);
         } else {
             //修改
-            count = commentReplyService.editCommentReply(commentReply);
+            count = commentReplyService.editCommentReply(commentReplyVO);
         }
         if (count > 0) {
             return Result.getSuccessResult(null);

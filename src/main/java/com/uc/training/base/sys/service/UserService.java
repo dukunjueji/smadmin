@@ -83,4 +83,11 @@ public interface UserService {
      */
     List<SysMenuRE> getMenuListByUserId(Long uid);
 
+    /**
+     * 根据用户名查询用户数量
+     * @param name
+     * @return
+     */
+    Long queryUserCountByName(String name);
+
 }

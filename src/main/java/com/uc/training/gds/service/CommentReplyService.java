@@ -1,8 +1,7 @@
-package com.uc.training.smadmin.gds.service;
+package com.uc.training.gds.service;
 
-import com.uc.training.smadmin.gds.model.CommentReply;
+import com.uc.training.gds.vo.CommentReplyVO;
 import com.uc.training.gds.re.CommentDetailRE;
-import com.uc.training.smadmin.gds.vo.CommentReplyVO;
 
 /**
  * 版权声明： Copyright (c) 2008 ucarinc. All Rights Reserved.
@@ -28,17 +27,17 @@ public interface CommentReplyService {
 
     /**
      * 新增商品详情回复
-     * @param commentReply
+     * @param commentReplyVO
      * @return
      */
-    Long insertCommentReply(CommentReply commentReply);
+    Long insertCommentReply(CommentReplyVO commentReplyVO);
 
     /**
      * 根据评论ID修改商家评论信息
-     * @param commentReply
+     * @param commentReplyVO
      * @return
      */
-    Integer editCommentReply(CommentReply commentReply);
+    Integer editCommentReply(CommentReplyVO commentReplyVO);
 
     /**
      * 删除商品详情回复
