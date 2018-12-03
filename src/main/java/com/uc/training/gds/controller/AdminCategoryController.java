@@ -1,10 +1,9 @@
 package com.uc.training.gds.controller;
 
 import com.uc.training.common.base.controller.BaseController;
-import com.uc.training.smadmin.gds.model.Category;
-import com.uc.training.smadmin.gds.re.CategoryRE;
-import com.uc.training.smadmin.gds.service.CategoryService;
-import com.uc.training.smadmin.gds.vo.CategoryVO;
+
+import com.uc.training.gds.re.CategoryRE;
+import com.uc.training.gds.service.CategoryService;
 import com.ycc.base.common.Result;
 import com.zuche.base.common.web.taglib.util.StringUtil;
 import org.springframework.beans.BeanUtils;

@@ -2,17 +2,16 @@ package com.uc.training.gds.controller;
 
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.common.enums.UUIDTypeEnum;
+import com.uc.training.common.utils.UUIDUtil;
 import com.uc.training.common.vo.PageVO;
-import com.uc.training.smadmin.gds.model.Goods;
-import com.uc.training.smadmin.gds.re.AdminGoodsRE;
-import com.uc.training.smadmin.gds.service.GoodsPicService;
-import com.uc.training.smadmin.gds.service.GoodsService;
-import com.uc.training.smadmin.gds.service.PropertyService;
-import com.uc.training.smadmin.gds.vo.AdminGoodsVO;
-import com.uc.training.smadmin.gds.vo.AdminPullGoodsVO;
-import com.uc.training.smadmin.gds.vo.AdminUpdateGoodsVO;
-import com.uc.training.smadmin.gds.vo.GoodsListVO;
-import com.uc.training.smadmin.utils.UUIDUtil;
+import com.uc.training.gds.dto.GoodsDTO;
+import com.uc.training.gds.dto.GoodsListDTO;
+import com.uc.training.gds.dto.GoodsPicDTO;
+import com.uc.training.gds.re.AdminGoodsRE;
+import com.uc.training.gds.service.CategoryService;
+import com.uc.training.gds.service.GoodsPicService;
+import com.uc.training.gds.service.GoodsService;
+import com.uc.training.gds.service.PropertyService;
 import com.ycc.base.common.Result;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,20 +45,23 @@ public class AdminGoodsController extends BaseController {
     @Autowired
     private GoodsPicService goodsPicService;
 
+    @Autowired
+    private CategoryService categoryService;
+
     /**
      * 后台查看所有商品
-     * @param goodsListVO
+     * @param goodsListDTO
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "adminGetGoodsPage.do_", method = RequestMethod.POST)
-    public Result<PageVO<AdminGoodsRE>> getAdminGoodsPage(GoodsListVO goodsListVO) {
+    public Result<PageVO<AdminGoodsRE>> getAdminGoodsPage(GoodsListDTO goodsListDTO) {
 
         PageVO<AdminGoodsRE> pageVO = new PageVO<>();
-        pageVO.setPageIndex(goodsListVO.getPageIndex());
-        pageVO.setPageSize(goodsListVO.getPageSize());
-        pageVO.setTotal(goodsService.getAdminGoodsListCount(goodsListVO));
-        pageVO.setDataList(goodsService.getAdminGoodsList(goodsListVO));
+        pageVO.setPageIndex(goodsListDTO.getPageIndex());
+        pageVO.setPageSize(goodsListDTO.getPageSize());
+        pageVO.setTotal(goodsService.getAdminGoodsListCount(goodsListDTO));
+        pageVO.setDataList(goodsService.getAdminGoodsList(goodsListDTO));
 
         return Result.getSuccessResult(pageVO);
     }
@@ -71,10 +73,7 @@ public class AdminGoodsController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "adminInsertGoods.do_", method = RequestMethod.POST)
-    public Result adminInsertGoods(@Validated AdminGoodsVO adminGoodsVO) {
-
-        Goods goods = new Goods();
-        BeanUtils.copyProperties(adminGoodsVO, goods);
+    public Result adminInsertGoods(@Validated GoodsDTO goods) {
 
         //生成商品编号
         goods.setCode(UUIDUtil.getUuidByType(UUIDTypeEnum.GOODSID.getType()));
@@ -102,11 +101,11 @@ public class AdminGoodsController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "updateGoods.do_", method = RequestMethod.POST)
-    public Result updateGoods(@Validated AdminUpdateGoodsVO adminUpdateGoodsVO) {
+    public Result updateGoods(@Validated GoodsDTO goods) {
 
-        adminUpdateGoodsVO.setModifyEmp(getUid());
+        goods.setModifyEmp(getUid());
 
-        return Result.getSuccessResult(goodsService.adminUpdateGoods(adminUpdateGoodsVO));
+        return Result.getSuccessResult(goodsService.adminUpdateGoods(goods));
     }
 
     /**
@@ -118,37 +117,50 @@ public class AdminGoodsController extends BaseController {
     @RequestMapping(value = "pullOnGoods.do_", method = RequestMethod.POST)
     public Result pullOnGoods(@NotNull(message = "请选择商品!") Long id) {
 
+        if (id == null) {
+            Result.getBusinessException("请选择商品!", null);
+        }
+
+        Long categoryId = goodsService.getGoodsById(id).getCategoryId();
+        if (categoryId == null || categoryService.queryCategory(categoryId) == null ||
+        categoryService.queryCategory(categoryId).getIsDelete() == 1) {
+            return Result.getBusinessException("请选择有效的商品类别", null);
+        }
+
         //判断商品商品属性数量
         List<Long> propertyIdList = propertyService.getPropertyIdListByGoodsId(id);
         if (CollectionUtils.isEmpty(propertyIdList)) {
             return Result.getBusinessException("请添加商品属性！", null);
         } else {
+            GoodsPicDTO goodsPic;
             for (Long propertyId : propertyIdList) {
+                goodsPic = new GoodsPicDTO();
+                goodsPic.setPropertyId(propertyId);
                 //判断商品属性的商品图片数量
-                if (goodsPicService.getGoodsPicCountByPropertyId(propertyId) == 0) {
+                if (goodsPicService.getCountByGoodsPic(goodsPic) == 0) {
                     return Result.getBusinessException("商品属性中的图片信息不完整!", null);
                 }
             }
         }
 
-        AdminPullGoodsVO adminPullGoodsVO = new AdminPullGoodsVO();
-        adminPullGoodsVO.setId(id);
-        adminPullGoodsVO.setModifyEmp(getUid());
+        GoodsDTO goods = new GoodsDTO();
+        goods.setId(id);
+        goods.setModifyEmp(getUid());
 
-        return Result.getSuccessResult(goodsService.pullOnGoods(adminPullGoodsVO));
+        return Result.getSuccessResult(goodsService.pullOnGoods(goods));
     }
     /**
      * 商品下架
-     * @param adminPullGoodsVO
+     * @param goods
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "pullOffGoods.do_", method = RequestMethod.POST)
-    public Result pullOffGoods(@Validated AdminPullGoodsVO adminPullGoodsVO) {
+    public Result pullOffGoods(@Validated GoodsDTO goods) {
 
-        adminPullGoodsVO.setModifyEmp(getUid());
+        goods.setModifyEmp(getUid());
 
-        return Result.getSuccessResult(goodsService.pullOffGoods(adminPullGoodsVO));
+        return Result.getSuccessResult(goodsService.pullOffGoods(goods));
     }
 
 
