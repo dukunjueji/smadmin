@@ -13,6 +13,7 @@ import com.uc.training.gds.re.GoodsStokeRE;
 import com.uc.training.gds.re.HotTagRE;
 import com.uc.training.gds.re.PropertyUrlRE;
 import com.uc.training.gds.service.GoodsService;
+import com.uc.training.gds.vo.GoodsStokeVO;
 import com.uc.training.remote.client.GdsClient;
 import org.springframework.stereotype.Service;
 
@@ -98,12 +99,12 @@ public class GoodsServiceImpl implements GoodsService {
      * @return
      */
     @Override
-    public  GoodsStokeRE selectGoodsStatus(GoodsAndPropertyDTO goodsAndPropertyDTO){
+    public  GoodsStokeRE selectGoodsStatus(GoodsStokeVO goodsAndPropertyDTO){
         return GdsClient.selectGoodsStatus(goodsAndPropertyDTO);
     }
 
     @Override
-    public Integer updateAndDeductStoke(GoodsAndPropertyDTO goodsAndPropertyDTO) {
+    public Integer updateAndDeductStoke(GoodsStokeVO goodsAndPropertyDTO) {
         return GdsClient.updateAndDeductStoke(goodsAndPropertyDTO);
     }
 

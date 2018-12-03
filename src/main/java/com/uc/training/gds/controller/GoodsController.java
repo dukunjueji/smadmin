@@ -11,6 +11,7 @@ import com.uc.training.gds.re.GoodsDetailRE;
 import com.uc.training.gds.re.GoodsRE;
 import com.uc.training.gds.re.HotTagRE;
 import com.uc.training.gds.service.GoodsService;
+import com.uc.training.gds.vo.GoodsStokeVO;
 import com.ycc.base.common.Result;
 import com.ycc.tools.middleware.redis.RedisCacheUtils;
 import org.apache.commons.lang.StringUtils;
@@ -141,9 +142,10 @@ public class GoodsController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "updateAndDeductStoke.do_")
     public Result<Integer> updateAndDeductStoke() {
-        GoodsAndPropertyDTO goodsAndPropertyDTO = new GoodsAndPropertyDTO();
+        GoodsStokeVO goodsAndPropertyDTO = new GoodsStokeVO();
         goodsAndPropertyDTO.setPropertyId(26L);
-        goodsAndPropertyDTO.setStock(1L);
+        goodsAndPropertyDTO.setStoke(1L);
+
         Integer status = goodsService.updateAndDeductStoke(goodsAndPropertyDTO);
         System.out.println(status + "------------------------------------");
         if(status.equals(StokeStatusEnum.SUCCESS_STATUS.getStatus())) {

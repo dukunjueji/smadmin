@@ -9,6 +9,7 @@ import com.uc.training.gds.re.GoodsDetailRE;
 import com.uc.training.gds.re.GoodsRE;
 import com.uc.training.gds.re.GoodsStokeRE;
 import com.uc.training.gds.re.HotTagRE;
+import com.uc.training.gds.vo.GoodsStokeVO;
 
 import java.util.List;
 
@@ -80,14 +81,14 @@ public interface GoodsService {
      * @param goodsAndPropertyDTO
      * @return
      */
-    public  GoodsStokeRE selectGoodsStatus(GoodsAndPropertyDTO goodsAndPropertyDTO);
+    public  GoodsStokeRE selectGoodsStatus(GoodsStokeVO goodsAndPropertyDTO);
 
     /**
      * 测试高并发下的减库存安全
      * @param goodsAndPropertyDTO
      * @return
      */
-    Integer updateAndDeductStoke(GoodsAndPropertyDTO goodsAndPropertyDTO);
+    Integer updateAndDeductStoke(GoodsStokeVO goodsAndPropertyDTO);
 
 
     /**

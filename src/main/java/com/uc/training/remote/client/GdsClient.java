@@ -28,6 +28,7 @@ import com.uc.training.gds.re.HotTagRE;
 import com.uc.training.gds.vo.CommentListVO;
 import com.uc.training.gds.vo.CommentReplyVO;
 import com.uc.training.gds.vo.CommentVO;
+import com.uc.training.gds.vo.GoodsStokeVO;
 import com.uc.training.remote.utils.RemoteUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -440,7 +441,9 @@ public  final class GdsClient {
     /**
      * 获取商品上架删除库存信息
      */
-    public static GoodsStokeRE selectGoodsStatus(GoodsAndPropertyDTO goodsAndPropertyDTO){
+    public static GoodsStokeRE selectGoodsStatus(GoodsStokeVO goodsStokeVO){
+        GoodsAndPropertyDTO goodsAndPropertyDTO =new GoodsAndPropertyDTO();
+        BeanUtils.copyProperties(goodsStokeVO,goodsAndPropertyDTO);
         try {
             return (GoodsStokeRE) RemoteUtil.exec(SELECT_GOODS_STATUS,  goodsAndPropertyDTO);
         } catch (ClassCastException e) {
@@ -453,7 +456,9 @@ public  final class GdsClient {
     /**
      * 更新减库存
      */
-    public static Integer updateAndDeductStoke(GoodsAndPropertyDTO goodsAndPropertyDTO){
+    public static Integer updateAndDeductStoke(GoodsStokeVO  goodsStokeVO){
+        GoodsAndPropertyDTO goodsAndPropertyDTO =new GoodsAndPropertyDTO();
+        BeanUtils.copyProperties(goodsStokeVO,goodsAndPropertyDTO);
         try {
             return (Integer) RemoteUtil.exec(UPDATE_AND_DEDUCT_STOKE,  goodsAndPropertyDTO);
         } catch (ClassCastException e) {
