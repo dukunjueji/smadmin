@@ -1,6 +1,6 @@
 package com.uc.training.common.redis;
 
-import com.uc.training.smadmin.redis.constant.RedisConfigConstant;
+import com.uc.training.common.redis.constant.RedisConfigConstant;
 import com.ycc.tools.middleware.redis.IRedisConfig;
 
 import java.util.concurrent.TimeUnit;

@@ -1,6 +1,9 @@
 package com.uc.training.ord.controller;
 
-import com.uc.training.base.vo.GenerateSmsVO;
+
+import com.uc.training.base.bd.service.MemberService;
+import com.uc.training.base.bd.vo.MemberInfoVO;
+import com.uc.training.base.sms.vo.GenerateSmsVO;
 import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.common.enums.GoodsStatusEnum;
@@ -8,6 +11,7 @@ import com.uc.training.common.enums.OrderEnum;
 import com.uc.training.common.enums.SmsTypeEnum;
 import com.uc.training.common.mq.vo.MqVO;
 import com.uc.training.gds.re.GoodsDetailRE;
+import com.uc.training.gds.service.GoodsService;
 import com.uc.training.ord.re.CartGoodsRE;
 import com.uc.training.ord.re.OrdOrderGoodsRE;
 import com.uc.training.ord.re.OrderConfirmRE;
@@ -21,7 +25,6 @@ import com.uc.training.ord.vo.OrdMemberVO;
 import com.uc.training.ord.vo.OrdOrderGoodsVO;
 import com.uc.training.ord.vo.OrdOrderVO;
 import com.uc.training.remote.client.OrderClient;
-import com.uc.training.smadmin.bd.vo.MemberInfoVO;
 import com.ycc.base.common.Result;
 import net.sf.json.JSONArray;
 import net.sf.json.JsonConfig;
@@ -48,6 +51,10 @@ import java.util.List;
 public class OrderController extends BaseController {
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private GoodsService goodsService;
+    @Autowired
+    private MemberService memberService;
 
     /**
      * 获取用户购物车商品列表

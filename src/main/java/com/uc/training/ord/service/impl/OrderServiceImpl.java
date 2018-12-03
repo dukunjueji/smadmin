@@ -7,6 +7,8 @@ import com.uc.training.common.enums.UUIDTypeEnum;
 import com.uc.training.common.utils.UUIDUtil;
 import com.uc.training.gds.re.GoodsDetailRE;
 import com.uc.training.gds.re.GoodsStokeRE;
+import com.uc.training.gds.service.GoodsService;
+import com.uc.training.gds.vo.GoodsStokeVO;
 import com.uc.training.ord.re.CartGoodsRE;
 import com.uc.training.ord.re.OrdOrderGoodsRE;
 import com.uc.training.ord.re.OrderConfirmRE;
@@ -29,6 +31,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -44,7 +47,8 @@ import java.util.List;
 @Service
 public class OrderServiceImpl implements OrderService {
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderServiceImpl.class);
-
+    @Autowired
+    private GoodsService goodsService;
     /**
      * 根据用户id查询购物车信息表
      *
