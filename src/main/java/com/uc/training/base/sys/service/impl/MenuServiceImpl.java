@@ -1,6 +1,5 @@
 package com.uc.training.base.sys.service.impl;
 
-import com.uc.training.base.sys.dto.SysMenuDTO;
 import com.uc.training.base.sys.re.SysMenuRE;
 import com.uc.training.base.sys.service.MenuService;
 import com.uc.training.base.sys.vo.MenuVO;
