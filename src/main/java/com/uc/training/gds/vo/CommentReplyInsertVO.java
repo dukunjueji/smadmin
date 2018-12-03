@@ -1,4 +1,4 @@
-package com.uc.training.smadmin.gds.vo;
+package com.uc.training.gds.vo;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;

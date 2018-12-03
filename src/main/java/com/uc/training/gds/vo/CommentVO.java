@@ -1,4 +1,4 @@
-package com.uc.training.smadmin.gds.vo;
+package com.uc.training.gds.vo;
 
 import java.io.Serializable;
 import java.util.Date;

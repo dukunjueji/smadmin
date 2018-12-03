@@ -33,6 +33,10 @@ public class OrdOrderGoodsVO implements Serializable {
      */
     private Long goodsId;
 
+    /**
+     *  评论状态，1：未评论。2,：已评论。3,：已追加
+     */
+    private Integer commentStatus;
 
     /**
      * 商品图片
@@ -130,6 +134,14 @@ public class OrdOrderGoodsVO implements Serializable {
     }
 
     private List<OrdOrderGoodsVO> list;
+
+    public Integer getCommentStatus() {
+        return commentStatus;
+    }
+
+    public void setCommentStatus(Integer commentStatus) {
+        this.commentStatus = commentStatus;
+    }
 
     public BigDecimal getPayPrice() {
         return payPrice;

@@ -1,8 +1,8 @@
-package com.uc.training.smadmin.gds.service.impl;
+package com.uc.training.gds.service.impl;
 
+import com.uc.training.gds.service.CommentPicService;
 import com.uc.training.remote.client.GdsClient;
 import com.uc.training.gds.re.CommentPicRE;
-import com.uc.training.smadmin.gds.service.CommentPicService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

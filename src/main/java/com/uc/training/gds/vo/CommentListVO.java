@@ -1,4 +1,4 @@
-package com.uc.training.smadmin.gds.vo;
+package com.uc.training.gds.vo;
 
 import com.uc.training.common.bean.PageQuery;
 

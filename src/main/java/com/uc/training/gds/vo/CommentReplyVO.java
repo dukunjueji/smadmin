@@ -1,4 +1,4 @@
-package com.uc.training.smadmin.gds.model;
+package com.uc.training.gds.vo;
 
 import com.uc.training.common.base.model.BaseModel;
 
@@ -11,7 +11,7 @@ import java.io.Serializable;
  * @Version 1.0
  * @date 2018/11/17
  */
-public class CommentReply extends BaseModel implements Serializable {
+public class CommentReplyVO extends BaseModel implements Serializable {
 
     private static final long serialVersionUID = -3550695496886085851L;
     /**

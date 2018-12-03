@@ -1,22 +1,23 @@
-package com.uc.training.smadmin.gds.controller;
+package com.uc.training.gds.controller;
 
-import com.uc.training.base.bd.re.MemberInfoRE;
+import com.uc.training.base.bd.re.MemberRE;
 import com.uc.training.base.bd.service.MemberService;
+import com.uc.training.base.bd.vo.MemberVO;
 import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.common.enums.CommentEnum;
 import com.uc.training.common.enums.OrderGoodsCommentEnum;
 import com.uc.training.gds.re.CommentAvgRE;
 import com.uc.training.gds.re.CommentCountRE;
+import com.uc.training.gds.re.GoodsDetailRE;
+import com.uc.training.gds.service.CommentService;
+import com.uc.training.gds.service.GoodsService;
+import com.uc.training.gds.vo.AddCommentVO;
+import com.uc.training.gds.vo.CommentListVO;
+import com.uc.training.gds.vo.CommentVO;
 import com.uc.training.ord.service.OrderGoodsService;
 import com.uc.training.ord.vo.OrdOrderGoodsVO;
 import com.uc.training.gds.re.CommentRE;
-import com.uc.training.smadmin.gds.re.GoodsDetailRE;
-import com.uc.training.smadmin.gds.service.CommentService;
-import com.uc.training.smadmin.gds.service.GoodsService;
-import com.uc.training.smadmin.gds.vo.AddCommentVO;
-import com.uc.training.smadmin.gds.vo.CommentListVO;
-import com.uc.training.smadmin.gds.vo.CommentVO;
 import com.ycc.base.common.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,7 +26,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -101,7 +101,9 @@ public class ApiCommentController extends BaseController {
         commentVo.setGoodsPropertyName(gdDTO.getProperty());
         commentVo.setGoodsId(gdDTO.getGoodsId());
         //插入用户信息
-        MemberInfoRE memberInfoRE = memberService.queryOneMemberById(getUid());
+        MemberVO member = new MemberVO();
+        member.setId(getUid());
+        MemberRE memberInfoRE = memberService.queryOneMember(member);
         if (memberInfoRE == null) {
             return Result.getBusinessException("获取不到用户信息", null);
         }

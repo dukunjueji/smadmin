@@ -1,15 +1,16 @@
-package com.uc.training.smadmin.gds.controller;
+package com.uc.training.gds.controller;
 
 import com.uc.training.base.bd.re.MemberInfoRE;
+import com.uc.training.base.bd.re.MemberRE;
 import com.uc.training.base.bd.service.MemberService;
+import com.uc.training.base.bd.vo.MemberVO;
 import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.common.enums.CommentReplyEnum;
-import com.uc.training.smadmin.gds.model.CommentReply;
+import com.uc.training.gds.service.CommentReplyService;
+import com.uc.training.gds.vo.CommentReplyInsertVO;
+import com.uc.training.gds.vo.CommentReplyVO;
 import com.uc.training.gds.re.CommentDetailRE;
-import com.uc.training.smadmin.gds.service.CommentReplyService;
-import com.uc.training.smadmin.gds.vo.CommentReplyInsertVO;
-import com.uc.training.smadmin.gds.vo.CommentReplyVO;
 import com.ycc.base.common.Result;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +64,7 @@ public class ApiCommentReplyController extends BaseController {
     @RequestMapping(value = "/insertCommentReply.do_", method = RequestMethod.POST)
     public Result<Long> insertCommentReply(@Validated CommentReplyInsertVO commentReplyInsertVO) {
 
-        CommentReply commentReply = new CommentReply();
+        CommentReplyVO commentReply = new CommentReplyVO();
         BeanUtils.copyProperties(commentReplyInsertVO, commentReply);
         commentReply.setType(CommentReplyEnum.OTHER_REPLY.getKey());
         commentReply.setMemberId(getUid());
@@ -71,9 +72,11 @@ public class ApiCommentReplyController extends BaseController {
         commentReply.setModifyEmp(getUid());
 
         //获取会员信息
-        MemberInfoRE member = memberService.queryOneMemberById(getUid());
-        commentReply.setMemberNickname(member.getNickname());
-        commentReply.setMemberImageUrl(member.getImageUrl());
+        MemberVO member = new MemberVO();
+        member.setId(getUid());
+        MemberRE memberRE = memberService.queryOneMember(member);
+        commentReply.setMemberNickname(memberRE.getNickname());
+        commentReply.setMemberImageUrl(memberRE.getImageUrl());
 
         return Result.getSuccessResult(commentReplyService.insertCommentReply(commentReply));
     }

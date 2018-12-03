@@ -25,11 +25,10 @@ import com.uc.training.gds.re.GoodsDetailRE;
 import com.uc.training.gds.re.GoodsRE;
 import com.uc.training.gds.re.GoodsStokeRE;
 import com.uc.training.gds.re.HotTagRE;
+import com.uc.training.gds.vo.CommentListVO;
+import com.uc.training.gds.vo.CommentReplyVO;
+import com.uc.training.gds.vo.CommentVO;
 import com.uc.training.remote.utils.RemoteUtil;
-import com.uc.training.smadmin.gds.model.CommentReply;
-import com.uc.training.smadmin.gds.vo.CommentListVO;
-import com.uc.training.smadmin.gds.vo.CommentReplyVO;
-import com.uc.training.smadmin.gds.vo.CommentVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -258,12 +257,12 @@ public  final class GdsClient {
     /**
      * hhj
      * 新增商品详情回复
-     * @param commentReply
+     * @param commentReplyVO
      * @return
      */
-    public static Long insertCommentReply(CommentReply commentReply){
+    public static Long insertCommentReply(CommentReplyVO commentReplyVO){
         CommentReplyModelDTO commentReplyModelDTO = new CommentReplyModelDTO();
-        BeanUtils.copyProperties(commentReply, commentReplyModelDTO);
+        BeanUtils.copyProperties(commentReplyVO, commentReplyModelDTO);
         try {
             return (Long) RemoteUtil.exec(INSERT_COMMENTREPLY, commentReplyModelDTO);
         } catch (ClassCastException e) {
@@ -276,12 +275,12 @@ public  final class GdsClient {
     /**
      * hhj
      * 根据评论ID修改商家评论信息
-     * @param commentReply
+     * @param commentReplyVO
      * @return
      */
-    public static Integer editCommentReply(CommentReply commentReply){
+    public static Integer editCommentReply(CommentReplyVO commentReplyVO){
         CommentReplyModelDTO commentReplyModelDTO = new CommentReplyModelDTO();
-        BeanUtils.copyProperties(commentReply, commentReplyModelDTO);
+        BeanUtils.copyProperties(commentReplyVO, commentReplyModelDTO);
         try {
             return (Integer) RemoteUtil.exec(EDIT_COMMENTREPLY, commentReplyModelDTO);
         } catch (ClassCastException e) {

@@ -1,12 +1,11 @@
-package com.uc.training.smadmin.gds.service;
+package com.uc.training.gds.service;
 
 import com.uc.training.gds.re.CommentAvgRE;
 import com.uc.training.gds.re.CommentCountRE;
-import com.uc.training.smadmin.gds.model.Comment;
+import com.uc.training.gds.vo.CommentListVO;
+import com.uc.training.gds.vo.CommentVO;
 import com.uc.training.gds.re.CommentRE;
-import com.uc.training.smadmin.gds.vo.CommentAvgVO;
-import com.uc.training.smadmin.gds.vo.CommentListVO;
-import com.uc.training.smadmin.gds.vo.CommentVO;
+
 
 import java.util.List;
 

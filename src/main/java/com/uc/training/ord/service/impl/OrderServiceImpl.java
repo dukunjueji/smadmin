@@ -8,6 +8,7 @@ import com.uc.training.common.utils.UUIDUtil;
 import com.uc.training.gds.re.GoodsDetailRE;
 import com.uc.training.gds.re.GoodsStokeRE;
 import com.uc.training.gds.service.GoodsService;
+import com.uc.training.gds.vo.GoodsStokeVO;
 import com.uc.training.ord.re.CartGoodsRE;
 import com.uc.training.ord.re.CommentRE;
 import com.uc.training.ord.re.OrdOrderGoodsRE;

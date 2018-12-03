@@ -1,11 +1,10 @@
-package com.uc.training.smadmin.gds.service.impl;
+package com.uc.training.gds.service.impl;
 
+import com.uc.training.gds.service.CommentReplyService;
+import com.uc.training.gds.service.CommentService;
+import com.uc.training.gds.vo.CommentReplyVO;
 import com.uc.training.remote.client.GdsClient;
-import com.uc.training.smadmin.gds.model.CommentReply;
 import com.uc.training.gds.re.CommentDetailRE;
-import com.uc.training.smadmin.gds.service.CommentReplyService;
-import com.uc.training.smadmin.gds.service.CommentService;
-import com.uc.training.smadmin.gds.vo.CommentReplyVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,12 +46,12 @@ public class CommentReplyServiceImpl implements CommentReplyService {
     /**
      * 新增商品详情回复
      *
-     * @param commentReply
+     * @param commentReplyVO
      * @return
      */
     @Override
-    public Long insertCommentReply(CommentReply commentReply) {
-        return GdsClient.insertCommentReply(commentReply);
+    public Long insertCommentReply(CommentReplyVO commentReplyVO) {
+        return GdsClient.insertCommentReply(commentReplyVO);
     }
 
     /**
@@ -67,7 +66,7 @@ public class CommentReplyServiceImpl implements CommentReplyService {
     }
 
     @Override
-    public Integer editCommentReply(CommentReply commentReply) {
-        return GdsClient.editCommentReply(commentReply);
+    public Integer editCommentReply(CommentReplyVO commentReplyVO) {
+        return GdsClient.editCommentReply(commentReplyVO);
     }
 }

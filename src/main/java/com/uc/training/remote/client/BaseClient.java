@@ -907,9 +907,6 @@ public class BaseClient {
     /**
      * hhj
      * 根据会员id获取充值记录
-     *
-     * @param memberRechargeHistoryVO
-     * @return
      */
     public static List<MemberRechargeHistoryListRE> getRechargeHistoryListByMemberId(MemberRechargeHistoryVO memberRechargeHistoryVO) {
         MemberRechargeHistoryDTO memberRechargeHistoryDTO = new MemberRechargeHistoryDTO();
@@ -926,9 +923,6 @@ public class BaseClient {
     /**
      * hhj
      * 根据会员id获取总记录数
-     *
-     * @param memberId
-     * @return
      */
     public static Integer getCountByMemberId(Long memberId) {
         try {
@@ -943,9 +937,6 @@ public class BaseClient {
     /**
      * hhj
      * 新增充值记录
-     *
-     * @param memberRechargeHistoryModelVO
-     * @return
      */
     public static Long insertMemberRechargeHistory(MemberRechargeHistoryModelVO memberRechargeHistoryModelVO) {
         MemberRechargeHistoryModelDTO memberRechargeHistoryModelDTO = new MemberRechargeHistoryModelDTO();
@@ -1080,8 +1071,8 @@ public class BaseClient {
         SmsTemplateDTO smsTemplateDTO = new SmsTemplateDTO();
         smsTemplateDTO.setCode(smsTemplateListVO.getCode());
         smsTemplateDTO.setType(smsTemplateListVO.getType());
-        smsTemplateDTO.setOffset(smsTemplateListVO.getOffset());
-        smsTemplateDTO.setPageSize(smsTemplateListVO.getPageSize());
+        //smsTemplateDTO.setOffset(smsTemplateListVO.getOffset());
+        //smsTemplateDTO.setPageSize(smsTemplateListVO.getPageSize());
         try {
             return (List<SmsTemplateRE>) RemoteUtil.exec(GET_TEMPLATE_LIST, smsTemplateDTO);
         } catch (Exception e) {
@@ -1288,9 +1279,7 @@ public class BaseClient {
         return null;
     }
 
-    /**
-     * 更新角色信息
-     */
+    /** 更新角色信息*/
     public static Integer updateRole(SysRoleDTO sysRoleDTO) {
         try {
             return (Integer) RemoteUtil.exec(UPDATE_ROLE, sysRoleDTO);
@@ -1301,9 +1290,7 @@ public class BaseClient {
         return null;
     }
 
-    /**
-     * 根据ID删除角色
-     */
+    /**根据ID删除角色*/
     public static Integer deleteSysRoleById(Long id) {
         try {
             return (Integer) RemoteUtil.exec(DELETE_SYS_ROLE_BY_ID, id);
@@ -1314,9 +1301,7 @@ public class BaseClient {
         return null;
     }
 
-    /**
-     * 新增角色
-     */
+    /**新增角色*/
     public static Long addRole(SysRoleDTO sysRoleDTO) {
         try {
             return (Long) RemoteUtil.exec(ADD_ROLE, sysRoleDTO);
@@ -1327,9 +1312,7 @@ public class BaseClient {
         return null;
     }
 
-    /**
-     * 批量新增角色权限
-     */
+    /** 批量新增角色权限*/
     public static Long batchInsertAuth(SysRoleDTO sysRoleDTO) {
         try {
             return (Long) RemoteUtil.exec(BATCH_INSERT_AUTH, sysRoleDTO);
@@ -1340,9 +1323,7 @@ public class BaseClient {
         return null;
     }
 
-    /**
-     * 通过角色ID获取该ID所有的菜单权限
-     */
+    /** 通过角色ID获取该ID所有的菜单权限*/
     public static List<Long> getRoleMenuIdByRid(Long rid) {
         try {
             return (List<Long>) RemoteUtil.exec(GET_ROLE_MENU_ID_BY_RID, rid);
@@ -1353,9 +1334,7 @@ public class BaseClient {
         return null;
     }
 
-    /**
-     * 获取角色列表
-     */
+    /** 获取角色列表*/
     public static List<SysRoleRE> getRoleList() {
         try {
             return (List<SysRoleRE>) RemoteUtil.exec(GET_ROLE_LIST, null);
@@ -1366,9 +1345,7 @@ public class BaseClient {
         return null;
     }
 
-    /**
-     * 通过用户ID获取角色ID
-     */
+    /**通过用户ID获取角色ID*/
     public static List<Long> getRoleListByUid(Long uid) {
         try {
             return (List<Long>) RemoteUtil.exec(GET_ROLE_LIST_BY_UID, uid);
@@ -1379,9 +1356,7 @@ public class BaseClient {
         return null;
     }
 
-    /**
-     * 通过用户ID和菜单ID列表添加用户权限
-     */
+    /**通过用户ID和菜单ID列表添加用户权限*/
     public static Long addUserRole(SysUserRoleDTO sysUserRoleDTO) {
         try {
             return (Long) RemoteUtil.exec(ADD_USER_ROLE, sysUserRoleDTO);
@@ -1392,9 +1367,7 @@ public class BaseClient {
         return null;
     }
 
-    /**
-     * 查找用户数量
-     */
+    /**查找用户数量*/
     public static Integer querySysRoleCount(String name) {
         try {
             return (Integer) RemoteUtil.exec(QUERY_SYS_ROLE_COUNT, name);
@@ -1405,9 +1378,7 @@ public class BaseClient {
         return null;
     }
 
-    /**
-     * 通过id查找角色
-     */
+    /*通过id查找角色*/
     public static SysRoleRE getSysRoleById(Long id) {
         try {
             return (SysRoleRE) RemoteUtil.exec(GET_SYS_ROLE_BY_ID, id);
@@ -1418,9 +1389,7 @@ public class BaseClient {
         return null;
     }
 
-    /**
-     * 用户登录获取用户
-     */
+    /**用户登录获取用户*/
     public static SysUserRE getUserLogin(SysUserDTO sysUserDTO) {
         try {
             return (SysUserRE) RemoteUtil.exec(GET_USER_LOGIN, sysUserDTO);
@@ -1431,9 +1400,7 @@ public class BaseClient {
         return null;
     }
 
-    /**
-     * 根据用户id查询用户
-     */
+    /**根据用户id查询用户*/
     public static SysUserRE getSysUserById(Long id) {
         try {
             return (SysUserRE) RemoteUtil.exec(GET_SYS_USER_BY_ID, id);
@@ -1444,9 +1411,7 @@ public class BaseClient {
         return null;
     }
 
-    /**
-     * 修改密码
-     */
+    /**修改密码*/
     public static Integer updatePassword(SysUserDTO sysUserDTO) {
         try {
             return (Integer) RemoteUtil.exec(UPDATE_PASSWORD, sysUserDTO);
@@ -1457,9 +1422,7 @@ public class BaseClient {
         return null;
     }
 
-    /**
-     * 获取用户分页列表
-     */
+    /**获取用户分页列表*/
     public static List<SysUserRE> getUserList(SysUserDTO sysUserDTO) {
         try {
             return (List<SysUserRE>) RemoteUtil.exec(GET_USER_LIST, sysUserDTO);
@@ -1470,9 +1433,7 @@ public class BaseClient {
         return null;
     }
 
-    /**
-     * 获取用户数量
-     */
+    /**获取用户数量*/
     public static Long queryUserCount(SysUserDTO sysUserDTO) {
         try {
             return (Long) RemoteUtil.exec(GET_USER_COUNT, sysUserDTO);
@@ -1483,9 +1444,7 @@ public class BaseClient {
         return null;
     }
 
-    /**
-     * 新增用户
-     */
+    /**新增用户*/
     public static Long addUser(SysUserDTO sysUserDTO) {
         try {
             return (Long) RemoteUtil.exec(ADD_USER, sysUserDTO);
@@ -1496,9 +1455,7 @@ public class BaseClient {
         return null;
     }
 
-    /**
-     * 通过ID删除用户
-     */
+    /**通过ID删除用户*/
     public static Integer deleteSysUserById(Long id) {
         try {
             return (Integer) RemoteUtil.exec(DELETE_SYS_USER_BY_ID, id);
@@ -1509,9 +1466,7 @@ public class BaseClient {
         return null;
     }
 
-    /**
-     * 更新用户信息
-     */
+    /**更新用户信息*/
     public static Integer updateUser(SysUserDTO sysUserDTO) {
         try {
             return (Integer) RemoteUtil.exec(UPDATE_USER, sysUserDTO);
@@ -1522,9 +1477,7 @@ public class BaseClient {
         return null;
     }
 
-    /**
-     * 通过用户ID获取用户的菜单权限
-     */
+    /**通过用户ID获取用户的菜单权限*/
     public static List<SysMenuRE> getMenuListByUserId(Long uid) {
         try {
             return (List<SysMenuRE>) RemoteUtil.exec(GET_MENU_LIST_BY_USER_ID, uid);
