@@ -1071,8 +1071,8 @@ public class BaseClient {
         SmsTemplateDTO smsTemplateDTO = new SmsTemplateDTO();
         smsTemplateDTO.setCode(smsTemplateListVO.getCode());
         smsTemplateDTO.setType(smsTemplateListVO.getType());
-        //smsTemplateDTO.setOffset(smsTemplateListVO.getOffset());
-        //smsTemplateDTO.setPageSize(smsTemplateListVO.getPageSize());
+        smsTemplateDTO.setOffset(smsTemplateListVO.getOffset());
+        smsTemplateDTO.setPageSize(smsTemplateListVO.getPageSize());
         try {
             return (List<SmsTemplateRE>) RemoteUtil.exec(GET_TEMPLATE_LIST, smsTemplateDTO);
         } catch (Exception e) {
@@ -1491,6 +1491,16 @@ public class BaseClient {
     public static Long addRoleAuth(SysRoleMenuDTO sysRoleMenuDTO) {
         try {
             return (Long) RemoteUtil.exec(ADD_ROLE_AUTH, sysRoleMenuDTO);
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            LOGGER.error("类型转换异常");
+        }
+        return null;
+    }
+
+    public static Long queryUserCountByName(String name) {
+        try {
+            return (Long) RemoteUtil.exec(QUERY_USER_COUNT_BY_NAME, name);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
