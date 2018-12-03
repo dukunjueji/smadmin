@@ -2,10 +2,12 @@ package com.uc.training.gds.controller;
 
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.common.vo.PageVO;
-import com.uc.training.gds.dto.AdminHotTagListDTO;
-import com.uc.training.gds.dto.HotTagDTO;
-import com.uc.training.gds.re.HotTagRE;
-import com.uc.training.gds.service.HotTagService;
+import com.uc.training.smadmin.gds.model.HotTag;
+import com.uc.training.smadmin.gds.re.AdminHotTagListRE;
+import com.uc.training.smadmin.gds.service.HotTagService;
+import com.uc.training.smadmin.gds.vo.AdminHotTagInsertVO;
+import com.uc.training.smadmin.gds.vo.AdminHotTagListVO;
+import com.uc.training.smadmin.gds.vo.AdminHotTagUpdateVO;
 import com.ycc.base.common.Result;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +37,13 @@ public class AdminHotTagController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/getAllHotTag.do_", method = RequestMethod.POST)
-    public Result<PageVO<HotTagRE>> getAllBannerList(AdminHotTagListDTO adminHotTagListDTO) {
-        PageVO<HotTagRE> pageVO = hotTagService.getAllHotTagList(adminHotTagListDTO);
+    public Result<PageVO<AdminHotTagListRE>> getAllBannerList(AdminHotTagListVO adminHotTagListVO) {
+
+        PageVO<AdminHotTagListRE> pageVO = new PageVO<>();
+        pageVO.setPageIndex(adminHotTagListVO.getPageIndex());
+        pageVO.setPageSize(adminHotTagListVO.getPageSize());
+        pageVO.setTotal(hotTagService.getAdminHotTagCount(adminHotTagListVO));
+        pageVO.setDataList(hotTagService.getAllHotTagList(adminHotTagListVO));
 
         return Result.getSuccessResult(pageVO);
     }
@@ -47,10 +54,14 @@ public class AdminHotTagController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/updateHotTag.do_", method = RequestMethod.POST)
-    public Result updateHotTag(@Validated HotTagDTO hotTagDTO) {
-        hotTagDTO.setModifyEmp(getUid());
+    public Result updateHotTag(@Validated AdminHotTagUpdateVO adminHotTagUpdateVO) {
 
-        return Result.getSuccessResult(hotTagService.updateHotTag(hotTagDTO));
+        HotTag hotTag = new HotTag();
+        BeanUtils.copyProperties(adminHotTagUpdateVO, hotTag);
+
+        hotTag.setModifyEmp(getUid());
+
+        return Result.getSuccessResult(hotTagService.updateHotTag(hotTag));
     }
 
     /**
@@ -66,12 +77,15 @@ public class AdminHotTagController extends BaseController {
 
     /**
      * 新增标签
-     * @param hotTag
+     * @param adminHotTagInsertVO
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "/insertHotTag.do_", method = RequestMethod.POST)
-    public Result insertHotTag(@Validated HotTagDTO hotTag) {
+    public Result insertHotTag(@Validated AdminHotTagInsertVO adminHotTagInsertVO) {
+
+        HotTag hotTag = new HotTag();
+        BeanUtils.copyProperties(adminHotTagInsertVO, hotTag);
 
         hotTag.setCreateEmp(getUid());
         hotTag.setModifyEmp(getUid());

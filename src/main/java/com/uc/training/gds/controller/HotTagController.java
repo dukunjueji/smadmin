@@ -1,8 +1,8 @@
 package com.uc.training.gds.controller;
 
 import com.uc.training.common.annotation.AccessLogin;
-import com.uc.training.gds.re.HotTagRE;
-import com.uc.training.gds.service.HotTagService;
+import com.uc.training.smadmin.gds.re.HotTagRE;
+import com.uc.training.smadmin.gds.service.HotTagService;
 import com.ycc.base.common.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

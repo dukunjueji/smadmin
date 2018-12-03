@@ -3,14 +3,14 @@ package com.uc.training.gds.controller;
 import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.common.enums.StokeStatusEnum;
-import com.uc.training.common.redis.RedisConfigEnum;
 import com.uc.training.common.vo.PageVO;
-import com.uc.training.gds.dto.GoodsAndPropertyDTO;
-import com.uc.training.gds.dto.GoodsListDTO;
-import com.uc.training.gds.re.GoodsDetailRE;
-import com.uc.training.gds.re.GoodsRE;
-import com.uc.training.gds.re.HotTagRE;
-import com.uc.training.gds.service.GoodsService;
+import com.uc.training.smadmin.gds.model.HotTag;
+import com.uc.training.smadmin.gds.re.GoodsDetailRE;
+import com.uc.training.smadmin.gds.re.GoodsRE;
+import com.uc.training.smadmin.gds.service.GoodsService;
+import com.uc.training.smadmin.gds.vo.GoodsListVO;
+import com.uc.training.smadmin.gds.vo.GoodsStokeVO;
+import com.uc.training.smadmin.redis.RedisConfigEnum;
 import com.ycc.base.common.Result;
 import com.ycc.tools.middleware.redis.RedisCacheUtils;
 import org.apache.commons.lang.StringUtils;
@@ -62,8 +62,15 @@ public class GoodsController extends BaseController {
     @AccessLogin(required = false)
     @ResponseBody
     @RequestMapping(value = "getGoodsPageByCategory.do_", method = RequestMethod.POST)
-    public Result<PageVO<GoodsRE>> getGoodsPageByCategory(GoodsListDTO goodsListDTO) {
-        PageVO<GoodsRE> pageVO=goodsService.getGoodsPageByCategory(goodsListDTO);
+    public Result<PageVO<GoodsRE>> getGoodsPageByCategory(GoodsListVO goodsListVO) {
+        PageVO<GoodsRE> pageVO = new PageVO<GoodsRE>();
+        pageVO.setPageIndex(goodsListVO.getPageIndex());
+        pageVO.setPageSize(goodsListVO.getPageSize());
+        List<Long> listPropertyId = goodsService.getGoodsListCount(goodsListVO);
+        if(listPropertyId.size() > 0) {
+            pageVO.setTotal(Long.valueOf(listPropertyId.size()));
+            pageVO.setDataList(goodsService.getGoodsList(listPropertyId));
+        }
         return Result.getSuccessResult(pageVO);
     }
 
@@ -93,11 +100,15 @@ public class GoodsController extends BaseController {
     @AccessLogin(required = false)
     @ResponseBody
     @RequestMapping(value = "searchByGoodsName.do_", method = RequestMethod.POST)
-    public Result<PageVO<GoodsRE>> searchByGoodsName(GoodsListDTO goodsListDTO) {
-        if(StringUtils.isEmpty(goodsListDTO.getName())) {
+    public Result<PageVO<GoodsRE>> searchByGoodsName(GoodsListVO goodsListVO) {
+        if(StringUtils.isEmpty(goodsListVO.getName())) {
             return null;
         }
-        PageVO<GoodsRE> pageVO = goodsService.searchByGoodsName(goodsListDTO);
+        PageVO<GoodsRE> pageVO = new PageVO<GoodsRE>();
+        pageVO.setPageIndex(goodsListVO.getPageIndex());
+        pageVO.setPageSize(goodsListVO.getPageSize());
+        pageVO.setTotal(Long.valueOf(goodsService.searchCountByGoodsName(goodsListVO)));
+        pageVO.setDataList(goodsService.searchByGoodsName(goodsListVO));
         return Result.getSuccessResult(pageVO);
     }
 
@@ -112,7 +123,7 @@ public class GoodsController extends BaseController {
     @AccessLogin(required = false)
     @ResponseBody
     @RequestMapping(value = "selectHotTag.do_", method = RequestMethod.GET)
-    public Result<List<HotTagRE>> selectHotTag() {
+    public Result<List<HotTag>> selectHotTag() {
         return Result.getSuccessResult(goodsService.selectHotTag());
     }
 
@@ -141,10 +152,10 @@ public class GoodsController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "updateAndDeductStoke.do_")
     public Result<Integer> updateAndDeductStoke() {
-        GoodsAndPropertyDTO goodsAndPropertyDTO = new GoodsAndPropertyDTO();
-        goodsAndPropertyDTO.setPropertyId(26L);
-        goodsAndPropertyDTO.setStock(1L);
-        Integer status = goodsService.updateAndDeductStoke(goodsAndPropertyDTO);
+        GoodsStokeVO goodsStokeVO = new GoodsStokeVO();
+        goodsStokeVO.setPropertyId(26L);
+        goodsStokeVO.setStoke(1L);
+        Integer status = goodsService.updateAndDeductStoke(goodsStokeVO);
         System.out.println(status + "------------------------------------");
         if(status.equals(StokeStatusEnum.SUCCESS_STATUS.getStatus())) {
             return Result.getSuccessResult(status);
