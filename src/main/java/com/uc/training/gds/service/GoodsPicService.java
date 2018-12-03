@@ -2,6 +2,7 @@ package com.uc.training.gds.service;
 
 import com.uc.training.gds.dto.GoodsPicDTO;
 import com.uc.training.gds.re.AdminGoodsPicRE;
+import com.uc.training.gds.re.GoodsRE;
 
 import java.util.List;
 
@@ -68,4 +69,11 @@ public interface GoodsPicService {
      * @return
      */
     Long getPropertyIdById(Long id);
+
+    /**
+     * 根据id获取商品信息
+     * @param id
+     * @return
+     */
+    GoodsRE getGoodsById(Long id);
 }

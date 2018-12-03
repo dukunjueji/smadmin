@@ -1,12 +1,12 @@
 package com.uc.training.gds.controller;
 
 import com.uc.training.common.base.controller.BaseController;
-import com.uc.training.smadmin.gds.model.GoodsPic;
-import com.uc.training.smadmin.gds.re.AdminGoodsPicRE;
-import com.uc.training.smadmin.gds.service.GoodsPicService;
-import com.uc.training.smadmin.gds.vo.AdminInsertGoodsPicVO;
-import com.uc.training.smadmin.gds.vo.AdminUpdateGoodsPicVO;
-import com.uc.training.smadmin.ord.service.OrderGoodsService;
+
+import com.uc.training.gds.dto.GoodsPicDTO;
+import com.uc.training.gds.re.AdminGoodsPicRE;
+import com.uc.training.gds.service.GoodsPicService;
+import com.uc.training.gds.service.PropertyService;
+import com.uc.training.ord.service.OrderGoodsService;
 import com.ycc.base.common.Result;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +35,11 @@ public class AdminGoodsPicController extends BaseController{
     @Autowired
     private OrderGoodsService orderGoodsService;
 
+    @Autowired
+    private GoodsPicService goodsService;
+
+    @Autowired
+    private PropertyService propertyService;
     /**
      * 后台通过商品属性id获取图片
      * @param propertyId
@@ -47,15 +52,12 @@ public class AdminGoodsPicController extends BaseController{
     }
     /**
      * 后台新增商品属性图片
-     * @param adminInsertGoodsPicVO
+     * @param goodsPic
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "insertGoodsPic.do_", method = RequestMethod.POST)
-    public Result insertGoodsPic(@Validated AdminInsertGoodsPicVO adminInsertGoodsPicVO) {
-
-        GoodsPic goodsPic = new GoodsPic();
-        BeanUtils.copyProperties(adminInsertGoodsPicVO, goodsPic);
+    public Result insertGoodsPic(@Validated GoodsPicDTO goodsPic) {
 
         goodsPic.setCreateEmp(getUid());
         goodsPic.setModifyEmp(getUid());
@@ -64,15 +66,12 @@ public class AdminGoodsPicController extends BaseController{
     }
     /**
      * 后台更新商品属性图片
-     * @param adminUpdateGoodsPicVO
+     * @param goodsPic
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "updateGoodsPic.do_", method = RequestMethod.POST)
-    public Result updateGoodsPic(@Validated AdminUpdateGoodsPicVO adminUpdateGoodsPicVO) {
-
-        GoodsPic goodsPic = new GoodsPic();
-        BeanUtils.copyProperties(adminUpdateGoodsPicVO, goodsPic);
+    public Result updateGoodsPic(@Validated GoodsPicDTO goodsPic) {
 
         goodsPic.setModifyEmp(getUid());
 
@@ -90,7 +89,8 @@ public class AdminGoodsPicController extends BaseController{
         //判断该商品属性的图片数量
         if (goodsPicService.getPropertyIdCountById(id) == 1) {
             //判断商品是否上架
-            if (goodsPicService.getGoodsStatusById(id) == 1) {
+            if (goodsService.getGoodsById(propertyService.getPropertyById
+            (goodsPicService.getPropertyIdById(id)).getGoodsId()).getStatus() == 1) {
                 return Result.getBusinessException("商品处于上架状态，商品属性中至少有一张图片！", null);
             }
             //判断商品属性是否存在订单
@@ -98,7 +98,6 @@ public class AdminGoodsPicController extends BaseController{
                 return Result.getBusinessException("该商品属性存在待付款的订单，至少有一张图片！", null);
             }
         }
-
 
         return Result.getSuccessResult(goodsPicService.deleteGoodsPicById(id));
     }

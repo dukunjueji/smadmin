@@ -1,7 +1,7 @@
 package com.uc.training.gds.controller;
 
 import com.uc.training.common.base.controller.BaseController;
-
+import com.uc.training.gds.dto.CategoryDTO;
 import com.uc.training.gds.re.CategoryRE;
 import com.uc.training.gds.service.CategoryService;
 import com.ycc.base.common.Result;
@@ -105,53 +105,40 @@ public class AdminCategoryController extends BaseController {
     /**
      * 新增父级分类
      *
-     * @param categoryVO
+     * @param category
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "addParentCategory.do_", method = RequestMethod.POST)
-    public Result addParentCategory(@Validated CategoryVO categoryVO) {
-
-        categoryVO.setParentId(0L);
-
+    public Result addParentCategory(@Validated CategoryDTO category) {
+        category.setParentId(0L);
         //判断同一级别是否存在同名
-        if (categoryService.getCountByNameAndParentId(categoryVO) > 0) {
+        if (categoryService.getCountByNameAndParentId(category) > 0) {
             return Result.getBusinessException("该名称已存在", null);
         }
-
-        Category category = new Category();
-        //将categoryVO的值映射到category中
-        BeanUtils.copyProperties(categoryVO, category);
-
         category.setCreateEmp(getUid());
         category.setModifyEmp(getUid());
-
         return Result.getSuccessResult(categoryService.addCategory(category));
     }
 
     /**
      * 新增子级分类
      *
-     * @param categoryVO
+     * @param category
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "addChildCategory.do_", method = RequestMethod.POST)
-    public Result addChildCategory(@Validated CategoryVO categoryVO) {
+    public Result addChildCategory(@Validated CategoryDTO category) {
 
         //判断同一级别是否存在同名
-        if (categoryService.getCountByNameAndParentId(categoryVO) > 0) {
+        if (categoryService.getCountByNameAndParentId(category) > 0) {
             return Result.getBusinessException("该名称已存在", null);
         }
         //判断图片地址
-        if (StringUtil.isBlank(categoryVO.getImageUrl())) {
+        if (StringUtil.isBlank(category.getImageUrl())) {
             return Result.getBusinessException("图片地址不能为空", null);
         }
-
-        Category category = new Category();
-
-        //将categoryVO的值映射到category中
-        BeanUtils.copyProperties(categoryVO, category);
 
         category.setCreateEmp(getUid());
         category.setModifyEmp(getUid());
@@ -173,32 +160,25 @@ public class AdminCategoryController extends BaseController {
     /**
      * 更新子级分类
      *
-     * @param categoryVO
+     * @param category
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "editCategory.do_", method = RequestMethod.POST)
-    public Result updateCategory(@Validated CategoryVO categoryVO) {
+    public Result updateCategory(@Validated CategoryDTO category) {
 
         //数据校验
-        if (categoryVO.getParentId() != 0) {
-            if (StringUtil.isBlank(categoryVO.getImageUrl())) {
+        if (category.getParentId() != 0) {
+            if (StringUtil.isBlank(category.getImageUrl())) {
                 return Result.getBusinessException("请上传图片！", null);
             }
         } else {
-            if (StringUtil.isNotBlank(categoryVO.getImageUrl())) {
+            if (StringUtil.isNotBlank(category.getImageUrl())) {
                 return Result.getBusinessException("不能上传图片！", null);
             }
         }
 
-        Category category = new Category();
-
-        //将categoryVO的值映射到category中
-        BeanUtils.copyProperties(categoryVO, category);
-
         category.setModifyEmp(getUid());
-
         return Result.getSuccessResult(categoryService.updateCategory(category));
     }
-
 }

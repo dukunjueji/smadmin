@@ -1,12 +1,14 @@
 package com.uc.training.gds.controller;
 
 import com.uc.training.common.base.controller.BaseController;
-import com.uc.training.smadmin.gds.model.Property;
-import com.uc.training.smadmin.gds.re.AdminPropertyListRE;
-import com.uc.training.smadmin.gds.service.PropertyService;
-import com.uc.training.smadmin.gds.vo.AdminPropertyUpdateVO;
-import com.uc.training.smadmin.gds.vo.AdminPropertyVO;
-import com.uc.training.smadmin.ord.service.OrderGoodsService;
+import com.uc.training.common.enums.GoodsStatusEnum;
+import com.uc.training.gds.dto.GoodsAndPropertyDTO;
+import com.uc.training.gds.dto.PropertyDTO;
+import com.uc.training.gds.re.GoodsDetailRE;
+import com.uc.training.gds.re.GoodsStokeRE;
+import com.uc.training.gds.service.GoodsService;
+import com.uc.training.gds.service.PropertyService;
+import com.uc.training.ord.service.OrderGoodsService;
 import com.ycc.base.common.Result;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +33,10 @@ public class AdminPropertyController extends BaseController{
 
     @Autowired
     private PropertyService propertyService;
-
     @Autowired
     private OrderGoodsService orderGoodsService;
+    @Autowired
+    private GoodsService goodsService;
 
     /**
      * 后台通过商品id获取商品属性列表
@@ -42,27 +45,24 @@ public class AdminPropertyController extends BaseController{
      */
     @ResponseBody
     @RequestMapping(value = "getPropertyListByGoodsId.do_", method = RequestMethod.POST)
-    public Result<List<AdminPropertyListRE>> getPropertyListByGoodsId(Long goodsId) {
+    public Result<List<GoodsDetailRE>> getPropertyListByGoodsId(Long goodsId) {
         return Result.getSuccessResult(propertyService.getPropertyListByGoodsId(goodsId));
     }
     /**
      * 后台新增商品属性
-     * @param adminPropertyVO
+     * @param property
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "insertProperty.do_", method = RequestMethod.POST)
-    public Result insertProperty(@Validated  AdminPropertyVO adminPropertyVO) {
+    public Result insertProperty(@Validated PropertyDTO property) {
 
-        if (adminPropertyVO.getIsDiscount() == 1 && adminPropertyVO.getDiscountPrice() == null) {
+        if (property.getIsDiscount() == 1 && property.getDiscountPrice() == null) {
             return Result.getBusinessException("请填写打折价格", null);
         }
 
-        Property property = new Property();
-        BeanUtils.copyProperties(adminPropertyVO, property);
-
         //获取同商品下同名称的数量
-        if (propertyService.getCountByGoodsIdAndName(property) >= 1) {
+        if (propertyService.getCountByProperty(property) >= 1) {
             return Result.getBusinessException("该规格已存在，请不要重复添加！", null);
         }
 
@@ -73,22 +73,19 @@ public class AdminPropertyController extends BaseController{
     }
     /**
      * 后台更新商品属性
-     * @param adminPropertyUpdateVO
+     * @param property
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "updateProperty.do_", method = RequestMethod.POST)
-    public Result updateProperty(@Validated AdminPropertyUpdateVO adminPropertyUpdateVO) {
+    public Result updateProperty(@Validated PropertyDTO property) {
 
-        if (adminPropertyUpdateVO.getIsDiscount() == 1 && adminPropertyUpdateVO.getDiscountPrice() == null) {
+        if (property.getIsDiscount() == 1 && property.getDiscountPrice() == null) {
             return Result.getBusinessException("请填写打折价格", null);
         }
 
-        Property property = new Property();
-        BeanUtils.copyProperties(adminPropertyUpdateVO, property);
-
         //获取同商品下同名称的数量
-        if (propertyService.getCountByGoodsIdAndName(property) > 1) {
+        if (propertyService.getCountByProperty(property) > 1) {
             return Result.getBusinessException("该规格已存在，请不要重复添加！", null);
         }
 
@@ -110,10 +107,16 @@ public class AdminPropertyController extends BaseController{
             return Result.getBusinessException("该属性存在待付款的订单，不可以直接删除!", null);
         }
 
+        PropertyDTO property = new PropertyDTO();
+        property.setGoodsId(propertyService.getPropertyById(id).getGoodsId());
+
         //判断商品是否上架和该商品的商品属性数量
-        if (propertyService.getGoodsStatusById(id) == 1 && propertyService.getGoodsIdCountById(id) == 1) {
+        if (goodsService.getGoodsById(propertyService.getPropertyById(id).getGoodsId()).getStatus()
+        .equals(GoodsStatusEnum.GOODS_SHELVES.getType())
+        && propertyService.getCountByProperty(property) == 1) {
             return Result.getBusinessException("该商品处于上架状态，不能删除商品唯一的属性!", null);
         }
+
 
         return Result.getSuccessResult(propertyService.deletePropertyAndGoodsPicById(id));
     }

@@ -13,7 +13,6 @@ import com.uc.training.gds.service.GoodsPicService;
 import com.uc.training.gds.service.GoodsService;
 import com.uc.training.gds.service.PropertyService;
 import com.ycc.base.common.Result;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
@@ -44,31 +43,30 @@ public class AdminGoodsController extends BaseController {
 
     @Autowired
     private GoodsPicService goodsPicService;
-
     @Autowired
     private CategoryService categoryService;
 
     /**
      * 后台查看所有商品
-     * @param goodsListDTO
+     * @param goodsListVO
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "adminGetGoodsPage.do_", method = RequestMethod.POST)
-    public Result<PageVO<AdminGoodsRE>> getAdminGoodsPage(GoodsListDTO goodsListDTO) {
+    public Result<PageVO<AdminGoodsRE>> getAdminGoodsPage(GoodsListDTO goodsListVO) {
 
         PageVO<AdminGoodsRE> pageVO = new PageVO<>();
-        pageVO.setPageIndex(goodsListDTO.getPageIndex());
-        pageVO.setPageSize(goodsListDTO.getPageSize());
-        pageVO.setTotal(goodsService.getAdminGoodsListCount(goodsListDTO));
-        pageVO.setDataList(goodsService.getAdminGoodsList(goodsListDTO));
+        pageVO.setPageIndex(goodsListVO.getPageIndex());
+        pageVO.setPageSize(goodsListVO.getPageSize());
+        pageVO.setTotal(goodsService.getAdminGoodsListCount(goodsListVO));
+        pageVO.setDataList(goodsService.getAdminGoodsList(goodsListVO));
 
         return Result.getSuccessResult(pageVO);
     }
 
     /**
      * 新增商品
-     * @param adminGoodsVO
+     * @param goods
      * @return
      */
     @ResponseBody
@@ -96,7 +94,7 @@ public class AdminGoodsController extends BaseController {
 
     /**
      * 更新商品
-     * @param adminUpdateGoodsVO
+     * @param goods
      * @return
      */
     @ResponseBody
@@ -116,7 +114,6 @@ public class AdminGoodsController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "pullOnGoods.do_", method = RequestMethod.POST)
     public Result pullOnGoods(@NotNull(message = "请选择商品!") Long id) {
-
         if (id == null) {
             Result.getBusinessException("请选择商品!", null);
         }
@@ -142,7 +139,6 @@ public class AdminGoodsController extends BaseController {
                 }
             }
         }
-
         GoodsDTO goods = new GoodsDTO();
         goods.setId(id);
         goods.setModifyEmp(getUid());
@@ -151,16 +147,16 @@ public class AdminGoodsController extends BaseController {
     }
     /**
      * 商品下架
-     * @param goods
+     * @param adminPullGoodsVO
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "pullOffGoods.do_", method = RequestMethod.POST)
-    public Result pullOffGoods(@Validated GoodsDTO goods) {
+    public Result pullOffGoods(@Validated GoodsDTO adminPullGoodsVO) {
 
-        goods.setModifyEmp(getUid());
+        adminPullGoodsVO.setModifyEmp(getUid());
 
-        return Result.getSuccessResult(goodsService.pullOffGoods(goods));
+        return Result.getSuccessResult(goodsService.pullOffGoods(adminPullGoodsVO));
     }
 
 
