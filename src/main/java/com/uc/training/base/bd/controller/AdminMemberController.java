@@ -1,21 +1,16 @@
 package com.uc.training.base.bd.controller;
 
+import com.uc.training.base.bd.re.MemberRE;
+import com.uc.training.base.bd.service.MemberService;
+import com.uc.training.base.bd.vo.MemberListVO;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.common.vo.PageVO;
-import com.uc.training.smadmin.bd.model.Member;
-import com.uc.training.smadmin.bd.service.MemberService;
-import com.uc.training.smadmin.bd.vo.MemberListVO;
 import com.ycc.base.common.Result;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @Author: 余旭东
@@ -36,9 +31,9 @@ public class AdminMemberController extends BaseController {
      */
     @RequestMapping(value = "/getMemberList.do_", method = RequestMethod.POST)
     @ResponseBody
-    public Result<PageVO<Member>> getMemberList(MemberListVO memberListVO) {
+    public Result<PageVO<MemberRE>> getMemberList(MemberListVO memberListVO) {
         try {
-            PageVO<Member> pageVO = new PageVO<Member>();
+            PageVO<MemberRE> pageVO = new PageVO<>();
             pageVO.setPageIndex(memberListVO.getPageIndex());
             pageVO.setPageSize(memberListVO.getPageSize());
             pageVO.setTotal(memberService.queryMemberCount(memberListVO));

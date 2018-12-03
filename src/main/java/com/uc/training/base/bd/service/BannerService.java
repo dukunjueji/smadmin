@@ -1,9 +1,8 @@
 package com.uc.training.base.bd.service;
 
-import com.uc.training.smadmin.bd.model.Banner;
-import com.uc.training.smadmin.bd.re.AdminBannerListRE;
-import com.uc.training.smadmin.bd.re.BannerRE;
-import com.uc.training.smadmin.bd.vo.AdminBannerListVO;
+import com.uc.training.base.bd.re.BannerRE;
+import com.uc.training.base.bd.vo.BannerListVO;
+import com.uc.training.base.bd.vo.BannerVO;
 
 import java.util.List;
 
@@ -19,21 +18,21 @@ public interface BannerService {
      * 获取轮播图信息(不包含不显示的图片)
      * @return
      */
-    List<BannerRE> getBannerList();
+    List<BannerRE> getBannerList(BannerVO bannerVO);
 
     /**
      * 获取所有轮播图(后台)
      * @param adminBannerListVO
      * @return
      */
-    List<AdminBannerListRE> getAllBannerList(AdminBannerListVO adminBannerListVO);
+    List<BannerRE> getAllBannerList(BannerListVO adminBannerListVO);
 
     /**
      * 更新图片
      * @param banner
      * @return
      */
-    Integer updateBanner(Banner banner);
+    Integer updateBanner(BannerVO banner);
 
     /**
      * 删除图片
@@ -47,19 +46,12 @@ public interface BannerService {
      * @param banner
      * @return
      */
-    Long insertBanner(Banner banner);
-
-    /**
-     * 增加点击量
-     * @param id
-     * @return
-     */
-    Integer insertClick(Long id);
+    Long insertBanner(BannerVO banner);
 
     /**
      * 获取商品总数量
      * @param adminBannerListVO
      * @return
      */
-    Long getAdminBannerCount(AdminBannerListVO adminBannerListVO);
+    Long getAdminBannerCount(BannerListVO adminBannerListVO);
 }

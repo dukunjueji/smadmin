@@ -1,6 +1,5 @@
 package com.uc.training.base.bd.service;
 
-import com.uc.training.base.bd.dto.AddressDTO;
 import com.uc.training.base.bd.re.AddressRE;
 import com.uc.training.base.bd.vo.AddressVO;
 
@@ -18,10 +17,10 @@ public interface AddressService {
     /**
      * 获取用户所有地址
      *
-     * @param addressDTO
+     * @param addressVO
      * @return
      */
-    List<AddressRE> getAddressList(AddressDTO addressDTO);
+    List<AddressRE> getAddressList(AddressVO addressVO);
 
     /**
      * 新增地址
@@ -29,7 +28,7 @@ public interface AddressService {
      * @param address
      * @return
      */
-    Long addAddress(AddressDTO address);
+    Long addAddress(AddressVO address);
 
     /**
      * 通过主键id获取地址
@@ -42,10 +41,10 @@ public interface AddressService {
     /**
      * 修改地址
      *
-     * @param addressDTO
+     * @param addressVO
      * @return
      */
-    Integer editAddress(AddressDTO addressDTO);
+    Integer editAddress(AddressVO addressVO);
 
     /**
      * 通过主键id删除地址

@@ -1,12 +1,10 @@
 package com.uc.training.base.bd.controller;
 
-import com.uc.training.base.bd.dto.AddressDTO;
 import com.uc.training.base.bd.re.AddressRE;
 import com.uc.training.base.bd.service.AddressService;
 import com.uc.training.base.bd.vo.AddressVO;
 import com.uc.training.common.base.controller.BaseController;
 import com.ycc.base.common.Result;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -37,11 +35,9 @@ public class AddressController extends BaseController {
     @ResponseBody
     @RequestMapping("/getAddressById.do_")
     public Result<AddressRE> getAddressById(Long id) {
-
         if (id == null) {
             return Result.getBusinessException("请选择有效地址", null);
         }
-
         return Result.getSuccessResult(addressService.getAddressById(id, getUid()));
     }
 
@@ -52,11 +48,7 @@ public class AddressController extends BaseController {
     @ResponseBody
     @RequestMapping("/getDefaultAddress.do_")
     public Result<AddressRE> getDefaultAddress() {
-        AddressRE address = addressService.getDefaultAddress(getUid());
-        if (address == null) {
-            return Result.getSuccessResult(null);
-        }
-        return Result.getSuccessResult(address);
+        return Result.getSuccessResult(addressService.getDefaultAddress(getUid()));
     }
 
     /**
@@ -66,9 +58,9 @@ public class AddressController extends BaseController {
     @ResponseBody
     @RequestMapping("/getAddressList.do_")
     public Result<List<AddressRE>> getAddressListBy() {
-        AddressDTO addressDTO = new AddressDTO();
-        addressDTO.setMemberId(getUid());
-        return Result.getSuccessResult(addressService.getAddressList(addressDTO));
+        AddressVO addressVO = new AddressVO();
+        addressVO.setMemberId(getUid());
+        return Result.getSuccessResult(addressService.getAddressList(addressVO));
     }
 
     /**
@@ -80,14 +72,11 @@ public class AddressController extends BaseController {
     @RequestMapping(value = "/addAddress.do_", method = RequestMethod.POST)
     public Result addAddress(@Validated AddressVO addressInsertVO) {
 
-        AddressDTO address = new AddressDTO();
-        BeanUtils.copyProperties(addressInsertVO, address);
+        addressInsertVO.setMemberId(getUid());
+        addressInsertVO.setCreateEmp(getUid());
+        addressInsertVO.setModifyEmp(getUid());
 
-        address.setMemberId(getUid());
-        address.setCreateEmp(getUid());
-        address.setModifyEmp(getUid());
-
-        return Result.getSuccessResult(addressService.addAddress(address));
+        return Result.getSuccessResult(addressService.addAddress(addressInsertVO));
     }
 
     /**
@@ -99,13 +88,10 @@ public class AddressController extends BaseController {
     @RequestMapping(value = "/editAddress.do_", method = RequestMethod.POST)
     public Result editAddress(@Validated AddressVO addressVO) {
 
-        AddressDTO address = new AddressDTO();
-        BeanUtils.copyProperties(addressVO, address);
+        addressVO.setMemberId(getUid());
+        addressVO.setModifyEmp(getUid());
 
-        address.setMemberId(getUid());
-        address.setModifyEmp(getUid());
-
-        return Result.getSuccessResult(addressService.editAddress(address));
+        return Result.getSuccessResult(addressService.editAddress(addressVO));
     }
 
     /**

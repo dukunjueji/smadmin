@@ -1,10 +1,10 @@
 package com.uc.training.base.bd.service.impl;
 
-import com.uc.training.base.bd.dto.AddressDTO;
 import com.uc.training.base.bd.re.AddressRE;
 import com.uc.training.base.bd.service.AddressService;
 import com.uc.training.base.bd.vo.AddressVO;
 import com.uc.training.remote.client.BaseClient;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,22 +21,22 @@ public class AddressServiceImpl implements AddressService {
 
     /**
      * 获取会员所有地址
-     * @param addressDTO
+     * @param addressVO
      * @return
      */
     @Override
-    public List<AddressRE> getAddressList(AddressDTO addressDTO) {
-        return BaseClient.getAddressList(addressDTO);
+    public List<AddressRE> getAddressList(AddressVO addressVO) {
+        return BaseClient.getAddressList(addressVO);
     }
 
     /**
      * 新增地址
-     * @param addressDTO
+     * @param address
      * @return
      */
     @Override
-    public Long addAddress(AddressDTO addressDTO) {
-        return BaseClient.insertAddress(addressDTO);
+    public Long addAddress(AddressVO address) {
+        return BaseClient.insertAddress(address);
     }
 
     /**
@@ -52,12 +52,12 @@ public class AddressServiceImpl implements AddressService {
 
     /**
      * 修改地址
-     * @param addressDTO
+     * @param addressVO
      * @return
      */
     @Override
-    public Integer editAddress(AddressDTO addressDTO) {
-        return BaseClient.updateAddressById(addressDTO);
+    public Integer editAddress(AddressVO addressVO) {
+        return BaseClient.updateAddressById(addressVO);
     }
 
     /**
@@ -78,9 +78,14 @@ public class AddressServiceImpl implements AddressService {
      */
     @Override
     public AddressRE getDefaultAddress(Long uid) {
-
-        BaseClient.getAddressList()
-        return null;
+        AddressVO addressVO = new AddressVO();
+        addressVO.setMemberId(uid);
+        addressVO.setIsDefault(1);
+        List<AddressRE> list = BaseClient.getAddressList(addressVO);
+        if (CollectionUtils.isEmpty(list)) {
+            return null;
+        }
+        return list.get(0);
     }
 
 }

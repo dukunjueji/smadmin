@@ -2,6 +2,7 @@ package com.uc.training.base.bd.controller;
 
 import com.uc.training.base.bd.re.BannerRE;
 import com.uc.training.base.bd.service.BannerService;
+import com.uc.training.base.bd.vo.BannerVO;
 import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
 import com.ycc.base.common.Result;
@@ -23,6 +24,14 @@ import java.util.List;
 @RequestMapping("/api/banner")
 public class BannerController extends BaseController{
 
+    /**显示轮播图*/
+    private static final Integer SHOW_BANNER = 1;
+    /**图片类型，轮播图*/
+    private static final Integer BANNER_TYPE = 1;
+    /**点击次数*/
+    private static final Integer CLICK = 1;
+
+
     @Autowired
     private BannerService bannerService;
 
@@ -34,7 +43,10 @@ public class BannerController extends BaseController{
     @AccessLogin(required = false)
     @RequestMapping(value = "/getBannerList.do_", method = RequestMethod.GET)
     public Result<List<BannerRE>> getBannerList() {
-        return Result.getSuccessResult(bannerService.getBannerList());
+        BannerVO bannerVO = new BannerVO();
+        bannerVO.setIsShow(SHOW_BANNER);
+        bannerVO.setType(BANNER_TYPE);
+        return Result.getSuccessResult(bannerService.getBannerList(bannerVO));
     }
 
     /**
@@ -45,7 +57,13 @@ public class BannerController extends BaseController{
     @AccessLogin(required = false)
     @RequestMapping(value = "/insertClick.do_", method = RequestMethod.GET)
     public Result insertClick(Long id) {
-        return Result.getSuccessResult(bannerService.insertClick(id));
+        if (id == null) {
+            return Result.getBusinessException("无法获取图片！", null);
+        }
+        BannerVO bannerVO = new BannerVO();
+        bannerVO.setId(id);
+        bannerVO.setClick(CLICK);
+        return Result.getSuccessResult(bannerService.updateBanner(bannerVO));
     }
 
 }

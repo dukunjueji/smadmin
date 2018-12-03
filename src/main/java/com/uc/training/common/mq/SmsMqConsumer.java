@@ -1,11 +1,11 @@
 package com.uc.training.common.mq;
 
 import com.alibaba.fastjson.JSON;
+import com.uc.training.base.sms.service.SmsTemplateService;
+import com.uc.training.base.sms.vo.GenerateSmsVO;
 import com.uc.training.common.enums.SmsStatusEnum;
-import com.uc.training.smadmin.mq.vo.MqVO;
-import com.uc.training.smadmin.sms.service.SmsTemplateService;
-import com.uc.training.smadmin.sms.vo.GenerateSmsVO;
-import com.uc.training.smadmin.utils.InjectionUtils;
+import com.uc.training.common.mq.vo.MqVO;
+import com.uc.training.common.utils.InjectionUtils;
 import com.zuche.framework.metaq.handler.DefaultExecutorMessageListener;
 import com.zuche.framework.metaq.vo.MessageVO;
 import org.springframework.beans.factory.annotation.Autowired;

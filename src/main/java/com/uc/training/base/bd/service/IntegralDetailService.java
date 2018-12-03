@@ -1,6 +1,6 @@
 package com.uc.training.base.bd.service;
 
-import com.uc.training.smadmin.bd.vo.IntegralVO;
+import com.uc.training.base.bd.vo.IntegralVO;
 
 /**
  * 版权说明：Copyright (c) 2018 ucarinc. All Rights Reserved.

@@ -2,8 +2,8 @@ package com.uc.training.gds.controller;
 
 import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
-import com.uc.training.gds.re.CategoryRE;
-import com.uc.training.gds.service.CategoryService;
+import com.uc.training.smadmin.gds.re.CategoryRE;
+import com.uc.training.smadmin.gds.service.CategoryService;
 import com.ycc.base.common.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
