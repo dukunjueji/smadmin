@@ -5,6 +5,8 @@ import com.uc.training.base.sys.dto.SysRoleMenuDTO;
 import com.uc.training.base.sys.dto.SysUserRoleDTO;
 import com.uc.training.base.sys.re.SysRoleRE;
 import com.uc.training.base.sys.service.RoleService;
+import com.uc.training.base.sys.vo.RoleListVO;
+import com.uc.training.base.sys.vo.RoleVO;
 import com.uc.training.remote.client.BaseClient;
 
 import java.util.List;
@@ -21,18 +23,18 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public List<SysRoleRE> getRolePage(SysRoleDTO sysRoleDTO) {
-        return BaseClient.getRolePage(sysRoleDTO);
+    public List<SysRoleRE> getRolePage(RoleListVO roleListVO) {
+        return BaseClient.getRolePage(roleListVO);
     }
 
     @Override
-    public Long getCount(SysRoleDTO sysRoleDTO) {
-        return BaseClient.getSysRoleCount(sysRoleDTO);
+    public Long getCount(RoleListVO roleListVO) {
+        return BaseClient.getSysRoleCount(roleListVO);
     }
 
     @Override
-    public Integer updateRole(SysRoleDTO roleDTO) {
-        return BaseClient.updateRole(roleDTO);
+    public Integer updateRole(RoleVO role) {
+        return BaseClient.updateRole(role);
     }
 
     @Override
@@ -41,13 +43,13 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Long addRole(SysRoleDTO roleDTO) {
-        return BaseClient.addRole(roleDTO);
+    public Long addRole(RoleVO role, Long createEmp) {
+        return BaseClient.addRole(role, createEmp);
     }
 
     @Override
-    public Long addRoleAuth(SysRoleMenuDTO sysRoleMenuDTO) {
-        return BaseClient.addRoleAuth(sysRoleMenuDTO);
+    public Long addRoleAuth(Long rid, List<Long> ids) {
+        return BaseClient.addRoleAuth(rid, ids);
     }
 
     @Override
@@ -66,8 +68,8 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Long addUserRole(SysUserRoleDTO sysUserRoleDTO) {
-        return BaseClient.addUserRole(sysUserRoleDTO);
+    public Long addUserRole(Long uid, List<Long> list, Long createEmp) {
+        return BaseClient.addUserRole(uid, list, createEmp);
     }
 
     @Override

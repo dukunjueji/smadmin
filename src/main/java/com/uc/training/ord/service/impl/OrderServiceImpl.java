@@ -1,6 +1,7 @@
 package com.uc.training.ord.service.impl;
 
 import com.uc.training.base.bd.re.AddressRE;
+import com.uc.training.base.bd.service.AddressService;
 import com.uc.training.common.enums.GoodsStatusEnum;
 import com.uc.training.common.enums.OrderEnum;
 import com.uc.training.common.enums.UUIDTypeEnum;
@@ -50,6 +51,8 @@ public class OrderServiceImpl implements OrderService {
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderServiceImpl.class);
     @Autowired
     private GoodsService goodsService;
+    @Autowired
+    private AddressService addressService;
 
     /**
      * 根据用户id查询购物车信息表
@@ -134,7 +137,7 @@ public class OrderServiceImpl implements OrderService {
                         break;
                     }
                 }
-            }else if (!CollectionUtils.isEmpty(goodsNumList)){
+            } else if (!CollectionUtils.isEmpty(goodsNumList)) {
                 // 判斷前臺提交的商品数量參數是否與购物车後臺一致
                 for (int j = 0; j < goodsNumList.size(); j++) {
                     if (goodsNumList.get(j).getGoodsPropertyId().equals(orderGodsList.get(i).getPropertyId())
@@ -144,7 +147,7 @@ public class OrderServiceImpl implements OrderService {
                     }
                 }
             }
-            if (ordOrderGoodsRE.getNum() == null){
+            if (ordOrderGoodsRE.getNum() == null) {
                 return list;
             }
             ordOrderGoodsRE.setPropertyId(orderGodsList.get(i).getPropertyId());
@@ -361,7 +364,7 @@ public class OrderServiceImpl implements OrderService {
         order.setOrderPrice(orderInfoListNow.get(orderInfoListNow.size() - 1).getOrderPrice());
         order.setPayPrice(orderInfoListNow.get(orderInfoListNow.size() - 1).getTotalPrice());
         //插入地址信息
-        AddressRE addressRE = addressService.getAddressById(orderInfoListNow.get(orderInfoListNow.size() - 2).getAddressId());
+        AddressRE addressRE = addressService.getAddressById(orderInfoListNow.get(orderInfoListNow.size() - 2).getAddressId(), null);
         if (addressRE != null) {
             order.setReceiptAddress(addressRE.getProvince() + addressRE.getCity() + addressRE.getDistrict() + addressRE.getAddrDetail());
             order.setReceiptName(addressRE.getReceiver());

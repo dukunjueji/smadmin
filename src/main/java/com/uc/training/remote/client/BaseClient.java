@@ -907,6 +907,9 @@ public class BaseClient {
     /**
      * hhj
      * 根据会员id获取充值记录
+     *
+     * @param memberRechargeHistoryVO
+     * @return
      */
     public static List<MemberRechargeHistoryListRE> getRechargeHistoryListByMemberId(MemberRechargeHistoryVO memberRechargeHistoryVO) {
         MemberRechargeHistoryDTO memberRechargeHistoryDTO = new MemberRechargeHistoryDTO();
@@ -923,6 +926,9 @@ public class BaseClient {
     /**
      * hhj
      * 根据会员id获取总记录数
+     *
+     * @param memberId
+     * @return
      */
     public static Integer getCountByMemberId(Long memberId) {
         try {
@@ -937,6 +943,9 @@ public class BaseClient {
     /**
      * hhj
      * 新增充值记录
+     *
+     * @param memberRechargeHistoryModelVO
+     * @return
      */
     public static Long insertMemberRechargeHistory(MemberRechargeHistoryModelVO memberRechargeHistoryModelVO) {
         MemberRechargeHistoryModelDTO memberRechargeHistoryModelDTO = new MemberRechargeHistoryModelDTO();
@@ -1204,9 +1213,11 @@ public class BaseClient {
     /**
      * 更新菜单
      */
-    public static Integer updateMenu(SysMenuDTO sysMenuDTO) {
+    public static Integer updateMenu(MenuVO menu) {
+        SysMenuDTO menuDTO = new SysMenuDTO();
+        BeanUtils.copyProperties(menu, menuDTO);
         try {
-            return (Integer) RemoteUtil.exec(UPDATE_MENU, sysMenuDTO);
+            return (Integer) RemoteUtil.exec(UPDATE_MENU, menuDTO);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
@@ -1256,9 +1267,11 @@ public class BaseClient {
     /**
      * 获取角色列表页面
      */
-    public static List<SysRoleRE> getRolePage(SysRoleDTO sysRoleDTO) {
+    public static List<SysRoleRE> getRolePage(RoleListVO roleListVO) {
+        SysRoleDTO roleDTO = new SysRoleDTO();
+        BeanUtils.copyProperties(roleListVO, roleDTO);
         try {
-            return (List<SysRoleRE>) RemoteUtil.exec(GET_ROLE_PAGE, sysRoleDTO);
+            return (List<SysRoleRE>) RemoteUtil.exec(GET_ROLE_PAGE, roleDTO);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
@@ -1269,9 +1282,11 @@ public class BaseClient {
     /**
      * 获取角色总数
      */
-    public static Long getSysRoleCount(SysRoleDTO sysRoleDTO) {
+    public static Long getSysRoleCount(RoleListVO roleListVO) {
+        SysRoleDTO roleDTO = new SysRoleDTO();
+        BeanUtils.copyProperties(roleListVO, roleDTO);
         try {
-            return (Long) RemoteUtil.exec(GET_SYS_ROLE_COUNT, sysRoleDTO);
+            return (Long) RemoteUtil.exec(GET_SYS_ROLE_COUNT, roleDTO);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
@@ -1279,10 +1294,14 @@ public class BaseClient {
         return null;
     }
 
-    /** 更新角色信息*/
-    public static Integer updateRole(SysRoleDTO sysRoleDTO) {
+    /**
+     * 更新角色信息
+     */
+    public static Integer updateRole(RoleVO role) {
+        SysRoleDTO roleDTO = new SysRoleDTO();
+        BeanUtils.copyProperties(role, roleDTO);
         try {
-            return (Integer) RemoteUtil.exec(UPDATE_ROLE, sysRoleDTO);
+            return (Integer) RemoteUtil.exec(UPDATE_ROLE, roleDTO);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
@@ -1290,7 +1309,9 @@ public class BaseClient {
         return null;
     }
 
-    /**根据ID删除角色*/
+    /**
+     * 根据ID删除角色
+     */
     public static Integer deleteSysRoleById(Long id) {
         try {
             return (Integer) RemoteUtil.exec(DELETE_SYS_ROLE_BY_ID, id);
@@ -1301,10 +1322,15 @@ public class BaseClient {
         return null;
     }
 
-    /**新增角色*/
-    public static Long addRole(SysRoleDTO sysRoleDTO) {
+    /**
+     * 新增角色
+     */
+    public static Long addRole(RoleVO roleVO, Long createEmp) {
+        SysRoleDTO roleDTO = new SysRoleDTO();
+        BeanUtils.copyProperties(roleVO, roleDTO);
+        roleDTO.setCreateEmp(createEmp);
         try {
-            return (Long) RemoteUtil.exec(ADD_ROLE, sysRoleDTO);
+            return (Long) RemoteUtil.exec(ADD_ROLE, roleDTO);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
@@ -1312,7 +1338,9 @@ public class BaseClient {
         return null;
     }
 
-    /** 批量新增角色权限*/
+    /**
+     * 批量新增角色权限
+     */
     public static Long batchInsertAuth(SysRoleDTO sysRoleDTO) {
         try {
             return (Long) RemoteUtil.exec(BATCH_INSERT_AUTH, sysRoleDTO);
@@ -1323,7 +1351,9 @@ public class BaseClient {
         return null;
     }
 
-    /** 通过角色ID获取该ID所有的菜单权限*/
+    /**
+     * 通过角色ID获取该ID所有的菜单权限
+     */
     public static List<Long> getRoleMenuIdByRid(Long rid) {
         try {
             return (List<Long>) RemoteUtil.exec(GET_ROLE_MENU_ID_BY_RID, rid);
@@ -1334,7 +1364,9 @@ public class BaseClient {
         return null;
     }
 
-    /** 获取角色列表*/
+    /**
+     * 获取角色列表
+     */
     public static List<SysRoleRE> getRoleList() {
         try {
             return (List<SysRoleRE>) RemoteUtil.exec(GET_ROLE_LIST, null);
@@ -1345,7 +1377,9 @@ public class BaseClient {
         return null;
     }
 
-    /**通过用户ID获取角色ID*/
+    /**
+     * 通过用户ID获取角色ID
+     */
     public static List<Long> getRoleListByUid(Long uid) {
         try {
             return (List<Long>) RemoteUtil.exec(GET_ROLE_LIST_BY_UID, uid);
@@ -1356,8 +1390,14 @@ public class BaseClient {
         return null;
     }
 
-    /**通过用户ID和菜单ID列表添加用户权限*/
-    public static Long addUserRole(SysUserRoleDTO sysUserRoleDTO) {
+    /**
+     * 通过用户ID和菜单ID列表添加用户权限
+     */
+    public static Long addUserRole(Long uid, List<Long> list, Long createEmp) {
+        SysUserRoleDTO sysUserRoleDTO = new SysUserRoleDTO();
+        sysUserRoleDTO.setUserId(uid);
+        sysUserRoleDTO.setRoleId(list);
+        sysUserRoleDTO.setCreateEmp(createEmp);
         try {
             return (Long) RemoteUtil.exec(ADD_USER_ROLE, sysUserRoleDTO);
         } catch (Exception e) {
@@ -1367,7 +1407,9 @@ public class BaseClient {
         return null;
     }
 
-    /**查找用户数量*/
+    /**
+     * 查找用户数量
+     */
     public static Integer querySysRoleCount(String name) {
         try {
             return (Integer) RemoteUtil.exec(QUERY_SYS_ROLE_COUNT, name);
@@ -1378,7 +1420,9 @@ public class BaseClient {
         return null;
     }
 
-    /*通过id查找角色*/
+    /**
+     * 通过id查找角色
+     */
     public static SysRoleRE getSysRoleById(Long id) {
         try {
             return (SysRoleRE) RemoteUtil.exec(GET_SYS_ROLE_BY_ID, id);
@@ -1389,10 +1433,14 @@ public class BaseClient {
         return null;
     }
 
-    /**用户登录获取用户*/
-    public static SysUserRE getUserLogin(SysUserDTO sysUserDTO) {
+    /**
+     * 用户登录获取用户
+     */
+    public static SysUserRE getUserLogin(UserLoginVO userLoginVO) {
+        SysUserDTO userDTO = new SysUserDTO();
+        BeanUtils.copyProperties(userLoginVO, userDTO);
         try {
-            return (SysUserRE) RemoteUtil.exec(GET_USER_LOGIN, sysUserDTO);
+            return (SysUserRE) RemoteUtil.exec(GET_USER_LOGIN, userDTO);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
@@ -1400,7 +1448,9 @@ public class BaseClient {
         return null;
     }
 
-    /**根据用户id查询用户*/
+    /**
+     * 根据用户id查询用户
+     */
     public static SysUserRE getSysUserById(Long id) {
         try {
             return (SysUserRE) RemoteUtil.exec(GET_SYS_USER_BY_ID, id);
@@ -1411,7 +1461,9 @@ public class BaseClient {
         return null;
     }
 
-    /**修改密码*/
+    /**
+     * 修改密码
+     */
     public static Integer updatePassword(SysUserDTO sysUserDTO) {
         try {
             return (Integer) RemoteUtil.exec(UPDATE_PASSWORD, sysUserDTO);
@@ -1422,8 +1474,12 @@ public class BaseClient {
         return null;
     }
 
-    /**获取用户分页列表*/
-    public static List<SysUserRE> getUserList(SysUserDTO sysUserDTO) {
+    /**
+     * 获取用户分页列表
+     */
+    public static List<SysUserRE> getUserList(UserListVO userListVO) {
+        SysUserDTO sysUserDTO = new SysUserDTO();
+        BeanUtils.copyProperties(userListVO, sysUserDTO);
         try {
             return (List<SysUserRE>) RemoteUtil.exec(GET_USER_LIST, sysUserDTO);
         } catch (Exception e) {
@@ -1433,8 +1489,12 @@ public class BaseClient {
         return null;
     }
 
-    /**获取用户数量*/
-    public static Long queryUserCount(SysUserDTO sysUserDTO) {
+    /**
+     * 获取用户数量
+     */
+    public static Long queryUserCount(UserListVO userListVO) {
+        SysUserDTO sysUserDTO = new SysUserDTO();
+        BeanUtils.copyProperties(userListVO, sysUserDTO);
         try {
             return (Long) RemoteUtil.exec(GET_USER_COUNT, sysUserDTO);
         } catch (Exception e) {
@@ -1444,10 +1504,16 @@ public class BaseClient {
         return null;
     }
 
-    /**新增用户*/
-    public static Long addUser(SysUserDTO sysUserDTO) {
+    /**
+     * 新增用户
+     */
+    public static Long addUser(UserVO user, Long uid, String pwd) {
+        SysUserDTO userDTO = new SysUserDTO();
+        BeanUtils.copyProperties(user, userDTO);
+        userDTO.setCreateEmp(uid);
+        userDTO.setPassword(pwd);
         try {
-            return (Long) RemoteUtil.exec(ADD_USER, sysUserDTO);
+            return (Long) RemoteUtil.exec(ADD_USER, userDTO);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
@@ -1455,7 +1521,9 @@ public class BaseClient {
         return null;
     }
 
-    /**通过ID删除用户*/
+    /**
+     * 通过ID删除用户
+     */
     public static Integer deleteSysUserById(Long id) {
         try {
             return (Integer) RemoteUtil.exec(DELETE_SYS_USER_BY_ID, id);
@@ -1466,10 +1534,15 @@ public class BaseClient {
         return null;
     }
 
-    /**更新用户信息*/
-    public static Integer updateUser(SysUserDTO sysUserDTO) {
+    /**
+     * 更新用户信息
+     */
+    public static Integer updateUser(UserVO user, Long uid) {
+        SysUserDTO userDTO = new SysUserDTO();
+        BeanUtils.copyProperties(user, userDTO);
+        userDTO.setModifyEmp(uid);
         try {
-            return (Integer) RemoteUtil.exec(UPDATE_USER, sysUserDTO);
+            return (Integer) RemoteUtil.exec(UPDATE_USER, userDTO);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
@@ -1477,7 +1550,9 @@ public class BaseClient {
         return null;
     }
 
-    /**通过用户ID获取用户的菜单权限*/
+    /**
+     * 通过用户ID获取用户的菜单权限
+     */
     public static List<SysMenuRE> getMenuListByUserId(Long uid) {
         try {
             return (List<SysMenuRE>) RemoteUtil.exec(GET_MENU_LIST_BY_USER_ID, uid);
@@ -1488,7 +1563,10 @@ public class BaseClient {
         return null;
     }
 
-    public static Long addRoleAuth(SysRoleMenuDTO sysRoleMenuDTO) {
+    public static Long addRoleAuth(Long rid, List<Long> list) {
+        SysRoleMenuDTO sysRoleMenuDTO = new SysRoleMenuDTO();
+        sysRoleMenuDTO.setMenuId(list);
+        sysRoleMenuDTO.setRoleId(rid);
         try {
             return (Long) RemoteUtil.exec(ADD_ROLE_AUTH, sysRoleMenuDTO);
         } catch (Exception e) {

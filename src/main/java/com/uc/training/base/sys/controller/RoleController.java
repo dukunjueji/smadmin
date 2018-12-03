@@ -39,10 +39,8 @@ public class RoleController extends BaseController {
             PageVO<SysRoleRE> pageVO = new PageVO<SysRoleRE>();
             pageVO.setPageIndex(roleListVO.getPageIndex());
             pageVO.setPageSize(roleListVO.getPageSize());
-            SysRoleDTO roleDTO = new SysRoleDTO();
-            BeanUtils.copyProperties(roleListVO, roleDTO);
-            pageVO.setTotal(roleService.getCount(roleDTO));
-            pageVO.setDataList(roleService.getRolePage(roleDTO));
+            pageVO.setTotal(roleService.getCount(roleListVO));
+            pageVO.setDataList(roleService.getRolePage(roleListVO));
             return Result.getSuccessResult(pageVO);
         } catch (Exception e) {
             logger.error("查询符合条件错误！", e);
@@ -85,10 +83,7 @@ public class RoleController extends BaseController {
         if (roleService.queryCountByName(role.getName()) > 0) {
             return Result.getBusinessException("该角色已存在", null);
         }
-        SysRoleDTO roleDTO = new SysRoleDTO();
-        BeanUtils.copyProperties(role, roleDTO);
-        roleDTO.setCreateEmp(getUid());
-        return Result.getSuccessResult(roleService.addRole(roleDTO));
+        return Result.getSuccessResult(roleService.addRole(role, getUid()));
     }
 
     /**
@@ -103,9 +98,7 @@ public class RoleController extends BaseController {
         if (roleService.queryCountByName(role.getName()) >0 && !role.getName().equals(oldName)){
             return Result.getBusinessException("该角色已存在", null);
         }
-        SysRoleDTO roleDTO = new SysRoleDTO();
-        BeanUtils.copyProperties(role, roleDTO);
-        return Result.getSuccessResult(roleService.updateRole(roleDTO));
+        return Result.getSuccessResult(roleService.updateRole(role));
     }
 
     /**
@@ -139,9 +132,7 @@ public class RoleController extends BaseController {
         for (String s : ids) {
             list.add(Long.parseLong(s));
         }
-        SysRoleMenuDTO sysRoleMenuDTO = new SysRoleMenuDTO();
-        sysRoleMenuDTO.setMenuId(list);
-        return Result.getSuccessResult(roleService.addRoleAuth(sysRoleMenuDTO));
+        return Result.getSuccessResult(roleService.addRoleAuth(rid, list));
     }
 
     /**
@@ -176,11 +167,7 @@ public class RoleController extends BaseController {
         for (String s : ids) {
             list.add(Long.parseLong(s));
         }
-        SysUserRoleDTO sysUserRoleDTO = new SysUserRoleDTO();
-        sysUserRoleDTO.setUserId(uid);
-        sysUserRoleDTO.setRoleId(list);
-        sysUserRoleDTO.setCreateEmp(getUid());
-        return Result.getSuccessResult(roleService.addUserRole(sysUserRoleDTO));
+        return Result.getSuccessResult(roleService.addUserRole(uid, list, getUid()));
     }
 
 }
