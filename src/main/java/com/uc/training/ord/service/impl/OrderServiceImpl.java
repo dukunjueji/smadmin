@@ -7,7 +7,9 @@ import com.uc.training.common.enums.UUIDTypeEnum;
 import com.uc.training.common.utils.UUIDUtil;
 import com.uc.training.gds.re.GoodsDetailRE;
 import com.uc.training.gds.re.GoodsStokeRE;
+import com.uc.training.gds.service.GoodsService;
 import com.uc.training.ord.re.CartGoodsRE;
+import com.uc.training.ord.re.CommentRE;
 import com.uc.training.ord.re.OrdOrderGoodsRE;
 import com.uc.training.ord.re.OrderConfirmRE;
 import com.uc.training.ord.re.OrderGoodsDetailRE;
@@ -29,6 +31,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -44,6 +47,8 @@ import java.util.List;
 @Service
 public class OrderServiceImpl implements OrderService {
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderServiceImpl.class);
+    @Autowired
+    private GoodsService goodsService;
 
     /**
      * 根据用户id查询购物车信息表
@@ -116,7 +121,8 @@ public class OrderServiceImpl implements OrderService {
             ordOrderGoodsRE.setGdsName(gdDTO.getName());
             // 对我的订单中的商品重新购买进行判断
             if (orderGodsList.get(0).getOrderId() != null) {
-                List<OrderGoodsRE> orderGdsList = orderGoodsDao.getOrderGoodsByOrderId(orderGodsList.get(0).getOrderId().intValue());
+
+                List<OrderGoodsRE> orderGdsList = OrderClient.getOrderGoodsByOrderId(orderGodsList.get(0).getOrderId().intValue());
                 if (CollectionUtils.isEmpty(orderGdsList)) {
                     return null;
                 }
@@ -337,7 +343,7 @@ public class OrderServiceImpl implements OrderService {
                             return list;
                         }
                     } catch (Exception e) {
-                        com.sun.istack.internal.logging.Logger logger = com.sun.istack.internal.logging.Logger.getLogger(OrdCartGoodsVo.class);
+                        com.sun.istack.internal.logging.Logger logger = com.sun.istack.internal.logging.Logger.getLogger(OrdCartGoodsVO.class);
                         logger.info(e.getMessage());
                     }
                 }
@@ -562,7 +568,6 @@ public class OrderServiceImpl implements OrderService {
         //先获该用户的取订单id，然后查询每条订单的状态，订单的金额 以及获取订单的商品信息
         List<OrderInfoRE> orderInfoREList = new ArrayList<>();
         List<OrderRE> orderList = OrderClient.getOrderByMemberVO(ordMemberVO);
-        ;
         if (CollectionUtils.isEmpty(orderList)) {
             return orderInfoREList;
         }
@@ -604,17 +609,17 @@ public class OrderServiceImpl implements OrderService {
     public List<CommentRE> getCommentOrderGoodsDetail(OrdGoodsVO ordGoodsVO) {
         List<CommentRE> list = OrderClient.getPropertyIdListByUid(ordGoodsVO);
         GoodsDetailRE gdDTO = new GoodsDetailRE();
-        int conut = 0;
+        int count = 0;
         // 判空
         if (CollectionUtils.isEmpty(list)) {
             return null;
         }
         // 记录上一个商品属性Id 如果相同不需要再次查库
-        Long recomentId = list.get(0).getGoodsPropertyId();
+        Long lastGoodsPropertyId = list.get(0).getGoodsPropertyId();
         // 获取未评价商品详情
         for (CommentRE commentRE : list) {
             // 第一次进入
-            if (conut == 0) {
+            if (count == 0) {
                 gdDTO = goodsService.getGoodsDetailByPropertyId(commentRE.getGoodsPropertyId());
                 commentRE.setGoodsId(gdDTO.getGoodsId());
                 commentRE.setGoodsProperty(gdDTO.getProperty());
@@ -623,12 +628,12 @@ public class OrderServiceImpl implements OrderService {
                 if (!CollectionUtils.isEmpty(gdDTO.getPicUrl())) {
                     commentRE.setImgUrl(gdDTO.getPicUrl().get(0).getPicUrl());
                 }
-                conut++;
-                recomentId = commentRE.getGoodsPropertyId();
+                count++;
+                lastGoodsPropertyId = commentRE.getGoodsPropertyId();
                 continue;
             }
             // 查找与上一次属性id相同时
-            if (recomentId.equals(commentRE.getGoodsPropertyId())) {
+            if (lastGoodsPropertyId.equals(commentRE.getGoodsPropertyId())) {
                 commentRE.setGoodsId(gdDTO.getGoodsId());
                 commentRE.setStatus(gdDTO.getStatus());
                 commentRE.setGoodsName(gdDTO.getName());
@@ -646,7 +651,7 @@ public class OrderServiceImpl implements OrderService {
             if (CollectionUtils.isEmpty(gdDTO.getPicUrl())) {
                 commentRE.setImgUrl(gdDTO.getPicUrl().get(0).getPicUrl());
             }
-            recomentId = commentRE.getGoodsPropertyId();
+            lastGoodsPropertyId = commentRE.getGoodsPropertyId();
         }
         return list;
     }
