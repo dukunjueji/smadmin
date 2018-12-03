@@ -59,4 +59,9 @@ public class UserServiceImpl implements UserService {
         return BaseClient.getMenuListByUserId(uid);
     }
 
+    @Override
+    public Long queryUserCountByName(String name) {
+        return BaseClient.queryUserCountByName(name);
+    }
+
 }

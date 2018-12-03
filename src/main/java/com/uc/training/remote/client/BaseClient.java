@@ -1544,4 +1544,14 @@ public class BaseClient {
         }
         return null;
     }
+
+    public static Long queryUserCountByName(String name) {
+        try {
+            return (Long) RemoteUtil.exec(QUERY_USER_COUNT_BY_NAME, name);
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            LOGGER.error("类型转换异常");
+        }
+        return null;
+    }
 }
