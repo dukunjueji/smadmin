@@ -4,7 +4,10 @@ import com.uc.training.base.sys.dto.SysRoleDTO;
 import com.uc.training.base.sys.dto.SysRoleMenuDTO;
 import com.uc.training.base.sys.dto.SysUserRoleDTO;
 import com.uc.training.base.sys.re.SysRoleRE;
+import com.uc.training.base.sys.vo.RoleListVO;
+import com.uc.training.base.sys.vo.RoleVO;
 
+import javax.management.relation.RoleList;
 import java.util.List;
 
 /**
@@ -23,24 +26,24 @@ public interface RoleService {
 
     /**
      * 获取角色列表页面
-     * @param sysRoleDTO
+     * @param roleListVO
      * @return
      */
-    List<SysRoleRE> getRolePage(SysRoleDTO sysRoleDTO);
+    List<SysRoleRE> getRolePage(RoleListVO roleListVO);
 
     /**
      * 获取角色总数
-     * @param sysRoleDTO
+     * @param roleListVO
      * @return
      */
-    Long getCount(SysRoleDTO sysRoleDTO);
+    Long getCount(RoleListVO roleListVO);
 
     /**
      * 更新角色信息
-     * @param roleDTO
+     * @param role
      * @return
      */
-    Integer updateRole(SysRoleDTO roleDTO);
+    Integer updateRole(RoleVO role);
 
     /**
      * 根据ID删除角色
@@ -51,17 +54,19 @@ public interface RoleService {
 
     /**
      * 新增角色
-     * @param roleDTO
+     * @param role
+     * @param createEmp
      * @return
      */
-    Long addRole(SysRoleDTO roleDTO);
+    Long addRole(RoleVO role, Long createEmp);
 
     /**
      * 通过用户ID和菜单ID列表添加用户权限
-     * @param sysRoleMenuDTO
+     * @param rid
+     * @param ids
      * @return
      */
-    Long addRoleAuth(SysRoleMenuDTO sysRoleMenuDTO);
+    Long addRoleAuth(Long rid, List<Long> ids);
 
     /**
      * 通过角色ID获取该ID所有的菜单权限
@@ -85,10 +90,12 @@ public interface RoleService {
 
     /**
      * 通过用户ID和菜单ID列表添加用户权限
-     * @param sysUserRoleDTO
+     * @param uid
+     * @param list
+     * @param createEmp
      * @return
      */
-    Long addUserRole(SysUserRoleDTO sysUserRoleDTO);
+    Long addUserRole(Long uid, List<Long> list, Long createEmp);
 
     /**
      * 通过角色名查找角色数量

@@ -60,10 +60,8 @@ public class UserController extends BaseController {
         try {
             String password = EncryptUtil.md5(userLoginVO.getPassword());
             userLoginVO.setPassword(password);
-            SysUserDTO userDTO = new SysUserDTO();
-            BeanUtils.copyProperties(userLoginVO, userDTO);
             // 判断账号密码是否匹配
-            SysUserRE user = userService.getUserLogin(userDTO);
+            SysUserRE user = userService.getUserLogin(userLoginVO);
             if (user == null) {
                 logger.info("用户名或密码不正确");
                 return Result.getBusinessException("用户名或密码不正确", null);
@@ -162,10 +160,8 @@ public class UserController extends BaseController {
             PageVO<SysUserRE> pageVO = new PageVO<SysUserRE>();
             pageVO.setPageIndex(userListVO.getPageIndex());
             pageVO.setPageSize(userListVO.getPageSize());
-            SysUserDTO sysUserDTO = new SysUserDTO();
-            BeanUtils.copyProperties(userListVO, sysUserDTO);
-            pageVO.setTotal(userService.queryUserCount(sysUserDTO));
-            pageVO.setDataList(userService.getUserList(sysUserDTO));
+            pageVO.setTotal(userService.queryUserCount(userListVO));
+            pageVO.setDataList(userService.getUserList(userListVO));
             return Result.getSuccessResult(pageVO);
         } catch (Exception e) {
             logger.error("查询符合条件错误！", e);
@@ -182,23 +178,17 @@ public class UserController extends BaseController {
     @AccessLogin
     @RequestMapping(value = "/addUser.do_", method = RequestMethod.POST)
     @ResponseBody
-    public Result<Long> addUser(@Validated UserVO user) {
+    public Result addUser(@Validated UserVO user) {
         // 判空
         if (user == null || StringUtils.isEmpty(user.getUserName())) {
             return Result.getBusinessException("输入用户不能为空", null);
         }
         String pwd = EncryptUtil.md5(Constant.DEFAULT_PASSWORD);
-        SysUserDTO name = new SysUserDTO();
-        name.setUserName(user.getUserName());
-        Long count = userService.queryUserCount(name);
+        Long count = userService.queryUserCountByName(user.getUserName());
         if (count > 0) {
             return Result.getBusinessException("该用户已存在", null);
         }
-        SysUserDTO userDTO = new SysUserDTO();
-        BeanUtils.copyProperties(user, userDTO);
-        userDTO.setCreateEmp(getUid());
-        userDTO.setPassword(pwd);
-        Long id = userService.addUser(userDTO);
+        Long id = userService.addUser(user, getUid(), pwd);
         return Result.getSuccessResult(id);
     }
 
@@ -211,7 +201,7 @@ public class UserController extends BaseController {
     @AccessLogin
     @RequestMapping(value = "/deleteUser.do_", method = RequestMethod.POST)
     @ResponseBody
-    public Result<Integer> deleteUser(Long id) {
+    public Result deleteUser(Long id) {
         return Result.getSuccessResult(userService.deleteById(id));
     }
 
@@ -224,21 +214,16 @@ public class UserController extends BaseController {
     @AccessLogin
     @RequestMapping(value = "/editUser.do_", method = RequestMethod.POST)
     @ResponseBody
-    public Result<Integer> editUser(@Validated UserVO user) {
+    public Result editUser(@Validated UserVO user) {
         // 判空
         if (user == null || StringUtils.isEmpty(user.getUserName()) || user.getId() == null) {
             return Result.getBusinessException("用户更新失败", null);
         }
         String oldName = userService.getById(user.getId()).getUserName();
-        SysUserDTO name = new SysUserDTO();
-        name.setUserName(user.getUserName());
-        if (userService.queryUserCount(name) > 0 && !user.getUserName().equals(oldName)) {
+        if (userService.queryUserCountByName(user.getUserName()) > 0 && !user.getUserName().equals(oldName)) {
             return Result.getBusinessException("该用户已存在", null);
         }
-        SysUserDTO userDTO = new SysUserDTO();
-        BeanUtils.copyProperties(user, userDTO);
-        userDTO.setModifyEmp(getUid());
-        return Result.getSuccessResult(userService.updateUser(userDTO));
+        return Result.getSuccessResult(userService.updateUser(user, getUid()));
     }
 
     /**

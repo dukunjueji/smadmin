@@ -3,6 +3,7 @@ package com.uc.training.base.sys.service.impl;
 import com.uc.training.base.sys.dto.SysMenuDTO;
 import com.uc.training.base.sys.re.SysMenuRE;
 import com.uc.training.base.sys.service.MenuService;
+import com.uc.training.base.sys.vo.MenuVO;
 import com.uc.training.remote.client.BaseClient;
 
 import java.util.List;
@@ -35,7 +36,7 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public Long addMenu(SysMenuDTO menu) {
+    public Long addMenu(MenuVO menu) {
         return BaseClient.addMenu(menu);
     }
 
@@ -45,7 +46,7 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public Integer updateMenu(SysMenuDTO menu) {
+    public Integer updateMenu(MenuVO menu) {
         return BaseClient.updateMenu(menu);
     }
 

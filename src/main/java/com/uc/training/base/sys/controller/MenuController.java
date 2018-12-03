@@ -63,9 +63,7 @@ public class MenuController extends BaseController {
         if (menuService.queryCountByName(menu.getName()) > 0) {
             return Result.getBusinessException("该菜单名已存在", null);
         }
-        SysMenuDTO menuDTO = new SysMenuDTO();
-        BeanUtils.copyProperties(menu, menuDTO);
-        return Result.getSuccessResult(menuService.addMenu(menuDTO));
+        return Result.getSuccessResult(menuService.addMenu(menu));
     }
 
     /**
@@ -80,9 +78,7 @@ public class MenuController extends BaseController {
         if (menuService.queryCountByName(menu.getName()) >0 && !menu.getName().equals(oldName)){
             return Result.getBusinessException("该菜单名已存在", null);
         }
-        SysMenuDTO menuDTO = new SysMenuDTO();
-        BeanUtils.copyProperties(menu, menuDTO);
-        return Result.getSuccessResult(menuService.updateMenu(menuDTO));
+        return Result.getSuccessResult(menuService.updateMenu(menu));
     }
 
     /**
