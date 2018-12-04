@@ -1,8 +1,5 @@
 package com.uc.training.base.sys.service.impl;
 
-import com.uc.training.base.sys.dto.SysRoleDTO;
-import com.uc.training.base.sys.dto.SysRoleMenuDTO;
-import com.uc.training.base.sys.dto.SysUserRoleDTO;
 import com.uc.training.base.sys.re.SysRoleRE;
 import com.uc.training.base.sys.service.RoleService;
 import com.uc.training.base.sys.vo.RoleListVO;

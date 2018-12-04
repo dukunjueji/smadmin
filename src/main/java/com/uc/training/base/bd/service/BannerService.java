@@ -16,6 +16,7 @@ import java.util.List;
 public interface BannerService {
     /**
      * 获取轮播图信息(不包含不显示的图片)
+     * @param bannerVO
      * @return
      */
     List<BannerRE> getBannerList(BannerVO bannerVO);

@@ -1,10 +1,10 @@
 package com.uc.training.gds.service.impl;
 
 import com.uc.training.common.enums.CommentEnum;
-import com.uc.training.common.enums.CommentTypyEnum;
 import com.uc.training.common.enums.OrderGoodsCommentEnum;
 import com.uc.training.gds.re.CommentAvgRE;
 import com.uc.training.gds.re.CommentCountRE;
+import com.uc.training.gds.re.CommentRE;
 import com.uc.training.gds.service.CommentPicService;
 import com.uc.training.gds.service.CommentReplyService;
 import com.uc.training.gds.service.CommentService;
@@ -14,7 +14,6 @@ import com.uc.training.ord.re.OrderRE;
 import com.uc.training.ord.service.OrderGoodsService;
 import com.uc.training.ord.vo.OrdOrderGoodsVO;
 import com.uc.training.remote.client.GdsClient;
-import com.uc.training.gds.re.CommentRE;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -103,9 +102,8 @@ public class CommentServiceImpl implements CommentService {
             }
         }
         if (commentListVO.getGoodsId() == null && commentListVO.getId() == null) {
-            OrderRE order = new OrderRE();
             for (CommentRE commentRE : commentList) {
-                order = orderGoodsService.getOrderByOrdGoodsId(commentRE.getOrderGoodsId());
+                OrderRE order = orderGoodsService.getOrderByOrdGoodsId(commentRE.getOrderGoodsId());
                 if (order != null) {
                     commentRE.setOrderNum(order.getOrderNum());
                 }

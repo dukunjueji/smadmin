@@ -42,8 +42,6 @@ public class MemberServiceImpl implements MemberService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MemberServiceImpl.class.getName());
 
-    //@Autowired    private GoodsService goodsService;
-
     @Autowired
     private OrderService orderService;
 

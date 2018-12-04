@@ -77,6 +77,7 @@ public interface UserService {
     /**
      * 更新用户信息
      * @param user
+     * @param uid
      * @return
      */
     Integer updateUser(UserVO user, Long uid);

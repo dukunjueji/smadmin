@@ -476,7 +476,7 @@ public class OrderServiceImpl implements OrderService {
                 return 0;
             }
         }
-        if (getOrdOrderVO.get(0).getStatus().equals(OrderEnum.WAITPAY.getKey().longValue())) {
+        if (getOrdOrderVO.get(0).getStatus() == OrderEnum.WAITPAY.getKey().longValue()) {
             return OrderClient.updateOrder(ordOrderVO);
         }
         return 0;
