@@ -8,6 +8,7 @@ import com.uc.training.base.sys.vo.UserListVO;
 import com.uc.training.base.sys.vo.UserLoginVO;
 import com.uc.training.base.sys.vo.UserVO;
 import com.uc.training.remote.client.BaseClient;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ import java.util.List;
  * @Date: 2018/11/30 13:42
  * @Description:
  */
+@Service
 public class UserServiceImpl implements UserService {
     @Override
     public SysUserRE getUserLogin(UserLoginVO userLoginVO) {

@@ -46,7 +46,12 @@ import com.uc.training.base.sys.dto.SysUserRoleDTO;
 import com.uc.training.base.sys.re.SysMenuRE;
 import com.uc.training.base.sys.re.SysRoleRE;
 import com.uc.training.base.sys.re.SysUserRE;
-import com.uc.training.base.sys.vo.*;
+import com.uc.training.base.sys.vo.MenuVO;
+import com.uc.training.base.sys.vo.RoleListVO;
+import com.uc.training.base.sys.vo.RoleVO;
+import com.uc.training.base.sys.vo.UserListVO;
+import com.uc.training.base.sys.vo.UserLoginVO;
+import com.uc.training.base.sys.vo.UserVO;
 import com.uc.training.remote.utils.RemoteUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -1190,6 +1195,7 @@ public class BaseClient {
         return null;
     }
 
+
     public static Integer queryMenuCountByName(String name) {
         try {
             return (Integer) RemoteUtil.exec(QUERY_MENU_COUNT_BY_NAME, name);
@@ -1244,9 +1250,7 @@ public class BaseClient {
     /**
      * 查找用户数量
      */
-    public static Integer querySysMenuCount(MenuVO menuVO) {
-        SysMenuDTO sysMenuDTO = new SysMenuDTO();
-        BeanUtils.copyProperties(menuVO, sysMenuDTO);
+    public static Integer querySysMenuCount(SysMenuDTO sysMenuDTO) {
         try {
             return (Integer) RemoteUtil.exec(QUERY_SYS_MENU_COUNT, sysMenuDTO);
         } catch (Exception e) {

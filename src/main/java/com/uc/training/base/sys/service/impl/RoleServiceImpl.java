@@ -8,6 +8,7 @@ import com.uc.training.base.sys.service.RoleService;
 import com.uc.training.base.sys.vo.RoleListVO;
 import com.uc.training.base.sys.vo.RoleVO;
 import com.uc.training.remote.client.BaseClient;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ import java.util.List;
  * @Date: 2018/11/30 13:42
  * @Description:
  */
+@Service
 public class RoleServiceImpl implements RoleService {
     @Override
     public List<String> getUserRoles(Long userId) {

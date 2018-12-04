@@ -4,6 +4,7 @@ import com.uc.training.base.sys.re.SysMenuRE;
 import com.uc.training.base.sys.service.MenuService;
 import com.uc.training.base.sys.vo.MenuVO;
 import com.uc.training.remote.client.BaseClient;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
  * @Date: 2018/11/30 13:41
  * @Description:
  */
+@Service
 public class MenuServiceImpl implements MenuService {
 
     @Override
