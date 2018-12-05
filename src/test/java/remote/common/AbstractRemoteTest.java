@@ -1,11 +1,14 @@
 package remote.common;
 
+import com.uc.training.common.vo.RemoteResult;
+import com.uc.training.gds.re.GoodsDetailRE;
 import com.zuche.framework.common.GlobalMessage;
 import com.zuche.framework.common.SpringApplicationContext;
 import com.zuche.framework.remote.RemoteClient;
 import com.zuche.framework.remote.RemoteClientFactory;
 import com.zuche.framework.remote.RemoteType;
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
@@ -26,12 +29,21 @@ import org.testng.annotations.BeforeClass;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={"classpath:frameworkContext.xml"})
 public class AbstractRemoteTest extends AbstractTestNGSpringContextTests {
-
+    String service = "smgoods.api.getGoodsDetailByPropertyId";
     protected RemoteClient client;
 
     @Before
     public final void beforeClass(){
         SpringApplicationContext.initApplicationContext(applicationContext);
         client = RemoteClientFactory.getInstance(RemoteType.TCP);
+    }
+
+
+    @Test
+    public void queryModelInfo() throws Exception {
+        Long Id = 24L;
+        Object obj = RemoteClientFactory.getInstance().executeToObject(service, Id);
+        RemoteResult<GoodsDetailRE> re = (RemoteResult<GoodsDetailRE>)obj;
+        System.out.println(re);
     }
 }
