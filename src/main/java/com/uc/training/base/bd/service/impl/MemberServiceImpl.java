@@ -179,7 +179,7 @@ public class MemberServiceImpl implements MemberService {
     public void memberLogin(LoginVO loginLog, MqVO mqVO) {
         BaseClient.insertLoginLog(loginLog);
         //判断是否第一次登陆
-        Integer loginNum = BaseClient.queryLoginCount(loginLog);
+        Long loginNum = BaseClient.queryLoginCount(loginLog);
         if (loginNum != null && loginNum == 1) {
             MetaQUtils.sendMsgNoException(new MqProducer(mqVO));
         }

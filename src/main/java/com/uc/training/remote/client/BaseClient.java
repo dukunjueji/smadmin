@@ -697,11 +697,11 @@ public class BaseClient {
     /**
      * 查找登陆日志数据
      */
-    public static Integer queryLoginCount(LoginVO loginVO) {
+    public static Long queryLoginCount(LoginVO loginVO) {
         LoginLogDTO loginLogDTO = new LoginLogDTO();
         loginLogDTO.setMemberId(loginVO.getMemberId());
         try {
-            return (Integer) RemoteUtil.exec(QUERY_LOGIN_COUNT, loginLogDTO);
+            return (Long) RemoteUtil.exec(QUERY_LOGIN_COUNT, loginLogDTO);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
