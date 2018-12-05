@@ -461,7 +461,7 @@ public class OrderServiceImpl implements OrderService {
         //如果是取消订单回退库存
         if (ordOrderVO.getStatus().equals(OrderEnum.CANCEL.getKey().longValue())) {
             //需要取消订单的状态为待付款状态
-            if (!getOrdOrderVO.get(0).getStatus().equals(OrderEnum.WAITPAY.getKey().longValue())) {
+            if (!getOrdOrderVO.get(0).getStatus().equals(OrderEnum.WAITPAY.getKey())) {
                 return 0;
             }
             List<OrderGoodsDetailRE> list = getOrderGdsById(ordOrderVO.getOrderId());

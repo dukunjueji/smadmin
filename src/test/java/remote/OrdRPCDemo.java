@@ -1,5 +1,6 @@
 package remote;
 
+import com.uc.training.base.bd.dto.MemberDTO;
 import com.uc.training.common.vo.RemoteResult;
 import com.uc.training.ord.re.OrderGoodsRE;
 import com.zuche.framework.common.SpringApplicationContext;
@@ -31,6 +32,7 @@ public class OrdRPCDemo extends AbstractTestNGSpringContextTests {
     String service = "uccms.model.queryModelDetailByPara";
     String service2 = "smbase.api.queryOneMember";
     String service3 = "smorder.api.getOrderGoodsByOrderId";
+    String service4 = "smbase.api.queryOneMember";
 
     /**
      * 订单rpc测试
@@ -38,9 +40,11 @@ public class OrdRPCDemo extends AbstractTestNGSpringContextTests {
     @Test
     public void queryModelInfo() throws Exception {
         SpringApplicationContext.initApplicationContext(applicationContext);
+        MemberDTO memberDTO = new MemberDTO();
+        memberDTO.setId(1L);
          Integer orderId = 23;
         RemoteResult<List<OrderGoodsRE>> re1 = (RemoteResult<List<OrderGoodsRE>>) RemoteClientFactory.getInstance(RemoteType.HESSIAN)
-                .executeToObject(service3, orderId);
+                .executeToObject(service4, memberDTO);
         System.out.println(re1);
     }
 
