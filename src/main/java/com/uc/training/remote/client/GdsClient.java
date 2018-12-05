@@ -357,7 +357,7 @@ public  final class GdsClient {
      */
     public static List<GoodsRE> getHotRecommend(){
         try {
-            return (List<GoodsRE>) RemoteUtil.exec(GET_HOT_RECOMMEND,null);
+            return (List<GoodsRE>) RemoteUtil.exec(GET_HOT_RECOMMEND);
         } catch (ClassCastException e) {
             logger.error("类型转换异常");
             logger.error(e.getMessage());
@@ -417,7 +417,7 @@ public  final class GdsClient {
      */
     public static PageVO<GoodsRE> searchByGoodsName(GoodsListDTO goodsListDTO){
         try {
-            return (PageVO<GoodsRE>) RemoteUtil.exec(SEARCH_BY_GOODS_NAME,  goodsListDTO);
+            return (PageVO<GoodsRE>) RemoteUtil.exec(SEARCH_BY_GOODS_NAME, goodsListDTO);
         } catch (ClassCastException e) {
             logger.error("类型转换异常");
             logger.error(e.getMessage());
@@ -429,7 +429,7 @@ public  final class GdsClient {
      */
     public static List<HotTagRE> selectHotTag(){
         try {
-            return (List<HotTagRE>) RemoteUtil.exec(SELECT_HOT_TAG, null);
+            return (List<HotTagRE>) RemoteUtil.exec(SELECT_HOT_TAG);
         } catch (ClassCastException e) {
             logger.error("类型转换异常");
             logger.error(e.getMessage());
@@ -1024,7 +1024,7 @@ public  final class GdsClient {
      */
     public static List<CategoryRE> getCategoryList(){
         try {
-            return (List<CategoryRE>) RemoteUtil.exec(GET_CATEGORY_LIST,null);
+            return (List<CategoryRE>) RemoteUtil.exec(GET_CATEGORY_LIST);
         } catch (ClassCastException e) {
             logger.error("类型转换异常");
             logger.error(e.getMessage());
