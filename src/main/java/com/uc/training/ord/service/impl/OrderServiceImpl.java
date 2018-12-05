@@ -250,7 +250,7 @@ public class OrderServiceImpl implements OrderService {
             //更新库存表、插入用户订单表和订单商品信息表、删除购物车商品信息,判断商品是否删除或者下架和库存是否足够
             goodsStokeVO = new GoodsStokeVO();
             goodsStokeVO.setPropertyId(orderInfoListNow.get(i).getPropertyId());
-            goodsStokeVO.setStoke((long) orderInfoListNow.get(i).getNum());
+            goodsStokeVO.setStock((long) orderInfoListNow.get(i).getNum());
             GoodsStokeRE goodsStokeRE = goodsService.selectGoodsStatus(goodsStokeVO);
             if (goodsStokeRE.getIsDelete().equals(GoodsStatusEnum.GOODS_DELETE.getType())) {
                 StringBuilder temp = new StringBuilder();
@@ -396,7 +396,7 @@ public class OrderServiceImpl implements OrderService {
             orderGoods.setGoodsPropertyId(orderInfoListNow.get(i).getPropertyId());
             OrderClient.insertOrderGoods(ordGoodsVO);
             //更新商品对应的库存
-            goodsStokeVO.setStoke(orderGoods.getGoodsNum().longValue());
+            goodsStokeVO.setStock(orderGoods.getGoodsNum().longValue());
             goodsStokeVO.setPropertyId(orderGoods.getGoodsPropertyId());
             goodsService.updateAndDeductStoke(goodsStokeVO);
         }
@@ -461,14 +461,14 @@ public class OrderServiceImpl implements OrderService {
         //如果是取消订单回退库存
         if (ordOrderVO.getStatus().equals(OrderEnum.CANCEL.getKey().longValue())) {
             //需要取消订单的状态为待付款状态
-            if (!getOrdOrderVO.get(0).getStatus().equals(OrderEnum.WAITPAY.getKey().longValue())) {
+            if (!OrderEnum.WAITPAY.getKey().equals(getOrdOrderVO.get(0).getStatus())) {
                 return 0;
             }
             List<OrderGoodsDetailRE> list = getOrderGdsById(ordOrderVO.getOrderId());
             if (!CollectionUtils.isEmpty(list)) {
                 GoodsStokeVO goodsStokeVO = new GoodsStokeVO();
                 for (OrderGoodsDetailRE orderGoodsDetailRe : list) {
-                    goodsStokeVO.setStoke(-(orderGoodsDetailRe.getGoodsNum().longValue()));
+                    goodsStokeVO.setStock(-(orderGoodsDetailRe.getGoodsNum().longValue()));
                     goodsStokeVO.setPropertyId(orderGoodsDetailRe.getGoodsPropertyId());
                     goodsService.updateAndDeductStoke(goodsStokeVO);
                 }

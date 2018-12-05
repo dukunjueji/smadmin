@@ -1,17 +1,21 @@
 package com.uc.training.gds.vo;
 
+import java.io.Serializable;
+
 /**
  * 商品库存
  *
  * @author zhongling(ling.zhong @ ucarinc.com)
  * @since 2018年10月19日 14:21
  */
-public class GoodsStokeVO {
+public class GoodsStokeVO implements Serializable {
+
+    private static final long serialVersionUID = -6524638416249583239L;
     private Long propertyId;
     /**
      * 需要扣除的库存
      */
-    private Long stoke;
+    private Long stock;
 
     public Long getGoodsId() {
         return goodsId;
@@ -34,16 +38,16 @@ public class GoodsStokeVO {
         this.propertyId = propertyId;
     }
 
-    public Long getStoke() {
-        return stoke;
+    public Long getStock() {
+        return stock;
     }
 
-    public void setStoke(Long stoke) {
-        this.stoke = stoke;
+    public void setStock(Long stock) {
+        this.stock = stock;
     }
 
     @Override
     public String toString() {
-        return "GoodsStokeVO{" + "propertyId=" + propertyId + ", stoke=" + stoke + ", goodsId=" + goodsId + '}';
+        return "GoodsStokeVO{" + "propertyId=" + propertyId + ", stock=" + stock + ", goodsId=" + goodsId + '}';
     }
 }

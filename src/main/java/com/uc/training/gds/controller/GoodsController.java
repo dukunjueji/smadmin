@@ -144,7 +144,7 @@ public class GoodsController extends BaseController {
     public Result<Integer> updateAndDeductStoke() {
         GoodsStokeVO goodsAndPropertyDTO = new GoodsStokeVO();
         goodsAndPropertyDTO.setPropertyId(26L);
-        goodsAndPropertyDTO.setStoke(1L);
+        goodsAndPropertyDTO.setStock(1L);
 
         Integer status = goodsService.updateAndDeductStoke(goodsAndPropertyDTO);
         System.out.println(status + "------------------------------------");
