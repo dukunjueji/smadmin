@@ -519,7 +519,7 @@ public class BaseClient {
     }
 
     /**
-     * 根据会员信息进行查找
+     * 新增会员
      */
     public static Long insertMember(MemberVO member) {
         MemberDTO memberDTO = new MemberDTO();

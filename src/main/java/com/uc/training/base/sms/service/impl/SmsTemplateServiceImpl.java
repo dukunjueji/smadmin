@@ -139,7 +139,7 @@ public class SmsTemplateServiceImpl implements SmsTemplateService {
             redis.set(generateSmsVO.getTelephone(), generateSmsVO.getMessage());
         }
 
-        if (generateSmsVO.getRechargeStatus() == 0) {
+        if (generateSmsVO.getRechargeStatus() != null && generateSmsVO.getRechargeStatus() == 0) {
             generateSmsVO.setCode(SmsTypeEnum.RECHARGE_FAIL.getCode());
         }
         SmsTemplateListVO smsTemplateListVO = new SmsTemplateListVO();

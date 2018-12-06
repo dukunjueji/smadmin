@@ -25,7 +25,6 @@ import com.uc.training.common.enums.SmsTypeEnum;
 import com.uc.training.common.mq.MqProducer;
 import com.uc.training.common.mq.vo.MqVO;
 import com.uc.training.common.redis.RedisConfigEnum;
-import com.uc.training.common.utils.EncryptUtil;
 import com.uc.training.common.utils.TokenUtil;
 import com.uc.training.ord.service.OrderService;
 import com.ycc.base.common.Result;
@@ -140,7 +139,7 @@ public class MemberController extends BaseController {
         if (mem == null) {
             return Result.getBusinessException("该账号不存在,请先注册", null);
         }
-        member.setPassword(EncryptUtil.md5(memberLoginVO.getPassword()));
+        member.setPassword(memberLoginVO.getPassword());
         MemberRE memberRE = memberService.queryOneMember(member);
         if (memberRE == null) {
             return Result.getBusinessException("您的密码错误", null);
@@ -343,7 +342,7 @@ public class MemberController extends BaseController {
 
         MemberVO memberVO = new MemberVO();
         memberVO.setId(getUid());
-        memberVO.setPassword(EncryptUtil.md5(sendCodeVO.getNewpassword()));
+        memberVO.setPassword(sendCodeVO.getNewpassword());
         MemberRE member = memberService.queryOneMember(memberVO);
         // 校验密码
         if (member == null) {
@@ -376,7 +375,7 @@ public class MemberController extends BaseController {
 
         MemberVO member = new MemberVO();
         member.setId(getUid());
-        member.setPassword(EncryptUtil.md5(passwordEditVO.getOldpassword()));
+        member.setPassword(passwordEditVO.getOldpassword());
         // 判断旧密码是否和库里的一致
         MemberRE mem = memberService.queryOneMember(member);
         if(mem == null){
