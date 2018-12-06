@@ -182,8 +182,7 @@ public class OrderController extends BaseController {
         if (CollectionUtils.isEmpty(list)) {
             return Result.getSuccessResult(null);
         }
-        List<OrdOrderGoodsVO> orderGodsList = new ArrayList<>();
-        List<OrdOrderGoodsRE> orderList = orderService.getOrderGoods(orderGodsList, orderId);
+        List<OrdOrderGoodsRE> orderList = orderService.getOrderGoods(list, orderId);
         if (CollectionUtils.isEmpty(orderList)) {
             return Result.getBusinessException("获取订单列表失败", "");
         }
@@ -276,7 +275,6 @@ public class OrderController extends BaseController {
     @AccessLogin
     @RequestMapping(value = "confirmOrderInfo.do_", method = RequestMethod.POST)
     public Result confirmOrderInfo(OrdOrderGoodsVO ordOrderGoodsVO, BigDecimal totalPrice) {
-
         List<OrdOrderGoodsVO> orderInfoListNow = ordOrderGoodsVO.getList();
         if (CollectionUtils.isEmpty(orderInfoListNow)) {
             return Result.getSuccessResult("提交订单失败");
@@ -325,10 +323,9 @@ public class OrderController extends BaseController {
         OrdMemberVO ordMemberVO = new OrdMemberVO();
         ordMemberVO.setMemberId(orderPayInfoNow.get(0).getMemberId());
         ordMemberVO.setOrderId(orderPayInfoNow.get(0).getOrderId());
-
         List<OrderRE> order = orderService.getOrderByMemberVO(ordMemberVO);
         if (!CollectionUtils.isEmpty(order)) {
-            if (order.get(0).getStatus() != 1 || !order.get(0).getMemberId().equals(getUid())) {
+            if (!(order.get(0).getStatus() == 1 && order.get(0).getMemberId().equals(getUid()))) {
                 return Result.getSuccessResult("支付失败");
             }
         }

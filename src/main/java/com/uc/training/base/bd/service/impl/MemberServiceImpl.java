@@ -13,6 +13,8 @@ import com.uc.training.common.enums.OrderEnum;
 import com.uc.training.common.mq.MqProducer;
 import com.uc.training.common.mq.vo.MqVO;
 import com.uc.training.common.utils.EncryptUtil;
+import com.uc.training.gds.dto.GoodsAndPropertyDTO;
+import com.uc.training.gds.service.GoodsService;
 import com.uc.training.ord.re.OrderConfirmRE;
 import com.uc.training.ord.re.OrderRE;
 import com.uc.training.ord.service.OrderService;
@@ -44,6 +46,8 @@ public class MemberServiceImpl implements MemberService {
 
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private GoodsService goodsService;
 
     @Override
     public Long insertMember(MemberVO memberVO) {
@@ -123,6 +127,13 @@ public class MemberServiceImpl implements MemberService {
                 }
             }
             }
+            // 加上对应的商品销量
+            for (int i = 1, j = orderPayInfoNow.size(); i < j; i++) {
+                GoodsAndPropertyDTO goodsStockVO = new GoodsAndPropertyDTO();
+                goodsStockVO.setStock(orderPayInfoNow.get(i).getGoodsNum());
+                goodsStockVO.setGoodsId(orderPayInfoNow.get(i).getGoodsId());
+                goodsService.updateSales(goodsStockVO);
+            }
             //加成长值，积分
             MqVO mqVO1 = new MqVO();
             mqVO1.setMemberId(memberInfoVO.getMemberId());
@@ -130,22 +141,9 @@ public class MemberServiceImpl implements MemberService {
             mqVO1.setGrowthType(GrowthEnum.PURCHASE.getGrowthType());
             mqVO1.setIntegralType(IntegralEnum.PURCHASE.getIntegralType());
             mqVO1.setPurchaseValue(memberInfoVO.getTotalPrice());
-
             //订单短信
             mqVO1.setGenerateSmsVO(mqVO.getGenerateSmsVO());
-
             MetaQUtils.sendMsgNoException(new MqProducer(mqVO1));
-            //更新订单状态
-            orderConfirmRE.setStatus(OrderEnum.WAITSHIP.getKey());
-            OrdOrderVO ordOrderVo = new OrdOrderVO();
-            ordOrderVo.setOrderNum(orderList.get(0).getOrderNum());
-            ordOrderVo.setStatus(OrderEnum.WAITSHIP.getKey().longValue());
-            ordOrderVo.setMemberId(memberInfoVO.getMemberId());
-            orderConfirmRE.setShowStatus("成功购买商品");
-            if (orderService.updateOrder(ordOrderVo) > 0) {
-                list.add(orderConfirmRE);
-            }
-
             return list;
         } else {
             orderConfirmRE.setShowStatus("余额不足，请充值或者返回购物车重新选取商品");

@@ -17,6 +17,7 @@ import com.uc.training.ord.vo.OrdGoodsVO;
 import com.uc.training.ord.vo.OrdMemberVO;
 import com.uc.training.ord.vo.OrdOrderGoodsVO;
 import com.uc.training.ord.vo.OrdOrderVO;
+import com.uc.training.ord.vo.OrderGoodsVO;
 import com.uc.training.ord.vo.OrderVO;
 import com.uc.training.remote.utils.RemoteUtil;
 import org.slf4j.Logger;
@@ -238,7 +239,7 @@ public final class OrderClient {
     /**
      * 插入订单商品信息并返回订单id
      */
-    public static Long insertOrderGoods(OrdGoodsVO orderGoodsVO) {
+    public static Long insertOrderGoods(OrderGoodsVO orderGoodsVO) {
         OrderGoodsDTO orderGoodsDTO = new OrderGoodsDTO();
         BeanUtils.copyProperties(orderGoodsVO, orderGoodsDTO);
         try {

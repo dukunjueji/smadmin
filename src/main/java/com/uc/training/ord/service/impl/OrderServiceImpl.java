@@ -392,7 +392,7 @@ public class OrderServiceImpl implements OrderService {
             orderGoods.setSalePrice(orderInfoListNow.get(i).getSalePrice());
             orderGoods.setDiscountPrice(orderInfoListNow.get(i).getDiscountPrice());
             orderGoods.setGoodsPropertyId(orderInfoListNow.get(i).getPropertyId());
-            OrderClient.insertOrderGoods(ordGoodsVO);
+            OrderClient.insertOrderGoods(orderGoods);
             //更新商品对应的库存
             goodsStokeVO.setStock(orderGoods.getGoodsNum().longValue());
             goodsStokeVO.setPropertyId(orderGoods.getGoodsPropertyId());
@@ -452,6 +452,7 @@ public class OrderServiceImpl implements OrderService {
     public int updateOrder(OrdOrderVO ordOrderVO) {
         OrdMemberVO ordMemberVO = new OrdMemberVO();
         ordMemberVO.setOrderNum(ordOrderVO.getOrderNum());
+        ordMemberVO.setMemberId(ordOrderVO.getMemberId());
         List<OrderRE> getOrdOrderVO = OrderClient.getOrderByMemberVO(ordMemberVO);
         if (getOrdOrderVO == null) {
             return 0;
