@@ -35,7 +35,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -274,7 +273,7 @@ public class OrderController extends BaseController {
     @ResponseBody
     @AccessLogin
     @RequestMapping(value = "confirmOrderInfo.do_", method = RequestMethod.POST)
-    public Result confirmOrderInfo(OrdOrderGoodsVO ordOrderGoodsVO, BigDecimal totalPrice) {
+    public Result confirmOrderInfo(OrdOrderGoodsVO ordOrderGoodsVO) {
         List<OrdOrderGoodsVO> orderInfoListNow = ordOrderGoodsVO.getList();
         if (CollectionUtils.isEmpty(orderInfoListNow)) {
             return Result.getSuccessResult("提交订单失败");
@@ -325,7 +324,7 @@ public class OrderController extends BaseController {
         ordMemberVO.setOrderId(orderPayInfoNow.get(0).getOrderId());
         List<OrderRE> order = orderService.getOrderByMemberVO(ordMemberVO);
         if (!CollectionUtils.isEmpty(order)) {
-            if (!(order.get(0).getStatus() == 1 && order.get(0).getMemberId().equals(getUid()))) {
+            if (order.get(0).getStatus() != 1 || !order.get(0).getMemberId().equals(getUid())) {
                 return Result.getSuccessResult("支付失败");
             }
         }

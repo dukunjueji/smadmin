@@ -120,11 +120,13 @@ public class OrderServiceImpl implements OrderService {
             if (gdDTO == null) {
                 return list;
             }
+            if (!CollectionUtils.isEmpty(gdDTO.getPicUrl())) {
+                ordOrderGoodsRE.setGdsUrl(gdDTO.getPicUrl().get(0).getPicUrl());
+            }
             ordOrderGoodsRE.setGoodsId(orderGodsList.get(i).getGoodsId());
             ordOrderGoodsRE.setGdsName(gdDTO.getName());
             // 对我的订单中的商品重新购买进行判断
             if (orderGodsList.get(0).getOrderId() != null) {
-
                 List<OrderGoodsRE> orderGdsList = OrderClient.getOrderGoodsByOrderId(orderGodsList.get(0).getOrderId().intValue());
                 if (CollectionUtils.isEmpty(orderGdsList)) {
                     return null;
@@ -139,8 +141,7 @@ public class OrderServiceImpl implements OrderService {
             } else if (!CollectionUtils.isEmpty(goodsNumList)) {
                 // 判斷前臺提交的商品数量參數是否與购物车後臺一致
                 for (int j = 0; j < goodsNumList.size(); j++) {
-                    if (goodsNumList.get(j).getGoodsPropertyId().equals(orderGodsList.get(i).getPropertyId())
-                            && goodsNumList.get(j).getGoodsNum().equals(orderGodsList.get(i).getNum())) {
+                    if (goodsNumList.get(j).getGoodsPropertyId().equals(orderGodsList.get(i).getPropertyId())) {
                         ordOrderGoodsRE.setNum(goodsNumList.get(j).getGoodsNum());
                         break;
                     }
