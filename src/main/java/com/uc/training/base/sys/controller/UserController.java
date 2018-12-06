@@ -21,7 +21,6 @@ import com.uc.training.common.utils.TokenUtil;
 import com.uc.training.common.vo.PageVO;
 import com.ycc.base.common.Result;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -101,7 +100,7 @@ public class UserController extends BaseController {
                 List<String> perms = menuService.getUserPerms(userId);
 
                 UserInfoRE userLoginRE = new UserInfoRE();
-                userLoginRE.setUsername(user.getUserName());
+                userLoginRE.setUsername(user.getUsername());
                 userLoginRE.setAdmin(user.getIsAdmin() == 1 ? true : false);
                 userLoginRE.setRoles(roles);
                 userLoginRE.setPerms(perms);
@@ -219,7 +218,7 @@ public class UserController extends BaseController {
         if (user == null || StringUtils.isEmpty(user.getUserName()) || user.getId() == null) {
             return Result.getBusinessException("用户更新失败", null);
         }
-        String oldName = userService.getById(user.getId()).getUserName();
+        String oldName = userService.getById(user.getId()).getUsername();
         if (userService.queryUserCountByName(user.getUserName()) > 0 && !user.getUserName().equals(oldName)) {
             return Result.getBusinessException("该用户已存在", null);
         }

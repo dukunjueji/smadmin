@@ -81,7 +81,7 @@ public interface GoodsService {
      * @param goodsAndPropertyDTO
      * @return
      */
-    public  GoodsStokeRE selectGoodsStatus(GoodsStokeVO goodsAndPropertyDTO);
+    GoodsStokeRE selectGoodsStatus(GoodsStokeVO goodsAndPropertyDTO);
 
     /**
      * 测试高并发下的减库存安全

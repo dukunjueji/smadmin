@@ -35,7 +35,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -173,7 +172,6 @@ public class OrderServiceImpl implements OrderService {
         OrdOrderGoodsRE ordOrderGoodsRE;
         OrdOrderGoodsVO ordOrderGoodsVO;
         List<OrderGoodsRE> orderGdsList = OrderClient.getOrderGoodsByOrderId(orderId.intValue());
-        ;
         if (CollectionUtils.isEmpty(orderGdsList)) {
             return null;
         }
@@ -476,7 +474,7 @@ public class OrderServiceImpl implements OrderService {
                 return 0;
             }
         }
-        if (getOrdOrderVO.get(0).getStatus() == OrderEnum.WAITPAY.getKey().longValue()) {
+        if (getOrdOrderVO.get(0).getStatus().equals(OrderEnum.WAITPAY.getKey())) {
             return OrderClient.updateOrder(ordOrderVO);
         }
         return 0;

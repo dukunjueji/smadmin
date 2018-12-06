@@ -49,7 +49,7 @@ public final class OrderClient {
      */
     private static final String GET_CAR_GOODS_BY_IDS = "smorder.api.getCarGoodsByIds";
     /**
-     * 根据用户id 获取购物车商品表数据数量
+     * 根据订单id 获取购物车商品表数据
      */
     private static final String GET_ORDER_GOODS_BY_ORDER_ID = "smorder.api.getOrderGoodsByOrderId";
     /**
@@ -83,7 +83,7 @@ public final class OrderClient {
     /**
      * 通过会员信息或者订单信息来查找订单信息
      */
-    private static final String GET_ORDER_BY_MEMBERVO = "smorder.api.getOrderByMemberVO";
+    private static final String GET_ORDER_BY_MEMBERDTO = "smorder.api.getOrderByMemberDTO";
     /**
      * 更新订单状态
      */
@@ -178,7 +178,7 @@ public final class OrderClient {
     }
 
     /**
-     * 根据用户id 获取购物车商品表数据数量
+     * 根据订单id 获取购物车商品表数据
      */
     public static List<OrderGoodsRE> getOrderGoodsByOrderId(Integer orderId) {
         try {
@@ -300,7 +300,7 @@ public final class OrderClient {
         try {
             OrdMemberDTO ordMemberDTO = new OrdMemberDTO();
             BeanUtils.copyProperties(ordMemberVO, ordMemberDTO);
-            return (List<OrderRE>) RemoteUtil.exec(GET_ORDER_BY_MEMBERVO, ordMemberDTO);
+            return (List<OrderRE>) RemoteUtil.exec(GET_ORDER_BY_MEMBERDTO, ordMemberDTO);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");

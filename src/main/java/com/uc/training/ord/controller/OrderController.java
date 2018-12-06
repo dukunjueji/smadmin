@@ -127,7 +127,26 @@ public class OrderController extends BaseController {
     }
 
     /**
-     * 获取订单列表(从购物车接口进入)
+     * 获取订单列表
+     *
+     * @param id
+     * @return
+     * @author HQ
+     */
+    @ResponseBody
+    @AccessLogin
+    @RequestMapping(value = "getOrderDetailById.do_", method = RequestMethod.POST)
+    public Result<List<OrderInfoRE>> getOrderDetailById(Long id) {
+        if (id == null) {
+            return Result.getBusinessException("请重新选择订单", null);
+        }
+        OrdMemberVO ordMemberVO = new OrdMemberVO();
+        ordMemberVO.setMemberId(getUid());
+        ordMemberVO.setOrderId(id);
+        return Result.getSuccessResult(orderService.getOrderInfoListByMemberId(ordMemberVO));
+    }
+    /**
+     * 获取提交订单的商品列表(从购物车接口进入)
      *
      * @param goodsList
      * @return
@@ -150,7 +169,7 @@ public class OrderController extends BaseController {
     }
 
     /**
-     * 获取订单列表(从我的订单接口进入)
+     * 获取已经存在的订单商品列表(从我的订单接口进入)
      *
      * @param goodsList
      * @return
@@ -400,7 +419,6 @@ public class OrderController extends BaseController {
     public Result cancelOrder(OrdOrderVO ordOrderVO) {
         ordOrderVO.setStatus(OrderEnum.CANCEL.getKey().longValue());
         ordOrderVO.setMemberId(getUid());
-
         if (orderService.updateOrder(ordOrderVO) > 0) {
             return Result.getSuccessResult(null);
         }

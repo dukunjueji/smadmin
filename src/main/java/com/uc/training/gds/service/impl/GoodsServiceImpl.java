@@ -1,7 +1,5 @@
 package com.uc.training.gds.service.impl;
 
-import com.uc.training.common.enums.GoodsStatusEnum;
-import com.uc.training.common.enums.StokeStatusEnum;
 import com.uc.training.common.vo.PageVO;
 import com.uc.training.gds.dto.GoodsAndPropertyDTO;
 import com.uc.training.gds.dto.GoodsDTO;
@@ -11,13 +9,11 @@ import com.uc.training.gds.re.GoodsDetailRE;
 import com.uc.training.gds.re.GoodsRE;
 import com.uc.training.gds.re.GoodsStokeRE;
 import com.uc.training.gds.re.HotTagRE;
-import com.uc.training.gds.re.PropertyUrlRE;
 import com.uc.training.gds.service.GoodsService;
 import com.uc.training.gds.vo.GoodsStokeVO;
 import com.uc.training.remote.client.GdsClient;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -90,7 +86,7 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     public Double getMemberDiscountPoint(Long uid) {
 //        return memberGradeService.getDiscountByUId(uid);
-        return null;
+        return 0.8;
     }
 
     /**
