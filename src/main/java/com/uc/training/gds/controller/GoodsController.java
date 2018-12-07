@@ -1,11 +1,11 @@
 package com.uc.training.gds.controller;
 
+import com.uc.training.base.bd.service.MemberGradeService;
 import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.common.enums.StokeStatusEnum;
 import com.uc.training.common.redis.RedisConfigEnum;
 import com.uc.training.common.vo.PageVO;
-import com.uc.training.gds.dto.GoodsAndPropertyDTO;
 import com.uc.training.gds.dto.GoodsListDTO;
 import com.uc.training.gds.re.GoodsDetailRE;
 import com.uc.training.gds.re.GoodsRE;
@@ -34,7 +34,9 @@ import java.util.List;
 @RequestMapping("api/gds/goods")
 public class GoodsController extends BaseController {
     @Autowired
-    GoodsService goodsService;
+    private GoodsService goodsService;
+    @Autowired
+    private MemberGradeService memberGradeService;
 
     /**
      * 功能描述: 获取热门推荐
@@ -130,7 +132,7 @@ public class GoodsController extends BaseController {
     @RequestMapping(value = "getMemberDiscountPoint.do_", method = RequestMethod.GET)
     public Result<Double> getMemberDiscountPoint() {
         Long uid = getUid();
-        return Result.getSuccessResult(goodsService.getMemberDiscountPoint(uid));
+        return Result.getSuccessResult(memberGradeService.getDiscountByUId(uid));
     }
 
     /**
