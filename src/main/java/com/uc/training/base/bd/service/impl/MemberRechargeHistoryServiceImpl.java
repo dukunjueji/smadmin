@@ -49,6 +49,10 @@ public class MemberRechargeHistoryServiceImpl implements MemberRechargeHistorySe
      */
     @Override
     public Integer getCountByMemberId(Long memberId) {
-        return BaseClient.getCountByMemberId(memberId);
+        Long count = BaseClient.getCountByMemberId(memberId);
+        if (count == null) {
+            return null;
+        }
+        return count.intValue();
     }
 }

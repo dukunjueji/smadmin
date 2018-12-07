@@ -62,7 +62,7 @@ public class BannerController extends BaseController{
         }
         BannerVO bannerVO = new BannerVO();
         bannerVO.setId(id);
-        bannerVO.setClick(CLICK);
+        bannerVO.setClicks(CLICK);
         return Result.getSuccessResult(bannerService.updateBanner(bannerVO));
     }
 

@@ -1,5 +1,6 @@
 package com.uc.training.common.vo;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -9,7 +10,8 @@ import java.util.List;
  * @date 2018/10/25 17:47
  * @version 1.0 2018/10/25 17:47
  */
-public class PageVO<T> {
+public class PageVO<T>  implements Serializable {
+    private static final long serialVersionUID = -3623596575707376133L;
     /**
      * 页码
      */
