@@ -52,7 +52,7 @@ public class AdminCommentController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/getCommentList.do_", method = RequestMethod.GET)
     public Result getCommentList(CommentListVO commentListVO) {
-        Map map = new HashMap();
+        Map map = new HashMap(16);
         List<CommentRE> list = commentService.getCommentList(commentListVO);
         CommentAvgRE commentAvgVO = commentService.getCommentCountAndAvg(commentListVO);
         map.put("commentList", list);

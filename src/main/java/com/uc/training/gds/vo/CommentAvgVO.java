@@ -33,7 +33,7 @@ public class CommentAvgVO implements Serializable {
     private Integer badCount;
 
     /**
-     *评分平均数
+     * 评分平均数
      */
     private Float sroceAvg;
 
@@ -75,5 +75,16 @@ public class CommentAvgVO implements Serializable {
 
     public void setBadCount(Integer badCount) {
         this.badCount = badCount;
+    }
+
+    @Override
+    public String toString() {
+        return "CommentAvgVO{" +
+                "count=" + count +
+                ", goodCount=" + goodCount +
+                ", midCount=" + midCount +
+                ", badCount=" + badCount +
+                ", sroceAvg=" + sroceAvg +
+                '}';
     }
 }

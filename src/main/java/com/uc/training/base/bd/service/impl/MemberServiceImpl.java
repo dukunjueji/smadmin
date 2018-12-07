@@ -193,7 +193,7 @@ public class MemberServiceImpl implements MemberService {
                 GoodsAndPropertyDTO goodsStockVO = new GoodsAndPropertyDTO();
                 goodsStockVO.setStock(orderPayInfoNow.get(i).getGoodsNum());
                 goodsStockVO.setGoodsId(orderPayInfoNow.get(i).getGoodsId());
-                // goodsService.updateSales(goodsStockVO);
+                goodsService.updateSales(goodsStockVO);
             }
             // 加成长值，积分
             MqVO mqVO1 = new MqVO();
