@@ -353,8 +353,7 @@ public class OrderServiceImpl implements OrderService {
                             return list;
                         }
                     } catch (Exception e) {
-                        com.sun.istack.internal.logging.Logger logger = com.sun.istack.internal.logging.Logger.getLogger(OrdCartGoodsVO.class);
-                        logger.info(e.getMessage());
+                        LOGGER.info(e.getMessage());
                     }
                 }
             } else {
