@@ -44,7 +44,7 @@ public class MemberGradeServiceImpl implements MemberGradeService {
      */
     @Override
     public Double getDiscountByUId(Long id) {
-        return null;
+        return BaseClient.getDiscountByUId(id);
     }
 
 }

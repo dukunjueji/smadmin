@@ -477,7 +477,7 @@ public class OrderController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "getCommentGoodsDetail.do_", method = RequestMethod.GET)
     public Result getCommentGoodsDetail(OrdGoodsVO ordGoodsVO) {
-        Map map = new HashMap();
+        Map map = new HashMap(16);
         ordGoodsVO.setMemberId(getUid());
         List<CommentRE> list = orderService.getCommentOrderGoodsDetail(ordGoodsVO);
         return Result.getSuccessResult(list);

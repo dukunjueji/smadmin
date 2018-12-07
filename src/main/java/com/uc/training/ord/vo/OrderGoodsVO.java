@@ -118,4 +118,17 @@ public class OrderGoodsVO extends BaseModel implements Serializable {
         return this.payPrice;
     }
 
+    @Override
+    public String toString() {
+        return "OrderGoodsVO{" +
+                "id=" + id +
+                ", orderId=" + orderId +
+                ", goodsId=" + goodsId +
+                ", goodsPropertyId=" + goodsPropertyId +
+                ", goodsNum=" + goodsNum +
+                ", salePrice=" + salePrice +
+                ", discountPrice=" + discountPrice +
+                ", payPrice=" + payPrice +
+                '}';
+    }
 }

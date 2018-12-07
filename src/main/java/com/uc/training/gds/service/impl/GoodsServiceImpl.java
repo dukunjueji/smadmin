@@ -85,7 +85,6 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Override
     public Double getMemberDiscountPoint(Long uid) {
-//        return memberGradeService.getDiscountByUId(uid);
         return 0.8;
     }
 
