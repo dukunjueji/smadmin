@@ -102,7 +102,7 @@ public interface RoleService {
      * @param name
      * @return
      */
-    Integer queryCountByName(String name);
+    Long queryCountByName(String name);
 
     /**
      * 通过id查找

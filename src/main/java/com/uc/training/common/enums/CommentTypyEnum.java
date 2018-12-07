@@ -1,5 +1,9 @@
 package com.uc.training.common.enums;
 
+/**
+ * 评论状态枚举
+ * @author DK
+ */
 public enum CommentTypyEnum {
     ALL_COMMENT(1,5,"全部"),
     GOOD_COMMENT(4,5,"好评"),

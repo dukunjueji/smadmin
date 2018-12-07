@@ -1,5 +1,9 @@
 package com.uc.training.common.enums;
 
+/**
+ * 评论枚举
+ * @author DK
+ */
 public enum CommentEnum {
   // 商家未回复
   COMMENT_NO(0,"商家未回复"),

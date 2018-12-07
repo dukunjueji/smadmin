@@ -2,12 +2,14 @@ package com.uc.training.ord.service.impl;
 
 import com.uc.training.base.bd.re.AddressRE;
 import com.uc.training.base.bd.service.AddressService;
+import com.uc.training.base.bd.service.MemberGradeService;
 import com.uc.training.common.enums.GoodsStatusEnum;
 import com.uc.training.common.enums.OrderEnum;
 import com.uc.training.common.enums.UUIDTypeEnum;
 import com.uc.training.common.utils.UUIDUtil;
 import com.uc.training.gds.re.GoodsDetailRE;
 import com.uc.training.gds.re.GoodsStokeRE;
+import com.uc.training.gds.service.CommentService;
 import com.uc.training.gds.service.GoodsService;
 import com.uc.training.gds.vo.GoodsStokeVO;
 import com.uc.training.ord.re.CartGoodsRE;
@@ -35,6 +37,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +55,10 @@ public class OrderServiceImpl implements OrderService {
     private GoodsService goodsService;
     @Autowired
     private AddressService addressService;
+    @Autowired
+    CommentService commentService;
+    @Autowired
+    private MemberGradeService memberGradeService;
 
     /**
      * 根据用户id查询购物车信息表
@@ -120,11 +127,13 @@ public class OrderServiceImpl implements OrderService {
             if (gdDTO == null) {
                 return list;
             }
+            if (!CollectionUtils.isEmpty(gdDTO.getPicUrl())) {
+                ordOrderGoodsRE.setGdsUrl(gdDTO.getPicUrl().get(0).getPicUrl());
+            }
             ordOrderGoodsRE.setGoodsId(orderGodsList.get(i).getGoodsId());
             ordOrderGoodsRE.setGdsName(gdDTO.getName());
             // 对我的订单中的商品重新购买进行判断
             if (orderGodsList.get(0).getOrderId() != null) {
-
                 List<OrderGoodsRE> orderGdsList = OrderClient.getOrderGoodsByOrderId(orderGodsList.get(0).getOrderId().intValue());
                 if (CollectionUtils.isEmpty(orderGdsList)) {
                     return null;
@@ -139,8 +148,7 @@ public class OrderServiceImpl implements OrderService {
             } else if (!CollectionUtils.isEmpty(goodsNumList)) {
                 // 判斷前臺提交的商品数量參數是否與购物车後臺一致
                 for (int j = 0; j < goodsNumList.size(); j++) {
-                    if (goodsNumList.get(j).getGoodsPropertyId().equals(orderGodsList.get(i).getPropertyId())
-                            && goodsNumList.get(j).getGoodsNum().equals(orderGodsList.get(i).getNum())) {
+                    if (goodsNumList.get(j).getGoodsPropertyId().equals(orderGodsList.get(i).getPropertyId())) {
                         ordOrderGoodsRE.setNum(goodsNumList.get(j).getGoodsNum());
                         break;
                     }
@@ -311,7 +319,7 @@ public class OrderServiceImpl implements OrderService {
         //调用远程服务查询购物车商品信息
         List<CartGoodsRE> goodsNumList = OrderClient.getCarGoodsByIds(ordGoodsVO);
         OrdOrderGoodsVO ordOrderGoodsVO;
-        Double memberDiscountPoint = goodsService.getMemberDiscountPoint(orderInfoListNow.get(orderInfoListNow.size() - 2).getMemberId());
+        Double memberDiscountPoint = memberGradeService.getDiscountByUId(orderInfoListNow.get(orderInfoListNow.size() - 2).getMemberId());
         if (memberDiscountPoint == null) {
             return list;
         }
@@ -392,7 +400,7 @@ public class OrderServiceImpl implements OrderService {
             orderGoods.setSalePrice(orderInfoListNow.get(i).getSalePrice());
             orderGoods.setDiscountPrice(orderInfoListNow.get(i).getDiscountPrice());
             orderGoods.setGoodsPropertyId(orderInfoListNow.get(i).getPropertyId());
-            OrderClient.insertOrderGoods(ordGoodsVO);
+            OrderClient.insertOrderGoods(orderGoods);
             //更新商品对应的库存
             goodsStokeVO.setStock(orderGoods.getGoodsNum().longValue());
             goodsStokeVO.setPropertyId(orderGoods.getGoodsPropertyId());
@@ -452,6 +460,7 @@ public class OrderServiceImpl implements OrderService {
     public int updateOrder(OrdOrderVO ordOrderVO) {
         OrdMemberVO ordMemberVO = new OrdMemberVO();
         ordMemberVO.setOrderNum(ordOrderVO.getOrderNum());
+        ordMemberVO.setMemberId(ordOrderVO.getMemberId());
         List<OrderRE> getOrdOrderVO = OrderClient.getOrderByMemberVO(ordMemberVO);
         if (getOrdOrderVO == null) {
             return 0;

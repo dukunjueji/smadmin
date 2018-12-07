@@ -48,7 +48,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Long addRoleAuth(Long rid, List<Long> ids) {
-        return BaseClient.addRoleAuth(rid, ids);
+        return BaseClient.batchInsertAuth(rid, ids);
     }
 
     @Override
@@ -72,7 +72,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Integer queryCountByName(String name) {
+    public Long queryCountByName(String name) {
         return BaseClient.querySysRoleCount(name);
     }
 

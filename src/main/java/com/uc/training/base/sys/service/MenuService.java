@@ -23,7 +23,7 @@ public interface MenuService {
      * @param name
      * @return
      */
-    Integer queryCountByName(String name);
+    Long queryCountByName(String name);
 
     /**
      * 根据用户id获取用户权限列表

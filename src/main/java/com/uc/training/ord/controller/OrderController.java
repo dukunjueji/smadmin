@@ -7,11 +7,13 @@ import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.common.enums.GoodsStatusEnum;
 import com.uc.training.common.enums.OrderEnum;
+import com.uc.training.common.enums.OrderGoodsCommentEnum;
 import com.uc.training.common.enums.SmsTypeEnum;
 import com.uc.training.common.mq.vo.MqVO;
 import com.uc.training.gds.re.GoodsDetailRE;
 import com.uc.training.gds.service.GoodsService;
 import com.uc.training.ord.re.CartGoodsRE;
+import com.uc.training.ord.re.CommentRE;
 import com.uc.training.ord.re.OrdOrderGoodsRE;
 import com.uc.training.ord.re.OrderConfirmRE;
 import com.uc.training.ord.re.OrderGoodsDetailRE;
@@ -35,9 +37,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 订单控制类
@@ -182,8 +185,7 @@ public class OrderController extends BaseController {
         if (CollectionUtils.isEmpty(list)) {
             return Result.getSuccessResult(null);
         }
-        List<OrdOrderGoodsVO> orderGodsList = new ArrayList<>();
-        List<OrdOrderGoodsRE> orderList = orderService.getOrderGoods(orderGodsList, orderId);
+        List<OrdOrderGoodsRE> orderList = orderService.getOrderGoods(list, orderId);
         if (CollectionUtils.isEmpty(orderList)) {
             return Result.getBusinessException("获取订单列表失败", "");
         }
@@ -275,8 +277,7 @@ public class OrderController extends BaseController {
     @ResponseBody
     @AccessLogin
     @RequestMapping(value = "confirmOrderInfo.do_", method = RequestMethod.POST)
-    public Result confirmOrderInfo(OrdOrderGoodsVO ordOrderGoodsVO, BigDecimal totalPrice) {
-
+    public Result confirmOrderInfo(OrdOrderGoodsVO ordOrderGoodsVO) {
         List<OrdOrderGoodsVO> orderInfoListNow = ordOrderGoodsVO.getList();
         if (CollectionUtils.isEmpty(orderInfoListNow)) {
             return Result.getSuccessResult("提交订单失败");
@@ -325,7 +326,6 @@ public class OrderController extends BaseController {
         OrdMemberVO ordMemberVO = new OrdMemberVO();
         ordMemberVO.setMemberId(orderPayInfoNow.get(0).getMemberId());
         ordMemberVO.setOrderId(orderPayInfoNow.get(0).getOrderId());
-
         List<OrderRE> order = orderService.getOrderByMemberVO(ordMemberVO);
         if (!CollectionUtils.isEmpty(order)) {
             if (order.get(0).getStatus() != 1 || !order.get(0).getMemberId().equals(getUid())) {
@@ -477,8 +477,10 @@ public class OrderController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "getCommentGoodsDetail.do_", method = RequestMethod.GET)
     public Result getCommentGoodsDetail(OrdGoodsVO ordGoodsVO) {
+        Map map = new HashMap(16);
         ordGoodsVO.setMemberId(getUid());
-        return Result.getSuccessResult(orderService.getCommentOrderGoodsDetail(ordGoodsVO));
+        List<CommentRE> list = orderService.getCommentOrderGoodsDetail(ordGoodsVO);
+        return Result.getSuccessResult(list);
     }
 
     /**
@@ -491,6 +493,7 @@ public class OrderController extends BaseController {
     @RequestMapping(value = "getCommentGoodsCount.do_", method = RequestMethod.GET)
     public Result getCommentGoodsCount(OrdGoodsVO ordGoodsVO) {
         ordGoodsVO.setMemberId(getUid());
+        ordGoodsVO.setCommentStatus(OrderGoodsCommentEnum.NO_COMMENT.getKey());
         return Result.getSuccessResult(orderService.getCommentGoodsCount(ordGoodsVO));
     }
 

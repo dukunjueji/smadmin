@@ -487,7 +487,7 @@ public  final class GdsClient {
     /**
      * 获取商品详情
      */
-    private static final String UPDATE_SALES = "smgoods.admin.updateSales";
+    private static final String UPDATE_SALES = "smgoods.api.updateSales";
     /**
      * 获取商品详情
      */
