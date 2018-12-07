@@ -57,7 +57,7 @@ public class AdminBannerController extends BaseController {
             return Result.getBusinessException("请重新修改图片！", null);
         }
         bannerVO.setModifyEmp(getUid());
-        bannerVO.setClick(null);
+        bannerVO.setClicks(null);
         return Result.getSuccessResult(bannerService.updateBanner(bannerVO));
     }
 

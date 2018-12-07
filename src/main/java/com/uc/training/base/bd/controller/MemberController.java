@@ -57,6 +57,7 @@ import java.util.regex.Pattern;
 @RequestMapping("api/member")
 public class MemberController extends BaseController {
     private static final Logger LOGGER = LoggerFactory.getLogger(MemberController.class);
+    private static final Integer MESSAGE_STATUS = 1;
     @Autowired
     private MemberService memberService;
 
@@ -300,6 +301,19 @@ public class MemberController extends BaseController {
     }
 
     /**
+     * 获取会员信息
+     * @return
+     */
+    @RequestMapping(value = "/getMemberInfoById.do_", method = RequestMethod.GET)
+    @ResponseBody
+    @AccessLogin
+    public Result<MemberRE> getMemberInfoById(){
+        MemberVO memberVO = new MemberVO();
+        memberVO.setId(getUid());
+        return Result.getSuccessResult(memberService.queryOneMember(memberVO));
+    }
+
+    /**
     *说明：更新会员信息
     *@param memberInfoVO 更新会员信息请求参数
     *@return：com.ycc.base.common.Result
@@ -343,7 +357,7 @@ public class MemberController extends BaseController {
 
         MemberVO memberVO = new MemberVO();
         memberVO.setId(getUid());
-        memberVO.setPassword(sendCodeVO.getNewpassword());
+        memberVO.setPassword(sendCodeVO.getOldpassword());
         MemberRE member = memberService.queryOneMember(memberVO);
         // 校验密码
         if (member == null) {
@@ -431,8 +445,9 @@ public class MemberController extends BaseController {
     public Result updateMessageStatus(@Validated MessageVO messageVO){
         MessageVO message = new MessageVO();
         message.setId(messageVO.getId());
-        message.setIsRead(messageVO.getIsRead());
+        message.setIsRead(MESSAGE_STATUS);
         message.setMemberId(getUid());
+        message.setModifyEmp(getUid());
         return Result.getSuccessResult( messageService.updateMessage(message));
     }
 

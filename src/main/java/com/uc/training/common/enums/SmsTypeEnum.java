@@ -18,7 +18,7 @@ public enum SmsTypeEnum {
     //充值
     RECHARGE("充值", 4, "6674"),
     //充值失败
-    RECHARGE_FAIL("充值失败", 4, "66741"),
+    RECHARGE_FAIL("充值失败", 4, "6678"),
     //订单信息
     ORDER_INFO("订单信息", 5, "6675"),
     //会员等级
