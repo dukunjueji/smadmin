@@ -1,5 +1,6 @@
 package com.uc.training.base.bd.vo;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
@@ -9,7 +10,9 @@ import java.math.BigDecimal;
  * @Version 1.0
  * @date 2018/11/29
  */
-public class MemberVO {
+public class MemberVO implements Serializable {
+
+    private static final long serialVersionUID = 6557847513925405009L;
 
     private Long id;
 
@@ -59,6 +62,11 @@ public class MemberVO {
      */
     private String nickname;
 
+    /**
+     * 昵称
+     */
+    private Long modifyEmp;
+
     public String getTelephone() {
         return telephone;
     }
@@ -89,7 +97,16 @@ public class MemberVO {
                 ", growth=" + growth +
                 ", integral=" + integral +
                 ", nickname='" + nickname + '\'' +
+                ", modifyEmp=" + modifyEmp +
                 '}';
+    }
+
+    public Long getModifyEmp() {
+        return modifyEmp;
+    }
+
+    public void setModifyEmp(Long modifyEmp) {
+        this.modifyEmp = modifyEmp;
     }
 
     public String getImageUrl() {

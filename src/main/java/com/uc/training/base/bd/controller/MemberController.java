@@ -218,6 +218,7 @@ public class MemberController extends BaseController {
             member = new MemberVO();
             member.setPassword(memberRegisterVO.getPassword());
             member.setId(memberRE.getId());
+            member.setModifyEmp(getUid());
             memberService.updateMember(member);
             return Result.getSuccessResult("重置密码成功");
         }else {
@@ -322,22 +323,17 @@ public class MemberController extends BaseController {
     @RequestMapping(value = "/editMemberInfo.do_", method = RequestMethod.POST)
     @ResponseBody
     @AccessLogin
-    public Result<MemberRE> editMemberInfo(@Validated MemberInfoVO memberInfoVO){
+    public Result<Integer> editMemberInfo(@Validated MemberInfoVO memberInfoVO){
         MemberVO member = new MemberVO();
         member.setNickname(memberInfoVO.getNickname());
         member.setEmail(memberInfoVO.getEmail());
         member.setSex(memberInfoVO.getSex());
         member.setId(getUid());
         member.setImageUrl(memberInfoVO.getImageUrl());
+        member.setModifyEmp(getUid());
 
         //更新会员信息
-        memberService.updateMemberInfo(member);
-        //查询指定会员信息
-        member = new MemberVO();
-        member.setId(getUid());
-        MemberRE memberInfoRE = memberService.queryOneMember(member);
-
-        return Result.getSuccessResult(memberInfoRE);
+        return Result.getSuccessResult(memberService.updateMemberInfo(member));
     }
 
     /**
@@ -406,6 +402,7 @@ public class MemberController extends BaseController {
         }
         if((passwordEditVO.getCode()).equals(msg)){
             member.setPassword(passwordEditVO.getNewpassword());
+            member.setModifyEmp(getUid());
             memberService.updateMember(member);
             return Result.getSuccessResult("修改密码成功");
         }else {
