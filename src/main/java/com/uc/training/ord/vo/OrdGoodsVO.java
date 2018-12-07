@@ -1,5 +1,7 @@
 package com.uc.training.ord.vo;
 
+import com.ycc.base.common.BaseDomain;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -10,22 +12,35 @@ import java.util.List;
  * @version 1.0
  * @date 2018/11/2  12:28
  */
-public class OrdGoodsVO implements Serializable {
+public class OrdGoodsVO extends BaseDomain implements Serializable {
 
   /**
-   * 商品id
+   * 会员id
    */
   private Long memberId;
+
+  /**
+   * 商品评价状态
+   */
+  private Integer commentStatus;
 
   /**
    * 购物车商品表ID list
    */
   private List<Long> list;
 
-  /**
+  /*
    *购物车商品属性id list
    */
   private List<Long> goodsPropertyIdList;
+
+  public Integer getCommentStatus() {
+    return commentStatus;
+  }
+
+  public void setCommentStatus(Integer commentStatus) {
+    this.commentStatus = commentStatus;
+  }
 
   public List<Long> getGoodsPropertyIdList() {
     return goodsPropertyIdList;
