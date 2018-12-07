@@ -51,6 +51,7 @@ import java.util.List;
 @Service
 public class OrderServiceImpl implements OrderService {
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderServiceImpl.class);
+    private static final Integer ORDER_INFO_LIST =2;
     @Autowired
     private GoodsService goodsService;
     @Autowired
@@ -247,12 +248,11 @@ public class OrderServiceImpl implements OrderService {
     private List<OrderConfirmRE> validationGoods(List<OrdOrderGoodsVO> orderInfoListNow) {
         List<OrderConfirmRE> list = new ArrayList<>();
         OrderConfirmRE orderConfirmRE = new OrderConfirmRE();
-        int a = 2;
         GoodsStokeVO goodsStokeVO;
-        if (orderInfoListNow.size() <= a) {
+        if (orderInfoListNow.size() <= ORDER_INFO_LIST) {
             return list;
         }
-        for (int i = 0; i < orderInfoListNow.size() - a; i++) {
+        for (int i = 0; i < orderInfoListNow.size() - ORDER_INFO_LIST; i++) {
             //更新库存表、插入用户订单表和订单商品信息表、删除购物车商品信息,判断商品是否删除或者下架和库存是否足够
             goodsStokeVO = new GoodsStokeVO();
             goodsStokeVO.setPropertyId(orderInfoListNow.get(i).getPropertyId());
@@ -309,22 +309,21 @@ public class OrderServiceImpl implements OrderService {
         // 判断前台传来的价格信息是否与购物车一致
         OrdGoodsVO ordGoodsVO = new OrdGoodsVO();
         OrdCartGoodsVO ordCartGoodsVO;
-        ordGoodsVO.setMemberId(orderInfoListNow.get(orderInfoListNow.size() - 2).getMemberId());
+        ordGoodsVO.setMemberId(orderInfoListNow.get(orderInfoListNow.size() - ORDER_INFO_LIST).getMemberId());
         List<Long> propertyIds = new ArrayList<>();
-        int a = 2;
-        for (int i = 0; i < orderInfoListNow.size() - a; i++) {
+        for (int i = 0; i < orderInfoListNow.size() - ORDER_INFO_LIST; i++) {
             propertyIds.add(orderInfoListNow.get(i).getPropertyId());
         }
         ordGoodsVO.setGoodsPropertyIdList(propertyIds);
         //调用远程服务查询购物车商品信息
         List<CartGoodsRE> goodsNumList = OrderClient.getCarGoodsByIds(ordGoodsVO);
         OrdOrderGoodsVO ordOrderGoodsVO;
-        Double memberDiscountPoint = memberGradeService.getDiscountByUId(orderInfoListNow.get(orderInfoListNow.size() - 2).getMemberId());
+        Double memberDiscountPoint = memberGradeService.getDiscountByUId(orderInfoListNow.get(orderInfoListNow.size() - ORDER_INFO_LIST).getMemberId());
         if (memberDiscountPoint == null) {
             return list;
         }
         BigDecimal payPrice = new BigDecimal(0);
-        for (int i = 0; i < orderInfoListNow.size() - a; i++) {
+        for (int i = 0; i < orderInfoListNow.size() - ORDER_INFO_LIST; i++) {
             ordOrderGoodsVO = new OrdOrderGoodsVO();
             GoodsDetailRE gdDTO = goodsService.getGoodsDetailByPropertyId(orderInfoListNow.get(i).getPropertyId());
             if (gdDTO == null) {
@@ -339,7 +338,7 @@ public class OrderServiceImpl implements OrderService {
                         } else {
                             payPrice = gdDTO.getSalePrice().multiply(BigDecimal.valueOf(goodsNumList.get(j).getGoodsNum() * memberDiscountPoint)).add(payPrice);
                         }
-                        payPrice = payPrice.setScale(2, BigDecimal.ROUND_HALF_UP);
+                        payPrice = payPrice.setScale(ORDER_INFO_LIST, BigDecimal.ROUND_HALF_UP);
                         break;
                     }
                 }
@@ -348,13 +347,12 @@ public class OrderServiceImpl implements OrderService {
                     try {
                         ordCartGoodsVO = new OrdCartGoodsVO();
                         ordCartGoodsVO.setPropertyId(orderInfoListNow.get(i).getPropertyId());
-                        ordCartGoodsVO.setMemberId(orderInfoListNow.get(orderInfoListNow.size() - a).getMemberId());
+                        ordCartGoodsVO.setMemberId(orderInfoListNow.get(orderInfoListNow.size() - ORDER_INFO_LIST).getMemberId());
                         if (deleteCarGoods(ordCartGoodsVO) <= 0) {
                             return list;
                         }
                     } catch (Exception e) {
-                        com.sun.istack.internal.logging.Logger logger = com.sun.istack.internal.logging.Logger.getLogger(OrdCartGoodsVO.class);
-                        logger.info(e.getMessage());
+                        LOGGER.info(e.getMessage());
                     }
                 }
             } else {
@@ -366,11 +364,11 @@ public class OrderServiceImpl implements OrderService {
         }
         //插入用户订单表
         OrderVO order = new OrderVO();
-        order.setMemberId(orderInfoListNow.get(orderInfoListNow.size() - a).getMemberId());
+        order.setMemberId(orderInfoListNow.get(orderInfoListNow.size() - ORDER_INFO_LIST).getMemberId());
         order.setOrderPrice(orderInfoListNow.get(orderInfoListNow.size() - 1).getOrderPrice());
         order.setPayPrice(orderInfoListNow.get(orderInfoListNow.size() - 1).getTotalPrice());
         //插入地址信息
-        AddressRE addressRE = addressService.getAddressById(orderInfoListNow.get(orderInfoListNow.size() - 2).getAddressId(), null);
+        AddressRE addressRE = addressService.getAddressById(orderInfoListNow.get(orderInfoListNow.size() - ORDER_INFO_LIST).getAddressId(), null);
         if (addressRE != null) {
             order.setReceiptAddress(addressRE.getProvince() + addressRE.getCity() + addressRE.getDistrict() + addressRE.getAddrDetail());
             order.setReceiptName(addressRE.getReceiver());
@@ -388,7 +386,7 @@ public class OrderServiceImpl implements OrderService {
         }
         //遍历orderInfoListNow
         OrderGoodsVO orderGoods;
-        for (int i = 0; i < orderInfoListNow.size() - a; i++) {
+        for (int i = 0; i < orderInfoListNow.size() - ORDER_INFO_LIST; i++) {
             //插入订单商品信息表
             orderGoods = new OrderGoodsVO();
             goodsStokeVO = new GoodsStokeVO();
