@@ -140,7 +140,7 @@ public class BaseClient {
     /**
      * 新增消息
      */
-    private static final String INSERT_MESSAGE = "smbase.api.updateMessage";
+    private static final String INSERT_MESSAGE = "smbase.api.insertMessage";
 
     /**
      * 通过消息id获取消息的详情
@@ -221,17 +221,17 @@ public class BaseClient {
     /**
      * 根据会员id获取充值记录
      */
-    private static final String GET_RECHARGEHISTORYLIST_BY_MEMBERID = "base.api.getRechargeHistoryListByMemberId";
+    private static final String GET_RECHARGEHISTORYLIST_BY_MEMBERID = "smbase.api.getRechargeHistoryListByMemberId";
 
     /**
      * 根据会员id获取总记录数
      */
-    private static final String GET_COUNT_BY_MEMBERID = "base.api.getCountByMemberId";
+    private static final String GET_COUNT_BY_MEMBERID = "smbase.api.getCountByMemberId";
 
     /**
      * 新增充值记录
      */
-    private static final String INSERT_MEMBERRECHARGEHISTORY = "base.api.insertMemberRechargeHistory";
+    private static final String INSERT_MEMBERRECHARGEHISTORY = "smbase.api.insertMemberRechargeHistory";
 
     /**
      * 查询短信列表
@@ -936,9 +936,9 @@ public class BaseClient {
      * @param memberId
      * @return
      */
-    public static Integer getCountByMemberId(Long memberId) {
+    public static Long getCountByMemberId(Long memberId) {
         try {
-            return (Integer) RemoteUtil.exec(GET_COUNT_BY_MEMBERID, memberId);
+            return (Long) RemoteUtil.exec(GET_COUNT_BY_MEMBERID, memberId);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
@@ -1378,7 +1378,7 @@ public class BaseClient {
      */
     public static List<SysRoleRE> getRoleList() {
         try {
-            return (List<SysRoleRE>) RemoteUtil.exec(GET_ROLE_LIST, null);
+            return (List<SysRoleRE>) RemoteUtil.exec(GET_ROLE_LIST);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");

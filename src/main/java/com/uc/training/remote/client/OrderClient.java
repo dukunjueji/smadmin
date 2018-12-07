@@ -341,7 +341,7 @@ public final class OrderClient {
      */
     public static OrderSaleRE getOrderSaleData() {
         try {
-            return (OrderSaleRE) RemoteUtil.exec(GET_ORDER_SALEDATA, null);
+            return (OrderSaleRE) RemoteUtil.exec(GET_ORDER_SALEDATA);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");

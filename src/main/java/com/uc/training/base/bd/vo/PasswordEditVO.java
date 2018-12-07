@@ -40,7 +40,6 @@ public class PasswordEditVO implements Serializable {
     /**
      * 验证码
      */
-    @NotBlank(message = "验证码不能为空")
     private String code;
 
     public String getOldpassword() {

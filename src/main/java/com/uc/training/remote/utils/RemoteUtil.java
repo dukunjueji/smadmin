@@ -2,6 +2,7 @@ package com.uc.training.remote.utils;
 
 import com.uc.training.common.vo.RemoteResult;
 import com.zuche.framework.remote.RemoteClientFactory;
+import com.zuche.framework.remote.RemoteType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +27,7 @@ public final class RemoteUtil {
     public static Object exec(String serviceName, Object... object) {
         Object result = null;
         try {
-            result = RemoteClientFactory.getInstance().executeToObject(serviceName, object);
+            result = RemoteClientFactory.getInstance(RemoteType.HESSIAN).executeToObject(serviceName, object);
         } catch (Exception e){
             LOGGER.error("调用远程服务异常！",e);
         }
