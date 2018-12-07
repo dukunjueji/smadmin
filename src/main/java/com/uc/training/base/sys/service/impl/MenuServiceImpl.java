@@ -22,7 +22,7 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public Integer queryCountByName(String name) {
+    public Long queryCountByName(String name) {
         return BaseClient.queryMenuCountByName(name);
     }
 

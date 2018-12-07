@@ -3,6 +3,8 @@ package com.uc.training.base.sms.vo;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * @Author: 余旭东
  * @Date: 2018/11/2 18:05
@@ -10,8 +12,8 @@ import org.hibernate.validator.constraints.NotBlank;
  */
 public class SmsTemplateVO {
     private Long id;
-    @NotBlank
-    private String type;
+    @NotNull
+    private Integer type;
     @NotBlank
     @Length(max = 255, message = "标题长度不能超过255位")
     private String title;
@@ -56,11 +58,11 @@ public class SmsTemplateVO {
         this.id = id;
     }
 
-    public String getType() {
+    public Integer getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 
