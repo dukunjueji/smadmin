@@ -326,7 +326,7 @@ public class BaseClient {
     /**
      * 通过菜单名查询菜单数量
      */
-    private static final String QUERY_MENU_COUNT_BY_NAME = "smbase.api.queryMenuCountByName";
+    private static final String QUERY_MENU_COUNT_BY_NAME = "smbase.api.querySysMenuCount";
 
     /**
      * 批量删除
@@ -396,7 +396,7 @@ public class BaseClient {
     /**
      * 查找用户数量
      */
-    private static final String QUERY_SYS_ROLE_COUNT = "smbase.api.querySysRoleCount";
+    private static final String QUERY_SYS_ROLE_COUNT = "smbase.api.querySysRoleCountByName";
 
     /**
      * 通过id查找
@@ -577,11 +577,14 @@ public class BaseClient {
     }
 
     /**
-     * 查找数据总记录数
+     * 通过用户ID获取折扣
+     * @param id
+     * @return
      */
-    public static Long queryMemberGradeCount() {
+    public static Double getDiscountByUId(Long id) {
         try {
-            return (Long) RemoteUtil.exec(QUERY_MEMBER_GRADE_COUNT);
+            MemberGradeRE res = (MemberGradeRE) RemoteUtil.exec(GET_MEMBER_GRADE_BY_ID, id);
+            return res.getDiscount();
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
@@ -590,11 +593,11 @@ public class BaseClient {
     }
 
     /**
-     * 通过用户ID获取会员信息
+     * 查找数据总记录数
      */
-    public static Integer getMemberGradeByUId(Long id) {
+    public static Long queryMemberGradeCount() {
         try {
-            return (Integer) RemoteUtil.exec(GET_MEMBER_GRADE_BY_ID, id);
+            return (Long) RemoteUtil.exec(QUERY_MEMBER_GRADE_COUNT);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
@@ -1198,7 +1201,9 @@ public class BaseClient {
 
     public static Integer queryMenuCountByName(String name) {
         try {
-            return (Integer) RemoteUtil.exec(QUERY_MENU_COUNT_BY_NAME, name);
+            SysMenuDTO menuDTO = new SysMenuDTO();
+            menuDTO.setName(name);
+            return (Integer) RemoteUtil.exec(QUERY_MENU_COUNT_BY_NAME, menuDTO);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
@@ -1419,9 +1424,9 @@ public class BaseClient {
     /**
      * 查找用户数量
      */
-    public static Integer querySysRoleCount(String name) {
+    public static Long querySysRoleCount(String name) {
         try {
-            return (Integer) RemoteUtil.exec(QUERY_SYS_ROLE_COUNT, name);
+            return (Long) RemoteUtil.exec(QUERY_SYS_ROLE_COUNT, name);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
