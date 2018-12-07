@@ -988,7 +988,7 @@ public class BaseClient {
      */
     public static Long querySmsCount(SmsListVO smsListVO) {
         SmsDTO smsDTO = new SmsDTO();
-
+        BeanUtils.copyProperties(smsListVO, smsDTO);
         try {
             return (Long) RemoteUtil.exec(QUERY_SMS_COUNT, smsDTO);
         } catch (Exception e) {
@@ -1199,11 +1199,11 @@ public class BaseClient {
     }
 
 
-    public static Integer queryMenuCountByName(String name) {
+    public static Long queryMenuCountByName(String name) {
         try {
             SysMenuDTO menuDTO = new SysMenuDTO();
             menuDTO.setName(name);
-            return (Integer) RemoteUtil.exec(QUERY_MENU_COUNT_BY_NAME, menuDTO);
+            return (Long) RemoteUtil.exec(QUERY_MENU_COUNT_BY_NAME, menuDTO);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
@@ -1355,7 +1355,10 @@ public class BaseClient {
     /**
      * 批量新增角色权限
      */
-    public static Long batchInsertAuth(SysRoleDTO sysRoleDTO) {
+    public static Long batchInsertAuth(Long rid, List<Long> ids) {
+        SysRoleDTO sysRoleDTO = new SysRoleDTO();
+        sysRoleDTO.setId(rid);
+        sysRoleDTO.setMid(ids);
         try {
             return (Long) RemoteUtil.exec(BATCH_INSERT_AUTH, sysRoleDTO);
         } catch (Exception e) {

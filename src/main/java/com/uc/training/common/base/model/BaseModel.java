@@ -11,6 +11,7 @@ import java.util.Date;
  * @version 1.0 2018/10/25 17:47
  */
 public abstract class BaseModel implements Serializable {
+    private static final long serialVersionUID = -8692250133221918890L;
     /**
      * 创建人
      **/

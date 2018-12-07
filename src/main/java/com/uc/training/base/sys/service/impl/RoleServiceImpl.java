@@ -48,7 +48,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Long addRoleAuth(Long rid, List<Long> ids) {
-        return BaseClient.addRoleAuth(rid, ids);
+        return BaseClient.batchInsertAuth(rid, ids);
     }
 
     @Override
