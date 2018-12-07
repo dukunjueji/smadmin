@@ -30,6 +30,7 @@ import com.uc.training.ord.service.OrderService;
 import com.ycc.base.common.Result;
 import com.ycc.tools.middleware.metaq.MetaQUtils;
 import com.ycc.tools.middleware.redis.RedisCacheUtils;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -372,7 +373,9 @@ public class MemberController extends BaseController {
         if (!passwordEditVO.getNewpassword().equals(passwordEditVO.getConfirmpassword())) {
             return Result.getBusinessException("新的密码和确认密码不一致", null);
         }
-
+        if (StringUtils.isEmpty(passwordEditVO.getCode())) {
+            return Result.getBusinessException("验证码不能为空", null);
+        }
         MemberVO member = new MemberVO();
         member.setId(getUid());
         member.setPassword(passwordEditVO.getOldpassword());
