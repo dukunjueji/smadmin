@@ -4,10 +4,13 @@ import com.uc.training.base.bd.re.AddressRE;
 import com.uc.training.base.bd.service.AddressService;
 import com.uc.training.common.enums.GoodsStatusEnum;
 import com.uc.training.common.enums.OrderEnum;
+import com.uc.training.common.enums.OrderGoodsCommentEnum;
 import com.uc.training.common.enums.UUIDTypeEnum;
 import com.uc.training.common.utils.UUIDUtil;
+import com.uc.training.gds.re.CommentCountRE;
 import com.uc.training.gds.re.GoodsDetailRE;
 import com.uc.training.gds.re.GoodsStokeRE;
+import com.uc.training.gds.service.CommentService;
 import com.uc.training.gds.service.GoodsService;
 import com.uc.training.gds.vo.GoodsStokeVO;
 import com.uc.training.ord.re.CartGoodsRE;
@@ -52,6 +55,8 @@ public class OrderServiceImpl implements OrderService {
     private GoodsService goodsService;
     @Autowired
     private AddressService addressService;
+    @Autowired
+    CommentService commentService;
 
     /**
      * 根据用户id查询购物车信息表
@@ -656,6 +661,18 @@ public class OrderServiceImpl implements OrderService {
                 commentRE.setImgUrl(gdDTO.getPicUrl().get(0).getPicUrl());
             }
             lastGoodsPropertyId = commentRE.getGoodsPropertyId();
+        }
+        if (!ordGoodsVO.getCommentStatus().equals(OrderGoodsCommentEnum.NO_COMMENT.getKey())) {
+            for (CommentRE commentRE : list){
+                List<CommentCountRE> list1 = commentService.getCommentCountByOrderGoodsId(commentRE.getId());
+                if (!org.springframework.util.CollectionUtils.isEmpty(list1)) {
+                    for (CommentCountRE comment:list1) {
+                        if (comment.getParentId() == null) {
+                            commentRE.setCommentId(comment.getId());
+                        }
+                    }
+                }
+            }
         }
         return list;
     }
