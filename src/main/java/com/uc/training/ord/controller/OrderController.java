@@ -7,11 +7,13 @@ import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.common.enums.GoodsStatusEnum;
 import com.uc.training.common.enums.OrderEnum;
+import com.uc.training.common.enums.OrderGoodsCommentEnum;
 import com.uc.training.common.enums.SmsTypeEnum;
 import com.uc.training.common.mq.vo.MqVO;
 import com.uc.training.gds.re.GoodsDetailRE;
 import com.uc.training.gds.service.GoodsService;
 import com.uc.training.ord.re.CartGoodsRE;
+import com.uc.training.ord.re.CommentRE;
 import com.uc.training.ord.re.OrdOrderGoodsRE;
 import com.uc.training.ord.re.OrderConfirmRE;
 import com.uc.training.ord.re.OrderGoodsDetailRE;
@@ -36,7 +38,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 订单控制类
@@ -473,8 +477,10 @@ public class OrderController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "getCommentGoodsDetail.do_", method = RequestMethod.GET)
     public Result getCommentGoodsDetail(OrdGoodsVO ordGoodsVO) {
+        Map map = new HashMap();
         ordGoodsVO.setMemberId(getUid());
-        return Result.getSuccessResult(orderService.getCommentOrderGoodsDetail(ordGoodsVO));
+        List<CommentRE> list = orderService.getCommentOrderGoodsDetail(ordGoodsVO);
+        return Result.getSuccessResult(list);
     }
 
     /**
@@ -487,6 +493,7 @@ public class OrderController extends BaseController {
     @RequestMapping(value = "getCommentGoodsCount.do_", method = RequestMethod.GET)
     public Result getCommentGoodsCount(OrdGoodsVO ordGoodsVO) {
         ordGoodsVO.setMemberId(getUid());
+        ordGoodsVO.setCommentStatus(OrderGoodsCommentEnum.NO_COMMENT.getKey());
         return Result.getSuccessResult(orderService.getCommentGoodsCount(ordGoodsVO));
     }
 
