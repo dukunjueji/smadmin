@@ -279,7 +279,7 @@ public class OrderServiceImpl implements OrderService {
             if (goodsStokeRE.getStoke() < orderInfoListNow.get(i).getNum()) {
                 StringBuilder temp = new StringBuilder();
                 temp.append("您的商品：" + goodsStokeRE.getGoodsName() + "\n" + "规格:");
-                temp.append(goodsStokeRE.getGoodsProperty() + "已经被卖完了，点击返回购物车，再重新选择");
+                temp.append(goodsStokeRE.getGoodsProperty() + "已经达到商品最大库存量，点击返回购物车，再重新选择");
                 orderConfirmRE.setShowStatus(temp.toString());
                 orderConfirmRE.setGoodsStatus(OrderEnum.NOORDER.getKey());
                 list.add(orderConfirmRE);
