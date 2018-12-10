@@ -146,7 +146,7 @@ public class SmsTemplateServiceImpl implements SmsTemplateService {
         smsTemplateListVO.setCode(generateSmsVO.getCode());
         List<SmsTemplateRE> smsTemplateRE = BaseClient.getTemplateList(smsTemplateListVO);
         //查找短信模板存在
-        if (CollectionUtils.isEmpty(smsTemplateRE) || smsTemplateRE.size() == 1) {
+        if (CollectionUtils.isEmpty(smsTemplateRE) || smsTemplateRE.size() != 1) {
             return SmsStatusEnum.TEMPLATE_NOT_EXIST.getKey();
         }
         //获取短信内容
