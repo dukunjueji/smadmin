@@ -1,7 +1,9 @@
 package com.uc.training.ord.controller;
 
+import com.uc.training.base.bd.re.MemberRE;
 import com.uc.training.base.bd.service.MemberService;
 import com.uc.training.base.bd.vo.MemberInfoVO;
+import com.uc.training.base.bd.vo.MemberVO;
 import com.uc.training.base.sms.vo.GenerateSmsVO;
 import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
@@ -335,11 +337,16 @@ public class OrderController extends BaseController {
         //生成消息体
         MqVO mqVO = new MqVO();
         GenerateSmsVO generateSmsVO = new GenerateSmsVO();
+        MemberVO memberVO = new MemberVO();
+        memberVO.setId(getUid());
+        MemberRE memberRE = memberService.queryOneMember(memberVO);
         //根据订单号获取手机号
         generateSmsVO.setTelephone(order.get(0).getReceiptTel());
         generateSmsVO.setMessage(order.get(0).getOrderNum());
         generateSmsVO.setCode(SmsTypeEnum.ORDER_INFO.getCode());
         generateSmsVO.setType(SmsTypeEnum.ORDER_INFO.getType());
+        generateSmsVO.setEmil(memberRE.getEmail());
+        generateSmsVO.setEmil(order.get(0).getTeag());
         mqVO.setGenerateSmsVO(generateSmsVO);
         List<OrderConfirmRE> list = memberService.queryBalances(orderPayInfoNow, mqVO);
         if (CollectionUtils.isEmpty(list)) {

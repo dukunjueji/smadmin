@@ -144,16 +144,17 @@ public class SmsTemplateServiceImpl implements SmsTemplateService {
         }
         SmsTemplateListVO smsTemplateListVO = new SmsTemplateListVO();
         smsTemplateListVO.setCode(generateSmsVO.getCode());
-        Long count = BaseClient.getTemplateListCount(smsTemplateListVO);
+        List<SmsTemplateRE> smsTemplateRE = BaseClient.getTemplateList(smsTemplateListVO);
         //查找短信模板存在
-        if (count == null || count != 1) {
+        if (CollectionUtils.isEmpty(smsTemplateRE) || smsTemplateRE.size() == 1) {
             return SmsStatusEnum.TEMPLATE_NOT_EXIST.getKey();
         }
-
         //获取短信内容
         String content = BaseClient.generateSms(generateSmsVO);
+        //邮件标题
+        generateSmsVO.setEmailTitle(smsTemplateRE.get(0).getTitle());
         // 发送短信
-        Integer status = this.smsService.sendSys(generateSmsVO.getTelephone(), content);
+        Integer status = this.smsService.sendSys(generateSmsVO, content);
 
         SmsVO sms = new SmsVO();
         sms.setType(generateSmsVO.getType());

@@ -1,6 +1,7 @@
 package com.uc.training.base.sms.service;
 
 import com.uc.training.base.sms.re.SmsRE;
+import com.uc.training.base.sms.vo.GenerateSmsVO;
 import com.uc.training.base.sms.vo.SmsListVO;
 import com.uc.training.base.sms.vo.SmsVO;
 
@@ -29,11 +30,11 @@ public interface SmsService {
 
     /**
      * 发送短信
-     * @param telephone
+     * @param generateSmsVO
      * @param content
      * @return
      */
-    Integer sendSys(String telephone, String content);
+    Integer sendSys(GenerateSmsVO generateSmsVO, String content);
 
     /**
      * 新增短信

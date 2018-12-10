@@ -16,6 +16,14 @@ public class GenerateSmsVO implements Serializable {
      * 手机号
      */
     private String telephone;
+    /**
+     * 邮箱标题
+     */
+    private String emailTitle;
+    /**
+     * 邮箱
+     */
+    private String emil;
 
     /**
      * 信息
@@ -40,11 +48,29 @@ public class GenerateSmsVO implements Serializable {
     public String toString() {
         return "GenerateSmsVO{" +
                 "telephone='" + telephone + '\'' +
+                ", emailTitle='" + emailTitle + '\'' +
+                ", emil='" + emil + '\'' +
                 ", message='" + message + '\'' +
                 ", code='" + code + '\'' +
                 ", type=" + type +
                 ", rechargeStatus=" + rechargeStatus +
                 '}';
+    }
+
+    public String getEmailTitle() {
+        return emailTitle;
+    }
+
+    public void setEmailTitle(String emailTitle) {
+        this.emailTitle = emailTitle;
+    }
+
+    public String getEmil() {
+        return emil;
+    }
+
+    public void setEmil(String emil) {
+        this.emil = emil;
     }
 
     public String getTelephone() {

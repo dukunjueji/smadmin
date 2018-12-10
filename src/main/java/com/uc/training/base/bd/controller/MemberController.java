@@ -89,6 +89,7 @@ public class MemberController extends BaseController {
         generateSmsVO.setTelephone(createCodeVO.getTelephone());
         generateSmsVO.setCode(SmsTypeEnum.REGISTER.getCode());
         generateSmsVO.setType(SmsTypeEnum.REGISTER.getType());
+        generateSmsVO.setEmil(createCodeVO.getEmail());
         mqVO.setGenerateSmsVO(generateSmsVO);
 
         MetaQUtils.sendMsgNoException(new MqProducer(mqVO));
@@ -108,6 +109,7 @@ public class MemberController extends BaseController {
         MemberVO member = new MemberVO();
         member.setTelephone(memberRegisterVO.getTelephone());
         member.setPassword(memberRegisterVO.getPassword());
+        member.setEmail(memberRegisterVO.getEmail());
         MemberRE mem = memberService.queryOneMember(member);
         if(mem != null){
             return Result.getBusinessException("手机号码已被注册",null);
@@ -186,6 +188,7 @@ public class MemberController extends BaseController {
         generateSmsVO.setTelephone(createCodeVO.getTelephone());
         generateSmsVO.setCode(SmsTypeEnum.FORGET_PASSWORD.getCode());
         generateSmsVO.setType(SmsTypeEnum.FORGET_PASSWORD.getType());
+        generateSmsVO.setEmil(memberRE.getEmail());
         mqVO.setGenerateSmsVO(generateSmsVO);
 
         MetaQUtils.sendMsgNoException(new MqProducer(mqVO));
@@ -243,6 +246,7 @@ public class MemberController extends BaseController {
         }
         MemberVO memberVO = new MemberVO();
         memberVO.setId(getUid());
+        MemberRE memberRE = memberService.queryOneMember(memberVO);
         memberVO.setBalance(chargeBalanceVO.getBalance());
         BigDecimal bigDecimal = new BigDecimal(0);
         int i = chargeBalanceVO.getBalance().compareTo(bigDecimal);
@@ -271,7 +275,7 @@ public class MemberController extends BaseController {
             generateSmsVO.setMessage(chargeBalanceVO.getBalance().toString());
             generateSmsVO.setCode(SmsTypeEnum.RECHARGE.getCode());
             generateSmsVO.setType(SmsTypeEnum.RECHARGE.getType());
-
+            generateSmsVO.setEmil(memberRE.getEmail());
             mqVO.setGenerateSmsVO(generateSmsVO);
 
             return Result.getSuccessResult(memberService.memberRecharge(memberVO, mqVO));
@@ -365,6 +369,7 @@ public class MemberController extends BaseController {
         generateSmsVO.setTelephone(member.getTelephone());
         generateSmsVO.setCode(SmsTypeEnum.CHANGE_PASSWORD.getCode());
         generateSmsVO.setType(SmsTypeEnum.CHANGE_PASSWORD.getType());
+        generateSmsVO.setEmil(member.getEmail());
         mqVO.setGenerateSmsVO(generateSmsVO);
         MetaQUtils.sendMsgNoException(new MqProducer(mqVO));
         return Result.getSuccessResult("验证码已发送");
