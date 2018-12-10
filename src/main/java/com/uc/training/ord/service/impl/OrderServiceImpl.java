@@ -460,7 +460,7 @@ public class OrderServiceImpl implements OrderService {
         ordMemberVO.setOrderNum(ordOrderVO.getOrderNum());
         ordMemberVO.setMemberId(ordOrderVO.getMemberId());
         List<OrderRE> getOrdOrderVO = OrderClient.getOrderByMemberVO(ordMemberVO);
-        if (getOrdOrderVO == null) {
+        if (CollectionUtils.isEmpty(getOrdOrderVO)) {
             return 0;
         }
         //如果是取消订单回退库存
@@ -481,10 +481,7 @@ public class OrderServiceImpl implements OrderService {
                 return 0;
             }
         }
-        if (getOrdOrderVO.get(0).getStatus().equals(OrderEnum.WAITPAY.getKey())) {
-            return OrderClient.updateOrder(ordOrderVO);
-        }
-        return 0;
+        return OrderClient.updateOrder(ordOrderVO);
     }
 
 
