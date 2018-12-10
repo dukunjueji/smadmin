@@ -76,6 +76,10 @@ public class MemberController extends BaseController {
     @ResponseBody
     @AccessLogin(required = false)
     public Result createCode(@Validated CreateCodeVO createCodeVO) {
+        if (StringUtils.isEmpty(createCodeVO.getEmail()) ||
+                createCodeVO.getEmail().matches("^\\w+((-\\w+)|(\\.\\w+))*\\@[A-Za-z0-9]+((\\.|-)[A-Za-z0-9]+)*\\.[A-Za-z0-9]+$")) {
+            return Result.getBusinessException("邮箱格式不正确！", null);
+        }
         //根据手机号查询会员信息
         MemberVO memberVO = new MemberVO();
         memberVO.setTelephone(createCodeVO.getTelephone());
@@ -106,6 +110,10 @@ public class MemberController extends BaseController {
     @ResponseBody
     @AccessLogin(required = false)
     public Result memberRegister(@Validated MemberRegisterVO memberRegisterVO){
+        if (StringUtils.isEmpty(memberRegisterVO.getEmail()) ||
+                memberRegisterVO.getEmail().matches("^\\w+((-\\w+)|(\\.\\w+))*\\@[A-Za-z0-9]+((\\.|-)[A-Za-z0-9]+)*\\.[A-Za-z0-9]+$")) {
+            return Result.getBusinessException("邮箱格式不正确！", null);
+        }
         MemberVO member = new MemberVO();
         member.setTelephone(memberRegisterVO.getTelephone());
         member.setPassword(memberRegisterVO.getPassword());

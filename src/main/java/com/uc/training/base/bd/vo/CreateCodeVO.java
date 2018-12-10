@@ -1,7 +1,5 @@
 package com.uc.training.base.bd.vo;
 
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.Pattern;
@@ -26,9 +24,6 @@ public class CreateCodeVO implements Serializable {
     /**
      * 电子邮箱
      */
-    @NotBlank(message = "邮箱不能为空")
-    @Length(max = 30, message = "邮箱长度过长")
-    @Email(message = "请输入正确格式的邮箱")
     private String email;
 
     public String getTelephone() {
