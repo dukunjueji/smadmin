@@ -68,7 +68,7 @@ import java.util.List;
  * @date 2018/11/22
  */
 @Service
-public class BaseClient {
+public final class BaseClient {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BaseClient.class.getName());
 
@@ -466,7 +466,7 @@ public class BaseClient {
         BeanUtils.copyProperties(memberVO, memberDTO);
         try {
             return (MemberRE) RemoteUtil.exec(QUERY_ONE_MEMBER, memberDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -481,7 +481,7 @@ public class BaseClient {
         BeanUtils.copyProperties(memberListVO, memberDTO);
         try {
             return (Long) RemoteUtil.exec(QUERY_MEMBER_COUNT, memberDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -496,7 +496,7 @@ public class BaseClient {
         BeanUtils.copyProperties(memberListVO, memberDTO);
         try {
             return (List<MemberRE>) RemoteUtil.exec(QUERY_MEMBER_LIST, memberDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -511,7 +511,7 @@ public class BaseClient {
         BeanUtils.copyProperties(member, memberDTO);
         try {
             return (Integer) RemoteUtil.exec(UPDATE_MEMBER, memberDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -526,7 +526,7 @@ public class BaseClient {
         BeanUtils.copyProperties(member, memberDTO);
         try {
             return (Long) RemoteUtil.exec(INSERT_MEMBER, memberDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -539,7 +539,7 @@ public class BaseClient {
     public static MemberDetailRE getMemberDetailById(Long id) {
         try {
             return (MemberDetailRE) RemoteUtil.exec(GET_MEMBER_DETAIL_BY_ID, id);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -554,7 +554,7 @@ public class BaseClient {
         BeanUtils.copyProperties(memberGradeVO, memberGradeDTO);
         try {
             return (List<MemberGradeRE>) RemoteUtil.exec(QUERY_MEMBER_GRADE_LIST, memberGradeDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -569,7 +569,7 @@ public class BaseClient {
         BeanUtils.copyProperties(memberGradeVO, memberGradeDTO);
         try {
             return (Integer) RemoteUtil.exec(MODIFY_MEMBER_GRADE, memberGradeDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -585,7 +585,7 @@ public class BaseClient {
         try {
             MemberGradeRE res = (MemberGradeRE) RemoteUtil.exec(GET_MEMBER_GRADE_BY_ID, id);
             return res.getDiscount();
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -598,7 +598,7 @@ public class BaseClient {
     public static Long queryMemberGradeCount() {
         try {
             return (Long) RemoteUtil.exec(QUERY_MEMBER_GRADE_COUNT);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -613,7 +613,7 @@ public class BaseClient {
         BeanUtils.copyProperties(messageVO, messageDTO);
         try {
             return (Integer) RemoteUtil.exec(QUERY_MESSAGE_COUNT, messageDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -628,7 +628,7 @@ public class BaseClient {
         BeanUtils.copyProperties(messageVO, messageDTO);
         try {
             return (List<MessageRE>) RemoteUtil.exec(QUERY_MESSAGE_LIST, messageDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -643,7 +643,7 @@ public class BaseClient {
         BeanUtils.copyProperties(message, messageDTO);
         try {
             return (Integer) RemoteUtil.exec(UPDATE_MESSAGE, messageDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -659,7 +659,7 @@ public class BaseClient {
         messageDTO.setContent(messageVO.getContent());
         try {
             return (Long) RemoteUtil.exec(INSERT_MESSAGE, messageDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -674,7 +674,7 @@ public class BaseClient {
         BeanUtils.copyProperties(messageVO, messageDTO);
         try {
             return (MessageRE) RemoteUtil.exec(QUERY_ONE_MESSAGE_BY_ID, messageDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -690,7 +690,7 @@ public class BaseClient {
         loginLogDTO.setMemberId(loginLog.getMemberId());
         try {
             return (Long) RemoteUtil.exec(INSERT_LOGIN_LOG, loginLogDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -705,7 +705,7 @@ public class BaseClient {
         loginLogDTO.setMemberId(loginVO.getMemberId());
         try {
             return (Long) RemoteUtil.exec(QUERY_LOGIN_COUNT, loginLogDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -722,7 +722,7 @@ public class BaseClient {
         integralDetaillDTO.setType(integralVO.getType());
         try {
             return (Long) RemoteUtil.exec(ADD_INTEGRAL_DETAIL, integralDetaillDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -737,7 +737,7 @@ public class BaseClient {
         BeanUtils.copyProperties(bannerVO, bannerDTO);
         try {
             return (List<BannerRE>) RemoteUtil.exec(GET_BANNER_LIST, bannerDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -752,7 +752,7 @@ public class BaseClient {
         BeanUtils.copyProperties(bannerListVO, bannerDTO);
         try {
             return (List<BannerRE>) RemoteUtil.exec(GET_ALL_BANNER_LIST, bannerDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -767,7 +767,7 @@ public class BaseClient {
         BeanUtils.copyProperties(banner, bannerDTO);
         try {
             return (Integer) RemoteUtil.exec(UPDATE_BANNER, bannerDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -780,7 +780,7 @@ public class BaseClient {
     public static Integer deleteBannerById(Long id) {
         try {
             return (Integer) RemoteUtil.exec(DELETE_BANNER_BY_ID, id);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -795,7 +795,7 @@ public class BaseClient {
         BeanUtils.copyProperties(bannerVO, bannerDTO);
         try {
             return (Long) RemoteUtil.exec(INSERT_BANNER, bannerDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -810,7 +810,7 @@ public class BaseClient {
         BeanUtils.copyProperties(bannerListVO, bannerDTO);
         try {
             return (Long) RemoteUtil.exec(GET_BANNER_COUNT, bannerDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -827,7 +827,7 @@ public class BaseClient {
         growthDetailDTO.setType(growthVO.getType());
         try {
             return (Long) RemoteUtil.exec(GET_BANNER_COUNT, growthDetailDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -845,7 +845,7 @@ public class BaseClient {
         addressDTO.setId(id);
         try {
             return (AddressRE) RemoteUtil.exec(GET_ADDRESS_BY_ID, addressDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -860,7 +860,7 @@ public class BaseClient {
         BeanUtils.copyProperties(addressVO, addressDTO);
         try {
             return (List<AddressRE>) RemoteUtil.exec(GET_ADDRESS_LIST, addressDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -875,7 +875,7 @@ public class BaseClient {
         BeanUtils.copyProperties(address, addressDTO);
         try {
             return (Long) RemoteUtil.exec(INSERT_ADDRESS, addressDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -890,7 +890,7 @@ public class BaseClient {
         BeanUtils.copyProperties(addressVO, addressDTO);
         try {
             return (Integer) RemoteUtil.exec(UPDATE_ADDRESS_BY_ID, addressDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -906,7 +906,7 @@ public class BaseClient {
         addressDTO.setId(address.getId());
         try {
             return (Integer) RemoteUtil.exec(DELETE_ADDRESS_BY_ID, addressDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -942,7 +942,7 @@ public class BaseClient {
     public static Long getCountByMemberId(Long memberId) {
         try {
             return (Long) RemoteUtil.exec(GET_COUNT_BY_MEMBERID, memberId);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
             return null;
@@ -961,7 +961,7 @@ public class BaseClient {
         BeanUtils.copyProperties(memberRechargeHistoryModelVO, memberRechargeHistoryModelDTO);
         try {
             return (Long) RemoteUtil.exec(INSERT_MEMBERRECHARGEHISTORY, memberRechargeHistoryModelDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
             return null;
@@ -976,7 +976,7 @@ public class BaseClient {
         BeanUtils.copyProperties(smsVO, smsDTO);
         try {
             return (List<SmsRE>) RemoteUtil.exec(GET_SMS_LIST, smsDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -991,7 +991,7 @@ public class BaseClient {
         BeanUtils.copyProperties(smsListVO, smsDTO);
         try {
             return (Long) RemoteUtil.exec(QUERY_SMS_COUNT, smsDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -1004,7 +1004,7 @@ public class BaseClient {
     public static SmsRE getSms(SmsDTO smsDTO) {
         try {
             return (SmsRE) RemoteUtil.exec(GET_SMS, smsDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -1019,7 +1019,7 @@ public class BaseClient {
         BeanUtils.copyProperties(smsVO, smsDTO);
         try {
             return (Long) RemoteUtil.exec(INSERT_SMS, smsDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -1034,7 +1034,7 @@ public class BaseClient {
         BeanUtils.copyProperties(smsTemplate, smsTemplateDTO);
         try {
             return (Long) RemoteUtil.exec(ADD_TEMPLATE, smsTemplateDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -1047,7 +1047,7 @@ public class BaseClient {
     public static Integer deleteTemplateById(Long id) {
         try {
             return (Integer) RemoteUtil.exec(DELETE_TEMPLATE_BY_ID, id);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -1062,7 +1062,7 @@ public class BaseClient {
         BeanUtils.copyProperties(smsTemplate, smsTemplateDTO);
         try {
             return (Integer) RemoteUtil.exec(MODIFY_TEMPLATE, smsTemplateDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -1075,7 +1075,7 @@ public class BaseClient {
     public static SmsTemplateRE getTemplateById(Long id) {
         try {
             return (SmsTemplateRE) RemoteUtil.exec(GET_TEMPLATE_BY_ID, id);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -1093,7 +1093,7 @@ public class BaseClient {
         smsTemplateDTO.setPageSize(smsTemplateListVO.getPageSize());
         try {
             return (List<SmsTemplateRE>) RemoteUtil.exec(GET_TEMPLATE_LIST, smsTemplateDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -1108,7 +1108,7 @@ public class BaseClient {
         BeanUtils.copyProperties(smsTemplateListVO, smsTemplateDTO);
         try {
             return (Long) RemoteUtil.exec(GET_TEMPLATE_LIST_COUNT, smsTemplateDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -1121,7 +1121,7 @@ public class BaseClient {
     public static Integer batchDeleteSmsTempleById(List<Long> list) {
         try {
             return (Integer) RemoteUtil.exec(BATCH_DELETE_SMS_TEMPLATE_BY_ID, list);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -1137,7 +1137,7 @@ public class BaseClient {
         smsTemplateDTO.setMessage(generateSmsVO.getMessage());
         try {
             return (String) RemoteUtil.exec(GENERATE_SMS, smsTemplateDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -1150,7 +1150,7 @@ public class BaseClient {
     public static List<String> getUserPerms(Long userId) {
         try {
             return (List<String>) RemoteUtil.exec(GET_USER_PERMS, userId);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -1163,7 +1163,7 @@ public class BaseClient {
     public static List<SysMenuRE> getMenuList() {
         try {
             return (List<SysMenuRE>) RemoteUtil.exec(GET_MENU_LIST);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -1176,7 +1176,7 @@ public class BaseClient {
     public static SysMenuRE getSysMenuById(Long id) {
         try {
             return (SysMenuRE) RemoteUtil.exec(GET_SYS_MENU_BY_ID, id);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -1191,7 +1191,7 @@ public class BaseClient {
         BeanUtils.copyProperties(menuVO, sysMenuDTO);
         try {
             return (Long) RemoteUtil.exec(ADD_MENU, sysMenuDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -1204,7 +1204,7 @@ public class BaseClient {
             SysMenuDTO menuDTO = new SysMenuDTO();
             menuDTO.setName(name);
             return (Long) RemoteUtil.exec(QUERY_MENU_COUNT_BY_NAME, menuDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -1217,7 +1217,7 @@ public class BaseClient {
     public static Integer deleteSysMenuById(Long id) {
         try {
             return (Integer) RemoteUtil.exec(DELETE_SYS_MENU_BY_ID, id);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -1232,7 +1232,7 @@ public class BaseClient {
         BeanUtils.copyProperties(menu, menuDTO);
         try {
             return (Integer) RemoteUtil.exec(UPDATE_MENU, menuDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -1245,7 +1245,7 @@ public class BaseClient {
     public static Integer batchDeleteSysMenu(List<Long> ids) {
         try {
             return (Integer) RemoteUtil.exec(BATCH_DELETE_SYS_MENU, ids);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -1258,7 +1258,7 @@ public class BaseClient {
     public static Integer querySysMenuCount(SysMenuDTO sysMenuDTO) {
         try {
             return (Integer) RemoteUtil.exec(QUERY_SYS_MENU_COUNT, sysMenuDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -1271,7 +1271,7 @@ public class BaseClient {
     public static List<String> getUserRoles(Long userId) {
         try {
             return (List<String>) RemoteUtil.exec(GET_USER_ROLES, userId);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -1286,7 +1286,7 @@ public class BaseClient {
         BeanUtils.copyProperties(roleListVO, roleDTO);
         try {
             return (List<SysRoleRE>) RemoteUtil.exec(GET_ROLE_PAGE, roleDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -1301,7 +1301,7 @@ public class BaseClient {
         BeanUtils.copyProperties(roleListVO, roleDTO);
         try {
             return (Long) RemoteUtil.exec(GET_SYS_ROLE_COUNT, roleDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -1316,7 +1316,7 @@ public class BaseClient {
         BeanUtils.copyProperties(role, roleDTO);
         try {
             return (Integer) RemoteUtil.exec(UPDATE_ROLE, roleDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -1329,7 +1329,7 @@ public class BaseClient {
     public static Integer deleteSysRoleById(Long id) {
         try {
             return (Integer) RemoteUtil.exec(DELETE_SYS_ROLE_BY_ID, id);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -1345,7 +1345,7 @@ public class BaseClient {
         roleDTO.setCreateEmp(createEmp);
         try {
             return (Long) RemoteUtil.exec(ADD_ROLE, roleDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -1361,7 +1361,7 @@ public class BaseClient {
         sysRoleDTO.setMid(ids);
         try {
             return (Long) RemoteUtil.exec(BATCH_INSERT_AUTH, sysRoleDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -1374,7 +1374,7 @@ public class BaseClient {
     public static List<Long> getRoleMenuIdByRid(Long rid) {
         try {
             return (List<Long>) RemoteUtil.exec(GET_ROLE_MENU_ID_BY_RID, rid);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -1387,7 +1387,7 @@ public class BaseClient {
     public static List<SysRoleRE> getRoleList() {
         try {
             return (List<SysRoleRE>) RemoteUtil.exec(GET_ROLE_LIST);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -1400,7 +1400,7 @@ public class BaseClient {
     public static List<Long> getRoleListByUid(Long uid) {
         try {
             return (List<Long>) RemoteUtil.exec(GET_ROLE_LIST_BY_UID, uid);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -1417,7 +1417,7 @@ public class BaseClient {
         sysUserRoleDTO.setCreateEmp(createEmp);
         try {
             return (Long) RemoteUtil.exec(ADD_USER_ROLE, sysUserRoleDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -1430,7 +1430,7 @@ public class BaseClient {
     public static Long querySysRoleCount(String name) {
         try {
             return (Long) RemoteUtil.exec(QUERY_SYS_ROLE_COUNT, name);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -1443,7 +1443,7 @@ public class BaseClient {
     public static SysRoleRE getSysRoleById(Long id) {
         try {
             return (SysRoleRE) RemoteUtil.exec(GET_SYS_ROLE_BY_ID, id);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -1458,7 +1458,7 @@ public class BaseClient {
         BeanUtils.copyProperties(userLoginVO, userDTO);
         try {
             return (SysUserRE) RemoteUtil.exec(GET_USER_LOGIN, userDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -1471,7 +1471,7 @@ public class BaseClient {
     public static SysUserRE getSysUserById(Long id) {
         try {
             return (SysUserRE) RemoteUtil.exec(GET_SYS_USER_BY_ID, id);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -1484,7 +1484,7 @@ public class BaseClient {
     public static Integer updatePassword(SysUserDTO sysUserDTO) {
         try {
             return (Integer) RemoteUtil.exec(UPDATE_PASSWORD, sysUserDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -1499,7 +1499,7 @@ public class BaseClient {
         BeanUtils.copyProperties(userListVO, sysUserDTO);
         try {
             return (List<SysUserRE>) RemoteUtil.exec(GET_USER_LIST, sysUserDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -1514,7 +1514,7 @@ public class BaseClient {
         BeanUtils.copyProperties(userListVO, sysUserDTO);
         try {
             return (Long) RemoteUtil.exec(GET_USER_COUNT, sysUserDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -1531,7 +1531,7 @@ public class BaseClient {
         userDTO.setPassword(pwd);
         try {
             return (Long) RemoteUtil.exec(ADD_USER, userDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -1544,7 +1544,7 @@ public class BaseClient {
     public static Integer deleteSysUserById(Long id) {
         try {
             return (Integer) RemoteUtil.exec(DELETE_SYS_USER_BY_ID, id);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -1560,7 +1560,7 @@ public class BaseClient {
         userDTO.setModifyEmp(uid);
         try {
             return (Integer) RemoteUtil.exec(UPDATE_USER, userDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -1573,7 +1573,7 @@ public class BaseClient {
     public static List<SysMenuRE> getMenuListByUserId(Long uid) {
         try {
             return (List<SysMenuRE>) RemoteUtil.exec(GET_MENU_LIST_BY_USER_ID, uid);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -1586,7 +1586,7 @@ public class BaseClient {
         sysRoleMenuDTO.setRoleId(rid);
         try {
             return (Long) RemoteUtil.exec(ADD_ROLE_AUTH, sysRoleMenuDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -1596,7 +1596,7 @@ public class BaseClient {
     public static Long queryUserCountByName(String name) {
         try {
             return (Long) RemoteUtil.exec(QUERY_USER_COUNT_BY_NAME, name);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
