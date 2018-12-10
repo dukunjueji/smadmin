@@ -42,7 +42,6 @@ public class OrdRPCDemo extends AbstractTestNGSpringContextTests {
         SpringApplicationContext.initApplicationContext(applicationContext);
         MemberDTO memberDTO = new MemberDTO();
         memberDTO.setId(1L);
-         Integer orderId = 23;
         RemoteResult<List<OrderGoodsRE>> re1 = (RemoteResult<List<OrderGoodsRE>>) RemoteClientFactory.getInstance(RemoteType.HESSIAN)
                 .executeToObject(service4, memberDTO);
         System.out.println(re1);

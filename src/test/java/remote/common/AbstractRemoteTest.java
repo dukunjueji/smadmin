@@ -30,12 +30,12 @@ import org.testng.annotations.BeforeClass;
 @ContextConfiguration(locations={"classpath:frameworkContext.xml"})
 public class AbstractRemoteTest extends AbstractTestNGSpringContextTests {
     String service = "smgoods.api.getGoodsDetailByPropertyId";
-    protected RemoteClient client;
+    //protected RemoteClient client;
 
     @Before
     public final void beforeClass(){
         SpringApplicationContext.initApplicationContext(applicationContext);
-        client = RemoteClientFactory.getInstance(RemoteType.TCP);
+        //client = RemoteClientFactory.getInstance(RemoteType.TCP);
     }
 
 

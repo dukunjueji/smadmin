@@ -21,7 +21,7 @@ public class UserVO extends BaseModel implements Serializable {
      * 用户名
      */
     @Length(max = 32, message = "用户名长度不能超过32位")
-    private String userName;
+    private String username;
 
     /**
      * 密码
@@ -51,11 +51,11 @@ public class UserVO extends BaseModel implements Serializable {
     }
 
     public String getUserName() {
-        return userName;
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUserName(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -70,7 +70,7 @@ public class UserVO extends BaseModel implements Serializable {
     public String toString() {
         return "UserVO{" +
                 "id=" + id +
-                ", userName='" + userName + '\'' +
+                ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", isAdmin=" + isAdmin +
                 '}';

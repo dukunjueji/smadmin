@@ -69,11 +69,6 @@ public class UUIDUtil {
         uuid.append(sort);
         return uuid.toString();
     }
-
-    public static void main(String[] args) {
-        String uuid = UUIDUtil.getUuidByType(UUIDTypeEnum.GOODSID.getType());
-//        System.out.println("------------------------" + uuid + "------------------------------------------------");
-    }
 }
 
 class GetAndProductUUID {
