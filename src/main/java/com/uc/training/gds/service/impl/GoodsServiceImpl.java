@@ -1,5 +1,6 @@
 package com.uc.training.gds.service.impl;
 
+import com.uc.training.base.bd.service.MemberGradeService;
 import com.uc.training.common.vo.PageVO;
 import com.uc.training.gds.dto.GoodsAndPropertyDTO;
 import com.uc.training.gds.dto.GoodsDTO;
@@ -12,6 +13,7 @@ import com.uc.training.gds.re.HotTagRE;
 import com.uc.training.gds.service.GoodsService;
 import com.uc.training.gds.vo.GoodsStokeVO;
 import com.uc.training.remote.client.GdsClient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,6 +31,8 @@ public class GoodsServiceImpl implements GoodsService {
      * 锁标志
      */
     private static Object lock = new Object();
+    @Autowired
+    private MemberGradeService memberGradeService;
 
     @Override
     public List<GoodsRE> getHotRecommend() {
@@ -85,7 +89,7 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Override
     public Double getMemberDiscountPoint(Long uid) {
-        return 0.8;
+        return memberGradeService.getDiscountByUId(uid);
     }
 
     /**
