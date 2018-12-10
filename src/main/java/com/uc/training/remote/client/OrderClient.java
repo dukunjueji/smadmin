@@ -156,7 +156,7 @@ public final class OrderClient {
         BeanUtils.copyProperties(ordCartGoodsVO, ordCartGoodsDTO);
         try {
             return (Integer) RemoteUtil.exec(UPDATE_CAR_GOODS_NUM, ordCartGoodsDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error("类型转换异常");
             LOGGER.error(e.getMessage());
         }
@@ -171,7 +171,7 @@ public final class OrderClient {
         BeanUtils.copyProperties(ordGoodsVO, ordGoodsDTO);
         try {
             return (List<CartGoodsRE>) RemoteUtil.exec(GET_CAR_GOODS_BY_IDS, ordGoodsDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error("数据类型转换异常");
             LOGGER.error(e.getMessage());
         }
@@ -184,7 +184,7 @@ public final class OrderClient {
     public static List<OrderGoodsRE> getOrderGoodsByOrderId(Integer orderId) {
         try {
             return (List<OrderGoodsRE>) RemoteUtil.exec(GET_ORDER_GOODS_BY_ORDER_ID, orderId);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error("类型转换异常");
             LOGGER.error(e.getMessage());
         }
@@ -199,7 +199,7 @@ public final class OrderClient {
         BeanUtils.copyProperties(ordCartGoodsVO, ordCartGoodsDTO);
         try {
             return (Integer) RemoteUtil.exec(ADD_CAR_GOODS, ordCartGoodsDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -214,7 +214,7 @@ public final class OrderClient {
         BeanUtils.copyProperties(ordCartGoodsVO, ordCartGoodsDTO);
         try {
             return (Integer) RemoteUtil.exec(DELETE_CAR_GOODS, ordCartGoodsDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error("数据类型转换异常");
             LOGGER.error(e.getMessage());
         }
@@ -229,7 +229,7 @@ public final class OrderClient {
         BeanUtils.copyProperties(orderVO, orderDTO);
         try {
             return (Long) RemoteUtil.exec(INSERT_ORDER, orderDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -244,7 +244,7 @@ public final class OrderClient {
         BeanUtils.copyProperties(orderGoodsVO, orderGoodsDTO);
         try {
             return (Long) RemoteUtil.exec(INSERT_ORDER_GOODS, orderGoodsDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error("数据类型转换异常");
             LOGGER.error(e.getMessage());
         }
@@ -259,7 +259,7 @@ public final class OrderClient {
         BeanUtils.copyProperties(ordOrderVO, ordOrderDTO);
         try {
             return (List<OrderRE>) RemoteUtil.exec(GET_ORDER_PAGE, ordOrderDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error("数据类型转换异常");
             LOGGER.error(e.getMessage());
         }
@@ -274,7 +274,7 @@ public final class OrderClient {
         BeanUtils.copyProperties(ordOrderVO, ordOrderDTO);
         try {
             return (Integer) RemoteUtil.exec(GET_ORDER_TOTAL, ordOrderDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("数据类型转换异常");
         }
@@ -287,7 +287,7 @@ public final class OrderClient {
     public static Integer logicDelOrder(List<Long> list) {
         try {
             return (Integer) RemoteUtil.exec(LOGIC_DEL_ORDER, list);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("结果转换异常");
         }
@@ -302,7 +302,7 @@ public final class OrderClient {
             OrdMemberDTO ordMemberDTO = new OrdMemberDTO();
             BeanUtils.copyProperties(ordMemberVO, ordMemberDTO);
             return (List<OrderRE>) RemoteUtil.exec(GET_ORDER_BY_MEMBERDTO, ordMemberDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -317,7 +317,7 @@ public final class OrderClient {
             OrdOrderDTO ordOrderDTO = new OrdOrderDTO();
             BeanUtils.copyProperties(ordOrderVO, ordOrderDTO);
             return (Integer) RemoteUtil.exec(UPDATE_ORDER, ordOrderDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -330,7 +330,7 @@ public final class OrderClient {
     public static String getTelephoneById(Long id) {
         try {
             return (String) RemoteUtil.exec(GET_TELEPHONE_BY_ID, id);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -343,7 +343,7 @@ public final class OrderClient {
     public static OrderSaleRE getOrderSaleData() {
         try {
             return (OrderSaleRE) RemoteUtil.exec(GET_ORDER_SALEDATA);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -356,7 +356,7 @@ public final class OrderClient {
     public static Integer queryCartGoodsCount(Long memberId) {
         try {
             return (Integer) RemoteUtil.exec(QUERY_CART_GOODS_COUNT, memberId);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error("Integer类型转换异常");
             LOGGER.error(e.getMessage());
         }
@@ -371,7 +371,7 @@ public final class OrderClient {
         BeanUtils.copyProperties(ordOrderVO, ordOrderDTO);
         try {
             return (Integer) RemoteUtil.exec(MEMBER_DEL_ORDER, ordOrderDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("参数类型转换异常");
         }
@@ -386,7 +386,7 @@ public final class OrderClient {
         BeanUtils.copyProperties(ordGoodsVO, ordGoodsDTO);
         try {
             return (List<CommentRE>) RemoteUtil.exec(GET_PROPERTY_ID_LIST_BY_UID, ordGoodsDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("参数类型转换异常");
         }
@@ -399,7 +399,7 @@ public final class OrderClient {
     public static Integer queryOrderCount(Long memberId) {
         try {
             return (Integer) RemoteUtil.exec(QUERY_ORDER_COUNT, memberId);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -411,7 +411,7 @@ public final class OrderClient {
     public static Integer getUnPayGoodsPropertyCountByPropertyId(Long propertyId) {
         try {
             return (Integer) RemoteUtil.exec(GET_UN_PAY_GOODS_PROPERTY_COUNT_BY_PROPERTY_ID, propertyId);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -425,7 +425,7 @@ public final class OrderClient {
             OrdOrderGoodsDTO ordOrderGoodsDTO =new OrdOrderGoodsDTO();
             BeanUtils.copyProperties(ordOrderGoodsVO,ordOrderGoodsDTO);
             return (Integer) RemoteUtil.exec(UP_ORD_GOODS_COMMENT_STATUS, ordOrderGoodsDTO);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
@@ -437,7 +437,7 @@ public final class OrderClient {
     public static OrderRE getOrderByOrdGoodsId(Long ordGoodsId) {
         try {
             return (OrderRE) RemoteUtil.exec(GET_ORDER_BY_ORD_GOODS_ID, ordGoodsId);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
             LOGGER.error("类型转换异常");
         }
