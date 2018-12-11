@@ -7,11 +7,16 @@ import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.common.vo.PageVO;
 import com.ycc.base.common.Result;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 /**
  * @Author: 余旭东
@@ -34,6 +39,25 @@ public class SmsController extends BaseController {
     @RequestMapping(value = "getSmsPage.do_", method = RequestMethod.POST)
     public Result<PageVO<SmsRE>> getDemoPage(SmsListVO smsListVO) {
         Result<PageVO<SmsRE>> res;
+        int minLength = 2;
+        String time = smsListVO.getTime();
+        time = time.replace("\"", "");
+        time = time.replace("[", "");
+        time = time.replace("]", "");
+        if (!StringUtils.isEmpty(time)){
+            String[] times = StringUtils.split(time, ',');
+            times[1] = times[1].replace("00:00:00", "23:59:59");
+            DateFormat ds = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            if (times.length == minLength) {
+                try {
+                    smsListVO.setStartDate(ds.parse(times[0]));
+                    smsListVO.setEndDate(ds.parse(times[1]));
+                } catch (ParseException e) {
+                    logger.error("日期格式不正确");
+                    e.printStackTrace();
+                }
+            }
+        }
         try {
             PageVO<SmsRE> pageVO = new PageVO<>();
             pageVO.setPageIndex(smsListVO.getPageIndex());

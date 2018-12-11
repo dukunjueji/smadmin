@@ -235,19 +235,4 @@ public final class TokenUtil {
             return true;
         }
     }
-
-
-    public static void main(String[] args) {
-//        String token = sign(1L, 60 * 1000 * 24 * 365);
-//        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJKRUVTRSIsImV4cCI6MTUyNjAxMjkyMywidXNlcklkIjoxLCJpYXQiOjE1MjYwMTI4NjN9.NKhWgl_L-TmZCOSOUzTaKQFYFfM7OrjG6O55BQ2Ts9M";
-//        System.out.println(token);
-//        AccessToken result = verify(token);
-//        System.out.println(result.isVerify());
-//        System.out.println(result.isExpire());
-//        System.out.println(result.getSignDate());
-//        System.out.println(result.getExpireDate());
-//        System.out.println(result.getId());
-//        System.out.println(verify(token, 1L));
-//        System.out.println(getId(token));
-    }
 }

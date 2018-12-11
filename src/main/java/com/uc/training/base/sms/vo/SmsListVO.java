@@ -43,9 +43,9 @@ public class SmsListVO extends PageQuery {
     /**
      * 字符串日期
      */
-    private String[] time;
+    private String time;
 
-    public String[] getTime() {
+    public String getTime() {
         return time;
     }
 
@@ -90,15 +90,8 @@ public class SmsListVO extends PageQuery {
         this.endDate = endDate == null ? null : (Date) endDate.clone();
     }
 
-    public void setTime(String[] time) {
+    public void setTime(String time) {
         this.time = time;
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        try {
-            this.startDate = format.parse(time[0]);
-            this.endDate = format.parse(time[1]);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override

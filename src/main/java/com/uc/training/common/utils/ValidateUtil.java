@@ -472,9 +472,4 @@ public final class ValidateUtil {
         Matcher matcher = pattern.matcher(str);
         return matcher.matches();
     }
-
-
-    public static void main(String[] args) {
-        System.out.println(isMoney("10"));
-    }
 }
