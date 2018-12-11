@@ -6,7 +6,6 @@ import com.uc.training.base.bd.service.MemberGradeService;
 import com.uc.training.common.enums.GoodsStatusEnum;
 import com.uc.training.common.enums.OrderEnum;
 import com.uc.training.common.enums.UUIDTypeEnum;
-import com.uc.training.common.redis.RedissonManager;
 import com.uc.training.common.utils.UUIDUtil;
 import com.uc.training.gds.re.GoodsDetailRE;
 import com.uc.training.gds.re.GoodsStokeRE;
@@ -33,7 +32,6 @@ import com.uc.training.ord.vo.OrderGoodsVO;
 import com.uc.training.ord.vo.OrderVO;
 import com.uc.training.remote.client.OrderClient;
 import org.apache.commons.collections.CollectionUtils;
-import org.redisson.api.RLock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -346,9 +344,9 @@ public class OrderServiceImpl implements OrderService {
                     }
                 }
                 //删除购物车信息表并且加入同步代码块
-                RLock lock = RedissonManager.getInstance().getLock("lock", true);
+                //RLock lock = RedissonManager.getInstance().getLock("lock", true);
                 try {
-                    lock.lock();
+                   // lock.lock();
                     ordCartGoodsVO = new OrdCartGoodsVO();
                     ordCartGoodsVO.setPropertyId(orderInfoListNow.get(i).getPropertyId());
                     ordCartGoodsVO.setMemberId(orderInfoListNow.get(orderInfoListNow.size() - ORDER_INFO_LIST).getMemberId());
@@ -359,7 +357,7 @@ public class OrderServiceImpl implements OrderService {
                     LOGGER.info(e.getMessage());
                     return list;
                 } finally {
-                    lock.unlock();
+                    //lock.unlock();
                 }
             } else {
                 return list;
