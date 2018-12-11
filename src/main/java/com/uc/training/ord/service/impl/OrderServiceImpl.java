@@ -325,7 +325,6 @@ public class OrderServiceImpl implements OrderService {
         }
         BigDecimal payPrice = new BigDecimal(0);
         for (int i = 0; i < orderInfoListNow.size() - ORDER_INFO_LIST; i++) {
-            ordOrderGoodsVO = new OrdOrderGoodsVO();
             GoodsDetailRE gdDTO = goodsService.getGoodsDetailByPropertyId(orderInfoListNow.get(i).getPropertyId());
             if (gdDTO == null) {
                 return list;
@@ -333,7 +332,6 @@ public class OrderServiceImpl implements OrderService {
             if (!CollectionUtils.isEmpty(goodsNumList)) {
                 for (int j = 0; j < goodsNumList.size(); j++) {
                     if (goodsNumList.get(j).getGoodsPropertyId().equals(orderInfoListNow.get(i).getPropertyId())) {
-                        ordOrderGoodsVO.setNum(goodsNumList.get(j).getGoodsNum());
                         if (gdDTO.getIsDiscount() == 1) {
                             payPrice = gdDTO.getDiscountPrice().multiply(BigDecimal.valueOf(goodsNumList.get(j).getGoodsNum() * memberDiscountPoint)).add(payPrice);
                         } else {
