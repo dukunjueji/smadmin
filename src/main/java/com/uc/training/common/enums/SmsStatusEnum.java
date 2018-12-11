@@ -17,7 +17,11 @@ public enum SmsStatusEnum {
     /**
      * 短信发送成功
      */
-    TEMPLATE_NOT_EXIST(2, "短信模板不存在");
+    TEMPLATE_NOT_EXIST(2, "短信模板不存在"),
+    /**
+     * 短信发送成功
+     */
+    SEND(3, "短信已发送");
 
     private int key;
     private String value;

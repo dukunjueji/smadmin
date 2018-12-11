@@ -80,6 +80,10 @@ public class MemberController extends BaseController {
                 !createCodeVO.getEmail().matches("^[a-z0-9A-Z]+[- | a-z0-9A-Z . _]+@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-z]{2,}$")) {
             return Result.getBusinessException("邮箱格式不正确！", null);
         }
+        RedisCacheUtils redis = RedisCacheUtils.getInstance(RedisConfigEnum.SYS_CODE);
+        if (redis.get(createCodeVO.getTelephone()) != null) {
+            return Result.getBusinessException("请不要频繁操作！", null);
+        }
         //根据手机号查询会员信息
         MemberVO memberVO = new MemberVO();
         memberVO.setTelephone(createCodeVO.getTelephone());
@@ -189,6 +193,10 @@ public class MemberController extends BaseController {
         MemberRE memberRE = memberService.queryOneMember(member);
         if(memberRE == null){
             return Result.getBusinessException("手机号还没被注册", null);
+        }
+        RedisCacheUtils redis = RedisCacheUtils.getInstance(RedisConfigEnum.SYS_CODE);
+        if (redis.get(createCodeVO.getTelephone()) != null) {
+            return Result.getBusinessException("请不要频繁操作！", null);
         }
         //生成消息体
         MqVO mqVO = new MqVO();
@@ -370,6 +378,10 @@ public class MemberController extends BaseController {
         // 校验密码
         if (member == null) {
             return Result.getBusinessException("原来的密码输入有误", null);
+        }
+        RedisCacheUtils redis = RedisCacheUtils.getInstance(RedisConfigEnum.SYS_CODE);
+        if (redis.get(member.getTelephone()) != null) {
+            return Result.getBusinessException("请不要频繁操作！", null);
         }
         //生成消息体
         MqVO mqVO = new MqVO();
