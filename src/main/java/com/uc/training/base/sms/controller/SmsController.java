@@ -44,7 +44,8 @@ public class SmsController extends BaseController {
         time = time.replace("\"", "");
         time = time.replace("[", "");
         time = time.replace("]", "");
-        if (!StringUtils.isEmpty(time)){
+        String nullValue = "null";
+        if (!StringUtils.isEmpty(time) && !nullValue.equals(time)){
             String[] times = StringUtils.split(time, ',');
             times[1] = times[1].replace("00:00:00", "23:59:59");
             DateFormat ds = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -54,7 +55,7 @@ public class SmsController extends BaseController {
                     smsListVO.setEndDate(ds.parse(times[1]));
                 } catch (ParseException e) {
                     logger.error("日期格式不正确");
-                    e.printStackTrace();
+                    return Result.getBusinessException("日期格式不正确", null);
                 }
             }
         }
