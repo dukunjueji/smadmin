@@ -6,6 +6,7 @@ import com.uc.training.base.bd.service.MemberGradeService;
 import com.uc.training.common.enums.GoodsStatusEnum;
 import com.uc.training.common.enums.OrderEnum;
 import com.uc.training.common.enums.UUIDTypeEnum;
+import com.uc.training.common.redis.RedissonManager;
 import com.uc.training.common.utils.UUIDUtil;
 import com.uc.training.gds.re.GoodsDetailRE;
 import com.uc.training.gds.re.GoodsStokeRE;
@@ -32,6 +33,7 @@ import com.uc.training.ord.vo.OrderGoodsVO;
 import com.uc.training.ord.vo.OrderVO;
 import com.uc.training.remote.client.OrderClient;
 import org.apache.commons.collections.CollectionUtils;
+import org.redisson.api.RLock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -50,8 +52,9 @@ import java.util.List;
  */
 @Service
 public class OrderServiceImpl implements OrderService {
+    private static final String RECONCILIATION_REDIS_LOCK_KEY = "ucasms_reconciliation_redis_lock_key";
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderServiceImpl.class);
-    private static final Integer ORDER_INFO_LIST =2;
+    private static final Integer ORDER_INFO_LIST = 2;
     @Autowired
     private GoodsService goodsService;
     @Autowired
@@ -279,7 +282,7 @@ public class OrderServiceImpl implements OrderService {
             if (goodsStokeRE.getStoke() < orderInfoListNow.get(i).getNum()) {
                 StringBuilder temp = new StringBuilder();
                 temp.append("您的商品：" + goodsStokeRE.getGoodsName() + "\n" + "规格:");
-                temp.append(goodsStokeRE.getGoodsProperty() + "已经达到最大库存量，点击返回购物车，再重新选择");
+                temp.append(goodsStokeRE.getGoodsProperty() + "已经超过商品最大库存量，点击返回购物车，请再重新选择");
                 orderConfirmRE.setShowStatus(temp.toString());
                 orderConfirmRE.setGoodsStatus(OrderEnum.NOORDER.getKey());
                 list.add(orderConfirmRE);
@@ -317,12 +320,14 @@ public class OrderServiceImpl implements OrderService {
         ordGoodsVO.setGoodsPropertyIdList(propertyIds);
         //调用远程服务查询购物车商品信息
         List<CartGoodsRE> goodsNumList = OrderClient.getCarGoodsByIds(ordGoodsVO);
+        OrdOrderGoodsVO ordOrderGoodsVO;
         Double memberDiscountPoint = memberGradeService.getDiscountByUId(orderInfoListNow.get(orderInfoListNow.size() - ORDER_INFO_LIST).getMemberId());
         if (memberDiscountPoint == null) {
             return list;
         }
         BigDecimal payPrice = new BigDecimal(0);
         for (int i = 0; i < orderInfoListNow.size() - ORDER_INFO_LIST; i++) {
+            ordOrderGoodsVO = new OrdOrderGoodsVO();
             GoodsDetailRE gdDTO = goodsService.getGoodsDetailByPropertyId(orderInfoListNow.get(i).getPropertyId());
             if (gdDTO == null) {
                 return list;
@@ -330,6 +335,7 @@ public class OrderServiceImpl implements OrderService {
             if (!CollectionUtils.isEmpty(goodsNumList)) {
                 for (int j = 0; j < goodsNumList.size(); j++) {
                     if (goodsNumList.get(j).getGoodsPropertyId().equals(orderInfoListNow.get(i).getPropertyId())) {
+                        ordOrderGoodsVO.setNum(goodsNumList.get(j).getGoodsNum());
                         if (gdDTO.getIsDiscount() == 1) {
                             payPrice = gdDTO.getDiscountPrice().multiply(BigDecimal.valueOf(goodsNumList.get(j).getGoodsNum() * memberDiscountPoint)).add(payPrice);
                         } else {
@@ -340,17 +346,20 @@ public class OrderServiceImpl implements OrderService {
                     }
                 }
                 //删除购物车信息表并且加入同步代码块
-                synchronized (this) {
-                    try {
-                        ordCartGoodsVO = new OrdCartGoodsVO();
-                        ordCartGoodsVO.setPropertyId(orderInfoListNow.get(i).getPropertyId());
-                        ordCartGoodsVO.setMemberId(orderInfoListNow.get(orderInfoListNow.size() - ORDER_INFO_LIST).getMemberId());
-                        if (deleteCarGoods(ordCartGoodsVO) <= 0) {
-                            return list;
-                        }
-                    } catch (Exception e) {
-                        LOGGER.info(e.getMessage());
+                RLock lock = RedissonManager.getInstance().getLock("lock", true);
+                try {
+                    lock.lock();
+                    ordCartGoodsVO = new OrdCartGoodsVO();
+                    ordCartGoodsVO.setPropertyId(orderInfoListNow.get(i).getPropertyId());
+                    ordCartGoodsVO.setMemberId(orderInfoListNow.get(orderInfoListNow.size() - ORDER_INFO_LIST).getMemberId());
+                    if (deleteCarGoods(ordCartGoodsVO) <= 0) {
+                        return list;
                     }
+                } catch (Exception e) {
+                    LOGGER.info(e.getMessage());
+                    return list;
+                } finally {
+                    lock.unlock();
                 }
             } else {
                 return list;
