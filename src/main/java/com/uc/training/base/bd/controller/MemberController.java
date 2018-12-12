@@ -25,6 +25,7 @@ import com.uc.training.common.enums.SmsTypeEnum;
 import com.uc.training.common.mq.MqProducer;
 import com.uc.training.common.mq.vo.MqVO;
 import com.uc.training.common.redis.RedisConfigEnum;
+import com.uc.training.common.utils.ReplaceStarUtils;
 import com.uc.training.common.utils.TokenUtil;
 import com.uc.training.ord.service.OrderService;
 import com.ycc.base.common.Result;
@@ -323,7 +324,11 @@ public class MemberController extends BaseController {
     public Result<MemberRE> getMemberInfoById(){
         MemberVO memberVO = new MemberVO();
         memberVO.setId(getUid());
-        return Result.getSuccessResult(memberService.queryOneMember(memberVO));
+        MemberRE memberRE = memberService.queryOneMember(memberVO);
+        if (memberRE != null && memberRE.getTelephone() != null) {
+            memberRE.setTelephone(ReplaceStarUtils.replaceAction(memberRE.getTelephone()));
+        }
+        return Result.getSuccessResult(memberRE);
     }
 
     /**
