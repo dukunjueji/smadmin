@@ -347,10 +347,10 @@ public class OrderServiceImpl implements OrderService {
                     }
                 }
                 //删除购物车信息表并且加入同步代码块
-                //String lockName = orderInfoListNow.get(i).getPropertyId() + "Lock";
-                //RLock lock = RedissonManager.getInstance().getLock("lock", true);
+                String lockName = orderInfoListNow.get(i).getPropertyId() + "Lock";
+                RLock lock = RedissonManager.getInstance().getLock(lockName, true);
                 try {
-                    //lock.lock();
+                    lock.lock();
                     ordCartGoodsVO = new OrdCartGoodsVO();
                     ordCartGoodsVO.setPropertyId(orderInfoListNow.get(i).getPropertyId());
                     ordCartGoodsVO.setMemberId(orderInfoListNow.get(orderInfoListNow.size() - ORDER_INFO_LIST).getMemberId());
@@ -361,7 +361,7 @@ public class OrderServiceImpl implements OrderService {
                     LOGGER.info(e.getMessage());
                     return list;
                 } finally {
-                    //lock.unlock();
+                    lock.unlock();
                 }
             } else {
                 return list;
