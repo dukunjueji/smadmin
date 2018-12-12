@@ -124,6 +124,9 @@ public class MqVO implements Serializable {
     public String toString() {
         return "MqVO{" +
                 "memberId=" + memberId +
+                ", rechargeStatus=" + rechargeStatus +
+                ", generateSmsVO=" + generateSmsVO +
+                ", memberRechargeHistory=" + memberRechargeHistory +
                 ", growthType=" + growthType +
                 ", integralType=" + integralType +
                 ", purchaseValue=" + purchaseValue +
