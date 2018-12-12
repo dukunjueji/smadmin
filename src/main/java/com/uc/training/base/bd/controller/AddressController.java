@@ -4,6 +4,7 @@ import com.uc.training.base.bd.re.AddressRE;
 import com.uc.training.base.bd.service.AddressService;
 import com.uc.training.base.bd.vo.AddressVO;
 import com.uc.training.common.base.controller.BaseController;
+import com.uc.training.common.utils.ReplaceStarUtils;
 import com.ycc.base.common.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -48,7 +49,11 @@ public class AddressController extends BaseController {
     @ResponseBody
     @RequestMapping("/getDefaultAddress.do_")
     public Result<AddressRE> getDefaultAddress() {
-        return Result.getSuccessResult(addressService.getDefaultAddress(getUid()));
+        AddressRE addressRE = addressService.getDefaultAddress(getUid());
+        if (addressRE != null && addressRE.getTelephone() != null) {
+            addressRE.setTelephone(ReplaceStarUtils.replaceAction(addressRE.getTelephone()));
+        }
+        return Result.getSuccessResult(addressRE);
     }
 
     /**
