@@ -161,7 +161,7 @@ public class SmsTemplateServiceImpl implements SmsTemplateService {
         sms.setStatus(status);
         sms.setContent(content);
         // 新增短信记录
-        this.smsService.insertSms(sms);
+        BaseClient.insertSms(sms);
 
         return status;
     }
