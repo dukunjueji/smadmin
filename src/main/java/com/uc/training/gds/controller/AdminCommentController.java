@@ -56,7 +56,11 @@ public class AdminCommentController extends BaseController {
         List<CommentRE> list = commentService.getCommentList(commentListVO);
         CommentAvgRE commentAvgVO = commentService.getCommentCountAndAvg(commentListVO);
         map.put("commentList", list);
-        map.put("count", commentAvgVO.getCount());
+        if (commentAvgVO == null) {
+            map.put("count", 0);
+        } else {
+            map.put("count", commentAvgVO.getCount());
+        }
         return Result.getSuccessResult(map);
     }
 

@@ -40,9 +40,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 订单控制类
@@ -150,6 +148,7 @@ public class OrderController extends BaseController {
         ordMemberVO.setOrderId(id);
         return Result.getSuccessResult(orderService.getOrderInfoListByMemberId(ordMemberVO));
     }
+
     /**
      * 获取提交订单的商品列表(从购物车接口进入)
      *
@@ -260,11 +259,10 @@ public class OrderController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "deleteCartgoods.do_", method = RequestMethod.POST)
     public Result deleteCartgds(HttpServletRequest request, OrdCartGoodsVO ordCartGoodsVO) {
-        try {
-            ordCartGoodsVO.setMemberId(getUid());
-            orderService.deleteCarGoods(ordCartGoodsVO);
-        } catch (Exception e) {
-            logger.error("删除异常", e);
+
+        ordCartGoodsVO.setMemberId(getUid());
+        Integer integer = orderService.deleteCarGoods(ordCartGoodsVO);
+        if (integer == null || integer<1) {
             return Result.getBusinessException("删除异常", null);
         }
         return Result.getSuccessResult(null);
@@ -390,8 +388,8 @@ public class OrderController extends BaseController {
                     return Result.getBusinessException("选择的商品已找不到信息请刷新，请重新到商品页面添加", null);
                 }
                 if (gdDTO.getStock() < cargd.getGoodsNum()
-                        || gdDTO.getStatus().equals(GoodsStatusEnum.GOODS_IS_SHELVES.getType().longValue())
-                        || gdDTO.getIsDelete().equals(GoodsStatusEnum.GOODS_DELETE.getType().longValue())) {
+                    || gdDTO.getStatus().equals(GoodsStatusEnum.GOODS_IS_SHELVES.getType().longValue())
+                    || gdDTO.getIsDelete().equals(GoodsStatusEnum.GOODS_DELETE.getType().longValue())) {
                     return Result.getBusinessException("选择的商品：“ " + gdDTO.getName() + " ” 库存不足或已下架或被删除无法购买，请取消选择", null);
                 }
             }

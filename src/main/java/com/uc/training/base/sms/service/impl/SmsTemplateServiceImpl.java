@@ -133,10 +133,15 @@ public class SmsTemplateServiceImpl implements SmsTemplateService {
         if (SmsTypeEnum.CHANGE_PASSWORD.getCode().equals(generateSmsVO.getCode()) ||
                 SmsTypeEnum.FORGET_PASSWORD.getCode().equals(generateSmsVO.getCode()) ||
                 SmsTypeEnum.REGISTER.getCode().equals(generateSmsVO.getCode())) {
-
-            generateSmsVO.setMessage(TelCodeUtil.createCode());
-            //手机号 验证码
-            redis.set(generateSmsVO.getTelephone(), generateSmsVO.getMessage());
+            String tel = generateSmsVO.getTelephone();
+            //判断验证码是否已经生成
+            if (redis.get(tel) != null) {
+                return SmsStatusEnum.SEND.getKey();
+            } else {
+                generateSmsVO.setMessage(TelCodeUtil.createCode());
+                //手机号 验证码
+                redis.set(generateSmsVO.getTelephone(), generateSmsVO.getMessage());
+            }
         }
 
         if (generateSmsVO.getRechargeStatus() != null && generateSmsVO.getRechargeStatus() == 0) {

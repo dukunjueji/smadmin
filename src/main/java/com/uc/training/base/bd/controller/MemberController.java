@@ -25,6 +25,7 @@ import com.uc.training.common.enums.SmsTypeEnum;
 import com.uc.training.common.mq.MqProducer;
 import com.uc.training.common.mq.vo.MqVO;
 import com.uc.training.common.redis.RedisConfigEnum;
+import com.uc.training.common.utils.ReplaceStarUtils;
 import com.uc.training.common.utils.TokenUtil;
 import com.uc.training.ord.service.OrderService;
 import com.ycc.base.common.Result;
@@ -76,10 +77,6 @@ public class MemberController extends BaseController {
     @ResponseBody
     @AccessLogin(required = false)
     public Result createCode(@Validated CreateCodeVO createCodeVO) {
-        if (StringUtils.isEmpty(createCodeVO.getEmail()) ||
-                !createCodeVO.getEmail().matches("^[a-z0-9A-Z]+[- | a-z0-9A-Z . _]+@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-z]{2,}$")) {
-            return Result.getBusinessException("邮箱格式不正确！", null);
-        }
         //根据手机号查询会员信息
         MemberVO memberVO = new MemberVO();
         memberVO.setTelephone(createCodeVO.getTelephone());
@@ -110,10 +107,6 @@ public class MemberController extends BaseController {
     @ResponseBody
     @AccessLogin(required = false)
     public Result memberRegister(@Validated MemberRegisterVO memberRegisterVO){
-        if (StringUtils.isEmpty(memberRegisterVO.getEmail()) ||
-                !memberRegisterVO.getEmail().matches("^[a-z0-9A-Z]+[- | a-z0-9A-Z . _]+@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-z]{2,}$")) {
-            return Result.getBusinessException("邮箱格式不正确！", null);
-        }
         MemberVO member = new MemberVO();
         member.setTelephone(memberRegisterVO.getTelephone());
         member.setPassword(memberRegisterVO.getPassword());
@@ -323,7 +316,11 @@ public class MemberController extends BaseController {
     public Result<MemberRE> getMemberInfoById(){
         MemberVO memberVO = new MemberVO();
         memberVO.setId(getUid());
-        return Result.getSuccessResult(memberService.queryOneMember(memberVO));
+        MemberRE memberRE = memberService.queryOneMember(memberVO);
+        if (memberRE != null && memberRE.getTelephone() != null) {
+            memberRE.setTelephone(ReplaceStarUtils.replaceAction(memberRE.getTelephone()));
+        }
+        return Result.getSuccessResult(memberRE);
     }
 
     /**

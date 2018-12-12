@@ -36,6 +36,8 @@ public class SmsMqConsumer  extends DefaultExecutorMessageListener {
                 System.out.println(SmsStatusEnum.FAIL.getValue());
             } else if (status == SmsStatusEnum.TEMPLATE_NOT_EXIST.getKey()) {
                 System.out.println(SmsStatusEnum.TEMPLATE_NOT_EXIST.getValue());
+            } else if (status == SmsStatusEnum.SEND.getKey()) {
+                System.out.println(SmsStatusEnum.SEND.getValue());
             }
         }
     }
