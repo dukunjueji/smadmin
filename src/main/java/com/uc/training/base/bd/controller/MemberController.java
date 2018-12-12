@@ -76,10 +76,6 @@ public class MemberController extends BaseController {
     @ResponseBody
     @AccessLogin(required = false)
     public Result createCode(@Validated CreateCodeVO createCodeVO) {
-        if (StringUtils.isEmpty(createCodeVO.getEmail()) ||
-                !createCodeVO.getEmail().matches("^[a-z0-9A-Z]+[- | a-z0-9A-Z . _]+@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-z]{2,}$")) {
-            return Result.getBusinessException("邮箱格式不正确！", null);
-        }
         RedisCacheUtils redis = RedisCacheUtils.getInstance(RedisConfigEnum.SYS_CODE);
         if (redis.get(createCodeVO.getTelephone()) != null) {
             return Result.getBusinessException("请不要频繁操作！", null);
@@ -114,10 +110,6 @@ public class MemberController extends BaseController {
     @ResponseBody
     @AccessLogin(required = false)
     public Result memberRegister(@Validated MemberRegisterVO memberRegisterVO){
-        if (StringUtils.isEmpty(memberRegisterVO.getEmail()) ||
-                !memberRegisterVO.getEmail().matches("^[a-z0-9A-Z]+[- | a-z0-9A-Z . _]+@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-z]{2,}$")) {
-            return Result.getBusinessException("邮箱格式不正确！", null);
-        }
         MemberVO member = new MemberVO();
         member.setTelephone(memberRegisterVO.getTelephone());
         member.setPassword(memberRegisterVO.getPassword());
