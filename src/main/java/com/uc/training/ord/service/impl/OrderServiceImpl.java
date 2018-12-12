@@ -5,8 +5,10 @@ import com.uc.training.base.bd.service.AddressService;
 import com.uc.training.base.bd.service.MemberGradeService;
 import com.uc.training.common.enums.GoodsStatusEnum;
 import com.uc.training.common.enums.OrderEnum;
+import com.uc.training.common.enums.OrderGoodsCommentEnum;
 import com.uc.training.common.enums.UUIDTypeEnum;
 import com.uc.training.common.utils.UUIDUtil;
+import com.uc.training.gds.re.CommentCountRE;
 import com.uc.training.gds.re.GoodsDetailRE;
 import com.uc.training.gds.re.GoodsStokeRE;
 import com.uc.training.gds.service.CommentService;
@@ -646,7 +648,7 @@ public class OrderServiceImpl implements OrderService {
                 commentRE.setStatus(gdDTO.getStatus());
                 commentRE.setGoodsName(gdDTO.getName());
                 commentRE.setGoodsProperty(gdDTO.getProperty());
-                if (CollectionUtils.isEmpty(gdDTO.getPicUrl())) {
+                if (!CollectionUtils.isEmpty(gdDTO.getPicUrl())) {
                     commentRE.setImgUrl(gdDTO.getPicUrl().get(0).getPicUrl());
                 }
                 continue;
@@ -656,10 +658,22 @@ public class OrderServiceImpl implements OrderService {
             commentRE.setGoodsProperty(gdDTO.getProperty());
             commentRE.setGoodsName(gdDTO.getName());
             commentRE.setStatus(gdDTO.getStatus());
-            if (CollectionUtils.isEmpty(gdDTO.getPicUrl())) {
+            if (!CollectionUtils.isEmpty(gdDTO.getPicUrl())) {
                 commentRE.setImgUrl(gdDTO.getPicUrl().get(0).getPicUrl());
             }
             lastGoodsPropertyId = commentRE.getGoodsPropertyId();
+        }
+        if (!ordGoodsVO.getCommentStatus().equals(OrderGoodsCommentEnum.NO_COMMENT.getKey())) {
+            for (CommentRE commentRE : list) {
+                List<CommentCountRE> list1 = commentService.getCommentCountByOrderGoodsId(commentRE.getId());
+                if (!org.springframework.util.CollectionUtils.isEmpty(list1)) {
+                    for (CommentCountRE comment : list1) {
+                        if (comment.getParentId() == null) {
+                            commentRE.setCommentId(comment.getId());
+                        }
+                    }
+                }
+            }
         }
         return list;
     }
@@ -667,7 +681,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public int getCommentGoodsCount(OrdGoodsVO ordGoodsVO) {
         List<CommentRE> list = OrderClient.getPropertyIdListByUid(ordGoodsVO);
-        if (CollectionUtils.isEmpty(list)) {
+        if (!CollectionUtils.isEmpty(list)) {
             return list.size();
         }
         return 0;
