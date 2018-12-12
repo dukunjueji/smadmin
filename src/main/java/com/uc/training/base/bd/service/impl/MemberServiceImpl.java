@@ -203,6 +203,7 @@ public class MemberServiceImpl implements MemberService {
             mqVO1.setIntegralType(IntegralEnum.PURCHASE.getIntegralType());
             mqVO1.setPurchaseValue(memberInfoVO.getTotalPrice());
             //订单短信
+            mqVO.getGenerateSmsVO().setEmil(memberRE.getEmail());
             mqVO1.setGenerateSmsVO(mqVO.getGenerateSmsVO());
             MetaQUtils.sendMsgNoException(new MqProducer(mqVO1));
             return list;
