@@ -65,7 +65,6 @@ public class ApiCommentController extends BaseController {
         CommentVO commentVo = new CommentVO();
         OrdOrderGoodsVO ordOrderGoodsVo = new OrdOrderGoodsVO();
         ordOrderGoodsVo.setId(addCommentVO.getOrderGoodsId());
-
         //校验是否已有评论
         List<CommentCountRE> list = commentService.getCommentCountByOrderGoodsId(addCommentVO.getOrderGoodsId());
         if (addCommentVO.getStatus().equals(OrderGoodsCommentEnum.HAVE_COMMENT.getKey()) && !CollectionUtils.isEmpty(list)) {
