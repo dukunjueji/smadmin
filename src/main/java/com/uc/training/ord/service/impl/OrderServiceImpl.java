@@ -648,7 +648,7 @@ public class OrderServiceImpl implements OrderService {
                 commentRE.setStatus(gdDTO.getStatus());
                 commentRE.setGoodsName(gdDTO.getName());
                 commentRE.setGoodsProperty(gdDTO.getProperty());
-                if (CollectionUtils.isEmpty(gdDTO.getPicUrl())) {
+                if (!CollectionUtils.isEmpty(gdDTO.getPicUrl())) {
                     commentRE.setImgUrl(gdDTO.getPicUrl().get(0).getPicUrl());
                 }
                 continue;
@@ -658,7 +658,7 @@ public class OrderServiceImpl implements OrderService {
             commentRE.setGoodsProperty(gdDTO.getProperty());
             commentRE.setGoodsName(gdDTO.getName());
             commentRE.setStatus(gdDTO.getStatus());
-            if (CollectionUtils.isEmpty(gdDTO.getPicUrl())) {
+            if (!CollectionUtils.isEmpty(gdDTO.getPicUrl())) {
                 commentRE.setImgUrl(gdDTO.getPicUrl().get(0).getPicUrl());
             }
             lastGoodsPropertyId = commentRE.getGoodsPropertyId();
