@@ -346,7 +346,7 @@ public class OrderServiceImpl implements OrderService {
                         break;
                     }
                 }
-                //删除购物车信息表并且加入同步代码块
+                //删除购物车信息表,并以商品id加入锁机制，防止重复提交订单
                 String lockName = orderInfoListNow.get(i).getPropertyId() + "Lock";
                 RLock lock = RedissonManager.getInstance().getLock(lockName, true);
                 try {

@@ -13,6 +13,7 @@ import com.uc.training.common.enums.IntegralEnum;
 import com.uc.training.common.enums.OrderEnum;
 import com.uc.training.common.mq.MqProducer;
 import com.uc.training.common.mq.vo.MqVO;
+import com.uc.training.common.redis.RedissonManager;
 import com.uc.training.common.utils.EncryptUtil;
 import com.uc.training.gds.dto.GoodsAndPropertyDTO;
 import com.uc.training.gds.re.GoodsStokeRE;
@@ -28,6 +29,7 @@ import com.uc.training.remote.client.BaseClient;
 import com.uc.training.remote.client.OrderClient;
 import com.ycc.tools.middleware.metaq.MetaQUtils;
 import org.apache.commons.collections.CollectionUtils;
+import org.redisson.api.RLock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -160,32 +162,35 @@ public class MemberServiceImpl implements MemberService {
             member.setId(memberInfoVO.getMemberId());
             BigDecimal accountBalances = BaseClient.queryOneMember(member).getBalance();
             if (accountBalances.compareTo(orderList.get(0).getPayPrice()) > 0) {
-                //加入同步 防止并发提交确认支付信息
-                synchronized (this) {
-                    //更新订单状态、减去用户余额
-                    try {
-                        orderConfirmRE.setStatus(OrderEnum.WAITSHIP.getKey());
-                        OrdOrderVO ordOrderVo = new OrdOrderVO();
-                        ordOrderVo.setOrderNum(orderList.get(0).getOrderNum());
-                        ordOrderVo.setStatus(OrderEnum.WAITSHIP.getKey().longValue());
-                        ordOrderVo.setMemberId(memberInfoVO.getMemberId());
-                        orderConfirmRE.setShowStatus("成功购买商品");
-                        if (orderService.updateOrder(ordOrderVo) > 0) {
-                            //减去用户余额
-                            MemberVO memberBalanceVO = new MemberVO();
-                            memberBalanceVO.setId(memberInfoVO.getMemberId());
-                            memberBalanceVO.setBalance((orderList.get(0).getPayPrice()).multiply(new BigDecimal(-1)));
-                            if (BaseClient.updateMember(memberBalanceVO) > 0) {
-                                list.add(orderConfirmRE);
-                            } else {
-                                return list;
-                            }
+                //加入分布式锁 防止并发提交确认支付信息，以订单编号加锁
+                RLock lock = RedissonManager.getInstance().getLock(orderList.get(0).getOrderNum(), true);
+                //更新订单状态、减去用户余额
+                try {
+                    lock.lock();
+                    orderConfirmRE.setStatus(OrderEnum.WAITSHIP.getKey());
+                    OrdOrderVO ordOrderVo = new OrdOrderVO();
+                    ordOrderVo.setOrderNum(orderList.get(0).getOrderNum());
+                    ordOrderVo.setStatus(OrderEnum.WAITSHIP.getKey().longValue());
+                    ordOrderVo.setMemberId(memberInfoVO.getMemberId());
+                    orderConfirmRE.setShowStatus("成功购买商品");
+                    if (orderService.updateOrder(ordOrderVo) > 0) {
+                        //减去用户余额
+                        MemberVO memberBalanceVO = new MemberVO();
+                        memberBalanceVO.setId(memberInfoVO.getMemberId());
+                        memberBalanceVO.setBalance((orderList.get(0).getPayPrice()).multiply(new BigDecimal(-1)));
+                        if (BaseClient.updateMember(memberBalanceVO) > 0) {
+                            list.add(orderConfirmRE);
                         } else {
                             return list;
                         }
-                    } catch (Exception e) {
-                        LOGGER.error(e.getMessage());
+                    } else {
+                        return list;
                     }
+                } catch (Exception e) {
+                    LOGGER.error(e.getMessage());
+                    return list;
+                } finally {
+                    lock.unlock();
                 }
             }
             // 加上对应的商品销量
