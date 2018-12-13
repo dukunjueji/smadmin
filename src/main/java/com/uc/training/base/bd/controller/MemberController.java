@@ -77,10 +77,6 @@ public class MemberController extends BaseController {
     @ResponseBody
     @AccessLogin(required = false)
     public Result createCode(@Validated CreateCodeVO createCodeVO) {
-        RedisCacheUtils redis = RedisCacheUtils.getInstance(RedisConfigEnum.SYS_CODE);
-        if (redis.get(createCodeVO.getTelephone()) != null) {
-            return Result.getBusinessException("请不要频繁操作！", null);
-        }
         //根据手机号查询会员信息
         MemberVO memberVO = new MemberVO();
         memberVO.setTelephone(createCodeVO.getTelephone());
@@ -186,10 +182,6 @@ public class MemberController extends BaseController {
         MemberRE memberRE = memberService.queryOneMember(member);
         if(memberRE == null){
             return Result.getBusinessException("手机号还没被注册", null);
-        }
-        RedisCacheUtils redis = RedisCacheUtils.getInstance(RedisConfigEnum.SYS_CODE);
-        if (redis.get(createCodeVO.getTelephone()) != null) {
-            return Result.getBusinessException("请不要频繁操作！", null);
         }
         //生成消息体
         MqVO mqVO = new MqVO();
@@ -375,10 +367,6 @@ public class MemberController extends BaseController {
         // 校验密码
         if (member == null) {
             return Result.getBusinessException("原来的密码输入有误", null);
-        }
-        RedisCacheUtils redis = RedisCacheUtils.getInstance(RedisConfigEnum.SYS_CODE);
-        if (redis.get(member.getTelephone()) != null) {
-            return Result.getBusinessException("请不要频繁操作！", null);
         }
         //生成消息体
         MqVO mqVO = new MqVO();

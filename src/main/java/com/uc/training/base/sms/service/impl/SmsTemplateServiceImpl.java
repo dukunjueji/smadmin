@@ -14,6 +14,9 @@ import com.uc.training.common.utils.InjectionUtils;
 import com.uc.training.common.utils.TelCodeUtil;
 import com.uc.training.remote.client.BaseClient;
 import com.ycc.tools.middleware.redis.RedisCacheUtils;
+import com.zuche.base.common.sendmsg.mail.service.MailService;
+import com.zuche.base.common.sendmsg.mail.service.MailServiceImpl;
+import com.zuche.base.sys.sendmessage.MailMessage;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +33,9 @@ public class SmsTemplateServiceImpl implements SmsTemplateService {
 
     @Autowired
     private SmsService smsService;
+
+    //使用MailServiceImpl()实现类，不要直接调用发送方法
+    private static MailService mailService = new MailServiceImpl();
 
     /**
      * 新增短信模板
@@ -127,21 +133,15 @@ public class SmsTemplateServiceImpl implements SmsTemplateService {
 
         this.smsService = InjectionUtils.getInjectionInstance(SmsService.class);
 
-        // redis
-        RedisCacheUtils redis = RedisCacheUtils.getInstance(RedisConfigEnum.SYS_CODE);
-
         if (SmsTypeEnum.CHANGE_PASSWORD.getCode().equals(generateSmsVO.getCode()) ||
                 SmsTypeEnum.FORGET_PASSWORD.getCode().equals(generateSmsVO.getCode()) ||
                 SmsTypeEnum.REGISTER.getCode().equals(generateSmsVO.getCode())) {
-            String tel = generateSmsVO.getTelephone();
-            //判断验证码是否已经生成
-            if (redis.get(tel) != null) {
-                return SmsStatusEnum.SEND.getKey();
-            } else {
-                generateSmsVO.setMessage(TelCodeUtil.createCode());
-                //手机号 验证码
-                redis.set(generateSmsVO.getTelephone(), generateSmsVO.getMessage());
-            }
+
+            // redis
+            RedisCacheUtils redis = RedisCacheUtils.getInstance(RedisConfigEnum.SYS_CODE);
+            generateSmsVO.setMessage(TelCodeUtil.createCode());
+            //手机号 验证码
+            redis.set(generateSmsVO.getTelephone(), generateSmsVO.getMessage());
         }
 
         if (generateSmsVO.getRechargeStatus() != null && generateSmsVO.getRechargeStatus() == 0) {
@@ -159,17 +159,28 @@ public class SmsTemplateServiceImpl implements SmsTemplateService {
         //邮件标题
         generateSmsVO.setEmailTitle(smsTemplateRE.get(0).getTitle());
         // 发送短信
-        Integer status = this.smsService.sendSys(generateSmsVO, content);
+        if (generateSmsVO.getEmil() != null) {
+            MailMessage mailMessage = new MailMessage();
+            mailMessage.setMailAddress(generateSmsVO.getEmil());//邮件地址
+            mailMessage.setContent(content); //邮件内容
+            mailMessage.setTitle(generateSmsVO.getEmailTitle()); //邮件标题
+            mailMessage.setMetaType("text"); //邮件类型(html或者text)
+            mailMessage.setSaveToDB(false); //是否保存到数据库
+            mailMessage.setChannel(2); //通道(专车：1通道；租车：1通道；买买车：2通道)
+            mailService.sendMessage(mailMessage);
+        }
+        System.out.println(generateSmsVO.getTelephone() + ": " +content);
+
 
         SmsVO sms = new SmsVO();
         sms.setType(generateSmsVO.getType());
         sms.setTelephone(generateSmsVO.getTelephone());
-        sms.setStatus(status);
+        sms.setStatus(SmsStatusEnum.SUCCESS.getKey());
         sms.setContent(content);
         // 新增短信记录
-        this.smsService.insertSms(sms);
+        BaseClient.insertSms(sms);
 
-        return status;
+        return SmsStatusEnum.SUCCESS.getKey();
     }
 
 }

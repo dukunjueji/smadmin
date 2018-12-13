@@ -20,8 +20,23 @@
         <findbugs.failOnError>false</findbugs.failOnError>
         <pmd.failOnViolation>false</pmd.failOnViolation>
     </properties>
-
     <dependencies>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+            <version>4.1.27.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson</artifactId>
+            <version>2.12.5</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
         <!--JWT dependency -->
         <dependency>
             <groupId>com.auth0</groupId>
