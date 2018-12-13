@@ -1,12 +1,18 @@
 package com.uc.training.gds.service.impl;
 
+import com.uc.training.gds.re.CommentRE;
 import com.uc.training.gds.service.CommentReplyService;
 import com.uc.training.gds.service.CommentService;
+import com.uc.training.gds.vo.CommentListVO;
 import com.uc.training.gds.vo.CommentReplyVO;
+import com.uc.training.remote.client.BaseClient;
 import com.uc.training.remote.client.GdsClient;
 import com.uc.training.gds.re.CommentDetailRE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+
+import java.util.List;
 
 /**
  * 版权声明： Copyright (c) 2008 ucarinc. All Rights Reserved.
@@ -40,7 +46,17 @@ public class CommentReplyServiceImpl implements CommentReplyService {
      */
     @Override
     public CommentDetailRE getCommentDetailByCommentId(CommentReplyVO commentReplyVO) {
-        return GdsClient.getCommentDetailByCommentId(commentReplyVO);
+        CommentDetailRE commentDetailRE = new CommentDetailRE();
+        CommentListVO commentListVO = new CommentListVO();
+        commentListVO.setId(commentReplyVO.getCommentId());
+        //获取商品评论
+        List<CommentRE> commentRE = commentService.getCommentList(commentListVO);
+        if (CollectionUtils.isEmpty(commentRE)) {
+            return commentDetailRE;
+        }
+        commentDetailRE = GdsClient.getCommentDetailByCommentId(commentReplyVO);
+        commentDetailRE.setCommentRE(commentRE.get(0));
+        return commentDetailRE;
     }
 
     /**
