@@ -3,9 +3,9 @@ package com.uc.training.ord.service.impl;
 import com.uc.training.base.bd.re.AddressRE;
 import com.uc.training.base.bd.service.AddressService;
 import com.uc.training.base.bd.service.MemberGradeService;
-import com.uc.training.common.enums.GoodsStatusEnum;
 import com.uc.training.common.enums.OrderEnum;
 import com.uc.training.common.enums.OrderGoodsCommentEnum;
+import com.uc.training.common.enums.StokeStatusEnum;
 import com.uc.training.common.enums.UUIDTypeEnum;
 import com.uc.training.common.redis.RedissonManager;
 import com.uc.training.common.utils.UUIDUtil;
@@ -34,7 +34,6 @@ import com.uc.training.ord.vo.OrdOrderVO;
 import com.uc.training.ord.vo.OrderGoodsVO;
 import com.uc.training.ord.vo.OrderVO;
 import com.uc.training.remote.client.OrderClient;
-import io.netty.resolver.dns.DnsNameResolver;
 import org.apache.commons.collections.CollectionUtils;
 import org.redisson.api.RLock;
 import org.slf4j.Logger;
@@ -55,7 +54,6 @@ import java.util.List;
  */
 @Service
 public class OrderServiceImpl implements OrderService {
-    private static final String RECONCILIATION_REDIS_LOCK_KEY = "ucasms_reconciliation_redis_lock_key";
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderServiceImpl.class);
     private static final Integer ORDER_INFO_LIST = 2;
     @Autowired
@@ -259,37 +257,46 @@ public class OrderServiceImpl implements OrderService {
             return list;
         }
         for (int i = 0; i < orderInfoListNow.size() - ORDER_INFO_LIST; i++) {
-            //更新库存表、插入用户订单表和订单商品信息表、删除购物车商品信息,判断商品是否删除或者下架和库存是否足够
+            //更新商品对应的库存,加入分布式，利用商品属性id生成锁，防止高并发下的库存数为负数
+            String lockName = orderInfoListNow.get(i).getPropertyId() + "lock";
+            RLock lock = RedissonManager.getInstance().getLock(lockName, true);
             goodsStokeVO = new GoodsStokeVO();
-            goodsStokeVO.setPropertyId(orderInfoListNow.get(i).getPropertyId());
-            goodsStokeVO.setStock((long) orderInfoListNow.get(i).getNum());
-            GoodsStokeRE goodsStokeRE = goodsService.selectGoodsStatus(goodsStokeVO);
-            if (goodsStokeRE.getIsDelete().equals(GoodsStatusEnum.GOODS_DELETE.getType())) {
-                StringBuilder temp = new StringBuilder();
-                temp.append("您的商品：" + goodsStokeRE.getGoodsName() + "\n" + "规格:");
-                temp.append(goodsStokeRE.getGoodsProperty() + "已经被删除了，点击返回购物车，再重新选择");
-                orderConfirmRE.setShowStatus(temp.toString());
-                orderConfirmRE.setGoodsStatus(OrderEnum.NOORDER.getKey());
-                list.add(orderConfirmRE);
-                return list;
-            }
-            if (goodsStokeRE.getStatus().equals(GoodsStatusEnum.GOODS_IS_SHELVES.getType())) {
-                StringBuilder temp = new StringBuilder();
-                temp.append("您的商品：" + goodsStokeRE.getGoodsName() + "\n" + "规格:");
-                temp.append(goodsStokeRE.getGoodsProperty() + "已经被下架了，点击返回购物车，再重新选择");
-                orderConfirmRE.setShowStatus(temp.toString());
-                orderConfirmRE.setGoodsStatus(OrderEnum.NOORDER.getKey());
-                list.add(orderConfirmRE);
-                return list;
-            }
-            if (goodsStokeRE.getStoke() < orderInfoListNow.get(i).getNum()) {
-                StringBuilder temp = new StringBuilder();
-                temp.append("您的商品：" + goodsStokeRE.getGoodsName() + "\n" + "规格:");
-                temp.append(goodsStokeRE.getGoodsProperty() + "已经超过商品最大库存量，点击返回购物车，请再重新选择");
-                orderConfirmRE.setShowStatus(temp.toString());
-                orderConfirmRE.setGoodsStatus(OrderEnum.NOORDER.getKey());
-                list.add(orderConfirmRE);
-                return list;
+            try {
+                lock.lock(RedissonManager.DEFAULT_EXPIRED_TIME, RedissonManager.DEFAULT_TIME_UNIT);
+                goodsStokeVO.setPropertyId(orderInfoListNow.get(i).getPropertyId());
+                goodsStokeVO.setStock((long) orderInfoListNow.get(i).getNum());
+                Integer status = goodsService.updateAndDeductStoke(goodsStokeVO);
+                //更新库存表、插入用户订单表和订单商品信息表、删除购物车商品信息,判断商品是否删除或者下架和库存是否足够
+                GoodsStokeRE goodsStokeRE = goodsService.selectGoodsStatus(goodsStokeVO);
+                if (status.equals(StokeStatusEnum.DELETE_STATUS.getStatus())) {
+                    StringBuilder temp = new StringBuilder();
+                    temp.append("您的商品：" + goodsStokeRE.getGoodsName() + "\n" + "规格:");
+                    temp.append(goodsStokeRE.getGoodsProperty() + "已经被删除了，点击返回购物车，再重新选择");
+                    orderConfirmRE.setShowStatus(temp.toString());
+                    orderConfirmRE.setGoodsStatus(OrderEnum.NOORDER.getKey());
+                    list.add(orderConfirmRE);
+                    return list;
+                } else if (status.equals(StokeStatusEnum.SHELVED_STATUS.getStatus())) {
+                    StringBuilder temp = new StringBuilder();
+                    temp.append("您的商品：" + goodsStokeRE.getGoodsName() + "\n" + "规格:");
+                    temp.append(goodsStokeRE.getGoodsProperty() + "已经被下架了，点击返回购物车，再重新选择");
+                    orderConfirmRE.setShowStatus(temp.toString());
+                    orderConfirmRE.setGoodsStatus(OrderEnum.NOORDER.getKey());
+                    list.add(orderConfirmRE);
+                    return list;
+                } else if (status.equals(StokeStatusEnum.NOT_ENOUGH_STATUS.getStatus())) {
+                    StringBuilder temp = new StringBuilder();
+                    temp.append("您的商品：" + goodsStokeRE.getGoodsName() + "\n" + "规格:");
+                    temp.append(goodsStokeRE.getGoodsProperty() + "已经超过商品最大库存量，点击返回购物车，请再重新选择");
+                    orderConfirmRE.setShowStatus(temp.toString());
+                    orderConfirmRE.setGoodsStatus(OrderEnum.NOORDER.getKey());
+                    list.add(orderConfirmRE);
+                    return list;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                lock.unlock();
             }
         }
         orderConfirmRE.setGoodsStatus(OrderEnum.WAITPAY.getKey());
@@ -304,7 +311,6 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderConfirmRE> confirmOrderInfo(List<OrdOrderGoodsVO> orderInfoListNow) {
         OrderConfirmRE orderConfirmRE = new OrderConfirmRE();
         List<OrderConfirmRE> list = new ArrayList<>();
-        GoodsStokeVO goodsStokeVO;
         // 判断该商品是否下架、删除、无库存
         List<OrderConfirmRE> goodsStatusList = validationGoods(orderInfoListNow);
         if (CollectionUtils.isEmpty(goodsStatusList)) {
@@ -323,7 +329,6 @@ public class OrderServiceImpl implements OrderService {
         ordGoodsVO.setGoodsPropertyIdList(propertyIds);
         //调用远程服务查询购物车商品信息
         List<CartGoodsRE> goodsNumList = OrderClient.getCarGoodsByIds(ordGoodsVO);
-        OrdOrderGoodsVO ordOrderGoodsVO;
         Double memberDiscountPoint = memberGradeService.getDiscountByUId(orderInfoListNow.get(orderInfoListNow.size() - ORDER_INFO_LIST).getMemberId());
         if (memberDiscountPoint == null) {
             return list;
@@ -346,11 +351,11 @@ public class OrderServiceImpl implements OrderService {
                         break;
                     }
                 }
-                //删除购物车信息表,并以商品id加入锁机制，防止重复提交订单
+                //删除购物车信息表,并以商品属性id加入锁机制，防止重复提交订单
                 String lockName = orderInfoListNow.get(i).getPropertyId() + "Lock";
                 RLock lock = RedissonManager.getInstance().getLock(lockName, true);
                 try {
-                    lock.lock();
+                    lock.lock(RedissonManager.DEFAULT_EXPIRED_TIME, RedissonManager.DEFAULT_TIME_UNIT);
                     ordCartGoodsVO = new OrdCartGoodsVO();
                     ordCartGoodsVO.setPropertyId(orderInfoListNow.get(i).getPropertyId());
                     ordCartGoodsVO.setMemberId(orderInfoListNow.get(orderInfoListNow.size() - ORDER_INFO_LIST).getMemberId());
@@ -397,7 +402,6 @@ public class OrderServiceImpl implements OrderService {
         for (int i = 0; i < orderInfoListNow.size() - ORDER_INFO_LIST; i++) {
             //插入订单商品信息表
             orderGoods = new OrderGoodsVO();
-            goodsStokeVO = new GoodsStokeVO();
             orderGoods.setOrderId(oderId);
             orderGoods.setGoodsId(orderInfoListNow.get(i).getGoodsId());
             orderGoods.setPayPrice(orderInfoListNow.get(i).getPayPrice());
@@ -407,10 +411,6 @@ public class OrderServiceImpl implements OrderService {
             orderGoods.setDiscountPrice(orderInfoListNow.get(i).getDiscountPrice());
             orderGoods.setGoodsPropertyId(orderInfoListNow.get(i).getPropertyId());
             OrderClient.insertOrderGoods(orderGoods);
-            //更新商品对应的库存
-            goodsStokeVO.setStock(orderGoods.getGoodsNum().longValue());
-            goodsStokeVO.setPropertyId(orderGoods.getGoodsPropertyId());
-            goodsService.updateAndDeductStoke(goodsStokeVO);
         }
         orderConfirmRE.setShowStatus("已成功生成订单");
         orderConfirmRE.setGoodsStatus((int) OrderEnum.WAITPAY.getKey().longValue());

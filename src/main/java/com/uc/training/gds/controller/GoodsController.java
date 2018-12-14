@@ -5,6 +5,7 @@ import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.common.enums.StokeStatusEnum;
 import com.uc.training.common.redis.RedisConfigEnum;
+import com.uc.training.common.redis.RedissonManager;
 import com.uc.training.common.vo.PageVO;
 import com.uc.training.gds.dto.GoodsListDTO;
 import com.uc.training.gds.re.GoodsDetailRE;
@@ -15,6 +16,7 @@ import com.uc.training.gds.vo.GoodsStokeVO;
 import com.ycc.base.common.Result;
 import com.ycc.tools.middleware.redis.RedisCacheUtils;
 import org.apache.commons.lang.StringUtils;
+import org.redisson.api.RLock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -147,15 +149,23 @@ public class GoodsController extends BaseController {
         GoodsStokeVO goodsAndPropertyDTO = new GoodsStokeVO();
         goodsAndPropertyDTO.setPropertyId(26L);
         goodsAndPropertyDTO.setStock(1L);
+        RLock lock = RedissonManager.getInstance().getLock("26Lock",true);
+        try {
+            lock.lock(RedissonManager.DEFAULT_EXPIRED_TIME,RedissonManager.DEFAULT_TIME_UNIT);
+            Integer status = goodsService.updateAndDeductStoke(goodsAndPropertyDTO);
+            System.out.println(status + "------------------------------------");
+            if(status.equals(StokeStatusEnum.SUCCESS_STATUS.getStatus())) {
+                return Result.getSuccessResult(status);
+            } else {
+                return Result.getBusinessException("减库存失败", null);
+            }
 
-        Integer status = goodsService.updateAndDeductStoke(goodsAndPropertyDTO);
-        System.out.println(status + "------------------------------------");
-        if(status.equals(StokeStatusEnum.SUCCESS_STATUS.getStatus())) {
-            return Result.getSuccessResult(status);
-        } else {
-            return Result.getBusinessException("减库存失败", null);
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            lock.unlock();
         }
-
+        return null;
     }
 
     /**

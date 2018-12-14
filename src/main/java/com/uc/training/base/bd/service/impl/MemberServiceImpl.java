@@ -108,15 +108,6 @@ public class MemberServiceImpl implements MemberService {
                 list.add(orderConfirmRE);
                 return list;
             }
-            if (goodsStokeRE.getStoke() < orderGdsList.get(i).getGoodsNum()) {
-                StringBuilder temp = new StringBuilder();
-                temp.append("您的商品：" + goodsStokeRE.getGoodsName() + "\n" + "规格:");
-                temp.append(goodsStokeRE.getGoodsProperty() + "已经达到最大库存量，点击返回订单");
-                orderConfirmRE.setStatus(OrderEnum.NOORDER.getKey());
-                orderConfirmRE.setShowStatus(temp.toString());
-                list.add(orderConfirmRE);
-                return list;
-            }
         }
         orderConfirmRE.setStatus(OrderEnum.WAITPAY.getKey());
         list.add(orderConfirmRE);
