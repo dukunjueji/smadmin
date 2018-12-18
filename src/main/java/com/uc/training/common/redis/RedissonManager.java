@@ -6,7 +6,6 @@ import com.zuche.redis.cluster.ClusterManager;
 import com.zuche.redis.config.RedisReadWriteConfig;
 import com.zuche.redis.pool.RedisPool;
 import com.zuche.redis.pool.RedisPoolConfig;
-import org.apache.poi.util.SystemOutLogger;
 import org.redisson.Redisson;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
