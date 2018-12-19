@@ -148,41 +148,36 @@ public class MemberServiceImpl implements MemberService {
         if (memberRE == null) {
             return null;
         }
-        if (memberRE.getBalance().compareTo(orderList.get(0).getPayPrice()) > 0) {
-            MemberVO member = new MemberVO();
-            member.setId(memberInfoVO.getMemberId());
-            BigDecimal accountBalances = BaseClient.queryOneMember(member).getBalance();
-            if (accountBalances.compareTo(orderList.get(0).getPayPrice()) > 0) {
-                //加入分布式锁 防止并发提交确认支付信息，以订单编号加锁
-                RLock lock = RedissonManager.getInstance().getLock(orderList.get(0).getOrderNum(), true);
-                //更新订单状态、减去用户余额
-                try {
-                    lock.lock();
-                    orderConfirmRE.setStatus(OrderEnum.WAITSHIP.getKey());
-                    OrdOrderVO ordOrderVo = new OrdOrderVO();
-                    ordOrderVo.setOrderNum(orderList.get(0).getOrderNum());
-                    ordOrderVo.setStatus(OrderEnum.WAITSHIP.getKey().longValue());
-                    ordOrderVo.setMemberId(memberInfoVO.getMemberId());
-                    orderConfirmRE.setShowStatus("成功购买商品");
-                    if (orderService.updateOrder(ordOrderVo) > 0) {
-                        //减去用户余额
-                        MemberVO memberBalanceVO = new MemberVO();
-                        memberBalanceVO.setId(memberInfoVO.getMemberId());
-                        memberBalanceVO.setBalance((orderList.get(0).getPayPrice()).multiply(new BigDecimal(-1)));
-                        if (BaseClient.updateMember(memberBalanceVO) > 0) {
-                            list.add(orderConfirmRE);
-                        } else {
-                            return list;
-                        }
+        if (memberRE.getBalance().compareTo(orderList.get(0).getPayPrice()) >= 0) {
+            //加入分布式锁 防止并发提交确认支付信息，以订单编号加锁
+            RLock lock = RedissonManager.getInstance().getLock(orderList.get(0).getOrderNum(), true);
+            //更新订单状态、减去用户余额
+            try {
+                lock.lock();
+                orderConfirmRE.setStatus(OrderEnum.WAITSHIP.getKey());
+                OrdOrderVO ordOrderVo = new OrdOrderVO();
+                ordOrderVo.setOrderNum(orderList.get(0).getOrderNum());
+                ordOrderVo.setStatus(OrderEnum.WAITSHIP.getKey().longValue());
+                ordOrderVo.setMemberId(memberInfoVO.getMemberId());
+                orderConfirmRE.setShowStatus("成功购买商品");
+                if (orderService.updateOrder(ordOrderVo) > 0) {
+                    //减去用户余额
+                    MemberVO memberBalanceVO = new MemberVO();
+                    memberBalanceVO.setId(memberInfoVO.getMemberId());
+                    memberBalanceVO.setBalance((orderList.get(0).getPayPrice()).multiply(new BigDecimal(-1)));
+                    if (BaseClient.updateMember(memberBalanceVO) > 0) {
+                        list.add(orderConfirmRE);
                     } else {
                         return list;
                     }
-                } catch (Exception e) {
-                    LOGGER.error(e.getMessage());
+                } else {
                     return list;
-                } finally {
-                    lock.unlock();
                 }
+            } catch (Exception e) {
+                LOGGER.error(e.getMessage());
+                return list;
+            } finally {
+                lock.unlock();
             }
             // 加上对应的商品销量
             for (int i = 1, j = orderPayInfoNow.size(); i < j; i++) {
