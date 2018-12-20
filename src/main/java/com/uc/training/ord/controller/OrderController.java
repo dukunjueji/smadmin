@@ -225,7 +225,11 @@ public class OrderController extends BaseController {
                 //判断该商品是否存在
                 if (cartGds.getGoodsPropertyId().equals(ordCartGoodsVO.getPropertyId())) {
                     //如果存在增加数量
-                    ordCartGoodsVO.setNum(ordCartGoodsVO.getNum() + cartGds.getGoodsNum());
+                    if (ordCartGoodsVO.getNum() + cartGds.getGoodsNum() < ordCartGoodsVO.getNum()) {
+                        ordCartGoodsVO.setNum(ordCartGoodsVO.getNum() + cartGds.getGoodsNum());
+                    } else {
+                        ordCartGoodsVO.setNum(ordCartGoodsVO.getNum());
+                    }
                     ordCartGoodsVO.setMemberId(getUid());
                     try {
                         orderService.updateCarGoodsNum(ordCartGoodsVO);
@@ -390,6 +394,11 @@ public class OrderController extends BaseController {
                 if (gdDTO.getStock() < cargd.getGoodsNum()
                     || gdDTO.getStatus().equals(GoodsStatusEnum.GOODS_IS_SHELVES.getType().longValue())
                     || gdDTO.getIsDelete().equals(GoodsStatusEnum.GOODS_DELETE.getType().longValue())) {
+                    OrdCartGoodsVO ordCartGoodsVO = new OrdCartGoodsVO();
+                    ordCartGoodsVO.setMemberId(getUid());
+                    ordCartGoodsVO.setCartId(cargd.getId());
+                    ordCartGoodsVO.setNum(gdDTO.getStock());
+                    orderService.updateCarGoodsNum(ordCartGoodsVO);
                     return Result.getBusinessException("选择的商品：“ " + gdDTO.getName() + " ” 库存不足或已下架或被删除无法购买，请取消选择", null);
                 }
             }
