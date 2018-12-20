@@ -153,7 +153,7 @@ public class MemberServiceImpl implements MemberService {
             RLock lock = RedissonManager.getInstance().getLock(orderList.get(0).getOrderNum(), true);
             //更新订单状态、减去用户余额
             try {
-                lock.lock();
+                lock.lock(RedissonManager.DEFAULT_EXPIRED_TIME, RedissonManager.DEFAULT_TIME_UNIT);
                 orderConfirmRE.setStatus(OrderEnum.WAITSHIP.getKey());
                 OrdOrderVO ordOrderVo = new OrdOrderVO();
                 ordOrderVo.setOrderNum(orderList.get(0).getOrderNum());
