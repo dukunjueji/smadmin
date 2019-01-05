@@ -5,6 +5,7 @@ import com.uc.training.ord.re.OrderRE;
 import com.uc.training.ord.service.OrderGoodsService;
 import com.uc.training.ord.vo.OrdOrderGoodsVO;
 import com.uc.training.remote.client.OrderClient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,6 +17,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class OrderGoodsServiceImpl implements OrderGoodsService {
+    @Autowired
+    OrderClient orderClient;
 
     /**
      * 通过商品属性id获取待支付的商品属性数量
@@ -25,7 +28,7 @@ public class OrderGoodsServiceImpl implements OrderGoodsService {
      */
     @Override
     public Integer getUnPayGoodsPropertyCountByPropertyId(Long propertyId) {
-        return OrderClient.getUnPayGoodsPropertyCountByPropertyId(propertyId);
+        return orderClient.getUnPayGoodsPropertyCountByPropertyId(propertyId);
     }
 
     /**
@@ -36,7 +39,7 @@ public class OrderGoodsServiceImpl implements OrderGoodsService {
      */
     @Override
     public Integer upOrdGoodsCommentStatus(OrdOrderGoodsVO ordOrderGoodsVO) {
-        return OrderClient.upOrdGoodsCommentStatus(ordOrderGoodsVO);
+        return orderClient.upOrdGoodsCommentStatus(ordOrderGoodsVO);
     }
 
     /**
@@ -47,6 +50,6 @@ public class OrderGoodsServiceImpl implements OrderGoodsService {
      */
     @Override
     public OrderRE getOrderByOrdGoodsId(Long ordGoodsId) {
-        return OrderClient.getOrderByOrdGoodsId(ordGoodsId);
+        return orderClient.getOrderByOrdGoodsId(ordGoodsId);
     }
 }
