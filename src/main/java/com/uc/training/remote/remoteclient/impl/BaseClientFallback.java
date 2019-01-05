@@ -1,4 +1,4 @@
-package com.uc.training.remote.client.fallback;
+package com.uc.training.remote.remoteclient.impl;
 
 import com.uc.training.base.bd.dto.AddressDTO;
 import com.uc.training.base.bd.dto.BannerDTO;
@@ -29,7 +29,7 @@ import com.uc.training.base.sys.re.SysMenuRE;
 import com.uc.training.base.sys.re.SysRoleRE;
 import com.uc.training.base.sys.re.SysUserRE;
 import com.uc.training.common.vo.RemoteResult;
-import com.uc.training.remote.client.BaseClient;
+import com.uc.training.remote.remoteclient.BaseClient;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

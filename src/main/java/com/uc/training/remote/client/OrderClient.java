@@ -19,7 +19,7 @@ import com.uc.training.ord.vo.OrdOrderGoodsVO;
 import com.uc.training.ord.vo.OrdOrderVO;
 import com.uc.training.ord.vo.OrderGoodsVO;
 import com.uc.training.ord.vo.OrderVO;
-import com.uc.training.remote.utils.RemoteUtil;
+import com.uc.training.remote.remoteclient.OrderClientRemote;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -39,95 +39,6 @@ public final class OrderClient {
     private  final Logger LOGGER = LoggerFactory.getLogger(OrderClient.class.getName());
 @Autowired
 OrderClientRemote orderClientRemote;
-    /**
-     * 根据用户id查询购物车信息表
-     */
-    private  final String GET_CAR_GOODS_BY_ID = "smorder.api.getCarGoodsById";
-    /**
-     * 更新购物车商品数量
-     */
-    private  final String UPDATE_CAR_GOODS_NUM = "smorder.api.updateCarGoodsNum";
-    /**
-     * 根据用户ID和购物车商品表ID获取购物车商品信息
-     */
-    private  final String GET_CAR_GOODS_BY_IDS = "smorder.api.getCarGoodsByIds";
-    /**
-     * 根据订单id 获取购物车商品表数据
-     */
-    private  final String GET_ORDER_GOODS_BY_ORDER_ID = "smorder.api.getOrderGoodsByOrderId";
-    /**
-     * 加入购物车
-     */
-    private  final String ADD_CAR_GOODS = "smorder.api.addCarGoods";
-    /**
-     * 删除购物车
-     */
-    private  final String DELETE_CAR_GOODS = "smorder.api.deleteCarGoods";
-    /**
-     * 插入订单信息并返回订单id
-     */
-    private  final String INSERT_ORDER = "smorder.api.insertOrder";
-    /**
-     * 插入订单商品信息
-     */
-    private  final String INSERT_ORDER_GOODS = "smorder.api.insertOrderGoods";
-    /**
-     * 获取订单查询分页
-     */
-    private  final String GET_ORDER_PAGE = "smorder.api.getOrderPage";
-    /**
-     * 获取总记录数
-     */
-    private  final String GET_ORDER_TOTAL = "smorder.api.getOrderTotal";
-    /**
-     * 批量逻辑删除订单
-     */
-    private  final String LOGIC_DEL_ORDER = "smorder.api.logicDelOrder";
-    /**
-     * 通过会员信息或者订单信息来查找订单信息
-     */
-    private  final String GET_ORDER_BY_MEMBERDTO = "smorder.api.getOrderByMemberDTO";
-    /**
-     * 更新订单状态
-     */
-    private  final String UPDATE_ORDER = "smorder.api.updateOrder";
-    /**
-     * 根据主键id获取手机号
-     */
-    private  final String GET_TELEPHONE_BY_ID = "smorder.api.getTelephoneById";
-    /**
-     * 当年每个月销售额
-     */
-    private  final String GET_ORDER_SALEDATA = "smorder.api.getOrderSaleData";
-    /**
-     * 根据用户id 获取购物车商品表数据数量
-     */
-    private  final String QUERY_CART_GOODS_COUNT = "smorder.api.queryCartGoodsCount";
-    /**
-     * 逻辑删除订单
-     */
-    private  final String MEMBER_DEL_ORDER = "smorder.api.memberDelOrder";
-    /**
-     * 根据用户ID 和 订单状态获取待评价商品详情
-     */
-    private  final String GET_PROPERTY_ID_LIST_BY_UID = "smorder.api.getPropertyIdListByUid";
-    /**
-     * 查找指定会员订单总记录数
-     */
-    private  final String QUERY_ORDER_COUNT = "smorder.api.queryOrderCount";
-    /**
-     * 通过商品属性id获取待支付的商品属性数量
-     */
-    private  final String GET_UN_PAY_GOODS_PROPERTY_COUNT_BY_PROPERTY_ID = "smorder.api.getUnPayGoodsPropertyCountByPropertyId";
-    /**
-     * 根据id 更改订单商品评论状态
-     */
-    private  final String UP_ORD_GOODS_COMMENT_STATUS = "smorder.api.upOrdGoodsCommentStatus";
-    /**
-     * 根据订单商品表Id获取订单表信息
-     */
-    private  final String GET_ORDER_BY_ORD_GOODS_ID = "smorder.api.getOrderByOrdGoodsId";
-
 
 
     /**

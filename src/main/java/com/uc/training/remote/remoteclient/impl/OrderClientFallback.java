@@ -1,4 +1,4 @@
-package com.uc.training.remote.client.fallback;
+package com.uc.training.remote.remoteclient.impl;
 
 import com.uc.training.common.vo.RemoteResult;
 import com.uc.training.ord.dto.OrdCartGoodsDTO;
@@ -14,7 +14,7 @@ import com.uc.training.ord.re.OrdOrderGoodsRE;
 import com.uc.training.ord.re.OrderGoodsRE;
 import com.uc.training.ord.re.OrderRE;
 import com.uc.training.ord.re.OrderSaleRE;
-import com.uc.training.remote.client.OrderClientRemote;
+import com.uc.training.remote.remoteclient.OrderClientRemote;
 
 import java.util.List;
 

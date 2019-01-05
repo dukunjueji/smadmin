@@ -1,4 +1,4 @@
-package com.uc.training.remote.client;
+package com.uc.training.remote.remoteclient;
 
 import com.uc.training.common.vo.RemoteResult;
 import com.uc.training.ord.dto.OrdCartGoodsDTO;
@@ -14,12 +14,9 @@ import com.uc.training.ord.re.OrdOrderGoodsRE;
 import com.uc.training.ord.re.OrderGoodsRE;
 import com.uc.training.ord.re.OrderRE;
 import com.uc.training.ord.re.OrderSaleRE;
-import com.uc.training.remote.client.fallback.BaseClientFallback;
-import com.uc.training.remote.client.fallback.OrderClientFallback;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.uc.training.remote.remoteclient.impl.OrderClientFallback;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 

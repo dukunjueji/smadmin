@@ -1,4 +1,4 @@
-package com.uc.training.remote.client;
+package com.uc.training.remote.remoteclient;
 
 import com.uc.training.base.bd.dto.AddressDTO;
 import com.uc.training.base.bd.dto.BannerDTO;
@@ -29,7 +29,7 @@ import com.uc.training.base.sys.re.SysMenuRE;
 import com.uc.training.base.sys.re.SysRoleRE;
 import com.uc.training.base.sys.re.SysUserRE;
 import com.uc.training.common.vo.RemoteResult;
-import com.uc.training.remote.client.fallback.BaseClientFallback;
+import com.uc.training.remote.remoteclient.impl.BaseClientFallback;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
