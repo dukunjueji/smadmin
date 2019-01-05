@@ -5,13 +5,14 @@ import com.uc.training.base.bd.service.AddressService;
 import com.uc.training.base.bd.vo.AddressVO;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.common.utils.ReplaceStarUtils;
-import com.ycc.base.common.Result;
+import com.uc.training.common.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ import java.util.List;
  * @Version 1.0
  * @date 2018/10/16 13:14
  */
-@Controller
+@RestController
 @RequestMapping("/api/address")
 public class AddressController extends BaseController {
 

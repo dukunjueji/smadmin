@@ -1,9 +1,12 @@
 package com.uc.training.base.sys.service.impl;
 
+import com.uc.training.base.sys.dto.SysMenuDTO;
 import com.uc.training.base.sys.re.SysMenuRE;
 import com.uc.training.base.sys.service.MenuService;
 import com.uc.training.base.sys.vo.MenuVO;
 import com.uc.training.remote.client.BaseClient;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,45 +18,53 @@ import java.util.List;
  */
 @Service
 public class MenuServiceImpl implements MenuService {
+    @Autowired
+    private BaseClient baseClient;
 
     @Override
     public List<SysMenuRE> getMenuList() {
-        return BaseClient.getMenuList();
+        return baseClient.getMenuList().getRe();
     }
 
     @Override
     public Long queryCountByName(String name) {
-        return BaseClient.queryMenuCountByName(name);
+        SysMenuDTO menuDTO = new SysMenuDTO();
+        menuDTO.setName(name);
+        return baseClient.queryMenuCountByName(menuDTO).getRe();
     }
 
     @Override
     public List<String> getUserPerms(Long userId) {
-        return BaseClient.getUserPerms(userId);
+        return baseClient.getUserPerms(userId).getRe();
     }
 
     @Override
     public SysMenuRE getById(Long id) {
-        return BaseClient.getSysMenuById(id);
+        return baseClient.getSysMenuById(id).getRe();
     }
 
     @Override
     public Long addMenu(MenuVO menu) {
-        return BaseClient.addMenu(menu);
+        SysMenuDTO sysMenuDTO = new SysMenuDTO();
+        BeanUtils.copyProperties(menu, sysMenuDTO);
+        return baseClient.addMenu(sysMenuDTO).getRe();
     }
 
     @Override
     public Integer deleteById(Long id) {
-        return BaseClient.deleteSysMenuById(id);
+        return baseClient.deleteSysMenuById(id).getRe();
     }
 
     @Override
     public Integer updateMenu(MenuVO menu) {
-        return BaseClient.updateMenu(menu);
+        SysMenuDTO menuDTO = new SysMenuDTO();
+        BeanUtils.copyProperties(menu, menuDTO);
+        return baseClient.updateMenu(menuDTO).getRe();
     }
 
     @Override
     public Integer batchDelete(List<Long> ids) {
-        return BaseClient.batchDeleteSysMenu(ids);
+        return baseClient.batchDeleteSysMenu(ids).getRe();
     }
 
 }

@@ -1,5 +1,6 @@
 package com.uc.training.base.sms.service.impl;
 
+import com.uc.training.base.sms.dto.SmsDTO;
 import com.uc.training.base.sms.re.SmsRE;
 import com.uc.training.base.sms.service.SmsService;
 import com.uc.training.base.sms.vo.GenerateSmsVO;
@@ -10,6 +11,8 @@ import com.uc.training.remote.client.BaseClient;
 import com.zuche.base.common.sendmsg.mail.service.MailService;
 import com.zuche.base.common.sendmsg.mail.service.MailServiceImpl;
 import com.zuche.base.sys.sendmessage.MailMessage;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,7 +24,8 @@ import java.util.List;
  */
 @Service
 public class SmsServiceImpl implements SmsService {
-
+@Autowired
+private BaseClient baseClient;
     //使用MailServiceImpl()实现类，不要直接调用发送方法
     private static MailService mailService = new MailServiceImpl();
 
@@ -32,7 +36,9 @@ public class SmsServiceImpl implements SmsService {
      */
     @Override
     public List<SmsRE> getList(SmsListVO smsListVO) {
-        return BaseClient.getSmsList(smsListVO);
+        SmsDTO smsDTO = new SmsDTO();
+        BeanUtils.copyProperties(smsListVO, smsDTO);
+        return baseClient.getSmsList(smsDTO).getRe();
     }
 
     /**
@@ -42,7 +48,9 @@ public class SmsServiceImpl implements SmsService {
      */
     @Override
     public Long querySmsCount(SmsListVO smsListVO) {
-        return BaseClient.querySmsCount(smsListVO);
+        SmsDTO smsDTO = new SmsDTO();
+        BeanUtils.copyProperties(smsListVO, smsDTO);
+        return baseClient.querySmsCount(smsDTO).getRe();
     }
 
     /**
@@ -79,6 +87,8 @@ public class SmsServiceImpl implements SmsService {
      */
     @Override
     public Long insertSms(SmsVO sms) {
-        return BaseClient.insertSms(sms);
+        SmsDTO smsDTO = new SmsDTO();
+        BeanUtils.copyProperties(sms, smsDTO);
+        return baseClient.insertSms(smsDTO).getRe();
     }
 }

@@ -1,10 +1,14 @@
 package com.uc.training.base.bd.service.impl;
 
+import com.uc.training.base.bd.dto.MemberRechargeHistoryDTO;
+import com.uc.training.base.bd.dto.MemberRechargeHistoryModelDTO;
 import com.uc.training.base.bd.re.MemberRechargeHistoryListRE;
 import com.uc.training.base.bd.service.MemberRechargeHistoryService;
 import com.uc.training.base.bd.vo.MemberRechargeHistoryModelVO;
 import com.uc.training.base.bd.vo.MemberRechargeHistoryVO;
 import com.uc.training.remote.client.BaseClient;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +22,8 @@ import java.util.List;
  */
 @Service
 public class MemberRechargeHistoryServiceImpl implements MemberRechargeHistoryService {
+    @Autowired
+    private BaseClient baseClient;
 
     /**
      * 新增充值记录
@@ -27,7 +33,9 @@ public class MemberRechargeHistoryServiceImpl implements MemberRechargeHistorySe
      */
     @Override
     public Long insertMemberRechargeHistory(MemberRechargeHistoryModelVO memberRechargeHistoryModelVO) {
-       return BaseClient.insertMemberRechargeHistory(memberRechargeHistoryModelVO);
+        MemberRechargeHistoryModelDTO memberRechargeHistoryModelDTO = new MemberRechargeHistoryModelDTO();
+        BeanUtils.copyProperties(memberRechargeHistoryModelVO, memberRechargeHistoryModelDTO);
+        return baseClient.insertMemberRechargeHistory(memberRechargeHistoryModelDTO).getRe();
     }
 
     /**
@@ -38,7 +46,9 @@ public class MemberRechargeHistoryServiceImpl implements MemberRechargeHistorySe
      */
     @Override
     public List<MemberRechargeHistoryListRE> getRechargeHistoryListByMemberId(MemberRechargeHistoryVO memberRechargeHistoryVO) {
-        return BaseClient.getRechargeHistoryListByMemberId(memberRechargeHistoryVO);
+        MemberRechargeHistoryDTO memberRechargeHistoryDTO = new MemberRechargeHistoryDTO();
+        BeanUtils.copyProperties(memberRechargeHistoryVO, memberRechargeHistoryDTO);
+        return baseClient.getRechargeHistoryListByMemberId(memberRechargeHistoryDTO).getRe();
     }
 
     /**
@@ -49,7 +59,7 @@ public class MemberRechargeHistoryServiceImpl implements MemberRechargeHistorySe
      */
     @Override
     public Integer getCountByMemberId(Long memberId) {
-        Long count = BaseClient.getCountByMemberId(memberId);
+        Long count = baseClient.getCountByMemberId(memberId).getRe();
         if (count == null) {
             return null;
         }

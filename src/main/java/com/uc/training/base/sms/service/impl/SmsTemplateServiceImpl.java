@@ -1,5 +1,7 @@
 package com.uc.training.base.sms.service.impl;
 
+import com.uc.training.base.sms.dto.SmsDTO;
+import com.uc.training.base.sms.dto.SmsTemplateDTO;
 import com.uc.training.base.sms.re.SmsTemplateRE;
 import com.uc.training.base.sms.service.SmsService;
 import com.uc.training.base.sms.service.SmsTemplateService;
@@ -18,6 +20,7 @@ import com.zuche.base.common.sendmsg.mail.service.MailService;
 import com.zuche.base.common.sendmsg.mail.service.MailServiceImpl;
 import com.zuche.base.sys.sendmessage.MailMessage;
 import org.apache.commons.collections.CollectionUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +36,8 @@ public class SmsTemplateServiceImpl implements SmsTemplateService {
 
     @Autowired
     private SmsService smsService;
+    @Autowired
+    private BaseClient baseClient;
 
     //使用MailServiceImpl()实现类，不要直接调用发送方法
     private static MailService mailService = new MailServiceImpl();
@@ -44,7 +49,9 @@ public class SmsTemplateServiceImpl implements SmsTemplateService {
      */
     @Override
     public Long addTemplate(SmsTemplateVO smsTemplate){
-        return BaseClient.addTemplate(smsTemplate);
+        SmsTemplateDTO smsTemplateDTO = new SmsTemplateDTO();
+        BeanUtils.copyProperties(smsTemplate, smsTemplateDTO);
+        return baseClient.addTemplate(smsTemplateDTO).getRe();
     }
 
     /**
@@ -54,7 +61,7 @@ public class SmsTemplateServiceImpl implements SmsTemplateService {
      */
     @Override
     public Integer deleteTemplateById(Long id){
-        return BaseClient.deleteTemplateById(id);
+        return baseClient.deleteTemplateById(id).getRe();
     }
 
     /**
@@ -64,7 +71,9 @@ public class SmsTemplateServiceImpl implements SmsTemplateService {
      */
     @Override
     public Integer modifyTemplate(SmsTemplateVO smsTemplate){
-        return BaseClient.modifyTemplate(smsTemplate);
+        SmsTemplateDTO smsTemplateDTO = new SmsTemplateDTO();
+        BeanUtils.copyProperties(smsTemplate, smsTemplateDTO);
+        return baseClient.modifyTemplate(smsTemplateDTO).getRe();
     }
 
     /**
@@ -74,7 +83,7 @@ public class SmsTemplateServiceImpl implements SmsTemplateService {
      */
     @Override
     public SmsTemplateRE getTemplateById(Long id){
-        return BaseClient.getTemplateById(id);
+        return baseClient.getTemplateById(id).getRe();
     }
 
     /**
@@ -83,7 +92,12 @@ public class SmsTemplateServiceImpl implements SmsTemplateService {
      */
     @Override
     public List<SmsTemplateRE> getTemplateList(SmsTemplateListVO smsTemplateListVO){
-        return BaseClient.getTemplateList(smsTemplateListVO);
+        SmsTemplateDTO smsTemplateDTO = new SmsTemplateDTO();
+        smsTemplateDTO.setCode(smsTemplateListVO.getCode());
+        smsTemplateDTO.setType(smsTemplateListVO.getType());
+        smsTemplateDTO.setOffset(smsTemplateListVO.getOffset());
+        smsTemplateDTO.setPageSize(smsTemplateListVO.getPageSize());
+        return baseClient.getTemplateList(smsTemplateDTO).getRe();
     }
 
     /**
@@ -93,7 +107,9 @@ public class SmsTemplateServiceImpl implements SmsTemplateService {
      */
     @Override
     public Long getTemplateListCount(SmsTemplateListVO smsTemplateListVO) {
-        return BaseClient.getTemplateListCount(smsTemplateListVO);
+        SmsTemplateDTO smsTemplateDTO = new SmsTemplateDTO();
+        BeanUtils.copyProperties(smsTemplateListVO, smsTemplateDTO);
+        return baseClient.getTemplateListCount(smsTemplateDTO).getRe();
     }
 
     /**
@@ -105,7 +121,12 @@ public class SmsTemplateServiceImpl implements SmsTemplateService {
     public SmsTemplateRE getByCode(String code) {
         SmsTemplateListVO sms = new SmsTemplateListVO();
         sms.setCode(code);
-        List<SmsTemplateRE> list = BaseClient.getTemplateList(sms);
+        SmsTemplateDTO smsTemplateDTO = new SmsTemplateDTO();
+        smsTemplateDTO.setCode(sms.getCode());
+        smsTemplateDTO.setType(sms.getType());
+        smsTemplateDTO.setOffset(sms.getOffset());
+        smsTemplateDTO.setPageSize(sms.getPageSize());
+        List<SmsTemplateRE> list = baseClient.getTemplateList(smsTemplateDTO).getRe();
         if (CollectionUtils.isEmpty(list)) {
             return null;
         }
@@ -119,7 +140,7 @@ public class SmsTemplateServiceImpl implements SmsTemplateService {
      */
     @Override
     public Integer batchDeleteById(List<Long> ids){
-        return BaseClient.batchDeleteSmsTempleById(ids);
+        return baseClient.batchDeleteSmsTempleById(ids).getRe();
     }
 
     /**
@@ -149,13 +170,20 @@ public class SmsTemplateServiceImpl implements SmsTemplateService {
         }
         SmsTemplateListVO smsTemplateListVO = new SmsTemplateListVO();
         smsTemplateListVO.setCode(generateSmsVO.getCode());
-        List<SmsTemplateRE> smsTemplateRE = BaseClient.getTemplateList(smsTemplateListVO);
+        SmsTemplateDTO smsTemplateDTO = new SmsTemplateDTO();
+        smsTemplateDTO.setCode(smsTemplateListVO.getCode());
+        smsTemplateDTO.setType(smsTemplateListVO.getType());
+        smsTemplateDTO.setOffset(smsTemplateListVO.getOffset());
+        smsTemplateDTO.setPageSize(smsTemplateListVO.getPageSize());
+        List<SmsTemplateRE> smsTemplateRE = baseClient.getTemplateList(smsTemplateDTO).getRe();
         //查找短信模板存在
         if (CollectionUtils.isEmpty(smsTemplateRE) || smsTemplateRE.size() != 1) {
             return SmsStatusEnum.TEMPLATE_NOT_EXIST.getKey();
         }
         //获取短信内容
-        String content = BaseClient.generateSms(generateSmsVO);
+        smsTemplateDTO.setCode(generateSmsVO.getCode());
+        smsTemplateDTO.setMessage(generateSmsVO.getMessage());
+        String content = baseClient.generateSms(smsTemplateDTO).getRe();
         //邮件标题
         generateSmsVO.setEmailTitle(smsTemplateRE.get(0).getTitle());
         // 发送短信
@@ -178,7 +206,9 @@ public class SmsTemplateServiceImpl implements SmsTemplateService {
         sms.setStatus(SmsStatusEnum.SUCCESS.getKey());
         sms.setContent(content);
         // 新增短信记录
-        BaseClient.insertSms(sms);
+        SmsDTO smsDTO = new SmsDTO();
+        BeanUtils.copyProperties(sms, smsDTO);
+        baseClient.insertSms(smsDTO);
 
         return SmsStatusEnum.SUCCESS.getKey();
     }

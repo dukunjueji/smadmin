@@ -1,10 +1,14 @@
 package com.uc.training.base.bd.service.impl;
 
+import com.uc.training.base.bd.dto.GrowthDetailDTO;
+import com.uc.training.base.bd.dto.MemberDTO;
 import com.uc.training.base.bd.service.GrowthDetailService;
 import com.uc.training.base.bd.vo.GrowthVO;
 import com.uc.training.base.bd.vo.MemberVO;
 import com.uc.training.common.enums.GrowthEnum;
 import com.uc.training.remote.client.BaseClient;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -21,6 +25,8 @@ import java.math.BigDecimal;
 public class GrowthDetailServiceImpl implements GrowthDetailService {
 
     private static final Integer NUM = 100;
+    @Autowired
+    private BaseClient baseClient;
     @Override
     public Long saveGrowthDetail(GrowthVO growthVO){
         GrowthVO growthDetail = new GrowthVO();
@@ -32,13 +38,19 @@ public class GrowthDetailServiceImpl implements GrowthDetailService {
         growthDetail.setGrowth(growthVaule);
 
         // 保存积分详情
-        BaseClient.saveGrowthDetail(growthDetail);
+        GrowthDetailDTO growthDetailDTO = new GrowthDetailDTO();
+        growthDetailDTO.setMemberId(growthVO.getMemberId());
+        growthDetailDTO.setGrowth(growthVO.getGrowth());
+        growthDetailDTO.setType(growthVO.getType());
+        baseClient.saveGrowthDetail(growthDetailDTO);
 
         MemberVO memberVO = new MemberVO();
         memberVO.setId(growthVO.getMemberId());
         memberVO.setGrowth(growthVaule);
         // 更新会员成长值
-        BaseClient.updateMember(memberVO);
+        MemberDTO memberDTO = new MemberDTO();
+        BeanUtils.copyProperties(memberVO, memberDTO);
+        baseClient.updateMember(memberDTO).getRe();
         return growthVaule;
     }
 

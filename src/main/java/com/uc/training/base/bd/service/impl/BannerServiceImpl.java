@@ -1,10 +1,13 @@
 package com.uc.training.base.bd.service.impl;
 
+import com.uc.training.base.bd.dto.BannerDTO;
 import com.uc.training.base.bd.re.BannerRE;
 import com.uc.training.base.bd.service.BannerService;
 import com.uc.training.base.bd.vo.BannerListVO;
 import com.uc.training.base.bd.vo.BannerVO;
 import com.uc.training.remote.client.BaseClient;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,14 +21,17 @@ import java.util.List;
  */
 @Service
 public class BannerServiceImpl implements BannerService {
-
+@Autowired
+private BaseClient baseClient;
     /**
      * 获取轮播图信息(不包含不显示的图片)
      * @return
      */
     @Override
     public List<BannerRE> getBannerList(BannerVO bannerVO) {
-        return BaseClient.getBannerList(bannerVO);
+        BannerDTO bannerDTO = new BannerDTO();
+        BeanUtils.copyProperties(bannerVO, bannerDTO);
+        return baseClient.getBannerList(bannerDTO).getRe();
     }
 
     /**
@@ -35,7 +41,9 @@ public class BannerServiceImpl implements BannerService {
      */
     @Override
     public List<BannerRE> getAllBannerList(BannerListVO adminBannerListVO) {
-        return BaseClient.getAllBannerList(adminBannerListVO);
+        BannerDTO bannerDTO = new BannerDTO();
+        BeanUtils.copyProperties(adminBannerListVO, bannerDTO);
+        return baseClient.getAllBannerList(bannerDTO).getRe();
     }
 
     /**
@@ -46,7 +54,9 @@ public class BannerServiceImpl implements BannerService {
      */
     @Override
     public Integer updateBanner(BannerVO banner) {
-        return BaseClient.updateBanner(banner);
+        BannerDTO bannerDTO = new BannerDTO();
+        BeanUtils.copyProperties(banner, bannerDTO);
+        return baseClient.updateBanner(bannerDTO).getRe();
     }
 
     /**
@@ -57,7 +67,7 @@ public class BannerServiceImpl implements BannerService {
      */
     @Override
     public Integer deleteBannerById(Long id) {
-        return BaseClient.deleteBannerById(id);
+        return baseClient.deleteBannerById(id).getRe();
     }
 
     /**
@@ -68,7 +78,9 @@ public class BannerServiceImpl implements BannerService {
      */
     @Override
     public Long insertBanner(BannerVO banner) {
-        return BaseClient.insertBanner(banner);
+        BannerDTO bannerDTO = new BannerDTO();
+        BeanUtils.copyProperties(banner, bannerDTO);
+        return baseClient.insertBanner(bannerDTO).getRe();
     }
 
     /**
@@ -79,6 +91,8 @@ public class BannerServiceImpl implements BannerService {
      */
     @Override
     public Long getAdminBannerCount(BannerListVO bannerListVO) {
-        return BaseClient.getBannerCount(bannerListVO);
+        BannerDTO bannerDTO = new BannerDTO();
+        BeanUtils.copyProperties(bannerListVO, bannerDTO);
+        return baseClient.getBannerCount(bannerDTO).getRe();
     }
 }

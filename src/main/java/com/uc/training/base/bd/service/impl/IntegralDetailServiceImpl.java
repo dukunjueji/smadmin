@@ -1,10 +1,14 @@
 package com.uc.training.base.bd.service.impl;
 
+import com.uc.training.base.bd.dto.IntegralDetaillDTO;
+import com.uc.training.base.bd.dto.MemberDTO;
 import com.uc.training.base.bd.service.IntegralDetailService;
 import com.uc.training.base.bd.vo.IntegralVO;
 import com.uc.training.base.bd.vo.MemberVO;
 import com.uc.training.common.enums.IntegralEnum;
 import com.uc.training.remote.client.BaseClient;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -21,6 +25,8 @@ import java.math.BigDecimal;
 public class IntegralDetailServiceImpl implements IntegralDetailService {
 
     private static final Integer  NUM = 100;
+    @Autowired
+    private BaseClient baseClient;
     @Override
     public Long saveIntegralDetail(IntegralVO integralVO){
         IntegralVO integralDetail = new IntegralVO();
@@ -45,7 +51,11 @@ public class IntegralDetailServiceImpl implements IntegralDetailService {
         integralDetail.setType(integralVO.getType());
 
         //插入会员详情
-        BaseClient.addIntegralDetail(integralDetail);
+        IntegralDetaillDTO integralDetaillDTO = new IntegralDetaillDTO();
+        integralDetaillDTO.setMemberId(integralVO.getMemberId());
+        integralDetaillDTO.setIntegral(integralVO.getIntegral());
+        integralDetaillDTO.setType(integralVO.getType());
+        baseClient.addIntegralDetail(integralDetaillDTO);
 
         //封装修改会员积分的参数
         MemberVO memberVO = new MemberVO();
@@ -53,7 +63,9 @@ public class IntegralDetailServiceImpl implements IntegralDetailService {
         memberVO.setId(integralVO.getMemberId());
 
         //更新会员积分
-        BaseClient.updateMember(memberVO);
+        MemberDTO memberDTO = new MemberDTO();
+        BeanUtils.copyProperties(memberVO, memberDTO);
+        baseClient.updateMember(memberDTO);
         return integralValue;
     }
 }

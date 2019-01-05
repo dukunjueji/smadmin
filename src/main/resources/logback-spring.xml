@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds">
+	<!--引入默认的一些设置-->
+    <include resource="org/springframework/boot/logging/logback/base.xml" />
+    
+    <logger name="org.springframework.web" level="INFO"/>
+    <logger name="org.springboot.sample" level="TRACE" />
+
+    <!--定义日志文件的存储地址 勿在 LogBack的配置中使用相对路径-->
+    <property name="LOG_PATH" value="/usr/local/logs/micro-provider-demo"/>
+    
+    <!--写入日志到控制台的appender,用默认的,但是要去掉charset,否则windows下tomcat下乱码-->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 开发环境 -->
+    <springProfile name="dev">
+	    <!-- 下面配置一些第三方包的日志过滤级别，用于避免刷屏 -->
+	    <logger name="com.ucar" level="DEBUG" />
+	    <logger name="org.thymeleaf" level="INFO" />  
+   		<logger name="org.apache" level="INFO" />
+        <logger name="org.springframework.web" level="INFO"/>
+        <logger name="org.springboot.sample" level="INFO" />
+        <!--<logger name="com.ucar.*.dao" level="DEBUG">
+            <appender-ref ref="STDOUT" />
+        </logger>-->
+    </springProfile>
+    
+    <!-- 测试环境 -->
+    <springProfile name="test">
+    	<!-- 注意这里一定要放到springProfile里, 否则在你本机执行的时候还是会去找相应的文件 -->
+        <appender name="INFO_FILE"  class="ch.qos.logback.core.rolling.RollingFileAppender">
+        	<file>${LOG_PATH}/info.log</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <!--日志文件输出的文件名-->
+                <FileNamePattern>${LOG_PATH}/info.%d{yyyy-MM-dd}.log</FileNamePattern>
+                <!--日志文件保留天数-->
+                <maxHistory>30</maxHistory>
+                <totalSizeCap>10GB</totalSizeCap>
+            </rollingPolicy>
+            <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+                <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+            </encoder>
+            <!--日志文件最大的大小-->
+            <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+                <MaxFileSize>100MB</MaxFileSize>
+            </triggeringPolicy>
+        </appender>
+        
+        <appender name="ERROR_FILE"  class="ch.qos.logback.core.rolling.RollingFileAppender">
+        	<file>${LOG_PATH}/error.log</file>
+        	<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+				<level>ERROR</level>
+			</filter>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <!--日志文件输出的文件名-->
+                <FileNamePattern>${LOG_PATH}/error.%d{yyyy-MM-dd}.log</FileNamePattern>
+                <!--日志文件保留天数-->
+                <maxHistory>30</maxHistory>
+                <totalSizeCap>10GB</totalSizeCap>
+            </rollingPolicy>
+            <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+                <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+            </encoder>
+            <!--日志文件最大的大小-->
+            <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+                <MaxFileSize>100MB</MaxFileSize>
+            </triggeringPolicy>
+        </appender>
+        
+	    <!--异步到文件-->
+	    <appender name="ASYNC_FILE" class="ch.qos.logback.classic.AsyncAppender">
+	        <discardingThreshold>0</discardingThreshold>
+	        <queueSize>500</queueSize>
+	        <appender-ref ref="INFO_FILE"/>
+	        <appender-ref ref="ERROR_FILE"/>
+	    </appender>
+	    
+	    <!-- 下面配置一些第三方包的日志过滤级别，用于避免刷屏 -->
+	    <logger name="org.jeese" level="DEBUG" />
+	    <logger name="org.thymeleaf" level="INFO" />  
+   		<logger name="org.apache" level="INFO" />
+        <logger name="org.springframework.web" level="INFO"/>
+        <logger name="org.springboot.sample" level="INFO" />
+        
+        <root level="INFO">
+            <appender-ref ref="ASYNC_FILE" />
+        </root>
+    </springProfile>
+    
+    <!-- 生产环境 -->
+    <springProfile name="prod">
+    	<!-- 注意这里一定要放到springProfile里, 否则在你本机执行的时候还是会去找相应的文件 -->
+        <appender name="INFO_FILE"  class="ch.qos.logback.core.rolling.RollingFileAppender">
+        	<file>${LOG_PATH}/info.log</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <!--日志文件输出的文件名-->
+                <FileNamePattern>${LOG_PATH}/info.%d{yyyy-MM-dd}.log</FileNamePattern>
+                <!--日志文件保留天数-->
+                <maxHistory>15</maxHistory>
+                <totalSizeCap>10GB</totalSizeCap>
+            </rollingPolicy>
+            <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+                <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+            </encoder>
+            <!--日志文件最大的大小-->
+            <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+                <MaxFileSize>100MB</MaxFileSize>
+            </triggeringPolicy>
+        </appender>
+        
+        <appender name="ERROR_FILE"  class="ch.qos.logback.core.rolling.RollingFileAppender">
+        	<file>${LOG_PATH}/error.log</file>
+        	<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+				<level>ERROR</level>
+			</filter>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <!--日志文件输出的文件名-->
+                <FileNamePattern>${LOG_PATH}/error.%d{yyyy-MM-dd}.log</FileNamePattern>
+                <!--日志文件保留天数-->
+                <maxHistory>30</maxHistory>
+                <totalSizeCap>10GB</totalSizeCap>
+            </rollingPolicy>
+            <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+                <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+            </encoder>
+            <!--日志文件最大的大小-->
+            <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+                <MaxFileSize>100MB</MaxFileSize>
+            </triggeringPolicy>
+        </appender>
+        
+	    <!--异步到文件-->
+	    <appender name="ASYNC_FILE" class="ch.qos.logback.classic.AsyncAppender">
+	        <discardingThreshold>0</discardingThreshold>
+	        <queueSize>500</queueSize>
+	        <appender-ref ref="INFO_FILE"/>
+	        <appender-ref ref="ERROR_FILE"/>
+	    </appender>
+	    
+	    <!-- 下面配置一些第三方包的日志过滤级别，用于避免刷屏 -->
+	    <logger name="org.jeese" level="ERROR" />
+        <logger name="org.thymeleaf" level="WARN" />  
+   		<logger name="org.apache" level="WARN" />
+        <logger name="org.springframework.web" level="ERROR"/>
+        <logger name="org.springboot.sample" level="ERROR" />
+        
+        <root level="INFO">
+            <appender-ref ref="ASYNC_FILE"/>
+        </root>
+    </springProfile>
+</configuration>

@@ -1,0 +1,26 @@
+server:
+  port: 8002
+spring:
+  datasource: 
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://180.76.106.207:3306/ucar-cloud?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: jeese
+    password: '!Jeese0715'
+    hikari: 
+      minimum-idle: 5
+      maximum-pool-size: 15
+      auto-commit: true
+      idle-timeout: 30000
+      pool-name: DatebookHikariCP
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
+eureka:
+  instance:
+    prefer-ip-address: true
+    #instance-id: ${eureka.instance.ip-address}:${server.port}
+    #ip-address: localhost
+  client:
+    serviceUrl:
+      defaultZone: http://10.112.11.155:9000/eureka/,http://10.112.11.186:9000/eureka/,http://10.112.11.14:9000/eureka/,http://10.112.11.108:9000/eureka/,http://10.112.11.164:9000/eureka/

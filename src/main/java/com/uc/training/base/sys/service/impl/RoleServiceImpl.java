@@ -1,10 +1,14 @@
 package com.uc.training.base.sys.service.impl;
 
+import com.uc.training.base.sys.dto.SysRoleDTO;
+import com.uc.training.base.sys.dto.SysUserRoleDTO;
 import com.uc.training.base.sys.re.SysRoleRE;
 import com.uc.training.base.sys.service.RoleService;
 import com.uc.training.base.sys.vo.RoleListVO;
 import com.uc.training.base.sys.vo.RoleVO;
 import com.uc.training.remote.client.BaseClient;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,68 +20,86 @@ import java.util.List;
  */
 @Service
 public class RoleServiceImpl implements RoleService {
+    @Autowired
+    private BaseClient baseClient;
     @Override
     public List<String> getUserRoles(Long userId) {
-        return BaseClient.getUserRoles(userId);
+        return baseClient.getUserRoles(userId).getRe();
     }
 
     @Override
     public List<SysRoleRE> getRolePage(RoleListVO roleListVO) {
-        return BaseClient.getRolePage(roleListVO);
+        SysRoleDTO roleDTO = new SysRoleDTO();
+        BeanUtils.copyProperties(roleListVO, roleDTO);
+        return baseClient.getRolePage(roleDTO).getRe();
     }
 
     @Override
     public Long getCount(RoleListVO roleListVO) {
-        return BaseClient.getSysRoleCount(roleListVO);
+        SysRoleDTO roleDTO = new SysRoleDTO();
+        BeanUtils.copyProperties(roleListVO, roleDTO);
+        return baseClient.getSysRoleCount(roleDTO).getRe();
     }
 
     @Override
     public Integer updateRole(RoleVO role) {
-        return BaseClient.updateRole(role);
+        SysRoleDTO roleDTO = new SysRoleDTO();
+        BeanUtils.copyProperties(role, roleDTO);
+        return baseClient.updateRole(roleDTO).getRe();
     }
 
     @Override
     public Integer deleteById(Long id) {
-        return BaseClient.deleteSysRoleById(id);
+        return baseClient.deleteSysRoleById(id).getRe();
     }
 
     @Override
     public Long addRole(RoleVO role, Long createEmp) {
-        return BaseClient.addRole(role, createEmp);
+        SysRoleDTO roleDTO = new SysRoleDTO();
+        BeanUtils.copyProperties(role, roleDTO);
+        roleDTO.setCreateEmp(createEmp);
+        return baseClient.addRole(roleDTO).getRe();
     }
 
     @Override
     public Long addRoleAuth(Long rid, List<Long> ids) {
-        return BaseClient.batchInsertAuth(rid, ids);
+        SysRoleDTO sysRoleDTO = new SysRoleDTO();
+        sysRoleDTO.setId(rid);
+        sysRoleDTO.setMid(ids);
+        return baseClient.batchInsertAuth(sysRoleDTO).getRe();
     }
 
     @Override
     public List<Long> getRoleMenuIdByRid(Long rid) {
-        return BaseClient.getRoleMenuIdByRid(rid);
+        return baseClient.getRoleMenuIdByRid(rid).getRe();
     }
 
     @Override
     public List<SysRoleRE> getRoleList() {
-        return BaseClient.getRoleList();
+        return baseClient.getRoleList().getRe();
     }
 
     @Override
     public List<Long> getRoleListByUid(Long uid) {
-        return BaseClient.getRoleListByUid(uid);
+        return baseClient.getRoleListByUid(uid).getRe();
     }
 
     @Override
     public Long addUserRole(Long uid, List<Long> list, Long createEmp) {
-        return BaseClient.addUserRole(uid, list, createEmp);
+        SysUserRoleDTO sysUserRoleDTO = new SysUserRoleDTO();
+        sysUserRoleDTO.setUserId(uid);
+        sysUserRoleDTO.setRoleId(list);
+        sysUserRoleDTO.setCreateEmp(createEmp);
+        return baseClient.addUserRole(sysUserRoleDTO).getRe();
     }
 
     @Override
     public Long queryCountByName(String name) {
-        return BaseClient.querySysRoleCount(name);
+        return baseClient.querySysRoleCount(name).getRe();
     }
 
     @Override
     public SysRoleRE getById(Long id) {
-        return BaseClient.getSysRoleById(id);
+        return baseClient.getSysRoleById(id).getRe();
     }
 }

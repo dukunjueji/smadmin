@@ -1,5 +1,7 @@
 package com.uc.training.base.bd.service.impl;
 
+import com.uc.training.base.bd.dto.LoginLogDTO;
+import com.uc.training.base.bd.dto.MemberDTO;
 import com.uc.training.base.bd.re.MemberDetailRE;
 import com.uc.training.base.bd.re.MemberRE;
 import com.uc.training.base.bd.service.MemberService;
@@ -32,6 +34,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.redisson.api.RLock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -56,10 +59,14 @@ public class MemberServiceImpl implements MemberService {
     private OrderService orderService;
     @Autowired
     private GoodsService goodsService;
+    @Autowired
+    private BaseClient baseClient;
 
     @Override
     public Long insertMember(MemberVO memberVO) {
-        return BaseClient.insertMember(memberVO);
+        MemberDTO memberDTO = new MemberDTO();
+        BeanUtils.copyProperties(memberVO, memberDTO);
+        return baseClient.insertMember(memberDTO).getRe();
     }
 
     @Override
@@ -68,13 +75,17 @@ public class MemberServiceImpl implements MemberService {
             //密码加密
             member.setPassword(EncryptUtil.md5(member.getPassword()));
         }
-        return BaseClient.queryOneMember(member);
+        MemberDTO memberDTO = new MemberDTO();
+        BeanUtils.copyProperties(member, memberDTO);
+        return baseClient.queryOneMember(memberDTO).getRe();
     }
 
     @Override
     public Integer updateMember(MemberVO member) {
         member.setPassword(EncryptUtil.md5(member.getPassword()));
-        return BaseClient.updateMember(member);
+        MemberDTO memberDTO = new MemberDTO();
+        BeanUtils.copyProperties(member, memberDTO);
+        return baseClient.updateMember(memberDTO).getRe();
     }
 
     /**
@@ -144,7 +155,9 @@ public class MemberServiceImpl implements MemberService {
         }
         MemberVO memberVO = new MemberVO();
         memberVO.setId(memberInfoVO.getMemberId());
-        MemberRE memberRE = BaseClient.queryOneMember(memberVO);
+        MemberDTO memberDTO = new MemberDTO();
+        BeanUtils.copyProperties(memberVO, memberDTO);
+        MemberRE memberRE = baseClient.queryOneMember(memberDTO).getRe();
         if (memberRE == null) {
             return null;
         }
@@ -165,7 +178,8 @@ public class MemberServiceImpl implements MemberService {
                     MemberVO memberBalanceVO = new MemberVO();
                     memberBalanceVO.setId(memberInfoVO.getMemberId());
                     memberBalanceVO.setBalance((orderList.get(0).getPayPrice()).multiply(new BigDecimal(-1)));
-                    if (BaseClient.updateMember(memberBalanceVO) > 0) {
+                    BeanUtils.copyProperties(memberBalanceVO, memberDTO);
+                    if (baseClient.updateMember(memberDTO).getRe() > 0) {
                         list.add(orderConfirmRE);
                     } else {
                         return list;
@@ -208,29 +222,39 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public MemberDetailRE getMemberDetailById(Long memberId) {
-        return BaseClient.getMemberDetailById(memberId);
+        return baseClient.getMemberDetailById(memberId).getRe();
     }
 
     @Override
     public Integer updateMemberInfo(MemberVO member) {
-        return BaseClient.updateMember(member);
+        MemberDTO memberDTO = new MemberDTO();
+        BeanUtils.copyProperties(member, memberDTO);
+        return baseClient.updateMember(memberDTO).getRe();
     }
 
     @Override
     public List<MemberRE> getMemberList(MemberListVO memberListVO) {
-        return BaseClient.queryMemberList(memberListVO);
+        MemberDTO memberDTO = new MemberDTO();
+        BeanUtils.copyProperties(memberListVO, memberDTO);
+        return baseClient.queryMemberList(memberDTO).getRe();
     }
 
     @Override
     public Long queryMemberCount(MemberListVO memberListVO) {
-        return BaseClient.queryMemberCount(memberListVO);
+        MemberDTO memberDTO = new MemberDTO();
+        BeanUtils.copyProperties(memberListVO, memberDTO);
+        return baseClient.queryMemberCount(memberDTO).getRe();
     }
 
     @Override
     public void memberLogin(LoginVO loginLog, MqVO mqVO) {
-        BaseClient.insertLoginLog(loginLog);
+        LoginLogDTO loginLogDTO = new LoginLogDTO();
+        loginLogDTO.setIp(loginLog.getIp());
+        loginLogDTO.setMemberId(loginLog.getMemberId());
+        baseClient.insertLoginLog(loginLogDTO).getRe();
         //判断是否第一次登陆
-        Long loginNum = BaseClient.queryLoginCount(loginLog);
+        loginLogDTO.setMemberId(loginLog.getMemberId());
+        Long loginNum = baseClient.queryLoginCount(loginLogDTO).getRe();
         if (loginNum != null && loginNum == 1) {
             MetaQUtils.sendMsgNoException(new MqProducer(mqVO));
         }
@@ -238,7 +262,9 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public Integer memberRecharge(MemberVO member, MqVO mqVO) {
-        Integer status = BaseClient.updateMember(member);
+        MemberDTO memberDTO = new MemberDTO();
+        BeanUtils.copyProperties(member, memberDTO);
+        Integer status = baseClient.updateMember(memberDTO).getRe();
         mqVO.setRechargeStatus(status);
         mqVO.getMemberRechargeHistory().setStatus(status);
         mqVO.getGenerateSmsVO().setRechargeStatus(status);

@@ -1,9 +1,13 @@
 package com.uc.training.base.bd.service.impl;
 
+import com.uc.training.base.bd.dto.MemberGradeDTO;
 import com.uc.training.base.bd.re.MemberGradeRE;
 import com.uc.training.base.bd.service.MemberGradeService;
 import com.uc.training.base.bd.vo.MemberGradeVO;
 import com.uc.training.remote.client.BaseClient;
+import org.checkerframework.checker.units.qual.A;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,15 +19,21 @@ import java.util.List;
  */
 @Service
 public class MemberGradeServiceImpl implements MemberGradeService {
+    @Autowired
+    private  BaseClient baseClient;
 
     @Override
     public List<MemberGradeRE> getList(MemberGradeVO memberGradeVO) {
-        return BaseClient.queryMemberGradeList(memberGradeVO);
+        MemberGradeDTO memberGradeDTO = new MemberGradeDTO();
+        BeanUtils.copyProperties(memberGradeVO, memberGradeDTO);
+        return baseClient.queryMemberGradeList(memberGradeVO).getRe();
     }
 
     @Override
     public Integer modifyMemberGrade(MemberGradeVO grade) {
-        return BaseClient.modifyMemberGrade(grade);
+        MemberGradeDTO memberGradeDTO = new MemberGradeDTO();
+        BeanUtils.copyProperties(grade, memberGradeDTO);
+        return baseClient.modifyMemberGrade(memberGradeDTO).getRe();
     }
 
     /**
@@ -44,7 +54,7 @@ public class MemberGradeServiceImpl implements MemberGradeService {
      */
     @Override
     public Double getDiscountByUId(Long id) {
-        return BaseClient.getDiscountByUId(id);
+        return baseClient.getDiscountByUId(id).getRe();
     }
 
 }

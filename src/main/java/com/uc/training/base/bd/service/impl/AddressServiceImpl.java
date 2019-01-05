@@ -1,10 +1,13 @@
 package com.uc.training.base.bd.service.impl;
 
+import com.uc.training.base.bd.dto.AddressDTO;
 import com.uc.training.base.bd.re.AddressRE;
 import com.uc.training.base.bd.service.AddressService;
 import com.uc.training.base.bd.vo.AddressVO;
 import com.uc.training.remote.client.BaseClient;
 import org.apache.commons.collections.CollectionUtils;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,7 +21,8 @@ import java.util.List;
  */
 @Service
 public class AddressServiceImpl implements AddressService {
-
+@Autowired
+private BaseClient baseClient;
     /**
      * 获取会员所有地址
      * @param addressVO
@@ -26,7 +30,9 @@ public class AddressServiceImpl implements AddressService {
      */
     @Override
     public List<AddressRE> getAddressList(AddressVO addressVO) {
-        return BaseClient.getAddressList(addressVO);
+        AddressDTO addressDTO = new AddressDTO();
+        BeanUtils.copyProperties(addressVO, addressDTO);
+        return baseClient.getAddressList(addressDTO).getRe();
     }
 
     /**
@@ -36,7 +42,9 @@ public class AddressServiceImpl implements AddressService {
      */
     @Override
     public Long addAddress(AddressVO address) {
-        return BaseClient.insertAddress(address);
+        AddressDTO addressDTO = new AddressDTO();
+        BeanUtils.copyProperties(address, addressDTO);
+        return baseClient.insertAddress(addressDTO).getRe();
     }
 
     /**
@@ -47,7 +55,12 @@ public class AddressServiceImpl implements AddressService {
      */
     @Override
     public AddressRE getAddressById(Long id, Long memberId) {
-        return BaseClient.getAddressById(id, memberId);
+        AddressDTO addressDTO = new AddressDTO();
+        if (memberId != null) {
+            addressDTO.setMemberId(memberId);
+        }
+        addressDTO.setId(id);
+        return baseClient.getAddressById(addressDTO).getRe();
     }
 
     /**
@@ -57,7 +70,9 @@ public class AddressServiceImpl implements AddressService {
      */
     @Override
     public Integer editAddress(AddressVO addressVO) {
-        return BaseClient.updateAddressById(addressVO);
+        AddressDTO addressDTO = new AddressDTO();
+        BeanUtils.copyProperties(addressVO, addressDTO);
+        return baseClient.updateAddressById(addressDTO).getRe();
     }
 
     /**
@@ -67,7 +82,10 @@ public class AddressServiceImpl implements AddressService {
      */
     @Override
     public Integer deleteAddressById(AddressVO address) {
-        return BaseClient.deleteAddressById(address);
+        AddressDTO addressDTO = new AddressDTO();
+        addressDTO.setMemberId(address.getMemberId());
+        addressDTO.setId(address.getId());
+        return baseClient.deleteAddressById(addressDTO).getRe();
     }
 
     /**
@@ -81,7 +99,9 @@ public class AddressServiceImpl implements AddressService {
         AddressVO addressVO = new AddressVO();
         addressVO.setMemberId(uid);
         addressVO.setIsDefault(1);
-        List<AddressRE> list = BaseClient.getAddressList(addressVO);
+        AddressDTO addressDTO = new AddressDTO();
+        BeanUtils.copyProperties(addressVO, addressDTO);
+        List<AddressRE> list = baseClient.getAddressList(addressDTO).getRe();
         if (CollectionUtils.isEmpty(list)) {
             return null;
         }
