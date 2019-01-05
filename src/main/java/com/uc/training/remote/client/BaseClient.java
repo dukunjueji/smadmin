@@ -17,45 +17,23 @@ import com.uc.training.base.bd.re.MemberGradeRE;
 import com.uc.training.base.bd.re.MemberRE;
 import com.uc.training.base.bd.re.MemberRechargeHistoryListRE;
 import com.uc.training.base.bd.re.MessageRE;
-import com.uc.training.base.bd.vo.AddressVO;
-import com.uc.training.base.bd.vo.BannerListVO;
-import com.uc.training.base.bd.vo.BannerVO;
-import com.uc.training.base.bd.vo.GrowthVO;
-import com.uc.training.base.bd.vo.IntegralVO;
-import com.uc.training.base.bd.vo.LoginVO;
-import com.uc.training.base.bd.vo.MemberRechargeHistoryModelVO;
-import com.uc.training.base.bd.vo.MemberRechargeHistoryVO;
-import com.uc.training.base.bd.vo.MessageVO;
 import com.uc.training.base.sms.dto.SmsDTO;
 import com.uc.training.base.sms.dto.SmsTemplateDTO;
 import com.uc.training.base.sms.re.SmsRE;
 import com.uc.training.base.sms.re.SmsTemplateRE;
-import com.uc.training.base.sms.vo.GenerateSmsVO;
-import com.uc.training.base.sms.vo.SmsListVO;
-import com.uc.training.base.sms.vo.SmsTemplateListVO;
-import com.uc.training.base.sms.vo.SmsTemplateVO;
-import com.uc.training.base.sms.vo.SmsVO;
 import com.uc.training.base.sys.dto.SysMenuDTO;
 import com.uc.training.base.sys.dto.SysRoleDTO;
-import com.uc.training.base.sys.dto.SysRoleMenuDTO;
 import com.uc.training.base.sys.dto.SysUserDTO;
 import com.uc.training.base.sys.dto.SysUserRoleDTO;
 import com.uc.training.base.sys.re.SysMenuRE;
 import com.uc.training.base.sys.re.SysRoleRE;
 import com.uc.training.base.sys.re.SysUserRE;
-import com.uc.training.base.sys.vo.MenuVO;
-import com.uc.training.base.sys.vo.RoleListVO;
-import com.uc.training.base.sys.vo.RoleVO;
-import com.uc.training.base.sys.vo.UserListVO;
-import com.uc.training.base.sys.vo.UserLoginVO;
-import com.uc.training.base.sys.vo.UserVO;
 import com.uc.training.common.vo.RemoteResult;
-import com.uc.training.remote.utils.RemoteUtil;
-import org.springframework.beans.BeanUtils;
+import com.uc.training.remote.client.fallback.BaseClientFallback;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+
 
 import java.util.List;
 
@@ -66,7 +44,7 @@ import java.util.List;
  * @Version 1.0
  * @date 2018/11/22
  */
-@FeignClient(name = "provider-smbase", fallback = DemoClientFallback.class)
+@FeignClient(name = "provider-smbase", fallback = BaseClientFallback.class)
 public interface BaseClient {
     /**
      * 根据会员信息进行查找
@@ -259,6 +237,7 @@ public interface BaseClient {
 
     /**
      * 新增轮播图
+     *
      * @param bannerDTO
      * @return
      */
@@ -267,6 +246,7 @@ public interface BaseClient {
 
     /**
      * 获取图片数量
+     *
      * @param bannerDTO
      * @return
      */
@@ -275,6 +255,7 @@ public interface BaseClient {
 
     /**
      * 添加积分详情
+     *
      * @param growthDetailDTO
      * @return
      */
@@ -283,6 +264,7 @@ public interface BaseClient {
 
     /**
      * 根据id查询地址信息
+     *
      * @param addressDTO
      * @return
      */
@@ -291,6 +273,7 @@ public interface BaseClient {
 
     /**
      * 获取用户地址
+     *
      * @param addressDTO
      * @return
      */
@@ -299,6 +282,7 @@ public interface BaseClient {
 
     /**
      * 新增地址
+     *
      * @param addressDTO
      * @return
      */
@@ -307,6 +291,7 @@ public interface BaseClient {
 
     /**
      * 修改地址
+     *
      * @param addressDTO
      * @return
      */
@@ -315,6 +300,7 @@ public interface BaseClient {
 
     /**
      * 删除地址
+     *
      * @param addressDTO
      * @return
      */
@@ -340,6 +326,7 @@ public interface BaseClient {
      */
     @PostMapping(value = "smbase/api/getCountByMemberId")
     RemoteResult<Long> getCountByMemberId(@RequestBody Long memberId);
+
     /**
      * hhj
      * 新增充值记录
@@ -352,6 +339,7 @@ public interface BaseClient {
 
     /**
      * 查询短信列表
+     *
      * @param smsDTO
      * @return
      */
@@ -360,6 +348,7 @@ public interface BaseClient {
 
     /**
      * 查询短信记录总数
+     *
      * @param smsDTO
      * @return
      */
@@ -368,6 +357,7 @@ public interface BaseClient {
 
     /**
      * 新增短信
+     *
      * @param smsDTO
      * @return
      */
@@ -376,6 +366,7 @@ public interface BaseClient {
 
     /**
      * 新增短信模板
+     *
      * @param smsTemplateDTO
      * @return
      */
@@ -384,6 +375,7 @@ public interface BaseClient {
 
     /**
      * 通过ID删除短信模板
+     *
      * @param id
      * @return
      */
@@ -392,6 +384,7 @@ public interface BaseClient {
 
     /**
      * 修改短信模板
+     *
      * @param smsTemplateDTO
      * @return
      */
@@ -400,6 +393,7 @@ public interface BaseClient {
 
     /**
      * 通过ID获取短信模板
+     *
      * @param id
      * @return
      */
@@ -408,6 +402,7 @@ public interface BaseClient {
 
     /**
      * 获取短信模板列表
+     *
      * @param smsTemplateDTO
      * @return
      */
@@ -416,6 +411,7 @@ public interface BaseClient {
 
     /**
      * 查询列表总记录数
+     *
      * @param smsTemplateDTO
      * @return
      */
@@ -424,6 +420,7 @@ public interface BaseClient {
 
     /**
      * 根据ID列表批量删除短信模板
+     *
      * @param list
      * @return
      */
@@ -432,6 +429,7 @@ public interface BaseClient {
 
     /**
      * 生成短信
+     *
      * @param smsTemplateDTO
      * @return
      */
@@ -440,6 +438,7 @@ public interface BaseClient {
 
     /**
      * 根据用户id获取用户权限列表
+     *
      * @param userId
      * @return
      */
@@ -448,6 +447,7 @@ public interface BaseClient {
 
     /**
      * 获取菜单列表
+     *
      * @return
      */
     @PostMapping(value = "smbase/api/getMenuList")
@@ -455,6 +455,7 @@ public interface BaseClient {
 
     /**
      * 通过ID获取菜单
+     *
      * @param id
      * @return
      */
@@ -463,6 +464,7 @@ public interface BaseClient {
 
     /**
      * 新增菜单
+     *
      * @param sysMenuDTO
      * @return
      */
@@ -471,6 +473,7 @@ public interface BaseClient {
 
     /**
      * 通过名字查找菜单数目
+     *
      * @param menuDTO
      * @return
      */
@@ -479,6 +482,7 @@ public interface BaseClient {
 
     /**
      * 通过ID删除菜单
+     *
      * @param id
      * @return
      */
@@ -487,6 +491,7 @@ public interface BaseClient {
 
     /**
      * 更新菜单
+     *
      * @param menuDTO
      * @return
      */
@@ -495,6 +500,7 @@ public interface BaseClient {
 
     /**
      * 批量删除
+     *
      * @param ids
      * @return
      */
@@ -503,6 +509,7 @@ public interface BaseClient {
 
     /**
      * 获取根据用户id用户角色列表
+     *
      * @param userId
      * @return
      */
@@ -511,6 +518,7 @@ public interface BaseClient {
 
     /**
      * 获取角色列表页面
+     *
      * @param roleDTO
      * @return
      */
@@ -519,6 +527,7 @@ public interface BaseClient {
 
     /**
      * 获取角色总数
+     *
      * @param roleDTO
      * @return
      */
@@ -527,6 +536,7 @@ public interface BaseClient {
 
     /**
      * 更新角色信息
+     *
      * @param roleDTO
      * @return
      */
@@ -535,6 +545,7 @@ public interface BaseClient {
 
     /**
      * 根据ID删除角色
+     *
      * @param id
      * @return
      */
@@ -543,6 +554,7 @@ public interface BaseClient {
 
     /**
      * 新增角色
+     *
      * @param roleDTO
      * @return
      */
@@ -551,6 +563,7 @@ public interface BaseClient {
 
     /**
      * 批量新增角色权限
+     *
      * @param sysRoleDTO
      * @return
      */
@@ -559,6 +572,7 @@ public interface BaseClient {
 
     /**
      * 通过角色ID获取该ID所有的菜单权限
+     *
      * @param rid
      * @return
      */
@@ -567,6 +581,7 @@ public interface BaseClient {
 
     /**
      * 获取角色列表
+     *
      * @return
      */
     @PostMapping(value = "smbase/api/getRoleList")
@@ -574,6 +589,7 @@ public interface BaseClient {
 
     /**
      * 通过用户ID获取角色ID
+     *
      * @param uid
      * @return
      */
@@ -582,6 +598,7 @@ public interface BaseClient {
 
     /**
      * 通过用户ID和菜单ID列表添加用户权限
+     *
      * @param sysUserRoleDTO
      * @return
      */
@@ -590,6 +607,7 @@ public interface BaseClient {
 
     /**
      * 查找用户数量
+     *
      * @param name
      * @return
      */
@@ -598,142 +616,95 @@ public interface BaseClient {
 
     /**
      * 通过id查找角色
+     *
      * @param id
      * @return
      */
     @PostMapping(value = "smbase/api/getSysRoleById")
     RemoteResult<SysRoleRE> getSysRoleById(@RequestBody Long id);
+
     /**
      * 用户登录获取用户
+     *
+     * @param userDTO
+     * @return
      */
-    public static SysUserRE getUserLogin(UserLoginVO userLoginVO) {
-        SysUserDTO userDTO = new SysUserDTO();
-        BeanUtils.copyProperties(userLoginVO, userDTO);
-        try {
-            return (SysUserRE) RemoteUtil.exec(GET_USER_LOGIN, userDTO);
-        } catch (ClassCastException e) {
-            LOGGER.error(e.getMessage());
-            LOGGER.error("类型转换异常");
-        }
-        return null;
-    }
+    @PostMapping(value = "smbase/api/getUserLogin")
+    RemoteResult<SysUserRE> getUserLogin(@RequestBody SysUserDTO userDTO);
 
     /**
      * 根据用户id查询用户
+     *
+     * @param id
+     * @return
      */
-    public static SysUserRE getSysUserById(Long id) {
-        try {
-            return (SysUserRE) RemoteUtil.exec(GET_SYS_USER_BY_ID, id);
-        } catch (ClassCastException e) {
-            LOGGER.error(e.getMessage());
-            LOGGER.error("类型转换异常");
-        }
-        return null;
-    }
+    @PostMapping(value = "smbase/api/getSysUserById")
+    RemoteResult<SysUserRE> getSysUserById(@RequestBody Long id);
 
     /**
      * 修改密码
+     *
+     * @param sysUserDTO
+     * @return
      */
-    public static Integer updatePassword(SysUserDTO sysUserDTO) {
-        try {
-            return (Integer) RemoteUtil.exec(UPDATE_PASSWORD, sysUserDTO);
-        } catch (ClassCastException e) {
-            LOGGER.error(e.getMessage());
-            LOGGER.error("类型转换异常");
-        }
-        return null;
-    }
+    @PostMapping(value = "smbase/api/updatePassword")
+    RemoteResult<Integer> updatePassword(@RequestBody SysUserDTO sysUserDTO);
 
     /**
      * 获取用户分页列表
+     *
+     * @param sysUserDTO
+     * @return
      */
-    public static List<SysUserRE> getUserList(UserListVO userListVO) {
-        SysUserDTO sysUserDTO = new SysUserDTO();
-        BeanUtils.copyProperties(userListVO, sysUserDTO);
-        try {
-            return (List<SysUserRE>) RemoteUtil.exec(GET_USER_LIST, sysUserDTO);
-        } catch (ClassCastException e) {
-            LOGGER.error(e.getMessage());
-            LOGGER.error("类型转换异常");
-        }
-        return null;
-    }
+    @PostMapping(value = "smbase/api/getUserList")
+    RemoteResult<List<SysUserRE>> getUserList(@RequestBody SysUserDTO sysUserDTO);
 
     /**
      * 获取用户数量
+     *
+     * @param sysUserDTO
+     * @return
      */
-    public static Long queryUserCount(UserListVO userListVO) {
-        SysUserDTO sysUserDTO = new SysUserDTO();
-        BeanUtils.copyProperties(userListVO, sysUserDTO);
-        try {
-            return (Long) RemoteUtil.exec(GET_USER_COUNT, sysUserDTO);
-        } catch (ClassCastException e) {
-            LOGGER.error(e.getMessage());
-            LOGGER.error("类型转换异常");
-        }
-        return null;
-    }
+    @PostMapping(value = "smbase/api/queryUserCount")
+    RemoteResult<Long> queryUserCount(@RequestBody SysUserDTO sysUserDTO);
 
     /**
      * 新增用户
+     *
+     * @param userDTO
+     * @return
      */
-    public static Long addUser(UserVO user, Long uid, String pwd) {
-        SysUserDTO userDTO = new SysUserDTO();
-        BeanUtils.copyProperties(user, userDTO);
-        userDTO.setCreateEmp(uid);
-        userDTO.setPassword(pwd);
-        try {
-            return (Long) RemoteUtil.exec(ADD_USER, userDTO);
-        } catch (ClassCastException e) {
-            LOGGER.error(e.getMessage());
-            LOGGER.error("类型转换异常");
-        }
-        return null;
-    }
+    @PostMapping(value = "smbase/api/addUser")
+    RemoteResult<Long> addUser(@RequestBody SysUserDTO userDTO);
 
     /**
      * 通过ID删除用户
+     *
+     * @param id
+     * @return
      */
-    public static Integer deleteSysUserById(Long id) {
-        try {
-            return (Integer) RemoteUtil.exec(DELETE_SYS_USER_BY_ID, id);
-        } catch (ClassCastException e) {
-            LOGGER.error(e.getMessage());
-            LOGGER.error("类型转换异常");
-        }
-        return null;
-    }
+    @PostMapping(value = "smbase/api/deleteSysUserById")
+    RemoteResult<Integer> deleteSysUserById(@RequestBody Long id);
 
     /**
      * 更新用户信息
+     *
+     * @param userDTO
+     * @return
      */
-    public static Integer updateUser(UserVO user, Long uid) {
-        SysUserDTO userDTO = new SysUserDTO();
-        BeanUtils.copyProperties(user, userDTO);
-        userDTO.setModifyEmp(uid);
-        try {
-            return (Integer) RemoteUtil.exec(UPDATE_USER, userDTO);
-        } catch (ClassCastException e) {
-            LOGGER.error(e.getMessage());
-            LOGGER.error("类型转换异常");
-        }
-        return null;
-    }
+    @PostMapping(value = "smbase/api/updateUser")
+    RemoteResult<Integer> updateUser(@RequestBody SysUserDTO userDTO);
 
     /**
      * 通过用户ID获取用户的菜单权限
+     *
+     * @param uid
+     * @return
      */
-    public static List<SysMenuRE> getMenuListByUserId(Long uid) {
-        try {
-            return (List<SysMenuRE>) RemoteUtil.exec(GET_MENU_LIST_BY_USER_ID, uid);
-        } catch (ClassCastException e) {
-            LOGGER.error(e.getMessage());
-            LOGGER.error("类型转换异常");
-        }
-        return null;
-    }
+    @PostMapping(value = "smbase/api/getMenuListByUserId")
+    RemoteResult<List<SysMenuRE>> getMenuListByUserId(@RequestBody Long uid);
 
-    public static Long addRoleAuth(Long rid, List<Long> list) {
+    /*public static Long addRoleAuth(Long rid, List<Long> list) {
         SysRoleMenuDTO sysRoleMenuDTO = new SysRoleMenuDTO();
         sysRoleMenuDTO.setMenuId(list);
         sysRoleMenuDTO.setRoleId(rid);
@@ -744,15 +715,14 @@ public interface BaseClient {
             LOGGER.error("类型转换异常");
         }
         return null;
-    }
+    }*/
 
-    public static Long queryUserCountByName(String name) {
-        try {
-            return (Long) RemoteUtil.exec(QUERY_USER_COUNT_BY_NAME, name);
-        } catch (ClassCastException e) {
-            LOGGER.error(e.getMessage());
-            LOGGER.error("类型转换异常");
-        }
-        return null;
-    }
+    /**
+     * 通过名字查询用户数量
+     *
+     * @param name
+     * @return
+     */
+    @PostMapping(value = "smbase/api/queryUserCountByName")
+    RemoteResult<Long> queryUserCountByName(@RequestBody String name);
 }

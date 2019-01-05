@@ -43,7 +43,7 @@ import java.util.List;
  * @Version 1.0
  * @date 2018/11/22
  */
-public  final class GdsClient {
+public  final class  GdsClient {
 
     private static final Logger logger = LoggerFactory.getLogger(GdsClient.class.getName());
 

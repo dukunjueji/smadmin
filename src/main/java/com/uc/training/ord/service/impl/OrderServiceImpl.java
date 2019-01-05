@@ -64,6 +64,8 @@ public class OrderServiceImpl implements OrderService {
     CommentService commentService;
     @Autowired
     private MemberGradeService memberGradeService;
+    @Autowired
+    OrderClient orderClient;
 
     /**
      * 根据用户id查询购物车信息表
@@ -74,7 +76,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<CartGoodsRE> getCarGoodsById(Long memberId) {
-        return OrderClient.getCarGoodsById(memberId);
+        return orderClient.getCarGoodsById(memberId);
     }
 
     /**
@@ -85,7 +87,7 @@ public class OrderServiceImpl implements OrderService {
      */
     @Override
     public Integer updateCarGoodsNum(OrdCartGoodsVO ordCartGoodsVO) {
-        return OrderClient.updateCarGoodsNum(ordCartGoodsVO);
+        return orderClient.updateCarGoodsNum(ordCartGoodsVO);
     }
 
     /**
@@ -96,12 +98,12 @@ public class OrderServiceImpl implements OrderService {
      */
     @Override
     public List<OrderRE> getOrderByMemberVO(OrdMemberVO ordMemberVO) {
-        return OrderClient.getOrderByMemberVO(ordMemberVO);
+        return orderClient.getOrderByMemberVO(ordMemberVO);
     }
 
     @Override
     public List<CartGoodsRE> getCarGoodsByIds(OrdGoodsVO ordGoodsVO) {
-        return OrderClient.getCarGoodsByIds(ordGoodsVO);
+        return orderClient.getCarGoodsByIds(ordGoodsVO);
     }
 
     /**
@@ -124,7 +126,7 @@ public class OrderServiceImpl implements OrderService {
         } else {
             return list;
         }
-        List<CartGoodsRE> goodsNumList = OrderClient.getCarGoodsByIds(ordGoodsVO);
+        List<CartGoodsRE> goodsNumList = orderClient.getCarGoodsByIds(ordGoodsVO);
         OrdOrderGoodsRE ordOrderGoodsRE;
         for (int i = 0; i < orderGodsList.size(); i++) {
             ordOrderGoodsRE = new OrdOrderGoodsRE();
@@ -139,7 +141,7 @@ public class OrderServiceImpl implements OrderService {
             ordOrderGoodsRE.setGdsName(gdDTO.getName());
             // 对我的订单中的商品重新购买进行判断
             if (orderGodsList.get(0).getOrderId() != null) {
-                List<OrderGoodsRE> orderGdsList = OrderClient.getOrderGoodsByOrderId(orderGodsList.get(0).getOrderId().intValue());
+                List<OrderGoodsRE> orderGdsList = orderClient.getOrderGoodsByOrderId(orderGodsList.get(0).getOrderId().intValue());
                 if (CollectionUtils.isEmpty(orderGdsList)) {
                     return null;
                 }
@@ -184,7 +186,7 @@ public class OrderServiceImpl implements OrderService {
         List<OrdOrderGoodsRE> list = new ArrayList<>();
         OrdOrderGoodsRE ordOrderGoodsRE;
         OrdOrderGoodsVO ordOrderGoodsVO;
-        List<OrderGoodsRE> orderGdsList = OrderClient.getOrderGoodsByOrderId(orderId.intValue());
+        List<OrderGoodsRE> orderGdsList = orderClient.getOrderGoodsByOrderId(orderId.intValue());
         if (CollectionUtils.isEmpty(orderGdsList)) {
             return null;
         }
@@ -226,7 +228,7 @@ public class OrderServiceImpl implements OrderService {
      */
     @Override
     public Integer addCarGoods(OrdCartGoodsVO ordCartGoodsVO) {
-        return OrderClient.addCarGoods(ordCartGoodsVO);
+        return orderClient.addCarGoods(ordCartGoodsVO);
     }
 
     /**
@@ -237,13 +239,13 @@ public class OrderServiceImpl implements OrderService {
      */
     @Override
     public Integer deleteCarGoods(OrdCartGoodsVO ordCartGoodsVO) {
-        return OrderClient.deleteCarGoods(ordCartGoodsVO);
+        return orderClient.deleteCarGoods(ordCartGoodsVO);
     }
 
 
     @Override
     public Integer queryOrderCount(Long memberId) {
-        return OrderClient.queryOrderCount(memberId);
+        return orderClient.queryOrderCount(memberId);
     }
 
     /**
@@ -328,7 +330,7 @@ public class OrderServiceImpl implements OrderService {
         }
         ordGoodsVO.setGoodsPropertyIdList(propertyIds);
         //调用远程服务查询购物车商品信息
-        List<CartGoodsRE> goodsNumList = OrderClient.getCarGoodsByIds(ordGoodsVO);
+        List<CartGoodsRE> goodsNumList = orderClient.getCarGoodsByIds(ordGoodsVO);
         Double memberDiscountPoint = memberGradeService.getDiscountByUId(orderInfoListNow.get(orderInfoListNow.size() - ORDER_INFO_LIST).getMemberId());
         if (memberDiscountPoint == null) {
             return list;
@@ -391,7 +393,7 @@ public class OrderServiceImpl implements OrderService {
         order.setIsDelete(0);
         //生成订单编号
         order.setOrderNum(UUIDUtil.getUuidByType(UUIDTypeEnum.ORDERID.getType()));
-        Long oderId = OrderClient.insertOrder(order);
+        Long oderId = orderClient.insertOrder(order);
         if (oderId != null) {
             order.setId(oderId);
         } else {
@@ -410,7 +412,7 @@ public class OrderServiceImpl implements OrderService {
             orderGoods.setSalePrice(orderInfoListNow.get(i).getSalePrice());
             orderGoods.setDiscountPrice(orderInfoListNow.get(i).getDiscountPrice());
             orderGoods.setGoodsPropertyId(orderInfoListNow.get(i).getPropertyId());
-            OrderClient.insertOrderGoods(orderGoods);
+            orderClient.insertOrderGoods(orderGoods);
         }
         orderConfirmRE.setShowStatus("已成功生成订单");
         orderConfirmRE.setGoodsStatus((int) OrderEnum.WAITPAY.getKey().longValue());
@@ -421,12 +423,12 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderRE> getOrderPage(OrdOrderVO ordOrderVO) {
-        return OrderClient.getOrderPage(ordOrderVO);
+        return orderClient.getOrderPage(ordOrderVO);
     }
 
     @Override
     public Integer getOrderTotal(OrdOrderVO ordOrderVO) {
-        return OrderClient.getOrderTotal(ordOrderVO);
+        return orderClient.getOrderTotal(ordOrderVO);
     }
 
     @Override
@@ -453,7 +455,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Integer logicDelOrder(List<Long> list) {
-        return OrderClient.logicDelOrder(list);
+        return orderClient.logicDelOrder(list);
     }
 
     /**
@@ -467,7 +469,7 @@ public class OrderServiceImpl implements OrderService {
         OrdMemberVO ordMemberVO = new OrdMemberVO();
         ordMemberVO.setOrderNum(ordOrderVO.getOrderNum());
         ordMemberVO.setMemberId(ordOrderVO.getMemberId());
-        List<OrderRE> getOrdOrderVO = OrderClient.getOrderByMemberVO(ordMemberVO);
+        List<OrderRE> getOrdOrderVO = orderClient.getOrderByMemberVO(ordMemberVO);
         if (CollectionUtils.isEmpty(getOrdOrderVO)) {
             return 0;
         }
@@ -489,13 +491,13 @@ public class OrderServiceImpl implements OrderService {
                 return 0;
             }
         }
-        return OrderClient.updateOrder(ordOrderVO);
+        return orderClient.updateOrder(ordOrderVO);
     }
 
 
     @Override
     public List<OrderGoodsDetailRE> getOrderGdsById(Integer id) {
-        List<OrderGoodsRE> orderGdsList = OrderClient.getOrderGoodsByOrderId(id);
+        List<OrderGoodsRE> orderGdsList = orderClient.getOrderGoodsByOrderId(id);
         if (CollectionUtils.isEmpty(orderGdsList)) {
             return null;
         }
@@ -529,7 +531,7 @@ public class OrderServiceImpl implements OrderService {
      */
     @Override
     public String getTelephoneById(Long id) {
-        return OrderClient.getTelephoneById(id);
+        return orderClient.getTelephoneById(id);
     }
 
     /**
@@ -539,7 +541,7 @@ public class OrderServiceImpl implements OrderService {
      * @return
      */
     private List<OrderGoodsDetailRE> getOrderGdsByIds(Integer id) {
-        List<OrderGoodsRE> orderGdsList = OrderClient.getOrderGoodsByOrderId(id);
+        List<OrderGoodsRE> orderGdsList = orderClient.getOrderGoodsByOrderId(id);
         if (CollectionUtils.isEmpty(orderGdsList)) {
             return null;
         }
@@ -581,7 +583,7 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderInfoRE> getOrderInfoListByMemberId(OrdMemberVO ordMemberVO) {
         //先获该用户的取订单id，然后查询每条订单的状态，订单的金额 以及获取订单的商品信息
         List<OrderInfoRE> orderInfoREList = new ArrayList<>();
-        List<OrderRE> orderList = OrderClient.getOrderByMemberVO(ordMemberVO);
+        List<OrderRE> orderList = orderClient.getOrderByMemberVO(ordMemberVO);
         if (CollectionUtils.isEmpty(orderList)) {
             return orderInfoREList;
         }
@@ -604,24 +606,24 @@ public class OrderServiceImpl implements OrderService {
         ordOrderVO.setMemberId(ordMemberVO.getMemberId());
         ordOrderVO.setStatus(ordMemberVO.getStatus());
         orderInfoRE = new OrderInfoRE();
-        orderInfoRE.setTotalOrderNum(OrderClient.getOrderTotal(ordOrderVO).longValue());
+        orderInfoRE.setTotalOrderNum(orderClient.getOrderTotal(ordOrderVO).longValue());
         orderInfoREList.add(orderInfoRE);
         return orderInfoREList;
     }
 
     @Override
     public OrderSaleRE getOrderSaleData() {
-        return OrderClient.getOrderSaleData();
+        return orderClient.getOrderSaleData();
     }
 
     @Override
     public Integer queryCartGoodsCount(Long memberId) {
-        return OrderClient.queryCartGoodsCount(memberId);
+        return orderClient.queryCartGoodsCount(memberId);
     }
 
     @Override
     public List<CommentRE> getCommentOrderGoodsDetail(OrdGoodsVO ordGoodsVO) {
-        List<CommentRE> list = OrderClient.getPropertyIdListByUid(ordGoodsVO);
+        List<CommentRE> list = orderClient.getPropertyIdListByUid(ordGoodsVO);
         GoodsDetailRE gdDTO = new GoodsDetailRE();
         int count = 0;
         // 判空
@@ -684,7 +686,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public int getCommentGoodsCount(OrdGoodsVO ordGoodsVO) {
-        List<CommentRE> list = OrderClient.getPropertyIdListByUid(ordGoodsVO);
+        List<CommentRE> list = orderClient.getPropertyIdListByUid(ordGoodsVO);
         if (!CollectionUtils.isEmpty(list)) {
             return list.size();
         }
