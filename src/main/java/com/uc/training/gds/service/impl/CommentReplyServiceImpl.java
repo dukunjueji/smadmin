@@ -5,7 +5,6 @@ import com.uc.training.gds.service.CommentReplyService;
 import com.uc.training.gds.service.CommentService;
 import com.uc.training.gds.vo.CommentListVO;
 import com.uc.training.gds.vo.CommentReplyVO;
-import com.uc.training.remote.client.BaseClient;
 import com.uc.training.remote.client.GdsClient;
 import com.uc.training.gds.re.CommentDetailRE;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +22,8 @@ import java.util.List;
  */
 @Service
 public class CommentReplyServiceImpl implements CommentReplyService {
+    @Autowired
+    GdsClient gdsClient;
 
     @Autowired
     private CommentService commentService;
@@ -35,7 +36,7 @@ public class CommentReplyServiceImpl implements CommentReplyService {
      */
     @Override
     public String getAdminReplyContent(Long commentId) {
-        return GdsClient.getAdminReplyContent(commentId);
+        return gdsClient.getAdminReplyContent(commentId);
     }
 
     /**
@@ -54,7 +55,7 @@ public class CommentReplyServiceImpl implements CommentReplyService {
         if (CollectionUtils.isEmpty(commentRE)) {
             return commentDetailRE;
         }
-        commentDetailRE = GdsClient.getCommentDetailByCommentId(commentReplyVO);
+        commentDetailRE = gdsClient.getCommentDetailByCommentId(commentReplyVO);
         commentDetailRE.setCommentRE(commentRE.get(0));
         return commentDetailRE;
     }
@@ -67,7 +68,7 @@ public class CommentReplyServiceImpl implements CommentReplyService {
      */
     @Override
     public Long insertCommentReply(CommentReplyVO commentReplyVO) {
-        return GdsClient.insertCommentReply(commentReplyVO);
+        return gdsClient.insertCommentReply(commentReplyVO);
     }
 
     /**
@@ -78,11 +79,11 @@ public class CommentReplyServiceImpl implements CommentReplyService {
      */
     @Override
     public Integer deleteCommentReplyById(CommentReplyVO commentReplyVO) {
-        return GdsClient.deleteCommentReplyById(commentReplyVO);
+        return gdsClient.deleteCommentReplyById(commentReplyVO);
     }
 
     @Override
     public Integer editCommentReply(CommentReplyVO commentReplyVO) {
-        return GdsClient.editCommentReply(commentReplyVO);
+        return gdsClient.editCommentReply(commentReplyVO);
     }
 }

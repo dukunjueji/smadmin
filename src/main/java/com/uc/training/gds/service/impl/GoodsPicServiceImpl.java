@@ -6,6 +6,7 @@ import com.uc.training.gds.re.AdminGoodsPicRE;
 import com.uc.training.gds.re.GoodsRE;
 import com.uc.training.gds.service.GoodsPicService;
 import com.uc.training.remote.client.GdsClient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +20,8 @@ import java.util.List;
  */
 @Service
 public class GoodsPicServiceImpl implements GoodsPicService {
+    @Autowired
+    GdsClient gdsClient;
 
     /**
      * 新增商品图片
@@ -28,7 +31,7 @@ public class GoodsPicServiceImpl implements GoodsPicService {
      */
     @Override
     public Long insertGoodsPic(GoodsPicDTO goodsPic) {
-        return GdsClient.insertGoodsPic(goodsPic);
+        return gdsClient.insertGoodsPic(goodsPic);
     }
 
     /**
@@ -39,7 +42,7 @@ public class GoodsPicServiceImpl implements GoodsPicService {
      */
     @Override
     public Integer updateGoodsPic(GoodsPicDTO goodsPic) {
-        return GdsClient.updateGoodsPic(goodsPic);
+        return gdsClient.updateGoodsPic(goodsPic);
     }
 
     /**
@@ -50,7 +53,7 @@ public class GoodsPicServiceImpl implements GoodsPicService {
      */
     @Override
     public List<AdminGoodsPicRE> getGoodsPicListByPropertyId(Long propertyId) {
-        return GdsClient.getGoodsPicListByPropertyId(propertyId);
+        return gdsClient.getGoodsPicListByPropertyId(propertyId);
     }
 
     /**
@@ -61,7 +64,7 @@ public class GoodsPicServiceImpl implements GoodsPicService {
      */
     @Override
     public Integer deleteGoodsPicById(Long id) {
-        return GdsClient.deleteGoodsPicById(id);
+        return gdsClient.deleteGoodsPicById(id);
     }
 
     /**
@@ -72,7 +75,7 @@ public class GoodsPicServiceImpl implements GoodsPicService {
      */
     @Override
     public Integer deleteGoodsPicByPropertyId(Long propertyId) {
-        return GdsClient.deleteGoodsPicByPropertyId(propertyId);
+        return gdsClient.deleteGoodsPicByPropertyId(propertyId);
     }
 
     /**
@@ -83,7 +86,7 @@ public class GoodsPicServiceImpl implements GoodsPicService {
      */
     @Override
     public Integer getPropertyIdCountById(Long id) {
-        return GdsClient.getPropertyIdCountById(id);
+        return gdsClient.getPropertyIdCountById(id);
     }
 
     /**
@@ -94,7 +97,7 @@ public class GoodsPicServiceImpl implements GoodsPicService {
      */
     @Override
     public Integer getCountByGoodsPic(GoodsPicDTO goodsPic) {
-        return GdsClient.getCountByGoodsPic(goodsPic);
+        return gdsClient.getCountByGoodsPic(goodsPic);
     }
 
     /**
@@ -105,7 +108,7 @@ public class GoodsPicServiceImpl implements GoodsPicService {
      */
     @Override
     public Long getPropertyIdById(Long id) {
-        return GdsClient.getPropertyIdById(id);
+        return gdsClient.getPropertyIdById(id);
     }
 
     /**
@@ -116,6 +119,6 @@ public class GoodsPicServiceImpl implements GoodsPicService {
      */
     @Override
     public GoodsRE getGoodsById(Long id) {
-        return GdsClient.getGoodsById(id);
+        return gdsClient.getGoodsById(id);
     }
 }

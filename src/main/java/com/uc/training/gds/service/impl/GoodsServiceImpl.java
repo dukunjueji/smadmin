@@ -26,6 +26,8 @@ import java.util.List;
  */
 @Service
 public class GoodsServiceImpl implements GoodsService {
+    @Autowired
+    GdsClient gdsClient;
 
     /**
      * 锁标志
@@ -36,7 +38,7 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Override
     public List<GoodsRE> getHotRecommend() {
-        List<GoodsRE> list = GdsClient.getHotRecommend();
+        List<GoodsRE> list = gdsClient.getHotRecommend();
         return list;
     }
 
@@ -47,7 +49,7 @@ public class GoodsServiceImpl implements GoodsService {
      */
     @Override
     public PageVO<GoodsRE> getGoodsPageByCategory(GoodsListDTO goodsListDTO){
-        return GdsClient.getGoodsPageByCategory(goodsListDTO);
+        return gdsClient.getGoodsPageByCategory(goodsListDTO);
     }
     /**
      * 通过属性id商品详情
@@ -57,20 +59,20 @@ public class GoodsServiceImpl implements GoodsService {
      */
     @Override
     public List<GoodsDetailRE> getGoodsDetailByPropertyIds(List<Long> propertyIds) {
-        List<GoodsDetailRE> goodsDetailRE =  GdsClient.getGoodsDetailByPropertyIds(propertyIds);
+        List<GoodsDetailRE> goodsDetailRE =  gdsClient.getGoodsDetailByPropertyIds(propertyIds);
         return goodsDetailRE;
     }
 
 
     @Override
     public GoodsDetailRE getGoodsDetailByPropertyId(Long propertyId) {
-        GoodsDetailRE goodsDetailRE=GdsClient.getGoodsDetailByPropertyId(propertyId);
+        GoodsDetailRE goodsDetailRE=gdsClient.getGoodsDetailByPropertyId(propertyId);
         return goodsDetailRE;
     }
 
     @Override
     public List<GoodsDetailRE> getGoodsDetailByGoodsId(Long goodsId) {
-        List<GoodsDetailRE> goodsDetailREList=GdsClient.getGoodsDetailByGoodsId(goodsId);
+        List<GoodsDetailRE> goodsDetailREList=gdsClient.getGoodsDetailByGoodsId(goodsId);
         return goodsDetailREList;
     }
 
@@ -78,13 +80,13 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     public PageVO<GoodsRE> searchByGoodsName(GoodsListDTO goodsListDTO) {
 
-        PageVO<GoodsRE> pageVO = GdsClient.searchByGoodsName(goodsListDTO);
+        PageVO<GoodsRE> pageVO = gdsClient.searchByGoodsName(goodsListDTO);
         return pageVO;
     }
 
     @Override
     public List<HotTagRE> selectHotTag() {
-        return GdsClient.selectHotTag();
+        return gdsClient.selectHotTag();
     }
 
     @Override
@@ -99,12 +101,12 @@ public class GoodsServiceImpl implements GoodsService {
      */
     @Override
     public  GoodsStokeRE selectGoodsStatus(GoodsStokeVO goodsAndPropertyDTO){
-        return GdsClient.selectGoodsStatus(goodsAndPropertyDTO);
+        return gdsClient.selectGoodsStatus(goodsAndPropertyDTO);
     }
 
     @Override
     public Integer updateAndDeductStoke(GoodsStokeVO goodsAndPropertyDTO) {
-        return GdsClient.updateAndDeductStoke(goodsAndPropertyDTO);
+        return gdsClient.updateAndDeductStoke(goodsAndPropertyDTO);
     }
 
 
@@ -115,7 +117,7 @@ public class GoodsServiceImpl implements GoodsService {
      */
     @Override
     public Long adminInsertGoods(GoodsDTO goods) {
-        return GdsClient.adminInsertGoods(goods);
+        return gdsClient.adminInsertGoods(goods);
     }
 
     /**
@@ -126,7 +128,7 @@ public class GoodsServiceImpl implements GoodsService {
      */
     @Override
     public List<AdminGoodsRE> getAdminGoodsList(GoodsListDTO goodsListDTO) {
-        return GdsClient.getAdminGoodsList(goodsListDTO);
+        return gdsClient.getAdminGoodsList(goodsListDTO);
     }
 
     /**
@@ -136,7 +138,7 @@ public class GoodsServiceImpl implements GoodsService {
      */
     @Override
     public Integer adminUpdateGoods(GoodsDTO goodsDTO) {
-        return GdsClient.adminUpdateGoods(goodsDTO);
+        return gdsClient.adminUpdateGoods(goodsDTO);
     }
 
     /**
@@ -146,7 +148,7 @@ public class GoodsServiceImpl implements GoodsService {
      */
     @Override
     public Integer logicDeleteGoods(Long id) {
-        return GdsClient.logicDeleteGoods(id);
+        return gdsClient.logicDeleteGoods(id);
     }
 
     /**
@@ -157,7 +159,7 @@ public class GoodsServiceImpl implements GoodsService {
      */
     @Override
     public int updateSales(GoodsAndPropertyDTO goodsAndPropertyDTO) {
-        return GdsClient.updateSales(goodsAndPropertyDTO);
+        return gdsClient.updateSales(goodsAndPropertyDTO);
     }
 
     /**
@@ -168,7 +170,7 @@ public class GoodsServiceImpl implements GoodsService {
      */
     @Override
     public Long getAdminGoodsListCount(GoodsListDTO goodsListVO) {
-        return GdsClient.getAdminGoodsListCount(goodsListVO);
+        return gdsClient.getAdminGoodsListCount(goodsListVO);
     }
 
     /**
@@ -179,7 +181,7 @@ public class GoodsServiceImpl implements GoodsService {
      */
     @Override
     public Integer pullOnGoods(GoodsDTO goodsDTO) {
-        return GdsClient.pullOnGoods(goodsDTO);
+        return gdsClient.pullOnGoods(goodsDTO);
     }
 
     /**
@@ -190,7 +192,7 @@ public class GoodsServiceImpl implements GoodsService {
      */
     @Override
     public Integer pullOffGoods(GoodsDTO goodsDTO) {
-        return GdsClient.pullOffGoods(goodsDTO);
+        return gdsClient.pullOffGoods(goodsDTO);
     }
 
     /**
@@ -201,7 +203,7 @@ public class GoodsServiceImpl implements GoodsService {
      */
     @Override
     public GoodsRE getGoodsById(Long id) {
-        return GdsClient.getGoodsById(id);
+        return gdsClient.getGoodsById(id);
     }
 
 }

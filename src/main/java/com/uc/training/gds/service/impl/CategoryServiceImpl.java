@@ -4,6 +4,7 @@ import com.uc.training.gds.dto.CategoryDTO;
 import com.uc.training.gds.re.CategoryRE;
 import com.uc.training.gds.service.CategoryService;
 import com.uc.training.remote.client.GdsClient;
+import com.uc.training.remote.client.GdsClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,8 @@ import java.util.List;
  */
 @Service
 public class CategoryServiceImpl implements CategoryService {
+    @Autowired
+    GdsClient gdsClient;
 
     /**
      * 获取有效的商品分类
@@ -25,7 +28,7 @@ public class CategoryServiceImpl implements CategoryService {
      */
     @Override
     public List<CategoryRE> getCategoryList() {
-        return GdsClient.getCategoryList();
+        return gdsClient.getCategoryList();
     }
 
     /**
@@ -36,7 +39,7 @@ public class CategoryServiceImpl implements CategoryService {
      */
     @Override
     public Long addCategory(CategoryDTO category) {
-        return GdsClient.addCategory(category);
+        return gdsClient.addCategory(category);
     }
 
     /**
@@ -47,7 +50,7 @@ public class CategoryServiceImpl implements CategoryService {
      */
     @Override
     public Integer logicDeleteCategory(Long id) {
-        return GdsClient.logicDeleteCategory(id);
+        return gdsClient.logicDeleteCategory(id);
     }
 
     /**
@@ -58,7 +61,7 @@ public class CategoryServiceImpl implements CategoryService {
      */
     @Override
     public CategoryRE queryCategory(Long id) {
-        return GdsClient.queryCategory(id);
+        return gdsClient.queryCategory(id);
     }
 
     /**
@@ -69,7 +72,7 @@ public class CategoryServiceImpl implements CategoryService {
      */
     @Override
     public Integer updateCategory(CategoryDTO category) {
-        return GdsClient.updateCategory(category);
+        return gdsClient.updateCategory(category);
     }
 
     /**
@@ -80,6 +83,6 @@ public class CategoryServiceImpl implements CategoryService {
      */
     @Override
     public Integer getCountByNameAndParentId(CategoryDTO categoryVO) {
-        return GdsClient.getCountByNameAndParentId(categoryVO);
+        return gdsClient.getCountByNameAndParentId(categoryVO);
     }
 }

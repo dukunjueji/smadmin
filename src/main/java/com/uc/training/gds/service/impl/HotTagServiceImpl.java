@@ -5,9 +5,9 @@ import com.uc.training.gds.dto.AdminHotTagListDTO;
 import com.uc.training.gds.dto.HotTagDTO;
 import com.uc.training.gds.re.HotTagRE;
 import com.uc.training.gds.service.HotTagService;
+import com.uc.training.remote.client.GdsClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.uc.training.remote.client.GdsClient;
 
 import java.util.List;
 
@@ -20,6 +20,8 @@ import java.util.List;
  */
 @Service
 public class HotTagServiceImpl implements HotTagService {
+    @Autowired
+    GdsClient gdsClient;
 
     /**
      * 获取热门标签
@@ -28,7 +30,7 @@ public class HotTagServiceImpl implements HotTagService {
      */
     @Override
     public List<HotTagRE> selectHotTag() {
-        return GdsClient.selectHotTag();
+        return gdsClient.selectHotTag();
     }
 
 
@@ -40,7 +42,7 @@ public class HotTagServiceImpl implements HotTagService {
      */
     @Override
     public PageVO<HotTagRE> getAllHotTagList(AdminHotTagListDTO adminHotTagListDTO) {
-        return GdsClient.getAllHotTagList(adminHotTagListDTO);
+        return gdsClient.getAllHotTagList(adminHotTagListDTO);
     }
 
     /**
@@ -51,7 +53,7 @@ public class HotTagServiceImpl implements HotTagService {
      */
     @Override
     public Integer updateHotTag(HotTagDTO hotTag) {
-        return GdsClient.updateHotTag(hotTag);
+        return gdsClient.updateHotTag(hotTag);
     }
 
     /**
@@ -62,7 +64,7 @@ public class HotTagServiceImpl implements HotTagService {
      */
     @Override
     public Integer deleteHotTagById(Long id) {
-        return GdsClient.deleteHotTagById(id);
+        return gdsClient.deleteHotTagById(id);
     }
 
     /**
@@ -73,6 +75,6 @@ public class HotTagServiceImpl implements HotTagService {
      */
     @Override
     public Long insertHotTag(HotTagDTO hotTag) {
-        return GdsClient.insertHotTag(hotTag);
+        return gdsClient.insertHotTag(hotTag);
     }
 }

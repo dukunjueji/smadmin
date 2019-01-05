@@ -19,6 +19,8 @@ import java.util.List;
  */
 @Service
 public class PropertyServiceImpl implements PropertyService {
+    @Autowired
+    GdsClient gdsClient;
 
     @Autowired
     private GoodsPicService goodsPicService;
@@ -31,7 +33,7 @@ public class PropertyServiceImpl implements PropertyService {
      */
     @Override
     public Long insertProperty(PropertyDTO property) {
-        return GdsClient.insertProperty(property);
+        return gdsClient.insertProperty(property);
     }
 
     /**
@@ -42,7 +44,7 @@ public class PropertyServiceImpl implements PropertyService {
      */
     @Override
     public Integer updateProperty(PropertyDTO property) {
-        return GdsClient.updateProperty(property);
+        return gdsClient.updateProperty(property);
     }
 
     /**
@@ -53,7 +55,7 @@ public class PropertyServiceImpl implements PropertyService {
      */
     @Override
     public List<Long> getPropertyIdListByGoodsId(Long goodsId) {
-        return GdsClient.getPropertyIdListByGoodsId(goodsId);
+        return gdsClient.getPropertyIdListByGoodsId(goodsId);
     }
 
     /**
@@ -64,7 +66,7 @@ public class PropertyServiceImpl implements PropertyService {
      */
     @Override
     public List<GoodsDetailRE> getPropertyListByGoodsId(Long goodsId) {
-        return GdsClient.getPropertyListByGoodsId(goodsId);
+        return gdsClient.getPropertyListByGoodsId(goodsId);
     }
 
     /**
@@ -75,7 +77,7 @@ public class PropertyServiceImpl implements PropertyService {
      */
     @Override
     public Integer deletePropertyAndGoodsPicById(Long id) {
-        return GdsClient.deleteGoodsPicByPropertyId(id);
+        return gdsClient.deleteGoodsPicByPropertyId(id);
     }
 
     /**
@@ -86,7 +88,7 @@ public class PropertyServiceImpl implements PropertyService {
      */
     @Override
     public Integer getCountByProperty(PropertyDTO property) {
-        return GdsClient.getCountByProperty(property);
+        return gdsClient.getCountByProperty(property);
     }
 
     /**
@@ -97,6 +99,6 @@ public class PropertyServiceImpl implements PropertyService {
      */
     @Override
     public GoodsDetailRE getPropertyById(Long id) {
-        return GdsClient.getPropertyById(id);
+        return gdsClient.getPropertyById(id);
     }
 }

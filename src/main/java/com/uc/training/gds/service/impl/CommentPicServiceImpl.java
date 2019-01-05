@@ -3,6 +3,7 @@ package com.uc.training.gds.service.impl;
 import com.uc.training.gds.service.CommentPicService;
 import com.uc.training.remote.client.GdsClient;
 import com.uc.training.gds.re.CommentPicRE;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +17,8 @@ import java.util.List;
  */
 @Service
 public class CommentPicServiceImpl implements CommentPicService {
+    @Autowired
+    GdsClient gdsClient;
 
     /**
      * 根据评论id获取评论图片
@@ -25,6 +28,6 @@ public class CommentPicServiceImpl implements CommentPicService {
      */
     @Override
     public List<CommentPicRE> getCommentPicByCommentId(Long commentId) {
-        return GdsClient.getCommentPicByCommentId(commentId);
+        return gdsClient.getCommentPicByCommentId(commentId);
     }
 }

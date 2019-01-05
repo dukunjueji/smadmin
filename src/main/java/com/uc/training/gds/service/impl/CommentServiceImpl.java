@@ -37,6 +37,10 @@ public class CommentServiceImpl implements CommentService {
 
     @Autowired
     OrderGoodsService orderGoodsService;
+
+    @Autowired
+    GdsClient gdsClient;
+
     /**
      * hhj
      * @param commentVO
@@ -47,7 +51,7 @@ public class CommentServiceImpl implements CommentService {
         OrdOrderGoodsVO ordOrderGoodsVo = new OrdOrderGoodsVO();
         ordOrderGoodsVo.setId(commentVO.getOrderGoodsId());
         //插评论
-        GdsClient.addComment(commentVO);
+        gdsClient.addComment(commentVO);
         // 修改订单商品表的状态
         if (commentVO.getParentId() == null) {
             ordOrderGoodsVo.setCommentStatus(OrderGoodsCommentEnum.HAVE_COMMENT.getKey());
@@ -67,7 +71,7 @@ public class CommentServiceImpl implements CommentService {
      */
     @Override
     public List<CommentCountRE> getCommentCountByOrderGoodsId(Long orderGoodsId) {
-        return GdsClient.getCommentCountByOrderGoodsId(orderGoodsId);
+        return gdsClient.getCommentCountByOrderGoodsId(orderGoodsId);
     }
 
     /**
@@ -79,7 +83,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public List<CommentRE> getCommentList(CommentListVO commentListVO) {
 
-        List<CommentRE> commentList = GdsClient.getCommentList(commentListVO);
+        List<CommentRE> commentList = gdsClient.getCommentList(commentListVO);
         //判空
         if (CollectionUtils.isEmpty(commentList)) {
             return null;
@@ -114,17 +118,17 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public CommentAvgRE getCountBySroce(CommentListVO commentListVO) {
-       return GdsClient.getCountBySroce(commentListVO);
+       return gdsClient.getCountBySroce(commentListVO);
     }
 
     @Override
     public CommentAvgRE getCommentCountAndAvg(CommentListVO commentListVO) {
 
-        return GdsClient.getCommentCountAndAvg(commentListVO);
+        return gdsClient.getCommentCountAndAvg(commentListVO);
     }
 
     @Override
     public Integer editCommentById(CommentVO commentVO) {
-        return GdsClient.editCommentById(commentVO);
+        return gdsClient.editCommentById(commentVO);
     }
 }
