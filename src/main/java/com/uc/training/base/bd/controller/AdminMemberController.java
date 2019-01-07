@@ -5,7 +5,7 @@ import com.uc.training.base.bd.service.MemberService;
 import com.uc.training.base.bd.vo.MemberListVO;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.common.vo.PageVO;
-import com.ycc.base.common.Result;
+import com.uc.training.common.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

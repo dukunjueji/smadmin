@@ -6,7 +6,7 @@ import com.uc.training.base.bd.service.IntegralDetailService;
 import com.uc.training.base.bd.vo.IntegralVO;
 import com.uc.training.base.bd.vo.MemberVO;
 import com.uc.training.common.enums.IntegralEnum;
-import com.uc.training.remote.client.BaseClient;
+import com.uc.training.remote.remoteclient.BaseClient;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

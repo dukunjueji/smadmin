@@ -2,13 +2,12 @@ package com.uc.training.gds.controller;
 
 import com.uc.training.common.base.controller.BaseController;
 
+import com.uc.training.common.vo.Result;
 import com.uc.training.gds.dto.GoodsPicDTO;
 import com.uc.training.gds.re.AdminGoodsPicRE;
 import com.uc.training.gds.service.GoodsPicService;
 import com.uc.training.gds.service.PropertyService;
 import com.uc.training.ord.service.OrderGoodsService;
-import com.ycc.base.common.Result;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;

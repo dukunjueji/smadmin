@@ -5,7 +5,7 @@ import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.bean.AccessToken;
 import com.uc.training.common.constant.Constant;
 import com.uc.training.common.utils.TokenUtil;
-import com.ycc.base.common.Result;
+import com.uc.training.common.vo.Result;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

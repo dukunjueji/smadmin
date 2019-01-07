@@ -36,9 +36,9 @@ import java.util.List;
  */
 public final class OrderClient {
 
-    private  final Logger LOGGER = LoggerFactory.getLogger(OrderClient.class.getName());
-@Autowired
-OrderClientRemote orderClientRemote;
+    private final Logger LOGGER = LoggerFactory.getLogger(OrderClient.class.getName());
+    @Autowired
+    OrderClientRemote orderClientRemote;
 
 
     /**
@@ -46,21 +46,21 @@ OrderClientRemote orderClientRemote;
      *
      * @return
      */
-    public  List<CartGoodsRE> getCarGoodsById(Long memberId) {
-            try {
-                List<CartGoodsRE> list = orderClientRemote.getCarGoodsById(memberId).getRe();
-                return list;
-            } catch (ClassCastException e) {
-                LOGGER.error("类型转换异常");
-                LOGGER.error(e.getMessage());
-            }
+    public List<CartGoodsRE> getCarGoodsById(Long memberId) {
+        try {
+            List<CartGoodsRE> list = orderClientRemote.getCarGoodsById(memberId).getRe();
+            return list;
+        } catch (ClassCastException e) {
+            LOGGER.error("类型转换异常");
+            LOGGER.error(e.getMessage());
+        }
         return null;
     }
 
     /**
      * 更新购物车商品数量
      */
-    public  Integer updateCarGoodsNum(OrdCartGoodsVO ordCartGoodsVO) {
+    public Integer updateCarGoodsNum(OrdCartGoodsVO ordCartGoodsVO) {
         OrdCartGoodsDTO ordCartGoodsDTO = new OrdCartGoodsDTO();
         BeanUtils.copyProperties(ordCartGoodsVO, ordCartGoodsDTO);
         try {
@@ -75,7 +75,7 @@ OrderClientRemote orderClientRemote;
     /**
      * 根据用户ID和购物车商品表ID获取购物车商品信息
      */
-    public  List<CartGoodsRE> getCarGoodsByIds(OrdGoodsVO ordGoodsVO) {
+    public List<CartGoodsRE> getCarGoodsByIds(OrdGoodsVO ordGoodsVO) {
         OrdGoodsDTO ordGoodsDTO = new OrdGoodsDTO();
         BeanUtils.copyProperties(ordGoodsVO, ordGoodsDTO);
         try {
@@ -90,7 +90,7 @@ OrderClientRemote orderClientRemote;
     /**
      * 根据订单id 获取购物车商品表数据
      */
-    public  List<OrderGoodsRE> getOrderGoodsByOrderId(Integer orderId) {
+    public List<OrderGoodsRE> getOrderGoodsByOrderId(Integer orderId) {
         try {
             return orderClientRemote.getOrderGoodsByOrderId(orderId).getRe();
         } catch (ClassCastException e) {
@@ -103,7 +103,7 @@ OrderClientRemote orderClientRemote;
     /**
      * 加入购物车
      */
-    public  Integer addCarGoods(OrdCartGoodsVO ordCartGoodsVO) {
+    public Integer addCarGoods(OrdCartGoodsVO ordCartGoodsVO) {
         OrdCartGoodsDTO ordCartGoodsDTO = new OrdCartGoodsDTO();
         BeanUtils.copyProperties(ordCartGoodsVO, ordCartGoodsDTO);
         try {
@@ -118,7 +118,7 @@ OrderClientRemote orderClientRemote;
     /**
      * 删除购物车
      */
-    public  Integer deleteCarGoods(OrdCartGoodsVO ordCartGoodsVO) {
+    public Integer deleteCarGoods(OrdCartGoodsVO ordCartGoodsVO) {
         OrdCartGoodsDTO ordCartGoodsDTO = new OrdCartGoodsDTO();
         BeanUtils.copyProperties(ordCartGoodsVO, ordCartGoodsDTO);
         try {
@@ -148,7 +148,7 @@ OrderClientRemote orderClientRemote;
     /**
      * 插入订单商品信息并返回订单id
      */
-    public  Long insertOrderGoods(OrderGoodsVO orderGoodsVO) {
+    public Long insertOrderGoods(OrderGoodsVO orderGoodsVO) {
         OrderGoodsDTO orderGoodsDTO = new OrderGoodsDTO();
         BeanUtils.copyProperties(orderGoodsVO, orderGoodsDTO);
         try {
@@ -163,7 +163,7 @@ OrderClientRemote orderClientRemote;
     /**
      * 获取订单查询分页
      */
-    public  List<OrderRE> getOrderPage(OrdOrderVO ordOrderVO) {
+    public List<OrderRE> getOrderPage(OrdOrderVO ordOrderVO) {
         OrdOrderDTO ordOrderDTO = new OrdOrderDTO();
         BeanUtils.copyProperties(ordOrderVO, ordOrderDTO);
         try {
@@ -178,7 +178,7 @@ OrderClientRemote orderClientRemote;
     /**
      * 获取总记录数
      */
-    public  Integer getOrderTotal(OrdOrderVO ordOrderVO) {
+    public Integer getOrderTotal(OrdOrderVO ordOrderVO) {
         OrdOrderDTO ordOrderDTO = new OrdOrderDTO();
         BeanUtils.copyProperties(ordOrderVO, ordOrderDTO);
         try {
@@ -193,7 +193,7 @@ OrderClientRemote orderClientRemote;
     /**
      * 批量逻辑删除订单
      */
-    public  Integer logicDelOrder(List<Long> list) {
+    public Integer logicDelOrder(List<Long> list) {
         try {
             return orderClientRemote.logicDelOrder(list).getRe();
         } catch (ClassCastException e) {
@@ -206,7 +206,7 @@ OrderClientRemote orderClientRemote;
     /**
      * 通过会员信息或者订单信息来查找订单信息
      */
-    public  List<OrderRE> getOrderByMemberVO(OrdMemberVO ordMemberVO) {
+    public List<OrderRE> getOrderByMemberVO(OrdMemberVO ordMemberVO) {
         try {
             OrdMemberDTO ordMemberDTO = new OrdMemberDTO();
             BeanUtils.copyProperties(ordMemberVO, ordMemberDTO);
@@ -221,7 +221,7 @@ OrderClientRemote orderClientRemote;
     /**
      * 更新订单状态
      */
-    public  Integer updateOrder(OrdOrderVO ordOrderVO) {
+    public Integer updateOrder(OrdOrderVO ordOrderVO) {
         try {
             OrdOrderDTO ordOrderDTO = new OrdOrderDTO();
             BeanUtils.copyProperties(ordOrderVO, ordOrderDTO);
@@ -236,7 +236,7 @@ OrderClientRemote orderClientRemote;
     /**
      * 更新订单状态
      */
-    public  String getTelephoneById(Long id) {
+    public String getTelephoneById(Long id) {
         try {
             return orderClientRemote.getTelephoneById(id).getRe();
         } catch (ClassCastException e) {
@@ -249,7 +249,7 @@ OrderClientRemote orderClientRemote;
     /**
      * 当年每个月销售额
      */
-    public  OrderSaleRE getOrderSaleData() {
+    public OrderSaleRE getOrderSaleData() {
         try {
             return orderClientRemote.getOrderSaleData().getRe();
         } catch (ClassCastException e) {
@@ -262,7 +262,7 @@ OrderClientRemote orderClientRemote;
     /**
      * 根据用户id 获取购物车商品表数据数量
      */
-    public  Integer queryCartGoodsCount(Long memberId) {
+    public Integer queryCartGoodsCount(Long memberId) {
         try {
             return orderClientRemote.queryCartGoodsCount(memberId).getRe();
         } catch (ClassCastException e) {
@@ -275,7 +275,7 @@ OrderClientRemote orderClientRemote;
     /**
      * 逻辑删除订单
      */
-    public  Integer memberDelOrder(OrdOrderVO ordOrderVO) {
+    public Integer memberDelOrder(OrdOrderVO ordOrderVO) {
         OrdOrderDTO ordOrderDTO = new OrdOrderDTO();
         BeanUtils.copyProperties(ordOrderVO, ordOrderDTO);
         try {
@@ -290,7 +290,7 @@ OrderClientRemote orderClientRemote;
     /**
      * 根据用户ID 和 订单状态获取待评价商品详情
      */
-    public  List<CommentRE> getPropertyIdListByUid(OrdGoodsVO ordGoodsVO) {
+    public List<CommentRE> getPropertyIdListByUid(OrdGoodsVO ordGoodsVO) {
         OrdGoodsDTO ordGoodsDTO = new OrdGoodsDTO();
         BeanUtils.copyProperties(ordGoodsVO, ordGoodsDTO);
         try {
@@ -305,7 +305,7 @@ OrderClientRemote orderClientRemote;
     /**
      * 查找指定会员订单总记录数
      */
-    public  Integer queryOrderCount(Long memberId) {
+    public Integer queryOrderCount(Long memberId) {
         try {
             return orderClientRemote.queryOrderCount(memberId).getRe();
         } catch (ClassCastException e) {
@@ -314,10 +314,11 @@ OrderClientRemote orderClientRemote;
         }
         return null;
     }
+
     /**
      * 通过商品属性id获取待支付的商品属性数量
      */
-    public  Integer getUnPayGoodsPropertyCountByPropertyId(Long propertyId) {
+    public Integer getUnPayGoodsPropertyCountByPropertyId(Long propertyId) {
         try {
             return orderClientRemote.getUnPayGoodsPropertyCountByPropertyId(propertyId).getRe();
         } catch (ClassCastException e) {
@@ -326,13 +327,14 @@ OrderClientRemote orderClientRemote;
         }
         return null;
     }
+
     /**
      * 根据id 更改订单商品评论状态
      */
-    public  Integer upOrdGoodsCommentStatus(OrdOrderGoodsVO ordOrderGoodsVO) {
+    public Integer upOrdGoodsCommentStatus(OrdOrderGoodsVO ordOrderGoodsVO) {
         try {
-            OrdOrderGoodsDTO ordOrderGoodsDTO =new OrdOrderGoodsDTO();
-            BeanUtils.copyProperties(ordOrderGoodsVO,ordOrderGoodsDTO);
+            OrdOrderGoodsDTO ordOrderGoodsDTO = new OrdOrderGoodsDTO();
+            BeanUtils.copyProperties(ordOrderGoodsVO, ordOrderGoodsDTO);
             return orderClientRemote.upOrdGoodsCommentStatus(ordOrderGoodsDTO).getRe();
         } catch (ClassCastException e) {
             LOGGER.error(e.getMessage());
@@ -340,10 +342,11 @@ OrderClientRemote orderClientRemote;
         }
         return null;
     }
+
     /**
      * 根据订单商品表Id获取订单表信息
      */
-    public  OrderRE getOrderByOrdGoodsId(Long ordGoodsId) {
+    public OrderRE getOrderByOrdGoodsId(Long ordGoodsId) {
         try {
             return orderClientRemote.getOrderByOrdGoodsId(ordGoodsId).getRe();
         } catch (ClassCastException e) {

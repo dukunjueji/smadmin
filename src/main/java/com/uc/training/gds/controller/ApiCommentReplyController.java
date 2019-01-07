@@ -1,17 +1,16 @@
 package com.uc.training.gds.controller;
 
-import com.uc.training.base.bd.re.MemberInfoRE;
 import com.uc.training.base.bd.re.MemberRE;
 import com.uc.training.base.bd.service.MemberService;
 import com.uc.training.base.bd.vo.MemberVO;
 import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.common.enums.CommentReplyEnum;
+import com.uc.training.common.vo.Result;
 import com.uc.training.gds.service.CommentReplyService;
 import com.uc.training.gds.vo.CommentReplyInsertVO;
 import com.uc.training.gds.vo.CommentReplyVO;
 import com.uc.training.gds.re.CommentDetailRE;
-import com.ycc.base.common.Result;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

@@ -6,7 +6,7 @@ import com.uc.training.base.sms.vo.SmsListVO;
 import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.common.vo.PageVO;
-import com.ycc.base.common.Result;
+import com.uc.training.common.vo.Result;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

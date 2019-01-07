@@ -6,7 +6,7 @@ import com.uc.training.base.bd.re.MemberRechargeHistoryListRE;
 import com.uc.training.base.bd.service.MemberRechargeHistoryService;
 import com.uc.training.base.bd.vo.MemberRechargeHistoryModelVO;
 import com.uc.training.base.bd.vo.MemberRechargeHistoryVO;
-import com.uc.training.remote.client.BaseClient;
+import com.uc.training.remote.remoteclient.BaseClient;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

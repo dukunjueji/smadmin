@@ -4,7 +4,7 @@ import com.uc.training.base.bd.dto.MessageDTO;
 import com.uc.training.base.bd.re.MessageRE;
 import com.uc.training.base.bd.service.MessageService;
 import com.uc.training.base.bd.vo.MessageVO;
-import com.uc.training.remote.client.BaseClient;
+import com.uc.training.remote.remoteclient.BaseClient;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;

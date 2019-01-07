@@ -2,8 +2,7 @@ package com.uc.training.common.handler;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Joiner;
-import com.ycc.base.common.Result;
-import com.ycc.base.framework.exception.BusinessRuntimeException;
+import com.uc.training.common.vo.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.BindException;

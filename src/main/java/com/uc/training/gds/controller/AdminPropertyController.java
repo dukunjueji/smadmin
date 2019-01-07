@@ -2,15 +2,12 @@ package com.uc.training.gds.controller;
 
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.common.enums.GoodsStatusEnum;
-import com.uc.training.gds.dto.GoodsAndPropertyDTO;
+import com.uc.training.common.vo.Result;
 import com.uc.training.gds.dto.PropertyDTO;
 import com.uc.training.gds.re.GoodsDetailRE;
-import com.uc.training.gds.re.GoodsStokeRE;
 import com.uc.training.gds.service.GoodsService;
 import com.uc.training.gds.service.PropertyService;
 import com.uc.training.ord.service.OrderGoodsService;
-import com.ycc.base.common.Result;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;

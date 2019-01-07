@@ -7,7 +7,7 @@ import com.uc.training.base.sys.service.UserService;
 import com.uc.training.base.sys.vo.UserListVO;
 import com.uc.training.base.sys.vo.UserLoginVO;
 import com.uc.training.base.sys.vo.UserVO;
-import com.uc.training.remote.client.BaseClient;
+import com.uc.training.remote.remoteclient.BaseClient;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

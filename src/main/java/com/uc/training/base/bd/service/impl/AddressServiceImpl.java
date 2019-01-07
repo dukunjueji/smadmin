@@ -4,7 +4,7 @@ import com.uc.training.base.bd.dto.AddressDTO;
 import com.uc.training.base.bd.re.AddressRE;
 import com.uc.training.base.bd.service.AddressService;
 import com.uc.training.base.bd.vo.AddressVO;
-import com.uc.training.remote.client.BaseClient;
+import com.uc.training.remote.remoteclient.BaseClient;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

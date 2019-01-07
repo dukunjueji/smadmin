@@ -4,7 +4,7 @@ import com.uc.training.base.bd.dto.MemberGradeDTO;
 import com.uc.training.base.bd.re.MemberGradeRE;
 import com.uc.training.base.bd.service.MemberGradeService;
 import com.uc.training.base.bd.vo.MemberGradeVO;
-import com.uc.training.remote.client.BaseClient;
+import com.uc.training.remote.remoteclient.BaseClient;
 import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +20,13 @@ import java.util.List;
 @Service
 public class MemberGradeServiceImpl implements MemberGradeService {
     @Autowired
-    private  BaseClient baseClient;
+    private BaseClient baseClient;
 
     @Override
     public List<MemberGradeRE> getList(MemberGradeVO memberGradeVO) {
         MemberGradeDTO memberGradeDTO = new MemberGradeDTO();
         BeanUtils.copyProperties(memberGradeVO, memberGradeDTO);
-        return baseClient.queryMemberGradeList(memberGradeVO).getRe();
+        return baseClient.queryMemberGradeList(memberGradeDTO).getRe();
     }
 
     @Override

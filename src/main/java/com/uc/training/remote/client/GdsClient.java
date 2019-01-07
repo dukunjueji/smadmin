@@ -98,7 +98,7 @@ public  class GdsClient {
     CommentListDTO commentListDTO = new CommentListDTO();
     BeanUtils.copyProperties(commentListVO, commentListDTO);
     try {
-      return (List<CommentRE>) goodsRmote.getCommentList(commentListDTO).getRe();
+      return goodsRmote.getCommentList(commentListDTO).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -117,7 +117,7 @@ public  class GdsClient {
     CommentListDTO commentListDTO = new CommentListDTO();
     BeanUtils.copyProperties(commentListVO, commentListDTO);
     try {
-      return (CommentAvgRE) goodsRmote.getCountBySroce(commentListDTO).getRe();
+      return goodsRmote.getCountBySroce(commentListDTO).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -136,7 +136,7 @@ public  class GdsClient {
     CommentListDTO commentListDTO = new CommentListDTO();
     BeanUtils.copyProperties(commentListVO, commentListDTO);
     try {
-      return (CommentAvgRE) goodsRmote.getCommentCountAndAvg(commentListDTO).getRe();
+      return goodsRmote.getCommentCountAndAvg(commentListDTO).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -155,7 +155,7 @@ public  class GdsClient {
     CommentDTO commentDTO = new CommentDTO();
     BeanUtils.copyProperties(commentVO, commentDTO);
     try {
-      return (Integer) goodsRmote.editCommentById( commentDTO).getRe();
+      return goodsRmote.editCommentById( commentDTO).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -172,7 +172,7 @@ public  class GdsClient {
    */
   public List<CommentPicRE> getCommentPicByCommentId(Long commentId) {
     try {
-      return (List<CommentPicRE>) goodsRmote.getCommentPicByCommentId(commentId).getRe();
+      return goodsRmote.getCommentPicByCommentId(commentId).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());

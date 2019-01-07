@@ -7,7 +7,7 @@ import com.uc.training.base.sms.vo.GenerateSmsVO;
 import com.uc.training.base.sms.vo.SmsListVO;
 import com.uc.training.base.sms.vo.SmsVO;
 import com.uc.training.common.enums.SmsStatusEnum;
-import com.uc.training.remote.client.BaseClient;
+import com.uc.training.remote.remoteclient.BaseClient;
 import com.zuche.base.common.sendmsg.mail.service.MailService;
 import com.zuche.base.common.sendmsg.mail.service.MailServiceImpl;
 import com.zuche.base.sys.sendmessage.MailMessage;

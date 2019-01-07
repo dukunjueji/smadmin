@@ -19,7 +19,7 @@ import com.uc.training.common.utils.EncryptUtil;
 import com.uc.training.common.utils.MenuUtil;
 import com.uc.training.common.utils.TokenUtil;
 import com.uc.training.common.vo.PageVO;
-import com.ycc.base.common.Result;
+import com.uc.training.common.vo.Result;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

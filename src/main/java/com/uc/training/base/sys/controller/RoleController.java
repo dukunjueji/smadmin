@@ -1,16 +1,12 @@
 package com.uc.training.base.sys.controller;
 
-import com.uc.training.base.sys.dto.SysRoleDTO;
-import com.uc.training.base.sys.dto.SysRoleMenuDTO;
-import com.uc.training.base.sys.dto.SysUserRoleDTO;
 import com.uc.training.base.sys.re.SysRoleRE;
 import com.uc.training.base.sys.service.RoleService;
 import com.uc.training.base.sys.vo.RoleListVO;
 import com.uc.training.base.sys.vo.RoleVO;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.common.vo.PageVO;
-import com.ycc.base.common.Result;
-import org.springframework.beans.BeanUtils;
+import com.uc.training.common.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;

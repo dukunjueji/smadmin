@@ -4,7 +4,6 @@ import com.uc.training.gds.dto.CategoryDTO;
 import com.uc.training.gds.re.CategoryRE;
 import com.uc.training.gds.service.CategoryService;
 import com.uc.training.remote.client.GdsClient;
-import com.uc.training.remote.client.GdsClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

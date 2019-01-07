@@ -5,7 +5,7 @@ import com.uc.training.base.bd.re.BannerRE;
 import com.uc.training.base.bd.service.BannerService;
 import com.uc.training.base.bd.vo.BannerListVO;
 import com.uc.training.base.bd.vo.BannerVO;
-import com.uc.training.remote.client.BaseClient;
+import com.uc.training.remote.remoteclient.BaseClient;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

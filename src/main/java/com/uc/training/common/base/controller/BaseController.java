@@ -1,7 +1,7 @@
 package com.uc.training.common.base.controller;
 
 import com.uc.training.common.constant.Constant;
-import com.ycc.base.common.Result;
+import com.uc.training.common.vo.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.Assert;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.net.Inet4Address;

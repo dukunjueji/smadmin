@@ -1,14 +1,12 @@
 package com.uc.training.base.sys.controller;
 
-import com.uc.training.base.sys.dto.SysMenuDTO;
 import com.uc.training.base.sys.re.SysMenuRE;
 import com.uc.training.base.sys.service.MenuService;
 import com.uc.training.base.sys.vo.MenuVO;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.common.enums.MenuEnum;
 import com.uc.training.common.utils.MenuUtil;
-import com.ycc.base.common.Result;
-import org.springframework.beans.BeanUtils;
+import com.uc.training.common.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;

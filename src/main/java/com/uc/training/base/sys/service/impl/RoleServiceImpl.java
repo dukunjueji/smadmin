@@ -6,7 +6,7 @@ import com.uc.training.base.sys.re.SysRoleRE;
 import com.uc.training.base.sys.service.RoleService;
 import com.uc.training.base.sys.vo.RoleListVO;
 import com.uc.training.base.sys.vo.RoleVO;
-import com.uc.training.remote.client.BaseClient;
+import com.uc.training.remote.remoteclient.BaseClient;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
