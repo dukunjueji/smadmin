@@ -1,15 +1,19 @@
 package com.uc.training.common.mq;
 
+import com.rabbitmq.client.AMQP;
+import com.rabbitmq.client.Channel;
 import com.uc.training.base.bd.service.MessageService;
 import com.uc.training.common.enums.GrowthEnum;
 import com.uc.training.common.enums.IntegralEnum;
 import com.uc.training.common.mq.vo.MqVO;
 import com.uc.training.common.utils.InjectionUtils;
+import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 
 /**
@@ -29,7 +33,7 @@ public class MessageMqConsumer {
     private static final Integer NUMBER = 0;
 
     @RabbitHandler
-    public void handlerMessage(MqVO mqVO) {
+    public void handlerMessage(MqVO mqVO, Channel channel, Message message) throws IOException {
         this.messageService = InjectionUtils.getInjectionInstance(MessageService.class);
         //判断消费类型是否为支付消息
         if (mqVO.getPurchaseValue() != null) {
@@ -46,6 +50,17 @@ public class MessageMqConsumer {
             mes.setMemberId(mqVO.getMemberId());
             mes.setContent(content);
             messageService.insertMessage(mes);
+            if (messageService.insertMessage(mes) > 0) {
+                /**
+                 * 手动发送确认消息
+                 */
+                channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
+            } else {
+                /**
+                 * 失败重新投递消息
+                 */
+                channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, true);
+            }
         }
         //判断消费类型是否为充值消息
         if (mqVO.getRechargeValue() != null) {
@@ -59,7 +74,17 @@ public class MessageMqConsumer {
             com.uc.training.base.bd.vo.MessageVO mes = new com.uc.training.base.bd.vo.MessageVO();
             mes.setMemberId(mqVO.getMemberId());
             mes.setContent(content);
-            messageService.insertMessage(mes);
+            if (messageService.insertMessage(mes) > 0) {
+                /**
+                 * 手动发送确认消息
+                 */
+                channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
+            } else {
+                /**
+                 * 失败重新投递消息
+                 */
+                channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, true);
+            }
         }
     }
 }

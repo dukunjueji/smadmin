@@ -1,7 +1,11 @@
 package com.uc.training.common.mq;
 
 import com.uc.training.common.mq.vo.MqVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.rabbit.support.CorrelationData;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,13 +18,25 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class MqProducer {
-
+    private final Logger logger = LoggerFactory.getLogger(MqProducer.class);
     private RabbitTemplate rabbitTemplate;
 
     @Autowired
     public MqProducer(RabbitTemplate rabbitTemplate) {
         this.rabbitTemplate = rabbitTemplate;
-        //rabbitTemplate如果为单例的话，那回调就是最后设置的内容
+        rabbitTemplate.setMandatory(true);
+        /**
+         * 消息应答机制
+         */
+        rabbitTemplate.setConfirmCallback(new RabbitTemplate.ConfirmCallback() {
+            @Override
+            public void confirm(CorrelationData correlationData, boolean ack, String cause) {
+                if (!ack) {
+                    logger.info("send message failed: " + cause);
+                    throw new RuntimeException("send error " + cause);
+                }
+            }
+        });
     }
 
     public void sendGrowth(MqVO mqVO) {

@@ -7,6 +7,10 @@ spring:
     active: dev
   application: 
     name: provider_goods
+  redis:
+      host: 192.168.99.100
+      port: 6379
+      database: 0
   boot:
     admin:
       client:

@@ -1,13 +1,17 @@
 package com.uc.training.common.mq;
 
+import com.rabbitmq.client.Channel;
 import com.uc.training.base.bd.service.MemberRechargeHistoryService;
 import com.uc.training.base.bd.vo.MemberRechargeHistoryModelVO;
 import com.uc.training.common.mq.vo.MqVO;
 import com.uc.training.common.utils.InjectionUtils;
+import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.io.IOException;
 
 /**
  * 版权声明： Copyright (c) 2008 ucarinc. All Rights Reserved.
@@ -24,12 +28,22 @@ public class RechargeHistoryConsumer {
     private MemberRechargeHistoryService memberRechargeHistoryService;
 
     @RabbitHandler
-    public void handlerMessage(MqVO mqVO) {
+    public void handlerMessage(MqVO mqVO, Channel channel, Message message) throws IOException {
         this.memberRechargeHistoryService = InjectionUtils.getInjectionInstance(MemberRechargeHistoryService.class);
         MemberRechargeHistoryModelVO memberRechargeHistory = mqVO.getMemberRechargeHistory();
         //判断消息实体是否为空
         if (memberRechargeHistory != null) {
-            memberRechargeHistoryService.insertMemberRechargeHistory(memberRechargeHistory);
+            if (memberRechargeHistoryService.insertMemberRechargeHistory(memberRechargeHistory) > 0) {
+                /**
+                 * 手动发送确认消息
+                 */
+                channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
+            } else {
+                /**
+                 * 失败重新投递消息
+                 */
+                channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, true);
+            }
         }
     }
 }
