@@ -1,8 +1,9 @@
 package com.uc.training.common.mq;
 
 import com.uc.training.common.mq.vo.MqVO;
-import com.ycc.tools.middleware.metaq.MQHelperAdapter;
-import com.ycc.tools.middleware.metaq.MetaQTopic;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * 版权声明： Copyright (c) 2008 ucarinc. All Rights Reserved.
@@ -11,29 +12,34 @@ import com.ycc.tools.middleware.metaq.MetaQTopic;
  * @Version 1.0
  * @date 2018/11/29
  */
-public class MqProducer extends MQHelperAdapter {
+@Component
+public class MqProducer {
 
-    private MqVO mqVO;
+    private RabbitTemplate rabbitTemplate;
 
-    public MqProducer(MqVO mqVO) {
-        this.mqVO = mqVO;
+    @Autowired
+    public MqProducer(RabbitTemplate rabbitTemplate) {
+        this.rabbitTemplate = rabbitTemplate;
+        //rabbitTemplate如果为单例的话，那回调就是最后设置的内容
     }
 
-    public MqVO getMqVO() {
-        return mqVO;
+    public void sendGrowth(MqVO mqVO) {
+        this.rabbitTemplate.convertAndSend(RabbitConfig.MMC_TRAIN_SM_MSG, RabbitConfig.ROUTINGKEY_GROWTH, mqVO);
     }
 
-    public void setMqVO(MqVO mqVO) {
-        this.mqVO = mqVO;
+    public void sendIntegral(MqVO mqVO) {
+        this.rabbitTemplate.convertAndSend(RabbitConfig.MMC_TRAIN_SM_MSG, RabbitConfig.ROUTINGKEY_INTEGRAL, mqVO);
     }
 
-    @Override
-    public MetaQTopic getTopic() {
-        return new MetaQTopic("mmc_train_sm_msg", "meta");
+    public void sendMessage(MqVO mqVO) {
+        this.rabbitTemplate.convertAndSend(RabbitConfig.MMC_TRAIN_SM_MSG, RabbitConfig.ROUTINGKEY_MESSAGE, mqVO);
     }
 
-    @Override
-    public Object getData() {
-        return this.mqVO;
+    public void sendRecharge(MqVO mqVO) {
+        this.rabbitTemplate.convertAndSend(RabbitConfig.MMC_TRAIN_SM_MSG, RabbitConfig.ROUTINGKEY_RECHARGE, mqVO);
+    }
+
+    public void sendSms(MqVO mqVO) {
+        this.rabbitTemplate.convertAndSend(RabbitConfig.MMC_TRAIN_SM_MSG, RabbitConfig.ROUTINGKEY_SMS, mqVO);
     }
 }

@@ -1,15 +1,14 @@
 package com.uc.training.common.mq;
 
-import com.alibaba.fastjson.JSON;
 import com.uc.training.base.sms.service.SmsTemplateService;
 import com.uc.training.base.sms.vo.GenerateSmsVO;
 import com.uc.training.common.enums.SmsStatusEnum;
 import com.uc.training.common.mq.vo.MqVO;
 import com.uc.training.common.utils.InjectionUtils;
-import com.zuche.framework.metaq.handler.DefaultExecutorMessageListener;
-import com.zuche.framework.metaq.vo.MessageVO;
+import org.springframework.amqp.rabbit.annotation.RabbitHandler;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Component;
 
 /**
  * 版权声明： Copyright (c) 2008 ucarinc. All Rights Reserved.
@@ -18,19 +17,19 @@ import org.springframework.stereotype.Controller;
  * @Version 1.0
  * @date 2018/11/12
  */
-@Controller
-public class SmsMqConsumer  extends DefaultExecutorMessageListener {
+@Component
+@RabbitListener(queues = RabbitConfig.SMS_QUEUE)
+public class SmsMqConsumer {
 
     @Autowired
     private SmsTemplateService smsTemplateService;
 
-    @Override
-    public void handlerMessage(MessageVO messageVO) {
+    @RabbitHandler
+    public void handlerMessage(MqVO mqVO) {
         this.smsTemplateService = InjectionUtils.getInjectionInstance(SmsTemplateService.class);
-        MqVO mqVO = JSON.parseObject(messageVO.getData(), MqVO.class);
         GenerateSmsVO generateSmsVO = mqVO.getGenerateSmsVO();
         //判断消息实体是否为空
-        if (generateSmsVO != null){
+        if (generateSmsVO != null) {
             Integer status = this.smsTemplateService.generateSms(generateSmsVO);
             if (status == SmsStatusEnum.FAIL.getKey()) {
                 System.out.println(SmsStatusEnum.FAIL.getValue());

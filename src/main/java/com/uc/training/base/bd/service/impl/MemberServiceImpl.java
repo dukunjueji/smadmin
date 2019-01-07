@@ -29,7 +29,6 @@ import com.uc.training.ord.vo.OrdMemberVO;
 import com.uc.training.ord.vo.OrdOrderVO;
 import com.uc.training.remote.client.OrderClient;
 import com.uc.training.remote.remoteclient.BaseClient;
-import com.ycc.tools.middleware.metaq.MetaQUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.redisson.api.RLock;
 import org.slf4j.Logger;
@@ -54,13 +53,16 @@ import java.util.List;
 public class MemberServiceImpl implements MemberService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MemberServiceImpl.class.getName());
-
+    @Autowired
+    private MqProducer mqProducer;
     @Autowired
     private OrderService orderService;
     @Autowired
     private GoodsService goodsService;
     @Autowired
     private BaseClient baseClient;
+    @Autowired
+    private OrderClient orderClient;
 
     @Override
     public Long insertMember(MemberVO memberVO) {
@@ -143,7 +145,7 @@ public class MemberServiceImpl implements MemberService {
         //获取订单信息
         List<OrderRE> orderList = orderService.getOrderByMemberVO(ordMemberVO);
         //获取订单商品信息和判断商品状态
-        List<OrderGoodsRE> orderGdsList = OrderClient.getOrderGoodsByOrderId(orderPayInfoNow.get(0).getOrderId().intValue());
+        List<OrderGoodsRE> orderGdsList = orderClient.getOrderGoodsByOrderId(orderPayInfoNow.get(0).getOrderId().intValue());
         if (orderList.size() <= 0) {
             return list;
         }
@@ -210,7 +212,10 @@ public class MemberServiceImpl implements MemberService {
             //订单短信
             mqVO.getGenerateSmsVO().setEmil(memberRE.getEmail());
             mqVO1.setGenerateSmsVO(mqVO.getGenerateSmsVO());
-            MetaQUtils.sendMsgNoException(new MqProducer(mqVO1));
+            mqProducer.sendSms(mqVO1);
+            mqProducer.sendMessage(mqVO1);
+            mqProducer.sendGrowth(mqVO1);
+            mqProducer.sendIntegral(mqVO1);
             return list;
         } else {
             orderConfirmRE.setShowStatus("余额不足，请充值或者返回购物车重新选取商品");
@@ -256,7 +261,7 @@ public class MemberServiceImpl implements MemberService {
         loginLogDTO.setMemberId(loginLog.getMemberId());
         Long loginNum = baseClient.queryLoginCount(loginLogDTO).getRe();
         if (loginNum != null && loginNum == 1) {
-            MetaQUtils.sendMsgNoException(new MqProducer(mqVO));
+            mqProducer.sendGrowth(mqVO);
         }
     }
 
@@ -268,7 +273,9 @@ public class MemberServiceImpl implements MemberService {
         mqVO.setRechargeStatus(status);
         mqVO.getMemberRechargeHistory().setStatus(status);
         mqVO.getGenerateSmsVO().setRechargeStatus(status);
-        MetaQUtils.sendMsgNoException(new MqProducer(mqVO));
+        mqProducer.sendRecharge(mqVO);
+        mqProducer.sendMessage(mqVO);
+        mqProducer.sendSms(mqVO);
         return status;
     }
 

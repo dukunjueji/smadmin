@@ -29,8 +29,6 @@ import com.uc.training.common.utils.ReplaceStarUtils;
 import com.uc.training.common.utils.TokenUtil;
 import com.uc.training.common.vo.Result;
 import com.uc.training.ord.service.OrderService;
-import com.ycc.tools.middleware.metaq.MetaQUtils;
-import com.ycc.tools.middleware.redis.RedisCacheUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,15 +59,16 @@ public class MemberController extends BaseController {
     private static final Integer MESSAGE_STATUS = 1;
     @Autowired
     private MemberService memberService;
-
+    @Autowired
+    private MqProducer mqProducer;
     @Autowired
     private OrderService orderService;
-
     @Autowired
     private MessageService messageService;
 
     /**
-     *注册时，生成验证码及短信
+     * 注册时，生成验证码及短信
+     *
      * @param createCodeVO 生成验证码的请求参数
      * @return 显示页面提示信息
      */
@@ -81,7 +80,7 @@ public class MemberController extends BaseController {
         MemberVO memberVO = new MemberVO();
         memberVO.setTelephone(createCodeVO.getTelephone());
         MemberRE member = memberService.queryOneMember(memberVO);
-        if(member != null){
+        if (member != null) {
             return Result.getBusinessException("手机号码已被注册", null);
         }
         //生成消息体
@@ -92,28 +91,27 @@ public class MemberController extends BaseController {
         generateSmsVO.setType(SmsTypeEnum.REGISTER.getType());
         generateSmsVO.setEmil(createCodeVO.getEmail());
         mqVO.setGenerateSmsVO(generateSmsVO);
-
-        MetaQUtils.sendMsgNoException(new MqProducer(mqVO));
+        mqProducer.sendSms(mqVO);
         return Result.getSuccessResult("验证码已发送");
     }
 
     /***
-    *说明：会员注册
-    *@param memberRegisterVO 会员注册的请求
-    *@return：com.uc.training.smadmin.bd.re.MemberMegRE
-    *@throws：
-    */
+     *说明：会员注册
+     *@param memberRegisterVO 会员注册的请求
+     *@return：com.uc.training.smadmin.bd.re.MemberMegRE
+     *@throws：
+     */
     @RequestMapping(value = "/memberRegister.do_", method = RequestMethod.POST)
     @ResponseBody
     @AccessLogin(required = false)
-    public Result memberRegister(@Validated MemberRegisterVO memberRegisterVO){
+    public Result memberRegister(@Validated MemberRegisterVO memberRegisterVO) {
         MemberVO member = new MemberVO();
         member.setTelephone(memberRegisterVO.getTelephone());
         member.setPassword(memberRegisterVO.getPassword());
         member.setEmail(memberRegisterVO.getEmail());
         MemberRE mem = memberService.queryOneMember(member);
-        if(mem != null){
-            return Result.getBusinessException("手机号码已被注册",null);
+        if (mem != null) {
+            return Result.getBusinessException("手机号码已被注册", null);
         }
         //redis
         RedisCacheUtils redis = RedisCacheUtils.getInstance(RedisConfigEnum.SYS_CODE);
@@ -121,23 +119,24 @@ public class MemberController extends BaseController {
         if (msg == null) {
             return Result.getBusinessException("验证码已过期，请重新获取", null);
         }
-        if(memberRegisterVO.getTelCode().equals(msg)){
+        if (memberRegisterVO.getTelCode().equals(msg)) {
             memberService.insertMember(member);
             return Result.getSuccessResult("注册成功");
-        }else {
+        } else {
             return Result.getBusinessException("验证码不正确", null);
         }
     }
 
     /**
      * 会员登录
+     *
      * @param memberLoginVO 会员登录请求参数
      * @return com.ycc.base.common.Result<com.uc.training.smadmin.bd.re.MemberLoginRE>
      */
     @RequestMapping(value = "/memberLogin.do_", method = RequestMethod.POST)
     @ResponseBody
     @AccessLogin(required = false)
-    public Result memberLogin(@Validated MemberLoginVO memberLoginVO){
+    public Result memberLogin(@Validated MemberLoginVO memberLoginVO) {
         MemberVO member = new MemberVO();
         member.setTelephone(memberLoginVO.getTelephone());
         MemberRE mem = memberService.queryOneMember(member);
@@ -148,7 +147,7 @@ public class MemberController extends BaseController {
         MemberRE memberRE = memberService.queryOneMember(member);
         if (memberRE == null) {
             return Result.getBusinessException("您的密码错误", null);
-        }else {
+        } else {
             String token = TokenUtil.sign(memberRE.getId());
             MemberLoginRE memberLoginRE = new MemberLoginRE();
             memberLoginRE.setToken(token);
@@ -170,6 +169,7 @@ public class MemberController extends BaseController {
 
     /**
      * 重置密码时，生成验证码及短信
+     *
      * @param createCodeVO 发送验证码的请求参数
      * @return 显示页面提示信息
      */
@@ -180,7 +180,7 @@ public class MemberController extends BaseController {
         MemberVO member = new MemberVO();
         member.setTelephone(createCodeVO.getTelephone());
         MemberRE memberRE = memberService.queryOneMember(member);
-        if(memberRE == null){
+        if (memberRE == null) {
             return Result.getBusinessException("手机号还没被注册", null);
         }
         //生成消息体
@@ -191,8 +191,7 @@ public class MemberController extends BaseController {
         generateSmsVO.setType(SmsTypeEnum.FORGET_PASSWORD.getType());
         generateSmsVO.setEmil(memberRE.getEmail());
         mqVO.setGenerateSmsVO(generateSmsVO);
-
-        MetaQUtils.sendMsgNoException(new MqProducer(mqVO));
+        mqProducer.sendSms(mqVO);
         return Result.getSuccessResult("验证码已发送");
     }
 
@@ -205,11 +204,11 @@ public class MemberController extends BaseController {
     @RequestMapping(value = "/memberPassword.do_", method = RequestMethod.POST)
     @ResponseBody
     @AccessLogin(required = false)
-    public Result memberPassword(@Validated MemberRegisterVO memberRegisterVO){
+    public Result memberPassword(@Validated MemberRegisterVO memberRegisterVO) {
         MemberVO member = new MemberVO();
         member.setTelephone(memberRegisterVO.getTelephone());
         MemberRE memberRE = memberService.queryOneMember(member);
-        if(memberRE == null){
+        if (memberRE == null) {
             return Result.getBusinessException("手机号还没被注册", null);
         }
         //redis
@@ -218,31 +217,32 @@ public class MemberController extends BaseController {
         if (msg == null) {
             return Result.getBusinessException("验证码已过期，请重新获取", null);
         }
-        if(memberRegisterVO.getTelCode().equals(msg)){
+        if (memberRegisterVO.getTelCode().equals(msg)) {
             member = new MemberVO();
             member.setPassword(memberRegisterVO.getPassword());
             member.setId(memberRE.getId());
             member.setModifyEmp(getUid());
             memberService.updateMember(member);
             return Result.getSuccessResult("重置密码成功");
-        }else {
+        } else {
             return Result.getBusinessException("验证码不正确", null);
         }
     }
 
     /**
-     *说明：会员充值金额
+     * 说明：会员充值金额
+     *
      * @param chargeBalanceVO 充值余额的请求参数
      * @return
      */
     @AccessLogin
     @RequestMapping(value = "/chargeBalance.do_", method = RequestMethod.POST)
     @ResponseBody
-    public Result chargeBalance(@Validated ChargeBalanceVO chargeBalanceVO){
+    public Result chargeBalance(@Validated ChargeBalanceVO chargeBalanceVO) {
         String regExp = "^([1-9]\\d*|0)(\\.\\d{1,2})?$";
         Pattern p = Pattern.compile(regExp);
         Matcher m = p.matcher(chargeBalanceVO.getBalance().toString());
-        if(!m.matches()){
+        if (!m.matches()) {
             return Result.getBusinessException("充值金额有误", null);
         }
         MemberVO memberVO = new MemberVO();
@@ -251,9 +251,9 @@ public class MemberController extends BaseController {
         memberVO.setBalance(chargeBalanceVO.getBalance());
         BigDecimal bigDecimal = new BigDecimal(0);
         int i = chargeBalanceVO.getBalance().compareTo(bigDecimal);
-        if (chargeBalanceVO.getBalance() == null || i == 0 ) {
+        if (chargeBalanceVO.getBalance() == null || i == 0) {
             return Result.getBusinessException("充值余额必须大于0", null);
-        }else {
+        } else {
             //生成消息体
             MqVO mqVO = new MqVO();
             mqVO.setMemberId(getUid());
@@ -284,15 +284,16 @@ public class MemberController extends BaseController {
     }
 
     /**
-    *说明：通过id获取会员的详细信息(包括会员等级)
-    *@param
-    *@return：com.ycc.base.common.Result<com.uc.training.smadmin.bd.re.MemberDetailRE>
-    *@throws：
-    */
+     * 说明：通过id获取会员的详细信息(包括会员等级)
+     *
+     * @param
+     * @return：com.ycc.base.common.Result<com.uc.training.smadmin.bd.re.MemberDetailRE>
+     * @throws：
+     */
     @RequestMapping(value = "/getMemberDetailById.do_", method = RequestMethod.GET)
     @ResponseBody
     @AccessLogin
-    public Result<MemberDetailRE> getMemberDetailById(){
+    public Result<MemberDetailRE> getMemberDetailById() {
         MemberDetailRE memberDetailRE = memberService.getMemberDetailById(getUid());
         //会员的订单数量
         Integer orderSum = orderService.queryOrderCount(getUid());
@@ -308,12 +309,13 @@ public class MemberController extends BaseController {
 
     /**
      * 获取会员信息
+     *
      * @return
      */
     @RequestMapping(value = "/getMemberInfoById.do_", method = RequestMethod.GET)
     @ResponseBody
     @AccessLogin
-    public Result<MemberRE> getMemberInfoById(){
+    public Result<MemberRE> getMemberInfoById() {
         MemberVO memberVO = new MemberVO();
         memberVO.setId(getUid());
         MemberRE memberRE = memberService.queryOneMember(memberVO);
@@ -324,15 +326,16 @@ public class MemberController extends BaseController {
     }
 
     /**
-    *说明：更新会员信息
-    *@param memberInfoVO 更新会员信息请求参数
-    *@return：com.ycc.base.common.Result
-    *@throws：
-    */
+     * 说明：更新会员信息
+     *
+     * @param memberInfoVO 更新会员信息请求参数
+     * @return：com.ycc.base.common.Result
+     * @throws：
+     */
     @RequestMapping(value = "/editMemberInfo.do_", method = RequestMethod.POST)
     @ResponseBody
     @AccessLogin
-    public Result<Integer> editMemberInfo(@Validated MemberInfoVO memberInfoVO){
+    public Result<Integer> editMemberInfo(@Validated MemberInfoVO memberInfoVO) {
         MemberVO member = new MemberVO();
         member.setNickname(memberInfoVO.getNickname());
         member.setEmail(memberInfoVO.getEmail());
@@ -346,17 +349,18 @@ public class MemberController extends BaseController {
     }
 
     /**
-    *说明：修改密码时发送验证码
-    *@param sendCodeVO 发送验证码接受的参数
-    *@return：com.ycc.base.common.Result
-    *@throws：
-    */
+     * 说明：修改密码时发送验证码
+     *
+     * @param sendCodeVO 发送验证码接受的参数
+     * @return：com.ycc.base.common.Result
+     * @throws：
+     */
     @ResponseBody
     @RequestMapping(value = "/sendCode.do_", method = RequestMethod.GET)
     @AccessLogin
-    public Result sendCode(@Validated PasswordEditVO sendCodeVO){
+    public Result sendCode(@Validated PasswordEditVO sendCodeVO) {
         // 判断新密码和确认密码是否一致
-        if (!(sendCodeVO.getNewpassword()).equals(sendCodeVO.getConfirmpassword())){
+        if (!(sendCodeVO.getNewpassword()).equals(sendCodeVO.getConfirmpassword())) {
             return Result.getBusinessException("两次输入的密码不一致", null);
         }
 
@@ -376,20 +380,21 @@ public class MemberController extends BaseController {
         generateSmsVO.setType(SmsTypeEnum.CHANGE_PASSWORD.getType());
         generateSmsVO.setEmil(member.getEmail());
         mqVO.setGenerateSmsVO(generateSmsVO);
-        MetaQUtils.sendMsgNoException(new MqProducer(mqVO));
+        mqProducer.sendSms(mqVO);
         return Result.getSuccessResult("验证码已发送");
     }
 
     /**
-    *说明：修改会员密码
-    *@param passwordEditVO 修改会员密码接收的参数
-    *@return：com.ycc.base.common.Result
-    *@throws：
-    */
+     * 说明：修改会员密码
+     *
+     * @param passwordEditVO 修改会员密码接收的参数
+     * @return：com.ycc.base.common.Result
+     * @throws：
+     */
     @ResponseBody
     @RequestMapping(value = "/editMemberPassword.do_", method = RequestMethod.POST)
     @AccessLogin
-    public Result editMemberPassword(@Validated PasswordEditVO passwordEditVO){
+    public Result editMemberPassword(@Validated PasswordEditVO passwordEditVO) {
         if (!passwordEditVO.getNewpassword().equals(passwordEditVO.getConfirmpassword())) {
             return Result.getBusinessException("新的密码和确认密码不一致", null);
         }
@@ -401,7 +406,7 @@ public class MemberController extends BaseController {
         member.setPassword(passwordEditVO.getOldpassword());
         // 判断旧密码是否和库里的一致
         MemberRE mem = memberService.queryOneMember(member);
-        if(mem == null){
+        if (mem == null) {
             return Result.getBusinessException("原来的密码输入有误", null);
         }
         //redis
@@ -410,26 +415,27 @@ public class MemberController extends BaseController {
         if (msg == null) {
             return Result.getBusinessException("验证码已过期，请重新获取", null);
         }
-        if((passwordEditVO.getCode()).equals(msg)){
+        if ((passwordEditVO.getCode()).equals(msg)) {
             member.setPassword(passwordEditVO.getNewpassword());
             member.setModifyEmp(getUid());
             memberService.updateMember(member);
             return Result.getSuccessResult("修改密码成功");
-        }else {
+        } else {
             return Result.getBusinessException("输入的验证码有误", null);
         }
     }
 
     /**
-    *说明：获取指定会员的消息列表
-    *@param
-    *@return：
-    *@throws：
-    */
+     * 说明：获取指定会员的消息列表
+     *
+     * @param
+     * @return：
+     * @throws：
+     */
     @ResponseBody
     @AccessLogin()
     @RequestMapping(value = "queryMessageList.do_", method = RequestMethod.GET)
-    public Result<AllMessageRE> queryMessageList(MessageVO messageVO){
+    public Result<AllMessageRE> queryMessageList(MessageVO messageVO) {
         messageVO.setMemberId(getUid());
         List<MessageRE> messageREList = messageService.queryMessageList(messageVO);
         Integer totalNum = messageService.queryMessageCount(messageVO);
@@ -441,33 +447,35 @@ public class MemberController extends BaseController {
     }
 
     /**
-    *说明：更新消息的状态
-    *@param messageVO
-    *@return：com.ycc.base.common.Result
-    *@throws：
-    */
+     * 说明：更新消息的状态
+     *
+     * @param messageVO
+     * @return：com.ycc.base.common.Result
+     * @throws：
+     */
     @RequestMapping(value = "/updateMessageStatus.do_", method = RequestMethod.POST)
     @AccessLogin
     @ResponseBody
-    public Result updateMessageStatus(@Validated MessageVO messageVO){
+    public Result updateMessageStatus(@Validated MessageVO messageVO) {
         MessageVO message = new MessageVO();
         message.setId(messageVO.getId());
         message.setIsRead(MESSAGE_STATUS);
         message.setMemberId(getUid());
         message.setModifyEmp(getUid());
-        return Result.getSuccessResult( messageService.updateMessage(message));
+        return Result.getSuccessResult(messageService.updateMessage(message));
     }
 
     /**
-    *说明：查询一个消息详情
-    *@param messageId
-    *@return：com.ycc.base.common.Result<com.uc.training.smadmin.bd.vo.MessageDetailVO>
-    *@throws：
-    */
+     * 说明：查询一个消息详情
+     *
+     * @param messageId
+     * @return：com.ycc.base.common.Result<com.uc.training.smadmin.bd.vo.MessageDetailVO>
+     * @throws：
+     */
     @RequestMapping(value = "/queryOneMessageById.do_", method = RequestMethod.GET)
     @AccessLogin
     @ResponseBody
-    public Result<MessageRE> queryOneMessageById(Long messageId){
+    public Result<MessageRE> queryOneMessageById(Long messageId) {
         MessageVO messageVO = new MessageVO();
         messageVO.setId(messageId);
         messageVO.setMemberId(getUid());

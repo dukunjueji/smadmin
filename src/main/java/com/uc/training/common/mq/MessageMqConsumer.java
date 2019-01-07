@@ -1,15 +1,14 @@
 package com.uc.training.common.mq;
 
-import com.alibaba.fastjson.JSON;
 import com.uc.training.base.bd.service.MessageService;
 import com.uc.training.common.enums.GrowthEnum;
 import com.uc.training.common.enums.IntegralEnum;
 import com.uc.training.common.mq.vo.MqVO;
 import com.uc.training.common.utils.InjectionUtils;
-import com.zuche.framework.metaq.handler.DefaultExecutorMessageListener;
-import com.zuche.framework.metaq.vo.MessageVO;
+import org.springframework.amqp.rabbit.annotation.RabbitHandler;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 
@@ -21,19 +20,19 @@ import java.math.BigDecimal;
  * @date: 2018/11/3
  * 说明：消息消费者
  */
-@Controller
-public class MessageMqConsumer extends DefaultExecutorMessageListener {
+@Component
+@RabbitListener(queues = RabbitConfig.MESSAGE_QUEUE)
+public class MessageMqConsumer {
     @Autowired
     private MessageService messageService;
     private static final Integer NUM = 100;
     private static final Integer NUMBER = 0;
 
-    @Override
-    public void handlerMessage(MessageVO message) {
+    @RabbitHandler
+    public void handlerMessage(MqVO mqVO) {
         this.messageService = InjectionUtils.getInjectionInstance(MessageService.class);
-        MqVO mqVO = JSON.parseObject(message.getData(), MqVO.class);
         //判断消费类型是否为支付消息
-        if (mqVO.getPurchaseValue() != null){
+        if (mqVO.getPurchaseValue() != null) {
             BigDecimal purchaseValue = mqVO.getPurchaseValue();
             Long growthValue = purchaseValue.multiply(BigDecimal
                     .valueOf(GrowthEnum.PURCHASE.getValue()))
@@ -41,7 +40,7 @@ public class MessageMqConsumer extends DefaultExecutorMessageListener {
             Long integralValue = purchaseValue.multiply(BigDecimal
                     .valueOf(IntegralEnum.PURCHASE.getValue()))
                     .divide(BigDecimal.valueOf(NUM)).longValue();
-            String content = "您共支付了" + purchaseValue + "元,成长值增加了"+
+            String content = "您共支付了" + purchaseValue + "元,成长值增加了" +
                     growthValue + ",积分增加了" + integralValue;
             com.uc.training.base.bd.vo.MessageVO mes = new com.uc.training.base.bd.vo.MessageVO();
             mes.setMemberId(mqVO.getMemberId());
@@ -49,12 +48,12 @@ public class MessageMqConsumer extends DefaultExecutorMessageListener {
             messageService.insertMessage(mes);
         }
         //判断消费类型是否为充值消息
-        if (mqVO.getRechargeValue() != null){
+        if (mqVO.getRechargeValue() != null) {
             String content;
-            if (mqVO.getRechargeStatus() > NUMBER){
+            if (mqVO.getRechargeStatus() > NUMBER) {
                 BigDecimal balance = mqVO.getRechargeValue();
                 content = balance + "元充值成功";
-            }else {
+            } else {
                 content = "充值失败";
             }
             com.uc.training.base.bd.vo.MessageVO mes = new com.uc.training.base.bd.vo.MessageVO();
