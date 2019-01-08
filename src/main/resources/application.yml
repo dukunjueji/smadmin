@@ -6,7 +6,7 @@ spring:
   profiles: 
     active: dev
   application: 
-    name: provider_goods
+    name: micro-smadmin
   redis:
       host: 10.112.11.14
       port: 6379
