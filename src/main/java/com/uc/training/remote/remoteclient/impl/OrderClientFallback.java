@@ -15,6 +15,7 @@ import com.uc.training.ord.re.OrderGoodsRE;
 import com.uc.training.ord.re.OrderRE;
 import com.uc.training.ord.re.OrderSaleRE;
 import com.uc.training.remote.remoteclient.OrderClientRemote;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -25,6 +26,7 @@ import java.util.List;
  * @date 2019年1月5日 下午1:58:32
  * @version V1.0
  */
+@Component
 public class OrderClientFallback implements OrderClientRemote {
     /**
      * 根据用户ID和购物车商品表ID获取购物车商品信息

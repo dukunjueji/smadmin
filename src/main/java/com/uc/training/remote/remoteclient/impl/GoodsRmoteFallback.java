@@ -27,6 +27,7 @@ import com.uc.training.gds.re.GoodsRE;
 import com.uc.training.gds.re.GoodsStokeRE;
 import com.uc.training.gds.re.HotTagRE;
 import com.uc.training.remote.remoteclient.GoodsRemote;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -37,6 +38,7 @@ import java.util.List;
  * @version 1.0
  * @date 2019/1/5  11:1
  */
+@Component
 public class GoodsRmoteFallback implements GoodsRemote {
   @Override
   public RemoteResult<List<GoodsRE>> getHotRecommend() {
