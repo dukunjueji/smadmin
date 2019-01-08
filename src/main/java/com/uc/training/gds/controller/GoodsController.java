@@ -4,6 +4,7 @@ import com.uc.training.base.bd.service.MemberGradeService;
 import com.uc.training.common.annotation.AccessLogin;
 import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.common.enums.StokeStatusEnum;
+import com.uc.training.common.redis.RedisComponent;
 import com.uc.training.common.redis.RedisConfigEnum;
 import com.uc.training.common.redis.RedissonManager;
 import com.uc.training.common.vo.PageVO;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 请填写类注释
@@ -175,8 +177,8 @@ public class GoodsController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "testRdis.do_")
     public Result<String> testRdis() {
-        RedisCacheUtils redis = RedisCacheUtils.getInstance(RedisConfigEnum.GOODS_DETAIL);
-        redis.set("helloTesst", "world");
+        RedisComponent redis = new RedisComponent();
+        redis.set("helloTesst", "world",60L,TimeUnit.SECONDS);
         System.out.println(redis.get("helloTesst").toString());
         return Result.getSuccessResult("成功");
     }

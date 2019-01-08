@@ -24,6 +24,7 @@ import com.uc.training.common.enums.GrowthEnum;
 import com.uc.training.common.enums.SmsTypeEnum;
 import com.uc.training.common.mq.MqProducer;
 import com.uc.training.common.mq.vo.MqVO;
+import com.uc.training.common.redis.RedisComponent;
 import com.uc.training.common.redis.RedisConfigEnum;
 import com.uc.training.common.utils.ReplaceStarUtils;
 import com.uc.training.common.utils.TokenUtil;
@@ -116,7 +117,7 @@ public class MemberController extends BaseController {
             return Result.getBusinessException("手机号码已被注册",null);
         }
         //redis
-        RedisCacheUtils redis = RedisCacheUtils.getInstance(RedisConfigEnum.SYS_CODE);
+        RedisComponent redis = new RedisComponent();
         String msg = redis.get(memberRegisterVO.getTelephone());
         if (msg == null) {
             return Result.getBusinessException("验证码已过期，请重新获取", null);
@@ -213,7 +214,7 @@ public class MemberController extends BaseController {
             return Result.getBusinessException("手机号还没被注册", null);
         }
         //redis
-        RedisCacheUtils redis = RedisCacheUtils.getInstance(RedisConfigEnum.SYS_CODE);
+        RedisComponent redis = new RedisComponent();
         String msg = redis.get(memberRegisterVO.getTelephone());
         if (msg == null) {
             return Result.getBusinessException("验证码已过期，请重新获取", null);
@@ -405,7 +406,7 @@ public class MemberController extends BaseController {
             return Result.getBusinessException("原来的密码输入有误", null);
         }
         //redis
-        RedisCacheUtils redis = RedisCacheUtils.getInstance(RedisConfigEnum.SYS_CODE);
+        RedisComponent redis = new RedisComponent();
         String msg = redis.get(mem.getTelephone());
         if (msg == null) {
             return Result.getBusinessException("验证码已过期，请重新获取", null);
@@ -454,7 +455,7 @@ public class MemberController extends BaseController {
         message.setId(messageVO.getId());
         message.setIsRead(MESSAGE_STATUS);
         message.setMemberId(getUid());
-        message.setModifyEmp(getUid());
+        message.setModifyEmFp(getUid());
         return Result.getSuccessResult( messageService.updateMessage(message));
     }
 

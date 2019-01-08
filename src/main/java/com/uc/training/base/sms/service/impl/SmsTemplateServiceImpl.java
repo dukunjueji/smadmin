@@ -11,6 +11,7 @@ import com.uc.training.base.sms.vo.SmsTemplateVO;
 import com.uc.training.base.sms.vo.SmsVO;
 import com.uc.training.common.enums.SmsStatusEnum;
 import com.uc.training.common.enums.SmsTypeEnum;
+import com.uc.training.common.redis.RedisComponent;
 import com.uc.training.common.redis.RedisConfigEnum;
 import com.uc.training.common.utils.InjectionUtils;
 import com.uc.training.common.utils.TelCodeUtil;
@@ -25,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Author: 余旭东
@@ -159,10 +161,10 @@ public class SmsTemplateServiceImpl implements SmsTemplateService {
                 SmsTypeEnum.REGISTER.getCode().equals(generateSmsVO.getCode())) {
 
             // redis
-            RedisCacheUtils redis = RedisCacheUtils.getInstance(RedisConfigEnum.SYS_CODE);
+            RedisComponent redis = new RedisComponent();
             generateSmsVO.setMessage(TelCodeUtil.createCode());
             //手机号 验证码
-            redis.set(generateSmsVO.getTelephone(), generateSmsVO.getMessage());
+            redis.set(generateSmsVO.getTelephone(), generateSmsVO.getMessage(),60L,TimeUnit.SECONDS );
         }
 
         if (generateSmsVO.getRechargeStatus() != null && generateSmsVO.getRechargeStatus() == 0) {
