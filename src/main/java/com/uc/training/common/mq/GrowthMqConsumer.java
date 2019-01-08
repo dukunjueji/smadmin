@@ -29,7 +29,7 @@ public class GrowthMqConsumer {
 
     @RabbitHandler
     public void handlerMessage(MqVO mqVO, Channel channel, Message message) throws IOException {
-        this.growthDetailService = InjectionUtils.getInjectionInstance(GrowthDetailService.class);
+        //this.growthDetailService = InjectionUtils.getInjectionInstance(GrowthDetailService.class);
         //判断消费类型是否为成长值
         if (mqVO.getGrowthType() != null) {
             GrowthVO growthVO = new GrowthVO();

@@ -12,17 +12,13 @@ import com.uc.training.base.sms.vo.SmsVO;
 import com.uc.training.common.enums.SmsStatusEnum;
 import com.uc.training.common.enums.SmsTypeEnum;
 import com.uc.training.common.redis.RedisComponent;
-import com.uc.training.common.redis.RedisConfigEnum;
 import com.uc.training.common.utils.InjectionUtils;
 import com.uc.training.common.utils.TelCodeUtil;
-import com.uc.training.remote.client.BaseClient;
-import com.ycc.tools.middleware.redis.RedisCacheUtils;
-import com.zuche.base.common.sendmsg.mail.service.MailService;
-import com.zuche.base.common.sendmsg.mail.service.MailServiceImpl;
-import com.zuche.base.sys.sendmessage.MailMessage;
+import com.uc.training.remote.remoteclient.BaseClient;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailMessage;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -42,7 +38,7 @@ public class SmsTemplateServiceImpl implements SmsTemplateService {
     private BaseClient baseClient;
 
     //使用MailServiceImpl()实现类，不要直接调用发送方法
-    private static MailService mailService = new MailServiceImpl();
+    //private static MailService mailService = new MailServiceImpl();
 
     /**
      * 新增短信模板
@@ -154,7 +150,7 @@ public class SmsTemplateServiceImpl implements SmsTemplateService {
     @Override
     public Integer generateSms(GenerateSmsVO generateSmsVO) {
 
-        this.smsService = InjectionUtils.getInjectionInstance(SmsService.class);
+        //this.smsService = InjectionUtils.getInjectionInstance(SmsService.class);
 
         if (SmsTypeEnum.CHANGE_PASSWORD.getCode().equals(generateSmsVO.getCode()) ||
                 SmsTypeEnum.FORGET_PASSWORD.getCode().equals(generateSmsVO.getCode()) ||
@@ -189,7 +185,7 @@ public class SmsTemplateServiceImpl implements SmsTemplateService {
         //邮件标题
         generateSmsVO.setEmailTitle(smsTemplateRE.get(0).getTitle());
         // 发送短信
-        if (generateSmsVO.getEmil() != null) {
+        /*if (generateSmsVO.getEmil() != null) {
             MailMessage mailMessage = new MailMessage();
             mailMessage.setMailAddress(generateSmsVO.getEmil());//邮件地址
             mailMessage.setContent(content); //邮件内容
@@ -198,7 +194,7 @@ public class SmsTemplateServiceImpl implements SmsTemplateService {
             mailMessage.setSaveToDB(false); //是否保存到数据库
             mailMessage.setChannel(2); //通道(专车：1通道；租车：1通道；买买车：2通道)
             mailService.sendMessage(mailMessage);
-        }
+        }*/
         System.out.println(generateSmsVO.getTelephone() + ": " +content);
 
 

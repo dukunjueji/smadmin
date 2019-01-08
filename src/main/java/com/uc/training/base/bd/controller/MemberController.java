@@ -25,7 +25,6 @@ import com.uc.training.common.enums.SmsTypeEnum;
 import com.uc.training.common.mq.MqProducer;
 import com.uc.training.common.mq.vo.MqVO;
 import com.uc.training.common.redis.RedisComponent;
-import com.uc.training.common.redis.RedisConfigEnum;
 import com.uc.training.common.utils.ReplaceStarUtils;
 import com.uc.training.common.utils.TokenUtil;
 import com.uc.training.common.vo.Result;

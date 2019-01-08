@@ -34,7 +34,7 @@ public class MessageMqConsumer {
 
     @RabbitHandler
     public void handlerMessage(MqVO mqVO, Channel channel, Message message) throws IOException {
-        this.messageService = InjectionUtils.getInjectionInstance(MessageService.class);
+        //this.messageService = InjectionUtils.getInjectionInstance(MessageService.class);
         //判断消费类型是否为支付消息
         if (mqVO.getPurchaseValue() != null) {
             BigDecimal purchaseValue = mqVO.getPurchaseValue();

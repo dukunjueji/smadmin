@@ -30,7 +30,7 @@ public class SmsMqConsumer {
 
     @RabbitHandler
     public void handlerMessage(MqVO mqVO, Channel channel, Message message) throws IOException {
-        this.smsTemplateService = InjectionUtils.getInjectionInstance(SmsTemplateService.class);
+        //this.smsTemplateService = InjectionUtils.getInjectionInstance(SmsTemplateService.class);
         GenerateSmsVO generateSmsVO = mqVO.getGenerateSmsVO();
         //判断消息实体是否为空
         if (generateSmsVO != null) {

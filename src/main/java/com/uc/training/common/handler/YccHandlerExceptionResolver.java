@@ -30,7 +30,7 @@ import java.util.Set;
  */
 public class YccHandlerExceptionResolver implements HandlerExceptionResolver {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(com.ycc.base.framework.web.spring.YccHandlerExceptionResolver.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(YccHandlerExceptionResolver.class);
 
     @Override
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
@@ -45,9 +45,9 @@ public class YccHandlerExceptionResolver implements HandlerExceptionResolver {
         }
 
         Result<Object> result = null;
-        if (ex instanceof BusinessRuntimeException) {
+        if (ex instanceof RuntimeException) {
             result = Result.getBusinessException(ex.getMessage(), null);
-            result.setCode(((BusinessRuntimeException) ex).getCode());
+            result.setCode("-1");
             if (logger.isDebugEnabled()) {
                 logger.debug("Controller返回结果包装：result={}", JSON.toJSONString(result));
             }

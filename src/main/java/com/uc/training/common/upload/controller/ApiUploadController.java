@@ -4,7 +4,7 @@ import com.uc.training.common.base.controller.BaseController;
 import com.uc.training.common.enums.UploadEnum;
 import com.uc.training.common.upload.re.UploadRE;
 import com.uc.training.common.upload.service.UploadService;
-import com.ycc.base.common.Result;
+import com.uc.training.common.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -47,7 +47,8 @@ public class ApiUploadController extends BaseController {
             return Result.getBusinessException("上传文件不能超过4M", null);
         }
 
-        return Result.getSuccessResult(uploadService.imageUpload(file));
+        //return Result.getSuccessResult(uploadService.imageUpload(file));
+        return null;
     }
 
     /**
@@ -58,6 +59,7 @@ public class ApiUploadController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/text.do_", method = RequestMethod.POST)
     public Result<UploadRE> imageToTextUpload(String imageText) {
-        return Result.getSuccessResult(uploadService.imageToTextUpload(imageText));
+        //return Result.getSuccessResult(uploadService.imageToTextUpload(imageText));
+        return null;
     }
 }

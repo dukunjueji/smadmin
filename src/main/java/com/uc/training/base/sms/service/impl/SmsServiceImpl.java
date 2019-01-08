@@ -8,9 +8,6 @@ import com.uc.training.base.sms.vo.SmsListVO;
 import com.uc.training.base.sms.vo.SmsVO;
 import com.uc.training.common.enums.SmsStatusEnum;
 import com.uc.training.remote.remoteclient.BaseClient;
-import com.zuche.base.common.sendmsg.mail.service.MailService;
-import com.zuche.base.common.sendmsg.mail.service.MailServiceImpl;
-import com.zuche.base.sys.sendmessage.MailMessage;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,7 +24,7 @@ public class SmsServiceImpl implements SmsService {
 @Autowired
 private BaseClient baseClient;
     //使用MailServiceImpl()实现类，不要直接调用发送方法
-    private static MailService mailService = new MailServiceImpl();
+    //private static MailService mailService = new MailServiceImpl();
 
     /**
      * 查询短信列表
@@ -63,7 +60,7 @@ private BaseClient baseClient;
     @Override
     public Integer sendSys(GenerateSmsVO generateSmsVO, String content) {
         //发送邮件
-        if (generateSmsVO.getEmil() != null) {
+        /*if (generateSmsVO.getEmil() != null) {
             MailMessage mailMessage = new MailMessage();
             mailMessage.setMailAddress(generateSmsVO.getEmil());//邮件地址
             mailMessage.setContent(content); //邮件内容
@@ -72,7 +69,7 @@ private BaseClient baseClient;
             mailMessage.setSaveToDB(false); //是否保存到数据库
             mailMessage.setChannel(2); //通道(专车：1通道；租车：1通道；买买车：2通道)
             mailService.sendMessage(mailMessage);
-        }
+        }*/
 
         System.out.println(generateSmsVO.getTelephone() + ": " +content);
 

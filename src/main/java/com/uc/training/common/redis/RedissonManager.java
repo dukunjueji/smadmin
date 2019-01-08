@@ -1,23 +1,12 @@
 package com.uc.training.common.redis;
 
 import com.uc.training.common.utils.ThreadUtils;
-import com.uc.training.common.utils.ValidatorUtils;
-import com.zuche.redis.cluster.ClusterManager;
-import com.zuche.redis.config.RedisReadWriteConfig;
-import com.zuche.redis.pool.RedisPool;
-import com.zuche.redis.pool.RedisPoolConfig;
 import org.redisson.Redisson;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
-import org.redisson.config.ClusterServersConfig;
-import org.redisson.config.Config;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 
@@ -39,29 +28,11 @@ public class RedissonManager {
 
     private static RedissonClient redissonClient;
 
-    private static List<RedisPoolConfig> configs;
-
     private static RedissonManager redissonManager;
 
     private RedissonManager() {
     }
 
-    static {
-        List<RedisReadWriteConfig> redisReadWriteConfigs = ClusterManager
-                .getRedisReadWriteConfig(REDISSON_CACHE_GROUP);
-        if (ValidatorUtils.isNotNull(redisReadWriteConfigs)) {
-            if (configs == null) {
-                configs = new ArrayList<>();
-            }
-            for (RedisReadWriteConfig redisReadWriteConfig : redisReadWriteConfigs) {
-                if (ValidatorUtils.isNotNull(redisReadWriteConfig.getPools())) {
-                    for (RedisPool redisPool : redisReadWriteConfig.getPools()) {
-                        configs.add(redisPool.getConfig());
-                    }
-                }
-            }
-        }
-    }
 
     public static RedissonManager getInstance() {
         synchronized (RedissonManager.class) {
@@ -70,37 +41,11 @@ public class RedissonManager {
         }
     }
 
-    private void init() {
-        //ClusterManager.clusterModelHash(block.namespaces, block.keys, block.groupName,block.isRead);
-    }
-
-
-    private Config initConfig() {
-        Config sessionConfig = new Config();
-        Set<String> redisUris = new HashSet<String>();
-        for (RedisPoolConfig redisPoolConfig : configs) {
-            redisUris.add("redis://".concat(redisPoolConfig.getHost()).concat(":").concat(String.valueOf(redisPoolConfig.getPort())));
-        }
-        if (redisUris.size() == 1) {
-            sessionConfig.useSingleServer().setAddress(redisUris.iterator().next());
-        } else {
-            ClusterServersConfig serversConfig = sessionConfig.useClusterServers().setScanInterval(2000);
-            for (String redisUri : redisUris) {
-                serversConfig.addNodeAddress(redisUri);
-            }
-        }
-//                .setAddress(config.getHost())
-//                //.setPassword(config.getPassword())
-//                //.setDatabase(config.getDatabase())
-//                .setConnectionPoolSize(config.getCorePoolSize());
-        return sessionConfig;
-    }
-
     private RedissonClient getRedissonClient() {
         logger.info("get RedissonClient ...");
         synchronized (RedissonManager.class) {
             if (redissonClient == null) {
-                redissonClient = Redisson.create(initConfig());
+                redissonClient = Redisson.create();
             }
         }
         return redissonClient;
@@ -113,7 +58,8 @@ public class RedissonManager {
      * @return
      */
     public RLock getLock(String lockName, boolean fairLock) {
-        RedissonClient redissonClient = getRedissonClient();
+        RedissonConfig redissonConfig = new RedissonConfig();
+        RedissonClient redissonClient = redissonConfig.getRedisson();
         //默认重试3次
         long tryTimes = TRY_TIMES;
         RLock lock = null;

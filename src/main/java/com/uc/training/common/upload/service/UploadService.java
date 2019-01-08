@@ -1,19 +1,8 @@
 package com.uc.training.common.upload.service;
 
-import com.uc.training.common.upload.re.UploadRE;
-import com.uc.training.common.utils.FileTypeUtil;
-import com.ycc.tools.upload.FileTransferUtils;
-import com.zuche.framework.enums.BusinessLineEnum;
-import com.zuche.framework.udfs.client.UDFSClient;
-import com.zuche.framework.udfs.client.UDFSPermissionEnum;
-import com.zuche.framework.udfs.client.upload.UDFSUploadResultVO;
-import com.zuche.framework.udfs.client.upload.UDFSUploadVO;
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -34,10 +23,10 @@ public class UploadService {
 
     /**
      * 上传图片文件
-     * @param file
+     * @param
      * @return
      */
-    public UploadRE imageUpload(MultipartFile file) {
+    /*public UploadRE imageUpload(MultipartFile file) {
 
         UDFSUploadResultVO resultVO;
         UploadRE uploadRE = new UploadRE();
@@ -72,7 +61,7 @@ public class UploadService {
         }
 
         return uploadRE;
-    }
+    }*/
 
     private byte[] getByteArrayInputStreamResource(InputStream inputStream) throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -87,10 +76,10 @@ public class UploadService {
 
     /**
      * base64上传文件
-     * @param imageText
+     * @param
      * @return
      */
-    public UploadRE imageToTextUpload(String imageText) {
+    /*public UploadRE imageToTextUpload(String imageText) {
         UDFSUploadResultVO resultVO;
         UploadRE uploadRE = new UploadRE();
         try {
@@ -121,13 +110,13 @@ public class UploadService {
             logger.error("读取源文件失败", e);
         }
         return uploadRE;
-    }
+    }*/
 
     public static InputStream base64ToInputStream(String base64string){
         ByteArrayInputStream stream = null;
         try {
-            byte[] bytes = Base64.decodeBase64(base64string);
-            stream = new ByteArrayInputStream(bytes);
+            //byte[] bytes = Base64.decodeBase64(base64string);
+            //stream = new ByteArrayInputStream(bytes);
         } catch (Exception e) {
             logger.error(e.getMessage());
         }

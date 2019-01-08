@@ -57,6 +57,8 @@ public class OrderController extends BaseController {
     private GoodsService goodsService;
     @Autowired
     private MemberService memberService;
+    @Autowired
+    private OrderClient orderClient;
 
     /**
      * 获取用户购物车商品列表
@@ -466,7 +468,7 @@ public class OrderController extends BaseController {
     @RequestMapping(value = "goDelete.do_", method = RequestMethod.POST)
     public Result goDelete(OrdOrderVO ordOrderVO) {
         ordOrderVO.setMemberId(getUid());
-        if (OrderClient.memberDelOrder(ordOrderVO) > 0) {
+        if (orderClient.memberDelOrder(ordOrderVO) > 0) {
             return Result.getSuccessResult(null);
         }
         return Result.getBusinessException("删除失败", null);

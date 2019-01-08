@@ -29,7 +29,7 @@ public class RechargeHistoryConsumer {
 
     @RabbitHandler
     public void handlerMessage(MqVO mqVO, Channel channel, Message message) throws IOException {
-        this.memberRechargeHistoryService = InjectionUtils.getInjectionInstance(MemberRechargeHistoryService.class);
+        //this.memberRechargeHistoryService = InjectionUtils.getInjectionInstance(MemberRechargeHistoryService.class);
         MemberRechargeHistoryModelVO memberRechargeHistory = mqVO.getMemberRechargeHistory();
         //判断消息实体是否为空
         if (memberRechargeHistory != null) {

@@ -1,6 +1,6 @@
 package com.uc.training.ord.vo;
 
-import com.ycc.base.common.BaseDomain;
+import com.uc.training.common.base.model.BaseDomain;
 
 import java.io.Serializable;
 import java.util.List;

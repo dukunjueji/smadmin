@@ -29,7 +29,7 @@ public class IntegralMqConsumer {
 
     @RabbitHandler
     public void handlerMessage(MqVO mqVO, Channel channel, Message message) throws IOException {
-        this.integralDetailService = InjectionUtils.getInjectionInstance(IntegralDetailService.class);
+        //this.integralDetailService = InjectionUtils.getInjectionInstance(IntegralDetailService.class);
         if (mqVO.getIntegralType() != null) {
             IntegralVO integralVO = new IntegralVO();
             integralVO.setMemberId(mqVO.getMemberId());

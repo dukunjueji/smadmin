@@ -8,7 +8,7 @@ spring:
   application: 
     name: provider_goods
   redis:
-      host: 192.168.99.100
+      host: 10.112.11.14
       port: 6379
       database: 0
   boot:
@@ -25,14 +25,6 @@ management:
   endpoint:
     health:
       show-details: ALWAYS
-# mybatis config
-mybatis:
-  type-aliases-package: smgoods.*.model
-  mapper-locations: classpath:com.uc.training.sql/**/*.xml
-  configuration:
-    call-setters-on-nulls: true
-    use-generated-keys: true
-    map-underscore-to-camel-case: true    
 # pagehelper config
 pagehelper:
     helperDialect: mysql

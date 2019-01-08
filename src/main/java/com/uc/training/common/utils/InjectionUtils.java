@@ -1,7 +1,5 @@
 package com.uc.training.common.utils;
 
-import com.zuche.framework.common.SpringApplicationContext;
-
 import java.util.Map;
 
 /**
@@ -14,17 +12,17 @@ import java.util.Map;
  */
 public final class InjectionUtils {
 
-    private InjectionUtils() {
+    /*private InjectionUtils() {
     }
 
-    /**
+    *//**
     *说明：获取实例化类
     *@param type
     *@return：T
     *@throws：
-    */
+    *//*
     public static <T>T getInjectionInstance(Class<T> type){
         Map<String, T> tMap = SpringApplicationContext.getBeansByType(type);
         return tMap.values().iterator().next();
-    }
+    }*/
 }
