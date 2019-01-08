@@ -47,6 +47,11 @@
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-amqp</artifactId>
+			<version>2.0.3.RELEASE</version>
+		</dependency>
+		<dependency>
 			<groupId>com.uc.training</groupId>
 			<artifactId>micro-smapi</artifactId>
 			<version>1.0.0-SNAPSHOT</version>

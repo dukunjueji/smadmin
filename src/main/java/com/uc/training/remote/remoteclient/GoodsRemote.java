@@ -39,13 +39,13 @@ import java.util.List;
  * @version 1.0
  * @date 2019/1/5  10:58
  */
-@FeignClient(name = "provider-smbase", fallback = GoodsRmoteFallback.class)
-public interface GoodsRmote {
+@FeignClient(name = "provider_goods", fallback = GoodsRmoteFallback.class)
+public interface GoodsRemote {
   /**
    * 获取商品详情
    *
    */
-  @PostMapping(value = "smbase/api/queryOneMember")
+  @PostMapping(value = "smgoods/api/getHotRecommend")
   RemoteResult<List<GoodsRE>> getHotRecommend();
 
   /**
@@ -53,7 +53,7 @@ public interface GoodsRmote {
    * @param  goodsListDTO
    * @return
    **/
-
+  @PostMapping(value = "smgoods/api/getGoodsPageByCategory")
   RemoteResult<PageVO<GoodsRE>> getGoodsPageByCategory(GoodsListDTO goodsListDTO);
 
   /**
@@ -61,6 +61,7 @@ public interface GoodsRmote {
    *  @param propertyId
    *  @return
    */
+  @PostMapping(value = "smgoods/api/getGoodsDetailByPropertyId")
   RemoteResult<GoodsDetailRE> getGoodsDetailByPropertyId(Long propertyId);
 
   /**
@@ -68,6 +69,7 @@ public interface GoodsRmote {
    *  @param goodsId
    *  @return
    */
+  @PostMapping(value = "smgoods/api/getGoodsDetailByGoodsId")
   RemoteResult<List<GoodsDetailRE>> getGoodsDetailByGoodsId(Long goodsId);
 
   /**
@@ -75,6 +77,7 @@ public interface GoodsRmote {
    *  @param
    *  @return
    */
+  @PostMapping(value = "smgoods/api/getGoodsDetailByPropertyIds")
   RemoteResult<List<GoodsDetailRE>> getGoodsDetailByPropertyIds(List<Long> propertyIds);
 
   /**
@@ -82,6 +85,7 @@ public interface GoodsRmote {
    *  @param goodsListDTO
    *  @return
    */
+  @PostMapping(value = "smgoods/api/searchByGoodsName")
   RemoteResult<PageVO<GoodsRE>> searchByGoodsName(GoodsListDTO goodsListDTO);
 
   /**
@@ -89,6 +93,7 @@ public interface GoodsRmote {
    *  @param
    *  @return
    */
+  @PostMapping(value = "smgoods/api/selectHotTag")
   RemoteResult<List<HotTagRE>> selectHotTag();
 
   /**
@@ -96,6 +101,7 @@ public interface GoodsRmote {
    *  @param goodsAndPropertyDTO
    *  @return
    */
+  @PostMapping(value = "smgoods/api/selectGoodsStatus")
   RemoteResult<GoodsStokeRE> selectGoodsStatus(GoodsAndPropertyDTO goodsAndPropertyDTO);
 
   /**
@@ -103,6 +109,7 @@ public interface GoodsRmote {
    *  @param goodsAndPropertyDTO
    *  @return
    */
+  @PostMapping(value = "smgoods/api/updateAndDeductStoke")
   RemoteResult<Integer> updateAndDeductStoke(GoodsAndPropertyDTO goodsAndPropertyDTO);
 
   /**
@@ -110,6 +117,7 @@ public interface GoodsRmote {
    *  @param commentDTO
    *  @return
    */
+  @PostMapping(value = "smgoods/api/addComment")
   RemoteResult<Integer> addComment(CommentDTO commentDTO);
 
   /**
@@ -117,6 +125,7 @@ public interface GoodsRmote {
    *  @param orderGoodsId
    *  @return
    */
+  @PostMapping(value = "smgoods/api/getCommentCountByOrderGoodsId")
   RemoteResult<List<CommentCountRE>> getCommentCountByOrderGoodsId(Long orderGoodsId);
 
   /**
@@ -124,6 +133,7 @@ public interface GoodsRmote {
    *  @param commentListDTO
    *  @return
    */
+  @PostMapping(value = "smgoods/api/getCommentList")
   RemoteResult<List<CommentRE>> getCommentList(CommentListDTO commentListDTO);
 
   /**
@@ -131,6 +141,7 @@ public interface GoodsRmote {
    *  @param commentListDTO
    *  @return
    */
+  @PostMapping(value = "smgoods/api/getCountBySroce")
   RemoteResult<CommentAvgRE> getCountBySroce(CommentListDTO commentListDTO);
 
   /**
@@ -138,6 +149,7 @@ public interface GoodsRmote {
    *  @param commentListDTO
    *  @return
    */
+  @PostMapping(value = "smgoods/api/getCommentCountAndAvg")
   RemoteResult<CommentAvgRE> getCommentCountAndAvg(CommentListDTO commentListDTO);
 
   /**
@@ -145,6 +157,7 @@ public interface GoodsRmote {
    *  @param commentDTO
    *  @return
    */
+  @PostMapping(value = "smgoods/api/editCommentById")
   RemoteResult<Integer> editCommentById(CommentDTO commentDTO);
 
   /**
@@ -152,6 +165,7 @@ public interface GoodsRmote {
    *  @param commentId
    *  @return
    */
+  @PostMapping(value = "smgoods/api/getCommentPicByCommentId")
   RemoteResult<List<CommentPicRE>> getCommentPicByCommentId(Long commentId);
 
   /**
@@ -159,6 +173,7 @@ public interface GoodsRmote {
    *  @param commentId
    *  @return
    */
+  @PostMapping(value = "smgoods/api/getAdminReplyContent")
   RemoteResult<String> getAdminReplyContent(Long commentId);
 
   /**
@@ -166,6 +181,7 @@ public interface GoodsRmote {
    *  @param commentReplyDTO
    *  @return
    */
+  @PostMapping(value = "smgoods/api/getCommentDetailByCommentId")
   RemoteResult<CommentDetailRE> getCommentDetailByCommentId(CommentReplyDTO commentReplyDTO);
 
   /**
@@ -173,6 +189,7 @@ public interface GoodsRmote {
    *  @param commentReplyModelDTO
    *  @return
    */
+  @PostMapping(value = "smgoods/api/insertCommentReply")
   RemoteResult<Long> insertCommentReply(CommentReplyModelDTO commentReplyModelDTO);
 
   /**
@@ -180,6 +197,7 @@ public interface GoodsRmote {
    *  @param commentReplyModelDTO
    *  @return
    */
+  @PostMapping(value = "smgoods/api/editCommentReply")
   RemoteResult<Integer> editCommentReply(CommentReplyModelDTO commentReplyModelDTO);
 
   /**
@@ -187,6 +205,7 @@ public interface GoodsRmote {
    *  @param commentReplyDTO
    *  @return
    */
+  @PostMapping(value = "smgoods/api/deleteCommentReplyById")
   RemoteResult<Integer> deleteCommentReplyById(CommentReplyDTO commentReplyDTO);
 
   /**
@@ -194,6 +213,7 @@ public interface GoodsRmote {
    *  @param id
    *  @return
    */
+  @PostMapping(value = "smgoods/api/getGoodsById")
   RemoteResult<GoodsRE> getGoodsById(Long id);
 
   /**
@@ -202,6 +222,7 @@ public interface GoodsRmote {
    * @param goodsListDTO
    * @return
    */
+  @PostMapping(value = "smgoods/api/getAdminGoodsList")
   RemoteResult<List<AdminGoodsRE>> getAdminGoodsList(GoodsListDTO goodsListDTO);
 
   /**
@@ -209,6 +230,7 @@ public interface GoodsRmote {
    * @param goodsDTO
    * @return
    */
+  @PostMapping(value = "smgoods/api/adminUpdateGoods")
   RemoteResult<Integer> adminUpdateGoods(GoodsDTO goodsDTO);
 
   /**
@@ -216,6 +238,7 @@ public interface GoodsRmote {
    * @param goodsDTO
    * @return
    */
+  @PostMapping(value = "smgoods/api/adminInsertGoods")
   RemoteResult<Long> adminInsertGoods(GoodsDTO goodsDTO);
 
   /**
@@ -223,6 +246,7 @@ public interface GoodsRmote {
    * @param id
    * @return
    */
+  @PostMapping(value = "smgoods/api/logicDeleteGoods")
   RemoteResult<Integer> logicDeleteGoods(Long id);
 
   /**
@@ -231,6 +255,7 @@ public interface GoodsRmote {
    * @param goodsAndPropertyDTO
    * @return
    */
+  @PostMapping(value = "smgoods/api/updateSales")
   RemoteResult<Integer> updateSales(GoodsAndPropertyDTO goodsAndPropertyDTO);
 
   /**
@@ -239,6 +264,7 @@ public interface GoodsRmote {
    * @param goodsListDTO
    * @return
    */
+  @PostMapping(value = "smgoods/api/getAdminGoodsListCount")
   RemoteResult<Long> getAdminGoodsListCount(GoodsListDTO goodsListDTO);
 
   /**
@@ -247,6 +273,7 @@ public interface GoodsRmote {
    * @param goodsDTO
    * @return
    */
+  @PostMapping(value = "smgoods/api/pullOnGoods")
   RemoteResult<Integer> pullOnGoods(GoodsDTO goodsDTO);
 
   /**
@@ -255,6 +282,7 @@ public interface GoodsRmote {
    * @param goodsDTO
    * @return
    */
+  @PostMapping(value = "smgoods/api/pullOffGoods")
   RemoteResult<Integer> pullOffGoods(GoodsDTO goodsDTO);
 
   /**
@@ -263,6 +291,7 @@ public interface GoodsRmote {
    * @param adminHotTagListDTO
    * @return
    */
+  @PostMapping(value = "smgoods/api/getAllHotTagList")
   RemoteResult<PageVO<HotTagRE>> getAllHotTagList(AdminHotTagListDTO adminHotTagListDTO);
 
   /**
@@ -271,6 +300,7 @@ public interface GoodsRmote {
    * @param hotTagDTO
    * @return
    */
+  @PostMapping(value = "smgoods/api/updateHotTag")
   RemoteResult<Integer> updateHotTag(HotTagDTO hotTagDTO);
 
   /**
@@ -279,6 +309,7 @@ public interface GoodsRmote {
    * @param id
    * @return
    */
+  @PostMapping(value = "smgoods/api/deleteHotTagById")
   RemoteResult<Integer> deleteHotTagById(Long id);
 
   /**
@@ -287,6 +318,7 @@ public interface GoodsRmote {
    * @param hotTagDTO
    * @return
    */
+  @PostMapping(value = "smgoods/api/insertHotTag")
   RemoteResult<Long> insertHotTag(HotTagDTO hotTagDTO);
 
   /**
@@ -295,6 +327,7 @@ public interface GoodsRmote {
    * @param goodsPicDTO
    * @return
    */
+  @PostMapping(value = "smgoods/api/insertGoodsPic")
   RemoteResult<Long> insertGoodsPic(GoodsPicDTO goodsPicDTO);
 
   /**
@@ -303,6 +336,7 @@ public interface GoodsRmote {
    * @param goodsPicDTO
    * @return
    */
+  @PostMapping(value = "smgoods/api/updateGoodsPic")
   RemoteResult<Integer> updateGoodsPic(GoodsPicDTO goodsPicDTO);
 
   /**
@@ -311,6 +345,7 @@ public interface GoodsRmote {
    * @param propertyId
    * @return
    */
+  @PostMapping(value = "smgoods/api/getGoodsPicListByPropertyId")
   RemoteResult<List<AdminGoodsPicRE>> getGoodsPicListByPropertyId(Long propertyId);
 
   /**
@@ -319,6 +354,7 @@ public interface GoodsRmote {
    * @param id
    * @return
    */
+  @PostMapping(value = "smgoods/api/deleteGoodsPicById")
   RemoteResult<Integer> deleteGoodsPicById(Long id);
 
   /**
@@ -327,6 +363,7 @@ public interface GoodsRmote {
    * @param propertyId
    * @return
    */
+  @PostMapping(value = "smgoods/api/deleteGoodsPicByPropertyId")
   RemoteResult<Integer> deleteGoodsPicByPropertyId(Long propertyId);
 
   /**
@@ -335,6 +372,7 @@ public interface GoodsRmote {
    * @param id
    * @return
    */
+  @PostMapping(value = "smgoods/api/getPropertyIdCountById")
   RemoteResult<Integer> getPropertyIdCountById(Long id);
 
   /**
@@ -343,6 +381,7 @@ public interface GoodsRmote {
    * @param id
    * @return
    */
+  @PostMapping(value = "smgoods/api/getPropertyIdById")
   RemoteResult<Long> getPropertyIdById(Long id);
 
   /**
@@ -351,6 +390,7 @@ public interface GoodsRmote {
    * @param propertyDTO
    * @return
    */
+  @PostMapping(value = "smgoods/api/insertProperty")
   RemoteResult<Long> insertProperty(PropertyDTO propertyDTO);
 
   /**
@@ -359,6 +399,7 @@ public interface GoodsRmote {
    * @param propertyDTO
    * @return
    */
+  @PostMapping(value = "smgoods/api/updateProperty")
   RemoteResult<Integer> updateProperty(PropertyDTO propertyDTO);
 
   /**
@@ -367,6 +408,7 @@ public interface GoodsRmote {
    * @param goodsId
    * @return
    */
+  @PostMapping(value = "smgoods/api/getPropertyIdListByGoodsId")
   RemoteResult<List<Long>> getPropertyIdListByGoodsId(Long goodsId);
 
   /**
@@ -375,6 +417,7 @@ public interface GoodsRmote {
    * @param goodsId
    * @return
    */
+  @PostMapping(value = "smgoods/api/getPropertyListByGoodsId")
   RemoteResult<List<GoodsDetailRE>> getPropertyListByGoodsId(Long goodsId);
 
   /**
@@ -383,6 +426,7 @@ public interface GoodsRmote {
    * @param id
    * @return
    */
+  @PostMapping(value = "smgoods/api/deletePropertyAndGoodsPicById")
   RemoteResult<Integer> deletePropertyAndGoodsPicById(Long id);
 
   /**
@@ -391,6 +435,7 @@ public interface GoodsRmote {
    * @param id
    * @return
    */
+  @PostMapping(value = "smgoods/api/getGoodsIdCountById")
   RemoteResult<Integer> getGoodsIdCountById(Long id);
 
   /**
@@ -398,6 +443,7 @@ public interface GoodsRmote {
    * @param propertyDTO
    * @return
    */
+  @PostMapping(value = "smgoods/api/getCountByProperty")
   RemoteResult<Integer> getCountByProperty(PropertyDTO propertyDTO);
 
   RemoteResult<Integer> getCountByGoodsIdAndName(PropertyDTO var1);
@@ -408,6 +454,7 @@ public interface GoodsRmote {
    * @param id
    * @return
    */
+  @PostMapping(value = "smgoods/api/queryCategory")
   RemoteResult<CategoryRE> queryCategory(Long id);
 
   /**
@@ -415,6 +462,7 @@ public interface GoodsRmote {
    * @param goodsPicDTO
    * @return
    */
+  @PostMapping(value = "smgoods/api/getCountByGoodsPic")
   RemoteResult<Integer> getCountByGoodsPic(GoodsPicDTO goodsPicDTO);
 
   /**
@@ -422,12 +470,14 @@ public interface GoodsRmote {
    * @param id
    * @return
    */
+  @PostMapping(value = "smgoods/api/getPropertyById")
   RemoteResult<GoodsDetailRE> getPropertyById(Long id);
 
   /**
    * 获取商品分类
    * @return
    */
+  @PostMapping(value = "smgoods/api/getCategoryList")
   RemoteResult<List<CategoryRE>> getCategoryList();
 
   /**
@@ -435,6 +485,7 @@ public interface GoodsRmote {
    * @param categoryDTO
    * @return
    */
+  @PostMapping(value = "smgoods/api/addCategory")
   RemoteResult<Long> addCategory(CategoryDTO categoryDTO);
 
   /**
@@ -442,6 +493,7 @@ public interface GoodsRmote {
    * @param id
    * @return
    */
+  @PostMapping(value = "smgoods/api/logicDeleteCategory")
   RemoteResult<Integer> logicDeleteCategory(Long id);
 
   /**
@@ -449,6 +501,7 @@ public interface GoodsRmote {
    * @param categoryDTO
    * @return
    */
+  @PostMapping(value = "smgoods/api/updateCategory")
   RemoteResult<Integer> updateCategory(CategoryDTO categoryDTO);
 
   /**
@@ -456,5 +509,6 @@ public interface GoodsRmote {
    * @param category
    * @return
    */
+  @PostMapping(value = "smgoods/api/getCountByNameAndParentId")
   RemoteResult<Integer> getCountByNameAndParentId(CategoryDTO category);
 }
