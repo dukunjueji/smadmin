@@ -22,7 +22,6 @@ public class RedissonConfig {
 
 
 
-    @Bean
     public RedissonClient getRedisson(){
 
         Config config = new Config();

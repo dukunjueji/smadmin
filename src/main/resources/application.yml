@@ -7,10 +7,6 @@ spring:
     active: dev
   application: 
     name: micro-smadmin
-  redis:
-      host: 10.112.11.14
-      port: 6379
-      database: 0
   boot:
     admin:
       client:
