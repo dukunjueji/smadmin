@@ -45,6 +45,7 @@ import java.util.List;
  * @Version 1.0
  * @date 2018/11/22
  */
+@Component
 public final class GdsClient {
     @Autowired
     GoodsRemote goodsRemote;

@@ -35,6 +35,7 @@ import java.util.List;
  * @Version 1.0
  * @date 2018/11/22
  */
+@Component
 public final class OrderClient {
 
     private final Logger LOGGER = LoggerFactory.getLogger(OrderClient.class.getName());
