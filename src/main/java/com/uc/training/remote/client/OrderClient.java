@@ -36,7 +36,7 @@ import java.util.List;
  * @date 2018/11/22
  */
 @Component
-public final class OrderClient {
+public class OrderClient {
 
     private final Logger LOGGER = LoggerFactory.getLogger(OrderClient.class.getName());
     @Autowired

@@ -1,7 +1,10 @@
 # server config
 server: 
-  port: 8002
+  port: 8082
 # spring config
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
 spring: 
   profiles: 
     active: dev
