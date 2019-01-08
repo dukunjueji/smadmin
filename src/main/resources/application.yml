@@ -12,6 +12,14 @@ spring:
       client:
         instance:
           health-url: http://localhost:9003
+  mail:
+    host: smtp.qq.com
+    username: 2272808281@qq.com
+    password: kxvobbpdprnceaba
+    default-encoding: utf-8
+mail:
+  fromMail:
+    addr: '2272808281@qq.com'
 # admin config
 management:
   endpoints:
