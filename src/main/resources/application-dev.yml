@@ -1,15 +1,15 @@
 server:
-  port: 8002
+  port: 8082
 spring:
   redis:
-    host: 10.112.11.14
+    host: 10.112.11.26
     port: 6379
     database: 0
   rabbitmq:
       host: 10.112.11.26
       port: 5672
-      username: admin
-      password: admin
+      username: guest
+      password: guest
 eureka:
   instance:
     prefer-ip-address: true

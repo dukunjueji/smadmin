@@ -46,7 +46,7 @@ import java.util.List;
  * @date 2018/11/22
  */
 @Component
-public final class GdsClient {
+public class GdsClient {
     @Autowired
     GoodsRemote goodsRemote;
 

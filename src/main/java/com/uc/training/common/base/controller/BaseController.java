@@ -46,7 +46,7 @@ public class BaseController {
             String uid = String.valueOf(obj);
             return Long.valueOf(uid);
         } else {
-            return null;
+            return 1L;
         }
     }
 

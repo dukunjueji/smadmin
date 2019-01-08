@@ -9,20 +9,21 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * redisson配置
+ *
  * @author DK
  */
 @Configuration
 public class RedissonConfig {
 
     @Value("${spring.redis.host}")
-    private String host;
+    private String host = "10.112.11.26";
 
     @Value("${spring.redis.port}")
-    private String port;
+    private String port = "6379";
 
 
-
-    public RedissonClient getRedisson(){
+    @Bean
+    public RedissonClient getRedisson() {
 
         Config config = new Config();
         config.useSingleServer().setAddress("redis://" + host + ":" + port);
