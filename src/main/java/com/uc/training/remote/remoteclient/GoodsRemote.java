@@ -39,7 +39,7 @@ import java.util.List;
  * @version 1.0
  * @date 2019/1/5  10:58
  */
-@FeignClient(name = "provider_goods", fallback = GoodsRmoteFallback.class)
+@FeignClient(name = "provider-goods", fallback = GoodsRmoteFallback.class)
 public interface GoodsRemote {
   /**
    * 获取商品详情

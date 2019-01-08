@@ -27,7 +27,7 @@ import java.util.List;
  * @version 1.0
  * @date 2019/1/4  17:54
  */
-@FeignClient(name = "provider_goods",fallback = OrderClientFallback.class)
+@FeignClient(name = "provider-goods",fallback = OrderClientFallback.class)
 public interface OrderClientRemote {
 
     /**

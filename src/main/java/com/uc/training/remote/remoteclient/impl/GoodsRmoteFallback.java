@@ -26,7 +26,7 @@ import com.uc.training.gds.re.GoodsDetailRE;
 import com.uc.training.gds.re.GoodsRE;
 import com.uc.training.gds.re.GoodsStokeRE;
 import com.uc.training.gds.re.HotTagRE;
-import com.uc.training.remote.remoteclient.GoodsRmote;
+import com.uc.training.remote.remoteclient.GoodsRemote;
 
 import java.util.List;
 
@@ -35,9 +35,9 @@ import java.util.List;
  *
  * @author 黄宏俊（hongjun.huang01@ucarinc.com）
  * @version 1.0
- * @date 2019/1/5  11:11
+ * @date 2019/1/5  11:1
  */
-public class GoodsRmoteFallback implements GoodsRmote {
+public class GoodsRmoteFallback implements GoodsRemote {
   @Override
   public RemoteResult<List<GoodsRE>> getHotRecommend() {
     return null;

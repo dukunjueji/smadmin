@@ -29,7 +29,7 @@ import com.uc.training.gds.vo.CommentListVO;
 import com.uc.training.gds.vo.CommentReplyVO;
 import com.uc.training.gds.vo.CommentVO;
 import com.uc.training.gds.vo.GoodsStokeVO;
-import com.uc.training.remote.remoteclient.GoodsRmote;
+import com.uc.training.remote.remoteclient.GoodsRemote;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -47,7 +47,7 @@ import java.util.List;
 
 public  class GdsClient {
   @Autowired
-  GoodsRmote goodsRmote;
+  GoodsRemote goodsRemote;
 
   private final Logger logger = LoggerFactory.getLogger(GdsClient.class.getName());
 
@@ -62,7 +62,7 @@ public  class GdsClient {
     CommentDTO commentDTO = new CommentDTO();
     BeanUtils.copyProperties(commentVO, commentDTO);
     try {
-      return goodsRmote.addComment(commentDTO).getRe();
+      return goodsRemote.addComment(commentDTO).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -79,7 +79,7 @@ public  class GdsClient {
    */
   public List<CommentCountRE> getCommentCountByOrderGoodsId(Long orderGoodsId) {
     try {
-      return (List<CommentCountRE>) goodsRmote.getCommentCountByOrderGoodsId(orderGoodsId);
+      return (List<CommentCountRE>) goodsRemote.getCommentCountByOrderGoodsId(orderGoodsId);
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -98,7 +98,7 @@ public  class GdsClient {
     CommentListDTO commentListDTO = new CommentListDTO();
     BeanUtils.copyProperties(commentListVO, commentListDTO);
     try {
-      return goodsRmote.getCommentList(commentListDTO).getRe();
+      return goodsRemote.getCommentList(commentListDTO).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -117,7 +117,7 @@ public  class GdsClient {
     CommentListDTO commentListDTO = new CommentListDTO();
     BeanUtils.copyProperties(commentListVO, commentListDTO);
     try {
-      return goodsRmote.getCountBySroce(commentListDTO).getRe();
+      return goodsRemote.getCountBySroce(commentListDTO).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -136,7 +136,7 @@ public  class GdsClient {
     CommentListDTO commentListDTO = new CommentListDTO();
     BeanUtils.copyProperties(commentListVO, commentListDTO);
     try {
-      return goodsRmote.getCommentCountAndAvg(commentListDTO).getRe();
+      return goodsRemote.getCommentCountAndAvg(commentListDTO).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -155,7 +155,7 @@ public  class GdsClient {
     CommentDTO commentDTO = new CommentDTO();
     BeanUtils.copyProperties(commentVO, commentDTO);
     try {
-      return goodsRmote.editCommentById( commentDTO).getRe();
+      return goodsRemote.editCommentById( commentDTO).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -172,7 +172,7 @@ public  class GdsClient {
    */
   public List<CommentPicRE> getCommentPicByCommentId(Long commentId) {
     try {
-      return goodsRmote.getCommentPicByCommentId(commentId).getRe();
+      return goodsRemote.getCommentPicByCommentId(commentId).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -189,7 +189,7 @@ public  class GdsClient {
    */
   public String getAdminReplyContent(Long commentId) {
     try {
-      return (String) goodsRmote.getAdminReplyContent( commentId).getRe();
+      return (String) goodsRemote.getAdminReplyContent( commentId).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -208,7 +208,7 @@ public  class GdsClient {
     CommentReplyDTO commentReplyDTO = new CommentReplyDTO();
     BeanUtils.copyProperties(commentReplyVO, commentReplyDTO);
     try {
-      return (CommentDetailRE) goodsRmote.getCommentDetailByCommentId( commentReplyDTO).getRe();
+      return (CommentDetailRE) goodsRemote.getCommentDetailByCommentId( commentReplyDTO).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -227,7 +227,7 @@ public  class GdsClient {
     CommentReplyModelDTO commentReplyModelDTO = new CommentReplyModelDTO();
     BeanUtils.copyProperties(commentReplyVO, commentReplyModelDTO);
     try {
-      return (Long) goodsRmote.insertCommentReply( commentReplyModelDTO).getRe();
+      return (Long) goodsRemote.insertCommentReply( commentReplyModelDTO).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -246,7 +246,7 @@ public  class GdsClient {
     CommentReplyModelDTO commentReplyModelDTO = new CommentReplyModelDTO();
     BeanUtils.copyProperties(commentReplyVO, commentReplyModelDTO);
     try {
-      return (Integer) goodsRmote.editCommentReply( commentReplyModelDTO).getRe();
+      return (Integer) goodsRemote.editCommentReply( commentReplyModelDTO).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -265,7 +265,7 @@ public  class GdsClient {
     CommentReplyDTO commentReplyDTO = new CommentReplyDTO();
     BeanUtils.copyProperties(commentReplyVO, commentReplyDTO);
     try {
-      return (Integer) goodsRmote.deleteCommentReplyById( commentReplyDTO).getRe();
+      return (Integer) goodsRemote.deleteCommentReplyById( commentReplyDTO).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -278,7 +278,7 @@ public  class GdsClient {
    */
   public List<GoodsRE> getHotRecommend() {
     try {
-      return (List<GoodsRE>) goodsRmote.getHotRecommend();
+      return (List<GoodsRE>) goodsRemote.getHotRecommend();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -291,7 +291,7 @@ public  class GdsClient {
    */
   public PageVO<GoodsRE> getGoodsPageByCategory(GoodsListDTO goodsListDTO) {
     try {
-      return (PageVO<GoodsRE>) goodsRmote.getGoodsPageByCategory( goodsListDTO).getRe();
+      return (PageVO<GoodsRE>) goodsRemote.getGoodsPageByCategory( goodsListDTO).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -304,7 +304,7 @@ public  class GdsClient {
    */
   public GoodsDetailRE getGoodsDetailByPropertyId(Long propertyId) {
     try {
-      return (GoodsDetailRE) goodsRmote.getGoodsDetailByPropertyId( propertyId).getRe();
+      return (GoodsDetailRE) goodsRemote.getGoodsDetailByPropertyId( propertyId).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -317,7 +317,7 @@ public  class GdsClient {
    */
   public List<GoodsDetailRE> getGoodsDetailByGoodsId(Long goodsId) {
     try {
-      return (List<GoodsDetailRE>) goodsRmote.getGoodsDetailByGoodsId( goodsId).getRe();
+      return (List<GoodsDetailRE>) goodsRemote.getGoodsDetailByGoodsId( goodsId).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -330,7 +330,7 @@ public  class GdsClient {
    */
   public List<GoodsDetailRE> getGoodsDetailByPropertyIds(List<Long> propertyIds) {
     try {
-      return (List<GoodsDetailRE>) goodsRmote.getGoodsDetailByPropertyIds( propertyIds).getRe();
+      return (List<GoodsDetailRE>) goodsRemote.getGoodsDetailByPropertyIds( propertyIds).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -343,7 +343,7 @@ public  class GdsClient {
    */
   public PageVO<GoodsRE> searchByGoodsName(GoodsListDTO goodsListDTO) {
     try {
-      return (PageVO<GoodsRE>) goodsRmote.searchByGoodsName( goodsListDTO).getRe();
+      return (PageVO<GoodsRE>) goodsRemote.searchByGoodsName( goodsListDTO).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -356,7 +356,7 @@ public  class GdsClient {
    */
   public List<HotTagRE> selectHotTag() {
     try {
-      return (List<HotTagRE>) goodsRmote.selectHotTag().getRe();
+      return (List<HotTagRE>) goodsRemote.selectHotTag().getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -372,7 +372,7 @@ public  class GdsClient {
     GoodsAndPropertyDTO goodsAndPropertyDTO = new GoodsAndPropertyDTO();
     BeanUtils.copyProperties(goodsStokeVO, goodsAndPropertyDTO);
     try {
-      return (GoodsStokeRE) goodsRmote.selectGoodsStatus( goodsAndPropertyDTO).getRe();
+      return (GoodsStokeRE) goodsRemote.selectGoodsStatus( goodsAndPropertyDTO).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -387,7 +387,7 @@ public  class GdsClient {
     GoodsAndPropertyDTO goodsAndPropertyDTO = new GoodsAndPropertyDTO();
     BeanUtils.copyProperties(goodsStokeVO, goodsAndPropertyDTO);
     try {
-      return (Integer) goodsRmote.updateAndDeductStoke( goodsAndPropertyDTO).getRe();
+      return (Integer) goodsRemote.updateAndDeductStoke( goodsAndPropertyDTO).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -401,7 +401,7 @@ public  class GdsClient {
    */
   public List<AdminGoodsRE> getAdminGoodsList(GoodsListDTO goodsListDTO) {
     try {
-      return (List<AdminGoodsRE>) goodsRmote.getAdminGoodsList( goodsListDTO).getRe();
+      return (List<AdminGoodsRE>) goodsRemote.getAdminGoodsList( goodsListDTO).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -414,7 +414,7 @@ public  class GdsClient {
    */
   public Integer adminUpdateGoods(GoodsDTO adminUpdateGoodsDTO) {
     try {
-      return (Integer) goodsRmote.adminUpdateGoods( adminUpdateGoodsDTO).getRe();
+      return (Integer) goodsRemote.adminUpdateGoods( adminUpdateGoodsDTO).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -427,7 +427,7 @@ public  class GdsClient {
    */
   public Long adminInsertGoods(GoodsDTO goods) {
     try {
-      return (Long) goodsRmote.adminInsertGoods( goods).getRe();
+      return (Long) goodsRemote.adminInsertGoods( goods).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -440,7 +440,7 @@ public  class GdsClient {
    */
   public Integer logicDeleteGoods(Long id) {
     try {
-      return (Integer) goodsRmote.logicDeleteGoods( id).getRe();
+      return (Integer) goodsRemote.logicDeleteGoods( id).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -453,7 +453,7 @@ public  class GdsClient {
    */
   public Integer updateSales(GoodsAndPropertyDTO goodsAndPropertyDTO) {
     try {
-      return (Integer) goodsRmote.updateSales( goodsAndPropertyDTO).getRe();
+      return (Integer) goodsRemote.updateSales( goodsAndPropertyDTO).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -466,7 +466,7 @@ public  class GdsClient {
    */
   public Long getAdminGoodsListCount(GoodsListDTO GoodsListDTO) {
     try {
-      return (Long) goodsRmote.getAdminGoodsListCount( GoodsListDTO).getRe();
+      return (Long) goodsRemote.getAdminGoodsListCount( GoodsListDTO).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -479,7 +479,7 @@ public  class GdsClient {
    */
   public Integer pullOnGoods(GoodsDTO goodsDTO) {
     try {
-      return (Integer) goodsRmote.pullOnGoods(goodsDTO).getRe();
+      return (Integer) goodsRemote.pullOnGoods(goodsDTO).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -492,7 +492,7 @@ public  class GdsClient {
    */
   public Integer pullOffGoods(GoodsDTO goodsDTO) {
     try {
-      return (Integer) goodsRmote.pullOffGoods( goodsDTO).getRe();
+      return (Integer) goodsRemote.pullOffGoods( goodsDTO).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -506,7 +506,7 @@ public  class GdsClient {
    */
   public PageVO<HotTagRE> getAllHotTagList(AdminHotTagListDTO adminHotTagListDTO) {
     try {
-      return (PageVO<HotTagRE>) goodsRmote.getAllHotTagList( adminHotTagListDTO).getRe();
+      return (PageVO<HotTagRE>) goodsRemote.getAllHotTagList( adminHotTagListDTO).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -519,7 +519,7 @@ public  class GdsClient {
    */
   public Integer updateHotTag(HotTagDTO hotTagDTO) {
     try {
-      return (Integer) goodsRmote.updateHotTag( hotTagDTO).getRe();
+      return (Integer) goodsRemote.updateHotTag( hotTagDTO).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -532,7 +532,7 @@ public  class GdsClient {
    */
   public Integer deleteHotTagById(Long id) {
     try {
-      return (Integer) goodsRmote.deleteHotTagById( id).getRe();
+      return (Integer) goodsRemote.deleteHotTagById( id).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -545,7 +545,7 @@ public  class GdsClient {
    */
   public Long insertHotTag(HotTagDTO hotTagDTO) {
     try {
-      return (Long) goodsRmote.insertHotTag( hotTagDTO).getRe();
+      return (Long) goodsRemote.insertHotTag( hotTagDTO).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -558,7 +558,7 @@ public  class GdsClient {
    */
   public Long insertGoodsPic(GoodsPicDTO goodsPic) {
     try {
-      return (Long) goodsRmote.insertGoodsPic( goodsPic).getRe();
+      return (Long) goodsRemote.insertGoodsPic( goodsPic).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -571,7 +571,7 @@ public  class GdsClient {
    */
   public Integer updateGoodsPic(GoodsPicDTO goodsPic) {
     try {
-      return (Integer) goodsRmote.updateGoodsPic( goodsPic).getRe();
+      return (Integer) goodsRemote.updateGoodsPic( goodsPic).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -584,7 +584,7 @@ public  class GdsClient {
    */
   public List<AdminGoodsPicRE> getGoodsPicListByPropertyId(Long propertyId) {
     try {
-      return (List<AdminGoodsPicRE>) goodsRmote.getGoodsPicListByPropertyId( propertyId).getRe();
+      return (List<AdminGoodsPicRE>) goodsRemote.getGoodsPicListByPropertyId( propertyId).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -597,7 +597,7 @@ public  class GdsClient {
    */
   public Integer deleteGoodsPicById(Long id) {
     try {
-      return (Integer) goodsRmote.deleteGoodsPicById( id).getRe();
+      return (Integer) goodsRemote.deleteGoodsPicById( id).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -610,7 +610,7 @@ public  class GdsClient {
    */
   public Integer deleteGoodsPicByPropertyId(Long propertyId) {
     try {
-      return (Integer) goodsRmote.deleteGoodsPicByPropertyId( propertyId).getRe();
+      return (Integer) goodsRemote.deleteGoodsPicByPropertyId( propertyId).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -623,7 +623,7 @@ public  class GdsClient {
    */
   public Integer getPropertyIdCountById(Long id) {
     try {
-      return (Integer) goodsRmote.getPropertyIdCountById( id).getRe();
+      return (Integer) goodsRemote.getPropertyIdCountById( id).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -636,7 +636,7 @@ public  class GdsClient {
    */
   public Long getPropertyIdById(Long id) {
     try {
-      return (Long) goodsRmote.getPropertyIdById( id).getRe();
+      return (Long) goodsRemote.getPropertyIdById( id).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -649,7 +649,7 @@ public  class GdsClient {
    */
   public Long insertProperty(PropertyDTO property) {
     try {
-      return (Long) goodsRmote.insertProperty( property).getRe();
+      return (Long) goodsRemote.insertProperty( property).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -662,7 +662,7 @@ public  class GdsClient {
    */
   public Integer updateProperty(PropertyDTO property) {
     try {
-      return (Integer) goodsRmote.updateProperty( property).getRe();
+      return (Integer) goodsRemote.updateProperty( property).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -675,7 +675,7 @@ public  class GdsClient {
    */
   public List<Long> getPropertyIdListByGoodsId(Long goodsId) {
     try {
-      return (List<Long>) goodsRmote.getPropertyIdListByGoodsId( goodsId).getRe();
+      return (List<Long>) goodsRemote.getPropertyIdListByGoodsId( goodsId).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -688,7 +688,7 @@ public  class GdsClient {
    */
   public List<GoodsDetailRE> getPropertyListByGoodsId(Long goodsId) {
     try {
-      return (List<GoodsDetailRE>) goodsRmote.getPropertyListByGoodsId( goodsId).getRe();
+      return (List<GoodsDetailRE>) goodsRemote.getPropertyListByGoodsId( goodsId).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -701,7 +701,7 @@ public  class GdsClient {
    */
   public CategoryRE queryCategory(Long id) {
     try {
-      return (CategoryRE) goodsRmote.queryCategory( id).getRe();
+      return (CategoryRE) goodsRemote.queryCategory( id).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -714,7 +714,7 @@ public  class GdsClient {
    */
   public Integer getCountByGoodsPic(GoodsPicDTO goodsPic) {
     try {
-      return (Integer) goodsRmote.getCountByGoodsPic( goodsPic).getRe();
+      return (Integer) goodsRemote.getCountByGoodsPic( goodsPic).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -727,7 +727,7 @@ public  class GdsClient {
    */
   public GoodsRE getGoodsById(Long id) {
     try {
-      return (GoodsRE) goodsRmote.getGoodsById( id).getRe();
+      return (GoodsRE) goodsRemote.getGoodsById( id).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -740,7 +740,7 @@ public  class GdsClient {
    */
   public GoodsDetailRE getPropertyById(Long id) {
     try {
-      return (GoodsDetailRE) goodsRmote.getPropertyById( id).getRe();
+      return (GoodsDetailRE) goodsRemote.getPropertyById( id).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -752,7 +752,7 @@ public  class GdsClient {
    */
   public List<CategoryRE> getCategoryList() {
     try {
-      return (List<CategoryRE>) goodsRmote.getCategoryList().getRe();
+      return (List<CategoryRE>) goodsRemote.getCategoryList().getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -765,7 +765,7 @@ public  class GdsClient {
    */
   public Long addCategory(CategoryDTO category) {
     try {
-      return (Long) goodsRmote.addCategory( category).getRe();
+      return (Long) goodsRemote.addCategory( category).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -778,7 +778,7 @@ public  class GdsClient {
    */
   public Integer logicDeleteCategory(Long id) {
     try {
-      return (Integer) goodsRmote.logicDeleteCategory( id).getRe();
+      return (Integer) goodsRemote.logicDeleteCategory( id).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -791,7 +791,7 @@ public  class GdsClient {
    */
   public Integer updateCategory(CategoryDTO category) {
     try {
-      return (Integer) goodsRmote.updateCategory( category).getRe();
+      return (Integer) goodsRemote.updateCategory( category).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -804,7 +804,7 @@ public  class GdsClient {
    */
   public Integer getCountByNameAndParentId(CategoryDTO category) {
     try {
-      return (Integer) goodsRmote.getCountByNameAndParentId( category).getRe();
+      return (Integer) goodsRemote.getCountByNameAndParentId( category).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
@@ -817,7 +817,7 @@ public  class GdsClient {
    */
   public Integer getCountByProperty(PropertyDTO property) {
     try {
-      return (Integer) goodsRmote.getCountByProperty( property).getRe();
+      return (Integer) goodsRemote.getCountByProperty( property).getRe();
     } catch (ClassCastException e) {
       logger.error("类型转换异常");
       logger.error(e.getMessage());
