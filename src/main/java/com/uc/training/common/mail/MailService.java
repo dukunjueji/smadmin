@@ -1,5 +1,7 @@
 package com.uc.training.common.mail;
 
+import com.uc.training.common.mail.dto.MailMessage;
+
 /**
  * 版权声明： Copyright (c) 2008 ucarinc. All Rights Reserved.
  *
@@ -10,9 +12,7 @@ package com.uc.training.common.mail;
 public interface MailService {
     /**
      * 发送邮件
-     * @param to
-     * @param subject
-     * @param content
+     * @param mailMessage
      */
-    void sendSimpleMail(String to, String subject, String content);
+    void sendSimpleMail(MailMessage mailMessage);
 }
