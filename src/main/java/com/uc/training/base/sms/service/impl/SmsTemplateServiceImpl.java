@@ -3,7 +3,6 @@ package com.uc.training.base.sms.service.impl;
 import com.uc.training.base.sms.dto.SmsDTO;
 import com.uc.training.base.sms.dto.SmsTemplateDTO;
 import com.uc.training.base.sms.re.SmsTemplateRE;
-import com.uc.training.base.sms.service.SmsService;
 import com.uc.training.base.sms.service.SmsTemplateService;
 import com.uc.training.base.sms.vo.GenerateSmsVO;
 import com.uc.training.base.sms.vo.SmsTemplateListVO;
@@ -11,14 +10,14 @@ import com.uc.training.base.sms.vo.SmsTemplateVO;
 import com.uc.training.base.sms.vo.SmsVO;
 import com.uc.training.common.enums.SmsStatusEnum;
 import com.uc.training.common.enums.SmsTypeEnum;
+import com.uc.training.common.mail.MailService;
+import com.uc.training.common.mail.dto.MailMessage;
 import com.uc.training.common.redis.RedisComponent;
-import com.uc.training.common.utils.InjectionUtils;
 import com.uc.training.common.utils.TelCodeUtil;
 import com.uc.training.remote.remoteclient.BaseClient;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailMessage;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,7 +32,7 @@ import java.util.concurrent.TimeUnit;
 public class SmsTemplateServiceImpl implements SmsTemplateService {
 
     @Autowired
-    private SmsService smsService;
+    private MailService mailService;
     @Autowired
     private BaseClient baseClient;
 
@@ -150,8 +149,6 @@ public class SmsTemplateServiceImpl implements SmsTemplateService {
     @Override
     public Integer generateSms(GenerateSmsVO generateSmsVO) {
 
-        //this.smsService = InjectionUtils.getInjectionInstance(SmsService.class);
-
         if (SmsTypeEnum.CHANGE_PASSWORD.getCode().equals(generateSmsVO.getCode()) ||
                 SmsTypeEnum.FORGET_PASSWORD.getCode().equals(generateSmsVO.getCode()) ||
                 SmsTypeEnum.REGISTER.getCode().equals(generateSmsVO.getCode())) {
@@ -184,17 +181,14 @@ public class SmsTemplateServiceImpl implements SmsTemplateService {
         String content = baseClient.generateSms(smsTemplateDTO).getRe();
         //邮件标题
         generateSmsVO.setEmailTitle(smsTemplateRE.get(0).getTitle());
-        // 发送短信
-        /*if (generateSmsVO.getEmil() != null) {
+        //发送邮件
+        if (generateSmsVO.getEmil() != null) {
             MailMessage mailMessage = new MailMessage();
-            mailMessage.setMailAddress(generateSmsVO.getEmil());//邮件地址
-            mailMessage.setContent(content); //邮件内容
-            mailMessage.setTitle(generateSmsVO.getEmailTitle()); //邮件标题
-            mailMessage.setMetaType("text"); //邮件类型(html或者text)
-            mailMessage.setSaveToDB(false); //是否保存到数据库
-            mailMessage.setChannel(2); //通道(专车：1通道；租车：1通道；买买车：2通道)
-            mailService.sendMessage(mailMessage);
-        }*/
+            mailMessage.setMailAddress(generateSmsVO.getEmil());
+            mailMessage.setTitle(generateSmsVO.getEmailTitle());
+            mailMessage.setContent(content);
+            mailService.sendSimpleMail(mailMessage);
+        }
         System.out.println(generateSmsVO.getTelephone() + ": " +content);
 
 
