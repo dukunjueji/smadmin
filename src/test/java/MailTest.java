@@ -1,5 +1,5 @@
 import com.uc.training.SmadminApplication;
-import com.smgoods.common.mail.MailService;
+import com.uc.training.common.mail.MailService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

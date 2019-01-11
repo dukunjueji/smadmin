@@ -1,6 +1,6 @@
 package com.uc.training.base.bd.vo;
 
-import com.smgoods.common.base.model.BaseModel;
+import com.uc.training.common.base.model.BaseModel;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

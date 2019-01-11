@@ -1,8 +1,8 @@
 package com.uc.training.gds.controller;
 
-import com.smgoods.common.base.controller.BaseController;
+import com.uc.training.common.base.controller.BaseController;
 
-import com.smgoods.common.vo.Result;
+import com.uc.training.common.vo.Result;
 import com.uc.training.gds.dto.GoodsPicDTO;
 import com.uc.training.gds.re.AdminGoodsPicRE;
 import com.uc.training.gds.service.GoodsPicService;

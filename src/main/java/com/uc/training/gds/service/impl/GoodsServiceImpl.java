@@ -1,7 +1,7 @@
 package com.uc.training.gds.service.impl;
 
 import com.uc.training.base.bd.service.MemberGradeService;
-import com.smgoods.common.vo.PageVO;
+import com.uc.training.common.vo.PageVO;
 import com.uc.training.gds.dto.GoodsAndPropertyDTO;
 import com.uc.training.gds.dto.GoodsDTO;
 import com.uc.training.gds.dto.GoodsListDTO;

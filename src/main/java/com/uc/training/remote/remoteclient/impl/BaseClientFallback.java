@@ -28,7 +28,7 @@ import com.uc.training.base.sys.dto.SysUserRoleDTO;
 import com.uc.training.base.sys.re.SysMenuRE;
 import com.uc.training.base.sys.re.SysRoleRE;
 import com.uc.training.base.sys.re.SysUserRE;
-import com.smgoods.common.vo.RemoteResult;
+import com.uc.training.common.vo.RemoteResult;
 import com.uc.training.remote.remoteclient.BaseClient;
 import org.springframework.stereotype.Component;
 

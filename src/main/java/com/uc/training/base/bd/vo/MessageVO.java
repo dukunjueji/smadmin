@@ -1,6 +1,6 @@
 package com.uc.training.base.bd.vo;
 
-import com.smgoods.common.base.model.BaseDomain;
+import com.uc.training.common.base.model.BaseDomain;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 

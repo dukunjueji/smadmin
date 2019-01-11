@@ -1,7 +1,7 @@
 package com.uc.training.base.sys.controller;
 
-import com.smgoods.common.base.controller.BaseController;
-import com.smgoods.common.vo.Result;
+import com.uc.training.common.base.controller.BaseController;
+import com.uc.training.common.vo.Result;
 import com.uc.training.ord.re.OrderSaleRE;
 import com.uc.training.ord.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;

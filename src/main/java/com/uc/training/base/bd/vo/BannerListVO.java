@@ -1,6 +1,6 @@
 package com.uc.training.base.bd.vo;
 
-import com.smgoods.common.bean.PageQuery;
+import com.uc.training.common.bean.PageQuery;
 
 import java.io.Serializable;
 

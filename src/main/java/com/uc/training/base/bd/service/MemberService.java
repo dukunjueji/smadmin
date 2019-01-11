@@ -6,7 +6,7 @@ import com.uc.training.base.bd.vo.LoginVO;
 import com.uc.training.base.bd.vo.MemberInfoVO;
 import com.uc.training.base.bd.vo.MemberListVO;
 import com.uc.training.base.bd.vo.MemberVO;
-import com.smgoods.common.mq.vo.MqVO;
+import com.uc.training.common.mq.vo.MqVO;
 import com.uc.training.ord.re.OrderConfirmRE;
 
 import java.util.List;

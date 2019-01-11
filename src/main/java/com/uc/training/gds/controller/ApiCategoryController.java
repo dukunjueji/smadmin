@@ -1,8 +1,8 @@
 package com.uc.training.gds.controller;
 
-import com.smgoods.common.annotation.AccessLogin;
-import com.smgoods.common.base.controller.BaseController;
-import com.smgoods.common.vo.Result;
+import com.uc.training.common.annotation.AccessLogin;
+import com.uc.training.common.base.controller.BaseController;
+import com.uc.training.common.vo.Result;
 import com.uc.training.gds.re.CategoryRE;
 import com.uc.training.gds.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;

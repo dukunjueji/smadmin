@@ -1,8 +1,8 @@
 package com.uc.training.gds.controller;
 
-import com.smgoods.common.base.controller.BaseController;
+import com.uc.training.common.base.controller.BaseController;
 import com.smgoods.enums.GoodsStatusEnum;
-import com.smgoods.common.vo.Result;
+import com.uc.training.common.vo.Result;
 import com.uc.training.gds.dto.PropertyDTO;
 import com.uc.training.gds.re.GoodsDetailRE;
 import com.uc.training.gds.service.GoodsService;

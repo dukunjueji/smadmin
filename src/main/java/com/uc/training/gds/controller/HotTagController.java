@@ -1,7 +1,7 @@
 package com.uc.training.gds.controller;
 
-import com.smgoods.common.annotation.AccessLogin;
-import com.smgoods.common.vo.Result;
+import com.uc.training.common.annotation.AccessLogin;
+import com.uc.training.common.vo.Result;
 import com.uc.training.gds.re.HotTagRE;
 import com.uc.training.gds.service.HotTagService;
 import org.springframework.beans.factory.annotation.Autowired;

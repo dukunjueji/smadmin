@@ -1,9 +1,9 @@
 package com.uc.training.gds.controller;
 
-import com.smgoods.common.base.controller.BaseController;
+import com.uc.training.common.base.controller.BaseController;
 import com.smgoods.enums.CommentEnum;
 import com.smgoods.enums.CommentReplyEnum;
-import com.smgoods.common.vo.Result;
+import com.uc.training.common.vo.Result;
 import com.uc.training.gds.re.CommentAvgRE;
 import com.uc.training.gds.service.CommentReplyService;
 import com.uc.training.gds.service.CommentService;

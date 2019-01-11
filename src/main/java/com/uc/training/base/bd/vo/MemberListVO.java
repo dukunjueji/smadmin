@@ -1,6 +1,6 @@
 package com.uc.training.base.bd.vo;
 
-import com.smgoods.common.vo.PageVO;
+import com.uc.training.common.vo.PageVO;
 
 /**
  * @Author: 余旭东
