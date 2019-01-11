@@ -31,18 +31,20 @@ public class RechargeHistoryConsumer {
         //this.memberRechargeHistoryService = InjectionUtils.getInjectionInstance(MemberRechargeHistoryService.class);
         MemberRechargeHistoryModelVO memberRechargeHistory = mqVO.getMemberRechargeHistory();
         //判断消息实体是否为空
-        if (memberRechargeHistory != null) {
+        memberRechargeHistoryService.insertMemberRechargeHistory(memberRechargeHistory);
+        channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
+        /*if (memberRechargeHistory != null) {
             if (memberRechargeHistoryService.insertMemberRechargeHistory(memberRechargeHistory) > 0) {
-                /**
+                *//**
                  * 手动发送确认消息
-                 */
+                 *//*
                 channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
             } else {
-                /**
+                *//**
                  * 失败重新投递消息
-                 */
+                 *//*
                 channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, true);
             }
-        }
+        }*/
     }
 }

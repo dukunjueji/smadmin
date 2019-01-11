@@ -34,17 +34,19 @@ public class IntegralMqConsumer {
             integralVO.setMemberId(mqVO.getMemberId());
             integralVO.setType(mqVO.getIntegralType());
             integralVO.setPurchaseValue(mqVO.getPurchaseValue());
-            if (this.integralDetailService.saveIntegralDetail(integralVO) > 0) {
-                /**
+            this.integralDetailService.saveIntegralDetail(integralVO);
+            channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
+            /*if (this.integralDetailService.saveIntegralDetail(integralVO) > 0) {
+                *//**
                  * 手动发送确认消息
-                 */
+                 *//*
                 channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
             } else {
-                /**
+                *//**
                  * 失败重新投递消息
-                 */
+                 *//*
                 channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, true);
-            }
+            }*/
         }
     }
 }

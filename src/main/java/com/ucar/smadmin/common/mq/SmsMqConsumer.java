@@ -31,18 +31,20 @@ public class SmsMqConsumer {
     public void handlerMessage(MqVO mqVO, Channel channel, Message message) throws IOException {
         //this.smsTemplateService = InjectionUtils.getInjectionInstance(SmsTemplateService.class);
         GenerateSmsVO generateSmsVO = mqVO.getGenerateSmsVO();
+        channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
+        this.smsTemplateService.generateSms(generateSmsVO);
         //判断消息实体是否为空
-        if (generateSmsVO != null) {
+        /*if (generateSmsVO != null) {
             Integer status = this.smsTemplateService.generateSms(generateSmsVO);
             if (status > 0) {
-                /**
+                *//**
                  * 手动发送确认消息
-                 */
+                 *//*
                 channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
             } else {
-                /**
+                *//**
                  * 失败重新投递消息
-                 */
+                 *//*
                 channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, true);
             }
             if (status == SmsStatusEnum.FAIL.getKey()) {
@@ -52,6 +54,6 @@ public class SmsMqConsumer {
             } else if (status == SmsStatusEnum.SEND.getKey()) {
                 System.out.println(SmsStatusEnum.SEND.getValue());
             }
-        }
+        }*/
     }
 }

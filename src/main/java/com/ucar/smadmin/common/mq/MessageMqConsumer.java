@@ -49,17 +49,18 @@ public class MessageMqConsumer {
             mes.setMemberId(mqVO.getMemberId());
             mes.setContent(content);
             messageService.insertMessage(mes);
-            if (messageService.insertMessage(mes) > 0) {
-                /**
+            channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, true);
+            /*if (messageService.insertMessage(mes) > 0) {
+                *//**
                  * 手动发送确认消息
-                 */
+                 *//*
                 channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
             } else {
-                /**
+                *//**
                  * 失败重新投递消息
-                 */
+                 *//*
                 channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, true);
-            }
+            }*/
         }
         //判断消费类型是否为充值消息
         if (mqVO.getRechargeValue() != null) {
@@ -73,17 +74,19 @@ public class MessageMqConsumer {
             MessageVO mes = new MessageVO();
             mes.setMemberId(mqVO.getMemberId());
             mes.setContent(content);
-            if (messageService.insertMessage(mes) > 0) {
-                /**
+            messageService.insertMessage(mes);
+            channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
+            /*if (messageService.insertMessage(mes) > 0) {
+                *//**
                  * 手动发送确认消息
-                 */
+                 *//*
                 channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
             } else {
-                /**
+                *//**
                  * 失败重新投递消息
-                 */
+                 *//*
                 channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, true);
-            }
+            }*/
         }
     }
 }

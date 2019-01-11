@@ -35,17 +35,19 @@ public class GrowthMqConsumer {
             growthVO.setMemberId(mqVO.getMemberId());
             growthVO.setType(mqVO.getGrowthType());
             growthVO.setPurchaseValue(mqVO.getPurchaseValue());
-            if (growthDetailService.saveGrowthDetail(growthVO) > 0) {
-                /**
+            growthDetailService.saveGrowthDetail(growthVO);
+            channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
+            /*if (growthDetailService.saveGrowthDetail(growthVO) > 0) {
+                *//**
                  * 手动发送确认消息
-                 */
+                 *//*
                 channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
             } else {
-                /**
+                *//**
                  * 失败重新投递消息
-                 */
+                 *//*
                 channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, true);
-            }
+            }*/
         }
     }
 }
