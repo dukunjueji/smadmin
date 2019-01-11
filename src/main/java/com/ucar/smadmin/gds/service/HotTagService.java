@@ -1,0 +1,52 @@
+package com.ucar.smadmin.gds.service;
+
+import com.ucar.smadmin.common.vo.PageVO;
+import com.ucar.smadmin.gds.dto.AdminHotTagListDTO;
+import com.ucar.smadmin.gds.dto.HotTagDTO;
+import com.ucar.smadmin.gds.re.HotTagRE;
+
+import java.util.List;
+
+/**
+ * 版权声明： Copyright (c) 2008 ucarinc. All Rights Reserved.
+ *
+ * @author 何麒（qi.he@ucarinc.com）
+ * @Version 1.0
+ * @date 2018/10/24
+ */
+public interface HotTagService {
+    /**
+     * 获取热门标签
+     * @return
+     */
+    List<HotTagRE> selectHotTag();
+
+
+    /**
+     * 后台获取商品标签
+     * @param adminHotTagListDTO
+     * @return
+     */
+    PageVO<HotTagRE> getAllHotTagList(AdminHotTagListDTO adminHotTagListDTO);
+
+    /**
+     * 后台更新商品标签
+     * @param hotTag
+     * @return
+     */
+    Integer updateHotTag(HotTagDTO hotTag);
+
+    /**
+     * 后台根据主键id删除商品标签
+     * @param id
+     * @return
+     */
+    Integer deleteHotTagById(Long id);
+
+    /**
+     * 后台新增商品标签
+     * @param hotTag
+     * @return
+     */
+    Long insertHotTag(HotTagDTO hotTag);
+}
