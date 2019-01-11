@@ -1,5 +1,5 @@
-import com.uc.training.SmadminApplication;
-import com.uc.training.common.mail.MailService;
+import com.ucar.smadmin.SmadminApplication;
+import com.ucar.smadmin.common.mail.MailService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
