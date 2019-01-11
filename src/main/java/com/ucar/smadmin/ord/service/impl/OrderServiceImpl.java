@@ -393,9 +393,9 @@ public class OrderServiceImpl implements OrderService {
         order.setIsDelete(0);
         //生成订单编号
         order.setOrderNum(UUIDUtil.getUuidByType(UUIDTypeEnum.ORDERID.getType()));
-        Long oderId = orderClient.insertOrder(order);
-        if (oderId != null) {
-            order.setId(oderId);
+        Long orderId = orderClient.insertOrder(order);
+        if (orderId != null) {
+            order.setId(orderId);
         } else {
             return list;
         }
@@ -404,7 +404,7 @@ public class OrderServiceImpl implements OrderService {
         for (int i = 0; i < orderInfoListNow.size() - ORDER_INFO_LIST; i++) {
             //插入订单商品信息表
             orderGoods = new OrderGoodsVO();
-            orderGoods.setOrderId(oderId);
+            orderGoods.setOrderId(orderId);
             orderGoods.setGoodsId(orderInfoListNow.get(i).getGoodsId());
             orderGoods.setPayPrice(orderInfoListNow.get(i).getPayPrice());
             orderGoods.setGoodsPropertyId(orderInfoListNow.get(i).getPropertyId());
