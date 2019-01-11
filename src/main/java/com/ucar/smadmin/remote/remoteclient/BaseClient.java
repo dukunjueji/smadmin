@@ -640,7 +640,7 @@ public interface BaseClient {
      * @return
      */
     @PostMapping(value = "smbase/api/getSysUserById")
-    RemoteResult<SysUserRE> getSysUserById(@RequestParam Long id);
+    RemoteResult<SysUserRE> getSysUserById(@RequestBody Long id);
 
     /**
      * 修改密码
