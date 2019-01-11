@@ -166,6 +166,7 @@ public class SmsTemplateServiceImpl implements SmsTemplateService {
         SmsTemplateListVO smsTemplateListVO = new SmsTemplateListVO();
         smsTemplateListVO.setCode(generateSmsVO.getCode());
         SmsTemplateDTO smsTemplateDTO = new SmsTemplateDTO();
+        smsTemplateDTO.setPageIndex(0);
         smsTemplateDTO.setCode(smsTemplateListVO.getCode());
         smsTemplateDTO.setType(smsTemplateListVO.getType());
         smsTemplateDTO.setOffset(smsTemplateListVO.getOffset());
