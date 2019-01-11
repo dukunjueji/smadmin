@@ -2,15 +2,15 @@ package com.ucar.smadmin.ord.service;
 
 
 
-import com.ucar.smadmin.ord.re.CartGoodsRE;
-import com.ucar.smadmin.ord.re.CommentRE;
-import com.ucar.smadmin.ord.re.OrdOrderGoodsRE;
-import com.ucar.smadmin.ord.re.OrderConfirmRE;
-import com.ucar.smadmin.ord.re.OrderGoodsDetailRE;
-import com.ucar.smadmin.ord.re.OrderInfoRE;
-import com.ucar.smadmin.ord.re.OrderRE;
-import com.ucar.smadmin.ord.re.OrderSaleRE;
-import com.ucar.smadmin.ord.re.OrderStatusRE;
+import com.ucar.smapi.ord.re.CartGoodsRE;
+import com.ucar.smapi.ord.re.CommentRE;
+import com.ucar.smapi.ord.re.OrdOrderGoodsRE;
+import com.ucar.smapi.ord.re.OrderConfirmRE;
+import com.ucar.smapi.ord.re.OrderGoodsDetailRE;
+import com.ucar.smapi.ord.re.OrderInfoRE;
+import com.ucar.smapi.ord.re.OrderRE;
+import com.ucar.smapi.ord.re.OrderSaleRE;
+import com.ucar.smapi.ord.re.OrderStatusRE;
 import com.ucar.smadmin.ord.vo.OrdCartGoodsVO;
 import com.ucar.smadmin.ord.vo.OrdGoodsVO;
 import com.ucar.smadmin.ord.vo.OrdMemberVO;

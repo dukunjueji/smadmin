@@ -1,7 +1,7 @@
 package com.ucar.smadmin.gds.service.impl;
 
-import com.ucar.smadmin.gds.dto.PropertyDTO;
-import com.ucar.smadmin.gds.re.GoodsDetailRE;
+import com.ucar.smapi.gds.dto.PropertyDTO;
+import com.ucar.smapi.gds.re.GoodsDetailRE;
 import com.ucar.smadmin.gds.service.GoodsPicService;
 import com.ucar.smadmin.gds.service.PropertyService;
 import com.ucar.smadmin.remote.client.GdsClient;

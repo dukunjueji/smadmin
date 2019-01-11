@@ -1,9 +1,9 @@
 package com.ucar.smadmin.gds.service;
 
-import com.ucar.smadmin.common.vo.PageVO;
-import com.ucar.smadmin.gds.dto.AdminHotTagListDTO;
-import com.ucar.smadmin.gds.dto.HotTagDTO;
-import com.ucar.smadmin.gds.re.HotTagRE;
+import com.ucar.smapi.common.vo.PageVO;
+import com.ucar.smapi.gds.dto.AdminHotTagListDTO;
+import com.ucar.smapi.gds.dto.HotTagDTO;
+import com.ucar.smapi.gds.re.HotTagRE;
 
 import java.util.List;
 

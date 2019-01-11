@@ -2,7 +2,7 @@ package com.ucar.smadmin.common.handler;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Joiner;
-import com.ucar.smadmin.common.vo.Result;
+import com.ucar.smapi.common.vo.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.BindException;

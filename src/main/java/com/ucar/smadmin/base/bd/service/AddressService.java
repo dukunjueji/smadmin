@@ -1,6 +1,6 @@
 package com.ucar.smadmin.base.bd.service;
 
-import com.ucar.smadmin.base.bd.re.AddressRE;
+import com.ucar.smapi.base.bd.re.AddressRE;
 import com.ucar.smadmin.base.bd.vo.AddressVO;
 
 import java.util.List;

@@ -1,7 +1,7 @@
 package com.ucar.smadmin.base.bd.service.impl;
 
-import com.ucar.smadmin.base.bd.dto.MemberGradeDTO;
-import com.ucar.smadmin.base.bd.re.MemberGradeRE;
+import com.ucar.smapi.base.bd.dto.MemberGradeDTO;
+import com.ucar.smapi.base.bd.re.MemberGradeRE;
 import com.ucar.smadmin.base.bd.service.MemberGradeService;
 import com.ucar.smadmin.base.bd.vo.MemberGradeVO;
 import com.ucar.smadmin.remote.remoteclient.BaseClient;

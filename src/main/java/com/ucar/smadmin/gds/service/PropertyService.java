@@ -1,7 +1,7 @@
 package com.ucar.smadmin.gds.service;
 
-import com.ucar.smadmin.gds.dto.PropertyDTO;
-import com.ucar.smadmin.gds.re.GoodsDetailRE;
+import com.ucar.smapi.gds.dto.PropertyDTO;
+import com.ucar.smapi.gds.re.GoodsDetailRE;
 
 import java.util.List;
 

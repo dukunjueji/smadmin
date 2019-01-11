@@ -1,7 +1,7 @@
 package com.ucar.smadmin.common.base.controller;
 
 import com.ucar.smadmin.common.constant.Constant;
-import com.ucar.smadmin.common.vo.Result;
+import com.ucar.smapi.common.vo.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;

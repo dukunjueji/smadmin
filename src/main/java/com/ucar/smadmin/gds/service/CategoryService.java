@@ -1,8 +1,8 @@
 package com.ucar.smadmin.gds.service;
 
 
-import com.ucar.smadmin.gds.dto.CategoryDTO;
-import com.ucar.smadmin.gds.re.CategoryRE;
+import com.ucar.smapi.gds.dto.CategoryDTO;
+import com.ucar.smapi.gds.re.CategoryRE;
 
 import java.util.List;
 

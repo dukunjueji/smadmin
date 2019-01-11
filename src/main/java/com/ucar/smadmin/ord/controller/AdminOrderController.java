@@ -2,9 +2,9 @@ package com.ucar.smadmin.ord.controller;
 
 import com.ucar.smadmin.common.annotation.AccessLogin;
 import com.ucar.smadmin.common.base.controller.BaseController;
-import com.ucar.smadmin.common.vo.Result;
-import com.ucar.smadmin.ord.re.OrderGoodsDetailRE;
-import com.ucar.smadmin.ord.re.OrderRE;
+import com.ucar.smapi.common.vo.Result;
+import com.ucar.smapi.ord.re.OrderGoodsDetailRE;
+import com.ucar.smapi.ord.re.OrderRE;
 import com.ucar.smadmin.ord.service.OrderService;
 import com.ucar.smadmin.ord.vo.OrdOrderVO;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,8 +2,8 @@ package com.ucar.smadmin.gds.controller;
 
 import com.ucar.smadmin.common.annotation.AccessLogin;
 import com.ucar.smadmin.common.base.controller.BaseController;
-import com.ucar.smadmin.common.vo.Result;
-import com.ucar.smadmin.gds.re.CategoryRE;
+import com.ucar.smapi.common.vo.Result;
+import com.ucar.smapi.gds.re.CategoryRE;
 import com.ucar.smadmin.gds.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

@@ -1,8 +1,8 @@
 package com.ucar.smadmin.gds.service;
 
-import com.ucar.smadmin.gds.dto.GoodsPicDTO;
-import com.ucar.smadmin.gds.re.AdminGoodsPicRE;
-import com.ucar.smadmin.gds.re.GoodsRE;
+import com.ucar.smapi.gds.dto.GoodsPicDTO;
+import com.ucar.smapi.gds.re.AdminGoodsPicRE;
+import com.ucar.smapi.gds.re.GoodsRE;
 
 import java.util.List;
 

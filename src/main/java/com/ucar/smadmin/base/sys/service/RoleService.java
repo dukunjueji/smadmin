@@ -1,6 +1,6 @@
 package com.ucar.smadmin.base.sys.service;
 
-import com.ucar.smadmin.base.sys.re.SysRoleRE;
+import com.ucar.smapi.base.sys.re.SysRoleRE;
 import com.ucar.smadmin.base.sys.vo.RoleListVO;
 import com.ucar.smadmin.base.sys.vo.RoleVO;
 

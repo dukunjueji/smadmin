@@ -1,6 +1,6 @@
 package com.ucar.smadmin.base.bd.service;
 
-import com.ucar.smadmin.base.bd.re.MemberRechargeHistoryListRE;
+import com.ucar.smapi.base.bd.re.MemberRechargeHistoryListRE;
 import com.ucar.smadmin.base.bd.vo.MemberRechargeHistoryModelVO;
 import com.ucar.smadmin.base.bd.vo.MemberRechargeHistoryVO;
 

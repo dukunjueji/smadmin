@@ -2,7 +2,7 @@ package com.ucar.smadmin.common.upload.controller;
 
 import com.ucar.smadmin.common.upload.re.UploadRE;
 import com.ucar.smadmin.common.upload.service.UploadService;
-import com.ucar.smadmin.common.vo.Result;
+import com.ucar.smapi.common.vo.Result;
 import com.ucar.smadmin.common.base.controller.BaseController;
 import com.ucar.smadmin.enums.UploadEnum;
 import org.springframework.beans.factory.annotation.Autowired;

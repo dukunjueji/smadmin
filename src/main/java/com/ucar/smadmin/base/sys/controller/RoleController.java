@@ -1,12 +1,12 @@
 package com.ucar.smadmin.base.sys.controller;
 
-import com.ucar.smadmin.base.sys.re.SysRoleRE;
+import com.ucar.smapi.base.sys.re.SysRoleRE;
 import com.ucar.smadmin.base.sys.service.RoleService;
 import com.ucar.smadmin.base.sys.vo.RoleListVO;
 import com.ucar.smadmin.base.sys.vo.RoleVO;
 import com.ucar.smadmin.common.base.controller.BaseController;
-import com.ucar.smadmin.common.vo.PageVO;
-import com.ucar.smadmin.common.vo.Result;
+import com.ucar.smapi.common.vo.PageVO;
+import com.ucar.smapi.common.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;

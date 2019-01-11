@@ -1,6 +1,6 @@
 package com.ucar.smadmin.ord.vo;
 
-import com.ucar.smadmin.common.base.model.BaseModel;
+import com.ucar.smapi.common.base.model.BaseModel;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

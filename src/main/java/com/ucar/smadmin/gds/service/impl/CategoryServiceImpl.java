@@ -1,7 +1,7 @@
 package com.ucar.smadmin.gds.service.impl;
 
-import com.ucar.smadmin.gds.dto.CategoryDTO;
-import com.ucar.smadmin.gds.re.CategoryRE;
+import com.ucar.smapi.gds.dto.CategoryDTO;
+import com.ucar.smapi.gds.re.CategoryRE;
 import com.ucar.smadmin.gds.service.CategoryService;
 import com.ucar.smadmin.remote.client.GdsClient;
 import org.springframework.beans.factory.annotation.Autowired;

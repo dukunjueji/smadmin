@@ -1,6 +1,6 @@
 package com.ucar.smadmin.gds.service;
 
-import com.ucar.smadmin.gds.re.CommentPicRE;
+import com.ucar.smapi.gds.re.CommentPicRE;
 
 import java.util.List;
 

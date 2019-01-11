@@ -1,16 +1,16 @@
 package com.ucar.smadmin.gds.controller;
 
-import com.ucar.smadmin.base.bd.re.MemberRE;
+import com.ucar.smapi.base.bd.re.MemberRE;
 import com.ucar.smadmin.base.bd.service.MemberService;
 import com.ucar.smadmin.base.bd.vo.MemberVO;
 import com.ucar.smadmin.common.annotation.AccessLogin;
 import com.ucar.smadmin.common.base.controller.BaseController;
-import com.ucar.smadmin.common.vo.Result;
+import com.ucar.smapi.common.vo.Result;
 import com.ucar.smadmin.enums.CommentReplyEnum;
 import com.ucar.smadmin.gds.service.CommentReplyService;
 import com.ucar.smadmin.gds.vo.CommentReplyInsertVO;
 import com.ucar.smadmin.gds.vo.CommentReplyVO;
-import com.ucar.smadmin.gds.re.CommentDetailRE;
+import com.ucar.smapi.gds.re.CommentDetailRE;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

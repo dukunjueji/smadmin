@@ -1,10 +1,10 @@
 package com.ucar.smadmin.gds.service;
 
-import com.ucar.smadmin.gds.re.CommentAvgRE;
-import com.ucar.smadmin.gds.re.CommentCountRE;
+import com.ucar.smapi.gds.re.CommentAvgRE;
+import com.ucar.smapi.gds.re.CommentCountRE;
 import com.ucar.smadmin.gds.vo.CommentListVO;
 import com.ucar.smadmin.gds.vo.CommentVO;
-import com.ucar.smadmin.gds.re.CommentRE;
+import com.ucar.smapi.gds.re.CommentRE;
 
 
 import java.util.List;

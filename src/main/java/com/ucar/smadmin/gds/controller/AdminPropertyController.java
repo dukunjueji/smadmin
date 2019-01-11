@@ -1,10 +1,10 @@
 package com.ucar.smadmin.gds.controller;
 
 import com.ucar.smadmin.common.base.controller.BaseController;
-import com.ucar.smadmin.common.vo.Result;
+import com.ucar.smapi.common.vo.Result;
 import com.ucar.smadmin.enums.GoodsStatusEnum;
-import com.ucar.smadmin.gds.dto.PropertyDTO;
-import com.ucar.smadmin.gds.re.GoodsDetailRE;
+import com.ucar.smapi.gds.dto.PropertyDTO;
+import com.ucar.smapi.gds.re.GoodsDetailRE;
 import com.ucar.smadmin.gds.service.GoodsService;
 import com.ucar.smadmin.gds.service.PropertyService;
 import com.ucar.smadmin.ord.service.OrderGoodsService;

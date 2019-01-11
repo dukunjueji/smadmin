@@ -8,7 +8,7 @@ import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.ucar.smadmin.common.bean.AccessToken;
+import com.ucar.smapi.common.bean.AccessToken;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Date;

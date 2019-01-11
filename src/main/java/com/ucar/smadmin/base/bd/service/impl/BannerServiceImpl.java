@@ -1,7 +1,7 @@
 package com.ucar.smadmin.base.bd.service.impl;
 
-import com.ucar.smadmin.base.bd.dto.BannerDTO;
-import com.ucar.smadmin.base.bd.re.BannerRE;
+import com.ucar.smapi.base.bd.dto.BannerDTO;
+import com.ucar.smapi.base.bd.re.BannerRE;
 import com.ucar.smadmin.base.bd.service.BannerService;
 import com.ucar.smadmin.base.bd.vo.BannerListVO;
 import com.ucar.smadmin.base.bd.vo.BannerVO;

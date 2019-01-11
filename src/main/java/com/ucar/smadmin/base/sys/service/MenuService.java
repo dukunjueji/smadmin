@@ -1,6 +1,6 @@
 package com.ucar.smadmin.base.sys.service;
 
-import com.ucar.smadmin.base.sys.re.SysMenuRE;
+import com.ucar.smapi.base.sys.re.SysMenuRE;
 import com.ucar.smadmin.base.sys.vo.MenuVO;
 
 import java.util.List;

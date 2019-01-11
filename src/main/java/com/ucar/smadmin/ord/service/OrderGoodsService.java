@@ -1,6 +1,6 @@
 package com.ucar.smadmin.ord.service;
 
-import com.ucar.smadmin.ord.re.OrderRE;
+import com.ucar.smapi.ord.re.OrderRE;
 import com.ucar.smadmin.ord.vo.OrdOrderGoodsVO;
 
 /**

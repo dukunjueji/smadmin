@@ -1,6 +1,6 @@
 package com.ucar.smadmin.ord.vo;
 
-import com.ucar.smadmin.common.base.model.BaseDomain;
+import com.ucar.smapi.common.base.model.BaseDomain;
 
 import java.io.Serializable;
 

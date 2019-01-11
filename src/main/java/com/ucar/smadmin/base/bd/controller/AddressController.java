@@ -1,11 +1,11 @@
 package com.ucar.smadmin.base.bd.controller;
 
-import com.ucar.smadmin.base.bd.re.AddressRE;
+import com.ucar.smapi.base.bd.re.AddressRE;
 import com.ucar.smadmin.base.bd.service.AddressService;
 import com.ucar.smadmin.base.bd.vo.AddressVO;
 import com.ucar.smadmin.common.base.controller.BaseController;
 import com.ucar.smadmin.common.utils.ReplaceStarUtils;
-import com.ucar.smadmin.common.vo.Result;
+import com.ucar.smapi.common.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;

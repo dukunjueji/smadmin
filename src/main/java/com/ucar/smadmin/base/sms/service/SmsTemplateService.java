@@ -1,6 +1,6 @@
 package com.ucar.smadmin.base.sms.service;
 
-import com.ucar.smadmin.base.sms.re.SmsTemplateRE;
+import com.ucar.smapi.base.sms.re.SmsTemplateRE;
 import com.ucar.smadmin.base.sms.vo.GenerateSmsVO;
 import com.ucar.smadmin.base.sms.vo.SmsTemplateListVO;
 import com.ucar.smadmin.base.sms.vo.SmsTemplateVO;

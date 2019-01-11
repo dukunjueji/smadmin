@@ -1,7 +1,7 @@
 package com.ucar.smadmin.base.bd.service.impl;
 
-import com.ucar.smadmin.base.bd.dto.MessageDTO;
-import com.ucar.smadmin.base.bd.re.MessageRE;
+import com.ucar.smapi.base.bd.dto.MessageDTO;
+import com.ucar.smapi.base.bd.re.MessageRE;
 import com.ucar.smadmin.base.bd.service.MessageService;
 import com.ucar.smadmin.base.bd.vo.MessageVO;
 import com.ucar.smadmin.remote.remoteclient.BaseClient;

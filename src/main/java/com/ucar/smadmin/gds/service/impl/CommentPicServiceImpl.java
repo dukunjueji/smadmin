@@ -2,7 +2,7 @@ package com.ucar.smadmin.gds.service.impl;
 
 import com.ucar.smadmin.gds.service.CommentPicService;
 import com.ucar.smadmin.remote.client.GdsClient;
-import com.ucar.smadmin.gds.re.CommentPicRE;
+import com.ucar.smapi.gds.re.CommentPicRE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

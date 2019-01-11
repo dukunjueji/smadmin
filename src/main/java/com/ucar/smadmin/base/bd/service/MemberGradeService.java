@@ -1,6 +1,6 @@
 package com.ucar.smadmin.base.bd.service;
 
-import com.ucar.smadmin.base.bd.re.MemberGradeRE;
+import com.ucar.smapi.base.bd.re.MemberGradeRE;
 import com.ucar.smadmin.base.bd.vo.MemberGradeVO;
 
 import java.util.List;

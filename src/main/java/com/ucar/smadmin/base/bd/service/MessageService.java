@@ -1,6 +1,6 @@
 package com.ucar.smadmin.base.bd.service;
 
-import com.ucar.smadmin.base.bd.re.MessageRE;
+import com.ucar.smapi.base.bd.re.MessageRE;
 import com.ucar.smadmin.base.bd.vo.MessageVO;
 
 import java.util.List;

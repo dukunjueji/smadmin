@@ -1,10 +1,10 @@
 package com.ucar.smadmin.base.sys.controller;
 
-import com.ucar.smadmin.base.sys.dto.SysUserDTO;
-import com.ucar.smadmin.base.sys.re.SysMenuRE;
-import com.ucar.smadmin.base.sys.re.SysUserRE;
-import com.ucar.smadmin.base.sys.re.UserInfoRE;
-import com.ucar.smadmin.base.sys.re.UserLoginRE;
+import com.ucar.smapi.base.sys.dto.SysUserDTO;
+import com.ucar.smapi.base.sys.re.SysMenuRE;
+import com.ucar.smapi.base.sys.re.SysUserRE;
+import com.ucar.smapi.base.sys.re.UserInfoRE;
+import com.ucar.smapi.base.sys.re.UserLoginRE;
 import com.ucar.smadmin.base.sys.service.MenuService;
 import com.ucar.smadmin.base.sys.service.RoleService;
 import com.ucar.smadmin.base.sys.service.UserService;
@@ -18,8 +18,8 @@ import com.ucar.smadmin.common.constant.Constant;
 import com.ucar.smadmin.common.utils.EncryptUtil;
 import com.ucar.smadmin.common.utils.MenuUtil;
 import com.ucar.smadmin.common.utils.TokenUtil;
-import com.ucar.smadmin.common.vo.PageVO;
-import com.ucar.smadmin.common.vo.Result;
+import com.ucar.smapi.common.vo.PageVO;
+import com.ucar.smapi.common.vo.Result;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

@@ -1,18 +1,18 @@
 package com.ucar.smadmin.gds.service.impl;
 
 import com.ucar.smadmin.base.bd.service.MemberGradeService;
-import com.ucar.smadmin.common.vo.PageVO;
-import com.ucar.smadmin.gds.dto.GoodsAndPropertyDTO;
-import com.ucar.smadmin.gds.dto.GoodsDTO;
-import com.ucar.smadmin.gds.dto.GoodsListDTO;
-import com.ucar.smadmin.gds.re.AdminGoodsRE;
-import com.ucar.smadmin.gds.re.GoodsDetailRE;
-import com.ucar.smadmin.gds.re.GoodsRE;
-import com.ucar.smadmin.gds.re.GoodsStokeRE;
-import com.ucar.smadmin.gds.re.HotTagRE;
 import com.ucar.smadmin.gds.service.GoodsService;
 import com.ucar.smadmin.gds.vo.GoodsStokeVO;
 import com.ucar.smadmin.remote.client.GdsClient;
+import com.ucar.smapi.common.vo.PageVO;
+import com.ucar.smapi.gds.dto.GoodsAndPropertyDTO;
+import com.ucar.smapi.gds.dto.GoodsDTO;
+import com.ucar.smapi.gds.dto.GoodsListDTO;
+import com.ucar.smapi.gds.re.AdminGoodsRE;
+import com.ucar.smapi.gds.re.GoodsDetailRE;
+import com.ucar.smapi.gds.re.GoodsRE;
+import com.ucar.smapi.gds.re.GoodsStokeRE;
+import com.ucar.smapi.gds.re.HotTagRE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

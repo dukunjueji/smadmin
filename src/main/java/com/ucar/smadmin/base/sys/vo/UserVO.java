@@ -1,6 +1,6 @@
 package com.ucar.smadmin.base.sys.vo;
 
-import com.ucar.smadmin.common.base.model.BaseModel;
+import com.ucar.smapi.common.base.model.BaseModel;
 import org.hibernate.validator.constraints.Length;
 
 import java.io.Serializable;

@@ -1,12 +1,12 @@
 package com.ucar.smadmin.base.sms.controller;
 
-import com.ucar.smadmin.base.sms.re.SmsRE;
+import com.ucar.smapi.base.sms.re.SmsRE;
 import com.ucar.smadmin.base.sms.service.SmsService;
 import com.ucar.smadmin.base.sms.vo.SmsListVO;
 import com.ucar.smadmin.common.annotation.AccessLogin;
 import com.ucar.smadmin.common.base.controller.BaseController;
-import com.ucar.smadmin.common.vo.PageVO;
-import com.ucar.smadmin.common.vo.Result;
+import com.ucar.smapi.common.vo.PageVO;
+import com.ucar.smapi.common.vo.Result;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

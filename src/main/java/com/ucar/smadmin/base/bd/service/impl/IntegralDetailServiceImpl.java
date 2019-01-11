@@ -1,7 +1,7 @@
 package com.ucar.smadmin.base.bd.service.impl;
 
-import com.ucar.smadmin.base.bd.dto.IntegralDetaillDTO;
-import com.ucar.smadmin.base.bd.dto.MemberDTO;
+import com.ucar.smapi.base.bd.dto.IntegralDetaillDTO;
+import com.ucar.smapi.base.bd.dto.MemberDTO;
 import com.ucar.smadmin.base.bd.service.IntegralDetailService;
 import com.ucar.smadmin.base.bd.vo.IntegralVO;
 import com.ucar.smadmin.base.bd.vo.MemberVO;

@@ -1,7 +1,7 @@
 package com.ucar.smadmin.base.bd.service.impl;
 
-import com.ucar.smadmin.base.bd.dto.AddressDTO;
-import com.ucar.smadmin.base.bd.re.AddressRE;
+import com.ucar.smapi.base.bd.dto.AddressDTO;
+import com.ucar.smapi.base.bd.re.AddressRE;
 import com.ucar.smadmin.base.bd.service.AddressService;
 import com.ucar.smadmin.base.bd.vo.AddressVO;
 import com.ucar.smadmin.remote.remoteclient.BaseClient;

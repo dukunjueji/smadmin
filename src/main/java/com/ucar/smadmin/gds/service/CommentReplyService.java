@@ -1,7 +1,7 @@
 package com.ucar.smadmin.gds.service;
 
 import com.ucar.smadmin.gds.vo.CommentReplyVO;
-import com.ucar.smadmin.gds.re.CommentDetailRE;
+import com.ucar.smapi.gds.re.CommentDetailRE;
 
 /**
  * 版权声明： Copyright (c) 2008 ucarinc. All Rights Reserved.

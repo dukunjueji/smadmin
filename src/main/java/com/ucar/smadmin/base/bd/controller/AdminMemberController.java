@@ -1,11 +1,11 @@
 package com.ucar.smadmin.base.bd.controller;
 
-import com.ucar.smadmin.base.bd.re.MemberRE;
+import com.ucar.smapi.base.bd.re.MemberRE;
 import com.ucar.smadmin.base.bd.service.MemberService;
 import com.ucar.smadmin.base.bd.vo.MemberListVO;
 import com.ucar.smadmin.common.base.controller.BaseController;
-import com.ucar.smadmin.common.vo.PageVO;
-import com.ucar.smadmin.common.vo.Result;
+import com.ucar.smapi.common.vo.PageVO;
+import com.ucar.smapi.common.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

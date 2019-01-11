@@ -1,8 +1,8 @@
 package com.ucar.smadmin.gds.controller;
 
 import com.ucar.smadmin.common.annotation.AccessLogin;
-import com.ucar.smadmin.common.vo.Result;
-import com.ucar.smadmin.gds.re.HotTagRE;
+import com.ucar.smapi.common.vo.Result;
+import com.ucar.smapi.gds.re.HotTagRE;
 import com.ucar.smadmin.gds.service.HotTagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

@@ -1,6 +1,6 @@
 package com.ucar.smadmin.gds.vo;
 
-import com.ucar.smadmin.common.bean.PageQuery;
+import com.ucar.smapi.common.bean.PageQuery;
 
 /**
  * 请填写类注释

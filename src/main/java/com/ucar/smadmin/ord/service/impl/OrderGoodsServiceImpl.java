@@ -1,7 +1,7 @@
 package com.ucar.smadmin.ord.service.impl;
 
 
-import com.ucar.smadmin.ord.re.OrderRE;
+import com.ucar.smapi.ord.re.OrderRE;
 import com.ucar.smadmin.ord.service.OrderGoodsService;
 import com.ucar.smadmin.ord.vo.OrdOrderGoodsVO;
 import com.ucar.smadmin.remote.client.OrderClient;

@@ -1,12 +1,12 @@
 package com.ucar.smadmin.gds.service.impl;
 
-import com.ucar.smadmin.gds.re.CommentRE;
+import com.ucar.smapi.gds.re.CommentRE;
 import com.ucar.smadmin.gds.service.CommentReplyService;
 import com.ucar.smadmin.gds.service.CommentService;
 import com.ucar.smadmin.gds.vo.CommentListVO;
 import com.ucar.smadmin.gds.vo.CommentReplyVO;
 import com.ucar.smadmin.remote.client.GdsClient;
-import com.ucar.smadmin.gds.re.CommentDetailRE;
+import com.ucar.smapi.gds.re.CommentDetailRE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;

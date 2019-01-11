@@ -1,7 +1,7 @@
 package com.ucar.smadmin.base.sys.service.impl;
 
-import com.ucar.smadmin.base.sys.dto.SysMenuDTO;
-import com.ucar.smadmin.base.sys.re.SysMenuRE;
+import com.ucar.smapi.base.sys.dto.SysMenuDTO;
+import com.ucar.smapi.base.sys.re.SysMenuRE;
 import com.ucar.smadmin.base.sys.service.MenuService;
 import com.ucar.smadmin.base.sys.vo.MenuVO;
 import com.ucar.smadmin.remote.remoteclient.BaseClient;

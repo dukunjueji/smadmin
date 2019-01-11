@@ -1,17 +1,17 @@
 package com.ucar.smadmin.gds.controller;
 
 import com.ucar.smadmin.common.base.controller.BaseController;
-import com.ucar.smadmin.common.vo.Result;
+import com.ucar.smapi.common.vo.Result;
 import com.ucar.smadmin.enums.CommentEnum;
 import com.ucar.smadmin.enums.CommentReplyEnum;
-import com.ucar.smadmin.gds.re.CommentAvgRE;
+import com.ucar.smapi.gds.re.CommentAvgRE;
 import com.ucar.smadmin.gds.service.CommentReplyService;
 import com.ucar.smadmin.gds.service.CommentService;
 import com.ucar.smadmin.gds.vo.CommentListVO;
 import com.ucar.smadmin.gds.vo.CommentReplyInsertVO;
 import com.ucar.smadmin.gds.vo.CommentReplyVO;
 import com.ucar.smadmin.gds.vo.CommentVO;
-import com.ucar.smadmin.gds.re.CommentRE;
+import com.ucar.smapi.gds.re.CommentRE;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

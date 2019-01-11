@@ -1,19 +1,19 @@
 package com.ucar.smadmin.remote.remoteclient.impl;
 
-import com.ucar.smadmin.common.vo.RemoteResult;
-import com.ucar.smadmin.ord.dto.OrdCartGoodsDTO;
-import com.ucar.smadmin.ord.dto.OrdGoodsDTO;
-import com.ucar.smadmin.ord.dto.OrdMemberDTO;
-import com.ucar.smadmin.ord.dto.OrdOrderDTO;
-import com.ucar.smadmin.ord.dto.OrdOrderGoodsDTO;
-import com.ucar.smadmin.ord.dto.OrderDTO;
-import com.ucar.smadmin.ord.dto.OrderGoodsDTO;
-import com.ucar.smadmin.ord.re.CartGoodsRE;
-import com.ucar.smadmin.ord.re.CommentRE;
-import com.ucar.smadmin.ord.re.OrdOrderGoodsRE;
-import com.ucar.smadmin.ord.re.OrderGoodsRE;
-import com.ucar.smadmin.ord.re.OrderRE;
-import com.ucar.smadmin.ord.re.OrderSaleRE;
+import com.ucar.smapi.common.vo.RemoteResult;
+import com.ucar.smapi.ord.dto.OrdCartGoodsDTO;
+import com.ucar.smapi.ord.dto.OrdGoodsDTO;
+import com.ucar.smapi.ord.dto.OrdMemberDTO;
+import com.ucar.smapi.ord.dto.OrdOrderDTO;
+import com.ucar.smapi.ord.dto.OrdOrderGoodsDTO;
+import com.ucar.smapi.ord.dto.OrderDTO;
+import com.ucar.smapi.ord.dto.OrderGoodsDTO;
+import com.ucar.smapi.ord.re.CartGoodsRE;
+import com.ucar.smapi.ord.re.CommentRE;
+import com.ucar.smapi.ord.re.OrdOrderGoodsRE;
+import com.ucar.smapi.ord.re.OrderGoodsRE;
+import com.ucar.smapi.ord.re.OrderRE;
+import com.ucar.smapi.ord.re.OrderSaleRE;
 import com.ucar.smadmin.remote.remoteclient.OrderClientRemote;
 import org.springframework.stereotype.Component;
 

@@ -1,6 +1,6 @@
 package com.ucar.smadmin.base.bd.vo;
 
-import com.ucar.smadmin.common.bean.PageQuery;
+import com.ucar.smapi.common.bean.PageQuery;
 
 import java.io.Serializable;
 

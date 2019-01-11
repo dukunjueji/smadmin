@@ -1,11 +1,11 @@
 package com.ucar.smadmin.base.bd.controller;
 
-import com.ucar.smadmin.base.bd.re.MemberGradeRE;
+import com.ucar.smapi.base.bd.re.MemberGradeRE;
 import com.ucar.smadmin.base.bd.service.MemberGradeService;
 import com.ucar.smadmin.base.bd.vo.MemberGradeVO;
 import com.ucar.smadmin.common.annotation.AccessLogin;
 import com.ucar.smadmin.common.base.controller.BaseController;
-import com.ucar.smadmin.common.vo.Result;
+import com.ucar.smapi.common.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;

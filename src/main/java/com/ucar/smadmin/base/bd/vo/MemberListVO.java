@@ -1,6 +1,6 @@
 package com.ucar.smadmin.base.bd.vo;
 
-import com.ucar.smadmin.common.vo.PageVO;
+import com.ucar.smapi.common.vo.PageVO;
 
 /**
  * @Author: 余旭东

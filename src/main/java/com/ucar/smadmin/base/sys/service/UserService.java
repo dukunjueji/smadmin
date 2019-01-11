@@ -1,8 +1,8 @@
 package com.ucar.smadmin.base.sys.service;
 
-import com.ucar.smadmin.base.sys.dto.SysUserDTO;
-import com.ucar.smadmin.base.sys.re.SysMenuRE;
-import com.ucar.smadmin.base.sys.re.SysUserRE;
+import com.ucar.smapi.base.sys.dto.SysUserDTO;
+import com.ucar.smapi.base.sys.re.SysMenuRE;
+import com.ucar.smapi.base.sys.re.SysUserRE;
 import com.ucar.smadmin.base.sys.vo.UserListVO;
 import com.ucar.smadmin.base.sys.vo.UserLoginVO;
 import com.ucar.smadmin.base.sys.vo.UserVO;

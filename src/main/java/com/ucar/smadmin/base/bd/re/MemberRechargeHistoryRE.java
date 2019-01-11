@@ -1,5 +1,7 @@
 package com.ucar.smadmin.base.bd.re;
 
+import com.ucar.smapi.base.bd.re.MemberRechargeHistoryListRE;
+
 import java.io.Serializable;
 import java.util.List;
 

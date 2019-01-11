@@ -2,8 +2,8 @@ package com.ucar.smadmin.common.interceptor;
 
 import com.alibaba.fastjson.JSONObject;
 import com.ucar.smadmin.common.annotation.AccessLogin;
-import com.ucar.smadmin.common.bean.AccessToken;
-import com.ucar.smadmin.common.vo.Result;
+import com.ucar.smapi.common.bean.AccessToken;
+import com.ucar.smapi.common.vo.Result;
 import com.ucar.smadmin.common.constant.Constant;
 import com.ucar.smadmin.common.utils.TokenUtil;
 import org.apache.commons.lang.StringUtils;

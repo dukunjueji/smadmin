@@ -2,9 +2,9 @@ package com.ucar.smadmin.gds.controller;
 
 import com.ucar.smadmin.common.base.controller.BaseController;
 
-import com.ucar.smadmin.common.vo.Result;
-import com.ucar.smadmin.gds.dto.GoodsPicDTO;
-import com.ucar.smadmin.gds.re.AdminGoodsPicRE;
+import com.ucar.smapi.common.vo.Result;
+import com.ucar.smapi.gds.dto.GoodsPicDTO;
+import com.ucar.smapi.gds.re.AdminGoodsPicRE;
 import com.ucar.smadmin.gds.service.GoodsPicService;
 import com.ucar.smadmin.gds.service.PropertyService;
 import com.ucar.smadmin.ord.service.OrderGoodsService;

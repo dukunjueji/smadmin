@@ -1,7 +1,7 @@
 package com.ucar.smadmin.base.sms.service.impl;
 
-import com.ucar.smadmin.base.sms.dto.SmsDTO;
-import com.ucar.smadmin.base.sms.re.SmsRE;
+import com.ucar.smapi.base.sms.dto.SmsDTO;
+import com.ucar.smapi.base.sms.re.SmsRE;
 import com.ucar.smadmin.base.sms.service.SmsService;
 import com.ucar.smadmin.base.sms.vo.GenerateSmsVO;
 import com.ucar.smadmin.base.sms.vo.SmsListVO;
