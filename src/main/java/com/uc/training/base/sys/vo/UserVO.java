@@ -1,6 +1,6 @@
 package com.uc.training.base.sys.vo;
 
-import com.uc.training.common.base.model.BaseModel;
+import com.smgoods.common.base.model.BaseModel;
 import org.hibernate.validator.constraints.Length;
 
 import java.io.Serializable;

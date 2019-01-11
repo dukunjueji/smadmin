@@ -1,6 +1,6 @@
 package com.uc.training.gds.service.impl;
 
-import com.uc.training.common.vo.PageVO;
+import com.smgoods.common.vo.PageVO;
 import com.uc.training.gds.dto.AdminHotTagListDTO;
 import com.uc.training.gds.dto.HotTagDTO;
 import com.uc.training.gds.re.HotTagRE;

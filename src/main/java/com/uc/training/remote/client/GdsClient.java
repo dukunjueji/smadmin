@@ -1,6 +1,6 @@
 package com.uc.training.remote.client;
 
-import com.uc.training.common.vo.PageVO;
+import com.smgoods.common.vo.PageVO;
 import com.uc.training.gds.dto.AdminHotTagListDTO;
 import com.uc.training.gds.dto.CategoryDTO;
 import com.uc.training.gds.dto.CommentDTO;

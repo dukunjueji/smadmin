@@ -1,6 +1,6 @@
 package com.uc.training.gds.vo;
 
-import com.uc.training.common.bean.PageQuery;
+import com.smgoods.common.bean.PageQuery;
 
 /**
  * 请填写类注释

@@ -3,11 +3,10 @@ package com.uc.training.base.bd.controller;
 import com.uc.training.base.bd.re.MemberRE;
 import com.uc.training.base.bd.service.MemberService;
 import com.uc.training.base.bd.vo.MemberListVO;
-import com.uc.training.common.base.controller.BaseController;
-import com.uc.training.common.vo.PageVO;
-import com.uc.training.common.vo.Result;
+import com.smgoods.common.base.controller.BaseController;
+import com.smgoods.common.vo.PageVO;
+import com.smgoods.common.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,7 +27,7 @@ public class AdminMemberController extends BaseController {
      * 获取会员列表
      *
      * @param memberListVO
-     * @return com.ycc.base.common.Result<com.uc.training.common.vo.PageVO < com.uc.training.smadmin.bd.model.Member>>
+     * @return com.ycc.base.common.Result<PageVO < com.uc.training.smadmin.bd.model.Member>>
      */
     @RequestMapping(value = "/getMemberList.do_", method = RequestMethod.POST)
     @ResponseBody

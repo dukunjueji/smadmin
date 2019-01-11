@@ -1,6 +1,6 @@
 package com.uc.training.remote.remoteclient.impl;
 
-import com.uc.training.common.vo.RemoteResult;
+import com.smgoods.common.vo.RemoteResult;
 import com.uc.training.ord.dto.OrdCartGoodsDTO;
 import com.uc.training.ord.dto.OrdGoodsDTO;
 import com.uc.training.ord.dto.OrdMemberDTO;

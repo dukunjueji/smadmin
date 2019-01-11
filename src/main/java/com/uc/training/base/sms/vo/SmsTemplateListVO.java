@@ -1,6 +1,6 @@
 package com.uc.training.base.sms.vo;
 
-import com.uc.training.common.bean.PageQuery;
+import com.smgoods.common.bean.PageQuery;
 import org.hibernate.validator.constraints.Length;
 
 /**

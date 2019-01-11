@@ -6,7 +6,7 @@ import com.uc.training.base.sms.service.SmsService;
 import com.uc.training.base.sms.vo.GenerateSmsVO;
 import com.uc.training.base.sms.vo.SmsListVO;
 import com.uc.training.base.sms.vo.SmsVO;
-import com.uc.training.common.enums.SmsStatusEnum;
+import com.smgoods.enums.SmsStatusEnum;
 import com.uc.training.remote.remoteclient.BaseClient;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

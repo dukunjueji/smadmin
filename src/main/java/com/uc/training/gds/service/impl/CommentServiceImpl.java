@@ -1,7 +1,7 @@
 package com.uc.training.gds.service.impl;
 
-import com.uc.training.common.enums.CommentEnum;
-import com.uc.training.common.enums.OrderGoodsCommentEnum;
+import com.smgoods.enums.CommentEnum;
+import com.smgoods.enums.OrderGoodsCommentEnum;
 import com.uc.training.gds.re.CommentAvgRE;
 import com.uc.training.gds.re.CommentCountRE;
 import com.uc.training.gds.re.CommentRE;

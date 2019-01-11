@@ -1,5 +1,5 @@
 import com.uc.training.SmadminApplication;
-import com.uc.training.common.mail.MailService;
+import com.smgoods.common.mail.MailService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +20,6 @@ public class MailTest {
     private MailService mailService;
     @Test
     public void testSimpleMail() throws Exception {
-        mailService.sendSimpleMail("494173758@qq.com","dukun","520");
+        //mailService.sendSimpleMail("494173758@qq.com","dukun","520");
     }
 }

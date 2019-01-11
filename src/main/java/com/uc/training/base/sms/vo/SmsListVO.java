@@ -1,10 +1,7 @@
 package com.uc.training.base.sms.vo;
 
-import com.uc.training.common.bean.PageQuery;
+import com.smgoods.common.bean.PageQuery;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**

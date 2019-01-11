@@ -1,10 +1,10 @@
 package com.uc.training.gds.controller;
 
-import com.uc.training.common.base.controller.BaseController;
-import com.uc.training.common.enums.UUIDTypeEnum;
-import com.uc.training.common.utils.UUIDUtil;
-import com.uc.training.common.vo.PageVO;
-import com.uc.training.common.vo.Result;
+import com.smgoods.common.base.controller.BaseController;
+import com.smgoods.enums.UUIDTypeEnum;
+import com.smgoods.common.utils.UUIDUtil;
+import com.smgoods.common.vo.PageVO;
+import com.smgoods.common.vo.Result;
 import com.uc.training.gds.dto.GoodsDTO;
 import com.uc.training.gds.dto.GoodsListDTO;
 import com.uc.training.gds.dto.GoodsPicDTO;

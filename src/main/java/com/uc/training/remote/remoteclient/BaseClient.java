@@ -28,11 +28,12 @@ import com.uc.training.base.sys.dto.SysUserRoleDTO;
 import com.uc.training.base.sys.re.SysMenuRE;
 import com.uc.training.base.sys.re.SysRoleRE;
 import com.uc.training.base.sys.re.SysUserRE;
-import com.uc.training.common.vo.RemoteResult;
+import com.smgoods.common.vo.RemoteResult;
 import com.uc.training.remote.remoteclient.impl.BaseClientFallback;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 import java.util.List;
@@ -639,7 +640,7 @@ public interface BaseClient {
      * @return
      */
     @PostMapping(value = "smbase/api/getSysUserById")
-    RemoteResult<SysUserRE> getSysUserById(@RequestBody Long id);
+    RemoteResult<SysUserRE> getSysUserById(@RequestParam Long id);
 
     /**
      * 修改密码

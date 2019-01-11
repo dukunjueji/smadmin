@@ -1,7 +1,7 @@
 package com.uc.training.remote.remoteclient.impl;
 
-import com.uc.training.common.vo.PageVO;
-import com.uc.training.common.vo.RemoteResult;
+import com.smgoods.common.vo.PageVO;
+import com.smgoods.common.vo.RemoteResult;
 import com.uc.training.gds.dto.AdminHotTagListDTO;
 import com.uc.training.gds.dto.CategoryDTO;
 import com.uc.training.gds.dto.CommentDTO;
@@ -42,286 +42,286 @@ import java.util.List;
 public class GoodsRmoteFallback implements GoodsRemote {
   @Override
   public RemoteResult<List<GoodsRE>> getHotRecommend() {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<PageVO<GoodsRE>> getGoodsPageByCategory(GoodsListDTO goodsListDTO) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<GoodsDetailRE> getGoodsDetailByPropertyId(Long propertyId) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<List<GoodsDetailRE>> getGoodsDetailByGoodsId(Long goodsId) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<List<GoodsDetailRE>> getGoodsDetailByPropertyIds(List<Long> propertyIds) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<PageVO<GoodsRE>> searchByGoodsName(GoodsListDTO goodsListDTO) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<List<HotTagRE>> selectHotTag() {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<GoodsStokeRE> selectGoodsStatus(GoodsAndPropertyDTO goodsAndPropertyDTO) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<Integer> updateAndDeductStoke(GoodsAndPropertyDTO goodsAndPropertyDTO) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<Integer> addComment(CommentDTO commentDTO) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<List<CommentCountRE>> getCommentCountByOrderGoodsId(Long orderGoodsId) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<List<CommentRE>> getCommentList(CommentListDTO commentListDTO) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<CommentAvgRE> getCountBySroce(CommentListDTO commentListDTO) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<CommentAvgRE> getCommentCountAndAvg(CommentListDTO commentListDTO) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<Integer> editCommentById(CommentDTO commentDTO) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<List<CommentPicRE>> getCommentPicByCommentId(Long commentId) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<String> getAdminReplyContent(Long commentId) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<CommentDetailRE> getCommentDetailByCommentId(CommentReplyDTO commentReplyDTO) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<Long> insertCommentReply(CommentReplyModelDTO commentReplyModelDTO) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<Integer> editCommentReply(CommentReplyModelDTO commentReplyModelDTO) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<Integer> deleteCommentReplyById(CommentReplyDTO commentReplyDTO) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<GoodsRE> getGoodsById(Long id) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<List<AdminGoodsRE>> getAdminGoodsList(GoodsListDTO goodsListDTO) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<Integer> adminUpdateGoods(GoodsDTO goodsDTO) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<Long> adminInsertGoods(GoodsDTO goodsDTO) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<Integer> logicDeleteGoods(Long id) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<Integer> updateSales(GoodsAndPropertyDTO goodsAndPropertyDTO) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<Long> getAdminGoodsListCount(GoodsListDTO goodsListDTO) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<Integer> pullOnGoods(GoodsDTO goodsDTO) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<Integer> pullOffGoods(GoodsDTO goodsDTO) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<PageVO<HotTagRE>> getAllHotTagList(AdminHotTagListDTO adminHotTagListDTO) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<Integer> updateHotTag(HotTagDTO hotTagDTO) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<Integer> deleteHotTagById(Long id) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<Long> insertHotTag(HotTagDTO hotTagDTO) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<Long> insertGoodsPic(GoodsPicDTO goodsPicDTO) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<Integer> updateGoodsPic(GoodsPicDTO goodsPicDTO) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<List<AdminGoodsPicRE>> getGoodsPicListByPropertyId(Long propertyId) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<Integer> deleteGoodsPicById(Long id) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<Integer> deleteGoodsPicByPropertyId(Long propertyId) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<Integer> getPropertyIdCountById(Long id) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<Long> getPropertyIdById(Long id) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<Long> insertProperty(PropertyDTO propertyDTO) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<Integer> updateProperty(PropertyDTO propertyDTO) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<List<Long>> getPropertyIdListByGoodsId(Long goodsId) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<List<GoodsDetailRE>> getPropertyListByGoodsId(Long goodsId) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<Integer> deletePropertyAndGoodsPicById(Long id) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<Integer> getGoodsIdCountById(Long id) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<Integer> getCountByProperty(PropertyDTO propertyDTO) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<Integer> getCountByGoodsIdAndName(PropertyDTO var1) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<CategoryRE> queryCategory(Long id) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<Integer> getCountByGoodsPic(GoodsPicDTO goodsPicDTO) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<GoodsDetailRE> getPropertyById(Long id) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<List<CategoryRE>> getCategoryList() {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<Long> addCategory(CategoryDTO categoryDTO) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<Integer> logicDeleteCategory(Long id) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<Integer> updateCategory(CategoryDTO categoryDTO) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 
   @Override
   public RemoteResult<Integer> getCountByNameAndParentId(CategoryDTO category) {
-    return null;
+    return RemoteResult.getServiceError();
   }
 }

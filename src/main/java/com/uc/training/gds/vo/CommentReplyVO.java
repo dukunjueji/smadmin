@@ -1,6 +1,6 @@
 package com.uc.training.gds.vo;
 
-import com.uc.training.common.base.model.BaseModel;
+import com.smgoods.common.base.model.BaseModel;
 
 import java.io.Serializable;
 

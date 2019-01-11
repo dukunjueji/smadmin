@@ -5,7 +5,7 @@ import com.uc.training.base.bd.dto.MemberDTO;
 import com.uc.training.base.bd.service.GrowthDetailService;
 import com.uc.training.base.bd.vo.GrowthVO;
 import com.uc.training.base.bd.vo.MemberVO;
-import com.uc.training.common.enums.GrowthEnum;
+import com.smgoods.enums.GrowthEnum;
 import com.uc.training.remote.remoteclient.BaseClient;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

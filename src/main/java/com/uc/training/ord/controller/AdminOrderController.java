@@ -1,8 +1,8 @@
 package com.uc.training.ord.controller;
 
-import com.uc.training.common.annotation.AccessLogin;
-import com.uc.training.common.base.controller.BaseController;
-import com.uc.training.common.vo.Result;
+import com.smgoods.common.annotation.AccessLogin;
+import com.smgoods.common.base.controller.BaseController;
+import com.smgoods.common.vo.Result;
 import com.uc.training.ord.re.OrderGoodsDetailRE;
 import com.uc.training.ord.re.OrderRE;
 import com.uc.training.ord.service.OrderService;

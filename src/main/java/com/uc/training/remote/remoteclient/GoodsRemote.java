@@ -1,7 +1,7 @@
 package com.uc.training.remote.remoteclient;
 
-import com.uc.training.common.vo.PageVO;
-import com.uc.training.common.vo.RemoteResult;
+import com.smgoods.common.vo.PageVO;
+import com.smgoods.common.vo.RemoteResult;
 import com.uc.training.gds.dto.AdminHotTagListDTO;
 import com.uc.training.gds.dto.CategoryDTO;
 import com.uc.training.gds.dto.CommentDTO;
@@ -29,6 +29,7 @@ import com.uc.training.gds.re.HotTagRE;
 import com.uc.training.remote.remoteclient.impl.GoodsRmoteFallback;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -117,7 +118,7 @@ public interface GoodsRemote {
      * @return
      */
     @PostMapping(value = "smgoods/api/updateAndDeductStoke")
-    RemoteResult<Integer> updateAndDeductStoke(GoodsAndPropertyDTO goodsAndPropertyDTO);
+    RemoteResult<Integer> updateAndDeductStoke(@RequestBody GoodsAndPropertyDTO goodsAndPropertyDTO);
 
     /**
      * 添加评论
@@ -306,7 +307,7 @@ public interface GoodsRemote {
      * @return
      */
     @PostMapping(value = "smgoods/api/pullOffGoods")
-    RemoteResult<Integer> pullOffGoods(GoodsDTO goodsDTO);
+    RemoteResult<Integer> pullOffGoods(@RequestBody GoodsDTO goodsDTO);
 
     /**
      * 后台获取商品标签

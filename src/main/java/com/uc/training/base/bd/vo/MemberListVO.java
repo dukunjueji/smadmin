@@ -1,10 +1,6 @@
 package com.uc.training.base.bd.vo;
 
-import com.uc.training.common.vo.PageVO;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
-
-import javax.validation.constraints.Pattern;
+import com.smgoods.common.vo.PageVO;
 
 /**
  * @Author: 余旭东

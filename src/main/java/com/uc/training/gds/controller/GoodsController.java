@@ -1,13 +1,13 @@
 package com.uc.training.gds.controller;
 
 import com.uc.training.base.bd.service.MemberGradeService;
-import com.uc.training.common.annotation.AccessLogin;
-import com.uc.training.common.base.controller.BaseController;
-import com.uc.training.common.enums.StokeStatusEnum;
-import com.uc.training.common.redis.RedisComponent;
-import com.uc.training.common.redis.RedissonManager;
-import com.uc.training.common.vo.PageVO;
-import com.uc.training.common.vo.Result;
+import com.smgoods.common.annotation.AccessLogin;
+import com.smgoods.common.base.controller.BaseController;
+import com.smgoods.enums.StokeStatusEnum;
+import com.smgoods.common.redis.RedisComponent;
+import com.smgoods.common.redis.RedissonManager;
+import com.smgoods.common.vo.PageVO;
+import com.smgoods.common.vo.Result;
 import com.uc.training.gds.dto.GoodsListDTO;
 import com.uc.training.gds.re.GoodsDetailRE;
 import com.uc.training.gds.re.GoodsRE;
@@ -60,7 +60,7 @@ public class GoodsController extends BaseController {
      * 功能描述: 通过分类来获取商品
      *
      * @param: [demoListVO]
-     * @return: com.ycc.base.common.Result<com.uc.training.common.vo.PageVO<com.uc.training.smadmin.gds.re.GoodsRE>>
+     * @return: com.ycc.base.common.Result<PageVO<com.uc.training.smadmin.gds.re.GoodsRE>>
      * @auther: ling
      * @date: 2018/10/19 9:02
      */
