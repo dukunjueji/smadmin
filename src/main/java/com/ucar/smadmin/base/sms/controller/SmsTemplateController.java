@@ -70,7 +70,7 @@ public class SmsTemplateController extends BaseController {
      * @return
      */
     @AccessLogin
-    @RequestMapping(value = "/modifyTemplate", method = RequestMethod.POST)
+    @RequestMapping(value = "/modifyTemplate.do_", method = RequestMethod.POST)
     @ResponseBody
     public Result<Integer> modifyTemplate(@Validated SmsTemplateVO template){
         template.setModifyEmp(getUid());
