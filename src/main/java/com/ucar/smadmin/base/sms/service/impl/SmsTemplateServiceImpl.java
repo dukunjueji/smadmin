@@ -35,6 +35,8 @@ public class SmsTemplateServiceImpl implements SmsTemplateService {
     private MailService mailService;
     @Autowired
     private BaseClient baseClient;
+    @Autowired
+    private RedisComponent redis;
 
     //使用MailServiceImpl()实现类，不要直接调用发送方法
     //private static MailService mailService = new MailServiceImpl();
@@ -154,7 +156,6 @@ public class SmsTemplateServiceImpl implements SmsTemplateService {
                 SmsTypeEnum.REGISTER.getCode().equals(generateSmsVO.getCode())) {
 
             // redis
-            RedisComponent redis = new RedisComponent();
             generateSmsVO.setMessage(TelCodeUtil.createCode());
             //手机号 验证码
             redis.set(generateSmsVO.getTelephone(), generateSmsVO.getMessage(),60L,TimeUnit.SECONDS );
