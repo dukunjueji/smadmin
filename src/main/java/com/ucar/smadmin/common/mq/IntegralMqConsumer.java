@@ -34,8 +34,8 @@ public class IntegralMqConsumer {
             integralVO.setMemberId(mqVO.getMemberId());
             integralVO.setType(mqVO.getIntegralType());
             integralVO.setPurchaseValue(mqVO.getPurchaseValue());
-            this.integralDetailService.saveIntegralDetail(integralVO);
             channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
+            this.integralDetailService.saveIntegralDetail(integralVO);
             /*if (this.integralDetailService.saveIntegralDetail(integralVO) > 0) {
                 *//**
                  * 手动发送确认消息

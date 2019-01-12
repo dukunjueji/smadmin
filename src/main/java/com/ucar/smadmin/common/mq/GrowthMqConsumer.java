@@ -35,8 +35,8 @@ public class GrowthMqConsumer {
             growthVO.setMemberId(mqVO.getMemberId());
             growthVO.setType(mqVO.getGrowthType());
             growthVO.setPurchaseValue(mqVO.getPurchaseValue());
-            growthDetailService.saveGrowthDetail(growthVO);
             channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
+            growthDetailService.saveGrowthDetail(growthVO);
             /*if (growthDetailService.saveGrowthDetail(growthVO) > 0) {
                 *//**
                  * 手动发送确认消息
