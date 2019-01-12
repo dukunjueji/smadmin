@@ -37,10 +37,10 @@ public class GrowthDetailServiceImpl implements GrowthDetailService {
         Long growthVaule= getGrowthVauleByType(growthVO);
         growthDetail.setGrowth(growthVaule);
 
-        // 保存积分详情
+        // 保存成長值详情
         GrowthDetailDTO growthDetailDTO = new GrowthDetailDTO();
         growthDetailDTO.setMemberId(growthVO.getMemberId());
-        growthDetailDTO.setGrowth(growthVO.getGrowth());
+        growthDetailDTO.setGrowth(growthVaule);
         growthDetailDTO.setType(growthVO.getType());
         baseClient.saveGrowthDetail(growthDetailDTO);
 

@@ -212,7 +212,7 @@ public class MemberServiceImpl implements MemberService {
             //订单短信
             mqVO.getGenerateSmsVO().setEmil(memberRE.getEmail());
             mqVO1.setGenerateSmsVO(mqVO.getGenerateSmsVO());
-            mqProducer.sendSms(mqVO1);
+            mqProducer.sendSms(mqVO);
             mqProducer.sendMessage(mqVO1);
             mqProducer.sendGrowth(mqVO1);
             mqProducer.sendIntegral(mqVO1);

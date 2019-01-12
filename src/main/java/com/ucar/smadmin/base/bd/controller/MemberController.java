@@ -136,6 +136,7 @@ public class MemberController extends BaseController {
      */
     @RequestMapping(value = "/memberLogin.do_", method = RequestMethod.POST)
     @ResponseBody
+    @AccessLogin(required = false)
     public Result memberLogin(@Validated MemberLoginVO memberLoginVO) {
         MemberVO member = new MemberVO();
         member.setTelephone(memberLoginVO.getTelephone());

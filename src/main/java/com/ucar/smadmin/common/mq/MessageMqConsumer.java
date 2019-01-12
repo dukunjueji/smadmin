@@ -48,8 +48,8 @@ public class MessageMqConsumer {
             MessageVO mes = new MessageVO();
             mes.setMemberId(mqVO.getMemberId());
             mes.setContent(content);
+            channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
             messageService.insertMessage(mes);
-            channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, true);
             /*if (messageService.insertMessage(mes) > 0) {
                 *//**
                  * 手动发送确认消息
@@ -74,8 +74,8 @@ public class MessageMqConsumer {
             MessageVO mes = new MessageVO();
             mes.setMemberId(mqVO.getMemberId());
             mes.setContent(content);
-            messageService.insertMessage(mes);
             channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
+            messageService.insertMessage(mes);
             /*if (messageService.insertMessage(mes) > 0) {
                 *//**
                  * 手动发送确认消息
