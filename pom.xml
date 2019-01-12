@@ -9,8 +9,8 @@
 		<artifactId>micro</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>micro-smadmin</artifactId>
-	<name>micro-smadmin</name>
+	<artifactId>smadmin</artifactId>
+	<name>smadmin</name>
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -140,6 +140,7 @@
 			<plugin>
 				<groupId>com.spotify</groupId>
 				<artifactId>docker-maven-plugin</artifactId>
+				<version>1.0.0</version>
 				<configuration>
 					<imageName>${docker.image.prefix}/${project.artifactId}</imageName>
 					<dockerDirectory>src/main/docker</dockerDirectory>
@@ -153,5 +154,6 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>smadmin</finalName>
 	</build>
 </project>

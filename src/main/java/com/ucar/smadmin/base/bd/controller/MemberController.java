@@ -65,6 +65,8 @@ public class MemberController extends BaseController {
     private OrderService orderService;
     @Autowired
     private MessageService messageService;
+    @Autowired
+    RedisComponent redis;
 
     /**
      * 注册时，生成验证码及短信
@@ -114,7 +116,6 @@ public class MemberController extends BaseController {
             return Result.getBusinessException("手机号码已被注册", null);
         }
         //redis
-        RedisComponent redis = new RedisComponent();
         String msg = redis.get(memberRegisterVO.getTelephone());
         if (msg == null) {
             return Result.getBusinessException("验证码已过期，请重新获取", null);
@@ -135,7 +136,6 @@ public class MemberController extends BaseController {
      */
     @RequestMapping(value = "/memberLogin.do_", method = RequestMethod.POST)
     @ResponseBody
-    @AccessLogin(required = false)
     public Result memberLogin(@Validated MemberLoginVO memberLoginVO) {
         MemberVO member = new MemberVO();
         member.setTelephone(memberLoginVO.getTelephone());
@@ -212,7 +212,6 @@ public class MemberController extends BaseController {
             return Result.getBusinessException("手机号还没被注册", null);
         }
         //redis
-        RedisComponent redis = new RedisComponent();
         String msg = redis.get(memberRegisterVO.getTelephone());
         if (msg == null) {
             return Result.getBusinessException("验证码已过期，请重新获取", null);
@@ -410,7 +409,6 @@ public class MemberController extends BaseController {
             return Result.getBusinessException("原来的密码输入有误", null);
         }
         //redis
-        RedisComponent redis = new RedisComponent();
         String msg = redis.get(mem.getTelephone());
         if (msg == null) {
             return Result.getBusinessException("验证码已过期，请重新获取", null);

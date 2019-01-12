@@ -8,16 +8,17 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.concurrent.TimeUnit;
 
 @Component
 public class RedisComponent {
     //操作字符串的template，StringRedisTemplate是RedisTemplate的一个子集
-    @Autowired
+    @Resource
     private StringRedisTemplate stringRedisTemplate;
     private Logger logger = LoggerFactory.getLogger(RedisComponent.class);
     //RedisTemplate可以进行所有的操作
-    @Autowired
+    @Resource
     private RedisTemplate<Object, Object> redisTemplate;
 
     public void set(String key, String value, Long timeout, TimeUnit unit) {

@@ -39,6 +39,8 @@ public class GoodsController extends BaseController {
     private GoodsService goodsService;
     @Autowired
     private MemberGradeService memberGradeService;
+    @Autowired
+    RedisComponent redis;
 
     /**
      * 功能描述: 获取热门推荐
@@ -175,7 +177,6 @@ public class GoodsController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "testRdis.do_")
     public Result<String> testRdis() {
-        RedisComponent redis = new RedisComponent();
         redis.set("helloTesst", "world",60L,TimeUnit.SECONDS);
         System.out.println(redis.get("helloTesst").toString());
         return Result.getSuccessResult("成功");
