@@ -50,4 +50,4 @@ eureka:
       #lease-renewal-interval-in-seconds: 5
   client:
     serviceUrl: 
-      defaultZone: http://localhost:9000/eureka/
+      defaultZone: http://10.112.11.155:9002/eureka/,http://10.112.11.14:1115/eureka/,http://10.112.11.26:9090/eureka/
