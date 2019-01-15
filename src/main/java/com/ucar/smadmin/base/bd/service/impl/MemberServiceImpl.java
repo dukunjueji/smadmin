@@ -1,34 +1,34 @@
 package com.ucar.smadmin.base.bd.service.impl;
 
-import com.ucar.smapi.base.bd.dto.LoginLogDTO;
-import com.ucar.smapi.base.bd.dto.MemberDTO;
-import com.ucar.smapi.base.bd.re.MemberDetailRE;
-import com.ucar.smapi.base.bd.re.MemberRE;
 import com.ucar.smadmin.base.bd.service.MemberService;
 import com.ucar.smadmin.base.bd.vo.LoginVO;
 import com.ucar.smadmin.base.bd.vo.MemberInfoVO;
 import com.ucar.smadmin.base.bd.vo.MemberListVO;
 import com.ucar.smadmin.base.bd.vo.MemberVO;
-import com.ucar.smadmin.common.mq.MqProducer;
-import com.ucar.smadmin.common.mq.vo.MqVO;
+import com.ucar.smadmin.common.mq.MqService;
 import com.ucar.smadmin.common.redis.RedissonManager;
 import com.ucar.smadmin.common.utils.EncryptUtil;
 import com.ucar.smadmin.enums.GoodsStatusEnum;
 import com.ucar.smadmin.enums.GrowthEnum;
 import com.ucar.smadmin.enums.IntegralEnum;
 import com.ucar.smadmin.enums.OrderEnum;
-import com.ucar.smapi.gds.dto.GoodsAndPropertyDTO;
-import com.ucar.smapi.gds.re.GoodsStokeRE;
 import com.ucar.smadmin.gds.service.GoodsService;
 import com.ucar.smadmin.gds.vo.GoodsStokeVO;
-import com.ucar.smapi.ord.re.OrderConfirmRE;
-import com.ucar.smapi.ord.re.OrderGoodsRE;
-import com.ucar.smapi.ord.re.OrderRE;
 import com.ucar.smadmin.ord.service.OrderService;
 import com.ucar.smadmin.ord.vo.OrdMemberVO;
 import com.ucar.smadmin.ord.vo.OrdOrderVO;
 import com.ucar.smadmin.remote.client.OrderClient;
 import com.ucar.smadmin.remote.remoteclient.BaseClient;
+import com.ucar.smapi.base.bd.dto.LoginLogDTO;
+import com.ucar.smapi.base.bd.dto.MemberDTO;
+import com.ucar.smapi.base.bd.re.MemberDetailRE;
+import com.ucar.smapi.base.bd.re.MemberRE;
+import com.ucar.smapi.common.mq.MqVO;
+import com.ucar.smapi.gds.dto.GoodsAndPropertyDTO;
+import com.ucar.smapi.gds.re.GoodsStokeRE;
+import com.ucar.smapi.ord.re.OrderConfirmRE;
+import com.ucar.smapi.ord.re.OrderGoodsRE;
+import com.ucar.smapi.ord.re.OrderRE;
 import org.apache.commons.collections.CollectionUtils;
 import org.redisson.api.RLock;
 import org.slf4j.Logger;
@@ -54,7 +54,7 @@ public class MemberServiceImpl implements MemberService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MemberServiceImpl.class.getName());
     @Autowired
-    private MqProducer mqProducer;
+    private MqService mqService;
     @Autowired
     private OrderService orderService;
     @Autowired
@@ -212,10 +212,10 @@ public class MemberServiceImpl implements MemberService {
             //订单短信
             mqVO.getGenerateSmsVO().setEmil(memberRE.getEmail());
             mqVO1.setGenerateSmsVO(mqVO.getGenerateSmsVO());
-            mqProducer.sendSms(mqVO);
-            mqProducer.sendMessage(mqVO1);
-            mqProducer.sendGrowth(mqVO1);
-            mqProducer.sendIntegral(mqVO1);
+            mqService.sendSms(mqVO);
+            mqService.sendMessage(mqVO1);
+            mqService.sendGrowth(mqVO1);
+            mqService.sendIntegral(mqVO1);
             return list;
         } else {
             orderConfirmRE.setShowStatus("余额不足，请充值或者返回购物车重新选取商品");
@@ -261,7 +261,7 @@ public class MemberServiceImpl implements MemberService {
         loginLogDTO.setMemberId(loginLog.getMemberId());
         Long loginNum = baseClient.queryLoginCount(loginLogDTO).getRe();
         if (loginNum != null && loginNum == 1) {
-            mqProducer.sendGrowth(mqVO);
+            mqService.sendGrowth(mqVO);
         }
     }
 
@@ -273,9 +273,9 @@ public class MemberServiceImpl implements MemberService {
         mqVO.setRechargeStatus(status);
         mqVO.getMemberRechargeHistory().setStatus(status);
         mqVO.getGenerateSmsVO().setRechargeStatus(status);
-        mqProducer.sendRecharge(mqVO);
-        mqProducer.sendMessage(mqVO);
-        mqProducer.sendSms(mqVO);
+        mqService.sendRecharge(mqVO);
+        mqService.sendMessage(mqVO);
+        mqService.sendSms(mqVO);
         return status;
     }
 

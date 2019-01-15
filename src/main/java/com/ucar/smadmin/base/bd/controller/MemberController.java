@@ -1,10 +1,7 @@
 package com.ucar.smadmin.base.bd.controller;
 
 import com.ucar.smadmin.base.bd.re.AllMessageRE;
-import com.ucar.smapi.base.bd.re.MemberDetailRE;
 import com.ucar.smadmin.base.bd.re.MemberLoginRE;
-import com.ucar.smapi.base.bd.re.MemberRE;
-import com.ucar.smapi.base.bd.re.MessageRE;
 import com.ucar.smadmin.base.bd.service.MemberService;
 import com.ucar.smadmin.base.bd.service.MessageService;
 import com.ucar.smadmin.base.bd.vo.ChargeBalanceVO;
@@ -12,23 +9,26 @@ import com.ucar.smadmin.base.bd.vo.CreateCodeVO;
 import com.ucar.smadmin.base.bd.vo.LoginVO;
 import com.ucar.smadmin.base.bd.vo.MemberInfoVO;
 import com.ucar.smadmin.base.bd.vo.MemberLoginVO;
-import com.ucar.smadmin.base.bd.vo.MemberRechargeHistoryModelVO;
 import com.ucar.smadmin.base.bd.vo.MemberRegisterVO;
 import com.ucar.smadmin.base.bd.vo.MemberVO;
 import com.ucar.smadmin.base.bd.vo.MessageVO;
 import com.ucar.smadmin.base.bd.vo.PasswordEditVO;
-import com.ucar.smadmin.base.sms.vo.GenerateSmsVO;
 import com.ucar.smadmin.common.annotation.AccessLogin;
 import com.ucar.smadmin.common.base.controller.BaseController;
-import com.ucar.smadmin.common.mq.MqProducer;
-import com.ucar.smadmin.common.mq.vo.MqVO;
+import com.ucar.smadmin.common.mq.MqService;
+import com.ucar.smadmin.common.redis.RedisComponent;
 import com.ucar.smadmin.common.utils.ReplaceStarUtils;
 import com.ucar.smadmin.common.utils.TokenUtil;
 import com.ucar.smadmin.enums.GrowthEnum;
 import com.ucar.smadmin.enums.SmsTypeEnum;
-import com.ucar.smadmin.common.redis.RedisComponent;
-import com.ucar.smapi.common.vo.Result;
 import com.ucar.smadmin.ord.service.OrderService;
+import com.ucar.smapi.base.bd.re.MemberDetailRE;
+import com.ucar.smapi.base.bd.re.MemberRE;
+import com.ucar.smapi.base.bd.re.MessageRE;
+import com.ucar.smapi.common.mq.GenerateSmsVO;
+import com.ucar.smapi.common.mq.MemberRechargeHistoryModelVO;
+import com.ucar.smapi.common.mq.MqVO;
+import com.ucar.smapi.common.vo.Result;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,7 +60,7 @@ public class MemberController extends BaseController {
     @Autowired
     private MemberService memberService;
     @Autowired
-    private MqProducer mqProducer;
+    private MqService mqService;
     @Autowired
     private OrderService orderService;
     @Autowired
@@ -93,7 +93,7 @@ public class MemberController extends BaseController {
         generateSmsVO.setType(SmsTypeEnum.REGISTER.getType());
         generateSmsVO.setEmil(createCodeVO.getEmail());
         mqVO.setGenerateSmsVO(generateSmsVO);
-        mqProducer.sendSms(mqVO);
+        mqService.sendSms(mqVO);
         return Result.getSuccessResult("验证码已发送");
     }
 
@@ -192,7 +192,7 @@ public class MemberController extends BaseController {
         generateSmsVO.setType(SmsTypeEnum.FORGET_PASSWORD.getType());
         generateSmsVO.setEmil(memberRE.getEmail());
         mqVO.setGenerateSmsVO(generateSmsVO);
-        mqProducer.sendSms(mqVO);
+        mqService.sendSms(mqVO);
         return Result.getSuccessResult("验证码已发送");
     }
 
@@ -380,7 +380,7 @@ public class MemberController extends BaseController {
         generateSmsVO.setType(SmsTypeEnum.CHANGE_PASSWORD.getType());
         generateSmsVO.setEmil(member.getEmail());
         mqVO.setGenerateSmsVO(generateSmsVO);
-        mqProducer.sendSms(mqVO);
+        mqService.sendSms(mqVO);
         return Result.getSuccessResult("验证码已发送");
     }
 
