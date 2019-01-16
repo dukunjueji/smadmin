@@ -41,7 +41,28 @@ public class BaseController {
      * @return java.lang.Long
      */
     public Long getUid() {
-        Object obj = getRequest().getAttribute(Constant.REQUEST_HEADER_UID);
+        Object obj = getRequest().getHeader(Constant.REQUEST_HEADER_UID);
+        if (obj != null) {
+            String uid = String.valueOf(obj);
+            getRequest().setAttribute(Constant.REQUEST_HEADER_UID,uid);
+            return Long.valueOf(uid);
+        } else {
+            Object obj1 = getRequest().getAttribute(Constant.REQUEST_HEADER_UID);
+            if(obj1 != null){
+                String uid = String.valueOf(obj);
+                return Long.valueOf(uid);
+            }
+            return null;
+        }
+    }
+
+    /**
+     * 根据token获取用户id
+     *
+     * @return java.lang.Long
+     */
+    public Long getUid(HttpServletRequest request) {
+        Object obj = request.getAttribute(Constant.REQUEST_HEADER_UID);
         if (obj != null) {
             String uid = String.valueOf(obj);
             return Long.valueOf(uid);
@@ -49,7 +70,6 @@ public class BaseController {
             return null;
         }
     }
-
     public void setSessionAttribute(String key, Object value) {
         getSession().setAttribute(key, value);
     }
