@@ -1,27 +1,18 @@
 package com.ucar.smadmin.base.sms.service.impl;
 
-import com.ucar.smapi.base.sms.dto.SmsDTO;
-import com.ucar.smapi.base.sms.dto.SmsTemplateDTO;
-import com.ucar.smapi.base.sms.re.SmsTemplateRE;
 import com.ucar.smadmin.base.sms.service.SmsTemplateService;
-import com.ucar.smadmin.base.sms.vo.GenerateSmsVO;
 import com.ucar.smadmin.base.sms.vo.SmsTemplateListVO;
 import com.ucar.smadmin.base.sms.vo.SmsTemplateVO;
-import com.ucar.smadmin.base.sms.vo.SmsVO;
-import com.ucar.smadmin.common.mail.dto.MailMessage;
-import com.ucar.smadmin.common.utils.TelCodeUtil;
-import com.ucar.smadmin.enums.SmsStatusEnum;
-import com.ucar.smadmin.enums.SmsTypeEnum;
-import com.ucar.smadmin.common.mail.MailService;
 import com.ucar.smadmin.common.redis.RedisComponent;
 import com.ucar.smadmin.remote.remoteclient.BaseClient;
+import com.ucar.smapi.base.sms.dto.SmsTemplateDTO;
+import com.ucar.smapi.base.sms.re.SmsTemplateRE;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @Author: 余旭东
@@ -31,8 +22,6 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class SmsTemplateServiceImpl implements SmsTemplateService {
 
-    @Autowired
-    private MailService mailService;
     @Autowired
     private BaseClient baseClient;
     @Autowired
@@ -140,71 +129,6 @@ public class SmsTemplateServiceImpl implements SmsTemplateService {
     @Override
     public Integer batchDeleteById(List<Long> ids){
         return baseClient.batchDeleteSmsTempleById(ids).getRe();
-    }
-
-    /**
-     * 生成短信
-     *
-     * @param generateSmsVO
-     * @return
-     */
-    @Override
-    public Integer generateSms(GenerateSmsVO generateSmsVO) {
-
-        if (SmsTypeEnum.CHANGE_PASSWORD.getCode().equals(generateSmsVO.getCode()) ||
-                SmsTypeEnum.FORGET_PASSWORD.getCode().equals(generateSmsVO.getCode()) ||
-                SmsTypeEnum.REGISTER.getCode().equals(generateSmsVO.getCode())) {
-
-            // redis
-            generateSmsVO.setMessage(TelCodeUtil.createCode());
-            //手机号 验证码
-            redis.set(generateSmsVO.getTelephone(), generateSmsVO.getMessage(),60L,TimeUnit.SECONDS );
-        }
-
-        if (generateSmsVO.getRechargeStatus() != null && generateSmsVO.getRechargeStatus() == 0) {
-            generateSmsVO.setCode(SmsTypeEnum.RECHARGE_FAIL.getCode());
-        }
-        SmsTemplateListVO smsTemplateListVO = new SmsTemplateListVO();
-        smsTemplateListVO.setCode(generateSmsVO.getCode());
-        SmsTemplateDTO smsTemplateDTO = new SmsTemplateDTO();
-        smsTemplateDTO.setPageIndex(0);
-        smsTemplateDTO.setCode(smsTemplateListVO.getCode());
-        smsTemplateDTO.setType(smsTemplateListVO.getType());
-        smsTemplateDTO.setOffset(smsTemplateListVO.getOffset());
-        smsTemplateDTO.setPageSize(smsTemplateListVO.getPageSize());
-        List<SmsTemplateRE> smsTemplateRE = baseClient.getTemplateList(smsTemplateDTO).getRe();
-        //查找短信模板存在
-        if (CollectionUtils.isEmpty(smsTemplateRE) || smsTemplateRE.size() != 1) {
-            return SmsStatusEnum.TEMPLATE_NOT_EXIST.getKey();
-        }
-        //获取短信内容
-        smsTemplateDTO.setCode(generateSmsVO.getCode());
-        smsTemplateDTO.setMessage(generateSmsVO.getMessage());
-        String content = baseClient.generateSms(smsTemplateDTO).getRe();
-        //邮件标题
-        generateSmsVO.setEmailTitle(smsTemplateRE.get(0).getTitle());
-        //发送邮件
-        if (generateSmsVO.getEmil() != null) {
-            MailMessage mailMessage = new MailMessage();
-            mailMessage.setMailAddress(generateSmsVO.getEmil());
-            mailMessage.setTitle(generateSmsVO.getEmailTitle());
-            mailMessage.setContent(content);
-            mailService.sendSimpleMail(mailMessage);
-        }
-        System.out.println(generateSmsVO.getTelephone() + ": " +content);
-
-
-        SmsVO sms = new SmsVO();
-        sms.setType(generateSmsVO.getType());
-        sms.setTelephone(generateSmsVO.getTelephone());
-        sms.setStatus(SmsStatusEnum.SUCCESS.getKey());
-        sms.setContent(content);
-        // 新增短信记录
-        SmsDTO smsDTO = new SmsDTO();
-        BeanUtils.copyProperties(sms, smsDTO);
-        baseClient.insertSms(smsDTO);
-
-        return SmsStatusEnum.SUCCESS.getKey();
     }
 
 }

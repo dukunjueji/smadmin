@@ -1,9 +1,8 @@
 package com.ucar.smadmin.base.sms.service;
 
-import com.ucar.smapi.base.sms.re.SmsTemplateRE;
-import com.ucar.smadmin.base.sms.vo.GenerateSmsVO;
 import com.ucar.smadmin.base.sms.vo.SmsTemplateListVO;
 import com.ucar.smadmin.base.sms.vo.SmsTemplateVO;
+import com.ucar.smapi.base.sms.re.SmsTemplateRE;
 
 import java.util.List;
 
@@ -69,11 +68,5 @@ public interface SmsTemplateService {
      */
     Integer batchDeleteById(List<Long> ids);
 
-    /**
-     * 生成短信
-     * @param generateSmsVO
-     * @return
-     */
-    Integer generateSms(GenerateSmsVO generateSmsVO);
 
 }
