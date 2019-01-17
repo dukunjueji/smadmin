@@ -50,7 +50,7 @@ public class IntegralDetailServiceImpl implements IntegralDetailService {
         integralDetail.setMemberId(integralVO.getMemberId());
         integralDetail.setType(integralVO.getType());
 
-        //插入会员详情
+        //插入积分详情
         IntegralDetaillDTO integralDetaillDTO = new IntegralDetaillDTO();
         integralDetaillDTO.setMemberId(integralVO.getMemberId());
         integralDetaillDTO.setIntegral(integralValue);

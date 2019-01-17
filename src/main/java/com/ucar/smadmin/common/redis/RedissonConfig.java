@@ -15,10 +15,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RedissonConfig {
 
-    @Value("${spring.redis.host}")
     private String host = "10.112.11.26";
 
-    @Value("${spring.redis.port}")
     private String port = "6379";
 
 

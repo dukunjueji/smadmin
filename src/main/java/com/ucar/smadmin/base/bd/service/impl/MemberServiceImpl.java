@@ -1,5 +1,6 @@
 package com.ucar.smadmin.base.bd.service.impl;
 
+import com.codingapi.tx.annotation.TxTransaction;
 import com.ucar.smadmin.base.bd.service.MemberService;
 import com.ucar.smadmin.base.bd.vo.LoginVO;
 import com.ucar.smadmin.base.bd.vo.MemberInfoVO;
@@ -36,6 +37,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -230,7 +232,14 @@ public class MemberServiceImpl implements MemberService {
         return baseClient.getMemberDetailById(memberId).getRe();
     }
 
+    /**
+     * 测试分布式事务
+     * @param member
+     * @return
+     */
     @Override
+    @TxTransaction(isStart=true)
+    @Transactional
     public Integer updateMemberInfo(MemberVO member) {
         MemberDTO memberDTO = new MemberDTO();
         BeanUtils.copyProperties(member, memberDTO);
